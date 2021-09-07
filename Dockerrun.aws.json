@@ -1,0 +1,45 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+      {
+        "name": "client",
+        "image": "005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-client",
+        "hostname": "client",
+        "essential": true,
+        "memory": 1024,
+        "portMappings": [
+          {
+            "hostPort": 4200,
+            "containerPort": 4200
+          }
+        ]
+      },
+      {
+        "name": "server",
+        "image": "005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-server",
+        "hostname": "server",
+        "essential": true,
+        "memory": 512,
+        "portMappings": [
+          {
+            "hostPort": 4000,
+            "containerPort": 4000
+          }
+        ]
+      },
+      {
+        "name": "proxy",
+        "image": "005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-proxy",
+        "hostname": "proxy",
+        "essential": true,
+        "portMappings": [ 
+          {
+            "hostPort": 80,
+            "containerPort": 80
+          }
+        ],
+        "links": ["client", "server"],
+        "memory": 512
+      }
+    ]
+  }

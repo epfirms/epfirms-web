@@ -4,6 +4,7 @@ services:
       context: ./epfirms-api
       dockerfile: Dockerfile.prod
       target: base
+    image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-server
     container_name: epfirms-api
     expose:
       - '4000'
@@ -15,7 +16,18 @@ services:
       context: ./epfirms-client
       dockerfile: Dockerfile.prod
     container_name: epfirms-client
+    image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-client
     expose:
       - '4200'
     ports:
       - '4200:4200'
+  proxy: 
+    container_name: epfirms-proxy
+    depends_on: 
+      - client
+      - server
+    image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-proxy
+    ports: 
+      - "80:80"
+    build:
+      context: ./proxy
