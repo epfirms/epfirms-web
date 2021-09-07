@@ -1,0 +1,17 @@
+FROM node:14-alpine as base
+
+WORKDIR /home/node/api
+
+COPY package*.json ./
+
+RUN npm i
+
+RUN npm install -g pm2
+
+RUN npm install -g typescript
+
+COPY . .
+
+ENV NODE_PATH=./build
+
+RUN npm run build

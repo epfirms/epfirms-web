@@ -1,0 +1,19 @@
+{ 
+  "singleQuote": true,
+  "trailingComma": "none",
+  "endOfLine": "auto",
+  "arrowParens": "always",
+  "tabWidth": 2,
+  "printWidth": 100,
+  "overrides": [
+    {
+      "files": "{**/.vscode/*.json,**/tsconfig.json,**/tsconfig.*.json}",
+      "options": {
+        "parser": "json5",
+        "quoteProps": "preserve",
+        "singleQuote": false,
+        "trailingComma": "all"
+      }
+    }
+  ]
+}
