@@ -1,0 +1,16 @@
+services:
+  server:
+    image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-server
+    container_name: epfirms-api
+    expose:
+      - '4000'
+    ports:
+      - '4000:4000'
+    command: npm start
+  client:
+    image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-client
+    container_name: epfirms-client
+    expose:
+      - '4200'
+    ports:
+      - '4200:4200'
