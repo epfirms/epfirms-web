@@ -31,3 +31,4 @@ services:
       - "80:80"
     build:
       context: ./proxy
+      dockerfile: Dockerfile.prod
