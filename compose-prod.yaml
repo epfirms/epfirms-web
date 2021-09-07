@@ -1,6 +1,9 @@
 services:
   server:
-    image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-server
+    build:
+      context: ./epfirms-api
+      dockerfile: Dockerfile.prod
+      target: base
     container_name: epfirms-api
     expose:
       - '4000'
@@ -8,7 +11,9 @@ services:
       - '4000:4000'
     command: npm start
   client:
-    image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-client
+    build:
+      context: ./epfirms-client
+      dockerfile: Dockerfile.prod
     container_name: epfirms-client
     expose:
       - '4200'
