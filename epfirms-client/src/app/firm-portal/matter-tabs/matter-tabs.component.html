@@ -1,0 +1,121 @@
+<ng-container *ngIf="tabs$ | async as tabs">
+  <tabset
+    [expanded]="tabs.expanded"
+    (expandedChange)="toggleExpanded($event)"
+    (close)="closeTab($event)"
+  >
+    <tab
+      *ngFor="let matter of matters$ | async"
+      [title]="matter.client.full_name"
+    >
+      <div class="flex flex-col flex-1 h-full">
+        <div class="bg-white flex space-between sm:px-8 border-b border-gray-200">
+          <div class="flex-1 sm:flex sm:items-baseline">
+            <div class="mt-4">
+              <nav class="-mb-px flex space-x-8">
+                <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
+                <a                 
+                *ngFor="let subtab of tabs.subtabs"
+                (click)="changeSubtab(subtab)"
+                [ngClass]="{
+                  'border-blue-500 text-blue-600': subtab === selectedSubtab,
+                  'text-gray-500 hover:text-gray-700 hover:border-gray-300 border-transparent':
+                    subtab !== selectedSubtab
+                }" class=" whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm hover:cursor-pointer" aria-current="page">
+                {{ subtab | titlecase }}
+
+                <span class="hidden py-0.5 rounded-full text-xs font-bold md:inline-block" 
+                *ngIf="subtab === 'intake' && matter.matter_intake">({{matter.matter_intake.status | titlecase}})</span>
+                </a>
+              </nav>
+            </div>
+          </div>
+
+          <div class="flex items-center">
+          <ng-container *ngIf="legalAreas$ | async as legalAreas">
+          <tw-tag
+            [dot]="false"
+            [color]="matter.legal_area?.color"
+            [rounded]="false"
+            twSize="small"
+            [dropdown]="true"
+            [options]="legalAreas"
+            (selectedOptionChange)="setLegalArea(matter, $event)"
+          >
+            {{ matter.legal_area?.name || 'Select a legal area' | titlecase }}
+          </tw-tag>
+        </ng-container>
+          <tw-tag
+            [dot]="true"
+            [dotColor]="matter.status === 'active' ? 'emerald' : 'gray'"
+            [twSize]="'small'"
+            [rounded]="false"
+            [dropdown]="true"
+            [options]="statusOptions"
+            (selectedOptionChange)="setStatus(matter, $event)"
+            class="ml-3"
+          >
+            {{ matter.status + " " + matter.matter_type | titlecase }}
+          </tw-tag>
+          </div>
+        </div>
+        <!-- <ng-container *ngIf="legalAreas$ | async as legalAreas">
+          <tw-tag
+            [dot]="true"
+            [color]="matter.legal_area?.color"
+            [rounded]="false"
+            twSize="large"
+            [dropdown]="true"
+            [options]="legalAreas"
+            (selectedOptionChange)="setLegalArea(matter, $event)"
+          >
+            {{ matter.legal_area?.name || 'Select a legal area' | titlecase }}
+          </tw-tag>
+        </ng-container>
+          <tw-tag
+            [dot]="true"
+            [dotColor]="matter.status === 'active' ? 'emerald' : 'gray'"
+            [twSize]="'large'"
+            [rounded]="false"
+            [dropdown]="true"
+            [options]="statusOptions"
+            (selectedOptionChange)="setStatus(matter, $event)"
+            class="ml-3"
+          >
+            {{ matter.status + " " + matter.matter_type | titlecase }}
+          </tw-tag> -->
+        <main class="flex flex-1 relative overflow-y-auto focus:outline-none">
+          <div class="flex flex-1">
+            <div class="px-0 flex flex-1">
+              <div class="flex flex-col flex-1 xl:col-span-2 xl:border-r xl:border-gray-200">
+                <section aria-labelledby="subtab" class="flex-1">
+                  <!-- 'overview', 'tasks', 'activity', 'notes', 'documents', 'intake' -->
+                  <ng-container [ngSwitch]="selectedSubtab">
+                    <app-tasks *ngSwitchCase="'tasks'" [matter]="matter"></app-tasks>
+                    <app-activity *ngSwitchCase="'activity'" [matter]="matter"></app-activity>
+                    <app-notes *ngSwitchCase="'notes'" [matter]="matter"></app-notes>
+                    <app-documents *ngSwitchCase="'documents'" [matter]="matter"></app-documents>
+                    <app-intake-form *ngSwitchCase="'intake'"></app-intake-form>
+                  </ng-container>
+                </section>
+              </div>
+              <aside class="hidden p-6 w-96 lg:block">
+                <div class="pb-16 space-y-6">
+                  <div>
+                  <user-info [user]="matter.client" [label]="'client'"></user-info>
+                </div>
+                <div>
+                  <user-info [user]="matter.spouse" [label]="'spouse'" (addClicked)="addSpouse(matter, $event);"></user-info>
+                </div>
+                <div>
+                  <user-info [user]="matter.point_of_contact" [label]="'point of contact'" (addClicked)="addPointOfContact(matter, $event);"></user-info>
+                </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </main>
+      </div>
+    </tab>
+  </tabset>
+</ng-container>

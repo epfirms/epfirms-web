@@ -1,0 +1,54 @@
+<div class="px-4 sm:px-0">
+    <h2 class="text-lg font-medium text-gray-900">Cases</h2>
+  </div>
+
+  <!-- Stacked list -->
+  <ul role="list" class="mt-5 border-t border-b border-gray-200 divide-y divide-gray-200" *ngIf="matters$ | async as matters">
+    <li *ngFor="let matter of matters">
+      <a (click)="openIntake(matter)" class="group block">
+        <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0 group-hover:bg-blue-50 group-hover:cursor-pointer">
+          <div class="min-w-0 flex-1 flex items-center">
+            <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+              <div>
+                  <div class="flex items-center">
+
+                    <span class="text-sm font-medium text-sky-600 truncate group-hover:text-sky-700">{{ matter.legal_area.name }}</span>
+                  </div>
+                <p class="mt-2 flex items-center text-sm text-gray-500 group-hover:text-gray-600">
+                  <span class="truncate">Attorney: {{ matter.attorney.full_name | titlecase }}</span>
+                </p>
+              </div>
+              <div class="hidden md:block">
+                <div>
+                  <p class="text-sm text-gray-800 group-hover:text-gray-900">
+                    Created on
+                    <time datetime="2020-07-01T15:34:56">{{ matter.created_at | date }}</time>
+                  </p>
+                  <p class="mt-2 flex items-center text-sm text-gray-500" *ngIf="matter.matter_intake?.status === 'complete'">
+                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Intake form complete
+                  </p>
+                  <p class="mt-2 flex items-center text-sm text-gray-500 group-hover:text-gray-600" *ngIf="matter.matter_intake?.status !== 'complete'">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                      </svg>
+                        Fill out intake form
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <!-- Heroicon name: solid/chevron-right -->
+            <svg class="h-5 w-5 text-gray-400 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- More candidates... -->
+  </ul>

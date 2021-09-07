@@ -1,0 +1,191 @@
+<div class="fixed inset-0 overflow-hidden z-20" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <div class="absolute inset-0 overflow-hidden">
+      <!-- Background overlay, show/hide based on slide-over state. -->
+      <div class="absolute inset-0" aria-hidden="true"></div>
+  
+      <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16">
+        <!--
+          Slide-over panel, show/hide based on slide-over state.
+  
+          Entering: "transform transition ease-in-out duration-500 sm:duration-700"
+            From: "translate-x-full"
+            To: "translate-x-0"
+          Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
+            From: "translate-x-0"
+            To: "translate-x-full"
+        -->
+        <div #slideOver class="w-screen max-w-2xl transform transition ease-in-out duration-300 translate-x-full">
+          <form [formGroup]="staffForm" class="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
+            <div class="flex-1">
+              <!-- Header -->
+              <div class="px-4 py-6 bg-gray-50 sm:px-6">
+                <div class="flex items-start justify-between space-x-3">
+                  <div class="space-y-1">
+                    <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+                      Edit Staff
+                    </h2>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Divider container -->
+              <div class="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-gray-200">
+                <!-- Project name -->
+                <div class="space-y-1 px-4 sm:space-y-0 grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6 sm:px-6 sm:py-5">
+                    <div class="sm:col-span-6">
+                    <label for="photo" class="block text-sm font-medium text-blue-gray-900">
+                      Photo
+                    </label>
+                    <div class="mt-1 flex items-center">
+                      <img class="inline-block h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80" alt="">
+                      <div class="ml-4 flex">
+                        <div class="relative bg-white py-2 px-3 border border-blue-gray-300 rounded-md shadow-sm flex items-center cursor-pointer hover:bg-blue-gray-50 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-blue-gray-50 focus-within:ring-blue-500">
+                          <label for="user-photo" class="relative text-sm font-medium text-blue-gray-900 pointer-events-none">
+                            <span>Change</span>
+                            <span class="sr-only"> user photo</span>
+                          </label>
+                          <input id="user-photo" name="user-photo" type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md">
+                        </div>
+                        <button type="button" class="ml-3 bg-transparent py-2 px-3 border border-transparent rounded-md text-sm font-medium text-blue-gray-900 hover:text-blue-gray-700 focus:outline-none focus:border-blue-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-gray-50 focus:ring-blue-500">
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                    
+                    <div class="sm:col-span-3">
+                        <label for="first-name" class="block text-sm font-medium text-blue-gray-900">
+                          First Name
+                        </label>
+                        <!-- <autocomplete *ngIf="firm$" [options]="firm" (onSelect)="selectEvent($event, 'firm_id')"></autocomplete> -->
+                        <input formControlName="first_name" type="text" name="first-name" id="first-name" class="mt-1 block w-full border-blue-gray-300 rounded-md shadow-sm text-blue-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <label for="last-name" class="block text-sm font-medium text-blue-gray-900">
+                          Last Name
+                        </label>
+                        <!-- <autocomplete *ngIf="firm$" [options]="firm" (onSelect)="selectEvent($event, 'firm_id')"></autocomplete> -->
+                        <input formControlName="last_name" type="text" name="last-name" id="last-name" class="mt-1 block w-full border-blue-gray-300 rounded-md shadow-sm text-blue-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <label for="phone-number" class="block text-sm font-medium text-blue-gray-900">
+                            Email
+                        </label>
+                        <input formControlName="email" type="text" name="email" id="email" 
+                        class="mt-1 block w-full border-blue-gray-300 rounded-md shadow-sm text-blue-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500">
+                        <!-- <input formControlName="phone" type="text" name="phone-number" id="phone-number" autocomplete="tel" 
+                        class="mt-1 block w-full border-blue-gray-300 rounded-md shadow-sm text-blue-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
+                        pattern="((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}" [textMask]="{mask: mobileNumberMask}"> -->
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <label for="phone-number" class="block text-sm font-medium text-blue-gray-900">
+                            Phone number
+                        </label>
+                        <input formControlName="phone" type="text" name="phone-number" id="phone-number" 
+                        class="mt-1 block w-full border-blue-gray-300 rounded-md shadow-sm text-blue-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500">
+                        <!-- <input formControlName="phone" type="text" name="phone-number" id="phone-number" autocomplete="tel" 
+                        class="mt-1 block w-full border-blue-gray-300 rounded-md shadow-sm text-blue-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
+                        pattern="((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}" [textMask]="{mask: mobileNumberMask}"> -->
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <label for="rate" class="block text-sm font-medium text-blue-gray-900">
+                        $ Default Hourly Rate
+                        </label>
+                        <!-- <autocomplete *ngIf="firm$" [options]="firm" (onSelect)="selectEvent($event, 'firm_id')"></autocomplete> -->
+                        <input formControlName="rate" type="text" name="rate" id="rate" class="mt-1 block w-full border-blue-gray-300 rounded-md shadow-sm text-blue-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+                <!-- Staff Roles -->
+                <fieldset>
+                  <div class="space-y-2 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:px-6 sm:py-5">
+                    <div>
+                      <legend class="text-sm font-medium text-gray-900">
+                        Choose Role
+                      </legend>
+                    </div>
+                    <div class="space-y-5 sm:col-span-2">
+
+                      <fieldset class="space-y-5">
+                        <div class="relative flex items-start">
+                          <div class="flex items-center h-5">
+                            <input name="admin" formControlName="admin" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                          </div>
+                          <div class="ml-3 text-sm">
+                            <label for="admin" class="font-medium text-gray-700">Firm Admin</label>
+                          </div>
+                        </div>
+                        <div>
+                          <div class="relative flex items-start">
+                            <div class="flex items-center h-5">
+                              <input name="attorney" formControlName="attorney" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                            </div>
+                            <div class="ml-3 text-sm">
+                              <label for="attorney" class="font-medium text-gray-700">Attorney</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div class="relative flex items-start">
+                            <div class="flex items-center h-5">
+                              <input name="paralegal" type="checkbox" formControlName="paralegal" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                            </div>
+                            <div class="ml-3 text-sm">
+                              <label for="paralegal" class="font-medium text-gray-700">Paralegal</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                            <div class="relative flex items-start">
+                              <div class="flex items-center h-5">
+                                <input name="legal_assistant" type="checkbox" formControlName="legal_assistant" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                              </div>
+                              <div class="ml-3 text-sm">
+                                <label for="legal_assistant" class="font-medium text-gray-700">Legal Assistant</label>
+                              </div>
+                            </div>
+                          </div>
+                      </fieldset>
+                      <hr class="border-gray-200">
+                      <div class="flex flex-col space-between space-y-4 sm:flex-row sm:items-center sm:space-between sm:space-y-0">
+                        <div class="flex-1">
+
+                        </div>
+                        <div>
+                          <a href="#" class="group flex items-center text-sm text-gray-500 hover:text-gray-900 space-x-2.5">
+                            <!-- Heroicon name: solid/question-mark-circle -->
+                            <svg class="h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                            <span>
+                              Learn more about roles
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+  
+            <!-- Action buttons -->
+            <div class="flex-shrink-0 px-4 border-t border-gray-200 py-5 sm:px-6">
+              <div class="space-x-3 flex justify-end">
+                <button (click)="close()" type="button" class="button-white">
+                  Cancel
+                </button>
+                <button (click)="onSubmit()" type="submit" class="button-primary">
+                  Update Staff
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

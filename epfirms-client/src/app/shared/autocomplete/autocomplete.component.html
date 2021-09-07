@@ -1,0 +1,58 @@
+<div>
+  <div class="relative">
+    <div>
+      <div class="relative rounded-md shadow-sm">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <img *ngIf="selectedOption.profile_image" [src]="selectedOption.profile_image" alt="" class="flex-shrink-0 h-6 w-6 rounded-full">
+          <span class="flex-shrink-0 h-6 w-6 rounded-full overflow-hidden bg-gray-100" *ngIf="!selectedOption.profile_image">
+            <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </span>
+        </div>
+        <input (click)="displayOptionList = !displayOptionList" (input)="filterOptions($event.target)" [value]="selectedOption.full_name" type="text" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 text-sm border-gray-300 rounded-md" [placeholder]="placeholder">
+      </div>
+    </div>
+
+    <ul *ngIf="displayOptionList" class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-64 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3" (blur)="displayOptionList = !displayOptionList">
+
+      <li class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:text-white hover:bg-blue-600" id="listbox-option-0" role="option" *ngFor="let option of filteredOptions | slice:0:5" (click)="selectOption(option)">
+        <div class="flex items-center">
+          <img *ngIf="option.profile_image" [src]="option.profile_image" alt="" class="flex-shrink-0 h-6 w-6 rounded-full">
+          <span class="flex-shrink-0 h-6 w-6 rounded-full overflow-hidden bg-gray-100" *ngIf="!option.profile_image">
+            <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </span>
+          <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+          <span class="font-normal ml-3 block truncate" [class.font-semibold]="option.id == selectedOption.id">
+            {{option.full_name | titlecase}}
+          </span>
+        </div>
+
+        <!--
+          Checkmark, only display for selected option.
+
+          Highlighted: "text-white", Not Highlighted: "text-blue-600"
+        -->
+        <span class="text-blue-600 absolute inset-y-0 right-0 flex items-center pr-4 hover:text-white" *ngIf="option.id == selectedOption.id">
+          <!-- Heroicon name: solid/check -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+        </span>
+      </li>
+
+      <li class="text-gray-900 cursor-default select-none relative px-3 py-2 border-t border-gray-200" id="listbox-option-0" role="option" (click)="addButtonClicked.emit(true)" *ngIf="addButton">
+        <div class="flex items-center justify-center">
+          <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+          <button class="pre-icon-button-sm w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 20 22" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Add</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

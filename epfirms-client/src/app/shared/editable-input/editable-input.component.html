@@ -1,0 +1,4 @@
+<input type="text" [value]="value" [placeholder]="placeholder" (keydown.enter)="onEnter()" (blur)="emitChange()" #inputField />
+<div class="kbd-icon" *ngIf="enterKey">
+  <kbd> ↵ </kbd>
+</div>

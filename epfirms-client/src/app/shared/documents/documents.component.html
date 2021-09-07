@@ -1,0 +1,375 @@
+<ng-container *ngIf="matter">
+  <div class="p-4">
+    <button class="button-primary-icon-sm" (click)="fileList.click()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+      </svg>
+      Upload
+
+      <input type="file" (change)="onFilesSelected($event)" #fileList multiple style="display:none">
+    </button>
+
+    <div class="inline-block float-right">
+    <input type="text" id="email"  [(ngModel)]="search" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md ml-3" placeholder="Search...">
+  </div>
+  </div>
+  <div class="align-middle inline-block min-w-full">
+    <table class="min-w-full">
+      <thead>
+        <tr class="border-t border-gray-200">
+          <th
+            class="
+              px-4
+              py-3
+              border-gray-200
+              bg-white
+              text-left text-xs
+              font-medium
+              text-gray-500
+              uppercase
+              tracking-wider
+            "
+          >Name</th>
+          <th
+            class="
+              px-4
+              py-3
+              border-gray-200
+              bg-white
+              text-left text-xs
+              font-medium
+              text-gray-500
+              uppercase
+              tracking-wider
+              whitespace-nowrap
+              border-gray-200
+            "
+          >
+            <span>Type</span>
+          </th>
+          <th
+            class="
+              px-4
+              py-3
+              border-gray-200
+              bg-white
+              text-left text-xs
+              font-medium
+              text-gray-500
+              uppercase
+              tracking-wider
+              whitespace-nowrap
+              border-gray-200
+            "
+          >
+          Sharing
+          </th>
+          <th
+            class="
+              hidden
+              md:table-cell
+              px-6
+              py-3
+              border-gray-200
+              bg-white
+              text-left text-xs
+              font-medium
+              text-gray-500
+              uppercase
+              tracking-wider
+              whitespace-nowrap
+              border-gray-200
+            "
+          >
+          </th>
+        </tr>
+      </thead>
+
+      <tbody *ngIf="documents$ | async as docs" class="bg-white">
+        <tr *ngFor="let doc of docs | search:search">
+          <td class="px-4 border-t border-b border-gray-200 group-focus:bg-blue-50">
+            <div class="text-sm font-medium text-gray-900 whitespace-nowrap">
+              {{doc.doc_name}}
+            </div>
+          </td>
+          <td class="px-4 border-t border-b border-gray-200 group-focus:bg-blue-50">
+            <div class="text-sm text-gray-900 whitespace-nowrap">{{doc.doc_type}}</div>
+          </td>
+          <td
+          class="
+            px-4
+            py-1
+            max-w-0
+            whitespace-nowrap
+            text-sm
+            font-medium
+            text-gray-900
+            border-t border-b border-gray-200
+          "
+        >
+        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">
+          {{doc.share_with}}
+        </span>
+        </td>
+        <td
+        class="
+        px-4
+        py-1
+        w-32
+        whitespace-nowrap
+        text-sm
+        font-medium
+        text-gray-900
+        border-t border-b border-gray-200
+        "
+      >
+      <app-document-actions [document]="doc"></app-document-actions>
+      </td>
+        </tr>
+
+        <!-- More people... -->
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="displayManageDocs" class="fixed inset-0 overflow-hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <div class="absolute inset-0 overflow-hidden">
+      <!--
+        Background overlay, show/hide based on slide-over state.
+
+        Entering: "ease-in-out duration-500"
+          From: "opacity-0"
+          To: "opacity-100"
+        Leaving: "ease-in-out duration-500"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+      <div class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+      <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+        <!--
+          Slide-over panel, show/hide based on slide-over state.
+
+          Entering: "transform transition ease-in-out duration-500 sm:duration-700"
+            From: "translate-x-full"
+            To: "translate-x-0"
+          Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
+            From: "translate-x-0"
+            To: "translate-x-full"
+        -->
+        <div class="relative w-screen max-w-lg">
+          <!--
+            Close button, show/hide based on slide-over state.
+
+            Entering: "ease-in-out duration-500"
+              From: "opacity-0"
+              To: "opacity-100"
+            Leaving: "ease-in-out duration-500"
+              From: "opacity-100"
+              To: "opacity-0"
+          -->
+          <div class="absolute top-0 left-0 -ml-8 pt-4 pr-2 flex sm:-ml-10 sm:pr-4">
+            <button (click)="toggleManageDocs()" class="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
+              <span class="sr-only">Close panel</span>
+              <!-- Heroicon name: outline/x -->
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
+            <div class="px-4 sm:px-6">
+              <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+                Manage Document Uploads
+              </h2>
+            </div>
+            <div class="mt-6 relative flex-1 px-4 sm:px-6">
+              <!-- Replace with your content -->
+              <div *ngFor="let document of selectedDocuments">
+                <label for="price" class="block text-sm font-medium text-gray-700">Document Name</label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+
+                  <input type="text" value="{{document.doc_name}}" (blur)="setDocName(document, $event)" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                </div>
+                <!-- This example requires Tailwind CSS v2.0+ -->
+                <!--
+    Custom select controls like this require a considerable amount of JS to implement from scratch. We're planning
+    to build some low-level libraries to make this easier with popular frameworks like React, Vue, and even Alpine.js
+    in the near future, but in the mean time we recommend these reference guides when building your implementation:
+
+    https://www.w3.org/TR/wai-aria-practices/#Listbox
+    https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.html
+  -->
+                <div>
+                  <label id="listbox-label" class="block text-sm font-medium text-gray-700">
+                    Document Type
+                  </label>
+                  <div class="mt-1 relative">
+                    <button (click)="toggleDisplayDocTypeSelection(document)" type="button"
+                      class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox"
+                      aria-expanded="true" aria-labelledby="listbox-label">
+                      <span class="flex items-center">
+                        <span class="ml-3 block truncate">
+                          {{document.doc_type}}
+                        </span>
+                      </span>
+                      <span class="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                        <!-- Heroicon name: solid/selector -->
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd"
+                            d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                        </svg>
+                      </span>
+                    </button>
+
+                    <!--
+        Select popover, show/hide based on select state.
+
+        Entering: ""
+          From: ""
+          To: ""
+        Leaving: "transition ease-in duration-100"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+                    <ul *ngIf="displayDocTypeSelection && document.id == currentDocument.id"
+                      class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label"
+                      aria-activedescendant="listbox-option-3">
+                      <!--
+          Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+
+          Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
+        -->
+                      <li *ngFor="let doc_type of legalDocumentTypes" (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0"
+                        role="option">
+                        <div (click)="setType(doc_type.viewValue); toggleDisplayDocTypeSelection(document)" class="flex items-center">
+                          <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                          <span class="font-normal ml-3 block truncate">
+                            {{doc_type.viewValue}}
+                          </span>
+                        </div>
+
+                        <!--
+            Checkmark, only display for selected option.
+
+            Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+          -->
+                        <span *ngIf="document.doc_type == doc_type.viewValue" class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
+                          <!-- Heroicon name: solid/check -->
+                          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                          </svg>
+                        </span>
+                      </li>
+
+                      <!-- More items... -->
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- SELECT DOCUMENT SHARING -->
+                <div>
+                  <label id="listbox-label" class="block text-sm font-medium text-gray-700">
+                    Document Sharing
+                  </label>
+                  <div class="mt-1 relative">
+                    <button (click)="toggleDisplaySharing(document)" type="button"
+                      class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox"
+                      aria-expanded="true" aria-labelledby="listbox-label">
+                      <span class="flex items-center">
+                        <span class="ml-3 block truncate">
+                          {{document.share_with}}
+                        </span>
+                      </span>
+                      <span class="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                        <!-- Heroicon name: solid/selector -->
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd"
+                            d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                        </svg>
+                      </span>
+                    </button>
+
+                    <!--
+        Select popover, show/hide based on select state.
+
+        Entering: ""
+          From: ""
+          To: ""
+        Leaving: "transition ease-in duration-100"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+                    <ul *ngIf="displaySharingSelection && document.id == currentDocument.id"
+                      class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label"
+                      aria-activedescendant="listbox-option-3">
+                      <!--
+          Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+
+          Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
+        -->
+                      <li (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
+                        <div (click)="setSharing('Firm Only'); toggleDisplaySharing(document)" class="flex items-center">
+                          <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                          <span class="font-normal ml-3 block truncate">
+                            Firm Only
+                          </span>
+                        </div>
+
+                        <!--
+            Checkmark, only display for selected option.
+
+            Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+          -->
+                        <span *ngIf="document.share_with == 'Firm Only'" class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
+                          <!-- Heroicon name: solid/check -->
+                          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                          </svg>
+                        </span>
+                      </li>
+
+                      <li (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
+                        <div (click)="setSharing('Firm and Clients'); toggleDisplaySharing(document)" class="flex items-center">
+                          <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                          <span class="font-normal ml-3 block truncate">
+                            Firm and Clients
+                          </span>
+                        </div>
+
+                        <!--
+            Checkmark, only display for selected option.
+
+            Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+          -->
+                        <span *ngIf="document.share_with == 'Firm And Clients'" class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
+                          <!-- Heroicon name: solid/check -->
+                          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                          </svg>
+                        </span>
+                      </li>
+
+                      <!-- More items... -->
+                    </ul>
+                  </div>
+                </div>
+
+
+                <br><br>
+              </div>
+              <button type="button" (click)="upload()"
+                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Confirm Upload
+              </button>
+              <!-- /End replace -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </ng-container>

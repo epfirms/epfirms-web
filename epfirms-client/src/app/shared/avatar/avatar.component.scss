@@ -1,0 +1,71 @@
+.avatar {
+  @apply inline-block;
+}
+
+.initials {
+  @apply inline-flex items-center justify-center bg-gray-400;
+
+  & > span {
+    @apply font-medium leading-none text-white uppercase;
+  }
+
+  &.xs {
+    & > span {
+      @apply text-xs;
+    }
+  }
+
+  &.sm {
+    & > span {
+      @apply text-sm;
+    }
+  }
+
+  &.lg {
+    & > span {
+      @apply text-lg;
+    }
+  }
+
+  &.xl {
+    & > span {
+      @apply text-xl;
+    }
+  }
+}
+
+.icon {
+  @apply inline-block overflow-hidden bg-gray-100;
+
+  & > svg {
+    @apply h-full w-full text-gray-300;
+  }
+}
+
+.round {
+  @apply rounded-full;
+}
+
+.square {
+  @apply rounded-md;
+}
+
+.xs {
+  @apply h-6 w-6;
+}
+
+.sm {
+  @apply h-8 w-8;
+}
+
+.md {
+  @apply h-10 w-10;
+}
+
+.lg {
+  @apply h-12 w-12;
+}
+
+.xl {
+  @apply h-14 w-14;
+}

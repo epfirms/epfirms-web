@@ -1,0 +1,52 @@
+.tab-bar-container {
+  @apply flex items-end justify-between h-11 flex-grow;
+
+  & > .tab-container {
+    @apply flex items-center;
+
+    & > .tab-list {
+      @apply flex cursor-pointer;
+    }
+  }
+}
+
+.tab {
+  @apply py-2
+        rounded-t-md
+        text-sm
+        border-l
+        text-gray-500
+        border-r border-t border-gray-200
+        mr-1
+        shadow-sm
+        font-medium;
+}
+
+.selected {
+  @apply bg-white;
+}
+
+.not-selected {
+  @apply bg-gray-100;
+}
+
+.remove-tab-button {
+  @apply inline-flex
+        ml-6
+        p-1
+        items-center
+        border border-transparent
+        rounded-md
+        text-gray-400
+        hover:bg-gray-300
+        focus:outline-none
+        focus:ring-2
+        focus:ring-offset-2
+        focus:ring-indigo-500;
+}
+
+.transition-expand {
+  transition-property: max-height, background-color, border-color, color, fill,
+    stroke, opacity, box-shadow, transform, filter, backdrop-filter,
+    -webkit-backdrop-filter;
+}

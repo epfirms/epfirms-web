@@ -1,0 +1,7 @@
+.task-row {
+    @apply hover:cursor-pointer focus-within:bg-blue-50;
+
+    &:hover:not(:focus-within) {
+        @apply bg-gray-50;
+    }
+}
