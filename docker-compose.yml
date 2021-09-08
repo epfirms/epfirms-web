@@ -6,6 +6,8 @@ services:
       - '4000'
     ports:
       - '4000:4000'
+    networks:
+      - nginx_network
   client:
     container_name: epfirms-client
     image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-client
@@ -13,6 +15,8 @@ services:
       - '4200'
     ports:
       - '4200:4200'
+    networks:
+      - nginx_network
   proxy: 
     container_name: epfirms-proxy
     depends_on: 
@@ -21,3 +25,8 @@ services:
     image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-proxy
     ports: 
       - "80:80"
+    networks:
+      - nginx_network
+networks:
+  nginx_network:
+    driver: bridge
