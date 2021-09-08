@@ -1,5 +1,6 @@
 services:
   backend:
+    restart: always
     image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-server
     container_name: epfirms-api
     expose:
@@ -9,6 +10,7 @@ services:
     networks:
       - nginx_network
   client:
+    restart: always
     container_name: epfirms-client
     image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-client
     expose:
@@ -18,6 +20,7 @@ services:
     networks:
       - nginx_network
   proxy: 
+    restart: always
     container_name: epfirms-proxy
     depends_on: 
       - client
