@@ -11,6 +11,8 @@ services:
       - '4000'
     ports:
       - '4000:4000'
+    networks:
+      - nginx_network
   client:
     build:
       context: ./epfirms-client
@@ -21,6 +23,8 @@ services:
       - '4200'
     ports:
       - '4200:4200'
+    networks:
+      - nginx_network
   proxy: 
     container_name: epfirms-proxy
     depends_on: 
@@ -32,3 +36,8 @@ services:
     build:
       context: ./proxy
       dockerfile: Dockerfile.prod
+    networks:
+      - nginx_network
+networks:
+  nginx_network:
+    driver: bridge
