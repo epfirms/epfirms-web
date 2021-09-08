@@ -1,5 +1,5 @@
 services:
-  server:
+  backend:
     build:
       context: ./epfirms-api
       dockerfile: Dockerfile

@@ -1,5 +1,5 @@
 services:
-  server:
+  backend:
     image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-server
     container_name: epfirms-api
     expose:
@@ -21,7 +21,7 @@ services:
     container_name: epfirms-proxy
     depends_on: 
       - client
-      - server
+      - backend
     image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-proxy
     ports: 
       - "80:80"

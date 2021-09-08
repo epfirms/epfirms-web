@@ -1,6 +1,6 @@
 version: '3'
 services:
-  server:
+  backend:
     build:
       context: ./epfirms-api
       dockerfile: Dockerfile.prod
@@ -29,7 +29,7 @@ services:
     container_name: epfirms-proxy
     depends_on: 
       - client
-      - server
+      - backend
     image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-proxy
     ports: 
       - "80:80"

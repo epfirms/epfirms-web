@@ -1,4 +1,4 @@
 {
-    "host":"server",
+    "host":"backend",
     "port":4000
 }

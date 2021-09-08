@@ -1,7 +1,7 @@
 {
   "/api": {
     "target": {
-      "host": "server",
+      "host": "backend",
       "port": 4000,
       "protocol": "http:"
     },
