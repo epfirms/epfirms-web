@@ -9,6 +9,7 @@ services:
       - '4000:4000'
     networks:
       - nginx_network
+    command: npm start
   client:
     restart: always
     container_name: epfirms-client
