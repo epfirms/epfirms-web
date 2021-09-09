@@ -10,5 +10,6 @@ module.exports = {
     DB_PORT: process.env.DB_PORT,
     JWT_SECRET: process.env.JWT_SECRET,
     STRIPE_SECRET: process.env.STRIPE_SECRET,
-    EMAIL_API_KEY: process.env.EMAIL_API_KEY
+    EMAIL_API_KEY: process.env.EMAIL_API_KEY,
+    EMAIL_DOMAIN: process.env.EMAIL_DOMAIN,
 }
