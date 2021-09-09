@@ -13,7 +13,6 @@ services:
       - .env
     command: npm start
   client:
-    restart: always
     container_name: epfirms-client
     image: 005021368988.dkr.ecr.us-east-2.amazonaws.com/epfirms-client
     expose:
