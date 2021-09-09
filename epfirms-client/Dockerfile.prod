@@ -14,6 +14,6 @@ FROM alpine:latest
 
 RUN mkdir /client_build
 
-COPY --from=build /usr/src/app/dist/epfirms-client /client_build
+COPY --from=build /usr/src/app/dist /client_build
 
 VOLUME /client_build
