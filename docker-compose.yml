@@ -9,6 +9,8 @@ services:
       - '4000:4000'
     networks:
       - nginx_network
+    env_file:
+      - .env
     command: npm start
   client:
     restart: always
