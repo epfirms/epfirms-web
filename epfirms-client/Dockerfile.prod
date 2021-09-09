@@ -1,4 +1,4 @@
-FROM node:14-alpine As builder
+FROM node:14-alpine as build
 
 WORKDIR /usr/src/app
 
@@ -10,6 +10,10 @@ COPY . .
 
 RUN npm run build --prod
 
-FROM nginx:1.21.1-alpine
+FROM alpine:latest
 
-COPY --from=builder /usr/src/app/dist/epfirms-client/ /usr/share/nginx/html
+RUN mkdir /client_build
+
+COPY --from=build /usr/src/app/dist /client_build
+
+VOLUME /client_build
