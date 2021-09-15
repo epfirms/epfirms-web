@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-const { DB_NAME, DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT } = require('@configs/vars.js');
+const { DB_NAME, DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT } = require('@configs/vars');
 
 export class Database {
   public static models: any;
@@ -44,7 +44,8 @@ export class Database {
       matter_intake: require('../models/MatterIntake')(this.sequelize, Sequelize),
       verification_token: require('../models/verification_token')(this.sequelize, Sequelize),
       review: require('../models/Review')(this.sequelize, Sequelize),
-      appointee: require('../models/Appointee')(this.sequelize, Sequelize)
+      appointee: require('../models/Appointee')(this.sequelize, Sequelize),
+      password_reset_token: require('../models/PasswordResetToken')(this.sequelize, Sequelize)
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee });
@@ -205,6 +206,13 @@ export class Database {
       through: this.models.appointee,
       as: 'owner',
       foreignKey: 'appointee_id'
+    });
+
+    this.models.user.hasOne(this.models.password_reset_token, {
+      foreignKey: 'user_id'
+    });
+    this.models.password_reset_token.belongsTo(this.models.user, {
+      foreignKey: 'user_id'
     });
   }
 

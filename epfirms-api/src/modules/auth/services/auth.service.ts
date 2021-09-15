@@ -1,8 +1,9 @@
 import { Database } from '@src/core/Database';
+import { UserService } from '@src/modules/user/services/user.service';
 import { header } from 'express-validator';
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('@configs/vars.js');
+const { JWT_SECRET } = require('@configs/vars');
 
 export interface AccessToken {
   id: number;
@@ -14,7 +15,7 @@ export interface AccessToken {
 }
 
 export class AuthService {
-  public static async validate(email, password): Promise<boolean> {
+  public static async validate(email, password): Promise<{valid: boolean, msg: string}> {
     const user = await Database.models.user.findOne({
       attributes: ['id', 'email', 'password'],
       where: {
@@ -22,11 +23,15 @@ export class AuthService {
       }
     });
 
-    if (user && bcrypt.compareSync(password, user.password)) {
-      return Promise.resolve(true);
+    if (user.password && user.password.startsWith("$2a")) {
+      return Promise.resolve({valid: false, msg: "update"});
     }
 
-    return Promise.reject(false);
+    if (user && bcrypt.compareSync(password, user.password)) {
+      return Promise.resolve({valid: true, msg: ''});
+    }
+
+    return Promise.reject({valid: false, msg: "incorrect username/password combination"});
   }
 
   public static async generateToken(user, clientAccess, firmAccess): Promise<string> {
@@ -146,5 +151,25 @@ export class AuthService {
     console.log("removed ", token, " from the database.")
     return Promise.resolve(true);
   }
-  
+
+  public static async resetPassword(userId: number, token: string, password: string): Promise<boolean> {
+    const { password_reset_token } = Database.models;
+    const passwordResetToken = await password_reset_token.findOne({where: {user_id: userId}});
+
+    if (!passwordResetToken) {
+      return Promise.reject(false);
+    }
+
+    const isValid = await bcrypt.compare(token, passwordResetToken.token);
+
+    if (!isValid) {
+      return Promise.reject(false);
+    }
+
+    await UserService.update({id: userId, password});
+
+    await password_reset_token.destroy({where: {user_id: userId}});
+
+    return Promise.resolve(true);
+  }
 }

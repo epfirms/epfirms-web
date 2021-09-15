@@ -11,7 +11,7 @@
         </p>
       </div>
       <div class="mt-8 py-3 px-5 mb-4 bg-red-100 text-red-900 text-sm rounded-md border border-red-200" role="alert" *ngIf="error">
-        Incorrect email or password
+        {{errorMessage}}
     </div>
       <form class="mt-8 space-y-6" [formGroup]="loginForm" (ngSubmit)="handleSubmit()" *ngIf="!pageLoading">
         <input type="hidden" name="remember" value="true">

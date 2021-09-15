@@ -6,7 +6,7 @@ const passport = require('passport');
 const Strategy = require('passport-http-bearer').Strategy;
 const helmet = require('helmet');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('@configs/vars.js');
+const { JWT_SECRET } = require('@configs/vars');
 import { Database } from '@src/core/Database';
 
 export class CommonMiddleware {

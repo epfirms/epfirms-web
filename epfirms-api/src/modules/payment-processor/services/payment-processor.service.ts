@@ -1,5 +1,5 @@
 import { Database } from '@src/core/Database';
-const { STRIPE_SECRET } = require('@configs/vars.js');
+const { STRIPE_SECRET } = require('@configs/vars');
 const stripe = require('stripe')(STRIPE_SECRET);
 
 export class PaymentProcessorService {

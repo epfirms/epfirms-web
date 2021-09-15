@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 import { AuthService } from "@modules/auth/services/auth.service";
 import { StatusConstants } from "@src/constants/StatusConstants";
 import { UserService } from "@src/modules/user/services/user.service";
+import { emailsService } from "@src/modules/emails/services/emails.service";
 
 export class AuthController {
   constructor() {}
@@ -10,7 +11,7 @@ export class AuthController {
     try {
       const { email, password } = req.body;
       
-      const valid = await AuthService.validate(email, password);
+      const {valid, msg} = await AuthService.validate(email, password);
 
       if (valid) {
         const user = await UserService.get('email', email);
@@ -18,13 +19,18 @@ export class AuthController {
         const clientScope = await AuthService.getClientScope(user.id);
         const token = await AuthService.generateToken(user, clientScope, firmScope);
 
-        resp.status(StatusConstants.OK).send({success: true, access_token: token});
+        resp.status(StatusConstants.OK).send({success: true, access_token: token, msg});
+      } else if (msg && msg === 'update'){
+        // Send password reset email for users on the old password system
+        await emailsService.requestPasswordReset(email);
+        
+        resp.status(StatusConstants.OK).send({success: false, access_token: null, msg})
       } else {
-        throw new Error("Error signing in");
+        throw new Error(msg);
       }
     } catch (error) {
       console.log(error.message)
-      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, msg: error.message});
     }
   }
 
@@ -57,6 +63,16 @@ export class AuthController {
     }
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
+  public async updatePassword(req: any, resp: Response): Promise<any> {
+    try {
+      const { id, token, password } = req.body;
+      await AuthService.resetPassword(id, token, password);
+      resp.status(StatusConstants.OK).send(true);
+    } catch (error) {
+      resp.status(StatusConstants.UNAUTHORIZED).send(error.message);
     }
   }
 }

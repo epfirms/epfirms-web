@@ -1,7 +1,7 @@
 
 module.exports = (sequelize, {
     INTEGER,
-    STRING
+    TEXT
   }) => {
     const tableName = 'matter_note';
   
@@ -19,7 +19,7 @@ module.exports = (sequelize, {
           type: INTEGER
         },
         note_string: {
-          type: STRING
+          type: TEXT
         }
       }, {
         tableName,

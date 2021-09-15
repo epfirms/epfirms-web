@@ -1,16 +1,15 @@
 var express = require("express");
-
+const { SERVER_HOST, SERVER_PORT } = require('@configs/vars');
 import { Express } from "express";
 import { InitializeMiddleWare } from "./InitializeMiddleware";
 import { InitializeRoutes } from "./InitializeRoutes";
 import { Database } from "./Database";
-import * as ServerConfig from "@configs/ServerConfig.json";
 
 export async function server() {
   let app: Express = express();
 
-  let host = ServerConfig.host;
-  let port = ServerConfig.port;
+  let host = SERVER_HOST;
+  let port = SERVER_PORT;
 
   let link = "http://" + host + ":" + port.toString();
   await Database.connect();

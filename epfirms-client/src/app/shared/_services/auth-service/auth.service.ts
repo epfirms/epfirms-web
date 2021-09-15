@@ -66,7 +66,7 @@ export class AuthService {
         password,
       })
       .pipe(
-        map(({ success, access_token }) => {
+        map(({ success, access_token, msg }) => {
           if (success) {
             localStorage.setItem('accessToken', JSON.stringify(access_token));
             this.accessTokenSubject.next(access_token);
@@ -74,9 +74,13 @@ export class AuthService {
             this.logout();
           }
 
-          return success;
+          return {success, msg};
         })
       );
+  }
+
+  updatePassword(id, token, password: string): Observable<any> {
+    return this._http.post<any>('/api/auth/password', {id, token, password});
   }
 
   getCurrentUserScope(): Observable<any> {

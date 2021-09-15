@@ -1,5 +1,6 @@
 import { Response, Request } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
+const { AWS_REGION, AWS_SECRET_KEY, AWS_ACCESS_KEY_ID, AWS_BUCKET } = require('@configs/vars')
 const aws = require('aws-sdk');
 require('dotenv').config();
 
@@ -11,9 +12,9 @@ export class AWSController {
   constructor(){
     // aws class properties
     aws.config.update({
-      secretAccessKey: process.env.AWS_SECRET_KEY,
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      region: process.env.AWS_REGION,
+      secretAccessKey: AWS_SECRET_KEY,
+      accessKeyId: AWS_ACCESS_KEY_ID,
+      region: AWS_REGION,
     });
 
     this.s3 = new aws.S3();
@@ -29,7 +30,7 @@ export class AWSController {
 
       // create the params for the aws s3 api
       const params = {
-        Bucket: process.env.AWS_BUCKET,
+        Bucket: AWS_BUCKET,
         Key: req.body.key,
         Expires: 40 * 60,
         ACL: 'bucket-owner-full-control',
@@ -49,7 +50,7 @@ export class AWSController {
   public async deleteDocument(req, res ): Promise<any> {
     try {
       const params = {
-        Bucket: process.env.AWS_BUCKET,
+        Bucket: AWS_BUCKET,
         Key: req.body.doc_key
       }
       const result = await this.s3.deleteObject(params).promise();
@@ -69,12 +70,12 @@ export class AWSController {
   public async downloadDocumentFromPresignedURL(req, res): Promise<any> {
     try {
       const getSignedURLParams = {
-        Bucket: process.env.AWS_BUCKET,
+        Bucket: AWS_BUCKET,
         Key: req.body.key,
         Expires: 60 * 5
       }
       const getObjectHeadParams = {
-        Bucket: process.env.AWS_BUCKET,
+        Bucket: AWS_BUCKET,
         Key: req.body.key
       }
 
@@ -97,8 +98,8 @@ export class AWSController {
     try {
 
       const cloneParams = {
-        Bucket: process.env.AWS_BUCKET,
-        CopySource: process.env.AWS_BUCKET + '/' + req.body.oldKey,
+        Bucket: AWS_BUCKET,
+        CopySource: AWS_BUCKET + '/' + req.body.oldKey,
         Key: req.body.key
       }
       // clone the existing data in the s3 first
@@ -107,7 +108,7 @@ export class AWSController {
       if (cloned.CopyObjectResult){
         // delete the old one
         const deleteParams = {
-          Bucket: process.env.AWS_BUCKET,
+          Bucket: AWS_BUCKET,
           Key: req.body.oldKey
         }
         const deleted = await this.s3.deleteObject(deleteParams).promise();

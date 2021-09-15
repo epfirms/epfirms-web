@@ -6,7 +6,7 @@ import { StatusConstants } from '@src/constants/StatusConstants';
 
 const fs = require('fs');
 const passport = require('passport');
-const { EMAIL_API_KEY } = require('@configs/vars.js');
+const { EMAIL_API_KEY } = require('@configs/vars');
 export class emailsController {
     
 constructor() {}

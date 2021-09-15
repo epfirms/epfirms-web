@@ -12,6 +12,8 @@ import { RegisterComponent } from './register/register.component';
 import { LoginSelectComponent } from './login-select/login-select.component';
 import { VerifyEmailComponent } from './verifyEmail/VerifyEmail.component';
 import { FeedbackPageComponent } from './feedback-page/feedback-page.component';
+import { ModalModule } from '@app/modal/modal.module';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { FeedbackPageComponent } from './feedback-page/feedback-page.component';
     RegisterComponent,
     LoginSelectComponent,
     VerifyEmailComponent,
-    FeedbackPageComponent
+    FeedbackPageComponent,
+    UpdatePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,7 @@ import { FeedbackPageComponent } from './feedback-page/feedback-page.component';
     UserAuthRoutingModule,
     SharedModule,
     NgxStripeModule.forRoot('pk_test_NaQ0K78jrNRGyacbblmpM2RW00mvwDjEh6'),
+    ModalModule
   ]
 })
 export class UserAuthModule { }

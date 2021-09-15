@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { UserAuthComponent } from './user-auth.component';
 import { VerifyEmailComponent } from './verifyEmail/VerifyEmail.component';
 import { FeedbackPageComponent } from './feedback-page/feedback-page.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 const loginChildRoutes: Routes = [
   { path: 'select', component: LoginSelectComponent },
@@ -17,6 +18,7 @@ const childRoutes: Routes = [
   { path: 'login', children: loginChildRoutes },
   { path: 'verify', component: VerifyEmailComponent },
   { path: 'feedback', component: FeedbackPageComponent },
+  { path: 'password-reset', component: UpdatePasswordComponent},
   { path: '**', redirectTo: '/login'}
 ];
 

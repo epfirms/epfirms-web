@@ -12,5 +12,5 @@ authRouter.get(
 
 authRouter.post('/', (req, res) => authController.login(req, res));
 authRouter.post('/VerifyEmail', (req, res) => authController.verifyEmailToken(req, res));
-
+authRouter.post('/password', (req, res) => authController.updatePassword(req, res));
 export { authRouter };
