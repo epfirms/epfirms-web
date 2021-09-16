@@ -5,39 +5,11 @@ services:
       context: ./epfirms-api
       dockerfile: Dockerfile.prod
       target: base
-    image: jaerq/epfirms-server
     container_name: epfirms-api
-    expose:
-      - '4000'
-    ports:
-      - '4000:4000'
-    networks:
-      - nginx_network
+    image: jaerq/epfirms-server
   client:
     build:
       context: ./epfirms-client
       dockerfile: Dockerfile.prod
     container_name: epfirms-client
     image: jaerq/epfirms-client
-    expose:
-      - '4200'
-    ports:
-      - '4200:4200'
-    networks:
-      - nginx_network
-  proxy: 
-    container_name: epfirms-proxy
-    depends_on: 
-      - client
-      - backend
-    image: jaerq/epfirms-nginx
-    ports: 
-      - "80:80"
-    build:
-      context: ./proxy
-      dockerfile: Dockerfile.prod
-    networks:
-      - nginx_network
-networks:
-  nginx_network:
-    driver: bridge
