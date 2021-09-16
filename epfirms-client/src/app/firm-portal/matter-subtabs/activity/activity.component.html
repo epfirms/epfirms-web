@@ -1,54 +1,24 @@
-<div>
-    <div class="divide-y divide-gray-200">
-      <div class="pt-6">
-        <!-- Activity feed-->
-        <div class="flow-root overflow-y-auto">
-          <ul class="-mb-8">
+  <div class="max-w-2xl mx-auto px-6">
+  <div>
+    <ul role="list" class="divide-y divide-gray-200">
+      <li class="py-4" *ngFor="let activity of activities$ | async">
+        <div class="flex space-x-3">
+          <tw-avatar
+          twSize="xsmall"
+          [twText]="activity.staff_name"
+        ></tw-avatar>
+          <div class="flex-1 space-y-1">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-medium">{{activity.staff_name | titlecase}}</h3>
+              <p class="text-sm text-gray-500">{{activity.created_at | date:'MMM d, y \'at\' h:mm a'}}</p>
+            </div>
+            <p class="text-sm text-gray-500" *ngIf="activity.action === 'add'">Added a {{activity.feature}} {{activity.value ? '(' + activity.value + ')' : ''}} to this case</p>
+            <p class="text-sm text-gray-500" *ngIf="activity.action === 'update'">Updated {{activity.feature}} "{{activity.value}}"</p>
+            <p class="text-sm text-gray-500" *ngIf="activity.action === 'delete'">Deleted {{activity.feature}} "{{activity.value}}"</p>
 
-
-            <li *ngFor="let activity of activities$ | async">
-              <div class="relative pb-8">
-                <span class="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
-                <div class="relative flex items-start space-x-3">
-                  <div>
-                    <div class="relative px-1">
-                      <div class="h-8 w-8 bg-gray-100 rounded-full ring-8 ring-white flex items-center justify-center">
-                        <!-- Heroicon name: solid/user-circle -->
-                        <svg class="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="min-w-0 flex-1 py-1.5">
-                    <div class="text-sm text-gray-500">
-                      <!-- DIV FOR DOCUMENT ACTIVITIES -->
-                      <div *ngIf="activity.feature == 'document' && activity.action == 'add'" class="">
-                        {{activity.staff_name}} added {{activity.value}} to Documents
-                      </div>
-                      <div *ngIf="activity.feature == 'document' && activity.action == 'update'" class="">
-                        {{activity.staff_name}} updated document to {{activity.value}}
-                      </div>
-                      <div *ngIf="activity.feature == 'document' && activity.action == 'delete'" class="">
-                        {{activity.staff_name}} deleted document {{activity.value}}
-                      </div>
-                      <!-- -------------- -->
-                      <!-- TASK ACTIVITIES -->
-                      <div *ngIf="activity.feature == 'task' && activity.action == 'add'" class="">
-                        {{activity.staff_name}} added task {{activity.value}}
-                      </div>
-                      <div *ngIf="activity.feature == 'task' && activity.action == 'update'" class="">
-                        {{activity.staff_name}} updated task {{activity.value}}
-                      </div>
-
-                      <!-- ------------------- -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
+          </div>
         </div>
-      </div>
-    </div>
+      </li>
+      </ul>
   </div>
+</div>

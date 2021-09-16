@@ -6,6 +6,8 @@ export class MatterActivity {
   action: string;
   value?: string;
   staff_name?: string;
+  created_at?: any;
+  updated_at?: any;
 
   constructor(userId, matterId, feature, action, value?, staffName?){
     this.user_id = userId;

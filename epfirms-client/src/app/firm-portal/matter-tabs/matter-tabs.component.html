@@ -88,7 +88,7 @@
           <div class="flex flex-1">
             <div class="px-0 flex flex-1">
               <div class="flex flex-col flex-1 xl:col-span-2 xl:border-r xl:border-gray-200">
-                <section aria-labelledby="subtab" class="flex-1">
+                <section aria-labelledby="subtab" class="flex-1 overflow-y-auto">
                   <!-- 'overview', 'tasks', 'activity', 'notes', 'documents', 'intake' -->
                   <ng-container [ngSwitch]="selectedSubtab">
                     <app-tasks *ngSwitchCase="'tasks'" [matter]="matter"></app-tasks>
