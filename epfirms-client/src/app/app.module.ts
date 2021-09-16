@@ -20,7 +20,7 @@ import { MatterActivityInterceptor } from './shared/_interceptors/matter-activit
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
-  timeout: 3000, // request timeout
+  timeout: 30000, // request timeout
 };
 
 @NgModule({
