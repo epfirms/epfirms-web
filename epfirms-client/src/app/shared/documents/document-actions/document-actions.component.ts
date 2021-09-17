@@ -28,7 +28,6 @@ export class DocumentActionsComponent implements OnInit {
   toggleIsEditVisible(): void {
     this.isEditVisible = !this.isEditVisible;
     this.toggleVisibilty();
-    console.log(this.isEditVisible);
   }
 
 

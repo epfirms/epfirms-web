@@ -20,7 +20,6 @@ theURL: String = "http://localhost:4200"
             var mailgun = require('mailgun-js')({apiKey: API_KEY, domain: DOMAIN});
             var token = emailsService.createConfirmationToken(req.body);
             var theHTML = 'Click <a href="' + this.theURL + '/verify?token=' + await(token) + '">here</a> to verify your account\'s email.'
-            console.log(theHTML)
             const data = {
                 from: 'EPFirms <me@mg.epfirms.com>',
                 to: req.body.user.email,
@@ -29,12 +28,10 @@ theURL: String = "http://localhost:4200"
             };
 
             mailgun.messages().send(data, function (error, body) {
-                console.log(body);
                 resp.status(StatusConstants.OK).send("Email Sent!");
               });
             
         } catch(error) {
-        console.log("HERE IS ERROR",error);
         resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
         }
     }
@@ -63,22 +60,14 @@ theURL: String = "http://localhost:4200"
             go the firms Google Review Page to write a review.
     */
     public async reviewFeedback(req: any, resp: Response): Promise<any> {
-        console.log("Starting to send review feedback email.");
-        console.log("REQQY", req.body);
-        console.log("req.body.client", req.body.client);
-        console.log("req.body.client.email", req.body.client.email);
-        console.log("matter_id", req.body.id);
         var firm_id = req.body.firm_id;
         var reviewURL = FirmService.getReviewURL(await (firm_id));
         var firmName = FirmService.getFirmName(await (firm_id));
-        console.log(firm_id)
-        console.log(reviewURL)
+
         var review = await reviewsService.getReviewFromDatabase(req.body.id);
         if(req.body.reviews.length == 0) {
             review = reviewsService.addReviewToDatabase("",0,req.body.id);
-            console.log("apple " + await review)
         }
-        console.log("AAAAAAAAAAAAAAA", await review)
         try {
             var API_KEY = EMAIL_API_KEY;
             var DOMAIN = 'mg.epfirms.com';
@@ -110,7 +99,6 @@ theURL: String = "http://localhost:4200"
                 first_name: "First",
                 firm_name: "FirmName"
             };
-            console.log(theHTML)
             const data = {
                 from: 'EPFirms <me@mg.epfirms.com>',
                 to: req.body.client.email,
@@ -120,11 +108,9 @@ theURL: String = "http://localhost:4200"
             };
 
             mailgun.messages().send(data, function (error, body) {
-                console.log(body);
               });
             
         } catch(error) {
-        console.log("HERE IS ERROR",error);
         resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
         }
     }

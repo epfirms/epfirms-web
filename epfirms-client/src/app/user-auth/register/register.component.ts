@@ -71,7 +71,6 @@ export class RegisterComponent implements OnInit {
       .subscribe((result) => {
         if (result.token) {
           // Use the token
-          console.log(result.token.id);
           // this._authService.createSubscription({
           //   email: "jaer.rq@gmail.com",
           //   password: "ABoriy78",

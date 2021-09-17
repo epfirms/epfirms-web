@@ -128,11 +128,4 @@ export class CasesComponent implements OnInit {
     const filterValues = Object.assign({}, this.matterFilterValues);
     this._matterService.setFilter(filterValues);
   }
-
-  // sendReview(matter, event) {
-  //   console.log(event)
-  //   event.stopPropagation()
-  //   console.log(matter);
-  //   this._emailService.sendReview(matter).subscribe();
-  // }
 }

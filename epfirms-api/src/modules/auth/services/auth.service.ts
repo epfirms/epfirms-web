@@ -119,16 +119,13 @@ export class AuthService {
     // verify token, and use database to connect with ID.
     jwt.verify(token, JWT_SECRET, (err, payload) => {
       if (err === null) {
-        console.log('Your JWT was successfully validated!');
         user_id = payload.user_id;
       }
       else if (err.name === 'TokenExpiredError') {
-        console.log('Whoops, your token has expired!');
         booly = false;
 
       }
       else if (err.name === 'JsonWebTokenError') {
-        console.log('That JWT is malformed!');
         booly = false;
       }
     });
@@ -142,13 +139,11 @@ export class AuthService {
       }
     });
     // Remove row with token from verification_token
-    console.log("removing ", token, " from the database.")
     await Database.models.verification_token.destroy({
       where: {
         user_id: user_id
       }
     });
-    console.log("removed ", token, " from the database.")
     return Promise.resolve(true);
   }
 

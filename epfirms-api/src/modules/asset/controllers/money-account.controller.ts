@@ -16,7 +16,6 @@ export class MoneyAccountController {
       
       resp.status(StatusConstants.OK).send(createdAccount);
     } catch (error) {
-      console.log(error.message)
       resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
     }
   }
@@ -27,7 +26,6 @@ export class MoneyAccountController {
       
         resp.status(StatusConstants.OK).send();
     } catch (error) {
-      console.log(error.message)
       resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
     }
   }

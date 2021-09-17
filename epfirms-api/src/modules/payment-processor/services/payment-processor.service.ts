@@ -13,8 +13,6 @@ export class PaymentProcessorService {
   }
 
   public static async addPayment(customerId, source): Promise<any> {
-    console.log(customerId);
-    console.log(source);
     const newCard = await stripe.customers.createSource(customerId, { source });
 
     return Promise.resolve(newCard);

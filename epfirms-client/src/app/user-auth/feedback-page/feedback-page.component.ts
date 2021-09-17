@@ -24,7 +24,6 @@ export class FeedbackPageComponent implements OnInit {
     // Grabs the id from the URL and stores it into this.matter_id.
     this._route.queryParams
       .subscribe(params => {
-        console.log(params);
         this.id = params.id;
       }
     );
@@ -50,7 +49,6 @@ export class FeedbackPageComponent implements OnInit {
       var reviewRatingNumber = this.rating.charAt(0);
       var reviewComment = this.comment;
       this._reviewService.updateReview(reviewComment, reviewRatingNumber, this.id).subscribe(result => {
-        console.log("Result: " + result.success);
         this.result = result.success
       });
     }

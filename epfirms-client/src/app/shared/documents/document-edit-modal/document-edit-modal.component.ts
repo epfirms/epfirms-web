@@ -29,7 +29,6 @@ export class DocumentEditModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("edit modal", this.document);
     this.updatedDocument = new Document(this.document.id, this.document.doc_name, this.document.user_id, this.document.firm_id,
     this.document.share_with)
     this.updatedDocument.doc_type = this.document.doc_type;
@@ -39,7 +38,6 @@ export class DocumentEditModalComponent implements OnInit {
   toggleIsEditVisible(): void {
     this.isEditVisible = !this.isEditVisible;
     this.isEditVisibleChange.emit(this.isEditVisible);
-    console.log(this.isEditVisible);
   }
   //toggles displayDocTypeSelection : boolean
   toggleDisplayDocTypeSelection(): void {
@@ -57,7 +55,6 @@ export class DocumentEditModalComponent implements OnInit {
   */
   setType(docType): void {
     this.updatedDocument.doc_type = docType;
-    console.log("set doc type", this.updatedDocument);
   }
 
   /**
@@ -66,7 +63,6 @@ export class DocumentEditModalComponent implements OnInit {
   */
   setDocName(document, event) : void {
     this.updatedDocument.doc_name = event.target.value;
-    console.log("set doc name", this.updatedDocument);
 
   }
 
@@ -76,7 +72,6 @@ export class DocumentEditModalComponent implements OnInit {
   */
   setSharing(sharingType : string) : void {
     this.updatedDocument.share_with = sharingType;
-    console.log("setsharing", this.updatedDocument);
   }
 
   // changes the class on mouseover

@@ -31,7 +31,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.activities$ = this._matterActivityService.getAllByMatterId(this._matter.id)
-    this.activitiesSubscription = this.activities$.subscribe(res => console.log(res));
+    this.activitiesSubscription = this.activities$.subscribe();
   }
 
   ngOnDestroy(): void {

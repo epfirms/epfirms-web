@@ -73,13 +73,7 @@ export class MatterTabsComponent implements OnInit {
     this.legalAreas$ = _legalAreaService.entities$;
 
     this.matters$ = combineLatest([_matterService.entities$, this.tabs$]).pipe(
-      tap(m => {
-        console.log(m)
-      }),
       map(this.filterById),
-      tap(m => {
-        console.log(m)
-      }),
     );
 
     this.staff$ = _staffService.entities$;

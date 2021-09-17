@@ -11,7 +11,6 @@ export class ReviewService {
     ) { }
 
   updateReview(reviewComment, reviewRating, id) {
-    console.log("Sending Review")
     return this._http.post<any>('/api/reviews/update', {
       reviewComment: reviewComment,
       reviewRating: reviewRating,

@@ -46,7 +46,6 @@ export class ManageStaffComponent implements OnInit {
     this.staff$ = _staffService.entities$;
     this.user$ = this._currentUserService.user$;
     //this.roles$ = _staffService.entities$;
-    console.log("staff$: ", this.staff$);
    }
 
   ngOnInit(): void {
@@ -55,12 +54,6 @@ export class ManageStaffComponent implements OnInit {
     this.user$.pipe().subscribe(({user}) => {
       this.user = user;
     });
-
-
-
-    console.log("this.user$: ", this.user$);
-    console.log("_staffService: ", this._staffService);
-    console.log("_firmService: ", this._firmService);
 
     // this._currentUserService.getCurrentUser().subscribe(userRes => {
     //   // create matter activity object

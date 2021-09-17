@@ -56,17 +56,13 @@ export class emailsService {
     // verify token, and use database to connect with ID.
     jwt.verify(token, JWT_SECRET, (err, payload) => {
       if (err.name === 'TokenExpiredError') {
-        console.log('Whoops, your token has expired!');
       }
 
       if (err.name === 'JsonWebTokenError') {
-        console.log('That JWT is malformed!');
       }
 
       if (err === null) {
-        console.log('Your JWT was successfully validated!');
       }
-      console.log(payload.user_id);
       user_id = payload.user_id;
     });
     // Set user that's connected to user_id verified to 1 (True).

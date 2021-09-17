@@ -68,7 +68,6 @@ export class UserInfoComponent implements OnInit {
   }
 
   selectEvent(item: any) {
-    console.log(item);
     this.addClicked.emit(item);
   }
 }

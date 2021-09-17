@@ -11,7 +11,6 @@ export class AssetController {
       
         resp.status(StatusConstants.OK).send();
     } catch (error) {
-      console.log(error.message)
       resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
     }
   }
@@ -24,7 +23,6 @@ export class AssetController {
       
         resp.status(StatusConstants.OK).send(userAssets);
     } catch (error) {
-      console.log(error.message)
       resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
     }
   }

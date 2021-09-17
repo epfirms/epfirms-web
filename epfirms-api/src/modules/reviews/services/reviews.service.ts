@@ -13,7 +13,6 @@ export class reviewsService {
             addReview adds a review to the database, specifically to the "reviews" table, by creating an object (reviewOb), and then adding it to the table..
     */
     public static async addReviewToDatabase(comment, rating, matter_id) {
-      console.log("I'm ADDING A REVIEW TO THE DATABASE BOIIIIIIIII")
       var reviewOb = {
         comment: comment,
         rating: rating,
@@ -23,9 +22,7 @@ export class reviewsService {
       };
       const review = await Database.models.review.findOne({ where: { matter_id: matter_id } });
       if((await review) == null){
-        console.log("There *isn't* one here yet?")
       } else {
-        console.log("There IS one here already!!!")
       }
       const verification = await Database.models.review.create(reviewOb);
       Promise.resolve(verification);
@@ -49,7 +46,6 @@ export class reviewsService {
     }
 
     public static async getReviewFromDatabase(matter_id): Promise<any> {
-      console.log("ID: ", matter_id)
       try {
       const review = await Database.models.review.findOne({ where: { matter_id: matter_id } });
       return Promise.resolve(await (review));

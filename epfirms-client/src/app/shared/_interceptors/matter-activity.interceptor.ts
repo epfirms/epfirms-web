@@ -20,7 +20,6 @@ export class MatterActivityInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("INTERCEPTED URL", request.url, request.method);
     //handle document requests and generate matter activity
     let isDocument = request.url.search(this.documentPattern);
     if (isDocument !== -1){

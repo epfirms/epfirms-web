@@ -21,18 +21,15 @@ constructor(
             addReview adds a review to the database, specifically to the "reviews" table, by making a call to the reviewsService.
     */
     public async addReview(req, res) {
-        console.log("Adding Review to Database", req.body);
         reviewsService.addReviewToDatabase(req.body.reviewComment,req.body.reviewRating, req.body.matter_id)
         return
     }
 
     public async updateReview(req,res) {
-        console.log("Updating Review in Database", req.body);
         reviewsService.UpdateReviewInDatabase(req.body.reviewComment,req.body.reviewRating, req.body.matter_id, req.body.id)
     }
 
     public static async getReview(matter_id): Promise<any> {
-        console.log("ID: ", matter_id);
         const review = reviewsService.getReviewFromDatabase(matter_id);
         return Promise.resolve(await (review));
       }

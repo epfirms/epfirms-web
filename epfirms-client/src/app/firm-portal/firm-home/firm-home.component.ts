@@ -89,7 +89,6 @@ export class FirmHomeComponent implements OnInit, OnDestroy {
         return acc;
       }, initialValue);
 
-      console.log(this.taskCategories);
     })
   }
 

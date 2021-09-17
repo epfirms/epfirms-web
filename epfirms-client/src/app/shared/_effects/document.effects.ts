@@ -21,7 +21,6 @@ export class DocumentEffects {
     ofEntityType("Document"),
     ofEntityOp([EntityOp.SAVE_ADD_ONE_SUCCESS]),
     map(action => {
-      console.log(action);
       // create matter activity object
       let matterActivity = new MatterActivity(action.payload.data.user_id, action.payload.data.matter_id,
          "document", "add", action.payload.data.doc_name);
@@ -35,7 +34,6 @@ export class DocumentEffects {
     ofEntityType("Document"),
     ofEntityOp([EntityOp.SAVE_UPDATE_ONE_SUCCESS]),
     map(action => {
-      console.log(action);
       let changes = action.payload.data.changes;
       // create matter activity object
       let matterActivity = new MatterActivity(changes.user_id, changes.matter_id,

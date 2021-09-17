@@ -24,7 +24,6 @@ export class FirmDetailsComponent implements OnInit, OnDestroy {
     private _firmService : FirmService
   ) { 
     this.firm$ = _firmService.entities$;
-    console.log("firm object: ", this.firm$);
 
     this.mobileNumberMask = [
       '(',
@@ -47,7 +46,6 @@ export class FirmDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.firmSubscription = this.firm$.subscribe(res => {
-      console.log("response ", res);
       
       this.firmForm = this._fb.group({
         id: [res[0].id, [Validators.required]],
@@ -70,7 +68,6 @@ export class FirmDetailsComponent implements OnInit, OnDestroy {
   }
 
   selectEvent(item: any, controlName: string) {
-    console.log(item);
     //this.firmForm.patchValue({[controlName]: item});
     //this.firmForm.updateValueAndValidity();
     //console.log(this.firmForm.value);
@@ -78,7 +75,6 @@ export class FirmDetailsComponent implements OnInit, OnDestroy {
 
   update(): void {
     this._firmService.update(this.firmForm.value).subscribe(res => {
-      console.log("update fired off");
       //const firmData = res.values;
     })
   }

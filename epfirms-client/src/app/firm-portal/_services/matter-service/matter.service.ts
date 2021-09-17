@@ -73,7 +73,6 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
         Post request to the backend that sends the note object to be added to the database.
   */
         addMatterNote(note): Observable<any> {
-          console.log("I'm the one doing the sending!");
           return this._http.post<any>('/api/matters/note', note).pipe(
             map((response: Matter) => {
               this.updateOneInCache(response);

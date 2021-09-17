@@ -46,14 +46,12 @@ export class FirmService {
           Finds the firm that matches the id, and returns the Google Review Page for that firm.
   */
   public static async getReviewURL(id): Promise<any> {
-    console.log("ID: ", id)
     const firm = await Database.models.firm.findOne({ where: { id } });
 
     return Promise.resolve(await (firm.google_review_url));
   }
 
   public static async getFirmName(id): Promise<any> {
-    console.log("ID: ", id)
     const firm = await Database.models.firm.findOne({ where: { id } });
 
     return Promise.resolve(await (firm.name));

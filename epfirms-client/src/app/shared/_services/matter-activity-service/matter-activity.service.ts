@@ -15,7 +15,6 @@ export class MatterActivityService {
   ) { }
 
   create(matterActivity : MatterActivity) : Observable<any> {
-    console.log("NEW MATTER ACTVITY", matterActivity);
     return this._http.post("/api/matter-activity", matterActivity);
   }
 

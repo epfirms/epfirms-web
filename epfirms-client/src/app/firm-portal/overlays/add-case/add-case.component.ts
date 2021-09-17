@@ -95,10 +95,8 @@ export class AddCaseComponent implements OnInit {
   }
 
   selectEvent(item: any, controlName: string) {
-    console.log(item);
     this.caseForm.patchValue({[controlName]: item});
     this.caseForm.updateValueAndValidity();
-    console.log(this.caseForm.value);
   }
 
   setLegalArea(legalArea: LegalArea) {

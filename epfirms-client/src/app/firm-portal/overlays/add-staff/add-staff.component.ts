@@ -104,10 +104,8 @@ export class AddStaffComponent implements OnInit {
   }
 
   selectEvent(item: any, controlName: string) {
-    console.log(item);
     this.staffForm.patchValue({[controlName]: item});
     this.staffForm.updateValueAndValidity();
-    console.log(this.staffForm.value);
   }
 
   onChangeSearch(val: string) {
@@ -131,7 +129,6 @@ export class AddStaffComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("value: ", this.staffForm.value)
     this._staffService.createStaff(this.staffForm.value).subscribe(res => {
       this.close();
     });

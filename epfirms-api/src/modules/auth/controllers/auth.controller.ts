@@ -29,7 +29,6 @@ export class AuthController {
         throw new Error(msg);
       }
     } catch (error) {
-      console.log(error.message)
       resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, msg: error.message});
     }
   }
@@ -54,9 +53,7 @@ export class AuthController {
       // query params
       const token = req.body.token;
       const isValid = await AuthService.verifyEmail(token);
-      console.log(isValid);
       if(isValid){
-        console.log("Backend Email Token",token);
         resp.status(StatusConstants.OK).send({success: true});
       } else {
       resp.status(StatusConstants.OK).send({success: false});

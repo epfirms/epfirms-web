@@ -72,9 +72,7 @@ export class TabsetComponent implements AfterViewInit, AfterContentChecked, OnDe
   }
 
   ngAfterViewInit(): void {
-    this.tabSubscription = this.tabs.changes.subscribe(tab => {
-      console.log(tab)
-    })
+    this.tabSubscription = this.tabs.changes.subscribe()
   }
 
   ngAfterContentChecked(): void {

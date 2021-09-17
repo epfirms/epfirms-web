@@ -24,18 +24,15 @@ export class FirmSettingsComponent implements OnInit, OnDestroy {
     private _firmService : FirmService
   ) { 
     this.firm$ = _firmService.entities$;
-    console.log("firm object: ", this.firm$);
   }
 
   ngOnInit(): void {
     this._firmService.getCurrentFirm().pipe().subscribe(res => {
-      console.log("back end firm data: ", res);
 
       //const firmData = res.values;
     })
 
     this.firmSubscription = this.firm$.subscribe(res => {
-      console.log("response ", res);
       this.firmForm = this._fb.group({
         id: ['', [Validators.required]],
         name: ['', [Validators.required]],
@@ -52,7 +49,6 @@ export class FirmSettingsComponent implements OnInit, OnDestroy {
 
     
 
-    console.log("_firmService: ", this._firmService);
   }
 
   ngOnDestroy(): void {
@@ -60,10 +56,6 @@ export class FirmSettingsComponent implements OnInit, OnDestroy {
   }
   
   selectEvent(item: any, controlName: string) {
-    console.log(item);
-    //this.firmForm.patchValue({[controlName]: item});
-    //this.firmForm.updateValueAndValidity();
-    //console.log(this.firmForm.value);
   }
 
   update(): void {
