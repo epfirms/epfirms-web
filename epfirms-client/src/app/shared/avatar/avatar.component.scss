@@ -3,7 +3,7 @@
 }
 
 .initials {
-  @apply inline-flex items-center justify-center bg-gray-400;
+  @apply inline-flex items-center justify-center bg-gray-500;
 
   & > span {
     @apply font-medium leading-none text-white uppercase;

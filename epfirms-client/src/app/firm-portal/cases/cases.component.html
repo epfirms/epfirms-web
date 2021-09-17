@@ -161,9 +161,9 @@
   </div>
 </div>
 
-<div class="flex flex-1">
+<div class="flex flex-1 overflow-y-auto">
   <main
-    class="flex flex-col flex-1 relative z-0 overflow-y-auto focus:outline-none"
+    class="flex flex-col flex-1 relative z-0 focus:outline-none"
   >
     <!-- Projects table (small breakpoint and up) -->
     <div class="hidden sm:block flex-1 bg-white">
@@ -238,7 +238,6 @@
                   text-gray-500
                   uppercase
                   tracking-wider
-                  text-center
                 "
               >
                 Status
@@ -278,7 +277,7 @@
                       [twSrc]="case.client.profile_image"
                       [twText]="case.client.full_name"
                     ></tw-avatar>
-                    <div class="ml-4">
+                    <div class="ml-2">
                       <div class="text-sm font-medium text-gray-900">
                         {{ case.client.full_name | titlecase }}
                       </div>
@@ -299,18 +298,18 @@
                     >
                       <div>
                         <tw-avatar
-                          twSize="small"
+                          twSize="xsmall"
                           [twSrc]="case.matter_tasks[0].assignee?.profile_image"
                           [twText]="case.matter_tasks[0].assignee?.full_name"
                         ></tw-avatar>
                       </div>
-                      <div class="ml-3">
+                      <div class="ml-2">
                         <p
                           class="
                             text-sm
-                            font-medium
-                            text-gray-700
-                            group-hover:text-gray-900
+                            text-gray-900
+                            max-w-xs
+                            truncate
                           "
                         >
                           {{ case.matter_tasks[0].name || "No task name" }}
@@ -318,9 +317,7 @@
                         <p
                           class="
                             text-sm
-                            font-medium
                             text-gray-500
-                            group-hover:text-gray-700
                           "
                         >
                           {{ case.matter_tasks[0].due | date }}
@@ -347,7 +344,7 @@
                           />
                         </svg>
                       </div>
-                      <div class="ml-3">
+                      <div class="ml-2">
                         <p
                           class="
                             text-sm
@@ -380,7 +377,7 @@
                         />
                       </svg>
                     </div>
-                    <span class="ml-3"> No tasks </span>
+                    <span class="ml-2"> No tasks </span>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -413,7 +410,7 @@
                       [twText]="case.attorney.full_name"
                     ></tw-avatar>
                     <div class="ml-2">
-                      <div class="text-sm font-medium text-gray-900">
+                      <div class="text-sm text-gray-800">
                         {{ case.attorney.full_name | titlecase }}
                       </div>
                     </div>
@@ -421,7 +418,6 @@
                 </td>
 
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="flex justify-center items-center">
                     <tw-tag
                       (click)="$event.stopPropagation()"
                       [dot]="true"
@@ -434,7 +430,6 @@
                     >
                       {{ case.status + " " + case.matter_type | titlecase }}
                     </tw-tag>
-                  </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <div class="text-sm text-gray-500">

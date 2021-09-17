@@ -147,9 +147,9 @@
   </div>
 </div>
 
-<div class="flex flex-1">
+<div class="flex flex-1 overflow-y-auto">
   <main
-    class="flex flex-col flex-1 relative z-0 overflow-y-auto focus:outline-none"
+    class="flex flex-col flex-1 relative z-0 focus:outline-none"
   >
     <!-- Projects table (small breakpoint and up) -->
     <div class="hidden sm:block flex-1 bg-white">
@@ -225,7 +225,6 @@
                   text-gray-500
                   uppercase
                   tracking-wider
-                  text-center
                 "
               >
                 Status
@@ -265,7 +264,7 @@
                       [twSrc]="lead.client.profile_image"
                       [twText]="lead.client.full_name"
                     ></tw-avatar>
-                    <div class="ml-4">
+                    <div class="ml-2">
                       <div class="text-sm font-medium text-gray-900">
                         {{ lead.client.full_name | titlecase }}
                       </div>
@@ -283,7 +282,7 @@
                     <div class="flex items-center" *ngIf="!lead.matter_tasks[0].completed">
                       <div>
                         <tw-avatar
-                          twSize="small"
+                          twSize="xsmall"
                           [twSrc]="
                             lead.matter_tasks[0]
                               .assignee?.profile_image
@@ -298,13 +297,13 @@
                             </span>
                             <img class="inline-block h-8 w-8 rounded-full" [src]="lead.matter_tasks[lead.matter_tasks.length].assignee?.profile_image" alt=""> -->
                       </div>
-                      <div class="ml-3">
+                      <div class="ml-2">
                         <p
                           class="
                             text-sm
-                            font-medium
-                            text-gray-700
-                            group-hover:text-gray-900
+                            text-gray-900
+                            max-w-xs
+                            truncate
                           "
                         >
                           {{
@@ -315,9 +314,7 @@
                         <p
                           class="
                             text-sm
-                            font-medium
                             text-gray-500
-                            group-hover:text-gray-700
                           "
                         >
                           {{
@@ -344,7 +341,7 @@
                             />
                           </svg>
                         </div>
-                      <div class="ml-3">
+                      <div class="ml-2">
                         <p
                           class="
                             text-sm
@@ -368,7 +365,7 @@
                         <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
                       </svg>
                     </div>
-                    <span class="ml-3"> No tasks </span>
+                    <span class="ml-2"> No tasks </span>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -400,26 +397,15 @@
                       [twSrc]="lead.attorney.profile_image"
                       [twText]="lead.attorney.full_name"
                     ></tw-avatar>
+                    <div class="ml-2">
+                      <div class="text-sm text-gray-800">
+                        {{ lead.attorney.full_name | titlecase }}
+                      </div>
+                    </div>
                   </div>
                 </td>
 
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="flex justify-center items-center">
-                    <!-- <tw-tag
-                    (click)="$event.stopPropagation()"
-                    [dot]="true"
-                    [color]="lead.legal_area?.color"
-                    [rounded]="false"
-                    twSize="small"
-                    [dropdown]="true"
-                    [options]="legalAreas"
-                    (selectedOptionChange)="setLegalArea(lead, $event)"
-                  >
-                    {{
-                      lead.legal_area?.name || "Select a legal area"
-                        | titlecase
-                    }}
-                  </tw-tag> -->
                     <tw-tag
                       (click)="$event.stopPropagation()"
                       [dot]="true"
@@ -432,7 +418,6 @@
                     >
                       {{ lead.status + " " + lead.matter_type | titlecase }}
                     </tw-tag>
-                  </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   Sent

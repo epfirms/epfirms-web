@@ -1,1 +1,17 @@
-<router-outlet></router-outlet>
+<ng-container *ngIf="!loading" @fadeAnimation>
+    <router-outlet></router-outlet>
+</ng-container>
+
+<div class="fixed top-0 left-0 z-50 w-screen h-screen flex items-center justify-center bg-gray-800" *ngIf="loading" @fadeAnimation>
+    <div class="py-2 px-5 flex items-center flex-col">
+        <div class="text-gray-300 text-sm font-light mt-2 text-center">
+            <img class="h-10 w-auto" src="assets/logo/blue-short.png" alt="Workflow">
+        </div>
+        <div class="loader-dots block relative w-20 h-5 mt-4">
+            <div class="absolute top-0 mt-1 w-2 h-2 rounded-full bg-blue-600"></div>
+            <div class="absolute top-0 mt-1 w-2 h-2 rounded-full bg-blue-600"></div>
+            <div class="absolute top-0 mt-1 w-2 h-2 rounded-full bg-blue-600"></div>
+            <div class="absolute top-0 mt-1 w-2 h-2 rounded-full bg-blue-600"></div>
+        </div>
+    </div>
+</div>
