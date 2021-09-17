@@ -12,11 +12,10 @@ import { StoreModule } from '@ngrx/store';
 import { DefaultDataServiceConfig, EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from 'src/environments/environment';
 import { matterTabsReducer } from './store/matter-tabs/matter-tabs.reducer';
 import { currentUserReducer } from './store/current-user/current-user.reducer';
 import { MatterActivityInterceptor } from './shared/_interceptors/matter-activity.interceptor';
+import { extModules } from 'src/environments/development/modules.dev';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -38,11 +37,7 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
     StoreModule.forRoot({matterTabs: matterTabsReducer, currentUser: currentUserReducer}, {}),
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: environment.production,
-      autoPause: true
-    })
+    extModules
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
