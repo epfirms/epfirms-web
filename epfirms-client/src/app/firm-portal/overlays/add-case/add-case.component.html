@@ -13,7 +13,59 @@
 
     <!-- Divider container -->
     <div class="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-gray-200">
+      <!-- Project name -->
+      <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+        <div>
+          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
+            Client
+          </label>
+        </div>
+        <div class="sm:col-span-2">
+          <ng-container *ngIf="clients$ | async as clients">
+            <autocomplete [options]="clients" [addButton]="false" [placeholder]="'Search client directory'" (onSelect)="selectEvent($event, 'client_id')"></autocomplete>
+          </ng-container>
+          <div class="relative my-3">
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              <div class="w-full border-t border-gray-300"></div>
+            </div>
+            <div class="relative flex justify-start">
+              <span class="pr-2 bg-white text-sm text-gray-500">
+                or
+              </span>
+            </div>
+          </div>
+          <div>
+            <button class="button-white-icon-sm" (click)="openAddClient()" >
+              <svg
+                class="icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              Add new client
+            </button>
+      </div>
+        </div>
 
+      </div>
+
+      <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+        <div>
+          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
+            Attorney
+          </label>
+        </div>
+        <div class="sm:col-span-2">
+          <autocomplete *ngIf="attorneys$ | async as attorneys" [options]="attorneys" [placeholder]="'Search attorneys'"
+            (addButtonClicked)="openAddStaff()" (onSelect)="selectEvent($event, 'attorney_id')"></autocomplete>
+        </div>
+      </div>
       <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
           <label for="project-name" class="block text-sm font-medium text-gray-900 ">
@@ -85,60 +137,6 @@
           </ng-container>
         </div>
       </div>
-      <!-- Project name -->
-      <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-        <div>
-          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
-            Client
-          </label>
-        </div>
-        <div class="sm:col-span-2">
-          <ng-container *ngIf="clients$ | async as clients">
-            <autocomplete [options]="clients" [addButton]="false" [placeholder]="'Search client directory'" (onSelect)="selectEvent($event, 'client_id')"></autocomplete>
-          </ng-container>
-          <div class="relative my-3">
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-              <div class="w-full border-t border-gray-300"></div>
-            </div>
-            <div class="relative flex justify-start">
-              <span class="pr-2 bg-white text-sm text-gray-500">
-                or
-              </span>
-            </div>
-          </div>
-          <div>
-            <button class="button-white-icon-sm" (click)="openAddClient()" >
-              <svg
-                class="icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              Add Client
-            </button>
-      </div>
-        </div>
-
-      </div>
-
-      <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-        <div>
-          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
-            Attorney
-          </label>
-        </div>
-        <div class="sm:col-span-2">
-          <autocomplete *ngIf="attorneys$ | async as attorneys" [options]="attorneys" [placeholder]="'Search attorneys'"
-            (addButtonClicked)="openAddStaff()" (onSelect)="selectEvent($event, 'attorney_id')"></autocomplete>
-        </div>
-      </div>
-
       <!-- Project description -->
       <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>

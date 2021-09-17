@@ -144,7 +144,11 @@ export class Database {
       foreignKey: 'matter_id'
     });
 
-    this.models.matter_note.belongsTo(this.models.firm_employee, {
+    this.models.user.hasMany(this.models.matter_note, {
+      foreignKey: 'user_id'
+    });
+
+    this.models.matter_note.belongsTo(this.models.user, {
       foreignKey: 'user_id'
     });
 

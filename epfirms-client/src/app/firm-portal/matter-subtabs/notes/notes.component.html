@@ -1,101 +1,85 @@
-<section aria-labelledby="notes-title" class="align-middle flex flex-col min-w-full h-full">
-      <div class="bg-white shadow flex flex-col flex-1 sm:rounded-lg sm:overflow-hidden">
-        <div class="divide-y divide-gray-200 flex-1">
-          <div class="px-4 py-5 sm:px-6">
-            <h2 id="notes-title" class="text-lg font-medium text-gray-900">
-              Notes
-            </h2>
-          </div>
-          <div class="px-4 py-6 sm:px-6">
-            <ul role="list" class="space-y-8">
-              <li *ngFor="let note of matter.matter_notes">
-                <div class="flex space-x-3">
-                  <div class="flex-shrink-0">
-                    <!-- Avatar -->
-                  </div>
-                  <div>
-                    <div class="text-sm">
-                      <a href="#" class="font-medium text-gray-900"
-                        >Leslie Alexander</a
-                      >
-                    </div>
-                    <div class="mt-1 text-sm text-gray-700">
-                      <p>{{ note.note_string }}</p>
-                    </div>
-                    <div class="mt-2 text-sm space-x-2">
-                      <span class="text-gray-500 font-medium">4d ago</span>
-                      <span class="text-gray-500 font-medium">&middot;</span>
-                      <button type="button" class="text-gray-900 font-medium">
-                        Reply
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
+<div class="mx-auto px-6">
+  <div>
+    <ul role="list" class="divide-y divide-gray-200">
+      <li class="py-4" *ngFor="let note of matter.matter_notes">
+        <div class="flex space-x-3">
+          <tw-avatar
+          twSize="xsmall"
+          [twSrc]="note.user.profile_image"
+          [twText]="note.user.first_name + ' ' + note.user.last_name"
+        ></tw-avatar>
+          <div class="flex-1 space-y-1">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-medium">{{note.user.first_name + ' ' + note.user.last_name | titlecase}}</h3>
+              <p class="text-sm text-gray-500">{{note.created_at | date:'MMM d, y \'at\' h:mm a'}}</p>
+            </div>
+            <p class="text-sm text-gray-500" style="white-space: pre-line">{{ note.note_string }}</p>
           </div>
         </div>
-        <div class="bg-gray-50 px-4 py-6 sm:px-6">
-          <div class="flex space-x-3">
-            <div class="flex-shrink-0">
-              <ng-container *ngIf="currentUser$ | async as currentUser">
-                <tw-avatar
-                  twSize="medium"
-                  [twSrc]="currentUser.profile_image"
-                  [twText]="currentUser.full_name"
-                ></tw-avatar>
-              </ng-container>
-            </div>
-            <div class="min-w-0 flex-1">
-              <form action="#">
-                <div>
-                  <label for="note" class="sr-only">Note</label>
-                  <textarea
-                    [(ngModel)]="note"
-                    id="note"
-                    name="note"
-                    rows="3"
-                    class="
-                      shadow-sm
-                      block
-                      w-full
-                      focus:ring-blue-500 focus:border-blue-500
-                      sm:text-sm
-                      border border-gray-300
-                      rounded-md
-                    "
-                    placeholder="Add a note"
-                  ></textarea>
-                </div>
-                <div class="mt-3 flex items-center justify-between">
-                  <button
-                    (click)="addNote()"
-                    class="
-                      inline-flex
-                      items-center
-                      justify-center
-                      px-4
-                      py-2
-                      border border-transparent
-                      text-sm
-                      font-medium
-                      rounded-md
-                      shadow-sm
-                      text-white
-                      bg-blue-600
-                      hover:bg-blue-700
-                      focus:outline-none
-                      focus:ring-2
-                      focus:ring-offset-2
-                      focus:ring-blue-500
-                    "
-                  >
-                    Add note
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+      </li>
+      </ul>
+  </div>
+</div>
+
+<div class="bg-gray-50 px-4 py-6 sm:px-6 sticky bottom-0">
+  <div class="flex space-x-3">
+    <div class="flex-shrink-0">
+      <ng-container *ngIf="currentUser$ | async as currentUser">
+        <tw-avatar
+          twSize="medium"
+          [twSrc]="currentUser.profile_image"
+          [twText]="currentUser.full_name"
+        ></tw-avatar>
+      </ng-container>
+    </div>
+    <div class="min-w-0 flex-1">
+      <form action="#">
+        <div>
+          <label for="note" class="sr-only">Note</label>
+          <textarea
+            [(ngModel)]="note"
+            id="note"
+            name="note"
+            rows="3"
+            class="
+              shadow-sm
+              block
+              w-full
+              focus:ring-blue-500 focus:border-blue-500
+              sm:text-sm
+              border border-gray-300
+              rounded-md
+            "
+            placeholder="Add a note"
+          ></textarea>
         </div>
-      </div>
-</section>
+        <div class="mt-3 flex items-center justify-between">
+          <button
+            (click)="addNote()"
+            class="
+              inline-flex
+              items-center
+              justify-center
+              px-4
+              py-2
+              border border-transparent
+              text-sm
+              font-medium
+              rounded-md
+              shadow-sm
+              text-white
+              bg-blue-600
+              hover:bg-blue-700
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-blue-500
+            "
+          >
+            Add note
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

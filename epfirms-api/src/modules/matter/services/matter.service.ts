@@ -54,7 +54,13 @@ export class MatterService {
           model: review
         },
         {
-          model: matter_note
+          model: matter_note,
+          include: [
+            {
+              model: user,
+              attributes: ['id', 'first_name', 'last_name', 'profile_image']
+            }
+          ]
         }
       ],
       order: [[sequelize.literal('(CASE WHEN `matter_tasks`.completed = 1 THEN 1 END) asc, (CASE WHEN `matter_tasks`.due IS NULL THEN 3 END) asc, `matter_tasks`.due asc')]]
@@ -114,7 +120,13 @@ export class MatterService {
           model: review
         },
         {
-          model: matter_note
+          model: matter_note,
+          include: [
+            {
+              model: user,
+              attributes: ['id', 'first_name', 'last_name', 'profile_image']
+            }
+          ]
         }
       ],
       order: [[sequelize.literal('(CASE WHEN `matter_tasks`.completed = 1 THEN 1 END) asc, (CASE WHEN `matter_tasks`.due IS NULL THEN 3 END) asc, `matter_tasks`.due asc')]]
