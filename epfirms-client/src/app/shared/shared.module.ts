@@ -28,6 +28,7 @@ import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { AddRealEstateComponent } from './add-real-estate/add-real-estate.component';
 import { AddFamilyMemberComponent } from './add-family-member/add-family-member.component';
 import { AddAppointeeComponent } from './add-appointee/add-appointee.component';
+import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { AddAppointeeComponent } from './add-appointee/add-appointee.component';
     FormsModule,
     ReactiveFormsModule,
     DatepickerModule,
-    MenuModule
+    MenuModule,
+    AngularMyDatePickerModule
   ],
   exports: [
     InputComponent,

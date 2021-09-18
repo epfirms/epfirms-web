@@ -27,6 +27,7 @@
     "@ngrx/store": "^12.2.0",
     "@ngrx/store-devtools": "^12.3.0",
     "@stripe/stripe-js": "^1.16.0",
+    "angular-mydatepicker": "^0.11.5",
     "angular-ng-autocomplete": "^2.0.5",
     "angular2-text-mask": "^9.0.0",
     "date-fns": "^2.23.0",
