@@ -5,6 +5,7 @@ import { ModalService } from '@app/modal/modal.service';
 import { LegalArea } from '@app/_models/legal-area';
 import { Matter } from '@app/_models/matter';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { AddCaseComponent } from '../overlays/add-case/add-case.component';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
@@ -98,11 +99,28 @@ export class LeadsComponent implements OnInit {
   addLead() {
     const addLeadModal = this._modalService.open(AddCaseComponent, {matter_type: 'lead'}, {type: 'slideOver'});
 
-    addLeadModal.afterClosed$.subscribe(closed => {
-      if(closed.data) {
-        this._matterService.create(closed.data).subscribe();
+    addLeadModal.afterClosed$.subscribe((closed) => {
+      if (closed.data && closed.data.matter) {
+        this._matterService.create(closed.data.matter).subscribe((response) => {
+          response.pipe(take(1)).subscribe((newMatter) => {
+            if (closed.data.note && closed.data.note.length && newMatter.id) {
+              if (closed.data.note && closed.data.note.length) {
+                this.addNote(newMatter.id, closed.data.note);
+              }
+            }
+          });
+        });
       }
     })
+  }
+  
+  addNote(id: number, note: string) {
+    const noteBody = {
+      matter_id: id,
+      note_string: note,
+    };
+
+    this._matterService.addMatterNote(noteBody).subscribe();
   }
 
   setLegalArea(matter: Matter, legalArea: LegalArea) {

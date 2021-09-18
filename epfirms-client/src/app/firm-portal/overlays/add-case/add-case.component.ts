@@ -59,6 +59,8 @@ export class AddCaseComponent implements OnInit {
     color: 'gray'
   };
 
+  note: string;
+
   constructor(
     private _fb: FormBuilder,
     private _staffService: StaffService,
@@ -118,6 +120,6 @@ export class AddCaseComponent implements OnInit {
   }
 
   onSubmit() {
-    this.close(this.caseForm.value);
+    this.close({matter: this.caseForm.value, note: this.note});
   }
 }

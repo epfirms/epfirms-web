@@ -77,6 +77,7 @@ export class LoginComponent implements OnInit {
       .pipe(
         catchError((err) => {
           this._authService.logout();
+          this.pageLoading = false;
           return EMPTY;
         })
       )

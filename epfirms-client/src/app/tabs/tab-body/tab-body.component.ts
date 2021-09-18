@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
 
 @Component({
   selector: '[tab-body]',
@@ -9,7 +9,8 @@ import { Component, Input, OnInit, TemplateRef } from '@angular/core';
     'class': 'bg-white flex h-full',
     '[class.h-full]': 'active',
     '[attr.tabindex]': 'active ? 0 : -1',
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabBodyComponent {
   @Input() content: TemplateRef<void> | null = null;
