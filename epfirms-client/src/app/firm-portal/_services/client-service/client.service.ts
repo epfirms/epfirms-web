@@ -38,4 +38,13 @@ export class ClientService extends EntityCollectionServiceBase<Client> {
       })
     );
   }
+
+  updateClient(client): Observable<any> {
+    return this._http.patch<any>('/api/user', client).pipe(
+      map((response: Client)=> {
+        this.updateOneInCache(response);
+        return of(response);
+      })
+    )
+  }
 }

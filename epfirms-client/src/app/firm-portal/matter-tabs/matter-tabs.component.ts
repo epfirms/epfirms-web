@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from '@app/modal/modal.service';
+import { matterTabsReducer } from '@app/store/matter-tabs/matter-tabs.reducer';
 import { LegalArea } from '@app/_models/legal-area';
 import { Matter } from '@app/_models/matter';
 import { Staff } from '@app/_models/staff';
 import { Tabs } from '@app/_models/tabs';
 import { combineLatest, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { EditClientComponent } from '../overlays/edit-client/edit-client.component';
 import { FirmService } from '../_services/firm-service/firm.service';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
@@ -66,7 +69,8 @@ export class MatterTabsComponent implements OnInit {
     public _matterTabsService: MatterTabsService,
     private _staffService: StaffService,
     private _matterService: MatterService,
-    private _legalAreaService: LegalAreaService
+    private _legalAreaService: LegalAreaService,
+    private _modalService: ModalService
   ) {
     this.tabs$ = this._matterTabsService.tabs$;
 
@@ -115,6 +119,23 @@ export class MatterTabsComponent implements OnInit {
 
   sendIntake(matterId: number) {
     this._matterService.createIntake(matterId).subscribe();
+  }
+
+  handleUserInfoOption(matter, optionData) {
+    if (optionData.option === 'edit') {
+      const editModal = this._modalService.open(EditClientComponent, {user: optionData.user});
+      editModal.afterClosed$.subscribe(closed => {
+        if (closed) {
+          this._matterService.update({id: matter.id}).subscribe();
+        }
+      });
+    } else if (optionData.option === 'remove') {
+      if (optionData.label === 'spouse') {
+        this._matterService.update({id: matter.id, spouse_id: null}).subscribe();
+      } else if (optionData.label === 'point of contact') {
+        this._matterService.update({id: matter.id, point_of_contact_id: null}).subscribe();
+      }
+    }
   }
 
   private filterById = ([matters, matterTabs]) => {

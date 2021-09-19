@@ -35,7 +35,8 @@ export class UserService {
 
     const user = await Database.models.user.update(userData, {where: {id: userData.id}});
 
-    return Promise.resolve(user);
+    const updatedUserData = await Database.models.user.findOne({where: {id: userData.id}});
+    return Promise.resolve(updatedUserData);
   }
 
   public static async getFamilyMemberById(id: number): Promise<any> {

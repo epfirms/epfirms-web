@@ -42,6 +42,8 @@ export class UserInfoComponent implements OnInit {
 
   @Output() addClicked: EventEmitter<number> = new EventEmitter<number>();
 
+  @Output() optionClicked: EventEmitter<any> = new EventEmitter<any>();
+
   clients$: Observable<Client[]>;
 
   private _label: string;
@@ -69,5 +71,13 @@ export class UserInfoComponent implements OnInit {
 
   selectEvent(item: any) {
     this.addClicked.emit(item);
+  }
+
+  selectOption(option: string) {
+    this.optionClicked.emit({
+      label: this.label,
+      user: this.user,
+      option,
+    });
   }
 }

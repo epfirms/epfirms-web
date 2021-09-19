@@ -99,16 +99,16 @@
                   </ng-container>
                 </section>
               </div>
-              <aside class="hidden p-6 w-96 lg:block">
-                <div class="pb-16 space-y-6">
+              <aside class="hidden p-6 w-96 lg:block overflow-y-auto">
+                <div class="pb-16 space-y-4">
                   <div>
-                  <user-info [user]="matter.client" [label]="'client'"></user-info>
+                  <user-info [user]="matter.client" [label]="'client'" (optionClicked)="handleUserInfoOption(matter, $event)"></user-info>
                 </div>
                 <div>
-                  <user-info [user]="matter.spouse" [label]="'spouse'" (addClicked)="addSpouse(matter, $event);"></user-info>
+                  <user-info [user]="matter.spouse" [label]="'spouse'" (addClicked)="addSpouse(matter, $event);" (optionClicked)="handleUserInfoOption(matter, $event)"></user-info>
                 </div>
                 <div>
-                  <user-info [user]="matter.point_of_contact" [label]="'point of contact'" (addClicked)="addPointOfContact(matter, $event);"></user-info>
+                  <user-info [user]="matter.point_of_contact" [label]="'point of contact'" (addClicked)="addPointOfContact(matter, $event);" (optionClicked)="handleUserInfoOption(matter, $event)"></user-info>
                 </div>
                 </div>
               </aside>

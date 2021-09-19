@@ -18,16 +18,20 @@ export class EditableDatepickerComponent implements OnInit {
     dateRange: false,
     dateFormat: 'mmm d, yyyy',
     alignSelectorRight: true
-    // other options are here...
   };
 
   @Input() set date(d: string) {
-    this._date = {
-      isRange: false,
-      singleDate: {
-        jsDate: d && d.length ? new Date(d) : null
+    if (d) {
+      this._date = {
+        isRange: false,
+        singleDate: {
+          jsDate: d && d.length ? new Date(d) : null
+        }
       }
+    } else {
+      this._date = null
     }
+
   };
 
   @Output() dateChanged = new EventEmitter<Date>();

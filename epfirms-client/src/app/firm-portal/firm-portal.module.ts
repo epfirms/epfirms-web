@@ -17,7 +17,6 @@ import { OverviewComponent } from './matter-subtabs/overview/overview.component'
 import { TasksComponent } from './matter-subtabs/tasks/tasks.component';
 import { ActivityComponent } from './matter-subtabs/activity/activity.component';
 import { NotesComponent } from './matter-subtabs/notes/notes.component';
-import { IntakeFormComponent } from './matter-subtabs/intake-form/intake-form.component';
 import { TabsModule } from '@app/tabs/tabs.module';
 import { MenuModule } from 'headlessui-angular';
 import { UserInfoComponent } from './matter-tabs/user-info/user-info.component';
@@ -26,6 +25,8 @@ import { LeadsComponent } from './leads/leads.component';
 import { AddStaffComponent } from './overlays/add-staff/add-staff.component';
 import { DeleteStaffComponent } from './overlays/delete-staff/delete-staff.component';
 import { EditStaffComponent } from './overlays/edit-staff/edit-staff.component';
+import { IntakeModule } from '@app/intake/intake.module';
+import { EditClientComponent } from './overlays/edit-client/edit-client.component';
 
 
 @NgModule({
@@ -42,12 +43,12 @@ import { EditStaffComponent } from './overlays/edit-staff/edit-staff.component';
     TasksComponent,
     ActivityComponent,
     NotesComponent,
-    IntakeFormComponent,
     UserInfoComponent,
     LeadsComponent,
     AddStaffComponent,
     DeleteStaffComponent,
     EditStaffComponent,
+    EditClientComponent,
   ],
   imports: [
     CommonModule,
@@ -58,7 +59,8 @@ import { EditStaffComponent } from './overlays/edit-staff/edit-staff.component';
     AutocompleteLibModule,
     TabsModule,
     MenuModule,
-    ModalModule
+    ModalModule,
+    IntakeModule
   ]
 })
 export class FirmPortalModule { }
