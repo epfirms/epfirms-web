@@ -48,8 +48,8 @@
                   "with": "src/environments/environment.prod.ts"
                 },
                 {
-                  "replace": "src/environments/modules.dev.ts",
-                  "with": "src/environments/modules.prod.ts"
+                  "replace": "src/environments/development/modules.dev.ts",
+                  "with": "src/environments/production/modules.prod.ts"
                 }
               ],
               "optimization": true,
