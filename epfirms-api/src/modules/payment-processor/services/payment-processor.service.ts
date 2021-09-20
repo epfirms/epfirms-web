@@ -1,5 +1,5 @@
 import { Database } from '@src/core/Database';
-const { STRIPE_SECRET } = require('@configs/vars');
+const { STRIPE_SECRET, STRIPE_PLAN } = require('@configs/vars');
 const stripe = require('stripe')(STRIPE_SECRET);
 
 export class PaymentProcessorService {
@@ -21,7 +21,7 @@ export class PaymentProcessorService {
   public static async subscribe(customerId): Promise<any> {
     const subscription = await stripe.subscriptions.create({
       customer: customerId,
-      items: [{ price: 'price_1IW4GHCwsmq5BK27HUm2vMzr' }],
+      items: [{ price: STRIPE_PLAN}],
       expand: ['latest_invoice.payment_intent'],
       trial_period_days: 30
     });

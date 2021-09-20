@@ -12,6 +12,7 @@ module.exports = {
   DB_PORT: process.env.DB_PORT,
   JWT_SECRET: process.env.JWT_SECRET,
   STRIPE_SECRET: process.env.STRIPE_SECRET,
+  STRIPE_PLAN: process.env.STRIPE_PLAN,
   EMAIL_API_KEY: process.env.EMAIL_API_KEY,
   EMAIL_DOMAIN: process.env.EMAIL_DOMAIN,
   AWS_SECRET_KEY: process.env.AWS_SECRET_KEY,

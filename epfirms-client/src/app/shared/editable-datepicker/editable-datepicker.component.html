@@ -1,5 +1,13 @@
 <!-- <ngx-datepicker [(ngModel)]="_date" (ngModelChange)="dateChanged.emit(_date)" [options]="options"></ngx-datepicker> -->
-    <input class="input-box"
-    angular-mydatepicker name="mydate" (click)="dp.toggleCalendar()" 
-    [(ngModel)]="_date" [options]="options" 
-    #dp="angular-mydatepicker" (dateChanged)="onDateChanged($event)">
+<div class="relative">
+  <input
+    class="input-box"
+    angular-mydatepicker
+    name="mydate"
+    (click)="dp.toggleCalendar()"
+    [(ngModel)]="_date"
+    [options]="options"
+    #dp="angular-mydatepicker"
+    (dateChanged)="onDateChanged($event)"
+  />
+</div>
