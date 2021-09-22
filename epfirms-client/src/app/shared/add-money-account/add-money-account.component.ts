@@ -15,10 +15,12 @@ import { take } from 'rxjs/operators';
 export class AddMoneyAccountComponent implements OnInit {
   accountForm: FormGroup;
   typeOptions = [
-    'checkings',
+    'checking',
     'savings',
     'investment',
-    'IRA/401k'
+    'IRA/401k',
+    'money market',
+    'other'
   ]
   constructor(private _fb: FormBuilder, private _assetService: AssetService, private _modalRef: ModalRef) { }
 

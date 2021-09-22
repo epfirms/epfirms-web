@@ -1,6 +1,8 @@
 import {
   AfterContentChecked,
+  AfterContentInit,
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
@@ -11,7 +13,8 @@ import {
   Output,
   QueryList,
 } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { merge, Subject, Subscription } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 import { TabComponent, TAB_SET } from '../tab/tab.component';
 
 let nextId = 0;
@@ -28,9 +31,10 @@ let nextId = 0;
   ],
   host: {
     'class': 'flex flex-col h-screen',
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TabsetComponent implements AfterViewInit, AfterContentChecked, OnDestroy {
+export class TabsetComponent implements AfterContentInit, AfterContentChecked, OnDestroy {
   @Input()
   get selectedIndex(): number | null {
     return this._selectedIndex;
@@ -57,22 +61,49 @@ export class TabsetComponent implements AfterViewInit, AfterContentChecked, OnDe
   @ContentChildren(TabComponent, { descendants: true })
   tabs: QueryList<TabComponent> = new QueryList<TabComponent>();
 
-  private tabSubscription: Subscription;
   private readonly tabSetId!: number;
   private indexToSelect: number | null = 0;
   private _selectedIndex: number | null = null;
   private _expanded: boolean = false;
+  private tabLabelSubscription = Subscription.EMPTY;
+  private tabsSubscription = Subscription.EMPTY;
 
   constructor(private cdr: ChangeDetectorRef) {
     this.tabSetId = nextId++;
   }
 
   ngOnDestroy(): void {
-    this.tabSubscription.unsubscribe();
+    this.tabLabelSubscription.unsubscribe();
+    this.tabsSubscription.unsubscribe();
   }
 
-  ngAfterViewInit(): void {
-    this.tabSubscription = this.tabs.changes.subscribe()
+  ngAfterContentInit(): void {
+    this.subscribeToTabLabels();
+    this.subscribeToAllTabChanges();
+
+    // Subscribe to changes in the amount of tabs, in order to be
+    // able to re-render the content as new tabs are added or removed.
+    this.tabsSubscription = this.tabs.changes.subscribe(() => {
+      const indexToSelect = this.clampTabIndex(this.indexToSelect);
+
+      // Maintain the previously-selected tab if a new tab is added or removed and there is no
+      // explicit change that selects a different tab.
+      if (indexToSelect === this.selectedIndex) {
+        const tabs = this.tabs.toArray();
+
+        for (let i = 0; i < tabs.length; i++) {
+          if (tabs[i].isActive) {
+            // Assign both to the `indexToSelect` and `selectedIndex` so we don't fire a changed
+            // event, otherwise the consumer may end up in an infinite loop in some edge cases like
+            // adding a tab within the `nzSelectedIndexChange` event.
+            this.indexToSelect = this.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      this.subscribeToTabLabels();
+      this.cdr.markForCheck();
+    });
   }
 
   ngAfterContentChecked(): void {
@@ -146,5 +177,22 @@ export class TabsetComponent implements AfterViewInit, AfterContentChecked, OnDe
 
   getTabIndex(tab: TabComponent, index: number): number | null {
     return this._selectedIndex === index ? 0 : -1;
+  }
+
+  private subscribeToTabLabels(): void {
+    if (this.tabLabelSubscription) {
+      this.tabLabelSubscription.unsubscribe();
+    }
+
+    this.tabLabelSubscription = merge(...this.tabs.map(tab => tab.stateChanges)).subscribe(() =>
+      this.cdr.markForCheck()
+    );
+  }
+
+  private subscribeToAllTabChanges(): void {
+    this.tabs.changes.pipe(startWith(this.tabs)).subscribe((tabs: QueryList<TabComponent>) => {
+      this.tabs.reset(tabs.filter(tab => tab.closestTabSet === this));
+      this.tabs.notifyOnChanges();
+    });
   }
 }
