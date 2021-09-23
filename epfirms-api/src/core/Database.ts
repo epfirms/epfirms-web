@@ -222,14 +222,16 @@ export class Database {
     });
 
     this.models.firm.hasMany(this.models.task_template, {
-      foreignKey: 'firm_id'
+      foreignKey: 'firm_id',
+      onDelete: 'cascade'
     });
     this.models.task_template.belongsTo(this.models.firm, {
       foreignKey: 'firm_id'
     });
 
     this.models.task_template.hasMany(this.models.template_task, {
-      foreignKey: 'template_id'
+      foreignKey: 'template_id',
+      onDelete: 'cascade'
     });
     this.models.template_task.belongsTo(this.models.task_template, {
       foreignKey: 'firm_id'
