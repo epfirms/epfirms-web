@@ -4,8 +4,8 @@ const passport = require('passport');
 
 const templateTaskRouter = express.Router();
 
-// taskTemplate.post('/', passport.authenticate('bearer', { session: false }), (req, res) => taskTemplateController.createDocument(req, res));
-// taskTemplate.get('/', passport.authenticate('bearer', { session: false }), (req, res) => taskTemplateController.getAllFirmDocuments(req, res));
-// taskTemplate.delete('/:id', passport.authenticate('bearer', { session: false }), (req, res) => taskTemplateController.delete(req, res));
-// taskTemplate.put('/:id', passport.authenticate('bearer', { session: false }), (req, res) => taskTemplateController.update(req, res));
+templateTaskRouter.post('/', passport.authenticate('bearer', { session: false }), (req, res) => templateTaskController.create(req, res));
+// templateTaskRouter.get('/', passport.authenticate('bearer', { session: false }), (req, res) => templateTaskController.getAllFirmDocuments(req, res));
+templateTaskRouter.delete('/:id', passport.authenticate('bearer', { session: false }), (req, res) => templateTaskController.delete(req, res));
+templateTaskRouter.put('/', passport.authenticate('bearer', { session: false }), (req, res) => templateTaskController.update(req, res));
 export { templateTaskRouter };
