@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TaskTemplateService } from '@app/firm-portal/_services/task-template-service/task-template.service';
 
 @Component({
   selector: 'app-task-templates',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskTemplatesComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private taskTemplateService: TaskTemplateService
+  ) { }
 
   //MODAL LOGIC
   isVisible: boolean = false;
@@ -31,6 +34,10 @@ export class TaskTemplatesComponent implements OnInit {
 
   createTaskTemplate():void {
     console.log(this.templateName);
+
+    this.taskTemplateService.create(this.templateName).subscribe(res => {
+      console.log(res);
+    })
   }
 
 }
