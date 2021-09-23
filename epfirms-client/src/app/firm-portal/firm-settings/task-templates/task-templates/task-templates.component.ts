@@ -9,7 +9,14 @@ export class TaskTemplatesComponent implements OnInit {
 
   constructor() { }
 
+  //MODAL LOGIC
+  isVisible: boolean = false;
+
   ngOnInit(): void {
+  }
+
+  toggleModalVisibility():void {
+    this.isVisible = !this.isVisible;
   }
 
 }
