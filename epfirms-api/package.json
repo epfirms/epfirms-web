@@ -18,6 +18,7 @@
   "dependencies": {
     "@types/chai-http": "^4.2.0",
     "@types/express": "^4.17.12",
+    "@types/node": "^16.9.6",
     "@types/winston": "^2.4.4",
     "aws-sdk": "^2.957.0",
     "bcrypt": "^5.0.1",
