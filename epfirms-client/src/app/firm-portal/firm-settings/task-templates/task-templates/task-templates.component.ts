@@ -15,6 +15,9 @@ export class TaskTemplatesComponent implements OnInit {
   //selector state
   isSelectVisible:boolean = false;
 
+  //TASK TEMPLATE FORM BINDINGS
+  templateName: string;
+
   ngOnInit(): void {
   }
 
@@ -24,6 +27,10 @@ export class TaskTemplatesComponent implements OnInit {
 
   toggleSelectVisibility():void {
     this.isSelectVisible = !this.isSelectVisible;
+  }
+
+  createTaskTemplate():void {
+    console.log(this.templateName);
   }
 
 }
