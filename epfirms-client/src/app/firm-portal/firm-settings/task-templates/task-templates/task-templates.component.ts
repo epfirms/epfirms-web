@@ -12,11 +12,18 @@ export class TaskTemplatesComponent implements OnInit {
   //MODAL LOGIC
   isVisible: boolean = false;
 
+  //selector state
+  isSelectVisible:boolean = false;
+
   ngOnInit(): void {
   }
 
   toggleModalVisibility():void {
     this.isVisible = !this.isVisible;
+  }
+
+  toggleSelectVisibility():void {
+    this.isSelectVisible = !this.isSelectVisible;
   }
 
 }
