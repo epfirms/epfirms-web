@@ -52,7 +52,7 @@ export class FirmService {
   }
 
   public static async getFirmName(id): Promise<any> {
-    const firm = await Database.models.firm.findOne({ where: { id } });
+    const firm = await Database.models.firm.findOne({ where: { id }, include: {model: Database.models.task_template, include: {model:Database.models.template_task}} });
 
     return Promise.resolve(await (firm.name));
   }
@@ -118,7 +118,7 @@ export class FirmService {
           as: 'FirmClient'
         }
       },
-      { 
+      {
         model: matter,
         as: 'client',
         required: false,
