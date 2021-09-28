@@ -15,7 +15,7 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./tasks.component.scss']
 })
 export class TasksComponent implements OnInit {
-  @Input() 
+  @Input()
   get matter() {
     return this._matter;
   }
@@ -24,15 +24,18 @@ export class TasksComponent implements OnInit {
   };
 
   private _matter: Matter;
-  
+
   staff$: Observable<Staff[]>;
+
+  // bool for showing task template selection
+  isTaskTemplateSelectionVisible : boolean = false;
 
   @ViewChildren('taskName') taskNames;
 
   constructor(
-    private _matterTabsService: MatterTabsService, 
-    private _matterService: MatterService, 
-    private _staffService: StaffService) { 
+    private _matterTabsService: MatterTabsService,
+    private _matterService: MatterService,
+    private _staffService: StaffService) {
     this.staff$ = _staffService.entities$;
   }
 
@@ -63,5 +66,9 @@ export class TasksComponent implements OnInit {
 
   deleteTask(taskId) {
     this._matterService.deleteMatterTask(taskId).subscribe();
+  }
+
+  toggleTaskTemplateVisibility(): void {
+    this.isTaskTemplateSelectionVisible = !this.isTaskTemplateSelectionVisible;
   }
 }

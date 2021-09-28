@@ -27,6 +27,7 @@ import { DeleteStaffComponent } from './overlays/delete-staff/delete-staff.compo
 import { EditStaffComponent } from './overlays/edit-staff/edit-staff.component';
 import { IntakeModule } from '@app/intake/intake.module';
 import { EditClientComponent } from './overlays/edit-client/edit-client.component';
+import { TaskTemplateModalComponent } from './matter-subtabs/tasks/task-template-modal/task-template-modal.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { EditClientComponent } from './overlays/edit-client/edit-client.componen
     DeleteStaffComponent,
     EditStaffComponent,
     EditClientComponent,
+    TaskTemplateModalComponent,
   ],
   imports: [
     CommonModule,
