@@ -67,7 +67,7 @@ export class TaskTemplatesComponent implements OnInit {
     console.log(this.templateName);
     let template = new TaskTemplate(this.firmId, this.templateName);
 
-    this.taskTemplateService.create(this.templateName).subscribe(res => {
+    this.taskTemplateService.create(template).subscribe(res => {
       console.log(res);
       this.templateTasks.forEach((task, index) => {
         task.template_id = res.id;
