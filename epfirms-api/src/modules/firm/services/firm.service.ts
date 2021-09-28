@@ -52,14 +52,14 @@ export class FirmService {
   }
 
   public static async getFirmName(id): Promise<any> {
-    const firm = await Database.models.firm.findOne({ where: { id }, include: {model: Database.models.task_template, include: {model:Database.models.template_task}} });
+    const firm = await Database.models.firm.findOne({ where: { id } });
 
     return Promise.resolve(await (firm.name));
   }
 
   public static async get(id): Promise<any> {
     try {
-      const firm = await Database.models.firm.findOne({ where: { id: id } });
+      const firm = await Database.models.firm.findOne({ where: { id: id },include: {model: Database.models.task_template, include: {model:Database.models.template_task}} });
 
       return Promise.resolve(firm);
     } catch (err) {
