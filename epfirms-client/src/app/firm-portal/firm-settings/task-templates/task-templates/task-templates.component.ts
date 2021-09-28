@@ -35,6 +35,9 @@ export class TaskTemplatesComponent implements OnInit {
   //tempalate tasks: used for list of tasks created on template
   templateTasks = [];
 
+  //list of task templates used by the table that displays them
+  taskTemplates = [];
+
   constructor(
     private taskTemplateService: TaskTemplateService,
     private templateTaskService : TemplateTaskService,
@@ -52,6 +55,7 @@ export class TaskTemplatesComponent implements OnInit {
     this.firm$.subscribe(res => {
       console.log(res);
       this.firmId = res[0].id;
+      this.taskTemplates = res[0].task_templates;
     });
   }
 
@@ -74,6 +78,7 @@ export class TaskTemplatesComponent implements OnInit {
         this.templateTaskService.create(task).subscribe(taskRes => {
           if (index + 1 == this.templateTasks.length){
             this.clearForm();
+            this.firmService.updateCurrentFirm().subscribe();
           }
         });
       });

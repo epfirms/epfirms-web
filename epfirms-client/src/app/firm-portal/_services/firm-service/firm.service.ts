@@ -28,6 +28,15 @@ export class FirmService extends EntityCollectionServiceBase<Firm> {
     );
   }
 
+  updateCurrentFirm(){
+    return this._http.get('/api/firm').pipe(
+      map((response: Firm) => {
+        this.updateOneInCache(response);
+        return of(response);
+      })
+    );
+  }
+
   delete(id): Observable<any> {
     return this._http.delete<any>('/api/matters');
   }
