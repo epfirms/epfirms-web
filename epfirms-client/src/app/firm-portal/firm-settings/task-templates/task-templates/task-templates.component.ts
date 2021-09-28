@@ -120,7 +120,11 @@ export class TaskTemplatesComponent implements OnInit {
     this.isEditMode = true;
     this.selectedTemplate = template;
     this.templateName = template.template_name;
-    this.templateTasks = template.template_tasks;
+    template.template_tasks.forEach(task => {
+      let newTask = new TemplateTask();
+      newTask.clone(task);
+      this.templateTasks.push(newTask);
+    });
     this.toggleModalVisibility();
   }
 

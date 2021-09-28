@@ -29,7 +29,7 @@ export class TaskTemplateController {
       const deleted = await TaskTemplateService.delete(req.params.id);
       res.status(StatusConstants.OK).send(deleted);
     } catch (err) {
-      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err.message);
     }
   }
 
