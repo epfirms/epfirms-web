@@ -25,6 +25,8 @@ export class TaskTemplatesComponent implements OnInit {
 
   //MODAL LOGIC
   isVisible: boolean = false;
+  isEditMode: boolean = false;
+  selectedTemplate;
 
   //selector state
   isSelectVisible:boolean = false;
@@ -87,6 +89,14 @@ export class TaskTemplatesComponent implements OnInit {
     console.log("tasks", this.templateTasks);
   }
 
+  submit():void {
+    if (this.isEditMode) {
+      this.updateTaskTemplate();
+    }else {
+      this.createTaskTemplate();
+    }
+  }
+
   clearForm():void {
     this.templateName = "";
     this.templateTasks = [];
@@ -96,6 +106,39 @@ export class TaskTemplatesComponent implements OnInit {
     let task = new TemplateTask();
 
     this.templateTasks.push(task);
+  }
+
+  deleteTemplate(id):void{
+    console.log("delete", id);
+    this.taskTemplateService.delete(id).subscribe(res => {
+      console.log(res);
+      this.firmService.updateCurrentFirm().subscribe();
+    });
+  }
+
+  toggleUpdateMode(template):void {
+    this.isEditMode = true;
+    this.selectedTemplate = template;
+    this.templateName = template.template_name;
+    this.templateTasks = template.template_tasks;
+    this.toggleModalVisibility();
+  }
+
+  updateTaskTemplate():void {
+    this.taskTemplateService.update({id: this.selectedTemplate.id, template_name: this.templateName}).subscribe(res => {
+      console.log(res);
+      this.templateTasks.forEach((task, index) => {
+        task.template_id = res.id;
+        this.templateTaskService.update(task).subscribe(taskRes => {
+          if (index + 1 == this.templateTasks.length){
+            this.clearForm();
+            this.firmService.updateCurrentFirm().subscribe();
+          }
+        });
+      });
+      this.toggleModalVisibility();
+      this.isEditMode = false;
+    });
   }
 
 }

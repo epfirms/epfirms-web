@@ -12,4 +12,8 @@ export class TemplateTaskService {
   create(data):Observable<any> {
     return this.http.post('/api/template-task', data);
   }
+
+  update(data):Observable<any> {
+    return this.http.put('/api/template-task', data);
+  }
 }

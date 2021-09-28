@@ -12,4 +12,12 @@ export class TaskTemplateService {
   create(data):Observable<any> {
     return this.http.post('/api/task-template', data);
   }
+
+  delete(id):Observable<any>{
+    return this.http.delete(`/api/task-template/${id}`);
+  }
+
+  update(data):Observable<any> {
+    return this.http.put('/api/task-template', data);
+  }
 }
