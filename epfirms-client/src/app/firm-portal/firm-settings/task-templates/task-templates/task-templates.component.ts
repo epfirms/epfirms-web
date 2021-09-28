@@ -4,6 +4,7 @@ import { StaffService } from '@app/firm-portal/_services/staff-service/staff.ser
 import { TaskTemplateService } from '@app/firm-portal/_services/task-template-service/task-template.service';
 import { Firm } from '@app/_models/firm';
 import { Staff } from '@app/_models/staff';
+import { TemplateTask } from '@app/_models/template-task';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -27,6 +28,9 @@ export class TaskTemplatesComponent implements OnInit {
 
   //TASK TEMPLATE FORM BINDINGS
   templateName: string;
+
+  //tempalate tasks: used for list of tasks created on template
+  templateTasks = [];
 
   constructor(
     private taskTemplateService: TaskTemplateService,
@@ -57,6 +61,12 @@ export class TaskTemplatesComponent implements OnInit {
     this.taskTemplateService.create(this.templateName).subscribe(res => {
       console.log(res);
     })
+  }
+
+  createTemplateTask():void {
+    let task = new TemplateTask();
+
+    this.templateTasks.push(task);
   }
 
 }
