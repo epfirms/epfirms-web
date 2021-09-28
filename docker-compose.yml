@@ -9,6 +9,7 @@ services:
       - '4000:4000'
     networks:
       - nginx_network
+      - socket
     env_file:
       - .env
     command: npm start
@@ -20,8 +21,16 @@ services:
       - "80:80"
     networks:
       - nginx_network
+      - socket
     depends_on:
       - backend
+  redis:
+    image: redis
+    networks:
+      - socket
+    expose:
+      - '6379'
 networks:
   nginx_network:
     driver: bridge
+  socket:

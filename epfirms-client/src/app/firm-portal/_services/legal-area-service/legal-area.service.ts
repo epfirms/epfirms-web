@@ -4,6 +4,7 @@ import { LegalArea } from '@app/_models/legal-area';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { SocketService } from '../socket-service/socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,22 @@ export class LegalAreaService extends EntityCollectionServiceBase<LegalArea>  {
 
   constructor(
     private _http: HttpClient,
+    private _socketService: SocketService,
     serviceElementsFactory: EntityCollectionServiceElementsFactory
   ) {
     super('LegalArea', serviceElementsFactory);
+
+    this._socketService.on('add:legal-area', (entityData) => {
+      this.addOneToCache(entityData);
+    });
+
+    this._socketService.on('update:legal-area', (entityData) => {
+      this.updateOneInCache(entityData);
+    });
+
+    this._socketService.on('delete:legal-area', (entityData) => {
+      this.removeOneFromCache(entityData);
+    });
   }
 
   getLegalAreas(): Observable<any> {
@@ -33,7 +47,7 @@ export class LegalAreaService extends EntityCollectionServiceBase<LegalArea>  {
       .post<any>('/api/legal-area', { legalArea })
       .pipe(
         map((response: LegalArea) => {
-          this.addOneToCache(response);
+          this._socketService.addOneToCacheSync('legal-area', response);
           return of(response);
         })
       );
@@ -44,7 +58,7 @@ export class LegalAreaService extends EntityCollectionServiceBase<LegalArea>  {
       .delete<any>('/api/legal-area', { body: {id} })
       .pipe(
         map((response: number) => {
-          this.removeOneFromCache(response);
+          this._socketService.deleteCacheSync('legal-area', response);
           return of(response);
         })
       );

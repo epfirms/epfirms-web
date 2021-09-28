@@ -7,6 +7,8 @@ import {
 } from '@ngrx/data';
 import { map } from 'rxjs/operators';
 import { Client } from '@app/_models/client';
+import { Socket } from 'ngx-socket-io';
+import { SocketService } from '../socket-service/socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +16,23 @@ import { Client } from '@app/_models/client';
 export class ClientService extends EntityCollectionServiceBase<Client> {
   constructor(
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
-    private _http: HttpClient
+    private _http: HttpClient,
+    private _socketService: SocketService
   ) {
     super('Client', serviceElementsFactory);
+
+    // Socket event listeners for syncing changes across firm users
+    this._socketService.on('add:client', (entityData) => {
+      this.addOneToCache(entityData);
+    });
+
+    this._socketService.on('update:client', (entityData) => {
+      this.updateOneInCache(entityData);
+    });
+
+    this._socketService.on('delete:client', (entityData) => {
+      this.removeOneFromCache(entityData);
+    })
   }
 
   getClients(): Observable<any> {
@@ -28,12 +44,20 @@ export class ClientService extends EntityCollectionServiceBase<Client> {
     );
   }
 
+emit() {
+  // this.socket.emit('test', {msg: 'hello world'});
+}
+
+  test() {
+    // return this.socket.fromEvent('response').pipe(map((data: any) => data.msg));
+  }
+
   createClient(client): Observable<any> {
     return this._http.post<any>('/api/firm/clients', {
       client,
     }).pipe(
       map((response: Client) => {
-        this.addOneToCache(response);
+        this._socketService.addOneToCacheSync('client', response);
         return of(response);
       })
     );
@@ -42,7 +66,7 @@ export class ClientService extends EntityCollectionServiceBase<Client> {
   updateClient(client): Observable<any> {
     return this._http.patch<any>('/api/user', client).pipe(
       map((response: Client)=> {
-        this.updateOneInCache(response);
+        this._socketService.updateCacheSync('client', response);
         return of(response);
       })
     )

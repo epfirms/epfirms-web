@@ -9,6 +9,7 @@ import {
 } from '@app/store/matter-tabs/matter-tabs.actions';
 import { Store } from '@ngrx/store';
 import { Tabs } from '@app/_models/tabs';
+import { selectedOpenTabs } from '@app/store/matter-tabs/matter-tabs.reducer';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,10 @@ export class MatterTabsService {
 
   constructor(private store: Store<{ matterTabs: Tabs }>) {
     this.tabs$ = store.select('matterTabs');
+  }
+
+  getOpenTabs() {
+    return this.store.select(selectedOpenTabs);
   }
 
   add(matterId: number) {
