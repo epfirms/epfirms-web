@@ -69,12 +69,22 @@ export class TaskTemplatesComponent implements OnInit {
 
     this.taskTemplateService.create(this.templateName).subscribe(res => {
       console.log(res);
-      this.templateTasks.forEach(task => {
+      this.templateTasks.forEach((task, index) => {
         task.template_id = res.id;
-        this.templateTaskService.create(task).subscribe(taskRes => console.log(taskRes));
+        this.templateTaskService.create(task).subscribe(taskRes => {
+          if (index + 1 == this.templateTasks.length){
+            this.clearForm();
+          }
+        });
       });
+      this.toggleModalVisibility();
     });
     console.log("tasks", this.templateTasks);
+  }
+
+  clearForm():void {
+    this.templateName = "";
+    this.templateTasks = [];
   }
 
   createTemplateTask():void {
