@@ -128,6 +128,12 @@ export class TaskTemplatesComponent implements OnInit {
     this.toggleModalVisibility();
   }
 
+  cancel():void {
+    this.toggleModalVisibility()
+    this.isEditMode = false;
+    this.clearForm();
+  }
+
   updateTaskTemplate():void {
     this.taskTemplateService.update({id: this.selectedTemplate.id, template_name: this.templateName}).subscribe(res => {
       console.log(res);
