@@ -33,6 +33,7 @@
     "date-fns": "^2.23.0",
     "headlessui-angular": "0.0.5",
     "ng2-datepicker": "^12.0.0",
+    "ngx-socket-io": "^4.1.0",
     "ngx-stripe": "^12.3.1",
     "rxjs": "^6.6.7",
     "tslib": "^2.0.0",

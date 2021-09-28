@@ -8,6 +8,9 @@ import {
 } from '@ngrx/data';
 import { concatMap, filter, map, reduce, take } from 'rxjs/operators';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
+import { SocketService } from '../socket-service/socket.service';
+import { select } from '@ngrx/store';
+import { selectPopulatedMatters } from '@app/store/matter/matter.selector';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +19,23 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   constructor(
     private _http: HttpClient,
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
-    private _currentUserService: CurrentUserService
+    private _currentUserService: CurrentUserService,
+    private _socketService: SocketService
   ) {
     super('Matter', serviceElementsFactory);
+
+    // Socket event listeners for syncing changes across firm users
+    this._socketService.on('add:matter', (entityData) => {
+      this.addOneToCache(entityData);
+    });
+
+    this._socketService.on('update:matter', (entityData) => {
+      this.updateOneInCache(entityData);
+    });
+
+    this._socketService.on('delete:matter', (entityData) => {
+      this.removeOneFromCache(entityData);
+    });
   }
 
   get(): Observable<any> {
@@ -26,14 +43,12 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   }
 
   create(matter): Observable<any> {
-    return this._http
-      .post<any>('/api/matters', { matter })
-      .pipe(
-        map((response: Matter) => {
-          this.addOneToCache(response);
-          return of(response);
-        })
-      );
+    return this._http.post<any>('/api/matters', { matter }).pipe(
+      map((response: Matter) => {
+        this._socketService.addOneToCacheSync('matter', response);
+        return of(response);
+      })
+    );
   }
 
   delete(id): Observable<any> {
@@ -41,27 +56,31 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   }
 
   update(matter): Observable<any> {
-    return this._http
-      .put<any>('/api/matters', matter)
-      .pipe(
-        map((response: Matter) => {
-          this.updateOneInCache(response);
-          return of(response);
-        })
-      );
+    return this._http.put<any>('/api/matters', matter).pipe(
+      map((response: Matter) => {
+        this._socketService.updateCacheSync('matter', response);
+        return of(response);
+      })
+    );
+  }
+
+  getEntities(): Observable<Matter[]> {
+    return this.filteredEntities$.pipe(select(selectPopulatedMatters));
   }
 
   getClientMatters(userId: number) {
     return this.entities$.pipe(
       take(1),
-      map((matters: Matter[]) => {
-        const clientMatters = matters.filter(matter => matter.client_id === userId || matter.spouse_id === userId);
-        return clientMatters;
-      })
-    )
+      // map((matters: Matter[]) => {
+      //   const clientMatters = matters.filter(
+      //     (matter) => matter.client_id === userId || matter.spouse_id === userId
+      //   );
+      //   return clientMatters;
+      // })
+    );
   }
 
-    /*
+  /*
     addMatterNote()
       Inputs:
         note: A note object containing
@@ -72,35 +91,31 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
       Outputs:
         Post request to the backend that sends the note object to be added to the database.
   */
-        addMatterNote(note): Observable<any> {
-          return this._http.post<any>('/api/matters/note', note).pipe(
-            map((response: Matter) => {
-              this.updateOneInCache(response);
-              return of(response);
-            })
-          );
-        }
+  addMatterNote(note): Observable<any> {
+    return this._http.post<any>('/api/matters/note', note).pipe(
+      map((response: Matter) => {
+        this._socketService.updateCacheSync('matter', response);
+        return of(response);
+      })
+    );
+  }
 
   addMatterTask(task): Observable<any> {
-    return this._http
-      .post<any>('/api/matters/task', task)
-      .pipe(
-        map((response: Matter) => {
-          this.updateOneInCache(response);
-          return of(response);
-        })
-      );
+    return this._http.post<any>('/api/matters/task', task).pipe(
+      map((response: Matter) => {
+        this._socketService.updateCacheSync('matter', response);
+        return of(response);
+      })
+    );
   }
 
   updateMatterTask(task): Observable<any> {
-    return this._http
-      .patch<any>('/api/matters/task', task)
-      .pipe(
-        map((response: Matter) => {
-          this.updateOneInCache(response);
-          return of(response);
-        })
-      );
+    return this._http.patch<any>('/api/matters/task', task).pipe(
+      map((response: Matter) => {
+        this._socketService.updateCacheSync('matter', response);
+        return of(response);
+      })
+    );
   }
 
   deleteMatterTask(task): Observable<any> {
@@ -110,7 +125,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
       })
       .pipe(
         map((response: Matter) => {
-          this.updateOneInCache(response);
+          this._socketService.updateCacheSync('matter', response);
           return of(response);
         })
       );
@@ -150,7 +165,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
       .post<any>('/api/matters/intake', { matter_id: matterId })
       .pipe(
         map((response: Matter) => {
-          this.updateOneInCache(response);
+          this._socketService.updateCacheSync('matter', response);
           return of(response);
         })
       );

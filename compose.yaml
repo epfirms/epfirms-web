@@ -14,6 +14,8 @@ services:
     command: npm run dev
     depends_on:
       - database
+    networks:
+      - socket
   client:
     build:
       context: ./epfirms-client
@@ -26,7 +28,9 @@ services:
     volumes:
       - './epfirms-client:/home/node/client'
       - '/home/node/client/node_modules'
-    command: node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng serve --host 0.0.0.0
+    command: node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --disable-host-check
+    networks:
+      - socket
   database:
     image: mysql:5.7
     restart: always
@@ -34,11 +38,19 @@ services:
     container_name: epfirms-db
     env_file:
       - ./database.env
-    ports:
-      - '3307:3307'
     expose:
       - '3307'
     volumes:
       - epfirms-db:/var/lib/mysql
+    networks:
+      - socket
+  redis:
+    image: redis
+    networks:
+      - socket
+    expose:
+      - '6379'
 volumes:
   epfirms-db:
+networks:
+  socket:

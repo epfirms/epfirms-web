@@ -16,11 +16,14 @@ import { matterTabsReducer } from './store/matter-tabs/matter-tabs.reducer';
 import { currentUserReducer } from './store/current-user/current-user.reducer';
 import { MatterActivityInterceptor } from './shared/_interceptors/matter-activity.interceptor';
 import { extModules } from 'src/environments/development/modules.dev';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
   timeout: 30000, // request timeout
 };
+
+const config: SocketIoConfig = { url: 'http://localhost:4000', options: {autoConnect: false} };
 
 @NgModule({
   declarations: [
@@ -37,7 +40,8 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
     StoreModule.forRoot({matterTabs: matterTabsReducer, currentUser: currentUserReducer}, {}),
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
-    extModules
+    extModules,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

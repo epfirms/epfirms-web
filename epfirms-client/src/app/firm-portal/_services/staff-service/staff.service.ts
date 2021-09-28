@@ -7,6 +7,7 @@ import {
 } from '@ngrx/data';
 import { map } from 'rxjs/operators';
 import { Staff } from '@app/_models/staff';
+import { SocketService } from '../socket-service/socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +15,22 @@ import { Staff } from '@app/_models/staff';
 export class StaffService extends EntityCollectionServiceBase<Staff> {
   constructor(
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
-    private _http: HttpClient
+    private _http: HttpClient,
+    private _socketService: SocketService
   ) {
     super('Staff', serviceElementsFactory);
+    // Socket event listeners for syncing changes across firm users
+    this._socketService.on('add:staff', (entityData) => {
+      this.addOneToCache(entityData);
+    });
+
+    this._socketService.on('update:staff', (entityData) => {
+      this.updateOneInCache(entityData);
+    });
+
+    this._socketService.on('delete:staff', (entityData) => {
+      this.removeOneFromCache(entityData);
+    });
   }
 
   getStaff(): Observable<any> {
@@ -31,16 +45,7 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
   createStaff(body): Observable<any> {
     return this._http.post('http://localhost:4000/api/firm/staff', body).pipe(
       map((response: Staff) => {
-        this.addOneToCache(response);
-        return of(response);
-      })
-    );
-  }
-
-  getClients(): Observable<any> {
-    return this._http.get('/api/firm/clients').pipe(
-      map((response: Staff[]) => {
-        this.addAllToCache(response);
+        this._socketService.addOneToCacheSync('staff', response);
         return of(response);
       })
     );

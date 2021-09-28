@@ -76,9 +76,7 @@ export class MatterTabsComponent implements OnInit {
 
     this.legalAreas$ = _legalAreaService.entities$;
 
-    this.matters$ = combineLatest([_matterService.entities$, this.tabs$]).pipe(
-      map(this.filterById),
-    );
+    this.matters$ = this._matterTabsService.getOpenTabs()
 
     this.staff$ = _staffService.entities$;
   }
@@ -136,16 +134,5 @@ export class MatterTabsComponent implements OnInit {
         this._matterService.update({id: matter.id, point_of_contact_id: null}).subscribe();
       }
     }
-  }
-
-  private filterById = ([matters, matterTabs]) => {
-    return matterTabs.openTabs.reduce((acc, curr) => {
-      const matter = matters.find((matter: Matter) => matter.id === curr);
-      if (matter) {
-        return [...acc, matter];
-      } else {
-        return acc;
-      }
-    }, []);
   }
 }

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { EntityCacheDispatcher } from '@ngrx/data';
 import { MatterTabsService } from '@app/firm-portal/_services/matter-tabs-service/matter-tabs.service';
 import { CurrentUserService } from '../current-user-service/current-user.service';
+import { SocketService } from '@app/firm-portal/_services/socket-service/socket.service';
 
 interface LoginForm {
   email: string;
@@ -16,36 +17,22 @@ interface LoginForm {
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<any>;
-
   private accessTokenSubject: BehaviorSubject<any>;
 
-  public currentUser: Observable<any>;
-
   public accessToken: Observable<any>;
-
-  public userScope: any;
 
   constructor(
     private _http: HttpClient,
     private _router: Router,
     private entityCacheDispatcher: EntityCacheDispatcher,
     private _matterTabsService: MatterTabsService,
-    private _currentUserService: CurrentUserService
+    private _currentUserService: CurrentUserService,
+    private _socketService: SocketService
   ) {
     this.accessTokenSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('accessToken'))
     );
     this.accessToken = this.accessTokenSubject.asObservable();
-
-    this.currentUserSubject = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem('currentUser'))
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
-  }
-
-  public get currentUserValue(): any {
-    return this.currentUserSubject.value;
   }
 
   public get accessTokenValue(): any {
@@ -99,12 +86,14 @@ export class AuthService {
     });
   }
 
+  // Remove access token, clear data stores, disconnect from socket, re-route to login page
   logout() {
     localStorage.removeItem('accessToken');
     this.entityCacheDispatcher.clearCollections();
     this._matterTabsService.clear();
     this._currentUserService.clear();
     this.accessTokenSubject.next(null);
+    this._socketService.disconnect();
     this._router.navigate(['login']);
   }
 }
