@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
+import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { TaskTemplateService } from '@app/firm-portal/_services/task-template-service/task-template.service';
+import { Firm } from '@app/_models/firm';
+import { Staff } from '@app/_models/staff';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-task-templates',
@@ -8,9 +13,11 @@ import { TaskTemplateService } from '@app/firm-portal/_services/task-template-se
 })
 export class TaskTemplatesComponent implements OnInit {
 
-  constructor(
-    private taskTemplateService: TaskTemplateService
-  ) { }
+  // Firm Entities
+  firm$ : Observable<Firm[]>;
+
+  //Staff entities
+  staff$: Observable<Staff[]>;
 
   //MODAL LOGIC
   isVisible: boolean = false;
@@ -21,7 +28,19 @@ export class TaskTemplatesComponent implements OnInit {
   //TASK TEMPLATE FORM BINDINGS
   templateName: string;
 
+  constructor(
+    private taskTemplateService: TaskTemplateService,
+    private firmService : FirmService,
+    private staffService : StaffService,
+  ) {
+    this.firm$ = firmService.entities$;
+    this.staff$ = staffService.entities$;
+   }
+
+
+
   ngOnInit(): void {
+    this.staff$.subscribe(res => console.log(res))
   }
 
   toggleModalVisibility():void {
