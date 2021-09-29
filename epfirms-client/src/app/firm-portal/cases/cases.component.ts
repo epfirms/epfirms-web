@@ -14,7 +14,9 @@ import { MatterService } from '../_services/matter-service/matter.service';
 import { MatterTabsService } from '../_services/matter-tabs-service/matter-tabs.service';
 import { OverlayService } from '../_services/overlay-service/overlay.service';
 import { emailService } from '../../shared/_services/email-service/email.service';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
+import { Staff } from '@app/_models/staff';
+import { StaffService } from '../_services/staff-service/staff.service';
 
 @Component({
   selector: 'app-cases',
@@ -36,6 +38,17 @@ import { take } from 'rxjs/operators';
   ],
 })
 export class CasesComponent implements OnInit {
+  displayedColumns = [
+    'client',
+    'task',
+    'legal-area',
+    'attorney',
+    'status',
+    'intake',
+    'edit',
+  ];
+
+  attorneys$: Observable<Staff[]>;
   cases$: Observable<Matter[]>;
   legalAreas$: Observable<LegalArea[]>;
   statusFilterOptions: any[] = ['active', 'inactive', 'complete'];
@@ -76,20 +89,29 @@ export class CasesComponent implements OnInit {
     matter_type: 'case',
     status: 'active',
     searchTerm: '',
+    attorney_id: null,
+  };
+
+  sortValues: { column: string; direction: string } = {
+    column: null,
+    direction: null,
   };
 
   constructor(
     private _matterService: MatterService,
     private _matterTabsService: MatterTabsService,
     private _legalAreaService: LegalAreaService,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _staffService: StaffService
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.cases$ = _matterService.filteredEntities$;
+    this.attorneys$ = _staffService.filteredEntities$;
   }
 
   ngOnInit(): void {
     this.filter();
+    this._staffService.setFilter('attorney');
   }
 
   openTab(matter: Matter) {
@@ -131,6 +153,104 @@ export class CasesComponent implements OnInit {
       .subscribe();
   }
 
+  // TODO: Rewrite this abomination to be generic
+  sortMatters(column: string) {
+    // Toggle asc -> desc -> null
+    if (!this.sortValues.direction) {
+      this.sortValues.column = column;
+      this.sortValues.direction = 'asc';
+    } else if (this.sortValues.direction === 'asc') {
+      this.sortValues.direction = 'desc';
+    } else {
+      this.sortValues.column = null;
+      this.sortValues.direction = null;
+    }
+
+    if (this.sortValues.column && this.sortValues.direction) {
+      if (this.sortValues.column === 'first_name') {
+        this.cases$ = this._matterService.filteredEntities$.pipe(
+          map((matters) => {
+            return matters.sort(
+              this.sortByFirstName(this.sortValues.direction)
+            );
+          })
+        );
+      } else if (this.sortValues.column === 'task') {
+        this.cases$ = this._matterService.filteredEntities$.pipe(
+          map((matters) => {
+            return matters.sort(this.sortByTaskDate(this.sortValues.direction));
+          })
+        );
+      }
+    } else {
+      this.filter();
+      this.cases$ = this._matterService.filteredEntities$;
+    }
+    console.log(this.sortValues.direction);
+  }
+
+  sortByFirstName(direction: string) {
+    return (a, b) => {
+      if (direction === 'asc') {
+        return a.client.first_name.localeCompare(b.client.first_name);
+      } else if (direction === 'desc') {
+        return b.client.first_name.localeCompare(a.client.first_name);
+      }
+    };
+  }
+
+  sortByTaskDate(direction: string) {
+    return (a, b) => {
+      if (direction === 'asc') {
+        if (a.matter_tasks.length && !b.matter_tasks.length) {
+          return -1;
+        } else if (!a.matter_tasks.length && b.matter_tasks.length) {
+          return 1;
+        } else if (!a.matter_tasks.length && !b.matter_tasks.length) {
+          return 0;
+        } else {
+          if (a.matter_tasks[0].completed && !b.matter_tasks[0].completed) {
+            return 1;
+          } else if (
+            !a.matter_tasks[0].completed &&
+            b.matter_tasks[0].completed
+          ) {
+            return -1;
+          } else if (
+            !a.matter_tasks[0].completed &&
+            b.matter_tasks[0].completed
+          ) {
+            return 0;
+          } else {
+            return (
+              new Date(a.matter_tasks[0].due).getTime() -
+              new Date(b.matter_tasks[0].due).getTime()
+            );
+          }
+        }
+      } else {
+        if (a.matter_tasks.length && !b.matter_tasks.length){
+          return 1;
+        } else if (!a.matter_tasks.length && b.matter_tasks.length) {
+          return -1;
+        } else if (!a.matter_tasks.length && !b.matter_tasks.length) {
+          return 0;
+        } else {
+          if (a.matter_tasks[0].completed && !b.matter_tasks[0].completed) {
+            return -1;
+          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed){
+            return 1
+          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
+            return 0;
+          } else {
+            return new Date(a.matter_tasks[0].due).getTime() - new Date(b.matter_tasks[0].due).getTime()
+          }
+        }
+      }
+
+  }
+  }
+
   setStatus(matter: Matter, status) {
     this._matterService.update({ id: matter.id, ...status }).subscribe();
   }
@@ -144,8 +264,22 @@ export class CasesComponent implements OnInit {
     this.filter();
   }
 
+  filterAttorney(id: number) {
+    if (this.matterFilterValues.attorney_id != id) {
+      this.matterFilterValues.attorney_id = id;
+    } else {
+      this.matterFilterValues.attorney_id = null;
+    }
+
+    this.filter();
+  }
+
   filter() {
     const filterValues = Object.assign({}, this.matterFilterValues);
     this._matterService.setFilter(filterValues);
+  }
+
+  trackByIndex(index, item) {
+    return item.id;
   }
 }

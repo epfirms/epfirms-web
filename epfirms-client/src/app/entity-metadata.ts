@@ -4,10 +4,12 @@ import { Staff } from './_models/staff';
 import { LegalArea } from './_models/legal-area';
 import {Document} from './_models/document';
 import { Client } from './_models/client';
+import { MatterTask } from './_models/matter-task';
 
 const entityMetadata: EntityMetadataMap = {
   Matter: {
-    filterFn: matterFilter
+    filterFn: matterFilter,
+    sortComparer: matterSort
   },
   Client: {
     filterFn: clientFilter
@@ -27,7 +29,7 @@ export function roleFilter(entities: Staff[], search: string) {
 }
 
 export function matterFilter(entities: Matter[], search: {matter_type: string; status: string; attorney_id?: number; client_id?: number; searchTerm?: string}) {
-  let searchFields = Object.getOwnPropertyNames(search).filter(field => field !== 'searchTerm');
+  let searchFields = Object.getOwnPropertyNames(search).filter(field => field !== 'searchTerm' && !!search[field]);
 
   return entities.filter(e => {
     if (search.searchTerm && search.searchTerm.length) {
@@ -46,6 +48,26 @@ export function clientFilter(entities: Client[], search: {searchTerm?: string}) 
 
 export function documentFilter(entities: Document[], search: number){
   return entities.filter(e => e.user_id === search)
+}
+
+export function matterSort(a: { matter_tasks: MatterTask[] }, b: { matter_tasks: MatterTask[] }): number {
+  if (a.matter_tasks.length && !b.matter_tasks.length){
+    return 1;
+  } else if (!a.matter_tasks.length && b.matter_tasks.length) {
+    return -1;
+  } else if (!a.matter_tasks.length && !b.matter_tasks.length) {
+    return 0;
+  } else {
+    if (a.matter_tasks[0].completed && !b.matter_tasks[0].completed) {
+      return -1;
+    } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed){
+      return 1
+    } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
+      return 0;
+    } else {
+      return new Date(a.matter_tasks[0].due).getTime() - new Date(b.matter_tasks[0].due).getTime()
+    }
+  }
 }
 
 const pluralNames = { Staff: 'Staff' };

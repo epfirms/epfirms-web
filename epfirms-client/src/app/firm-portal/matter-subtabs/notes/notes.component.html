@@ -2,7 +2,7 @@
   <div>
     <ul role="list" class="divide-y divide-gray-200">
       <li class="py-4" *ngFor="let note of matter.matter_notes">
-        <div class="flex space-x-3">
+        <div class="flex space-x-3" *ngIf="note.user">
           <tw-avatar
           twSize="xsmall"
           [twSrc]="note.user.profile_image"

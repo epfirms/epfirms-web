@@ -27,7 +27,7 @@ import { DeleteStaffComponent } from './overlays/delete-staff/delete-staff.compo
 import { EditStaffComponent } from './overlays/edit-staff/edit-staff.component';
 import { IntakeModule } from '@app/intake/intake.module';
 import { EditClientComponent } from './overlays/edit-client/edit-client.component';
-
+import { CdkTableModule } from '@angular/cdk/table'
 
 @NgModule({
   declarations: [
@@ -60,7 +60,8 @@ import { EditClientComponent } from './overlays/edit-client/edit-client.componen
     TabsModule,
     MenuModule,
     ModalModule,
-    IntakeModule
+    IntakeModule,
+    CdkTableModule
   ]
 })
 export class FirmPortalModule { }

@@ -50,6 +50,18 @@
     }
 }
 
+.table-dropdown {
+    @apply inline-flex items-center px-2.5 py-1 border border-gray-300 shadow-sm text-xs leading-4 font-medium rounded text-gray-700 bg-white hover:bg-gray-50;
+
+    &>svg.icon {
+        @apply -ml-1 mr-1 h-3 w-3;
+    }
+
+    &>svg.icon-end {
+        @apply -mr-1 ml-1 h-3 w-3;
+    }
+}
+
 .button-primary-icon-sm {
     @apply inline-flex items-center px-2.5 py-1.5 border border-transparent shadow-sm text-xs leading-4 font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
 
