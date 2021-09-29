@@ -198,7 +198,7 @@
             <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
                 <tw-avatar
-                  twSize="small"
+                  twSize="xsmall"
                   [twSrc]="case.client.profile_image"
                   [twText]="case.client.full_name"
                 >
@@ -685,7 +685,7 @@
 
     <ng-container *ngIf="cases$ | async as cases">
       <tw-paginator
-        [twPageSize]="10"
+        [twPageSize]="20"
         [twTotalSize]="cases.length"
         (twCurrentPage)="setPagination($event)"
       ></tw-paginator>

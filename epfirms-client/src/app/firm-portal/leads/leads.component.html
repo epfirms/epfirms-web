@@ -184,7 +184,7 @@
             <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
                 <tw-avatar
-                  twSize="small"
+                  twSize="xsmall"
                   [twSrc]="lead.client.profile_image"
                   [twText]="lead.client.full_name"
                 >
@@ -671,7 +671,7 @@
 
     <ng-container *ngIf="leads$ | async as leads">
       <tw-paginator
-        [twPageSize]="10"
+        [twPageSize]="20"
         [twTotalSize]="leads.length"
         (twCurrentPage)="setPagination($event)"
       ></tw-paginator>

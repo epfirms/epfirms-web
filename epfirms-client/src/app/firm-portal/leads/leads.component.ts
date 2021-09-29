@@ -50,7 +50,7 @@ export class LeadsComponent implements OnInit {
   legalAreas$: Observable<LegalArea[]>;
   statusFilterOptions: any[] = ['active', 'inactive'];
 
-  paginator: { start: number; end: number } = { start: 0, end: 1 };
+  paginator: { start: number; end: number } = { start: 0, end: 20 };
 
   searchTerm: string = '';
 
