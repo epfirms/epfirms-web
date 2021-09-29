@@ -154,7 +154,8 @@
     <!-- Projects table (small breakpoint and up) -->
     <div class="hidden sm:block flex-1 bg-white">
       <div class="align-middle inline-block min-w-full">
-        <table class="min-w-full" cdk-table recycleRows [dataSource]="leads$" [trackBy]="trackByIndex">
+        <ng-container *ngIf="leads$ | async as leads">
+        <table class="min-w-full" cdk-table recycleRows [dataSource]="leads | slice: paginator.start:paginator.end" [trackBy]="trackByIndex">
           <!-- Position Column -->
           <ng-container cdkColumnDef="client">
             <th
@@ -600,6 +601,7 @@
             (click)="openTab(row)"
           ></tr>
         </table>
+        </ng-container>
       </div>
 
       <ng-container *ngIf="leads$ | async as leads">
