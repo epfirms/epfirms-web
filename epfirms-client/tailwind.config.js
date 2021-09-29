@@ -28,9 +28,7 @@ module.exports = {
       },
     },
     variants: {
-      extend: {
-        animation: ['hover']
-      },
+      extend: {},
     },
     plugins: [require('@tailwindcss/aspect-ratio'),require('@tailwindcss/forms'),require('@tailwindcss/typography')],
 };
