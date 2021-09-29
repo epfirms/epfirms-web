@@ -40,6 +40,8 @@ services:
       - ./database.env
     expose:
       - '3307'
+    ports:
+      - '3307:3307'
     volumes:
       - epfirms-db:/var/lib/mysql
     networks:

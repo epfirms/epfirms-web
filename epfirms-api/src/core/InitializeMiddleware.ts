@@ -6,6 +6,7 @@ export class InitializeMiddleWare {
   public static async InitializeCommonMiddleware(app: Express) {
     let middleware = new CommonMiddleware(app);
 
+    await middleware.useCompression();
     await middleware.usePassport();
     await middleware.useHelmet();
     await middleware.useBodyParser();

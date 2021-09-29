@@ -23,7 +23,7 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
   timeout: 30000, // request timeout
 };
 
-const config: SocketIoConfig = { url: 'http://localhost:4000', options: {autoConnect: false} };
+const config: SocketIoConfig = { url: 'http://localhost:4000', options: {autoConnect: false, transports: ['websocket']} };
 
 @NgModule({
   declarations: [

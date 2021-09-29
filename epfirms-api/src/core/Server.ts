@@ -37,7 +37,8 @@ export async function socketServer(httpServer) {
   const io = new Server(httpServer, {
     cors: {
       origin: '*',
-    }
+    },
+    transports: ['websocket']
   });
   const pubClient = new RedisClient({ host: REDIS_HOST, port: REDIS_PORT });
   const subClient = pubClient.duplicate();
@@ -125,6 +126,8 @@ export async function socketServer(httpServer) {
       console.log(socket, ' disconnect')
     })
   });
+
+  return Promise.resolve(io);
 }
 
 function getSocketRoom(token): string {

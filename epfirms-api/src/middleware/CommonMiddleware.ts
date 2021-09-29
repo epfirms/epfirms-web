@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('@configs/vars');
 import { Database } from '@src/core/Database';
+const compression = require('compression');
 
 export class CommonMiddleware {
   app: Express;
@@ -53,6 +54,10 @@ export class CommonMiddleware {
 
   public async useCors() {
     this.app.use(cors());
+  }
+
+  public async useCompression() {
+    this.app.use(compression());
   }
 
   public async logRequests() {
