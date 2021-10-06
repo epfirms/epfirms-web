@@ -23,6 +23,14 @@ export class AssetService {
     return Promise.resolve(createdAccount);
   }
 
+  public static async updateMoneyAccount(id: number, data: any): Promise<boolean> {
+    const { money_account } = Database.models;
+
+    await money_account.update(data, { where: { id }});
+
+    return Promise.resolve(true);
+  }
+
   public static async deleteMoneyAccount(id: number): Promise<any> {
     const { money_account } = Database.models;
 
@@ -39,6 +47,14 @@ export class AssetService {
     return Promise.resolve(createdRealEstate);
   }
 
+  public static async updateRealEstate(id: number, data: any): Promise<boolean> {
+    const { real_estate } = Database.models;
+
+    await real_estate.update(data, { where: { id }});
+
+    return Promise.resolve(true);
+  }
+
   public static async deleteRealEstate(id: number): Promise<boolean> {
     const { real_estate } = Database.models;
 
@@ -53,6 +69,14 @@ export class AssetService {
     const createdVehicle = await vehicle.create(vehicleData);
 
     return Promise.resolve(createdVehicle);
+  }
+
+  public static async updateVehicle(id: number, data: any): Promise<boolean> {
+    const { vehicle } = Database.models;
+
+    await vehicle.update(data, { where: { id }});
+
+    return Promise.resolve(true);
   }
 
   public static async deleteVehicle(id: number): Promise<boolean> {

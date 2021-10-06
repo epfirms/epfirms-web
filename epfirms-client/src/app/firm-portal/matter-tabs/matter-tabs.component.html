@@ -8,6 +8,7 @@
       *ngFor="let matter of matters$ | async"
       [title]="matter.client.full_name"
     >
+    <ng-template tab>
       <div class="flex flex-col flex-1 h-full">
         <div class="bg-white flex space-between sm:px-8 border-b border-gray-200">
           <div class="flex-1 sm:flex sm:items-baseline">
@@ -95,7 +96,8 @@
                     <app-activity *ngSwitchCase="'activity'" [matter]="matter"></app-activity>
                     <app-notes *ngSwitchCase="'notes'" [matter]="matter"></app-notes>
                     <app-documents *ngSwitchCase="'documents'" [matter]="matter"></app-documents>
-                    <app-intake-form *ngSwitchCase="'intake'"></app-intake-form>
+                    <app-intake-form *ngSwitchCase="'intake'" [matter]="matter"></app-intake-form>
+                    <app-billing *ngSwitchCase="'billing'"></app-billing>
                   </ng-container>
                 </section>
               </div>
@@ -116,6 +118,7 @@
           </div>
         </main>
       </div>
+    </ng-template>
     </tab>
   </tabset>
 </ng-container>

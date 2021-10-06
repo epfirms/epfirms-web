@@ -6,7 +6,6 @@ import { CurrentUserResolver } from '@app/shared/_resolvers/current-user.resolve
 import { CaseListComponent } from './case-list/case-list.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
 import { ClientPortalComponent } from './client-portal.component';
-import { IntakeFormComponent } from './intake-form/intake-form.component';
 
 const routes: Routes = [
   {
@@ -19,8 +18,7 @@ const routes: Routes = [
     component: ClientPortalComponent,
     children: [{ path: '', canActivate: [AuthGuard], children: [
       {path: '', component: ClientHomeComponent, canActivate: [AuthGuard], children: [
-        {path: '', component: CaseListComponent, canActivate: [AuthGuard]},
-        {path: 'intake/:id', component: IntakeFormComponent, canActivate: [AuthGuard]},
+        {path: '', component: CaseListComponent, canActivate: [AuthGuard]}
       ]},
     ] }],
   },

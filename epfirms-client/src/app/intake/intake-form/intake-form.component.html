@@ -1,64 +1,1022 @@
-<div class="shadow overflow-hidden border-b border-gray-200">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
-        <tr>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Name
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Title
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Email
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Role
-          </th>
-          <th scope="col" class="relative px-6 py-3">
-            <span class="sr-only">Edit</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Odd row -->
-        <tr class="bg-white">
-          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-            Jane Cooper
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            Regional Paradigm Technician
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            jane.cooper@example.com
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            Admin
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-          </td>
-        </tr>
-
-        <!-- Even row -->
-        <tr class="bg-gray-50">
-          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-            Cody Fisher
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            Product Directives Officer
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            cody.fisher@example.com
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            Owner
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-          </td>
-        </tr>
-
-        <!-- More people... -->
-      </tbody>
-    </table>
+<div class="py-8 px-24">
+  <div *ngIf="matter.spouse_id" class="mb-6">
+    <div>
+      <nav class="flex space-x-4" aria-label="Tabs">
+        <a (click)="toggleClientIntake()" class="px-3 py-2 font-medium text-sm rounded-md hover:cursor-pointer" [ngClass]="{'bg-blue-100 text-blue-700': selectedUser.id === matter.client_id, 'text-gray-500 hover:text-gray-700 hover:bg-gray-50': selectedUser.id === matter.spouse_id}">
+          Client Intake
+        </a>
+  
+        <a (click)="toggleSpouseIntake()" class="px-3 py-2 font-medium text-sm rounded-md hover:cursor-pointer" [ngClass]="{'bg-blue-100 text-blue-700': selectedUser.id === matter.spouse_id, 'text-gray-500 hover:text-gray-700 hover:bg-gray-50': selectedUser.id === matter.client_id}">
+          Spouse Intake
+        </a>
+      </nav>
+    </div>
   </div>
+
+  <div class="flex items-center">
+    <div class="flex-1">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+      {{selectedUser.id === matter.spouse_id ? 'Spouse' : 'Client'}} Intake Form
+    </h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500">
+      Personal details, family members, assets, and appointees
+    </p>
+  </div>
+    <div>
+      <button *ngIf="!matter.spouse_id" (click)="addSpouseToMatter()" type="button" class="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+        </svg>
+        Add spouse
+      </button>
+
+      <button *ngIf="matter.spouse_id" (click)="removeSpouseFromMatter()" type="button" class="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+        </svg>
+        Remove spouse
+      </button>
+    </div>
+  </div>
+  <div class="mt-5 border-t border-gray-200">
+    <dl class="divide-y divide-gray-200">
+      <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-500">
+          Full name
+        </dt>
+        <dd class="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <span class="flex-grow">{{selectedUser.full_name | titlecase}}</span>
+          <span class="ml-4 flex-shrink-0">
+            <button (click)="editUserInfo(selectedUser)" type="button"
+              class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              Update
+            </button>
+          </span>
+        </dd>
+      </div>
+      <div class="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-500">
+          Date of birth
+        </dt>
+        <dd class="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <span class="flex-grow">{{selectedUser.dob | date}}</span>
+          <span class="ml-4 flex-shrink-0">
+            <button (click)="editUserInfo(selectedUser)" type="button"
+              class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              Update
+            </button>
+          </span>
+        </dd>
+      </div>
+      <div class="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-500">
+          Phone number
+        </dt>
+        <dd class="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <span class="flex-grow">{{selectedUser.phone}}</span>
+          <span class="ml-4 flex-shrink-0">
+            <button (click)="editUserInfo(selectedUser)" type="button"
+              class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              Update
+            </button>
+          </span>
+        </dd>
+      </div>
+      <div class="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-500">
+          Address
+        </dt>
+        <dd class="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <span class="flex-grow">{{selectedUser.address}}, {{selectedUser.city}}, {{selectedUser.state}}
+            {{selectedUser.zip}}</span>
+          <span class="ml-4 flex-shrink-0">
+            <button (click)="editUserInfo(selectedUser)" type="button"
+              class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              Update
+            </button>
+          </span>
+        </dd>
+      </div>
+      <div class="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-500">
+          Family members
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <div class="mb-4">
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Children</span>
+
+              <button class="button-white-icon-sm" (click)="addFamilyMember(selectedUser.id, 'child')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add child
+              </button>
+            </div>
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!familyMembers.child.length">
+              <h3 class="text-sm font-medium text-gray-500">No children added</h3>
+            </div>
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mt-2"
+              *ngIf="familyMembers.child.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let member of familyMembers.child">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{member.first_name | titlecase}} {{member.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      {{member.phone || 'No phone number'}}
+                      <span class="font-bold"> &#183; </span>
+                      <span *ngIf="member.address">
+                        {{member.address}}
+                        <span *ngIf="member.city">
+                          , {{member.city}}
+                          <span *ngIf="member.state">
+                            , {{member.state}}
+                            <span *ngIf="member.zip">
+                              {{member.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!member.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button (click)="editUserInfo(member)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button (click)="removeFamilyMember(selectedUser.id, member.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+
+
+          <div class="mb-4">
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Parents</span>
+
+              <button class="button-white-icon-sm" (click)="addFamilyMember(selectedUser.id, 'parent')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add parent
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!familyMembers.parent.length">
+              <h3 class="text-sm font-medium text-gray-500">No parents added</h3>
+            </div>
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mt-2"
+              *ngIf="familyMembers.parent.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let member of familyMembers.parent">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{member.first_name | titlecase}} {{member.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      {{member.phone || 'No phone number'}}
+                      <span class="font-bold"> &#183; </span>
+                      <span *ngIf="member.address">
+                        {{member.address}}
+                        <span *ngIf="member.city">
+                          , {{member.city}}
+                          <span *ngIf="member.state">
+                            , {{member.state}}
+                            <span *ngIf="member.zip">
+                              {{member.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!member.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button (click)="editUserInfo(member)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button (click)="removeFamilyMember(selectedUser.id, member.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Siblings</span>
+
+              <button class="button-white-icon-sm" (click)="addFamilyMember(selectedUser.id, 'sibling')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add sibling
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!familyMembers.sibling.length">
+              <h3 class="text-sm font-medium text-gray-500">No siblings added</h3>
+            </div>
+
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mt-2"
+              *ngIf="familyMembers.sibling.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let member of familyMembers.sibling">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{member.first_name | titlecase}} {{member.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      {{member.phone || 'No phone number'}}
+                      <span class="font-bold"> &#183; </span>
+                      <span *ngIf="member.address">
+                        {{member.address}}
+                        <span *ngIf="member.city">
+                          , {{member.city}}
+                          <span *ngIf="member.state">
+                            , {{member.state}}
+                            <span *ngIf="member.zip">
+                              {{member.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!member.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button (click)="editUserInfo(member)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button (click)="removeFamilyMember(selectedUser.id, member.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Other</span>
+
+              <button class="button-white-icon-sm" (click)="addFamilyMember(selectedUser.id, 'other')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add other
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!familyMembers.other.length">
+              <h3 class="text-sm font-medium text-gray-500">No other members</h3>
+            </div>
+
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mt-2"
+              *ngIf="familyMembers.other.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let member of familyMembers.other">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{member.first_name | titlecase}} {{member.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      {{member.phone || 'No phone number'}}
+                      <span class="font-bold"> &#183; </span>
+                      <span *ngIf="member.address">
+                        {{member.address}}
+                        <span *ngIf="member.city">
+                          , {{member.city}}
+                          <span *ngIf="member.state">
+                            , {{member.state}}
+                            <span *ngIf="member.zip">
+                              {{member.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!member.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button (click)="editUserInfo(member)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button (click)="removeFamilyMember(selectedUser.id, member.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </dd>
+      </div>
+
+      <div class="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-500">
+          Assets
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+          <div class="mb-4">
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Real estate</span>
+
+              <button class="button-white-icon-sm" (click)="addRealEstate(selectedUser.id)">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add real estate
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!assets.real_estate.length">
+              <h3 class="text-sm font-medium text-gray-500">No real estate added</h3>
+            </div>
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mt-2"
+              *ngIf="assets.real_estate.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let asset of assets.real_estate">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                      d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{asset.full_address}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      Total value: {{asset.total_value | currency}} <span class="font-bold"> &#183; </span> Loan amount:
+                      {{asset.loan_amount | currency}}
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button type="button"
+                    (click)="updateRealEstate(asset.id, asset)"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button type="button"
+                    (click)="deleteRealEstate(asset.id)"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Vehicles</span>
+
+              <button class="button-white-icon-sm" (click)="addVehicle(selectedUser.id)">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add vehicle
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!assets.vehicle.length">
+              <h3 class="text-sm font-medium text-gray-500">No vehicles added</h3>
+            </div>
+
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mb-4 mt-2"
+              *ngIf="assets.vehicle.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm" *ngFor="let asset of assets.vehicle">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                    <path
+                      d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{asset.vehicle_type}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      Total value: {{asset.total_value | currency}} <span class="font-bold"> &#183; </span> Loan amount:
+                      {{asset.loan_amount | currency}}
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button type="button"
+                    (click)="updateVehicle(asset.id, asset)"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button type="button"
+                    (click)="deleteVehicle(asset.id)"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Accounts</span>
+
+              <button class="button-white-icon-sm" (click)="addMoneyAccount(selectedUser.id)">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add account
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!assets.money_account.length">
+              <h3 class="text-sm font-medium text-gray-500">No accounts added</h3>
+            </div>
+
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200"
+              *ngIf="assets.money_account.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let asset of assets.money_account">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{asset.type | titlecase}} account: {{asset.balance}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      {{asset.institution}}
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button type="button"
+                    (click)="updateMoneyAccount(asset.id, asset)"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button type="button"
+                    (click)="deleteMoneyAccount(asset.id)"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </dd>
+      </div>
+
+      <div class="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+        <dt class="text-sm font-medium text-gray-500">
+          Appointees
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+          <div class="mb-4">
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Executor</span>
+
+              <button class="button-white-icon-sm" (click)="addAppointee(selectedUser.id, 'executor')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add executor
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!appointees.executor.length">
+              <h3 class="text-sm font-medium text-gray-500">No executors added</h3>
+            </div>
+
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mb-4 mt-2"
+              *ngIf="appointees.executor.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let appointee of appointees.executor">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{appointee.first_name | titlecase}} {{appointee.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      Rank: {{appointee.appointee.executor}} <span class="font-bold"> &#183; </span> {{appointee.phone || 'No
+                      phone number'}} <span class="font-bold"> &#183; </span>
+                      <span *ngIf="appointee.address">
+                        {{appointee.address}}
+                        <span *ngIf="appointee.city">
+                          , {{appointee.city}}
+                          <span *ngIf="appointee.state">
+                            , {{appointee.state}}
+                            <span *ngIf="appointee.zip">
+                              {{appointee.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!appointee.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button type="button"
+                    (click)="editAppointee('executor', appointee)"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button (click)="removeAppointee(selectedUser.id, appointee.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Trustee</span>
+
+              <button class="button-white-icon-sm" (click)="addAppointee(selectedUser.id, 'trustee')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add trustee
+              </button>
+            </div>
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!appointees.trustee.length">
+              <h3 class="text-sm font-medium text-gray-500">No trustees added</h3>
+            </div>
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mb-4 mt-2"
+              *ngIf="appointees.trustee.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let appointee of appointees.trustee">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{appointee.first_name | titlecase}} {{appointee.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      Rank: {{appointee.appointee.trustee}} <span class="font-bold"> &#183; </span> {{appointee.phone || 'No phone
+                      number'}} <span class="font-bold"> &#183; </span>
+                      <span *ngIf="appointee.address">
+                        {{appointee.address}}
+                        <span *ngIf="appointee.city">
+                          , {{appointee.city}}
+                          <span *ngIf="appointee.state">
+                            , {{appointee.state}}
+                            <span *ngIf="appointee.zip">
+                              {{appointee.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!appointee.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button (click)="removeAppointee(selectedUser.id, appointee.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Durable power of attorney</span>
+
+              <button class="button-white-icon-sm" (click)="addAppointee(selectedUser.id, 'dpoa')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add durable power of attorney
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!appointees.dpoa.length">
+              <h3 class="text-sm font-medium text-gray-500">No durable power of attorney added</h3>
+            </div>
+
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mb-4 mt-2"
+              *ngIf="appointees.dpoa.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let appointee of appointees.dpoa">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{appointee.first_name | titlecase}} {{appointee.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      Rank: {{appointee.appointee.dpoa}} <span class="font-bold"> &#183; </span> {{appointee.phone || 'No phone
+                      number'}} <span class="font-bold"> &#183; </span>
+                      <span *ngIf="appointee.address">
+                        {{appointee.address}}
+                        <span *ngIf="appointee.city">
+                          , {{appointee.city}}
+                          <span *ngIf="appointee.state">
+                            , {{appointee.state}}
+                            <span *ngIf="appointee.zip">
+                              {{appointee.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!appointee.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button (click)="removeAppointee(selectedUser.id, appointee.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Medical power of attorney</span>
+
+              <button class="button-white-icon-sm" (click)="addAppointee(selectedUser.id, 'mpoa')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add medical power of attorney
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!appointees.mpoa.length">
+              <h3 class="text-sm font-medium text-gray-500">No medical power of attorney added</h3>
+            </div>
+
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mb-4 mt-2"
+              *ngIf="appointees.mpoa.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let appointee of appointees.mpoa">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{appointee.first_name | titlecase}} {{appointee.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      Rank: {{appointee.appointee.mpoa}} <span class="font-bold"> &#183; </span> {{appointee.phone || 'No phone
+                      number'}} <span class="font-bold"> &#183; </span>
+                      <span *ngIf="appointee.address">
+                        {{appointee.address}}
+                        <span *ngIf="appointee.city">
+                          , {{appointee.city}}
+                          <span *ngIf="appointee.state">
+                            , {{appointee.state}}
+                            <span *ngIf="appointee.zip">
+                              {{appointee.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!appointee.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button (click)="removeAppointee(selectedUser.id, appointee.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Guardian of person</span>
+
+              <button class="button-white-icon-sm" (click)="addAppointee(selectedUser.id, 'gop')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add guardian of person
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!appointees.gop.length">
+              <h3 class="text-sm font-medium text-gray-500">No guardian of person added</h3>
+            </div>
+
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mb-4 mt-2"
+              *ngIf="appointees.gop.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let appointee of appointees.gop">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{appointee.first_name | titlecase}} {{appointee.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      Rank: {{appointee.appointee.gop}} <span class="font-bold"> &#183; </span> {{appointee.phone || 'No phone
+                      number'}} <span class="font-bold"> &#183; </span>
+                      <span *ngIf="appointee.address">
+                        {{appointee.address}}
+                        <span *ngIf="appointee.city">
+                          , {{appointee.city}}
+                          <span *ngIf="appointee.state">
+                            , {{appointee.state}}
+                            <span *ngIf="appointee.zip">
+                              {{appointee.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!appointee.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button (click)="removeAppointee(selectedUser.id, appointee.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Guardian of your estate</span>
+
+              <button class="button-white-icon-sm" (click)="addAppointee(selectedUser.id, 'goe')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add guardian of your estate
+              </button>
+            </div>
+
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!appointees.goe.length">
+              <h3 class="text-sm font-medium text-gray-500">No guardian of your estate added</h3>
+            </div>
+
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mb-4 mt-2"
+              *ngIf="appointees.goe.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let appointee of appointees.goe">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{appointee.first_name | titlecase}} {{appointee.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      Rank: {{appointee.appointee.goe}} <span class="font-bold"> &#183; </span> {{appointee.phone || 'No phone
+                      number'}} <span class="font-bold"> &#183; </span>
+                      <span *ngIf="appointee.address">
+                        {{appointee.address}}
+                        <span *ngIf="appointee.city">
+                          , {{appointee.city}}
+                          <span *ngIf="appointee.state">
+                            , {{appointee.state}}
+                            <span *ngIf="appointee.zip">
+                              {{appointee.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!appointee.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button (click)="removeAppointee(selectedUser.id, appointee.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="flex items-baseline">
+              <span class="text-sm text-gray-500 flex-1">Guardian of minor chilren</span>
+
+              <button class="button-white-icon-sm" (click)="addAppointee(selectedUser.id, 'gomc')">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Add guardian of minor children
+              </button>
+            </div>
+            <div class="text-center border border-gray-200 rounded-md mt-2 py-6" *ngIf="!appointees.gomc.length">
+              <h3 class="text-sm font-medium text-gray-500">No guardian of minor children added</h3>
+            </div>
+            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200 mb-4 mt-2"
+              *ngIf="appointees.gomc.length">
+              <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                *ngFor="let appointee of appointees.gomc">
+                <div class="w-0 flex-1 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <span class="ml-2 flex-1 w-0 truncate">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{appointee.first_name | titlecase}} {{appointee.last_name | titlecase}}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      Rank: {{appointee.appointee.gomc}} <span class="font-bold"> &#183; </span> {{appointee.phone || 'No phone
+                      number'}} <span class="font-bold"> &#183; </span>
+                      <span *ngIf="appointee.address">
+                        {{appointee.address}}
+                        <span *ngIf="appointee.city">
+                          , {{appointee.city}}
+                          <span *ngIf="appointee.state">
+                            , {{appointee.state}}
+                            <span *ngIf="appointee.zip">
+                              {{appointee.zip}}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span *ngIf="!appointee.address">No address</span>
+                    </div>
+                  </span>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <button (click)="removeAppointee(selectedUser.id, appointee.id)" type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Update
+                  </button>
+                  <span class="text-gray-300" aria-hidden="true">|</span>
+                  <button type="button"
+                    class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Remove
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>

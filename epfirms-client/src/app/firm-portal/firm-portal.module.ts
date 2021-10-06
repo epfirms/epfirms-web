@@ -28,6 +28,9 @@ import { EditStaffComponent } from './overlays/edit-staff/edit-staff.component';
 import { IntakeModule } from '@app/intake/intake.module';
 import { EditClientComponent } from './overlays/edit-client/edit-client.component';
 import { CdkTableModule } from '@angular/cdk/table'
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { NgxSelectModule } from 'ngx-select-ex';
+import { BillingComponent } from './matter-subtabs/billing/billing.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,7 @@ import { CdkTableModule } from '@angular/cdk/table'
     DeleteStaffComponent,
     EditStaffComponent,
     EditClientComponent,
+    BillingComponent,
   ],
   imports: [
     CommonModule,
@@ -61,7 +65,9 @@ import { CdkTableModule } from '@angular/cdk/table'
     MenuModule,
     ModalModule,
     IntakeModule,
-    CdkTableModule
+    CdkTableModule,
+    TooltipModule,
+    NgxSelectModule
   ]
 })
 export class FirmPortalModule { }

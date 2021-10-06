@@ -45,11 +45,7 @@ export class TasksComponent implements OnInit {
       matter_id: matterId
     };
 
-    this._matterService.addMatterTask(task).subscribe(() => {
-      setTimeout(() => {
-        this.taskNames.first.inputElement.nativeElement.focus();
-      }, 0);
-    });
+    this._matterService.addMatterTask(task).subscribe();
   }
 
   updateTask(task, property, value) {

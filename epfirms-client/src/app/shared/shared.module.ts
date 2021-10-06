@@ -29,6 +29,7 @@ import { AddRealEstateComponent } from './add-real-estate/add-real-estate.compon
 import { AddFamilyMemberComponent } from './add-family-member/add-family-member.component';
 import { AddAppointeeComponent } from './add-appointee/add-appointee.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
+import { UserFormModalComponent } from './user-form-modal/user-form-modal.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
     AddVehicleComponent,
     AddRealEstateComponent,
     AddFamilyMemberComponent,
-    AddAppointeeComponent
+    AddAppointeeComponent,
+    UserFormModalComponent
   ],
   imports: [
     CommonModule,

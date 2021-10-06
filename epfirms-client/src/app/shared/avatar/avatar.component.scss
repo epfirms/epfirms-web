@@ -1,9 +1,10 @@
 .avatar {
   @apply inline-block;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .initials {
-  @apply inline-flex items-center justify-center bg-gray-500;
+  @apply inline-flex items-center justify-center bg-gray-300;
 
   & > span {
     @apply font-medium leading-none text-white uppercase;
@@ -51,14 +52,17 @@
 }
 
 .xs {
+  min-width: 1.5rem;
   @apply h-6 w-6;
 }
 
 .sm {
+  min-width: 2rem;
   @apply h-8 w-8;
 }
 
 .md {
+  min-width: 2.5rem;
   @apply h-10 w-10;
 }
 

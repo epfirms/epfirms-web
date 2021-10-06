@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppointeeService } from '@app/client-portal/_services/appointee-service/appointee.service';
 import { ModalRef } from '@app/modal/modal-ref';
 
@@ -43,6 +43,12 @@ export class AddAppointeeComponent implements OnInit {
       goe: [0],
       gomc: [0],
     });
+
+    if (this._modalRef.data.appointeeData) {
+      this.appointeeForm.addControl('id', new FormControl(''));
+      this.appointeeForm.patchValue(this._modalRef.data.appointeeData);
+      this.appointeeForm.updateValueAndValidity();
+    }
   }
 
   getDisplayType(type: string) {
@@ -79,9 +85,7 @@ export class AddAppointeeComponent implements OnInit {
       ...this.appointeeForm.value,
       [this.type]: this.selectedRank
     };
-
-    this._appointeeService.addAppointee(appointee).subscribe(res => {
-      this.close(res);
-    });
+    
+    this.close(appointee);
   }
 }

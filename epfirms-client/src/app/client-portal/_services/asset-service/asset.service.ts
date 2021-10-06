@@ -12,15 +12,43 @@ export class AssetService {
     return this._http.get<any>('/api/asset').pipe();
   }
 
-  addMoneyAccount(account): Observable<any> {
-    return this._http.post<any>('/api/asset/money-account', account).pipe();
+  getAssetsByUserId(id: number): Observable<any> {
+    return this._http.get<any>(`/api/asset/${id}`);
   }
 
-  addRealEstate(realEstate): Observable<any> {
-    return this._http.post<any>('/api/asset/real-estate', realEstate).pipe();
+  addMoneyAccount(userId: number, account): Observable<any> {
+    return this._http.post<any>(`/api/asset/money-account/${userId}`, account).pipe();
   }
 
-  addVehicle(vehicle): Observable<any> {
-    return this._http.post<any>('/api/asset/vehicle', vehicle).pipe();
+  addRealEstate(userId: number, realEstate): Observable<any> {
+    return this._http.post<any>(`/api/asset/real-estate/${userId}`, realEstate).pipe();
+  }
+
+  addVehicle(userId: number, vehicle): Observable<any> {
+    return this._http.post<any>(`/api/asset/vehicle/${userId}`, vehicle).pipe();
+  }
+
+  updateMoneyAccount(assetId: number, account): Observable<any> {
+    return this._http.patch<any>(`/api/asset/money-account/${assetId}`, account).pipe();
+  }
+
+  updateRealEstate(assetId: number, realEstate): Observable<any> {
+    return this._http.patch<any>(`/api/asset/real-estate/${assetId}`, realEstate).pipe();
+  }
+
+  updateVehicle(assetId: number, vehicle): Observable<any> {
+    return this._http.patch<any>(`/api/asset/vehicle/${assetId}`, vehicle).pipe();
+  }
+
+  deleteMoneyAccount(assetId: number): Observable<any> {
+    return this._http.delete<any>(`/api/asset/money-account/${assetId}`).pipe();
+  }
+
+  deleteRealEstate(assetId: number): Observable<any> {
+    return this._http.delete<any>(`/api/asset/real-estate/${assetId}`).pipe();
+  }
+
+  deleteVehicle(assetId: number): Observable<any> {
+    return this._http.delete<any>(`/api/asset/vehicle/${assetId}`).pipe();
   }
 }

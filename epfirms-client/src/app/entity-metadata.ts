@@ -51,6 +51,7 @@ export function documentFilter(entities: Document[], search: number){
 }
 
 export function matterSort(a: { matter_tasks: MatterTask[] }, b: { matter_tasks: MatterTask[] }): number {
+  if (a.matter_tasks && b.matter_tasks) {
   if (a.matter_tasks.length && !b.matter_tasks.length){
     return 1;
   } else if (!a.matter_tasks.length && b.matter_tasks.length) {
@@ -68,6 +69,9 @@ export function matterSort(a: { matter_tasks: MatterTask[] }, b: { matter_tasks:
       return new Date(a.matter_tasks[0].due).getTime() - new Date(b.matter_tasks[0].due).getTime()
     }
   }
+} else {
+  return 0;
+}
 }
 
 const pluralNames = { Staff: 'Staff' };

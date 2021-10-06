@@ -4,7 +4,6 @@ import { ModalService } from '@app/modal/modal.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { Matter } from '@app/_models/matter';
 import { Observable, Subscription } from 'rxjs';
-import { IntakeFormComponent } from '../intake-form/intake-form.component';
 import { ClientMatterService } from '../_services/matter-service/client-matter.service';
 
 @Component({

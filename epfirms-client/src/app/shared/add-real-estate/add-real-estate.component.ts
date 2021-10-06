@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
 import { ModalRef } from '@app/modal/modal-ref';
 
@@ -19,12 +19,16 @@ export class AddRealEstateComponent implements OnInit {
       loan_amount: [null, [Validators.required]],
       total_value: [null, [Validators.required]],
     });
+
+    if (this._modalRef.data.asset) {
+      this.realEstateForm.addControl('id', new FormControl(''));
+      this.realEstateForm.patchValue(this._modalRef.data.asset);
+      this.realEstateForm.updateValueAndValidity();
+    }
   }
 
   submit() {
-    this._assetService.addRealEstate(this.realEstateForm.value).subscribe(res => {
-      this.close(res);
-    });
+    this.close(this.realEstateForm.value);
   }
 
   close(newRealEstate?: any) {

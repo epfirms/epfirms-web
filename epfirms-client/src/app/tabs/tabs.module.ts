@@ -19,7 +19,9 @@ import { TabDirective } from './tab.directive';
   ],
   exports: [
     TabComponent,
-    TabsetComponent
+    TabsetComponent,
+    TabBodyComponent,
+    TabDirective
   ]
 })
 export class TabsModule { }

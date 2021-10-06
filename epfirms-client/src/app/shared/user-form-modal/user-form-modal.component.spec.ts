@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IntakeFormComponent } from './intake-form.component';
+import { UserFormModalComponent } from './user-form-modal.component';
 
-describe('IntakeFormComponent', () => {
-  let component: IntakeFormComponent;
-  let fixture: ComponentFixture<IntakeFormComponent>;
+describe('UserFormModalComponent', () => {
+  let component: UserFormModalComponent;
+  let fixture: ComponentFixture<UserFormModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IntakeFormComponent ]
+      declarations: [ UserFormModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IntakeFormComponent);
+    fixture = TestBed.createComponent(UserFormModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

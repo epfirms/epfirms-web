@@ -7,10 +7,10 @@ export class MoneyAccountController {
 
   public async addMoneyAccount(req: any, resp: Response): Promise<any> {
     try {
-      const { id } = req.user;
+      const { user_id } = req.params;
       const account = req.body;
 
-      account.user_id = id;
+      account.user_id = user_id;
 
       const createdAccount = await AssetService.addMoneyAccount(account);
       
@@ -22,9 +22,22 @@ export class MoneyAccountController {
 
   public async removeMoneyAccount(req: Request, resp: Response): Promise<any> {
     try {
-      const { email, password } = req.body;
+      const { id } = req.params;
+
+      await AssetService.deleteMoneyAccount(parseInt(id));
       
-        resp.status(StatusConstants.OK).send();
+        resp.status(StatusConstants.OK).send({success: true});
+    } catch (error) {
+      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+    }
+  }
+
+  public async updateMoneyAccount(req: Request, resp: Response): Promise<any> {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+      const updatedRealEstate = await AssetService.updateMoneyAccount(parseInt(id), data);
+        resp.status(StatusConstants.OK).send({success: true});
     } catch (error) {
       resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
     }

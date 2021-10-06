@@ -12,6 +12,7 @@ import { awsRouter } from '@src/modules/aws/routes';
 import { legalAreaRouter } from '@src/modules/legal-area/routes';
 import { matterActivityRouter } from '@src/modules/matter-activity/routes';
 import { assetRouter } from '@src/modules/asset/routes';
+import { matterBillingRouter } from '@src/modules/matter-billing/routes';
 
 const v1Router = express.Router();
 
@@ -29,5 +30,6 @@ v1Router.use('/aws', awsRouter);
 v1Router.use('/legal-area', legalAreaRouter);
 v1Router.use('/matter-activity', matterActivityRouter);
 v1Router.use('/asset', assetRouter);
+v1Router.use('/billing', matterBillingRouter);
 
 export { v1Router }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
 import { ModalRef } from '@app/modal/modal-ref';
 
@@ -19,12 +19,16 @@ export class AddVehicleComponent implements OnInit {
       loan_amount: [null, [Validators.required]],
       total_value: [null, [Validators.required]],
     });
+
+    if (this._modalRef.data.asset) {
+      this.vehicleForm.addControl('id', new FormControl(''));
+      this.vehicleForm.patchValue(this._modalRef.data.asset);
+      this.vehicleForm.updateValueAndValidity();
+    }
   }
 
   submit() {
-    this._assetService.addVehicle(this.vehicleForm.value).subscribe(res => {
-      this.close(res);
-    });
+    this.close(this.vehicleForm.value);
   }
 
   close(newVehicle?: any) {

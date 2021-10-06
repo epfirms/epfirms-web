@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { OverlayService } from '@app/firm-portal/_services/overlay-service/overlay.service';
@@ -31,12 +31,16 @@ export class AddMoneyAccountComponent implements OnInit {
       type: ['', [Validators.required]],
       is_joint: [false, [Validators.required]]
     });
+
+    if (this._modalRef.data.asset) {
+      this.accountForm.addControl('id', new FormControl(''));
+      this.accountForm.patchValue(this._modalRef.data.asset);
+      this.accountForm.updateValueAndValidity();
+    }
   }
 
   submit() {
-    this._assetService.addMoneyAccount(this.accountForm.value).subscribe(res => {
-      this.close(res);
-    });
+    this.close(this.accountForm.value);
   }
 
   close(newAccount?: any) {

@@ -58,7 +58,7 @@ emit() {
     }).pipe(
       map((response: Client) => {
         this._socketService.addOneToCacheSync('client', response);
-        return of(response);
+        return response;
       })
     );
   }

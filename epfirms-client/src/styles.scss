@@ -145,3 +145,37 @@ body, html {
     @apply opacity-100
   }
 }
+
+.ngx-select {
+  @apply mt-1 relative;
+
+  &>.ngx-select__search {
+    @apply relative h-full w-full pl-3 pr-10 py-1 text-left border-transparent focus:outline-none focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm;
+  }
+
+  &>ul.ngx-select__choices {
+    @apply absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm;
+
+    &>.ngx-select__item-group {
+      &>.ngx-select__item {
+        @apply text-gray-900 cursor-default select-none relative py-1 pl-3 pr-9;
+
+        &.ngx-select__item_active {
+          @apply text-white bg-blue-600
+        }
+      }
+    }
+  }
+
+  &>.ngx-select__selected {
+    &>.ngx-select__toggle {
+      @apply px-2 py-1 border border-transparent border-dashed w-full;
+
+      &:hover {
+        color: inherit;
+        @apply bg-white border-gray-300;
+      }
+
+    }
+  }
+}

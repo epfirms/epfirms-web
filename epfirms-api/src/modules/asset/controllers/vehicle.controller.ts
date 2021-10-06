@@ -7,10 +7,10 @@ export class VehicleController {
 
   public async addVehicle(req: any, resp: Response): Promise<any> {
     try {
-      const { id } = req.user;
+      const { user_id } = req.params;
       const vehicle = req.body;
 
-      vehicle.user_id = id;
+      vehicle.user_id = user_id;
 
       const created = await AssetService.addVehicle(vehicle);
 
@@ -22,9 +22,20 @@ export class VehicleController {
 
   public async removeVehicle(req: Request, resp: Response): Promise<any> {
     try {
-      const { email, password } = req.body;
-      
-        resp.status(StatusConstants.OK).send();
+      const { id } = req.params;
+      await AssetService.deleteVehicle(parseInt(id));
+        resp.status(StatusConstants.OK).send({success: true});
+    } catch (error) {
+      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+    }
+  }
+
+  public async updateVehicle(req: Request, resp: Response): Promise<any> {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+      const updatedVehicle = await AssetService.updateVehicle(parseInt(id), data);
+        resp.status(StatusConstants.OK).send({success: true});
     } catch (error) {
       resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
     }

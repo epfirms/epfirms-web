@@ -50,7 +50,9 @@ export class AddFamilyMemberComponent implements OnInit {
     calendarClass: 'datepicker-blue', // custom datepicker calendar CSS class to be applied
     scrollBarColor: '#dfe3e9', // in case you customize you theme, here you define scroll bar color
   };
-  constructor(private _fb: FormBuilder, private _familyMemberService: FamilyMemberService, private _modalRef: ModalRef) { }
+  constructor(private _fb: FormBuilder, private _familyMemberService: FamilyMemberService, private _modalRef: ModalRef) {
+    this.familyMemberType = _modalRef.data.type;
+   }
 
   ngOnInit(): void {
     this.familyMemberForm = this._fb.group({
@@ -72,9 +74,7 @@ export class AddFamilyMemberComponent implements OnInit {
       relationship_type: this.familyMemberType
     };
 
-    this._familyMemberService.addFamilyMember(familyMember).subscribe(res => {
-      this.close(res);
-    });
+    this.close(familyMember);
   }
 
   close(newMember?: any) {

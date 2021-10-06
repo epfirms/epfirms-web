@@ -23,6 +23,7 @@ export class EditClientComponent {
       id: [_modalRef.data.user.id, [Validators.required]],
       first_name: [_modalRef.data.user.first_name, [Validators.required]],
       last_name: [_modalRef.data.user.last_name, [Validators.required]],
+      phone: [_modalRef.data.user.phone],
       email: [_modalRef.data.user.email, [Validators.email]],
       address: [_modalRef.data.user.address],
       city: [_modalRef.data.user.city],

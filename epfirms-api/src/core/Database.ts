@@ -45,7 +45,8 @@ export class Database {
       verification_token: require('../models/verification_token')(this.sequelize, Sequelize),
       review: require('../models/Review')(this.sequelize, Sequelize),
       appointee: require('../models/Appointee')(this.sequelize, Sequelize),
-      password_reset_token: require('../models/PasswordResetToken')(this.sequelize, Sequelize)
+      password_reset_token: require('../models/PasswordResetToken')(this.sequelize, Sequelize),
+      matter_billing: require('../models/MatterBilling')(this.sequelize, Sequelize)
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee });
@@ -127,6 +128,14 @@ export class Database {
     this.models.matter.hasMany(this.models.matter_task, {
       foreignKey: 'matter_id'
     });
+
+    this.models.matter.hasMany(this.models.matter_billing, {
+      foreignKey: 'matter_id'
+    });
+
+    this.models.matter_billing.belongsTo(this.models.matter, {
+      foreignKey: 'matter_id'
+    })
 
     this.models.matter.hasMany(this.models.review, {
       foreignKey: 'matter_id'

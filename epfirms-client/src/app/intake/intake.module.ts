@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IntakeFormComponent } from './intake-form/intake-form.component';
+import { ModalModule } from '@app/modal/modal.module';
 
 
 
@@ -9,7 +10,8 @@ import { IntakeFormComponent } from './intake-form/intake-form.component';
     IntakeFormComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ModalModule
   ],
   exports: [
     IntakeFormComponent

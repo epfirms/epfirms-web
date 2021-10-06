@@ -51,14 +51,20 @@
 }
 
 .table-dropdown {
-    @apply inline-flex items-center px-2.5 py-1 border border-gray-300 shadow-sm text-xs leading-4 font-medium rounded text-gray-700 bg-white hover:bg-gray-50;
+    @apply inline-flex items-center px-2.5 py-1 text-sm leading-4 font-normal rounded bg-white hover:bg-gray-100 transition-colors;
+
+    &:hover {
+        &>svg.icon-end {
+            @apply opacity-100;
+        }
+    }
 
     &>svg.icon {
         @apply -ml-1 mr-1 h-3 w-3;
     }
 
     &>svg.icon-end {
-        @apply -mr-1 ml-1 h-3 w-3;
+        @apply -mr-1 ml-1 h-3 w-3 opacity-0 transition-opacity;
     }
 }
 

@@ -169,7 +169,7 @@
     <div class="hidden sm:block flex-1 bg-white">
       <div class="align-middle inline-block min-w-full">
         <ng-container *ngIf="cases$ | async as cases">
-        <table class="min-w-full" cdk-table recycleRows [dataSource]="cases | slice: paginator.start:paginator.end" [trackBy]="trackByIndex">
+        <table class="min-w-full" cdk-table [dataSource]="cases | slice: paginator.start:paginator.end" [trackBy]="trackByIndex" fixedLayout>
           <!-- Position Column -->
           <ng-container cdkColumnDef="client">
             <th
@@ -181,13 +181,14 @@
                 text-gray-500
                 uppercase
                 tracking-wider
+                border-r border-gray-200
               "
               cdk-header-cell
               *cdkHeaderCellDef
               (click)="sortMatters('first_name')"
             >
             <div class="flex items-center group hover:cursor-pointer">
-              <div class="flex-1">Client</div>
+              <div class="flex-1">Case</div>
                 
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-opacity group-hover:opacity-50"  [ngClass]="{'opacity-0 group-hover:opacity-50': sortValues.column !== 'first_name', 'opacity-100': sortValues.column === 'client'}" viewBox="0 0 20 20" fill="currentColor">
                   <path *ngIf="sortValues.direction === 'asc' || !sortValues.direction" fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -195,20 +196,21 @@
                 </svg>
               </div>
             </th>
-            <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap">
+            <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap border-r border-gray-200 w-4/12">
               <div class="flex items-center">
                 <tw-avatar
-                  twSize="xsmall"
+                  twSize="medium"
+                  twShape="square"
                   [twSrc]="case.client.profile_image"
                   [twText]="case.client.full_name"
                 >
                 </tw-avatar>
                 <div class="ml-2">
                   <div class="text-sm font-medium text-gray-900">
-                    {{ case.client.full_name | titlecase }}
+                    {{ case.client.full_name | titlecase }} <span class="text-xs text-gray-500" *ngIf="case.spouse">& {{ case.spouse.full_name | titlecase }}</span>
                   </div>
-                  <div class="text-sm text-gray-500" *ngIf="case.spouse">
-                    {{ case.spouse.full_name | titlecase }}
+                  <div class="text-xs text-gray-500">
+                    #{{case.case_id}} <span class="font-bold">&#183;</span> {{case.matter_intake?.status || "No intake" | titlecase}} 
                   </div>
                 </div>
               </div>
@@ -240,9 +242,9 @@
               </svg>
             </div>
             </th>
-            <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap">
+            <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap w-3/12">
               <a class="flex-shrink-0 group block" *ngIf="case.matter_tasks.length">
-                <div class="flex items-center" *ngIf="!case.matter_tasks[0].completed">
+                <!-- <div class="flex items-center" *ngIf="!case.matter_tasks[0].completed">
                   <div>
                     <tw-avatar
                       twSize="xsmall"
@@ -258,32 +260,36 @@
                       {{ case.matter_tasks[0].due | date }}
                     </p>
                   </div>
-                </div>
-        
+                </div> -->
+                <a class="flex-shrink-0 group block" *ngIf="!case.matter_tasks[0].completed">
+                  <div class="flex items-center">
+                    <div>
+                      <tw-avatar
+                      twSize="small"
+                      [twSrc]="case.matter_tasks[0].assignee?.profile_image"
+                      [twText]="case.matter_tasks[0].assignee?.full_name"
+                    ></tw-avatar>                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate" style="max-width: 12rem" [tooltip]="case.matter_tasks[0].name || null"
+                      [options]="tooltipOptions">
+                        {{ case.matter_tasks[0].name || "No task name" }}
+                      </p>
+                      <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                        {{ case.matter_tasks[0].due | date }}
+                      </p>
+                    </div>
+                  </div>
+                </a>
                 <div
-                  class="flex items-center text-gray-400"
+                  class="flex items-center text-gray-400 font-normal"
                   *ngIf="case.matter_tasks[0].completed"
                 >
-                  <div class="w-6 h-6 flex items-center justify-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5 inline"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                      <path
-                        fill-rule="evenodd"
-                        d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </div>
+                <div class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-green-400" aria-hidden="true"></div>
                   <div class="ml-2">
                     <p
                       class="
                         text-sm
-                        font-medium
+                        font-normal
                         text-gray-500
                         group-hover:text-gray-600
                       "
@@ -297,19 +303,7 @@
                 class="text-sm text-gray-400 flex items-center"
                 *ngIf="!case.matter_tasks.length"
               >
-                <div class="w-6 h-6 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 inline"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                    <path
-                      d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
-                    />
-                  </svg>
-                </div>
+                <div class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gray-300" aria-hidden="true"></div>
                 <span class="ml-2 text-gray-500"> No tasks </span>
               </div>
             </td>
@@ -332,11 +326,11 @@
             >
               Legal Area
             </th>
-            <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap" (click)="$event.stopPropagation()">
+            <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap w-1/12">
               <div>
                 <ng-container *ngIf="legalAreas$ | async as legalAreas">
-                  <div hlMenu class="relative inline-block text-left">
-                    <button hlMenuButton class="table-dropdown">
+                  <div hlMenu class="relative inline-block text-left text-gray-700">
+                    <button hlMenuButton class="table-dropdown" [class.text-gray-500]="!case.legal_area?.name">
                       {{ case.legal_area?.name || "Select a legal area" | titlecase }}
           
                       <svg
@@ -363,6 +357,8 @@
                         origin-top-right
                         bg-white
                         rounded-md
+                        overflow-y-auto
+                        max-h-60
                         shadow-lg
                         ring-1 ring-black ring-opacity-5
                         focus:outline-none
@@ -473,20 +469,24 @@
                 </div>
               </div>
             </th>
-            <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap">
-              <div class="flex items-center">
-                <tw-avatar
-                  twSize="xsmall"
-                  [twSrc]="case.attorney.profile_image"
-                  [twText]="case.attorney.full_name"
-                >
-                </tw-avatar>
-                <div class="ml-2">
-                  <div class="text-sm text-gray-800">
-                    {{ case.attorney.full_name | titlecase }}
+            <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap w-2/12">
+              <ngx-select [items]="attorneys$ | async" (select)="setAttorney(case, $event)" [optionTextField]="'full_name'" [optionValueField]="'id'" [ngModel]="case.attorney_id" [keepSelectMenuOpened]="false">
+                <ng-template ngx-select-option ngx-select-option-selected let-option let-text="text">
+                  <div class="flex items-center">
+                    <tw-avatar
+                    twSize="xsmall"
+                    [twSrc]="option.data.profile_image"
+                    [twText]="option.data.full_name"
+                  >
+                  </tw-avatar>
+                    <div class="text-sm font-normal ml-3 block truncate">
+                      {{ option.text | titlecase }}
+                    </div>
                   </div>
-                </div>
-              </div>
+              </ng-template>
+              
+              </ngx-select>
+
             </td>
           </ng-container>
         
@@ -507,11 +507,9 @@
             >
               Status
             </th>
-            <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap">
+            <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap w-1/12">
               <div class="flex flex-col justify-center">
-              <span class="text-xs text-gray-500">#{{case.case_id}}</span>
               <tw-tag
-                (click)="$event.stopPropagation()"
                 [dot]="true"
                 [dotColor]="case.status === 'active' ? 'emerald' : 'gray'"
                 [twSize]="'small'"
@@ -549,19 +547,18 @@
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
             >
             <tw-tag
-            (click)="$event.stopPropagation()"
             [dot]="false"
             [color]="'sky'"
             [twSize]="'small'"
             [rounded]="true"
           >
-          {{case.matter_intake?.status || "No intake" | titlecase}}
+          {{case.matter_intake?.status ? `Intake ${case.matter_intake.status}|| "No intake"}}
           </tw-tag>
             </td>
           </ng-container>
           <!-- Symbol Column -->
           <ng-container cdkColumnDef="edit">
-            <th class="relative px-6 py-3" cdk-header-cell *cdkHeaderCellDef></th>
+            <th class="px-6 py-3" cdk-header-cell *cdkHeaderCellDef></th>
             <td
               cdk-cell
               *cdkCellDef="let case"
@@ -572,6 +569,7 @@
                 text-right text-sm
                 font-medium
                 text-gray-400
+                w-1/12
               "
             >
               <button
@@ -607,12 +605,49 @@
             </td>
           </ng-container>
         
+                    <!-- Symbol Column -->
+                    <ng-container cdkColumnDef="billing">
+                      <th               class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                    " cdk-header-cell *cdkHeaderCellDef>Billing</th>
+                      <td
+                        cdk-cell
+                        *cdkCellDef="let case"
+                        class="
+                          px-6
+                          py-4
+                          whitespace-nowrap
+                          text-right text-sm
+                          font-medium
+                          text-gray-400
+                          w-1/12
+                        "
+                      >
+                      <a class="flex-shrink-0 group block" (click)="openTab(case)">
+                        <div class="flex items-center">
+                          <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate" style="max-width: 12rem">
+                               $4,000  billed
+                            </p>
+                            <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                               $4,000 paid
+                            </p>
+                          </div>
+                        </div>
+                      </a>
+                      </td>
+                    </ng-container>
           <tr cdk-header-row *cdkHeaderRowDef="displayedColumns" class="bg-gray-50"></tr>
           <tr
             cdk-row
             *cdkRowDef="let row; columns: displayedColumns;"
             class="hover:cursor-pointer"
-            (click)="openTab(row)"
           ></tr>
         </table>
       </ng-container>

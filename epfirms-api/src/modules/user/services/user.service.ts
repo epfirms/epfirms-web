@@ -145,10 +145,20 @@ export class UserService {
     return Promise.resolve({...newAppointee.dataValues, appointee: {rank, executor, trustee, dpoa, mpoa, gop, goe, gomc}});
   }
 
-  public static async updateAppointee(familyMember): Promise<any> {
-    const user = await Database.models.family_member.update(familyMember);
+  public static async updateAppointee(appointeeId: number, data): Promise<any> {
+    const appointee = await Database.models.appointee.findOne({ where: { id: appointeeId }});
 
-    return Promise.resolve(user);
+    if (appointee) {
+      const updateUser = await Database.models.user.update(data.user, {where: {id: appointee.appointee_id}});
+
+      const updateAppointee = await Database.models.appointee.update(data.appointee, {where: {id: appointeeId}});
+
+      const updatedAppointee = await Database.models.user.findOne({where: {id: appointee.appointee_id}});
+      
+      return Promise.resolve(updatedAppointee);
+    }
+
+    return Promise.reject(new Error("Error updating appointee"));
   }
 
   public static async removeAppointee(userId: number, appointedUserId: number): Promise<any> {
@@ -158,7 +168,7 @@ export class UserService {
 
     const appointeeUser = await user.findByPk(appointedUserId);
 
-    const removed = await currentUser.removeAppointedUser(appointeeUser);
+    const removed = await currentUser.removeAppointed_user(appointeeUser);
 
     return Promise.resolve(removed);
   }

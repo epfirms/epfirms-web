@@ -17,12 +17,17 @@ userRouter.patch('/',
   (req, res) => userController.updateUser(req, res)
 )
 
+userRouter.get('/family-member/:id',
+passport.authenticate('bearer', {session: false}),
+  (req, res) => familyMemberController.getByUserId(req, res)
+)
+
 userRouter.get('/family-member',
 passport.authenticate('bearer', {session: false}),
   (req, res) => familyMemberController.getAll(req, res)
 )
 
-userRouter.post('/family-member',
+userRouter.post('/:user_id/family-member',
 passport.authenticate('bearer', {session: false}),
   (req, res) => familyMemberController.create(req, res)
 )
@@ -37,22 +42,32 @@ passport.authenticate('bearer', {session: false}),
   (req, res) => familyMemberController.remove(req, res)
 )
 
+userRouter.delete('/:user_id/family-member/:family_member_id',
+passport.authenticate('bearer', {session: false}),
+  (req, res) => familyMemberController.removeByUserId(req, res)
+)
+
+userRouter.get('/:id/appointee',
+passport.authenticate('bearer', {session: false}),
+  (req, res) => appointeeController.getByUserId(req, res)
+)
+
 userRouter.get('/appointee',
 passport.authenticate('bearer', {session: false}),
   (req, res) => appointeeController.getAll(req, res)
 )
 
-userRouter.post('/appointee',
+userRouter.post('/:user_id/appointee',
 passport.authenticate('bearer', {session: false}),
   (req, res) => appointeeController.create(req, res)
 )
 
-userRouter.patch('/appointee',
+userRouter.patch('/appointee/:appointee_id',
 passport.authenticate('bearer', {session: false}),
   (req, res) => appointeeController.update(req, res)
 )
 
-userRouter.delete('/appointee',
+userRouter.delete('/:user_id/appointee/:appointee_id',
 passport.authenticate('bearer', {session: false}),
   (req, res) => appointeeController.remove(req, res)
 )

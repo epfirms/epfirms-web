@@ -7,9 +7,10 @@ export class AssetController {
 
   public async getAssetsById(req: Request, resp: Response): Promise<any> {
     try {
-      const { email, password } = req.body;
+      const { id } = req.params;
+      const userAssets = await AssetService.getAssetsByUserId(parseInt(id));
       
-        resp.status(StatusConstants.OK).send();
+        resp.status(StatusConstants.OK).send(userAssets);
     } catch (error) {
       resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
     }
