@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModalService } from '@app/modal/modal.service';
+import { BillFormModalComponent } from '@app/shared/bill-form-modal/bill-form-modal.component';
 import { Matter } from '@app/_models/matter';
 
 @Component({
@@ -17,9 +19,15 @@ export class BillingComponent implements OnInit {
 
   private _matter: Matter;
   
-  constructor() { }
+  constructor(private _modalService: ModalService) { }
 
   ngOnInit(): void {
   }
 
+  addBill(): void {
+    const billModal = this._modalService.open(BillFormModalComponent, {});
+    billModal.afterClosed$.subscribe(({data}) => {
+      console.log(data);
+    });
+  }
 }

@@ -30,6 +30,8 @@ import { AddFamilyMemberComponent } from './add-family-member/add-family-member.
 import { AddAppointeeComponent } from './add-appointee/add-appointee.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { UserFormModalComponent } from './user-form-modal/user-form-modal.component';
+import { BillFormModalComponent } from './bill-form-modal/bill-form-modal.component';
+import { PaymentFormModalComponent } from './payment-form-modal/payment-form-modal.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { UserFormModalComponent } from './user-form-modal/user-form-modal.compon
     AddRealEstateComponent,
     AddFamilyMemberComponent,
     AddAppointeeComponent,
-    UserFormModalComponent
+    UserFormModalComponent,
+    BillFormModalComponent,
+    PaymentFormModalComponent
   ],
   imports: [
     CommonModule,

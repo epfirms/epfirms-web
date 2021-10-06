@@ -17,6 +17,7 @@ import { currentUserReducer } from './store/current-user/current-user.reducer';
 import { MatterActivityInterceptor } from './shared/_interceptors/matter-activity.interceptor';
 import { extModules } from 'src/environments/development/modules.dev';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -41,7 +42,8 @@ const config: SocketIoConfig = { url: 'http://localhost:4000', options: {autoCon
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
     extModules,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    InputMaskModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

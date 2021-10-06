@@ -33,7 +33,7 @@ export class ModalService {
       case 'modal':
         return {
           hasBackdrop: true,
-          panelClass: ['inline-block', 'align-bottom', 'bg-white', 'rounded-lg', 'text-left', 'overflow-hidden', 'shadow-xl', 'transform', 'transition-all', 'sm:align-middle', 'sm:max-w-xl', 'sm:w-full'],
+          panelClass: ['inline-block', 'align-bottom', 'bg-white', 'rounded-lg', 'text-left', 'shadow-xl', 'transform', 'transition-all', 'sm:align-middle', 'sm:max-w-xl', 'sm:w-full'],
           backdropClass: [],
           positionStrategy: this.overlay.position()
           .global().centerHorizontally()

@@ -1,0 +1,265 @@
+<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+    <div class="sm:flex sm:items-start">
+      <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+          Add Bill
+        </h3>
+        <div class="mt-6">
+          <form [formGroup]="billForm">
+            <div>
+              <div class="grid grid-cols-6 gap-6">
+                <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="first-name"
+                    class="block text-sm font-medium text-gray-700"
+                    >Billing style</label
+                  >
+                  <div hlMenu class="relative inline-block text-left">
+                    <button hlMenuButton class="button-white-icon-sm">
+                        {{billForm.get('billing_type').value || 'Select billing type'}}
+          
+                      <svg
+                        class="icon-end"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      *hlMenuItems
+                      class="
+                        z-10
+                        absolute
+                        right-0
+                        w-56
+                        mt-2
+                        origin-top-right
+                        bg-white
+                        rounded-md
+                        shadow-lg
+                        ring-1 ring-black ring-opacity-5
+                        focus:outline-none
+                      "
+                    >
+                      <!-- Use the `active` state to conditionally style the active item. -->
+                      <div class="p-1" *ngFor="let option of billingTypeOptions">
+                        <a
+                          *hlMenuItem="let item"
+                          class="
+                            group
+                            flex
+                            rounded-md
+                            items-center
+                            w-full
+                            px-2
+                            py-2
+                            text-gray-700
+                            font-medium
+                            text-sm
+                            hover:bg-blue-500 hover:text-white hover:cursor-pointer
+                          "
+                          (click)="setBillingType(option)"
+                        >
+                          {{ option | titlecase }}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                    <!-- billing_type -->
+                </div>
+  
+                <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="last-name"
+                    class="block text-sm font-medium text-gray-700"
+                    >Payment Type</label
+                  >
+                  <div hlMenu class="relative inline-block text-left">
+                    <button hlMenuButton class="button-white-icon-sm">
+                        {{billForm.get('payment_type').value || 'Select payment type'}}
+          
+                      <svg
+                        class="icon-end"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      *hlMenuItems
+                      class="
+                        z-10
+                        absolute
+                        right-0
+                        w-56
+                        mt-2
+                        origin-top-right
+                        bg-white
+                        rounded-md
+                        shadow-lg
+                        ring-1 ring-black ring-opacity-5
+                        focus:outline-none
+                      "
+                    >
+                      <!-- Use the `active` state to conditionally style the active item. -->
+                      <div class="p-1" *ngFor="let option of paymentTypeOptions">
+                        <a
+                          *hlMenuItem="let item"
+                          class="
+                            group
+                            flex
+                            rounded-md
+                            items-center
+                            w-full
+                            px-2
+                            py-2
+                            text-gray-700
+                            font-medium
+                            text-sm
+                            hover:bg-blue-500 hover:text-white hover:cursor-pointer
+                          "
+                          (click)="setPaymentType(option)"
+                        >
+                          {{ option | titlecase }}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                    <!-- payment_type -->
+                </div>
+                <ng-container *ngIf="billForm.get('billing_type').value === 'flat rate'">
+                <div class="col-span-6 sm:col-span-2">
+                  <label
+                    for="amount"
+                    class="block text-sm font-medium text-gray-700"
+                    >Amount billed</label
+                  >
+                  <input
+                  formControlName="amount"
+                  tw-input
+                  type="text"
+                  name="amount"
+                  id="amount"
+                  class="mt-1"
+                />
+                    <!-- amount -->
+                </div>
+  
+                <div class="col-span-6 sm:col-span-4">
+                  <label
+                    for="bill-date"
+                    class="block text-sm font-medium text-gray-700"
+                    >Bill date</label
+                  >
+                  <div class="relative">
+
+                    <input (click)="dp.toggleCalendar()" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Select a date" angular-mydatepicker id="bill-date" name="bill-date" 
+                      formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"/>
+                    </div>
+                    <!-- date -->
+                </div>
+            </ng-container>
+
+                <ng-container *ngIf="billForm.get('billing_type').value === 'hourly'">
+
+                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                  <label
+                    for="city"
+                    class="block text-sm font-medium text-gray-700"
+                    >Track time for</label
+                  >
+                    <!-- track_time_for -->
+                </div>
+  
+                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                  <label
+                    for="state"
+                    class="block text-sm font-medium text-gray-700"
+                    >Default hourly rate</label
+                  >
+                    <!-- hourly_rate -->
+                </div>
+  
+                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                  <label
+                    for="postal-code"
+                    class="block text-sm font-medium text-gray-700"
+                    >Date range</label
+                  >
+                    <!-- start_date end_date -->
+                </div>
+                
+                </ng-container>
+
+                <ng-container *ngIf="billForm.get('billing_type').value === 'contingency'">
+
+                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                    <label
+                      for="postal-code"
+                      class="block text-sm font-medium text-gray-700"
+                      >Estimated Settlement</label
+                    >
+                      <!-- settlement_amount -->
+                  </div>
+
+                  <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                    <label
+                      for="postal-code"
+                      class="block text-sm font-medium text-gray-700"
+                      >Contingency fee %</label
+                    >
+                      <!-- settlement_percentage -->
+                  </div>
+
+                  <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                    <label
+                      for="postal-code"
+                      class="block text-sm font-medium text-gray-700"
+                      >Settlement date</label
+                    >
+                      <!-- settlement_date -->
+                  </div>
+                  
+                  </ng-container>
+
+                  <div class="col-span-6">
+                    <label
+                      for="street-address"
+                      class="block text-sm font-medium text-gray-700"
+                      >Description</label
+                    >
+                      <!-- description -->
+                  </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+    <button
+
+
+      type="button"
+      class="button-primary"
+    >
+      Add bill
+    </button>
+    <button type="button" class="button-white">
+      Cancel
+    </button>
+  </div>
+  
