@@ -6,6 +6,7 @@ import {
   close,
   toggleExpand,
   clear,
+  minimize,
 } from '@app/store/matter-tabs/matter-tabs.actions';
 import { Store } from '@ngrx/store';
 import { Tabs } from '@app/_models/tabs';
@@ -40,5 +41,9 @@ export class MatterTabsService {
 
   toggleExpand(): void {
     this.store.dispatch(toggleExpand());
+  }
+  
+  minimizeTabs(): void {
+    this.store.dispatch(minimize());
   }
 }
