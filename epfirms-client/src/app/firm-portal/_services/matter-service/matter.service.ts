@@ -170,4 +170,16 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
         })
       );
   }
+
+  createBillOrPayment(bill): Observable<any> {
+    return this._http.post<any>('/api/billing', bill);
+  }
+
+  getMatterBillingById(id: number): Observable<any> {
+    return this._http.get<any>(`/api/billing/${id}`);
+  }
+
+  removeMatterBill(id): Observable<any> {
+    return this._http.delete<any>(`/api/billing/${id}`);
+  }
 }

@@ -28,7 +28,7 @@ export class MatterBillingController {
   public async delete(req, res : Response) : Promise<any>{
     try {
       const deleted = await MatterBillingService.delete(req.params.id);
-      res.status(StatusConstants.OK).send(deleted);
+      res.status(StatusConstants.OK).send({success: "true"});
     } catch (err) {
       console.error(err);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);

@@ -32,6 +32,7 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { UserFormModalComponent } from './user-form-modal/user-form-modal.component';
 import { BillFormModalComponent } from './bill-form-modal/bill-form-modal.component';
 import { PaymentFormModalComponent } from './payment-form-modal/payment-form-modal.component';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,7 @@ import { PaymentFormModalComponent } from './payment-form-modal/payment-form-mod
     AddAppointeeComponent,
     UserFormModalComponent,
     BillFormModalComponent,
-    PaymentFormModalComponent
+    PaymentFormModalComponent,
   ],
   imports: [
     CommonModule,
@@ -70,7 +71,8 @@ import { PaymentFormModalComponent } from './payment-form-modal/payment-form-mod
     ReactiveFormsModule,
     DatepickerModule,
     MenuModule,
-    AngularMyDatePickerModule
+    AngularMyDatePickerModule,
+    InputMaskModule
   ],
   exports: [
     InputComponent,

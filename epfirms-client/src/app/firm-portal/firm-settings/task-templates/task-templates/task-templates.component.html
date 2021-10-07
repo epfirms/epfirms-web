@@ -165,7 +165,7 @@
                                           <select *ngIf="staff$ | async as staffMembers" id="location" name="location"
                                             class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" [(ngModel)]="task.user_id">
                                             <option></option>
-                                            <option *ngFor="let staff of staffMembers" value="staff.id" [ngValue]="staff.id">{{staff.first_name}}, {{staff.last_name}}</option>
+                                            <option *ngFor="let staff of staffMembers" [ngValue]="staff.id">{{staff.first_name}}, {{staff.last_name}}</option>
                                           </select>
                                         </div>
                                       </td>

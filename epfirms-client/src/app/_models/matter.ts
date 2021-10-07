@@ -27,5 +27,7 @@ export class Matter {
     matter_notes?: MatterNote[];
     deleted?: boolean;
     created_at?: string;
+    total_billed?: string;
+    total_paid?: string;
   }
   
