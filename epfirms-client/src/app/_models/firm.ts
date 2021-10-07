@@ -1,3 +1,5 @@
+import { TaskTemplate } from "./task-template";
+
 export class Firm {
     id: number;
     name: string;
@@ -12,4 +14,5 @@ export class Firm {
     website_url?: string;
     firm_image?: string;
     google_review_url?: string;
+    task_templates?: TaskTemplate[];
   }

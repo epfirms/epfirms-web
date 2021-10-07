@@ -46,7 +46,9 @@ export class Database {
       review: require('../models/Review')(this.sequelize, Sequelize),
       appointee: require('../models/Appointee')(this.sequelize, Sequelize),
       password_reset_token: require('../models/PasswordResetToken')(this.sequelize, Sequelize),
-      matter_billing: require('../models/MatterBilling')(this.sequelize, Sequelize)
+      matter_billing: require('../models/MatterBilling')(this.sequelize, Sequelize),
+      template_task: require('../models/TemplateTask')(this.sequelize, Sequelize),
+      task_template: require('../models/TaskTemplate')(this.sequelize, Sequelize)
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee });
@@ -214,7 +216,7 @@ export class Database {
       as: 'appointed_user',
       foreignKey: 'user_id'
     });
-    
+
     this.models.user.belongsToMany(this.models.user, {
       through: this.models.appointee,
       as: 'owner',
@@ -226,6 +228,22 @@ export class Database {
     });
     this.models.password_reset_token.belongsTo(this.models.user, {
       foreignKey: 'user_id'
+    });
+
+    this.models.firm.hasMany(this.models.task_template, {
+      foreignKey: 'firm_id',
+      onDelete: 'cascade'
+    });
+    this.models.task_template.belongsTo(this.models.firm, {
+      foreignKey: 'firm_id'
+    });
+
+    this.models.task_template.hasMany(this.models.template_task, {
+      foreignKey: 'template_id',
+      onDelete: 'cascade'
+    });
+    this.models.template_task.belongsTo(this.models.task_template, {
+      foreignKey: 'firm_id'
     });
   }
 

@@ -31,6 +31,7 @@ import { CdkTableModule } from '@angular/cdk/table'
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { BillingComponent } from './matter-subtabs/billing/billing.component';
+import { TaskTemplateModalComponent } from './matter-subtabs/tasks/task-template-modal/task-template-modal.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { BillingComponent } from './matter-subtabs/billing/billing.component';
     EditStaffComponent,
     EditClientComponent,
     BillingComponent,
+    TaskTemplateModalComponent
   ],
   imports: [
     CommonModule,

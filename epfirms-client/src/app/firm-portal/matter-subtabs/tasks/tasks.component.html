@@ -15,6 +15,21 @@
       </svg>
       Add Task
     </button>
+    <button class="button-white-icon-sm ml-2" (click)="toggleTaskTemplateVisibility()" >
+      <svg
+        class="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      Add Tasks From Template
+    </button>
   </div>
   <div class="align-middle inline-block min-w-full">
     <table class="min-w-full">
@@ -175,3 +190,5 @@
     </table>
   </div>
   </ng-container>
+
+  <app-task-template-modal [isVisible]="isTaskTemplateSelectionVisible" [matter]="matter" (isVisibleChange)="isTaskTemplateSelectionVisible = $event"></app-task-template-modal>
