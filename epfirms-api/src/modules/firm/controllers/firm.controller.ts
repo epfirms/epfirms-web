@@ -31,7 +31,7 @@ export class FirmController {
 
       const roles = {
         admin: true,
-        attorney: false,
+        attorney: true,
         legal_assistant: false,
         paralegal: false
       };

@@ -1,6 +1,9 @@
 import { Response, Request } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
 import { MatterService } from '@modules/matter/services/matter.service';
+import { UserService } from '@modules/user/services/user.service';
+import { emailsService } from '@src/modules/emails/services/emails.service';
+import { FirmService } from '@src/modules/firm/services/firm.service';
 
 const passport = require('passport');
 
@@ -47,6 +50,13 @@ export class MatterController {
       await MatterService.update({id: createdIntake.matter_id, matter_intake_id: createdIntake.id});
       
       const newMatter = await MatterService.getOne(createdIntake.matter_id);
+      
+      const matterClient = await UserService.get('id', newMatter.client_id);
+
+      if (matterClient && matterClient.email && !matterClient.password) {
+        const firm = await FirmService.get(firm_id);
+        await emailsService.sendClientPortalInvite(matterClient.email, firm.name);
+      }
       resp.status(StatusConstants.OK).send(newMatter);
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);

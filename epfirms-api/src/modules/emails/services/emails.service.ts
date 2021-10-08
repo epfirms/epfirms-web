@@ -76,12 +76,12 @@ export class emailsService {
     );
   }
 
-  public static async requestPasswordReset(email: string): Promise<boolean> {
+  public static async sendClientPortalInvite(email: string, firmName: string): Promise<boolean> {
     const { user, password_reset_token } = Database.models;
     const existingUser = await user.findOne({where: {email}});
 
     if (!existingUser) {
-      Promise.reject("User not found");
+      Promise.reject(new Error("User not found"));
     }
 
     const existingToken = await password_reset_token.findOne({where: {user_id: existingUser.id}});
@@ -100,7 +100,44 @@ export class emailsService {
     const url = `${CLIENT_URL}/password-reset?token=${encodedToken}&id=${existingUser.id}`;
 
     const data = {
-      from: "EPFirms <me@mg.epfirms.com>",
+      from: "EPFirms <postmaster@mg.epfirms.com>",
+      to: email,
+      subject: "Confirm your account on EPFirms",
+      template: "client-portal-invite",
+      "v:url": url,
+      "v:firm_name": firmName
+    };
+
+    const responseBody = await mailgun.messages().send(data);
+
+    return Promise.resolve(true);
+  }
+
+  public static async requestPasswordReset(email: string): Promise<boolean> {
+    const { user, password_reset_token } = Database.models;
+    const existingUser = await user.findOne({where: {email}});
+
+    if (!existingUser) {
+      Promise.reject(new Error("User not found"));
+    }
+
+    const existingToken = await password_reset_token.findOne({where: {user_id: existingUser.id}});
+
+    if (existingToken) {
+      await password_reset_token.destroy({where: {user_id: existingUser.id}});
+    }
+
+    const token = crypto.randomBytes(32).toString("hex");
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(token, salt);
+
+    await password_reset_token.create({token: hash, user_id: existingUser.id});
+
+    const encodedToken = encodeURIComponent(token);
+    const url = `${CLIENT_URL}/password-reset?token=${encodedToken}&id=${existingUser.id}`;
+
+    const data = {
+      from: "EPFirms <postmaster@mg.epfirms.com>",
       to: email,
       subject: "Password reset request",
       template: "password-reset-email",

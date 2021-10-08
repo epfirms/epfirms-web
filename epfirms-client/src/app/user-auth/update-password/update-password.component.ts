@@ -45,7 +45,7 @@ export class UpdatePasswordComponent implements OnInit, OnDestroy {
         this.submitted = true;
         setTimeout(() => {
           this._router.navigate(['login']);
-        }, 5000);
+        }, 3000);
       }
     });
   }

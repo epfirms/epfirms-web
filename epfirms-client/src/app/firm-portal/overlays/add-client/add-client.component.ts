@@ -35,9 +35,7 @@ export class AddClientComponent implements OnInit {
 
   submit() {
     this._clientService.createClient(this.clientForm.value).subscribe(response => {
-      response.pipe(take(1)).subscribe(client => {
-        this.close(client);
-      });
+      this.close(response);
     });
   }
 
