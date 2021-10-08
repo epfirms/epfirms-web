@@ -84,16 +84,13 @@ export class IntakeFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.selectedUser);
-    this.toggleClientIntake();
+      this.toggleClientIntake();
   }
 
   loadIntakeForm(userId: number) {
-    this._assetService
-      .getAssetsByUserId(userId)
-      .subscribe((res) => {
-        this.assets = res;
-      });
+    this._assetService.getAssetsByUserId(userId).subscribe((res) => {
+      this.assets = res;
+    });
 
     this._familyMemberService
       .getByUserId(userId)
@@ -201,42 +198,53 @@ export class IntakeFormComponent implements OnInit {
   }
 
   editUserInfo(user) {
-    const editModal = this._modalService.open(EditClientComponent, {user: user});
-    editModal.afterClosed$.subscribe(closed => {
+    const editModal = this._modalService.open(EditClientComponent, {
+      user: user,
+    });
+    editModal.afterClosed$.subscribe((closed) => {
       if (closed.data) {
-        this._matterService.update({id: this.matter.id}).subscribe();
+        this._matterService.update({ id: this.matter.id }).subscribe();
       }
     });
   }
 
   addFamilyMember(userId: number, type: string): void {
-    const addFamilyMemberModal = this._modalService.open(AddFamilyMemberComponent, {type});
+    const addFamilyMemberModal = this._modalService.open(
+      AddFamilyMemberComponent,
+      { type }
+    );
 
-    addFamilyMemberModal.afterClosed$.subscribe(({data}) => {
+    addFamilyMemberModal.afterClosed$.subscribe(({ data }) => {
       if (data) {
-        this._familyMemberService.addFamilyMemberForUser(userId, data).subscribe(() => {
-          this.loadIntakeForm(this.selectedUser.id);
-        });
+        this._familyMemberService
+          .addFamilyMemberForUser(userId, data)
+          .subscribe(() => {
+            this.loadIntakeForm(this.selectedUser.id);
+          });
       }
-    })
-  }
-
-  removeFamilyMember(userId: number, memberId: number) {
-    this._familyMemberService.deleteFamilyMemberById(userId, memberId).subscribe(() => {
-      this.loadIntakeForm(this.selectedUser.id);
     });
   }
 
-  addAppointee(userId:number, type: string): void {
-    const addAppointeeModal = this._modalService.open(AddAppointeeComponent, {type});
+  removeFamilyMember(userId: number, memberId: number) {
+    this._familyMemberService
+      .deleteFamilyMemberById(userId, memberId)
+      .subscribe(() => {
+        this.loadIntakeForm(this.selectedUser.id);
+      });
+  }
 
-    addAppointeeModal.afterClosed$.subscribe(({data}) => {
+  addAppointee(userId: number, type: string): void {
+    const addAppointeeModal = this._modalService.open(AddAppointeeComponent, {
+      type,
+    });
+
+    addAppointeeModal.afterClosed$.subscribe(({ data }) => {
       if (data) {
-        this._appointeeService.addAppointee(userId, data).subscribe(res => {
+        this._appointeeService.addAppointee(userId, data).subscribe((res) => {
           this.loadIntakeForm(this.selectedUser.id);
         });
       }
-    })
+    });
   }
 
   editAppointee(type: string, appointee: any): void {
@@ -258,10 +266,13 @@ export class IntakeFormComponent implements OnInit {
       gop: appointee.appointee.gop,
       goe: appointee.appointee.goe,
       gomc: appointee.appointee.gomc,
-    }
-    const addAppointeeModal = this._modalService.open(AddAppointeeComponent, {type, appointeeData});
+    };
+    const addAppointeeModal = this._modalService.open(AddAppointeeComponent, {
+      type,
+      appointeeData,
+    });
 
-    addAppointeeModal.afterClosed$.subscribe(({data}) => {
+    addAppointeeModal.afterClosed$.subscribe(({ data }) => {
       if (data) {
         const updateData = {
           appointee: {
@@ -272,7 +283,7 @@ export class IntakeFormComponent implements OnInit {
             mpoa: data.mpoa,
             gop: data.gop,
             goe: data.goe,
-            gomc: data.gomc
+            gomc: data.gomc,
           },
           user: {
             first_name: data.first_name,
@@ -283,14 +294,16 @@ export class IntakeFormComponent implements OnInit {
             address: data.address,
             city: data.city,
             state: data.state,
-            zip: data.zip
-          }
-        }
-        this._appointeeService.updateAppointee(data.id, updateData).subscribe(res => {
-          this.loadIntakeForm(this.selectedUser.id);
-        });
+            zip: data.zip,
+          },
+        };
+        this._appointeeService
+          .updateAppointee(data.id, updateData)
+          .subscribe((res) => {
+            this.loadIntakeForm(this.selectedUser.id);
+          });
       }
-    })
+    });
   }
 
   removeAppointee(userId: number, memberId: number) {
@@ -300,109 +313,126 @@ export class IntakeFormComponent implements OnInit {
   }
 
   addMoneyAccount(userId: number): void {
-    const addMoneyAccountModal = this._modalService.open(AddMoneyAccountComponent, {});
+    const addMoneyAccountModal = this._modalService.open(
+      AddMoneyAccountComponent,
+      {}
+    );
 
-    addMoneyAccountModal.afterClosed$.subscribe(({data}) => {
+    addMoneyAccountModal.afterClosed$.subscribe(({ data }) => {
       if (data) {
-        this._assetService.addMoneyAccount(userId, data).subscribe(res => {
+        this._assetService.addMoneyAccount(userId, data).subscribe((res) => {
           this.loadIntakeForm(this.selectedUser.id);
         });
       }
-    })
+    });
   }
 
   addRealEstate(userId: number): void {
-    const addRealEstateModal = this._modalService.open(AddRealEstateComponent, {});
+    const addRealEstateModal = this._modalService.open(
+      AddRealEstateComponent,
+      {}
+    );
 
-    addRealEstateModal.afterClosed$.subscribe(({data}) => {
+    addRealEstateModal.afterClosed$.subscribe(({ data }) => {
       if (data) {
-        this._assetService.addRealEstate(userId, data).subscribe(res => {
+        this._assetService.addRealEstate(userId, data).subscribe((res) => {
           this.loadIntakeForm(this.selectedUser.id);
         });
       }
-    })
+    });
   }
 
   addVehicle(userId: number): void {
     const addVehicleModal = this._modalService.open(AddVehicleComponent, {});
 
-    addVehicleModal.afterClosed$.subscribe(({data}) => {
+    addVehicleModal.afterClosed$.subscribe(({ data }) => {
       if (data) {
-        this._assetService.addVehicle(userId, data).subscribe(res => {
+        this._assetService.addVehicle(userId, data).subscribe((res) => {
           this.loadIntakeForm(this.selectedUser.id);
         });
       }
-    })
+    });
   }
 
   updateMoneyAccount(id: number, asset): void {
-    const addMoneyAccountModal = this._modalService.open(AddMoneyAccountComponent, {asset});
+    const addMoneyAccountModal = this._modalService.open(
+      AddMoneyAccountComponent,
+      { asset }
+    );
 
-    addMoneyAccountModal.afterClosed$.subscribe(({data}) => {
+    addMoneyAccountModal.afterClosed$.subscribe(({ data }) => {
       if (data) {
-        this._assetService.updateMoneyAccount(id, data).subscribe(res => {
+        this._assetService.updateMoneyAccount(id, data).subscribe((res) => {
           this.loadIntakeForm(this.selectedUser.id);
         });
       }
-    })
+    });
   }
 
   updateRealEstate(id: number, asset): void {
-    const addRealEstateModal = this._modalService.open(AddRealEstateComponent, {asset});
+    const addRealEstateModal = this._modalService.open(AddRealEstateComponent, {
+      asset,
+    });
 
-    addRealEstateModal.afterClosed$.subscribe(({data}) => {
+    addRealEstateModal.afterClosed$.subscribe(({ data }) => {
       if (data) {
-        this._assetService.updateRealEstate(id, data).subscribe(res => {
+        this._assetService.updateRealEstate(id, data).subscribe((res) => {
           this.loadIntakeForm(this.selectedUser.id);
         });
       }
-    })
+    });
   }
 
   updateVehicle(id: number, asset): void {
-    const addVehicleModal = this._modalService.open(AddVehicleComponent, {asset});
+    const addVehicleModal = this._modalService.open(AddVehicleComponent, {
+      asset,
+    });
 
-    addVehicleModal.afterClosed$.subscribe(({data}) => {
+    addVehicleModal.afterClosed$.subscribe(({ data }) => {
       if (data) {
-        this._assetService.updateVehicle(id, data).subscribe(res => {
+        this._assetService.updateVehicle(id, data).subscribe((res) => {
           this.loadIntakeForm(this.selectedUser.id);
         });
       }
-    })
+    });
   }
 
   deleteMoneyAccount(id: number): void {
-    this._assetService.deleteMoneyAccount(id).subscribe(res => {
+    this._assetService.deleteMoneyAccount(id).subscribe((res) => {
       this.loadIntakeForm(this.selectedUser.id);
     });
   }
 
   deleteRealEstate(id: number): void {
-    this._assetService.deleteRealEstate(id).subscribe(res => {
+    this._assetService.deleteRealEstate(id).subscribe((res) => {
       this.loadIntakeForm(this.selectedUser.id);
     });
   }
 
   deleteVehicle(id: number): void {
-    this._assetService.deleteVehicle(id).subscribe(res => {
+    this._assetService.deleteVehicle(id).subscribe((res) => {
       this.loadIntakeForm(this.selectedUser.id);
     });
   }
 
   addSpouseToMatter(): void {
-    const spouseModal = this._modalService.open(UserFormModalComponent, {title: 'spouse'});
-    spouseModal.afterClosed$.subscribe(({data}) => {
+    const spouseModal = this._modalService.open(UserFormModalComponent, {
+      title: 'spouse',
+    });
+    spouseModal.afterClosed$.subscribe(({ data }) => {
       if (data) {
-        this._clientService.createClient(data).subscribe(response => {
-          this._matterService.update({id: this.matter.id, spouse_id: response.id}).subscribe();
+        this._clientService.createClient(data).subscribe((response) => {
+          this._matterService
+            .update({ id: this.matter.id, spouse_id: response.id })
+            .subscribe();
         });
       }
-    })
+    });
   }
 
   removeSpouseFromMatter(): void {
-    this._matterService.update({id: this.matter.id, spouse_id: null}).subscribe(() => {
-
-    });
+    this._matterService
+      .update({ id: this.matter.id, spouse_id: null })
+      .subscribe(() => {});
   }
 }

@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IntakeModule } from '@app/intake/intake.module';
+import { Component } from '@angular/core';
 import { Matter } from '@app/_models/matter';
 import { Observable } from 'rxjs';
 import { ClientMatterService } from '../_services/matter-service/client-matter.service';
@@ -8,30 +6,37 @@ import { ClientMatterService } from '../_services/matter-service/client-matter.s
 @Component({
   selector: 'app-case-list',
   templateUrl: './case-list.component.html',
-  styleUrls: ['./case-list.component.scss']
+  styleUrls: ['./case-list.component.scss'],
 })
 export class CaseListComponent {
   matters$: Observable<Matter[]>;
 
-  selectedIntake: Matter;
+  selectedMatter: Matter;
 
-  constructor(private _clientMatterService: ClientMatterService, private _router: Router, private _activatedRoute: ActivatedRoute) {
+  constructor(
+    private _clientMatterService: ClientMatterService,
+  ) {
     this.matters$ = _clientMatterService.entities$;
   }
 
   openIntake(matter: Matter): void {
-    if (matter.matter_intake?.status !== 'complete') {
-      this.selectedIntake = matter;
-  }
+    if (matter.matter_intake_id && matter.matter_intake.status !== 'complete') {
+      this.selectedMatter = matter;
+    }
   }
 
   closeIntake() {
-    this.selectedIntake = undefined;
+    this.selectedMatter = undefined;
   }
 
   submitIntake() {
-    this._clientMatterService.updateMatterIntake({id: this.selectedIntake.id, status: 'complete'}).subscribe(() => {
-      this.closeIntake();
-    });
+    this._clientMatterService
+      .updateMatterIntake({
+        id: this.selectedMatter.matter_intake_id,
+        status: 'complete',
+      })
+      .subscribe(() => {
+        this.closeIntake();
+      });
   }
 }

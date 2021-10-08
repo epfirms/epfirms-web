@@ -1,4 +1,4 @@
-<ng-container *ngIf="!selectedIntake">
+<ng-container *ngIf="!selectedMatter">
   <div class="px-4 sm:px-0">
     <h2 class="text-lg font-medium text-gray-900">Cases</h2>
   </div>
@@ -7,7 +7,7 @@
   <ul role="list" class="mt-5 border-t border-b border-gray-200 divide-y divide-gray-200"
     *ngIf="matters$ | async as matters">
     <li *ngFor="let matter of matters">
-      <a (click)="openIntake(matter)" class="group block">
+      <a (click)="openIntake(matter)" class="block" [class.group]="matter.matter_intake_id && matter.matter_intake.status !== 'complete'">
         <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0 group-hover:bg-blue-50 group-hover:cursor-pointer">
           <div class="min-w-0 flex-1 flex items-center">
             <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
@@ -70,15 +70,15 @@
   </ul>
 </ng-container>
 
-<ng-container *ngIf="selectedIntake">
-  <app-intake-form [matter]="selectedIntake"></app-intake-form>
+<ng-container *ngIf="selectedMatter">
+  <app-intake-form [matter]="selectedMatter"></app-intake-form>
 
-  <div class="mt-4">
-    <button (click)="closeIntake()" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+  <div class="pb-24 px-24 text-right">
+    <button (click)="closeIntake()" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
       Close
     </button>
 
-    <button (click)="submitIntake()" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+    <button (click)="submitIntake()" type="button" class="ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
       Submit
     </button>
   </div>

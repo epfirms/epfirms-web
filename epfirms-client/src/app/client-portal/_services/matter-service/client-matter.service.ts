@@ -39,7 +39,7 @@ export class ClientMatterService extends EntityCollectionServiceBase<Matter> {
   updateMatterIntake(matterIntake): Observable<any> {
     return this._http.patch<any>('/api/matters/intake', matterIntake).pipe(
       map((response: Matter) => {
-        this.addOneToCache(response);
+        this.updateOneInCache(response);
         return of(response);
       })
     );
