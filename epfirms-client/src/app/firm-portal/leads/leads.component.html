@@ -155,452 +155,449 @@
     <div class="hidden sm:block flex-1 bg-white">
       <div class="align-middle inline-block min-w-full">
         <ng-container *ngIf="leads$ | async as leads">
-        <table class="min-w-full" cdk-table recycleRows [dataSource]="leads | slice: paginator.start:paginator.end" [trackBy]="trackByIndex">
-          <!-- Position Column -->
-          <ng-container cdkColumnDef="client">
-            <th
-              class="
-                px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                uppercase
-                tracking-wider
-              "
-              cdk-header-cell
-              *cdkHeaderCellDef
-              (click)="sortMatters('first_name')"
-            >
-            <div class="flex items-center group hover:cursor-pointer">
-              <div class="flex-1">Client</div>
+          <table class="min-w-full" cdk-table [dataSource]="leads | slice: paginator.start:paginator.end" [trackBy]="trackByIndex" fixedLayout>
+            <!-- Position Column -->
+            <ng-container cdkColumnDef="client">
+              <th
+                class="
+                  px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  uppercase
+                  tracking-wider
+                  border-r border-gray-200
+                "
+                cdk-header-cell
+                *cdkHeaderCellDef
+                (click)="sortMatters('first_name')"
+              >
+              <div class="flex items-center group hover:cursor-pointer">
+                <div>Lead</div>
+                  
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-opacity group-hover:opacity-50"  [ngClass]="{'opacity-0 group-hover:opacity-50': sortValues.column !== 'first_name', 'opacity-100': sortValues.column === 'client'}" viewBox="0 0 20 20" fill="currentColor">
+                    <path *ngIf="sortValues.direction === 'asc' || !sortValues.direction" fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    <path *ngIf="sortValues.direction === 'desc'" fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </th>
+              <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap border-r border-gray-200 w-4/12" (click)="openTab(lead)">
+                <div class="flex items-center">
+                  <tw-avatar
+                    twSize="medium"
+                    twShape="square"
+                    [twSrc]="lead.client.profile_image"
+                    [twText]="lead.client.full_name"
+                  >
+                  </tw-avatar>
+                  <div class="ml-2">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ lead.client.full_name | titlecase }} <span class="text-xs text-gray-500" *ngIf="lead.spouse">& {{ lead.spouse.full_name | titlecase }}</span>
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      #{{lead.case_id}} <span class="font-bold">&#183;</span> {{lead.matter_intake?.status || "No intake" | titlecase}} 
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+          
+            <!-- Name Column -->
+            <ng-container cdkColumnDef="task">
+              <th
+                class="
+                  px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  uppercase
+                  tracking-wider
+                "
+                cdk-header-cell
+                *cdkHeaderCellDef
+                (click)="sortMatters('task')"
+              >
+              <div class="flex items-center group hover:cursor-pointer">
+              <div>Next Task</div>
                 
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-opacity group-hover:opacity-50"  [ngClass]="{'opacity-0 group-hover:opacity-50': sortValues.column !== 'first_name', 'opacity-100': sortValues.column === 'client'}" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-opacity group-hover:opacity-50"  [ngClass]="{'opacity-0 group-hover:opacity-50': sortValues.column !== 'task', 'opacity-100': sortValues.column === 'task'}" viewBox="0 0 20 20" fill="currentColor">
                   <path *ngIf="sortValues.direction === 'asc' || !sortValues.direction" fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                   <path *ngIf="sortValues.direction === 'desc'" fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
               </div>
-            </th>
-            <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap">
-              <div class="flex items-center">
-                <tw-avatar
-                  twSize="xsmall"
-                  [twSrc]="lead.client.profile_image"
-                  [twText]="lead.client.full_name"
-                >
-                </tw-avatar>
-                <div class="ml-2">
-                  <div class="text-sm font-medium text-gray-900">
-                    {{ lead.client.full_name | titlecase }}
-                  </div>
-                  <div class="text-sm text-gray-500" *ngIf="lead.spouse">
-                    {{ lead.spouse.full_name | titlecase }}
-                  </div>
-                </div>
-              </div>
-            </td>
-          </ng-container>
-        
-          <!-- Name Column -->
-          <ng-container cdkColumnDef="task">
-            <th
-              class="
-                px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                uppercase
-                tracking-wider
-              "
-              cdk-header-cell
-              *cdkHeaderCellDef
-              (click)="sortMatters('task')"
-            >
-            <div class="flex items-center group hover:cursor-pointer">
-            <div class="flex-1">Next Task</div>
-              
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-opacity group-hover:opacity-50"  [ngClass]="{'opacity-0 group-hover:opacity-50': sortValues.column !== 'task', 'opacity-100': sortValues.column === 'task'}" viewBox="0 0 20 20" fill="currentColor">
-                <path *ngIf="sortValues.direction === 'asc' || !sortValues.direction" fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                <path *ngIf="sortValues.direction === 'desc'" fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            </th>
-            <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap">
-              <a class="flex-shrink-0 group block" *ngIf="lead.matter_tasks.length">
-                <div class="flex items-center" *ngIf="!lead.matter_tasks[0].completed">
-                  <div>
-                    <tw-avatar
-                      twSize="xsmall"
-                      [twSrc]="lead.matter_tasks[0].assignee?.profile_image"
-                      [twText]="lead.matter_tasks[0].assignee?.full_name"
-                    ></tw-avatar>
-                  </div>
-                  <div class="ml-2">
-                    <p class="text-sm text-gray-900 max-w-xs truncate">
-                      {{ lead.matter_tasks[0].name || "No task name" }}
-                    </p>
-                    <p class="text-sm text-gray-500">
-                      {{ lead.matter_tasks[0].due | date }}
-                    </p>
-                  </div>
-                </div>
-        
-                <div
-                  class="flex items-center text-gray-400"
-                  *ngIf="lead.matter_tasks[0].completed"
-                >
-                  <div class="w-6 h-6 flex items-center justify-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5 inline"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                      <path
-                        fill-rule="evenodd"
-                        d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <div class="ml-2">
-                    <p
-                      class="
-                        text-sm
-                        font-medium
-                        text-gray-500
-                        group-hover:text-gray-600
-                      "
-                    >
-                      Tasks completed
-                    </p>
-                  </div>
-                </div>
-              </a>
-              <div
-                class="text-sm text-gray-400 flex items-center"
-                *ngIf="!lead.matter_tasks.length"
-              >
-                <div class="w-6 h-6 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 inline"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                    <path
-                      d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
-                    />
-                  </svg>
-                </div>
-                <span class="ml-2 text-gray-500"> No tasks </span>
-              </div>
-            </td>
-          </ng-container>
-        
-          <!-- Weight Column -->
-          <ng-container cdkColumnDef="legal-area">
-            <th
-              class="
-                px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                uppercase
-                tracking-wider
-              "
-              cdk-header-cell
-              *cdkHeaderCellDef
-            >
-              Legal Area
-            </th>
-            <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap">
-              <div>
-                <ng-container *ngIf="legalAreas$ | async as legalAreas">
-                  <div hlMenu class="relative inline-block text-left">
-                    <button hlMenuButton class="table-dropdown">
-                      {{ lead.legal_area?.name || "Select a legal area" | titlecase }}
-          
-                      <svg
-                        class="icon-end"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                    <div
-                      *hlMenuItems
-                      @toggleAnimation
-                      class="
-                        z-10
-                        absolute
-                        right-0
-                        mt-2
-                        origin-top-right
-                        bg-white
-                        rounded-md
-                        shadow-lg
-                        ring-1 ring-black ring-opacity-5
-                        focus:outline-none
-                      "
-                    >
-                      <!-- Use the `active` state to conditionally style the active item. -->
-                      <div class="p-1" *ngFor="let legalArea of legalAreas">
-                        <a
-                          *hlMenuItem="let item"
-                          class="
-                            group
-                            flex
-                            rounded-md
-                            items-center
-                            w-full
-                            px-2
-                            py-2
-                            text-gray-700
-                            font-medium
-                            text-xs
-                            hover:bg-blue-500 hover:text-white hover:cursor-pointer
-                          "
-                          (click)="setLegalArea(lead, legalArea)"
-                        >
-                          {{ legalArea.name | titlecase }} {{ legalArea.description ? '('+legalArea.description+")" : ''}}
-                        </a>
+              </th>
+              <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap w-3/12" (click)="openTab(lead)">
+                <a class="flex-shrink-0 group block" *ngIf="lead.matter_tasks.length">
+                  <!-- <div class="flex items-center" *ngIf="!lead.matter_tasks[0].completed">
+                    <div>
+                      <tw-avatar
+                        twSize="xsmall"
+                        [twSrc]="lead.matter_tasks[0].assignee?.profile_image"
+                        [twText]="lead.matter_tasks[0].assignee?.full_name"
+                      ></tw-avatar>
+                    </div>
+                    <div class="ml-2">
+                      <p class="text-sm text-gray-900 max-w-xs truncate">
+                        {{ lead.matter_tasks[0].name || "No task name" }}
+                      </p>
+                      <p class="text-sm text-gray-500">
+                        {{ lead.matter_tasks[0].due | date }}
+                      </p>
+                    </div>
+                  </div> -->
+                  <a class="flex-shrink-0 group block" *ngIf="!lead.matter_tasks[0].completed">
+                    <div class="flex items-center">
+                      <div>
+                        <tw-avatar
+                        twSize="small"
+                        [twSrc]="lead.matter_tasks[0].assignee?.profile_image"
+                        [twText]="lead.matter_tasks[0].assignee?.full_name"
+                      ></tw-avatar>                    </div>
+                      <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate" style="max-width: 12rem" [tooltip]="lead.matter_tasks[0].name || null"
+                        [options]="tooltipOptions">
+                          {{ lead.matter_tasks[0].name || "No task name" }}
+                        </p>
+                        <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                          {{ lead.matter_tasks[0].due | date }}
+                        </p>
                       </div>
                     </div>
-                  </div>
-                </ng-container>
-              </div>
-            </td>
-          </ng-container>
-        
-          <!-- Symbol Column -->
-          <ng-container cdkColumnDef="attorney">
-            <th
-              class="
-                px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                uppercase
-                tracking-wider
-              "
-              cdk-header-cell
-              *cdkHeaderCellDef
-            >
-              
-              <div hlMenu class="relative inline-block text-left w-full">
-                <div hlMenuButton class="flex w-full items-center group hover:cursor-pointer">
-                  <div class="flex-1">
-                  Attorney
-                </div>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover:text-blue-500" [class.text-blue-500]="matterFilterValues.attorney_id" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <div
-                  *hlMenuItems
-                  @toggleAnimation
-                  class="
-                    z-10
-                    absolute
-                    right-0
-                    w-56
-                    mt-2
-                    origin-top-right
-                    bg-white
-                    rounded-md
-                    shadow-lg
-                    ring-1 ring-black ring-opacity-5
-                    focus:outline-none
-                  "
-                >
-                  <!-- Use the `active` state to conditionally style the active item. -->
-                  <div class="p-1" *ngFor="let attorney of attorneys$ | async">
-                    <a
-                      *hlMenuItem="let item"
-                      class="
-                        group
-                        flex
-                        rounded-md
-                        items-center
-                        w-full
-                        px-2
-                        py-2
-                        text-gray-700
-                        font-medium
-                        text-sm
-                        normal-lead
-                        hover:bg-blue-500 hover:text-white hover:cursor-pointer
-                      "
-                      [ngClass]="{
-                        'bg-blue-500 text-white': attorney.id === matterFilterValues.attorney_id
-                      }"
-                      (click)="filterAttorney(attorney.id)"
-                    >
-                    <div class="w-full">
-                      {{ attorney.first_name + ' ' + attorney.last_name | titlecase }}
+                  </a>
+                  <div
+                    class="flex items-center text-gray-400 font-normal"
+                    *ngIf="lead.matter_tasks[0].completed"
+                  >
+                  <div class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-green-400" aria-hidden="true"></div>
+                    <div class="ml-2">
+                      <p
+                        class="
+                          text-sm
+                          font-normal
+                          text-gray-500
+                          group-hover:text-gray-600
+                        "
+                      >
+                        Tasks completed
+                      </p>
                     </div>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white hover:text-blue-200" viewBox="0 0 20 20" fill="currentColor" *ngIf="attorney.id === matterFilterValues.attorney_id">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                      </svg>
-                    </a>
                   </div>
-                </div>
-              </div>
-            </th>
-            <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap">
-              <div class="flex items-center">
-                <tw-avatar
-                  twSize="xsmall"
-                  [twSrc]="lead.attorney.profile_image"
-                  [twText]="lead.attorney.full_name"
+                </a>
+                <div
+                  class="text-sm text-gray-400 flex items-center"
+                  *ngIf="!lead.matter_tasks.length"
                 >
-                </tw-avatar>
-                <div class="ml-2">
-                  <div class="text-sm text-gray-800">
-                    {{ lead.attorney.full_name | titlecase }}
-                  </div>
+                  <div class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gray-300" aria-hidden="true"></div>
+                  <span class="ml-2 text-gray-500"> No tasks </span>
                 </div>
-              </div>
-            </td>
-          </ng-container>
-        
-          <!-- Symbol Column -->
-          <ng-container cdkColumnDef="status">
-            <th
-              class="
-                px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                uppercase
-                tracking-wider
-              "
-              cdk-header-cell
-              *cdkHeaderCellDef
-            >
-              Status
-            </th>
-            <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap">
-              <div class="flex flex-col justify-center">
-              <span class="text-xs text-gray-500">#{{lead.case_id}}</span>
-              <tw-tag
-                (click)="$event.stopPropagation()"
-                [dot]="true"
-                [dotColor]="lead.status === 'active' ? 'emerald' : 'gray'"
-                [twSize]="'small'"
-                [rounded]="false"
-                [dropdown]="true"
-                [options]="statusOptions"
-                (selectedOptionChange)="setStatus(lead, $event)"
-              >
-                {{ lead.status + " " + lead.matter_type | titlecase }}
-              </tw-tag>
-            </div>
-            </td>
-          </ng-container>
-        
-          <!-- Symbol Column -->
-          <ng-container cdkColumnDef="intake">
-            <th
-              class="
-                px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                uppercase
-                tracking-wider
-              "
-              cdk-header-cell
-              *cdkHeaderCellDef
-            >
-              Intake
-            </th>
-            <td
-              cdk-cell
-              *cdkCellDef="let lead"
-              class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-            >
-            <tw-tag
-            (click)="$event.stopPropagation()"
-            [dot]="false"
-            [color]="'sky'"
-            [twSize]="'small'"
-            [rounded]="true"
-          >
-          {{lead.matter_intake?.status || "No intake" | titlecase}}
-          </tw-tag>
-            </td>
-          </ng-container>
-          <!-- Symbol Column -->
-          <ng-container cdkColumnDef="edit">
-            <th class="relative px-6 py-3" cdk-header-cell *cdkHeaderCellDef></th>
-            <td
-              cdk-cell
-              *cdkCellDef="let lead"
-              class="
-                px-6
-                py-4
-                whitespace-nowrap
-                text-right text-sm
-                font-medium
-                text-gray-400
-              "
-            >
-              <button
-                type="button"
+              </td>
+            </ng-container>
+          
+            <!-- Weight Column -->
+            <ng-container cdkColumnDef="legal-area">
+              <th
                 class="
-                  -my-2
-                  p-2
-                  rounded-full
-                  bg-white
-                  flex
-                  items-center
-                  text-gray-400
-                  hover:text-gray-600
+                  px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  uppercase
+                  tracking-wider
                 "
-                id="menu-0-button"
-                aria-expanded="false"
-                aria-haspopup="true"
+                cdk-header-cell
+                *cdkHeaderCellDef
               >
-                <span class="sr-only">Open options</span>
-                <!-- Heroicon name: solid/dots-vertical -->
-                <svg
-                  class="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+                Legal Area
+              </th>
+              <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap w-1/12">
+                <div>
+                  <ng-container *ngIf="legalAreas$ | async as legalAreas">
+                    <div hlMenu class="relative inline-block text-left text-gray-700">
+                      <button hlMenuButton class="table-dropdown" [class.text-gray-500]="!lead.legal_area?.name">
+                        {{ lead.legal_area?.name || "Select a legal area" | titlecase }}
+            
+                        <svg
+                          class="icon-end"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </button>
+                      <div
+                        *hlMenuItems
+                        @toggleAnimation
+                        class="
+                          z-10
+                          absolute
+                          right-0
+                          mt-2
+                          origin-top-right
+                          bg-white
+                          rounded-md
+                          overflow-y-auto
+                          max-h-60
+                          shadow-lg
+                          ring-1 ring-black ring-opacity-5
+                          focus:outline-none
+                        "
+                      >
+                        <!-- Use the `active` state to conditionally style the active item. -->
+                        <div class="p-1" *ngFor="let legalArea of legalAreas">
+                          <a
+                            *hlMenuItem="let item"
+                            class="
+                              group
+                              flex
+                              rounded-md
+                              items-center
+                              w-full
+                              px-2
+                              py-2
+                              text-gray-700
+                              font-medium
+                              text-xs
+                              hover:bg-blue-500 hover:text-white hover:cursor-pointer
+                            "
+                            (click)="setLegalArea(lead, legalArea)"
+                          >
+                            {{ legalArea.name | titlecase }} {{ legalArea.description ? '('+legalArea.description+")" : ''}}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </td>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container cdkColumnDef="attorney">
+              <th
+                class="
+                  px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  uppercase
+                  tracking-wider
+                "
+                cdk-header-cell
+                *cdkHeaderCellDef
+              >
+                
+                <div hlMenu class="relative inline-block text-left w-full">
+                  <div hlMenuButton class="flex w-full items-center group hover:cursor-pointer">
+                    <div class="flex-1">
+                    Attorney
+                  </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover:text-blue-500" [class.text-blue-500]="matterFilterValues.attorney_id" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div
+                    *hlMenuItems
+                    @toggleAnimation
+                    class="
+                      z-10
+                      absolute
+                      right-0
+                      w-56
+                      mt-2
+                      origin-top-right
+                      bg-white
+                      rounded-md
+                      shadow-lg
+                      ring-1 ring-black ring-opacity-5
+                      focus:outline-none
+                    "
+                  >
+                    <!-- Use the `active` state to conditionally style the active item. -->
+                    <div class="p-1" *ngFor="let attorney of attorneys$ | async">
+                      <a
+                        *hlMenuItem="let item"
+                        class="
+                          group
+                          flex
+                          rounded-md
+                          items-center
+                          w-full
+                          px-2
+                          py-2
+                          text-gray-700
+                          font-medium
+                          text-sm
+                          normal-case
+                          hover:bg-blue-500 hover:text-white hover:cursor-pointer
+                        "
+                        [ngClass]="{
+                          'bg-blue-500 text-white': attorney.id === matterFilterValues.attorney_id
+                        }"
+                        (click)="filterAttorney(attorney.id)"
+                      >
+                      <div class="w-full">
+                        {{ attorney.first_name + ' ' + attorney.last_name | titlecase }}
+                      </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white hover:text-blue-200" viewBox="0 0 20 20" fill="currentColor" *ngIf="attorney.id === matterFilterValues.attorney_id">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap w-2/12">
+                <ngx-select [items]="attorneys$ | async" (select)="setAttorney(lead, $event)" [optionTextField]="'full_name'" [optionValueField]="'id'" [ngModel]="lead.attorney_id" [keepSelectMenuOpened]="false">
+                  <ng-template ngx-select-option ngx-select-option-selected let-option let-text="text">
+                    <div class="flex items-center">
+                      <tw-avatar
+                      twSize="xsmall"
+                      [twSrc]="option.data.profile_image"
+                      [twText]="option.data.full_name"
+                    >
+                    </tw-avatar>
+                      <div class="text-sm font-normal ml-3 block truncate">
+                        {{ option.text | titlecase }}
+                      </div>
+                    </div>
+                </ng-template>
+                
+                </ngx-select>
+  
+              </td>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container cdkColumnDef="status">
+              <th
+                class="
+                  px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  uppercase
+                  tracking-wider
+                "
+                cdk-header-cell
+                *cdkHeaderCellDef
+              >
+                Status
+              </th>
+              <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap w-1/12">
+                <div class="flex flex-col justify-center">
+                <tw-tag
+                  [dot]="true"
+                  [dotColor]="lead.status === 'active' ? 'emerald' : 'gray'"
+                  [twSize]="'small'"
+                  [rounded]="false"
+                  [dropdown]="true"
+                  [options]="statusOptions"
+                  (selectedOptionChange)="setStatus(lead, $event)"
                 >
-                  <path
-                    d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
-                  />
-                </svg>
-              </button>
-            </td>
-          </ng-container>
-        
-          <tr cdk-header-row *cdkHeaderRowDef="displayedColumns" class="bg-gray-50"></tr>
-          <tr
-            cdk-row
-            *cdkRowDef="let row; columns: displayedColumns;"
-            class="hover:cursor-pointer"
-            (click)="openTab(row)"
-          ></tr>
-        </table>
+                  {{ lead.status + " " + lead.matter_type | titlecase }}
+                </tw-tag>
+              </div>
+              </td>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container cdkColumnDef="intake">
+              <th
+                class="
+                  px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  uppercase
+                  tracking-wider
+                "
+                cdk-header-cell
+                *cdkHeaderCellDef
+              >
+                Intake
+              </th>
+              <td
+                cdk-cell
+                *cdkCellDef="let lead"
+                class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+              >
+              <tw-tag
+              [dot]="false"
+              [color]="'sky'"
+              [twSize]="'small'"
+              [rounded]="true"
+            >
+            {{lead.matter_intake?.status ? `Intake ${lead.matter_intake.status}|| "No intake"}}
+            </tw-tag>
+              </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container cdkColumnDef="edit">
+              <th class="px-6 py-3" cdk-header-cell *cdkHeaderCellDef></th>
+              <td
+                cdk-cell
+                *cdkCellDef="let lead"
+                class="
+                  px-6
+                  py-4
+                  whitespace-nowrap
+                  text-right text-sm
+                  font-medium
+                  text-gray-400
+                  w-1/12
+                "
+              >
+                <button
+                  type="button"
+                  class="
+                    -my-2
+                    p-2
+                    rounded-full
+                    bg-white
+                    flex
+                    items-center
+                    text-gray-400
+                    hover:text-gray-600
+                  "
+                  id="menu-0-button"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  <span class="sr-only">Open options</span>
+                  <!-- Heroicon name: solid/dots-vertical -->
+                  <svg
+                    class="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                    />
+                  </svg>
+                </button>
+              </td>
+            </ng-container>
+          
+            <tr cdk-header-row *cdkHeaderRowDef="displayedColumns" class="bg-gray-50"></tr>
+            <tr
+              cdk-row
+              *cdkRowDef="let row; columns: displayedColumns;"
+              class="hover:cursor-pointer"
+            ></tr>
+          </table>
         </ng-container>
       </div>
 

@@ -20,6 +20,7 @@ export class AddMoneyAccountComponent implements OnInit {
     'investment',
     'IRA/401k',
     'money market',
+    'checking/savings',
     'other'
   ]
   constructor(private _fb: FormBuilder, private _assetService: AssetService, private _modalRef: ModalRef) { }

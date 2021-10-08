@@ -5,6 +5,7 @@ import { ModalService } from '@app/modal/modal.service';
 import { LegalArea } from '@app/_models/legal-area';
 import { Matter } from '@app/_models/matter';
 import { Staff } from '@app/_models/staff';
+import { TooltipOptions } from 'ng2-tooltip-directive';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AddCaseComponent } from '../overlays/add-case/add-case.component';
@@ -40,8 +41,6 @@ export class LeadsComponent implements OnInit {
     'legal-area',
     'attorney',
     'status',
-    'intake',
-    'edit',
   ];
 
   attorneys$: Observable<Staff[]>;
@@ -51,7 +50,13 @@ export class LeadsComponent implements OnInit {
   statusFilterOptions: any[] = ['active', 'inactive'];
 
   paginator: { start: number; end: number } = { start: 0, end: 20 };
-
+  tooltipOptions: TooltipOptions = {
+    tooltipClass: 'border shadow-lg p-6 bg-white rounded-md text-gray-900 text-sm',
+    maxWidth: '32rem',
+    theme: "light",
+    hideDelay: 0,
+    animationDuration: 0
+  }
   searchTerm: string = '';
 
   statusOptions: any[] = [
@@ -138,7 +143,11 @@ export class LeadsComponent implements OnInit {
       }
     });
   }
-
+  setAttorney(matter: Matter, value) {
+    this._matterService
+    .update({ id: matter.id, attorney_id: value })
+    .subscribe();
+  }
   addNote(id: number, note: string) {
     const noteBody = {
       matter_id: id,

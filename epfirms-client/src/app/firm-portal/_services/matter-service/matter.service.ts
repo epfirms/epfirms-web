@@ -71,12 +71,12 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   getClientMatters(userId: number) {
     return this.entities$.pipe(
       take(1),
-      // map((matters: Matter[]) => {
-      //   const clientMatters = matters.filter(
-      //     (matter) => matter.client_id === userId || matter.spouse_id === userId
-      //   );
-      //   return clientMatters;
-      // })
+      map((matters: Matter[]) => {
+        const clientMatters = matters.filter(
+          (matter) => matter.client_id === userId || matter.spouse_id === userId
+        );
+        return clientMatters;
+      })
     );
   }
 
