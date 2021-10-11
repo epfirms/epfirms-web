@@ -21,10 +21,8 @@ import { InputMaskModule } from '@ngneat/input-mask';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
-  timeout: 30000, // request timeout
+  timeout: 50000, // request timeout
 };
-
-const config: SocketIoConfig = { url: 'http://localhost:4000', options: {autoConnect: false, transports: ['websocket']} };
 
 @NgModule({
   declarations: [
@@ -42,7 +40,6 @@ const config: SocketIoConfig = { url: 'http://localhost:4000', options: {autoCon
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
     extModules,
-    SocketIoModule.forRoot(config),
     InputMaskModule
   ],
   providers: [
