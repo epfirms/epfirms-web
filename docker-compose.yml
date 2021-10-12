@@ -21,7 +21,6 @@ services:
       - "80:80"
     networks:
       - nginx_network
-      - socket
     depends_on:
       - backend
     volumes:
