@@ -8,6 +8,7 @@ export class MatterTask {
     completed?: boolean;
     assignee?: any;
     assignee_id?: number;
+    hours?:string;
 
-    
+
   }
