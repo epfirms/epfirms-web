@@ -24,6 +24,8 @@ services:
       - socket
     depends_on:
       - backend
+    volumes:
+      - "${EB_LOG_BASE_DIR}/nginx:/var/log/nginx"
   redis:
     image: redis
     networks:
