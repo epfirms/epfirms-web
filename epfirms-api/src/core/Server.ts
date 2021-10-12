@@ -8,6 +8,7 @@ import { Database } from "./Database";
 import { Server } from 'socket.io';
 import { createAdapter } from '@socket.io/redis-adapter';
 import { RedisClient } from 'redis';
+import { Logger } from "@utils/logger/Logger";
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('@configs/vars');
 const axios = require("axios").default;
@@ -36,8 +37,9 @@ export async function server() {
 export async function socketServer(httpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: '*',
-    }
+      origin: '*/*'
+    },
+    transports: ['websocket']
   });
   const pubClient = new RedisClient({ host: REDIS_HOST, port: REDIS_PORT });
   const subClient = pubClient.duplicate();
@@ -54,12 +56,18 @@ export async function socketServer(httpServer) {
       next();
     } else {
       const err = new Error("not authorized");
+      let logger = Logger.getLogger();
+      logger.info("not authorized");
       next(err);
     }
   });
   
   // Namespace connection handler
   firmWorkspace.on("connection", socket => {
+    let logger = Logger.getLogger();
+    logger.info("Socket connected to workspace");
+    logger.info(socket)
+
     console.log("Socket connected");
     console.log("----------------");
 
