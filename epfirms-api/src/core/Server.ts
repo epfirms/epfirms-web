@@ -39,6 +39,7 @@ export async function socketServer(httpServer) {
     cors: {
       origin: '*/*'
     },
+    path:'/socket',
     transports: ['websocket']
   });
   const pubClient = new RedisClient({ host: REDIS_HOST, port: REDIS_PORT });
