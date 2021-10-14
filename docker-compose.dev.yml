@@ -1,9 +1,7 @@
 services:
   backend:
     build:
-      context: ./epfirms-api
       dockerfile: Dockerfile
-      target: base
     volumes:
       - './epfirms-api/src:/home/node/api/src'
     depends_on:
@@ -11,14 +9,11 @@ services:
     command: npm run dev
   client:
     build:
-      context: ./epfirms-client
       dockerfile: Dockerfile
     expose:
       - '4200'
     ports:
       - '4200:4200'
-    networks:
-      - socket
     volumes:
       - './epfirms-client:/home/node/client'
       - '/home/node/client/node_modules'
