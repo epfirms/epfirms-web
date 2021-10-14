@@ -67,7 +67,6 @@ export async function socketServer(httpServer) {
   firmWorkspace.on("connection", socket => {
     let logger = Logger.getLogger();
     logger.info("Socket connected to workspace");
-    logger.info(socket)
 
     console.log("Socket connected");
     console.log("----------------");
