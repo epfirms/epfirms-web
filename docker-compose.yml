@@ -3,16 +3,26 @@ services:
   backend:
     container_name: epfirms-api
     image: jaerq/epfirms-server
+    build:
+      context: ./epfirms-api
+      dockerfile: Dockerfile.prod
+      target: base
     expose:
       - "4000"
     ports:
       - "4000:4000"
     networks:
       - socket
+      - nginx_network
     command: npm start
   client:
     container_name: epfirms-client
     image: jaerq/epfirms-client
+    build:
+      context: ./epfirms-client
+      dockerfile: Dockerfile.prod
+    networks:
+      - nginx_network
   redis:
     image: redis
     networks:
@@ -20,4 +30,6 @@ services:
     expose:
       - '6379'
 networks:
+  nginx_network:
+    driver: bridge
   socket:
