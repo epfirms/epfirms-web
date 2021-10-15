@@ -1,4 +1,4 @@
-# Compose configuration for building/pushing images
+# Build compose configuration
 services:
   backend:
     build:
