@@ -1,17 +1,16 @@
-var express = require("express");
-const { SERVER_HOST, SERVER_PORT, REDIS_HOST, REDIS_PORT } = require('@configs/vars');
-import { Express } from "express";
-import { InitializeMiddleWare } from "./InitializeMiddleware";
-import { InitializeRoutes } from "./InitializeRoutes";
-import { Database } from "./Database";
-
+import 'reflect-metadata';
+var express = require('express');
+import { Express } from 'express';
+import { InitializeMiddleWare } from './InitializeMiddleware';
+import { InitializeRoutes } from './InitializeRoutes';
+import { Database } from './Database';
 import { Server } from 'socket.io';
 import { createAdapter } from '@socket.io/redis-adapter';
 import { RedisClient } from 'redis';
-import { Logger } from "@utils/logger/Logger";
+import { Logger } from '@utils/logger/Logger';
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('@configs/vars');
-const axios = require("axios").default;
+const axios = require('axios').default;
+const { SERVER_HOST, SERVER_PORT, REDIS_HOST, REDIS_PORT, JWT_SECRET } = require('@configs/vars');
 
 export async function server() {
   let app: Express = express();
@@ -26,7 +25,9 @@ export async function server() {
   await InitializeMiddleWare.InitializeErrorHandlingMiddleware(app);
 
   const httpServer = app.listen(port, host, () => {
-    console.log(`Server  started listening at ${host} on ${port} port. Redis: ${REDIS_HOST}:${REDIS_PORT}`);
+    console.log(
+      `Server  started listening at ${host} on ${port} port. Redis: ${REDIS_HOST}:${REDIS_PORT}`
+    );
   });
 
   await socketServer(httpServer);
@@ -39,7 +40,7 @@ export async function socketServer(httpServer) {
     cors: {
       origin: '*/*'
     },
-    path:'/socket',
+    path: '/socket',
     transports: ['websocket']
   });
   const pubClient = new RedisClient({ host: REDIS_HOST, port: REDIS_PORT });
@@ -47,7 +48,7 @@ export async function socketServer(httpServer) {
   io.adapter(createAdapter(pubClient, subClient));
 
   // Parent namespace in the form of firm-#
-  const firmWorkspace = io.of(/^\/firm-\d+$/)
+  const firmWorkspace = io.of(/^\/firm-\d+$/);
 
   // Middleware to authorize a user's credentials via auth token
   firmWorkspace.use((socket, next) => {
@@ -56,20 +57,20 @@ export async function socketServer(httpServer) {
     if (isValid) {
       next();
     } else {
-      const err = new Error("not authorized");
+      const err = new Error('not authorized');
       let logger = Logger.getLogger();
-      logger.info("not authorized");
+      logger.info('not authorized');
       next(err);
     }
   });
-  
-  // Namespace connection handler
-  firmWorkspace.on("connection", socket => {
-    let logger = Logger.getLogger();
-    logger.info("Socket connected to workspace");
 
-    console.log("Socket connected");
-    console.log("----------------");
+  // Namespace connection handler
+  firmWorkspace.on('connection', (socket) => {
+    let logger = Logger.getLogger();
+    logger.info('Socket connected to workspace');
+
+    console.log('Socket connected');
+    console.log('----------------');
 
     // Firm namespace
     const namespace = socket.nsp;
@@ -87,22 +88,22 @@ export async function socketServer(httpServer) {
     //     baseURL: `http://${SERVER_HOST}:${SERVER_PORT}`
     //   });
 
-      // Emit status to socket who sent request
-      // console.log(response);
-      // socket.emit('request', {
-      //   status: response.status,
-      //   statusText: response.statusText
-      // });
-      
-      //TODO: If successful, emit update to namespace. Else, emit error to sending socket
-      // let action;
-      // if (message.method === 'post') {
-      //   action = 'add-one'
-      // } else if (message.method === 'patch') {
-        // action = ''
-      // }
+    // Emit status to socket who sent request
+    // console.log(response);
+    // socket.emit('request', {
+    //   status: response.status,
+    //   statusText: response.statusText
+    // });
 
-      // Emit new entity to everyone connected to the firm namespace. Example, 'add-one:client'
+    //TODO: If successful, emit update to namespace. Else, emit error to sending socket
+    // let action;
+    // if (message.method === 'post') {
+    //   action = 'add-one'
+    // } else if (message.method === 'patch') {
+    // action = ''
+    // }
+
+    // Emit new entity to everyone connected to the firm namespace. Example, 'add-one:client'
     //   namespace.emit(`${action}:${message.name}`, {
     //     data: response.data
     //   })
@@ -110,28 +111,28 @@ export async function socketServer(httpServer) {
     //   console.log(err.message);
     // }
     // });
-    socket.on('add', message => {
-      namespace.emit(`add:${message.name}`, message.data)
+    socket.on('add', (message) => {
+      namespace.emit(`add:${message.name}`, message.data);
     });
 
-    socket.on('update', message => {
-      namespace.emit(`update:${message.name}`, message.data)
+    socket.on('update', (message) => {
+      namespace.emit(`update:${message.name}`, message.data);
     });
 
-    socket.on('delete', message => {
-      namespace.emit(`delete:${message.name}`, message.data)
-    })
+    socket.on('delete', (message) => {
+      namespace.emit(`delete:${message.name}`, message.data);
+    });
 
-    socket.on('test', test => {
+    socket.on('test', (test) => {
       console.log(test);
       console.log(io.engine.clientsCount);
       console.log(io.of('/').sockets.size);
-      namespace.to('room1').emit('response', {msg: 'test received'});
-    })
+      namespace.to('room1').emit('response', { msg: 'test received' });
+    });
 
-    socket.on("disconnect", socket => {
-      console.log(socket, ' disconnect')
-    })
+    socket.on('disconnect', (socket) => {
+      console.log(socket, ' disconnect');
+    });
   });
 
   return Promise.resolve(io);
@@ -144,7 +145,7 @@ function getSocketRoom(token): string {
     }
 
     if (!user.id) {
-      return null
+      return null;
     }
 
     if (!user.firm_access) {
