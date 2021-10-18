@@ -61,6 +61,8 @@ export class AddCaseComponent implements OnInit {
 
   note: string;
 
+  clientId: number;
+
   constructor(
     private _fb: FormBuilder,
     private _staffService: StaffService,
@@ -111,6 +113,7 @@ export class AddCaseComponent implements OnInit {
     addClientDialog.afterClosed$.subscribe((close: any) => {
       if (close.data && close.data.id) {
       this.selectEvent(close.data.id, 'client_id');
+      this.clientId = close.data.id;
     }
     });
   }

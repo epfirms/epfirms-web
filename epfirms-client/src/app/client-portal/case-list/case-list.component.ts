@@ -20,7 +20,7 @@ export class CaseListComponent {
   }
 
   openIntake(matter: Matter): void {
-    if (matter.matter_intake_id && matter.matter_intake.status !== 'complete') {
+    if (matter.matter_intake_id) {
       this.selectedMatter = matter;
     }
   }

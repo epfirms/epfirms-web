@@ -4,7 +4,6 @@ import chai from "chai";
 import { expect } from "chai";
 import chaiHttp from "chai-http";
 import { Express } from 'express'
-import { StatusConstants } from "@src/constants/StatusConstants";
 import { epfserver } from "../../../../../index";
 
 chai.use(chaiHttp);
@@ -18,8 +17,7 @@ describe("Non Existing API Error check", async () => {
             .request(app)
             .get("/abcd")
             .end((err, res) => {
-                expect(res).to.have.status(StatusConstants.NOT_FOUND);
-                expect(res.text).to.equals(StatusConstants.NOT_FOUND_MSG);
+                expect(res).to.have.status(404);
                 done();
             });
     });
