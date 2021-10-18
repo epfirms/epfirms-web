@@ -10,7 +10,7 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "pm2-runtime start build/index.js",
     "dev": "tsc-watch --onSuccess \"node ./build/index.js\"",
-    "test": "mocha -r ts-node/register modules/**/tests/*.spec.ts",
+    "test": "mocha",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test"
   },
   "author": "epfirms",

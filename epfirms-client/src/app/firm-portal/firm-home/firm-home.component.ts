@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { ClientService } from '../_services/client-service/client.service';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
+import { MatterTabsService } from '../_services/matter-tabs-service/matter-tabs.service';
 
 @Component({
   selector: 'app-firm-home',
@@ -42,7 +43,8 @@ export class FirmHomeComponent implements OnInit, OnDestroy {
   constructor(
     private _matterService: MatterService,
     private _legalAreaService: LegalAreaService,
-    private _clientService: ClientService
+    private _clientService: ClientService,
+    private _matterTabsService: MatterTabsService
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.clients$ = _clientService.entities$
@@ -112,7 +114,10 @@ export class FirmHomeComponent implements OnInit, OnDestroy {
   toggleExpand(category: string) {
     this.taskCategories[category].expanded = !this.taskCategories[category].expanded;
   }
-
+  
+  openTab(matterId: number) {
+    this._matterTabsService.add(matterId);
+  }
 
   setLegalArea(matterId: number, legalArea: LegalArea) {
     this._matterService.update({id: matterId, legal_area_id: legalArea.id}).subscribe();

@@ -7,7 +7,7 @@
   <ul role="list" class="mt-5 border-t border-b border-gray-200 divide-y divide-gray-200"
     *ngIf="matters$ | async as matters">
     <li *ngFor="let matter of matters">
-      <a (click)="openIntake(matter)" class="block" [class.group]="matter.matter_intake_id && matter.matter_intake.status !== 'complete'">
+      <a (click)="openIntake(matter)" class="block" [class.group]="matter.matter_intake_id">
         <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0 group-hover:bg-blue-50 group-hover:cursor-pointer">
           <div class="min-w-0 flex-1 flex items-center">
             <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
