@@ -66,6 +66,9 @@ export class TasksComponent implements OnInit {
         description: task.name,
         track_time_for: task.assignee_id,
         type: "0",
+        billing_type: "hourly",
+        payment_type: "private pay",
+        date: new Date()
       }
       this._matterService.createBillOrPayment(bill).subscribe();
     }
