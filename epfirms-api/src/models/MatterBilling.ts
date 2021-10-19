@@ -1,6 +1,6 @@
 module.exports = (sequelize, { INTEGER, DATE, DECIMAL, STRING }) => {
     const tableName = 'matter_billing';
-  
+
     const MatterBilling = sequelize.define(
       tableName,
       {
@@ -20,6 +20,9 @@ module.exports = (sequelize, { INTEGER, DATE, DECIMAL, STRING }) => {
           },
           date: {
             type: DATE,
+          },
+          hours: {
+            type: INTEGER
           },
           description: {
             type: STRING,
@@ -62,7 +65,6 @@ module.exports = (sequelize, { INTEGER, DATE, DECIMAL, STRING }) => {
         },
       }
     );
-  
+
     return MatterBilling;
   };
-  

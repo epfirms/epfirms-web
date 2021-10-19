@@ -56,6 +56,20 @@ export class TasksComponent implements OnInit {
       ...task,
       [property]: value
     }
+    console.log("VALUE", value, property);
+    // add logic for adding a bill automatically
+    if (property === "completed" && value === true) {
+      console.log("TASK", task);
+      let bill = {
+        matter_id: task.matter_id,
+        hours: task.hours,
+        description: task.name,
+        track_time_for: task.assignee_id,
+        type: "0",
+      }
+      this._matterService.createBillOrPayment(bill).subscribe();
+    }
+
 
     this._matterService.updateMatterTask(taskChanges).subscribe();
   }
