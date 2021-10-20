@@ -130,6 +130,8 @@ export class BillFormModalComponent implements OnInit {
 
   submit() {
     const bill = this.billForm.value;
+    bill.amount = bill.amount.replace(',', '');
+
     if (bill.billing_type === 'contingency' && bill.settlement_date) {
       bill.settlement_date = bill.settlement_date.singleDate.jsDate;
     } else if (bill.billing_type === 'hourly' && bill.start_date && bill.end_date) {
@@ -139,6 +141,10 @@ export class BillFormModalComponent implements OnInit {
       bill.date = bill.date.singleDate.jsDate;
     }
 
-    this._modalRef.close(bill);
+    this.close(bill);
+  }
+
+  close(data?: any) {
+    this._modalRef.close(data);
   }
 }
