@@ -2,6 +2,24 @@ import { Database } from '@src/core/Database';
 const bcrypt = require('bcrypt');
 
 export class UserService {
+  public static async isRegistered(userId: number): Promise<boolean> {
+    const user = await Database.models.user.findOne({
+      attributes: ['id', 'email', 'password'],
+      where: {
+        id: userId
+      }
+    });
+    
+    if (!user.email) {
+      return Promise.resolve(false);
+    }
+
+    if (!user.password) {
+      return Promise.resolve(false);
+    }
+
+    return Promise.resolve(true);
+  }
   public static async get(attribute: string, value: any): Promise<any> {
     const user = await Database.models.user.findOne({
       where: {

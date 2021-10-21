@@ -45,11 +45,15 @@ export class PaymentFormModalComponent implements OnInit {
 
   submit() {
     const payment = this.paymentForm.value;
-
+    payment.amount = payment.amount.replace(',', '');
     if (payment.date) {
       payment.date = payment.date.singleDate.jsDate;
     }
 
-    this._modalRef.close(payment);
+    this.close(payment);
+  }
+
+  close(data?: any) {
+    this._modalRef.close(data);
   }
 }
