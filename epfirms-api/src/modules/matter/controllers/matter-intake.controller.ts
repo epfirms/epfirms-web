@@ -3,6 +3,8 @@ import { StatusConstants } from '@src/constants/StatusConstants';
 import { MatterService } from '@modules/matter/services/matter.service';
 import { MatterTaskService } from '../services/matter-task.service';
 import { UserService } from '@src/modules/user/services/user.service';
+import { FirmService } from '@src/modules/firm/services/firm.service';
+import { emailsService } from '@src/modules/emails/services/emails.service';
 
 export class MatterIntakeController {
   constructor() {}
@@ -10,13 +12,22 @@ export class MatterIntakeController {
   public async create(req: any, resp: Response): Promise<any> {
     try {
       const { id } = req.user;
+      const { firm_id } = req.user.firm_access;
       const matter_id = req.body.matter_id;
-
+      
       const createdIntake = await MatterService.createIntake(matter_id, id);
 
       await MatterService.update({id: createdIntake.matter_id, matter_intake_id: createdIntake.id});
       
       const matter = await MatterService.getOne(createdIntake.matter_id);
+      
+      const isClientRegistered = await UserService.isRegistered(matter.client_id);
+
+      console.log(isClientRegistered);
+      if (!isClientRegistered && matter.client.email) {
+        const firm = await FirmService.get(firm_id);
+        await emailsService.sendClientPortalInvite(matter.client.email, firm.name);
+      }
 
       resp.status(StatusConstants.OK).send(matter);
     } catch (error) {
