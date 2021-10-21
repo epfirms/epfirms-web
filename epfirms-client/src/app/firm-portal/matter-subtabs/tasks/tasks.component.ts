@@ -26,6 +26,7 @@ export class TasksComponent implements OnInit {
   private _matter: Matter;
 
   staff$: Observable<Staff[]>;
+  staffList;
 
   // bool for showing task template selection
   isTaskTemplateSelectionVisible : boolean = false;
@@ -40,7 +41,9 @@ export class TasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.staff$.subscribe(res => {
+      this.staffList = res;
+    });
   }
 
   createMatterTask(matterId: number): void {
@@ -60,6 +63,9 @@ export class TasksComponent implements OnInit {
     // add logic for adding a bill automatically
     if (property === "completed" && value === true) {
       console.log("TASK", task);
+
+      let hourlyRate = this.staffList.filter(staff => staff.id == task.assignee_id)[0].firms[0].firm_employee.hourly_rate;
+      console.log(hourlyRate);
       let bill = {
         matter_id: task.matter_id,
         hours: task.hours,
@@ -68,7 +74,8 @@ export class TasksComponent implements OnInit {
         type: "0",
         billing_type: "hourly",
         payment_type: "private pay",
-        date: new Date()
+        date: new Date(),
+        amount: task.hours * hourlyRate
       }
       this._matterService.createBillOrPayment(bill).subscribe();
     }

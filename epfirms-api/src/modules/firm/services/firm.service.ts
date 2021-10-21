@@ -180,7 +180,7 @@ export class FirmService {
         through: {
           model: firm_employee,
           where: { firm_id: firmId, active: true },
-          attributes: ['admin', 'attorney', 'legal_assistant', 'paralegal']
+          attributes: ['admin', 'attorney', 'legal_assistant', 'paralegal', 'hourly_rate']
         }
       }
     });
