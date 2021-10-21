@@ -59,7 +59,12 @@ export async function socketServer(httpServer) {
     } else {
       const err = new Error('not authorized');
       let logger = Logger.getLogger();
-      logger.info('not authorized');
+      logger.info(`Error connecting to socket room.`);
+      if (socket.handshake?.auth?.token) {
+        logger.info(`Token: ${socket.handshake.auth.token}`)
+      } else {
+        logger.info(`No token found in socket.handshake.auth.token`);
+      }
       next(err);
     }
   });
@@ -67,10 +72,8 @@ export async function socketServer(httpServer) {
   // Namespace connection handler
   firmWorkspace.on('connection', (socket) => {
     let logger = Logger.getLogger();
-    logger.info('Socket connected to workspace');
+    logger.info(`Socket connected to workspace: ${socket.nsp}`);
 
-    console.log('Socket connected');
-    console.log('----------------');
 
     // Firm namespace
     const namespace = socket.nsp;
@@ -139,16 +142,21 @@ export async function socketServer(httpServer) {
 }
 
 function getSocketRoom(token): string {
+  let logger = Logger.getLogger();
+
   return jwt.verify(token, JWT_SECRET, function (err, user) {
     if (err) {
+      logger.info(err);
       return null;
     }
 
     if (!user.id) {
+      logger.info(user);
       return null;
     }
 
     if (!user.firm_access) {
+      logger.info(user);
       return null;
     }
 
