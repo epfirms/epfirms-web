@@ -72,7 +72,7 @@ export async function socketServer(httpServer) {
   // Namespace connection handler
   firmWorkspace.on('connection', (socket) => {
     let logger = Logger.getLogger();
-    logger.info(`Socket connected to workspace: ${socket.nsp}`);
+    logger.info(`Socket connected to workspace: ${socket.nsp.name} (${socket.handshake.auth.token})`);
 
 
     // Firm namespace
