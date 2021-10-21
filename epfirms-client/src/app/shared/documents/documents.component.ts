@@ -14,7 +14,7 @@ import { Matter } from '@app/_models/matter';
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss']
 })
-export class DocumentsComponent implements OnInit, AfterViewInit {
+export class DocumentsComponent implements OnInit {
 
   //Input binding from parent
   @Input()
@@ -64,12 +64,6 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     // from the current tab grab the user id and firm id and set filter
     this._docService.setFilter(this.matter.client.id);
   }
-
-  ngAfterViewInit(): void {
-
-  }
-
-
 
   // toggles displayManageDocs : boolean
   toggleManageDocs(): void {
@@ -153,7 +147,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     let documentList : Array<Document> = [];
     for (let i = 0; i < files.length; i++){
       let currentFile = files[i];
-      let document = new Document(i, currentFile.name, this.userId, this.firmId, "Firm Only");
+      let document = new Document(i, currentFile.name, this.userId, this.firmId, "Firm Only", this.matter.id);
 
       documentList.push(document);
     }

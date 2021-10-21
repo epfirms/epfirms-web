@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
+import { Observable } from 'rxjs';
 import {Document} from '../../../_models/document';
 
 @Injectable({
@@ -7,7 +9,11 @@ import {Document} from '../../../_models/document';
 })
 export class DocumentService extends EntityCollectionServiceBase<Document> {
 
-  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
+  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory, private http: HttpClient) {
     super('Document', serviceElementsFactory);
    }
+
+   getOwn(): Observable<any> {
+    return this.http.get('/api/documents/own');
+  }
 }

@@ -16,6 +16,16 @@ export class DocumentController {
     }
   }
 
+  public async getUserDocuments(req , res: Response): Promise<any> {
+    try {
+      const userId = req.user.id;
+      const userDocuments = await DocumentService.getDocumentsByUserId(userId);
+      res.status(StatusConstants.OK).send(userDocuments);
+    } catch (err) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
   public async getAllFirmDocuments(req , res: Response): Promise<any> {
     try {
       const firmId = req.user.firm_access.firm_id;
