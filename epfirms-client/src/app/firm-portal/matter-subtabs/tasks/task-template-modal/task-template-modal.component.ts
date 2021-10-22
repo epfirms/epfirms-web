@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { ModalRef } from '@app/modal/modal-ref';
 import { Firm } from '@app/_models/firm';
 import { MatterTask } from '@app/_models/matter-task';
+import { IAngularMyDpOptions } from 'angular-mydatepicker';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,11 +13,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./task-template-modal.component.scss']
 })
 export class TaskTemplateModalComponent implements OnInit {
+  MS_IN_DAY = 86400000;
 
-  @Input() isVisible: boolean;
-  @Output() isVisibleChange = new EventEmitter<boolean>();
-
-  @Input() matter;
+  matter;
 
   firm$ : Observable<Firm[]>;
   taskTemplates;
@@ -23,11 +23,20 @@ export class TaskTemplateModalComponent implements OnInit {
   //selected template to apply
   selectedTemplate;
 
+  startDate: Date = new Date();
+  
+  options: IAngularMyDpOptions = {
+    dateRange: false,
+    dateFormat: 'mmm d, yyyy',
+    alignSelectorRight: true
+  };
   constructor(
     private firmService : FirmService,
     private matterService : MatterService,
+    private _modalRef: ModalRef
   ) {
     this.firm$ = this.firmService.entities$;
+    this.matter = _modalRef.data.matter;
    }
 
   ngOnInit(): void {
@@ -36,9 +45,10 @@ export class TaskTemplateModalComponent implements OnInit {
     });
   }
 
-  toggleModalVisibility():void {
-    this.isVisible = !this.isVisible;
-    this.isVisibleChange.emit(this.isVisible);
+  setDate(value): void {
+    this.startDate = value.singleDate.jsDate;
+    console.log(value);
+    console.log(this.startDate)
   }
 
   applyTemplate():void {
@@ -48,13 +58,25 @@ export class TaskTemplateModalComponent implements OnInit {
         let newTask = new MatterTask()
         newTask.name = task.task_description;
         newTask.matter_id = this.matter.id;
-        newTask.due = task.user_id;
+        console.log(this.startDate);
+        console.log(task.no_of_days_from_start_date);
+        console.log(this.addDaysToDate(this.startDate, task.no_of_days_from_start_date))
+        newTask.due = this.addDaysToDate(this.startDate, task.no_of_days_from_start_date).toString();
+        newTask.assignee_id = task.user_id;
         
         console.log("New Task", newTask);
         this.matterService.addMatterTask(newTask).subscribe(res => console.log(res));
       });
     }
-    this.toggleModalVisibility();
+    this.close();
   }
 
+  close(data?: any) {
+    this._modalRef.close(data);
+  }
+
+  addDaysToDate(date: Date, numberOfDays: number): Date {
+    console.log(date);
+    return new Date(date.getTime() + (numberOfDays * this.MS_IN_DAY));
+  }
 }

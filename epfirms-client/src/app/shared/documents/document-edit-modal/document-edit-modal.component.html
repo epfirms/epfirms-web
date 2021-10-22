@@ -95,7 +95,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
     -->
                   <li *ngFor="let doc_type of legalDocumentTypes" (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0"
                     role="option">
-                    <div (click)="setType(doc_type.viewValue); toggleDisplayDocTypeSelection()" class="flex items-center">
+                    <div (click)="setType(doc_type.value); toggleDisplayDocTypeSelection()" class="flex items-center">
                       <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                       <span class="font-normal ml-3 block truncate">
                         {{doc_type.viewValue}}
@@ -107,7 +107,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
 
         Highlighted: "text-white", Not Highlighted: "text-indigo-600"
       -->
-                    <span *ngIf="updatedDocument.doc_type == doc_type.viewValue" class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
+                    <span *ngIf="updatedDocument.doc_type === doc_type.value" class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
                       <!-- Heroicon name: solid/check -->
                       <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
