@@ -334,7 +334,10 @@
               text-sm
               text-gray-900
               border-r border-t border-b border-gray-200
+              hover:bg-gray-50
+              hover:cursor-pointer
               "
+              (click)="openTab(taskData.matterId)"
             >
             <div class="flex items-center">
               <tw-avatar
@@ -455,7 +458,10 @@
           text-sm
           text-gray-900
           border-r border-t border-b border-gray-200
+          hover:bg-gray-50
+          hover:cursor-pointer
           "
+          (click)="openTab(taskData.matterId)"
         >
         <div class="flex items-center">
           <tw-avatar
@@ -576,7 +582,10 @@
       text-sm
       text-gray-900
       border-r border-t border-b border-gray-200
+      hover:bg-gray-50
+      hover:cursor-pointer
       "
+      (click)="openTab(taskData.matterId)"
     >
     <div class="flex items-center">
       <tw-avatar
