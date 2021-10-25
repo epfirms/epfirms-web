@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
 import { ModalRef } from '@app/modal/modal-ref';
 import { getYear } from 'date-fns';
-import { DatepickerOptions } from 'ng2-datepicker';
 import locale from 'date-fns/locale/en-US';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
@@ -36,20 +35,6 @@ export class AddFamilyMemberComponent implements OnInit {
     'other'
   ];
 
-  options: DatepickerOptions = {
-    minYear: getYear(new Date()) - 30, // minimum available and selectable year
-    maxYear: getYear(new Date()) + 30, // maximum available and selectable year
-    placeholder: '', // placeholder in case date model is null | undefined, example: 'Please pick a date'
-    format: 'MMM d, yyyy', // date format to display in input
-    formatTitle: 'LLLL yyyy',
-    formatDays: 'EEEEE',
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: locale, // date-fns locale
-    position: 'bottom',
-    inputClass: 'mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm', // custom input CSS class to be applied
-    calendarClass: 'datepicker-blue', // custom datepicker calendar CSS class to be applied
-    scrollBarColor: '#dfe3e9', // in case you customize you theme, here you define scroll bar color
-  };
   constructor(private _fb: FormBuilder, private _familyMemberService: FamilyMemberService, private _modalRef: ModalRef) {
     this.familyMemberType = _modalRef.data.type;
    }
