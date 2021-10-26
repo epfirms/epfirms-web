@@ -129,9 +129,13 @@ export class AddStaffComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log("I'mma boutta submit bois.")
+    console.log(this.staffForm)
+    console.log(this.staffForm.value)
     this._staffService.createStaff(this.staffForm.value).subscribe(res => {
       this.close();
     });
+    console.log("Hey, I did it!")
   }
 
 }

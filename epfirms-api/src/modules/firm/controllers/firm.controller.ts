@@ -95,12 +95,22 @@ export class FirmController {
 
   public async createStaffMember(req: any, resp: Response): Promise<any> {
     try {
-      const { client } = req.body;
+      console.log(req.body)
+      console.log("THIS IS MY req")
+      const user = req.body;
+      console.log(user)
       const { firm_id } = req.user.firm_access;
+      const createdUser = await UserService.create(user);
 
-      await FirmService.createClient(client, firm_id);
+      const roles = {
+        admin: user.admin,
+        attorney: user.attorney,
+        legal_assistant: user.legal_assistant,
+        paralegal: user.paralegal
+      };
 
-      resp.status(StatusConstants.CREATED).send({ success: true });
+      await FirmService.addEmployee(createdUser.id, firm_id, roles);
+      resp.status(StatusConstants.OK).send();
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }

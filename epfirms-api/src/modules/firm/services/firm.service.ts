@@ -189,6 +189,12 @@ export class FirmService {
     return Promise.resolve(staff);
   }
 
+  public static async createStaffMember(staff,firmId): Promise<any> {
+    this.createClient(staff,firmId)
+    console.log("I'mma HERE")
+    
+  }
+
   public static async updateFirm(firm_id, newFirmData) {
     try {
       const updatedFirm = await Database.models.firm.update(newFirmData, {

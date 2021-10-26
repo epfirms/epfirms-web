@@ -31,6 +31,8 @@ export class UserService {
   }
 
   public static async create(userData): Promise<any> {
+    console.log(userData)
+    console.log("THIS IS MY USERDATA")
     if (userData.password) {
       const { password } = userData;
       const salt = await bcrypt.genSalt(10);
