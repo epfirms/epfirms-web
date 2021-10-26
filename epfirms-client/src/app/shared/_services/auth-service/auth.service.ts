@@ -66,6 +66,10 @@ export class AuthService {
       );
   }
 
+  verifyPasswordToken(userId: number, token: string): Observable<any> {
+    return this._http.get<any>(`/api/auth/password/${userId}`, { params: {token: encodeURIComponent(token)}})
+  }
+
   updatePassword(id, token, password: string): Observable<any> {
     return this._http.post<any>('/api/auth/password', {id, token, password});
   }
