@@ -96,7 +96,6 @@ export class FirmController {
   public async createStaffMember(req: any, resp: Response): Promise<any> {
     try {
       console.log(req.body)
-      console.log("THIS IS MY req")
       const user = req.body;
       console.log(user)
       const { firm_id } = req.user.firm_access;
