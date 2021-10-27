@@ -135,4 +135,8 @@ export class MatterTabsComponent implements OnInit {
       }
     }
   }
+
+  trackByIndex(index, item) {
+    return item.id;
+  }
 }

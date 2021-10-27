@@ -21,14 +21,6 @@ export class MatterIntakeController {
       
       const matter = await MatterService.getOne(createdIntake.matter_id);
       
-      const isClientRegistered = await UserService.isRegistered(matter.client_id);
-
-      console.log(isClientRegistered);
-      if (!isClientRegistered && matter.client.email) {
-        const firm = await FirmService.get(firm_id);
-        await emailsService.sendClientPortalInvite(matter.client.email, firm.name);
-      }
-
       resp.status(StatusConstants.OK).send(matter);
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
