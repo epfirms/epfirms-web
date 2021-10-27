@@ -174,7 +174,7 @@
                 <ng-container *ngIf="taskCategories.overdue.expanded">
                 <tr
                 class="task-row"
-                *ngFor="let taskData of taskCategories.overdue.data"
+                *ngFor="let taskData of taskCategories.overdue.data; trackBy: trackByIndex"
               >
                 <td class="w-16 border-t border-b border-gray-200 text-center group-focus:bg-blue-50">
                   <input
@@ -298,7 +298,7 @@
             <ng-container *ngIf="taskCategories.today.expanded">
             <tr
             class="task-row"
-            *ngFor="let taskData of taskCategories.today.data"
+            *ngFor="let taskData of taskCategories.today.data; trackBy: trackByIndex"
           >
             <td class="w-16 border-t border-b border-gray-200 text-center group-focus:bg-blue-50">
               <input
@@ -422,7 +422,7 @@
         <ng-container *ngIf="taskCategories.later.expanded">
         <tr
         class="task-row"
-        *ngFor="let taskData of taskCategories.later.data"
+        *ngFor="let taskData of taskCategories.later.data; trackBy: trackByIndex"
       >
         <td class="w-16 border-t border-b border-gray-200 text-center group-focus:bg-blue-50">
           <input
@@ -546,7 +546,7 @@
     <ng-container *ngIf="taskCategories.completed.expanded">
     <tr
     class="task-row"
-    *ngFor="let taskData of taskCategories.completed.data"
+    *ngFor="let taskData of taskCategories.completed.data; trackBy: trackByIndex"
   >
     <td class="w-16 border-t border-b border-gray-200 text-center group-focus:bg-blue-50">
       <input
