@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
 import { ModalRef } from '@app/modal/modal-ref';
-import { getYear } from 'date-fns';
-import locale from 'date-fns/locale/en-US';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 

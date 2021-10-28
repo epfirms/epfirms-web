@@ -32,6 +32,7 @@ import { UserFormModalComponent } from './user-form-modal/user-form-modal.compon
 import { BillFormModalComponent } from './bill-form-modal/bill-form-modal.component';
 import { PaymentFormModalComponent } from './payment-form-modal/payment-form-modal.component';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { TippyModule } from '@ngneat/helipopper';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { InputMaskModule } from '@ngneat/input-mask';
     ReactiveFormsModule,
     MenuModule,
     AngularMyDatePickerModule,
-    InputMaskModule
+    InputMaskModule,
+    TippyModule
   ],
   exports: [
     InputComponent,

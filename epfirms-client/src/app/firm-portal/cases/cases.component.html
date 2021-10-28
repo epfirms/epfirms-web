@@ -270,8 +270,7 @@
                       [twText]="case.matter_tasks[0].assignee?.full_name"
                     ></tw-avatar>                    </div>
                     <div class="ml-3">
-                      <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate" style="max-width: 12rem" [tooltip]="case.matter_tasks[0].name || null"
-                      [options]="tooltipOptions">
+                      <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate" style="max-width: 12rem" [tippy]="case.matter_tasks[0].name || null" tabindex="0">
                         {{ case.matter_tasks[0].name || "No task name" }}
                       </p>
                       <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">

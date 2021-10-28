@@ -15,8 +15,6 @@ export class FirmDetailsComponent implements OnInit, OnDestroy {
 
   firmForm: FormGroup;
 
-  mobileNumberMask: any[];
-
   firmSubscription: Subscription;
 
   constructor(
@@ -24,23 +22,6 @@ export class FirmDetailsComponent implements OnInit, OnDestroy {
     private _firmService : FirmService
   ) { 
     this.firm$ = _firmService.entities$;
-
-    this.mobileNumberMask = [
-      '(',
-      /[1-9]/,
-      /\d/,
-      /\d/,
-      ')',
-      ' ',
-      /\d/,
-      /\d/,
-      /\d/,
-      '-',
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/
-    ];
   }
 
   ngOnInit(): void {

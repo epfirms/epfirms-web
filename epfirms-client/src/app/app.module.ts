@@ -16,13 +16,23 @@ import { matterTabsReducer } from './store/matter-tabs/matter-tabs.reducer';
 import { currentUserReducer } from './store/current-user/current-user.reducer';
 import { MatterActivityInterceptor } from './shared/_interceptors/matter-activity.interceptor';
 import { extModules } from 'src/environments/development/modules.dev';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { InputMaskModule } from '@ngneat/input-mask';
-import { TippyModule } from '@ngneat/helipopper';
+import { popperVariation, TippyModule, withContextMenuVariation } from '@ngneat/helipopper';
+import { TippyProps } from '@ngneat/helipopper/lib/tippy.types';
+import { DialogModule } from '@ngneat/dialog';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
   timeout: 50000, // request timeout
+};
+
+const tooltipConfig: Partial<TippyProps> = {
+  theme: 'tomato',
+  trigger: 'mouseenter focus',
+  arrow: false,
+  animation: 'shift-away-subtle',
+  offset: [0, 5],
+  duration: [150, 100]
 };
 
 @NgModule({
@@ -42,7 +52,15 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
     EntityDataModule.forRoot(entityConfig),
     extModules,
     InputMaskModule,
-    TippyModule.forRoot()
+    TippyModule.forRoot({
+      defaultVariation: 'tooltip',
+      variations: {
+        tooltip: tooltipConfig,
+        popper: popperVariation,
+        contextMenu: withContextMenuVariation(popperVariation)
+      }
+    }),
+    DialogModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
