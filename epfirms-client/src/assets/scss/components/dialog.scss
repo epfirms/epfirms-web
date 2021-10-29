@@ -1,0 +1,36 @@
+ngneat-dialog {
+    .ngneat-dialog-backdrop {
+      // backdrop styles
+      background: rgba(107, 114, 128, 0.75);
+      animation: 300ms cubic-bezier(0, 0, 0.2, 1) dialog-open-backdrop;
+
+      .ngneat-dialog-content {
+        // dialog content, where your component/template is placed
+        @apply shadow-lg;
+        animation: 300ms cubic-bezier(0, 0, 0.2, 1) ngneat-dialog-open;
+        border-radius: 0.5rem;
+        //.ngneat-drag-marker {
+          // draggable marker
+        //}
+       // .ngneat-close-dialog {
+          // 'X' icon for closing the dialog
+      //  }
+       // .ngneat-dialog-primary-btn,
+//.ngneat-dialog-secondary-btn {
+          // the default dialogs action buttons
+ //       }
+      }
+    }
+}
+
+@keyframes ngneat-dialog-open {
+    0% {
+        opacity: 0;
+        transform: translateX(0) translateY(1rem) rotate(0) skewX(0) skewY(0) scaleX(.95) scaleY(.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) rotate(0) skewX(0) skewY(0) scaleX(1) scaleY(1);
+    }
+}

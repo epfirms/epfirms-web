@@ -33,6 +33,8 @@ import { BillFormModalComponent } from './bill-form-modal/bill-form-modal.compon
 import { PaymentFormModalComponent } from './payment-form-modal/payment-form-modal.component';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { TippyModule } from '@ngneat/helipopper';
+import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,7 @@ import { TippyModule } from '@ngneat/helipopper';
     UserFormModalComponent,
     BillFormModalComponent,
     PaymentFormModalComponent,
+    PdfViewerComponent,
   ],
   imports: [
     CommonModule,
@@ -72,7 +75,8 @@ import { TippyModule } from '@ngneat/helipopper';
     MenuModule,
     AngularMyDatePickerModule,
     InputMaskModule,
-    TippyModule
+    TippyModule,
+    PdfJsViewerModule
   ],
   exports: [
     InputComponent,
@@ -90,7 +94,8 @@ import { TippyModule } from '@ngneat/helipopper';
     SearchPipe,
     InitialsPipe,
     PaginatorComponent,
-    TableSectionComponent
+    TableSectionComponent,
+    PdfViewerComponent
   ]
 })
 export class SharedModule { }

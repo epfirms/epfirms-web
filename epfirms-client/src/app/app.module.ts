@@ -20,6 +20,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
 import { popperVariation, TippyModule, withContextMenuVariation } from '@ngneat/helipopper';
 import { TippyProps } from '@ngneat/helipopper/lib/tippy.types';
 import { DialogModule } from '@ngneat/dialog';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -27,12 +28,23 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
 };
 
 const tooltipConfig: Partial<TippyProps> = {
-  theme: 'tomato',
+  theme: 'tooltip-dark',
   trigger: 'mouseenter focus',
   arrow: false,
   animation: 'shift-away-subtle',
   offset: [0, 5],
   duration: [150, 100]
+};
+
+const dropdownConfig: Partial<TippyProps> = {
+  theme: 'dropdown-light',
+  trigger: 'click focus',
+  interactive: true,
+  arrow: false,
+  animation: 'shift-away-subtle',
+  offset: [0, 5],
+  duration: [150, 100],
+  placement: 'bottom'
 };
 
 @NgModule({
@@ -57,10 +69,16 @@ const tooltipConfig: Partial<TippyProps> = {
       variations: {
         tooltip: tooltipConfig,
         popper: popperVariation,
-        contextMenu: withContextMenuVariation(popperVariation)
+        dropdown: {
+          ...dropdownConfig,
+          appendTo: "parent",
+        }
       }
     }),
-    DialogModule.forRoot()
+    DialogModule.forRoot({
+      closeButton: false
+    }),
+    PdfJsViewerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
