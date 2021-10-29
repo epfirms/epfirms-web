@@ -35,6 +35,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
 import { TippyModule } from '@ngneat/helipopper';
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
     BillFormModalComponent,
     PaymentFormModalComponent,
     PdfViewerComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     CommonModule,

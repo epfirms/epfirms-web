@@ -21,6 +21,7 @@ import { popperVariation, TippyModule, withContextMenuVariation } from '@ngneat/
 import { TippyProps } from '@ngneat/helipopper/lib/tippy.types';
 import { DialogModule } from '@ngneat/dialog';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -76,7 +77,10 @@ const dropdownConfig: Partial<TippyProps> = {
       }
     }),
     DialogModule.forRoot({
-      closeButton: false
+      closeButton: false,
+      confirm: {
+        component: ConfirmDialogComponent
+      }
     }),
     PdfJsViewerModule
   ],
