@@ -8,7 +8,7 @@ import { Matter } from '@app/_models/matter';
 @Component({
   selector: 'app-billing',
   templateUrl: './billing.component.html',
-  styleUrls: ['./billing.component.scss'],
+  styleUrls: ['./billing.component.scss']
 })
 export class BillingComponent implements OnInit {
   @Input()
@@ -24,30 +24,25 @@ export class BillingComponent implements OnInit {
   bills: any[] = [];
   payments: any[] = [];
 
-  constructor(
-    private _modalService: ModalService,
-    private _matterService: MatterService
-  ) {}
+  constructor(private _modalService: ModalService, private _matterService: MatterService) {}
   ngOnInit(): void {
     this.loadBillPayments();
   }
 
   loadBillPayments() {
-    this._matterService
-      .getMatterBillingById(this.matter.id)
-      .subscribe((response) => {
-        this.bills = response.filter((b) => b.type === "0");
-        this.payments = response.filter((b) => b.type === "1");
-      });
+    this._matterService.getMatterBillingById(this.matter.id).subscribe((response) => {
+      this.bills = response.filter((b) => b.type === '0');
+      this.payments = response.filter((b) => b.type === '1');
+    });
   }
+  
   addBill(): void {
     const billModal = this._modalService.open(BillFormModalComponent, {});
     billModal.afterClosed$.subscribe(({ data }) => {
-      console.log(data);
       if (data) {
         const bill = {
           ...data,
-          matter_id: this.matter.id,
+          matter_id: this.matter.id
         };
 
         if (bill.track_time_for === 'Attorney') {
@@ -68,7 +63,7 @@ export class BillingComponent implements OnInit {
       if (data) {
         const bill = {
           ...data,
-          matter_id: this.matter.id,
+          matter_id: this.matter.id
         };
         this._matterService.createBillOrPayment(bill).subscribe(() => {
           this.loadBillPayments();

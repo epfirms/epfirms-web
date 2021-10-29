@@ -18,6 +18,7 @@ import { MatterActivityInterceptor } from './shared/_interceptors/matter-activit
 import { extModules } from 'src/environments/development/modules.dev';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { TippyModule } from '@ngneat/helipopper';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -40,7 +41,8 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
     extModules,
-    InputMaskModule
+    InputMaskModule,
+    TippyModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -1,36 +1,29 @@
+# Development compose configuration
 services:
   backend:
     build:
       context: ./epfirms-api
       dockerfile: Dockerfile
       target: base
-    container_name: epfirms-api
-    expose:
-      - '4000'
-    ports:
-      - '4000:4000'
     volumes:
       - './epfirms-api/src:/home/node/api/src'
-    command: npm run dev
     depends_on:
       - database
-    networks:
-      - socket
+    command: npm run dev
   client:
     build:
       context: ./epfirms-client
       dockerfile: Dockerfile
-    container_name: epfirms-client
     expose:
       - '4200'
     ports:
       - '4200:4200'
+    networks:
+      - socket
     volumes:
       - './epfirms-client:/home/node/client'
       - '/home/node/client/node_modules'
     command: node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --disable-host-check
-    networks:
-      - socket
   database:
     image: mysql:5.7
     restart: always
@@ -46,13 +39,5 @@ services:
       - epfirms-db:/var/lib/mysql
     networks:
       - socket
-  redis:
-    image: redis
-    networks:
-      - socket
-    expose:
-      - '6379'
 volumes:
   epfirms-db:
-networks:
-  socket:

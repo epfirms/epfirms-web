@@ -32,6 +32,8 @@ import { TooltipModule } from 'ng2-tooltip-directive';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { BillingComponent } from './matter-subtabs/billing/billing.component';
 import { TaskTemplateModalComponent } from './matter-subtabs/tasks/task-template-modal/task-template-modal.component';
+import { AngularMyDatePickerModule } from 'angular-mydatepicker';
+import { EditableModule } from '@ngneat/edit-in-place';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { TaskTemplateModalComponent } from './matter-subtabs/tasks/task-template
     IntakeModule,
     CdkTableModule,
     TooltipModule,
-    NgxSelectModule
+    NgxSelectModule,
+    AngularMyDatePickerModule,
+    EditableModule
   ]
 })
 export class FirmPortalModule { }

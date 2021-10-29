@@ -44,12 +44,8 @@ export class MatterController {
       }
 
       const createdMatter = await MatterService.create(matter, firm_id);
-
-      const createdIntake = await MatterService.createIntake(createdMatter.id, id);
-
-      await MatterService.update({id: createdIntake.matter_id, matter_intake_id: createdIntake.id});
       
-      const newMatter = await MatterService.getOne(createdIntake.matter_id);
+      const newMatter = await MatterService.getOne(createdMatter.id);
       
       const matterClient = await UserService.get('id', newMatter.client_id);
 
@@ -57,6 +53,7 @@ export class MatterController {
         const firm = await FirmService.get(firm_id);
         await emailsService.sendClientPortalInvite(matterClient.email, firm.name);
       }
+      
       resp.status(StatusConstants.OK).send(newMatter);
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);

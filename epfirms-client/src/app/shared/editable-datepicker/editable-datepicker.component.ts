@@ -1,7 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { getYear } from 'date-fns';
-import { DatepickerOptions } from 'ng2-datepicker';
-import locale from 'date-fns/locale/en-US';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 
 @Component({

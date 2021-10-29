@@ -1,0 +1,21 @@
+# Production compose configuration
+services:
+  backend:
+    restart: always
+    networks:
+      - nginx_network
+    env_file:
+      - .env
+  client:
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - nginx_network
+    depends_on:
+      - backend
+    volumes:
+      - "${EB_LOG_BASE_DIR}/eb-current-app:/var/log/nginx"
+networks:
+  nginx_network:
+    driver: bridge

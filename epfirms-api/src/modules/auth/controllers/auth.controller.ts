@@ -63,6 +63,18 @@ export class AuthController {
     }
   }
 
+  public async verifyPasswordToken(req: any, resp: Response): Promise<any> {
+    try {
+      const { token } = req.query;
+      const { user_id } = req.params;
+
+      const isValid = await AuthService.verifyPasswordToken(user_id, token);
+      resp.status(StatusConstants.OK).send(isValid);
+    } catch (error) {
+      resp.status(StatusConstants.FORBIDDEN).send(error.message);
+    }
+  }
+
   public async updatePassword(req: any, resp: Response): Promise<any> {
     try {
       const { id, token, password } = req.body;

@@ -1,31 +1,18 @@
+# Base compose configuration
 services:
   backend:
-    restart: always
-    image: jaerq/epfirms-server
     container_name: epfirms-api
+    image: jaerq/epfirms-server
     expose:
-      - '4000'
+      - "4000"
     ports:
-      - '4000:4000'
+      - "4000:4000"
     networks:
-      - nginx_network
       - socket
-    env_file:
-      - .env
     command: npm start
   client:
-    restart: always
     container_name: epfirms-client
     image: jaerq/epfirms-client
-    ports:
-      - "80:80"
-    networks:
-      - nginx_network
-      - socket
-    depends_on:
-      - backend
-    volumes:
-      - "${EB_LOG_BASE_DIR}/eb-current-app:/var/log/nginx"
   redis:
     image: redis
     networks:
@@ -33,6 +20,4 @@ services:
     expose:
       - '6379'
 networks:
-  nginx_network:
-    driver: bridge
   socket:

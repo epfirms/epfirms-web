@@ -48,7 +48,8 @@ export class Database {
       password_reset_token: require('../models/PasswordResetToken')(this.sequelize, Sequelize),
       matter_billing: require('../models/MatterBilling')(this.sequelize, Sequelize),
       template_task: require('../models/TemplateTask')(this.sequelize, Sequelize),
-      task_template: require('../models/TaskTemplate')(this.sequelize, Sequelize)
+      task_template: require('../models/TaskTemplate')(this.sequelize, Sequelize),
+      external_lead: require('../models/ExternalLead')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee });

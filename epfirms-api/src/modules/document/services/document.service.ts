@@ -34,6 +34,15 @@ export class DocumentService {
     }
   }
 
+  public static async getDocumentsByUserId(userId: number): Promise<any> {
+    try {
+      const document = await Database.models.document.findAll({where: {user_id: userId}});
+      return Promise.resolve(document);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   public static async getDocumentById(docId): Promise<any> {
     try {
       const document = await Database.models.document.findOne({where: {id: docId}});

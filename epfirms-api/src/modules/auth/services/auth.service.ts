@@ -147,6 +147,23 @@ export class AuthService {
     return Promise.resolve(true);
   }
 
+  public static async verifyPasswordToken(userId: number, token: string): Promise<boolean> {
+    const { password_reset_token } = Database.models;
+    const passwordResetToken = await password_reset_token.findOne({where: {user_id: userId}});
+
+    if (!passwordResetToken) {
+      return Promise.reject(false);
+    }
+
+    const isValid = await bcrypt.compare(token, passwordResetToken.token);
+
+    if (!isValid) {
+      return Promise.reject(false);
+    }
+
+    return Promise.resolve(true);
+  }
+
   public static async resetPassword(userId: number, token: string, password: string): Promise<boolean> {
     const { password_reset_token } = Database.models;
     const passwordResetToken = await password_reset_token.findOne({where: {user_id: userId}});

@@ -3,18 +3,20 @@ import { FirmService } from '@app/firm-portal/_services/firm-service/firm.servic
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { MatterTabsService } from '@app/firm-portal/_services/matter-tabs-service/matter-tabs.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
+import { ModalService } from '@app/modal/modal.service';
 import { Matter } from '@app/_models/matter';
 import { MatterTab } from '@app/_models/matter-tab';
 import { MatterTask } from '@app/_models/matter-task';
 import { Staff } from '@app/_models/staff';
 import { Observable, Subscription } from 'rxjs';
+import { TaskTemplateModalComponent } from './task-template-modal/task-template-modal.component';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss']
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent {
   @Input()
   get matter() {
     return this._matter;
@@ -36,6 +38,7 @@ export class TasksComponent implements OnInit {
   constructor(
     private _matterTabsService: MatterTabsService,
     private _matterService: MatterService,
+    private _modalService: ModalService,
     private _staffService: StaffService) {
     this.staff$ = _staffService.entities$;
   }
@@ -89,6 +92,6 @@ export class TasksComponent implements OnInit {
   }
 
   toggleTaskTemplateVisibility(): void {
-    this.isTaskTemplateSelectionVisible = !this.isTaskTemplateSelectionVisible;
+    this._modalService.open(TaskTemplateModalComponent, {matter: this.matter});
   }
 }

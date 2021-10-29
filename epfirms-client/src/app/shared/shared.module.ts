@@ -10,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditableInputComponent } from './editable-input/editable-input.component';
 import { EditableAutocompleteComponent } from './editable-autocomplete/editable-autocomplete.component';
 import { EditableDatepickerComponent } from './editable-datepicker/editable-datepicker.component';
-import { DatepickerModule } from 'ng2-datepicker';
 import { TagComponent } from './tag/tag.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { SelectComponent } from './select/select.component';
@@ -69,7 +68,6 @@ import { InputMaskModule } from '@ngneat/input-mask';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    DatepickerModule,
     MenuModule,
     AngularMyDatePickerModule,
     InputMaskModule

@@ -21,6 +21,8 @@ export class UpdatePasswordComponent implements OnInit, OnDestroy {
 
   queryParamsSubscription: Subscription;
 
+  error: boolean = false;
+
   constructor(
     private _authService: AuthService,
     private _route: ActivatedRoute,
@@ -32,6 +34,13 @@ export class UpdatePasswordComponent implements OnInit, OnDestroy {
       let { id, token } = params;
       this.decodedToken = decodeURIComponent(token);
       this.userId = parseInt(id);
+
+      this._authService.verifyPasswordToken(this.userId, token).subscribe((response) => {
+        console.log(response);
+      },
+      (error) => {
+        this.error = true;
+      })
     });
   }
 

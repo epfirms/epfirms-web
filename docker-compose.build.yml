@@ -1,0 +1,11 @@
+# Build compose configuration
+services:
+  backend:
+    build:
+      context: ./epfirms-api
+      dockerfile: Dockerfile.prod
+      target: base
+  client:
+    build:
+      context: ./epfirms-client
+      dockerfile: Dockerfile.prod

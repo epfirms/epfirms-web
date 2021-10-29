@@ -30,7 +30,7 @@ export class DocumentEditModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.updatedDocument = new Document(this.document.id, this.document.doc_name, this.document.user_id, this.document.firm_id,
-    this.document.share_with)
+    this.document.share_with, this.document.matter_id)
     this.updatedDocument.doc_type = this.document.doc_type;
     this.legalDocumentTypes = legalDocumentTypes;
   }
