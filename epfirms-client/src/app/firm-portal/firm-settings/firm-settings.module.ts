@@ -9,7 +9,6 @@ import { FirmSettingsComponent } from './firm-settings.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/shared/_guards/auth.guard';
 import { FirmDetailsComponent } from './firm-details/firm-details/firm-details.component';
-import { TextMaskModule } from 'angular2-text-mask';
 import { SharedModule } from '@app/shared/shared.module';
 import { ManageStaffComponent } from './manage-staff/manage-staff.component';
 
@@ -38,7 +37,6 @@ const FirmSettingsRoute: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TextMaskModule,
     RouterModule.forChild(FirmSettingsRoute),
     SharedModule
   ]

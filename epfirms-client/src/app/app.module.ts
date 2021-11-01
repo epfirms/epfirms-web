@@ -16,13 +16,36 @@ import { matterTabsReducer } from './store/matter-tabs/matter-tabs.reducer';
 import { currentUserReducer } from './store/current-user/current-user.reducer';
 import { MatterActivityInterceptor } from './shared/_interceptors/matter-activity.interceptor';
 import { extModules } from 'src/environments/development/modules.dev';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { InputMaskModule } from '@ngneat/input-mask';
-import { TippyModule } from '@ngneat/helipopper';
+import { popperVariation, TippyModule, withContextMenuVariation } from '@ngneat/helipopper';
+import { TippyProps } from '@ngneat/helipopper/lib/tippy.types';
+import { DialogModule } from '@ngneat/dialog';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
   timeout: 50000, // request timeout
+};
+
+const tooltipConfig: Partial<TippyProps> = {
+  theme: 'tooltip-dark',
+  trigger: 'mouseenter focus',
+  arrow: false,
+  animation: 'shift-away-subtle',
+  offset: [0, 5],
+  duration: [150, 100]
+};
+
+const dropdownConfig: Partial<TippyProps> = {
+  theme: 'dropdown-light',
+  trigger: 'click focus',
+  interactive: true,
+  arrow: false,
+  animation: 'shift-away-subtle',
+  offset: [0, 5],
+  duration: [150, 100],
+  placement: 'bottom'
 };
 
 @NgModule({
@@ -42,7 +65,24 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
     EntityDataModule.forRoot(entityConfig),
     extModules,
     InputMaskModule,
-    TippyModule.forRoot()
+    TippyModule.forRoot({
+      defaultVariation: 'tooltip',
+      variations: {
+        tooltip: tooltipConfig,
+        popper: popperVariation,
+        dropdown: {
+          ...dropdownConfig,
+          appendTo: "parent",
+        }
+      }
+    }),
+    DialogModule.forRoot({
+      closeButton: false,
+      confirm: {
+        component: ConfirmDialogComponent
+      }
+    }),
+    PdfJsViewerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

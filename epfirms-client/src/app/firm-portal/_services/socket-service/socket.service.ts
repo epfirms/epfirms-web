@@ -13,6 +13,9 @@ export class SocketService {
     this._socket.ioSocket.auth = { token: accessTokenValue };
     this._socket.ioSocket.nsp = `/firm-${firmId}`;
     this._socket.connect();
+    this._socket.on('connect_error', (error)=> {
+      console.log(error);
+    });
   }
 
   disconnect(): void {
