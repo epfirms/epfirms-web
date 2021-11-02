@@ -58,7 +58,7 @@ export class BillingComponent implements OnInit {
     //   }
     // });
 
-    this.toggleBillManager()
+    this.toggleBillManager();
   }
 
   addPayment(): void {

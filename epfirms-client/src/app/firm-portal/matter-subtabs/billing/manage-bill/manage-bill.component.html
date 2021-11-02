@@ -56,7 +56,87 @@
 
 
       <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+        <div class="sm:col-span-3">
 
+          <div class="mt-1">
+            <!--
+              This example requires Tailwind CSS v2.0+
+
+              This example requires some changes to your config:
+
+              ```
+              // tailwind.config.js
+              module.exports = {
+                // ...
+                plugins: [
+                  // ...
+                  require('@tailwindcss/forms'),
+                ],
+              }
+              ```
+            -->
+            <div>
+              <label for="billingStyle" class="block text-sm font-medium text-gray-700">Billing Style</label>
+              <select id="billingStyle"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                <option>Flat Rate</option>
+                <option >Hourly</option>
+                <option>Contingency</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+            <!--
+              This example requires Tailwind CSS v2.0+
+
+              This example requires some changes to your config:
+
+              ```
+              // tailwind.config.js
+              module.exports = {
+                // ...
+                plugins: [
+                  // ...
+                  require('@tailwindcss/forms'),
+                ],
+              }
+              ```
+            -->
+            <div>
+              <label for="paymentType" class="block text-sm font-medium text-gray-700">Payment Type</label>
+              <select id="paymentType"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                <option>Private Pay</option>
+                <option >Legal Insurance</option>
+
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+
+            <div>
+              <label for="hours" class="block text-sm font-medium text-gray-700">Hours</label>
+              <input type="number" id="hours"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+
+            <div>
+              <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+              <input type="number" id="amount"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+            </div>
+          </div>
+        </div>
 
         <div class="sm:col-span-6">
           <label for="about" class="block text-sm font-medium text-gray-700">
