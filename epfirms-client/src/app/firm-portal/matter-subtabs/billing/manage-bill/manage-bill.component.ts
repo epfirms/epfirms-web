@@ -63,6 +63,7 @@ export class ManageBillComponent implements OnInit {
         hourly_rate: this.currentBill.hourly_rate,
         track_time_for: this.currentBill.track_time_for,
       });
+      this.date = this.currentBill.date;
     }
 
     //patch in the matter_id for the bill
