@@ -175,6 +175,10 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
     return this._http.post<any>('/api/billing', bill);
   }
 
+  editMatterBillOrPayment(bill): Observable<any> {
+    return this._http.put<any>('/api/billing', bill)
+  }
+
   getMatterBillingById(id: number): Observable<any> {
     return this._http.get<any>(`/api/billing/${id}`);
   }

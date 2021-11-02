@@ -13,13 +13,17 @@ export class ManageBillComponent implements OnInit {
   @Input() isVisible : boolean;
   @Output() isVisibleChange = new EventEmitter<boolean>();
 
+  //EDIT mode: determines if the form is in edit mode for a particular bill
+  @Input() isEditMode : boolean;
+  @Input() currentBill;
   // matter properties
   @Input() matter;
 
   // bill form group
   billForm = new FormGroup({
+    id : new FormControl(),
     matter_id : new FormControl('', Validators.required),
-    amount: new FormControl(0),
+    amount: new FormControl(0.00),
     // determines if bill or payment 0=bill 1=payment,
     type: new FormControl(0),
     date: new FormControl(new Date(), Validators.required),
@@ -40,6 +44,26 @@ export class ManageBillComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Matter", this.matter);
+    console.log(this.currentBill);
+
+    // init for edit mode
+    if (this.isEditMode === true){
+      console.log("EDIT MODE");
+      this.billForm.patchValue({
+        id: this.currentBill.id,
+        matter_id : this.currentBill.matter_id,
+        amount: this.currentBill.amount,
+        // determines if bill or payment 0=bill 1=payment,
+        type: this.currentBill.type,
+        date: this.currentBill.date,
+        hours: this.currentBill.hours,
+        description: this.currentBill.description,
+        billing_type : this.currentBill.billing_type,
+        payment_type: this.currentBill.payment_type,
+        hourly_rate: this.currentBill.hourly_rate,
+        track_time_for: this.currentBill.track_time_for,
+      });
+    }
 
     //patch in the matter_id for the bill
     this.billForm.patchValue({'matter_id': this.matter.id});
@@ -55,12 +79,21 @@ export class ManageBillComponent implements OnInit {
   }
 
   submit(): void {
-    let bill = this.billForm.value;
-    console.log(bill);
-    this._matterService.createBillOrPayment(bill).subscribe(res => {
-          console.log(res);
-          this.closeBillManager();
-         });
-  }
-
+    if (this.isEditMode) {
+      let bill = this.billForm.value;
+      console.log("EDITED BILL ", bill);
+      this._matterService.editMatterBillOrPayment(bill).subscribe(res => {
+        console.log(res);
+        this.closeBillManager();
+      });
+    }
+    else {
+      let bill = this.billForm.value;
+      console.log(bill);
+      this._matterService.createBillOrPayment(bill).subscribe(res => {
+            console.log(res);
+            this.closeBillManager();
+           });
+    }
+    }
 }

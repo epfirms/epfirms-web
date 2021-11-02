@@ -19,9 +19,9 @@ export class MatterBillingService {
       console.error(err);
     }
   }
-  public static async update(id) : Promise<any> {
+  public static async update(body) : Promise<any> {
     try {
-      const updated = await Database.models.matter_billing.update({where: {id: id}});
+      const updated = await Database.models.matter_billing.update(body, {where: {id: body.id}});
       return Promise.resolve(updated);
     }
     catch (err) {

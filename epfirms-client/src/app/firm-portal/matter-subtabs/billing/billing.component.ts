@@ -26,6 +26,8 @@ export class BillingComponent implements OnInit {
 
   //CONFIG FOR BILL MANAGER SLIDE OVER
   isBillManagerVisible : boolean = false;
+  isBillManagerEditMode : boolean = false;
+  currentBill;
 
   constructor(private _modalService: ModalService, private _matterService: MatterService) {}
   ngOnInit(): void {
@@ -86,5 +88,16 @@ export class BillingComponent implements OnInit {
   //method for toggling visibility of bill manager
   toggleBillManager():void {
     this.isBillManagerVisible = !this.isBillManagerVisible;
+  }
+
+  editBill(bill): void {
+    this.isBillManagerEditMode = true;
+    this.currentBill = bill;
+    this.toggleBillManager();
+  }
+
+  clearEditMode(): void {
+    this.isBillManagerEditMode = false;
+    this.currentBill = null;
   }
 }
