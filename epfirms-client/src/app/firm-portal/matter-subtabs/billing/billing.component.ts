@@ -24,6 +24,9 @@ export class BillingComponent implements OnInit {
   bills: any[] = [];
   payments: any[] = [];
 
+  //CONFIG FOR BILL MANAGER SLIDE OVER
+  isBillManagerVisible : boolean = false;
+
   constructor(private _modalService: ModalService, private _matterService: MatterService) {}
   ngOnInit(): void {
     this.loadBillPayments();
@@ -35,25 +38,27 @@ export class BillingComponent implements OnInit {
       this.payments = response.filter((b) => b.type === '1');
     });
   }
-  
+
   addBill(): void {
-    const billModal = this._modalService.open(BillFormModalComponent, {});
-    billModal.afterClosed$.subscribe(({ data }) => {
-      if (data) {
-        const bill = {
-          ...data,
-          matter_id: this.matter.id
-        };
+    // const billModal = this._modalService.open(BillFormModalComponent, {});
+    // billModal.afterClosed$.subscribe(({ data }) => {
+    //   if (data) {
+    //     const bill = {
+    //       ...data,
+    //       matter_id: this.matter.id
+    //     };
+    //
+    //     if (bill.track_time_for === 'Attorney') {
+    //       bill.track_time_for = this.matter.attorney_id;
+    //     }
+    //
+    //     this._matterService.createBillOrPayment(bill).subscribe(() => {
+    //       this.loadBillPayments();
+    //     });
+    //   }
+    // });
 
-        if (bill.track_time_for === 'Attorney') {
-          bill.track_time_for = this.matter.attorney_id;
-        }
-
-        this._matterService.createBillOrPayment(bill).subscribe(() => {
-          this.loadBillPayments();
-        });
-      }
-    });
+    this.toggleBillManager()
   }
 
   addPayment(): void {
@@ -76,5 +81,10 @@ export class BillingComponent implements OnInit {
     this._matterService.removeMatterBill(id).subscribe(() => {
       this.loadBillPayments();
     });
+  }
+
+  //method for toggling visibility of bill manager
+  toggleBillManager():void {
+    this.isBillManagerVisible = !this.isBillManagerVisible;
   }
 }

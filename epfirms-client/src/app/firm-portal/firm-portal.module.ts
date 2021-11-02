@@ -34,6 +34,7 @@ import { BillingComponent } from './matter-subtabs/billing/billing.component';
 import { TaskTemplateModalComponent } from './matter-subtabs/tasks/task-template-modal/task-template-modal.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { EditableModule } from '@ngneat/edit-in-place';
+import { ManageBillComponent } from './matter-subtabs/billing/manage-bill/manage-bill.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { EditableModule } from '@ngneat/edit-in-place';
     EditStaffComponent,
     EditClientComponent,
     BillingComponent,
-    TaskTemplateModalComponent
+    TaskTemplateModalComponent,
+    ManageBillComponent
   ],
   imports: [
     CommonModule,
