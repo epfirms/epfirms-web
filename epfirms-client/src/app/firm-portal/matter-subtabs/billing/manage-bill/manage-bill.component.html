@@ -50,7 +50,7 @@
   }
   ```
 -->
-<form class="space-y-8 divide-y divide-gray-200">
+<form [formGroup]="billForm" class="space-y-8 divide-y divide-gray-200">
   <div class="space-y-8 divide-y divide-gray-200">
     <div>
 
@@ -77,7 +77,7 @@
             -->
             <div>
               <label for="billingStyle" class="block text-sm font-medium text-gray-700">Billing Style</label>
-              <select id="billingStyle"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <select id="billingStyle" formControlName="billing_type"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 <option>Flat Rate</option>
                 <option >Hourly</option>
                 <option>Contingency</option>
@@ -107,7 +107,7 @@
             -->
             <div>
               <label for="paymentType" class="block text-sm font-medium text-gray-700">Payment Type</label>
-              <select id="paymentType"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <select id="paymentType" formControlName="payment_type"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 <option>Private Pay</option>
                 <option >Legal Insurance</option>
 
@@ -122,7 +122,7 @@
 
             <div>
               <label for="hours" class="block text-sm font-medium text-gray-700">Hours</label>
-              <input type="number" id="hours"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+              <input type="number" id="hours" formControlName="hours"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@
 
             <div>
               <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-              <input type="number" id="amount"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+              <input type="number" id="amount" formControlName="hours"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
             </div>
           </div>
         </div>
@@ -144,7 +144,7 @@
 
             <div>
               <label for="hours" class="block text-sm font-medium text-gray-700">Due Date</label>
-              <editable-datepicker></editable-datepicker>
+              <editable-datepicker [date]="date" (dateChanged)="setDueDate($event)"></editable-datepicker>
             </div>
           </div>
         </div>
@@ -155,7 +155,7 @@
             Description
           </label>
           <div class="mt-1">
-            <textarea id="about" name="about" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
+            <textarea id="about" name="about" formControlName="description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
           </div>
         </div>
 
@@ -172,10 +172,10 @@
 
   <div class="pt-5">
     <div class="flex justify-end">
-      <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      <button type="button" (click)="closeBillManager()" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         Cancel
       </button>
-      <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      <button (click)="submit()" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         Save
       </button>
     </div>

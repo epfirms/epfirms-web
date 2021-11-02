@@ -178,4 +178,5 @@
 
 </div>
 
-<app-manage-bill *ngIf="isBillManagerVisible" [(isVisible)]="isBillManagerVisible" (isVisibleChange)="isBillManagerVisible=$event"></app-manage-bill>
+<app-manage-bill *ngIf="isBillManagerVisible" [(isVisible)]="isBillManagerVisible"
+ (isVisibleChange)="isBillManagerVisible=$event; loadBillPayments()" [matter]="matter"></app-manage-bill>
