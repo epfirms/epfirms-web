@@ -8,5 +8,5 @@ emailsRouter.post('/', passport.authenticate('bearer', { session: false }), (req
 emailsRouter.get('/verify', passport.authenticate('bearer', { session: false }), (req, res) => EmailsController.verify(req, res));
 // Sending an email, requesting the client review the firm.
 emailsRouter.post('/sendReview', passport.authenticate('bearer', { session: false }), (req, res) => EmailsController.reviewFeedback(req, res));
-
+emailsRouter.post('/forgot-password', (req, res) => EmailsController.forgotPassword(req, res));
 export { emailsRouter };
