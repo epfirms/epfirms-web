@@ -44,7 +44,7 @@ export class AuthService {
       firm_access: firmAccess
     };
 
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '10h' });
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '120h' });
     return Promise.resolve(token);
   }
 
