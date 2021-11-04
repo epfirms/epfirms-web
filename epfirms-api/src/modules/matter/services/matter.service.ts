@@ -12,7 +12,8 @@ export class MatterService {
       matter_intake,
       review,
       matter_note,
-      matter_billing
+      matter_billing,
+      statement
     } = Database.models;
     const { sequelize } = Database;
     const matters = await matter.findOne({
@@ -86,7 +87,10 @@ export class MatterService {
               attributes: ['id', 'first_name', 'last_name', 'profile_image']
             }
           ]
-        }
+        },
+        {
+          model: statement
+        },
       ],
       order: [
         [
@@ -109,7 +113,8 @@ export class MatterService {
       matter_intake,
       review,
       matter_note,
-      matter_billing
+      matter_billing,
+      statement
     } = Database.models;
     const { sequelize } = Database;
     const matters = await matter.findAll({
@@ -183,7 +188,10 @@ export class MatterService {
               attributes: ['id', 'first_name', 'last_name', 'profile_image']
             }
           ]
-        }
+        },
+        {
+          model: statement
+        },
       ],
       order: [
         [
