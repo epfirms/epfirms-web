@@ -7,6 +7,7 @@ import { EntityCacheDispatcher } from '@ngrx/data';
 import { MatterTabsService } from '@app/firm-portal/_services/matter-tabs-service/matter-tabs.service';
 import { CurrentUserService } from '../current-user-service/current-user.service';
 import { SocketService } from '@app/firm-portal/_services/socket-service/socket.service';
+import { Socket } from 'ngx-socket-io';
 
 interface LoginForm {
   email: string;
@@ -14,7 +15,7 @@ interface LoginForm {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
   private accessTokenSubject: BehaviorSubject<any>;
@@ -27,7 +28,7 @@ export class AuthService {
     private entityCacheDispatcher: EntityCacheDispatcher,
     private _matterTabsService: MatterTabsService,
     private _currentUserService: CurrentUserService,
-    private _socketService: SocketService
+    private _socket: Socket
   ) {
     this.accessTokenSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('accessToken'))
@@ -42,7 +43,7 @@ export class AuthService {
   createFirm(firmDetails, userDetails): Observable<any> {
     return this._http.post<any>('/api/firm', {
       firm: firmDetails,
-      user: userDetails,
+      user: userDetails
     });
   }
 
@@ -50,7 +51,7 @@ export class AuthService {
     return this._http
       .post<any>('/api/auth', {
         email,
-        password,
+        password
       })
       .pipe(
         map(({ success, access_token, msg }) => {
@@ -61,17 +62,19 @@ export class AuthService {
             this.logout();
           }
 
-          return {success, msg};
+          return { success, msg };
         })
       );
   }
 
   verifyPasswordToken(userId: number, token: string): Observable<any> {
-    return this._http.get<any>(`/api/auth/password/${userId}`, { params: {token: encodeURIComponent(token)}})
+    return this._http.get<any>(`/api/auth/password/${userId}`, {
+      params: { token: encodeURIComponent(token) }
+    });
   }
 
   updatePassword(id, token, password: string): Observable<any> {
-    return this._http.post<any>('/api/auth/password', {id, token, password});
+    return this._http.post<any>('/api/auth/password', { id, token, password });
   }
 
   getCurrentUserScope(): Observable<any> {
@@ -86,7 +89,7 @@ export class AuthService {
 
   verifyEmail(token) {
     return this._http.post<any>('/api/auth/VerifyEmail', {
-      token: token,
+      token: token
     });
   }
 
@@ -97,7 +100,9 @@ export class AuthService {
     this._matterTabsService.clear();
     this._currentUserService.clear();
     this.accessTokenSubject.next(null);
-    this._socketService.disconnect();
+    if (this._socket && this._socket.ioSocket && this._socket.ioSocket.connected) {
+      this._socket.disconnect();
+    }
     this._router.navigate(['login']);
   }
 }

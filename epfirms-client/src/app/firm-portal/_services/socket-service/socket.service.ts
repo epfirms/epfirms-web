@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from '@app/shared/_services/auth-service/auth.service';
 import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -6,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SocketService {
-  constructor(private _socket: Socket) {}
+  constructor(private _socket: Socket, private _authService: AuthService) {}
 
   // Create a manual socket connection
   connect(firmId: number, accessTokenValue: string): void {
@@ -14,7 +15,9 @@ export class SocketService {
     this._socket.ioSocket.nsp = `/firm-${firmId}`;
     this._socket.connect();
     this._socket.on('connect_error', (error)=> {
-      console.log(error);
+      if (error && error.message === 'not authorized') {
+        this._authService.logout();
+      }
     });
   }
 
