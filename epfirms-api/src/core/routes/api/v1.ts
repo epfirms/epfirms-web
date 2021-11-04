@@ -15,6 +15,7 @@ import { assetRouter } from '@src/modules/asset/routes';
 import { matterBillingRouter } from '@src/modules/matter-billing/routes';
 import { taskTemplateRouter } from '@src/modules/task-template/routes';
 import { templateTaskRouter } from '@src/modules/template-task/routes';
+import { statementRouter } from '@src/modules/statement/routes';
 
 const v1Router = express.Router();
 
@@ -35,5 +36,6 @@ v1Router.use('/asset', assetRouter);
 v1Router.use('/billing', matterBillingRouter);
 v1Router.use('/task-template', taskTemplateRouter);
 v1Router.use('/template-task', templateTaskRouter);
+v1Router.use('/statement', statementRouter);
 
 export { v1Router }

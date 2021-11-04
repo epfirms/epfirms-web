@@ -50,6 +50,7 @@ export class Database {
       template_task: require('../models/TemplateTask')(this.sequelize, Sequelize),
       task_template: require('../models/TaskTemplate')(this.sequelize, Sequelize),
       external_lead: require('../models/ExternalLead')(this.sequelize, Sequelize),
+      statement: require('../models/Statement')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee });
@@ -245,6 +246,13 @@ export class Database {
     });
     this.models.template_task.belongsTo(this.models.task_template, {
       foreignKey: 'firm_id'
+    });
+
+    this.models.matter.hasMany(this.models.statement, {
+      foreignKey: 'matter_id'
+    });
+    this.models.statement.belongsTo(this.models.matter, {
+      foreignKey: 'matter_id'
     });
   }
 
