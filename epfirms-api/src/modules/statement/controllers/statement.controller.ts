@@ -15,7 +15,15 @@ export class StatementController {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
     }
   }
-
+  public async getAllByMatterId(req, res : Response) : Promise<any>{
+    try {
+      const queried = await StatementService.getAllByMatterId(req.params.matter_id);
+      res.status(StatusConstants.OK).send(queried);
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
   public async delete(req, res : Response) : Promise<any>{
     try {
       const deleted = await StatementService.delete(req.params.id);

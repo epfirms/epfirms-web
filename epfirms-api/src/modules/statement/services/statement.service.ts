@@ -10,7 +10,15 @@ export class StatementService {
       console.error(err);
     }
   }
-
+  public static async getAllByMatterId(matterId) : Promise<any> {
+    try {
+      const queried = await Database.models.statement.findAll({where: {matter_id: matterId}});
+      return Promise.resolve(queried);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
   public static async update(body) : Promise<any> {
     try {
       const updated = await Database.models.statement.update(body, {where: {id: body.id}});
