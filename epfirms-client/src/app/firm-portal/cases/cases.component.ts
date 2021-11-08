@@ -138,13 +138,8 @@ export class CasesComponent implements OnInit {
       }
     });
   }
-  addNote(id: number, note: string) {
-    const noteBody = {
-      matter_id: id,
-      note_string: note,
-    };
-
-    this._matterService.addMatterNote(noteBody).subscribe();
+  addNote(id: number, note) {
+    this._matterService.addMatterNote(id, note).subscribe();
   }
   setLegalArea(matter: Matter, legalArea: LegalArea) {
     this._matterService

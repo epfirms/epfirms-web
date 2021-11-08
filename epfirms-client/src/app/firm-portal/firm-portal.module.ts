@@ -33,6 +33,7 @@ import { TaskTemplateModalComponent } from './matter-subtabs/tasks/task-template
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { EditableModule } from '@ngneat/edit-in-place';
 import { TippyModule } from '@ngneat/helipopper';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { TippyModule } from '@ngneat/helipopper';
     NgxSelectModule,
     AngularMyDatePickerModule,
     EditableModule,
-    TippyModule
+    TippyModule,
+    QuillModule
   ]
 })
 export class FirmPortalModule { }
