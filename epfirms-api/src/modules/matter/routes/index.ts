@@ -17,7 +17,11 @@ matterRouter.put('/', passport.authenticate('bearer', { session: false }), (req,
 
 matterRouter.post('/task', passport.authenticate('bearer', { session: false }), (req, res) => matterTaskController.createTask(req, res));
 
-matterRouter.post('/note', passport.authenticate('bearer', { session: false }), (req, res) => matterNoteController.createNote(req, res));
+matterRouter.get('/:matter_id/notes', passport.authenticate('bearer', { session: false }), (req, res) => matterNoteController.getNotes(req, res));
+
+matterRouter.post('/:matter_id/notes', passport.authenticate('bearer', { session: false }), (req, res) => matterNoteController.createNote(req, res));
+
+matterRouter.delete('/notes/:note_id', passport.authenticate('bearer', { session: false }), (req, res) => matterNoteController.deleteNote(req, res));
 
 matterRouter.patch('/task', passport.authenticate('bearer', { session: false }), (req, res) => matterTaskController.updateTask(req, res));
 

@@ -22,6 +22,7 @@ import { TippyProps } from '@ngneat/helipopper/lib/tippy.types';
 import { DialogModule } from '@ngneat/dialog';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { QuillConfig, QuillModule, QuillToolbarConfig } from 'ngx-quill';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -48,6 +49,13 @@ const dropdownConfig: Partial<TippyProps> = {
   placement: 'bottom'
 };
 
+const quillConfig = [
+  ['bold', 'italic', 'underline'],
+  ['blockquote'],
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  ['image']
+]
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +71,12 @@ const dropdownConfig: Partial<TippyProps> = {
     StoreModule.forRoot({matterTabs: matterTabsReducer, currentUser: currentUserReducer}, {}),
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
+    QuillModule.forRoot({
+      modules: {
+        toolbar: quillConfig
+      },
+      format: 'json'
+    }),
     extModules,
     InputMaskModule,
     TippyModule.forRoot({

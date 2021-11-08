@@ -59,7 +59,7 @@ export class AddCaseComponent implements OnInit {
     color: 'gray'
   };
 
-  note: string;
+  note;
 
   clientId: number;
 

@@ -8,6 +8,7 @@ import { MatterTab } from '@app/_models/matter-tab';
 import { Staff } from '@app/_models/staff';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
+import { DialogService } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-notes',
@@ -15,50 +16,59 @@ import { CurrentUserService } from '@app/shared/_services/current-user-service/c
   styleUrls: ['./notes.component.scss']
 })
 export class NotesComponent {
-  @Input() 
+  @Input()
   get matter() {
     return this._matter;
   }
   set matter(value: Matter) {
     this._matter = value;
-  };
-  
+    this.loadNotes(this.matter.id);
+  }
+
   private _matter: Matter;
 
-  note: String = ""
-  
+  note;
+
   staff$: Observable<Staff[]>;
 
   currentUser$: Observable<any>;
+
+  matterNotes: any[] = [];
 
   constructor(
     private _matterService: MatterService,
     private _staffService: StaffService,
     private _currentUserService: CurrentUserService,
-    ) {
-      this.staff$ = _staffService.entities$;
-      this.currentUser$ = _currentUserService.user$;
-     }
-
-  /*
-    addNote()
-      Inputs:
-        this.comment: This is the string that's typed into the text-area in the HTML.
-
-      Outputs:
-        user_id: The id of the user making the comment.
-        matter_id: The id of the matter (case, lead, etc), that the comment is related to.
-        note_string: The actual content of the comment, in the form of a String.
-        note: The actual object, combining the previous parts into 1 object to pass onto the backend, through the _matterService.
-  */
-  addNote() {
-    const note = {
-      matter_id: this.matter.id,
-      note_string: this.note
-    };
-
-    this.note = ""
-    this._matterService.addMatterNote(note).subscribe()
+    private _dialog: DialogService
+  ) {
+    this.staff$ = _staffService.entities$;
+    this.currentUser$ = _currentUserService.user$;
   }
 
+  loadNotes(matterId: number) {
+    this._matterService.getNotes(matterId).subscribe((notes) => {
+      this.matterNotes = notes;
+    });
+  }
+
+  addNote() {
+    this._matterService.addMatterNote(this.matter.id, this.note).subscribe((newNote) => {
+      this.note = '';
+      this.loadNotes(this.matter.id);
+    });
+  }
+
+  deleteNote(noteId: number) {
+    const deleteNoteDialog = this._dialog.confirm({
+      title: 'Delete note?',
+      body: 'This action cannot be undone'
+    });
+    deleteNoteDialog.afterClosed$.subscribe((confirmed) => {
+      if (confirmed) {
+        this._matterService.deleteNote(noteId).subscribe(() => {
+          this.loadNotes(this.matter.id);
+        });
+      }
+    });
+  }
 }
