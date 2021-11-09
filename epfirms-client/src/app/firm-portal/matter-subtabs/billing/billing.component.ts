@@ -3,6 +3,7 @@ import { MatterService } from '@app/firm-portal/_services/matter-service/matter.
 import { ModalService } from '@app/modal/modal.service';
 import { BillFormModalComponent } from '@app/shared/bill-form-modal/bill-form-modal.component';
 import { PaymentFormModalComponent } from '@app/shared/payment-form-modal/payment-form-modal.component';
+import { StatementService } from '@app/shared/_services/statement-service/statement.service';
 import { Matter } from '@app/_models/matter';
 
 @Component({
@@ -11,6 +12,7 @@ import { Matter } from '@app/_models/matter';
   styleUrls: ['./billing.component.scss']
 })
 export class BillingComponent implements OnInit {
+  statements: any;
   @Input()
   get matter() {
     return this._matter;
@@ -29,9 +31,11 @@ export class BillingComponent implements OnInit {
   isBillManagerEditMode : boolean = false;
   currentBill;
 
-  constructor(private _modalService: ModalService, private _matterService: MatterService) {}
+  constructor(private _modalService: ModalService, private _matterService: MatterService,
+  private statementService : StatementService) {}
   ngOnInit(): void {
     this.loadBillPayments();
+    this.loadStatements();
   }
 
   loadBillPayments() {
@@ -106,8 +110,35 @@ export class BillingComponent implements OnInit {
     // get the bills for the month
     let monthlyBills = this.bills.filter(bill => new Date().getMonth() === new Date(bill.date).getMonth())
     console.log(monthlyBills)
+    let balance = 0;
+    monthlyBills.forEach(bill => {
+      balance += parseFloat(bill.amount);
+    });
+
+    console.log(balance);
+    console.log(this.matter)
+
+    let statement = {
+      firm_id : this.matter.firm_id,
+      status : "UNPAID",
+      matter_id : this.matter.id,
+      due_date : new Date().getDate() + 30,
+      balance_due: balance,
+      user_id : this.matter.attorney_id
+    }
+
+    this.statementService.create(statement).subscribe(res => console.log(res))
+
   }
 
 
   // EOSTATEMENT GENERATION CODE
+
+  // load all statements for the matter
+  loadStatements(): void {
+    this.statementService.getAllByMatterId(this.matter.id).subscribe(res => {
+      console.log(res);
+      this.statements = res;
+    });
+  }
 }

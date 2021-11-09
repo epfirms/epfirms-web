@@ -17,7 +17,7 @@ module.exports = (sequelize, {
         },
         user_id: {
           type: INTEGER,
-          allowNull: false,
+
         },
         invoice_number: {
           type: INTEGER,
@@ -28,7 +28,7 @@ module.exports = (sequelize, {
         },
         status: {
           type: STRING,
-          allowNull: false,
+
         },
         matter_id: {
           type: INTEGER,
@@ -36,7 +36,7 @@ module.exports = (sequelize, {
         },
         terms: {
           type: STRING,
-          allowNull: false,
+
         },
         due_date: {
           type: STRING,
@@ -44,7 +44,7 @@ module.exports = (sequelize, {
         },
         invoice_date: {
           type: STRING,
-          allowNull: false,
+
         },
         tags: {
           type: STRING,
@@ -60,7 +60,7 @@ module.exports = (sequelize, {
         },
         total: {
           type: INTEGER,
-          allowNull: false,
+          
         },
       }, {
         tableName,
