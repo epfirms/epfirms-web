@@ -100,4 +100,14 @@ export class BillingComponent implements OnInit {
     this.isBillManagerEditMode = false;
     this.currentBill = null;
   }
+
+  // STATEMENT GENERATION CODE
+  generateStatement(): void {
+    // get the bills for the month
+    let monthlyBills = this.bills.filter(bill => new Date().getMonth() === new Date(bill.date).getMonth())
+    console.log(monthlyBills)
+  }
+
+
+  // EOSTATEMENT GENERATION CODE
 }
