@@ -128,8 +128,32 @@ export class AddStaffComponent implements OnInit {
     // this._overlayService.add(AddClientComponent);
   }
 
+
+      /* 
+    ReviewFeedback
+        Inputs:
+            this.staffForm
+              value:
+                active: Should be true, there is no checkbox for it.
+                admin: Checkbox in sidebar.
+                attorney: Checkbox in sidebar.
+                email: The email.  There is no check on if it's valid, yet.
+                first_name: Just the First Name box.
+                last_name: Just the Last Name box.
+                legal_assistant: Checkbox in sidebar.
+                paralegal: Checkbox in sidebar.
+                phone: The Phone Number.  There is no check on if it's valid yet.
+                rate: The default hourly rate. There is no check on if it's valid yet.
+        Outputs:
+            Closing the sidebar, and adding to the database.
+        Function:
+            Submit the info from the form in this sidebar to be added to the database, and close the sidebar.
+    */
   onSubmit() {
+    // Just outputting exactly what we're getting from the form, for debugging purposes.
     console.log(this.staffForm.value)
+    // Calling the service to actually add this stuff to the database.
+    // If we get a success, then we close the side bar, otherwise we leave it open to fix what needs fixing.
     this._staffService.createStaff(this.staffForm.value).subscribe(res => {
       this.close();
     });
