@@ -1,5 +1,5 @@
 import express from 'express';
-import { firmController } from '@modules/firm/controllers';
+import { firmController, firmTaskTemplateController } from '@modules/firm/controllers';
 const passport = require('passport');
 
 const firmRouter = express.Router();
@@ -17,14 +17,19 @@ firmRouter.post('/clients', passport.authenticate('bearer', { session: false }),
 firmRouter.get('/staff', passport.authenticate('bearer', { session: false }), (req, res) => firmController.getStaffList(req, res));
 
 firmRouter.post('/staff', passport.authenticate('bearer', { session: false }), (req, res) => firmController.createClient(req, res));
-// public async InitializeGet() {
-//   this.router
-//     .get(
-//       this.path,
-//       passport.authenticate('bearer', { session: false, failureRedirect: '/login' }),
-//       this.getService.bind(this)
-//     )
-//     .bind(this);
-// }
+
+firmRouter.get('/task-templates', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.get(req, res));
+
+firmRouter.post('/task-templates', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.create(req, res));
+
+firmRouter.put('/task-templates/:firm_task_template_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.update(req, res));
+
+firmRouter.delete('/task-templates/:firm_task_template_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.delete(req, res));
+
+firmRouter.post('/task-templates/:firm_task_template_id/task', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.addTask(req, res));
+
+firmRouter.put('/task-templates/task/:firm_template_task_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.updateTask(req, res));
+
+firmRouter.delete('/task-templates/task/:firm_template_task_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.deleteTask(req, res));
 
 export { firmRouter };

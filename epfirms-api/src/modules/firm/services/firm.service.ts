@@ -59,7 +59,7 @@ export class FirmService {
 
   public static async get(id): Promise<any> {
     try {
-      const firm = await Database.models.firm.findOne({ where: { id: id },include: {model: Database.models.task_template, include: {model:Database.models.template_task}} });
+      const firm = await Database.models.firm.findOne({ where: { id: id },include: {model: Database.models.firm_task_template, include: {model:Database.models.firm_template_task}} });
 
       return Promise.resolve(firm);
     } catch (err) {

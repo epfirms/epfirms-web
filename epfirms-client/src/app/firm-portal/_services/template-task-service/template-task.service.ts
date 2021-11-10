@@ -9,11 +9,15 @@ export class TemplateTaskService {
 
   constructor(private http: HttpClient) { }
 
-  create(data):Observable<any> {
-    return this.http.post('/api/template-task', data);
+  create(templateId: number, data):Observable<any> {
+    return this.http.post(`/api/firm/task-templates/${templateId}/task`, data);
   }
 
-  update(data):Observable<any> {
-    return this.http.put('/api/template-task', data);
+  update(taskId: number, data):Observable<any> {
+    return this.http.put(`/api/firm/task-templates/task/${taskId}`, data);
+  }
+
+  delete(taskId: number):Observable<any> {
+    return this.http.delete(`/api/firm/task-templates/task/${taskId}`);
   }
 }

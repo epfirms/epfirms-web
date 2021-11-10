@@ -11,6 +11,9 @@ import { AuthGuard } from '@app/shared/_guards/auth.guard';
 import { FirmDetailsComponent } from './firm-details/firm-details/firm-details.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { ManageStaffComponent } from './manage-staff/manage-staff.component';
+import { DialogModule } from '@ngneat/dialog';
+import { TippyModule } from '@ngneat/helipopper';
+import { TaskTemplateModule } from '@app/features/task-template/task-template.module';
 
 const FirmSettingsRoute: Routes = [
   {
@@ -38,7 +41,10 @@ const FirmSettingsRoute: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(FirmSettingsRoute),
-    SharedModule
+    SharedModule,
+    DialogModule,
+    TippyModule,
+    TaskTemplateModule
   ]
 })
 export class FirmSettingsModule { }

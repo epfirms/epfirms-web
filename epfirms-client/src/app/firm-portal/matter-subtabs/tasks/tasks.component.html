@@ -15,7 +15,7 @@
       </svg>
       Add Task
     </button>
-    <button class="button-white-icon-sm ml-2" (click)="toggleTaskTemplateVisibility()" >
+    <button class="button-white-icon-sm ml-2" (click)="openTaskTemplateDialog()" >
       <svg
         class="icon"
         xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +123,7 @@
         <ng-container *ngIf="matter.matter_tasks.length">
           <tr
           class="task-row group"
-          *ngFor="let task of matter.matter_tasks"
+          *ngFor="let task of matter.matter_tasks; trackBy: trackByIndex"
         >
           <td class="w-16 border-t border-b border-gray-200 text-center group-focus:bg-blue-50">
             <input

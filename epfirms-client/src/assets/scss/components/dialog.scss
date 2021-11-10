@@ -9,6 +9,7 @@ ngneat-dialog {
         @apply shadow-lg;
         animation: 300ms cubic-bezier(0, 0, 0.2, 1) ngneat-dialog-open;
         border-radius: 0.5rem;
+        overflow: unset;
         //.ngneat-drag-marker {
           // draggable marker
         //}

@@ -14,6 +14,7 @@ import { VerifyEmailComponent } from './verifyEmail/VerifyEmail.component';
 import { FeedbackPageComponent } from './feedback-page/feedback-page.component';
 import { ModalModule } from '@app/modal/modal.module';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
     UserAuthRoutingModule,
     SharedModule,
     NgxStripeModule.forRoot('pk_test_NaQ0K78jrNRGyacbblmpM2RW00mvwDjEh6'),
-    ModalModule
+    ModalModule,
+    InputMaskModule
   ]
 })
 export class UserAuthModule { }

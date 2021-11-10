@@ -1,13 +1,14 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { TaskTemplateSelectionComponent } from '@app/features/task-template/task-template-selection/task-template-selection.component';
 import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
-import { MatterTabsService } from '@app/firm-portal/_services/matter-tabs-service/matter-tabs.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { ModalService } from '@app/modal/modal.service';
 import { Matter } from '@app/_models/matter';
 import { MatterTab } from '@app/_models/matter-tab';
 import { MatterTask } from '@app/_models/matter-task';
 import { Staff } from '@app/_models/staff';
+import { DialogService } from '@ngneat/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { TaskTemplateModalComponent } from './task-template-modal/task-template-modal.component';
 
@@ -29,17 +30,17 @@ export class TasksComponent {
 
   staff$: Observable<Staff[]>;
 
-  // bool for showing task template selection
-  isTaskTemplateSelectionVisible : boolean = false;
-
   @ViewChildren('taskName') taskNames;
 
   constructor(
-    private _matterTabsService: MatterTabsService,
     private _matterService: MatterService,
-    private _modalService: ModalService,
-    private _staffService: StaffService) {
+    private _staffService: StaffService,
+    private _dialog: DialogService) {
     this.staff$ = _staffService.entities$;
+  }
+
+  trackByIndex(index, item) {
+    return item.id;
   }
 
   createMatterTask(matterId: number): void {
@@ -63,7 +64,23 @@ export class TasksComponent {
     this._matterService.deleteMatterTask(taskId).subscribe();
   }
 
-  toggleTaskTemplateVisibility(): void {
-    this._modalService.open(TaskTemplateModalComponent, {matter: this.matter});
+  openTaskTemplateDialog(): void {
+    const taskTemplateDialog = this._dialog.open(TaskTemplateSelectionComponent, {
+      size: 'lg'
+    });
+
+    taskTemplateDialog.afterClosed$.subscribe((templateTasks) => {
+      if (templateTasks && templateTasks.length) {
+        this.applyTemplateTasks(templateTasks, this.matter.id);
+      }
+    });
+  }
+
+  private applyTemplateTasks(templateTasks, matterId: number): void {
+    templateTasks.forEach(t => {
+      t.matter_id = matterId;
+
+      this._matterService.addMatterTask(t).subscribe();
+    });
   }
 }

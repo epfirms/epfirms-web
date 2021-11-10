@@ -36,6 +36,7 @@ import { TippyModule } from '@ngneat/helipopper';
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {EditableModule} from '@ngneat/edit-in-place';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     AngularMyDatePickerModule,
     InputMaskModule,
     TippyModule,
-    PdfJsViewerModule
+    PdfJsViewerModule,
+    EditableModule
   ],
   exports: [
     InputComponent,

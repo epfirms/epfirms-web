@@ -23,7 +23,6 @@ import { ModalModule } from '@app/modal/modal.module';
 import { LeadsComponent } from './leads/leads.component';
 import { AddStaffComponent } from './overlays/add-staff/add-staff.component';
 import { DeleteStaffComponent } from './overlays/delete-staff/delete-staff.component';
-import { EditStaffComponent } from './overlays/edit-staff/edit-staff.component';
 import { IntakeModule } from '@app/intake/intake.module';
 import { EditClientComponent } from './overlays/edit-client/edit-client.component';
 import { CdkTableModule } from '@angular/cdk/table'
@@ -34,6 +33,8 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { EditableModule } from '@ngneat/edit-in-place';
 import { TippyModule } from '@ngneat/helipopper';
 import { QuillModule } from 'ngx-quill';
+import { DialogModule } from '@ngneat/dialog';
+import { TaskTemplateModule } from '@app/features/task-template/task-template.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,6 @@ import { QuillModule } from 'ngx-quill';
     LeadsComponent,
     AddStaffComponent,
     DeleteStaffComponent,
-    EditStaffComponent,
     EditClientComponent,
     BillingComponent,
     TaskTemplateModalComponent
@@ -73,7 +73,9 @@ import { QuillModule } from 'ngx-quill';
     AngularMyDatePickerModule,
     EditableModule,
     TippyModule,
-    QuillModule
+    QuillModule,
+    DialogModule,
+    TaskTemplateModule
   ]
 })
 export class FirmPortalModule { }
