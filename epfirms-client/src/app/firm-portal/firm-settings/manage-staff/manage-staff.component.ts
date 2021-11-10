@@ -75,8 +75,12 @@ export class ManageStaffComponent implements OnInit {
     this._overlayService.add(EditStaffComponent);
   }
 
-  deleteStaff() {
-    this._overlayService.add(DeleteStaffComponent);
+  deleteStaff(staff) {
+    console.log(staff)
+    console.log("I am HERE")
+    this._staffService.deleteStaff(staff).subscribe();
+    console.log("THIS IS THE AFTER")
+
   }
 
   addClient() {

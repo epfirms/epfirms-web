@@ -115,6 +115,21 @@ export class FirmController {
     }
   }
 
+  public async deleteStaffMember(req: any, resp: Response): Promise<any> {
+    console.log("I MADE IT HERE")
+    try {
+      console.log(req.body)
+      const staff = req.body;
+      console.log(staff)
+      const { firm_id } = req.user.firm_access;
+      await FirmService.deleteEmployee(staff, firm_id);
+      console.log("DELETED, we good.")
+      resp.status(StatusConstants.OK).send();
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
   public async updateFirm(req: any, resp: Response): Promise<any> {
     try {
       const firm_id = req.params.id;

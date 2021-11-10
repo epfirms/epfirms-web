@@ -17,6 +17,8 @@ firmRouter.post('/clients', passport.authenticate('bearer', { session: false }),
 firmRouter.get('/staff', passport.authenticate('bearer', { session: false }), (req, res) => firmController.getStaffList(req, res));
 
 firmRouter.post('/staff', passport.authenticate('bearer', { session: false }), (req, res) => firmController.createStaffMember(req, res));
+
+firmRouter.post('/staffDelete', passport.authenticate('bearer', { session: false }), (req, res) => firmController.deleteStaffMember(req, res));
 // public async InitializeGet() {
 //   this.router
 //     .get(

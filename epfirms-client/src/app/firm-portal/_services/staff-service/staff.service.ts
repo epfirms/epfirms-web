@@ -51,6 +51,12 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
     );
   }
 
+  deleteStaff(body): Observable<any> {
+    console.log("HERE")
+    return this._http.post('http://localhost:4000/api/firm/staffDelete', body);
+    console.log("HERE2")
+  }
+
   createClient(client): Observable<any> {
     return this._http.post<any>('/api/firm/clients', {
       client,

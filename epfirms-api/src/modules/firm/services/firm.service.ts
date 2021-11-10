@@ -189,6 +189,17 @@ export class FirmService {
     return Promise.resolve(staff);
   }
 
+  public static async deleteEmployee(employee, firmId): Promise<any> {
+    let id = employee.id
+    const deletedEmployee = await Database.models.firm_employee.destroy({
+      where: {
+        id: id,
+        firm_id: firmId
+      }
+    });
+    return Promise.resolve(deletedEmployee);
+  }
+
   public static async createStaffMember(staff,firmId): Promise<any> {
     this.createClient(staff,firmId)
     console.log("I'mma HERE")
