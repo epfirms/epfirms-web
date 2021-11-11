@@ -117,17 +117,23 @@ export class BillingComponent implements OnInit {
 
     console.log(balance);
     console.log(this.matter)
-
+    let date = new Date();
     let statement = {
       firm_id : this.matter.firm_id,
       status : "UNPAID",
       matter_id : this.matter.id,
-      due_date : new Date().getDate() + 30,
+      due_date : date.setDate(date.getDate() + 30),
       balance_due: balance,
       user_id : this.matter.attorney_id
     }
 
-    this.statementService.create(statement).subscribe(res => console.log(res))
+    this.statementService.create(statement).subscribe(res => {
+      console.log(res);
+      monthlyBills.forEach(bill => {
+        bill.statement_id = res.id;
+        this._matterService.editMatterBillOrPayment(bill).subscribe();
+      });
+    });
 
   }
 

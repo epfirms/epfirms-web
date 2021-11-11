@@ -56,6 +56,9 @@ module.exports = (sequelize, { INTEGER, DATE, DECIMAL, STRING }) => {
           },
           settlement_amount: {
             type: DECIMAL(15, 2),
+          },
+          statement_id: {
+            type: INTEGER
           }
       },
       {
