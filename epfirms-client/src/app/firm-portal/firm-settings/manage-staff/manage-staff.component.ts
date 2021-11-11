@@ -18,6 +18,7 @@ import { FirmService } from '@app/firm-portal/_services/firm-service/firm.servic
 import { EditStaffComponent } from '@app/firm-portal/overlays/edit-staff/edit-staff.component';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { take } from 'rxjs/operators';
+import { DialogService } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-manage-staff',
@@ -37,6 +38,7 @@ export class ManageStaffComponent implements OnInit {
   constructor(
     private _overlayService: OverlayService, 
     private _matterService: MatterService,
+    private _dialogService: DialogService,
     private _staffService: StaffService,
     private _firmService: FirmService,
     private _currentUserService: CurrentUserService,
@@ -72,7 +74,12 @@ export class ManageStaffComponent implements OnInit {
   }
 
   editStaff() {
-    this._overlayService.add(EditStaffComponent);
+    //opens the component in a dialog 
+    const ref = this._dialogService.open(EditStaffComponent, {
+      data: {
+        staff: 'staff'
+      }
+    });
   }
 
   deleteStaff(staff) {

@@ -19,6 +19,7 @@ import { extModules } from 'src/environments/development/modules.dev';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { TippyModule } from '@ngneat/helipopper';
+import { DialogModule } from '@ngneat/dialog';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -31,6 +32,7 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
   ],
   imports: [
     BrowserModule,
+    DialogModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,

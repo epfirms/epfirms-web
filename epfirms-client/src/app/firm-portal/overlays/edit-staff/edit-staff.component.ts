@@ -21,7 +21,7 @@ export interface Select {
 })
 export class EditStaffComponent implements OnInit {
   keyword = 'full_name';
-
+  Data = null;
   roles: Select[] = [
     { value: 'role_admin', viewValue: 'Firm Admin' },
     { value: 'role_attorney', viewValue: 'Attorney' },
@@ -129,7 +129,7 @@ export class EditStaffComponent implements OnInit {
   }
 
   onSubmit() {
-    this._staffService.createStaff(this.staffForm.value).subscribe(res => {
+    this._staffService.updateStaff(this.staffForm.value).subscribe(res => {
       this.close();
     });
   }
