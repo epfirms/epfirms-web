@@ -17,7 +17,7 @@ export class StatementController {
   }
   public async getAllByMatterId(req, res : Response) : Promise<any>{
     try {
-      const queried = await StatementService.getAllByMatterId(req.params.id);
+      const queried = await StatementService.getAllByMatterId(req.params.matter_id);
       res.status(StatusConstants.OK).send(queried);
     } catch (err) {
       console.error(err);

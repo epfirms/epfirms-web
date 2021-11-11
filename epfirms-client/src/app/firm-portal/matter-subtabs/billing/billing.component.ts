@@ -12,7 +12,7 @@ import { Matter } from '@app/_models/matter';
   styleUrls: ['./billing.component.scss']
 })
 export class BillingComponent implements OnInit {
-  statements: any;
+  statements: any[] = [];
   @Input()
   get matter() {
     return this._matter;
@@ -36,6 +36,8 @@ export class BillingComponent implements OnInit {
   ngOnInit(): void {
     this.loadBillPayments();
     this.loadStatements();
+    console.log(this.payments);
+
   }
 
   loadBillPayments() {
@@ -118,13 +120,16 @@ export class BillingComponent implements OnInit {
     console.log(balance);
     console.log(this.matter)
     let date = new Date();
+    date.setDate(date.getDate() + 30);
+
     let statement = {
       firm_id : this.matter.firm_id,
       status : "UNPAID",
       matter_id : this.matter.id,
-      due_date : date.setDate(date.getDate() + 30),
+      due_date : date.toDateString(),
       balance_due: balance,
-      user_id : this.matter.attorney_id
+      user_id : this.matter.attorney_id,
+      message: `Statement Generated: ${new Date().toDateString()}`
     }
 
     this.statementService.create(statement).subscribe(res => {
@@ -132,6 +137,7 @@ export class BillingComponent implements OnInit {
       monthlyBills.forEach(bill => {
         bill.statement_id = res.id;
         this._matterService.editMatterBillOrPayment(bill).subscribe();
+        this.loadStatements();
       });
     });
 
@@ -146,5 +152,9 @@ export class BillingComponent implements OnInit {
       console.log(res);
       this.statements = res;
     });
+  }
+
+  deleteStatement(id) : void {
+    this.statementService.delete(id).subscribe(res => this.loadStatements());
   }
 }

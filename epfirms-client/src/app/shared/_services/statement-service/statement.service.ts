@@ -16,4 +16,8 @@ export class StatementService {
   getAllByMatterId(id): Observable<any>{
     return this.http.get<any>(`/api/statement/${id}`);
   }
+
+  delete(id): Observable<any> {
+    return this.http.delete<any>(`/api/statement/${id}`);
+  }
 }
