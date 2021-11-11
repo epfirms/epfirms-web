@@ -6,6 +6,7 @@ import { OverlayService } from '@app/firm-portal/_services/overlay-service/overl
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { Client } from '@app/_models/client';
 import { Staff } from '@app/_models/staff';
+import { DialogRef, DialogService } from '@ngneat/dialog';
 import { Observable } from 'rxjs';
 import { AddClientComponent } from '../add-client/add-client.component';
 
@@ -21,7 +22,7 @@ export interface Select {
 })
 export class EditStaffComponent implements OnInit {
   keyword = 'full_name';
-  Data = null;
+
   roles: Select[] = [
     { value: 'role_admin', viewValue: 'Firm Admin' },
     { value: 'role_attorney', viewValue: 'Attorney' },
@@ -40,7 +41,7 @@ export class EditStaffComponent implements OnInit {
 
   clients$: Observable<Client[]>;
 
-  data = [
+  Data = [
     {
       id: 1,
       name: 'Usa',
@@ -59,18 +60,23 @@ export class EditStaffComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _overlayService: OverlayService,
     private _renderer: Renderer2,
+    private _dialogService: DialogService,
+    public ref: DialogRef,
     private el: ElementRef,
     private _staffService: StaffService,
     private _clientService: ClientService,
-    private _matterService: MatterService
+    private _matterService: MatterService,
+    
   ) { 
     this.attorneys$ = _staffService.filteredEntities$;
     this.clients$ = _clientService.entities$;
   }
 
   ngOnInit(): void {
+
+    console.log(this.Data, this.staffForm, this.ref.data)
+
     this.staffForm = this._fb.group({
       //id: ['', [Validators.required]],
       //firm_id: ['', [Validators.required]],
@@ -90,17 +96,18 @@ export class EditStaffComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this._renderer.addClass(this.slideOver.nativeElement, 'translate-x-0');
-    }, 10);
+    // setTimeout(() => {
+    //   this._renderer.addClass(this.slideOver.nativeElement, 'translate-x-0');
+    // }, 10);
   }
 
   close() {
-    this._renderer.addClass(this.slideOver.nativeElement, 'translate-x-full');
-    this._renderer.removeClass(this.slideOver.nativeElement, 'translate-x-0');
-    setTimeout(() => {
-      this._overlayService.clear();
-    }, 300);
+    // this._renderer.addClass(this.slideOver.nativeElement, 'translate-x-full');
+    // this._renderer.removeClass(this.slideOver.nativeElement, 'translate-x-0');
+    // setTimeout(() => {
+    //   this._overlayService.clear();
+    // }, 300);
+    this.ref.close()
   }
 
   selectEvent(item: any, controlName: string) {
@@ -121,7 +128,7 @@ export class EditStaffComponent implements OnInit {
   }
 
   openAddClient() {
-    this._overlayService.add(AddClientComponent);
+
   }
 
   openAddStaff() {
