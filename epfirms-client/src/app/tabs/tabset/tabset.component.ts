@@ -9,15 +9,15 @@ import {
   EventEmitter,
   Input,
   OnDestroy,
-  OnInit,
   Output,
   QueryList,
 } from '@angular/core';
-import { merge, Subject, Subscription } from 'rxjs';
+import { merge, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { TabComponent, TAB_SET } from '../tab/tab.component';
 
 let nextId = 0;
+
 @Component({
   selector: 'tabset',
   preserveWhitespaces: false,

@@ -136,6 +136,10 @@ export class MatterTabsComponent implements OnInit {
     }
   }
 
+  changeSelectedIndex(index: number) {
+    this._matterTabsService.setSelectedIndex(index);
+  }
+
   trackByIndex(index, item) {
     return item.id;
   }

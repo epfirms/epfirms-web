@@ -7,6 +7,7 @@ import {
   toggleExpand,
   clear,
   minimize,
+  setSelectedIndex,
 } from '@app/store/matter-tabs/matter-tabs.actions';
 import { Store } from '@ngrx/store';
 import { Tabs } from '@app/_models/tabs';
@@ -45,5 +46,9 @@ export class MatterTabsService {
   
   minimizeTabs(): void {
     this.store.dispatch(minimize());
+  }
+
+  setSelectedIndex(index: number): void {
+    this.store.dispatch(setSelectedIndex({ payload: index }));
   }
 }

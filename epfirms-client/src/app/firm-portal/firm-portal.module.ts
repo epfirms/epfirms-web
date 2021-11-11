@@ -25,10 +25,9 @@ import { AddStaffComponent } from './overlays/add-staff/add-staff.component';
 import { DeleteStaffComponent } from './overlays/delete-staff/delete-staff.component';
 import { IntakeModule } from '@app/intake/intake.module';
 import { EditClientComponent } from './overlays/edit-client/edit-client.component';
-import { CdkTableModule } from '@angular/cdk/table'
+import { CdkTableModule } from '@angular/cdk/table';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { BillingComponent } from './matter-subtabs/billing/billing.component';
-import { TaskTemplateModalComponent } from './matter-subtabs/tasks/task-template-modal/task-template-modal.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { EditableModule } from '@ngneat/edit-in-place';
 import { TippyModule } from '@ngneat/helipopper';
@@ -55,8 +54,7 @@ import { TaskTemplateModule } from '@app/features/task-template/task-template.mo
     AddStaffComponent,
     DeleteStaffComponent,
     EditClientComponent,
-    BillingComponent,
-    TaskTemplateModalComponent
+    BillingComponent
   ],
   imports: [
     CommonModule,
@@ -78,4 +76,4 @@ import { TaskTemplateModule } from '@app/features/task-template/task-template.mo
     TaskTemplateModule
   ]
 })
-export class FirmPortalModule { }
+export class FirmPortalModule {}
