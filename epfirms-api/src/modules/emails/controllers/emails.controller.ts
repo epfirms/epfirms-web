@@ -115,6 +115,17 @@ theURL: String = "http://localhost:4200"
         }
     }
 
+    public async forgotPassword(req: any, resp: Response): Promise<any> {
+        try {
+          const { email } = req.body;
+
+          await emailsService.requestPasswordReset(email);
+    
+          resp.status(StatusConstants.OK).send({success: true});
+        } catch (error) {
+          resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+        }
+      }
 }
 /*
                       <a href="` + this.theURL + `/feedback?id=` + await review.id + `" class="mt-2 text-base text-gray-500">1-4 Stars!</a>

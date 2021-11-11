@@ -44,16 +44,13 @@ export class MatterController {
       }
 
       const createdMatter = await MatterService.create(matter, firm_id);
-
-      // const createdIntake = await MatterService.createIntake(createdMatter.id, id);
-
-      // await MatterService.update({id: createdIntake.matter_id, matter_intake_id: createdIntake.id});
       
       const newMatter = await MatterService.getOne(createdMatter.id);
       
-      const matterClient = await UserService.get('id', newMatter.client_id);
+      const isClientRegistered = await UserService.isRegistered(newMatter.client_id);
 
-      if (matterClient && matterClient.email && !matterClient.password) {
+      if (!isClientRegistered) {
+        const matterClient = await UserService.get('id', newMatter.client_id);
         const firm = await FirmService.get(firm_id);
         await emailsService.sendClientPortalInvite(matterClient.email, firm.name);
       }

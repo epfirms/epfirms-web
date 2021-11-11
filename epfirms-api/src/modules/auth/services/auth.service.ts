@@ -44,7 +44,7 @@ export class AuthService {
       firm_access: firmAccess
     };
 
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '10h' });
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '120h' });
     return Promise.resolve(token);
   }
 
@@ -144,6 +144,23 @@ export class AuthService {
         user_id: user_id
       }
     });
+    return Promise.resolve(true);
+  }
+
+  public static async verifyPasswordToken(userId: number, token: string): Promise<boolean> {
+    const { password_reset_token } = Database.models;
+    const passwordResetToken = await password_reset_token.findOne({where: {user_id: userId}});
+
+    if (!passwordResetToken) {
+      return Promise.reject(false);
+    }
+
+    const isValid = await bcrypt.compare(token, passwordResetToken.token);
+
+    if (!isValid) {
+      return Promise.reject(false);
+    }
+
     return Promise.resolve(true);
   }
 

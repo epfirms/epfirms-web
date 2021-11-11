@@ -51,6 +51,15 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
     );
   }
 
+  updateStaff(body): Observable<any> {
+    return this._http.post('http://localhost:4000/api/firm/staffUpdate', body).pipe(
+      map((response: Staff) => {
+        this._socketService.addOneToCacheSync('staff', response);
+        return of(response);
+      })
+    );
+  }
+
   deleteStaff(body): Observable<any> {
     console.log("HERE")
     return this._http.post('http://localhost:4000/api/firm/staffDelete', body);

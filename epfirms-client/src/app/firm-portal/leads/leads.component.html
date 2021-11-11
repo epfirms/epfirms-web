@@ -14,7 +14,7 @@
         Leads
       </h1>
 
-      <form class="flex-1 w-full flex ml-12" action="#" method="GET">
+      <form class="flex-1 w-full flex ml-12" action="#" method="GET" autocomplete="off">
         <label for="search-field" class="sr-only">Search</label>
         <div class="relative w-full text-gray-400 focus-within:text-gray-600">
           <div
@@ -256,8 +256,7 @@
                         [twText]="lead.matter_tasks[0].assignee?.full_name"
                       ></tw-avatar>                    </div>
                       <div class="ml-3">
-                        <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate" style="max-width: 12rem" [tooltip]="lead.matter_tasks[0].name || null"
-                        [options]="tooltipOptions">
+                        <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate" style="max-width: 12rem" [tippy]="lead.matter_tasks[0].name || null"  tabindex="0">
                           {{ lead.matter_tasks[0].name || "No task name" }}
                         </p>
                         <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">

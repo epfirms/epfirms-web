@@ -17,7 +17,6 @@ import { emailService } from '../../shared/_services/email-service/email.service
 import { map, take } from 'rxjs/operators';
 import { Staff } from '@app/_models/staff';
 import { StaffService } from '../_services/staff-service/staff.service';
-import { TooltipOptions } from 'ng2-tooltip-directive';
 
 @Component({
   selector: 'app-cases',
@@ -83,14 +82,6 @@ export class CasesComponent implements OnInit {
 
   paginator: { start: number; end: number } = { start: 0, end: 20 };
 
-  tooltipOptions: TooltipOptions = {
-    tooltipClass: 'border shadow-lg p-6 bg-white rounded-md text-gray-900 text-sm',
-    maxWidth: '32rem',
-    theme: "light",
-    hideDelay: 0,
-    animationDuration: 0
-  }
-
   searchTerm: string = '';
 
   matterFilterValues = {
@@ -147,13 +138,8 @@ export class CasesComponent implements OnInit {
       }
     });
   }
-  addNote(id: number, note: string) {
-    const noteBody = {
-      matter_id: id,
-      note_string: note,
-    };
-
-    this._matterService.addMatterNote(noteBody).subscribe();
+  addNote(id: number, note) {
+    this._matterService.addMatterNote(id, note).subscribe();
   }
   setLegalArea(matter: Matter, legalArea: LegalArea) {
     this._matterService

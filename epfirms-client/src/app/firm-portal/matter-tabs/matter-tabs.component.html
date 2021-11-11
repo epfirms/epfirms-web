@@ -5,7 +5,7 @@
     (close)="closeTab($event)"
   >
     <tab
-      *ngFor="let matter of matters$ | async"
+      *ngFor="let matter of matters$ | async; trackBy: trackByIndex"
       [title]="matter.client.full_name"
     >
     <ng-template tab>

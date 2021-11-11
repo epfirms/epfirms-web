@@ -11,7 +11,6 @@ import { CasesComponent } from './cases/cases.component';
 import { AddCaseComponent } from './overlays/add-case/add-case.component';
 import { AddClientComponent } from './overlays/add-client/add-client.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { MatterTabsComponent } from './matter-tabs/matter-tabs.component';
 import { OverviewComponent } from './matter-subtabs/overview/overview.component';
 import { TasksComponent } from './matter-subtabs/tasks/tasks.component';
@@ -28,12 +27,13 @@ import { EditStaffComponent } from './overlays/edit-staff/edit-staff.component';
 import { IntakeModule } from '@app/intake/intake.module';
 import { EditClientComponent } from './overlays/edit-client/edit-client.component';
 import { CdkTableModule } from '@angular/cdk/table'
-import { TooltipModule } from 'ng2-tooltip-directive';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { BillingComponent } from './matter-subtabs/billing/billing.component';
 import { TaskTemplateModalComponent } from './matter-subtabs/tasks/task-template-modal/task-template-modal.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { EditableModule } from '@ngneat/edit-in-place';
+import { TippyModule } from '@ngneat/helipopper';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -64,16 +64,16 @@ import { EditableModule } from '@ngneat/edit-in-place';
     ReactiveFormsModule,
     FirmPortalRoutingModule,
     SharedModule,
-    AutocompleteLibModule,
     TabsModule,
     MenuModule,
     ModalModule,
     IntakeModule,
     CdkTableModule,
-    TooltipModule,
     NgxSelectModule,
     AngularMyDatePickerModule,
-    EditableModule
+    EditableModule,
+    TippyModule,
+    QuillModule
   ]
 })
 export class FirmPortalModule { }

@@ -1,7 +1,21 @@
 import { Database } from '@src/core/Database';
 
 export class MatterNoteService {
+  public static async get(matterId: number): Promise<any> {
+    const { matter_note, user } = Database.models;
 
+    const notes = await matter_note.findAll({
+      where: { matter_id: matterId },
+      include: [
+        {
+          model: user,
+          attributes: ['id', 'first_name', 'last_name', 'profile_image']
+        }
+      ]
+    });
+
+    return Promise.resolve(notes);
+  }
   /*
     create()
       Inputs:
@@ -13,11 +27,19 @@ export class MatterNoteService {
       Outputs:
         Creates note in the database, and returns that note to the backend (eventually), so it can update the cache.
   */
-  public static async create(note): Promise<any> {
+  public static async create(matterNote): Promise<any> {
     const { matter_note } = Database.models;
-    
-    const newNote = await matter_note.create(note);
 
-    return Promise.resolve(newNote);
+    const createdMatterNote = await matter_note.create(matterNote);
+
+    return Promise.resolve(createdMatterNote);
+  }
+
+  public static async delete(noteId: number): Promise<any> {
+    const { matter_note } = Database.models;
+
+    await matter_note.destroy({ where: { id: noteId } });
+
+    return Promise.resolve(true);
   }
 }

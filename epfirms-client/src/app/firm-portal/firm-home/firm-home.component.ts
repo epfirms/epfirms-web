@@ -122,4 +122,8 @@ export class FirmHomeComponent implements OnInit, OnDestroy {
   setLegalArea(matterId: number, legalArea: LegalArea) {
     this._matterService.update({id: matterId, legal_area_id: legalArea.id}).subscribe();
   }
+
+  trackByIndex(index, item) {
+    return item.id;
+  }
 }

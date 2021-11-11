@@ -5,6 +5,17 @@ import { StatusConstants } from '@src/constants/StatusConstants';
 export class MatterNoteController {
   constructor(private _matterNoteService = MatterNoteService) {}
 
+  public async getNotes(req: any, resp: Response): Promise<any> {
+    try {
+      const matterId = req.params.matter_id;
+
+      const matterNotes = await this._matterNoteService.get(matterId);
+
+      resp.status(StatusConstants.OK).send(matterNotes);
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
 
   /*
     createNote()
@@ -19,19 +30,35 @@ export class MatterNoteController {
   */
   public async createNote(req: any, resp: Response): Promise<any> {
     try {
-      const note = req.body;
-      const user_id = req.user.id;
+      const matterId = req.params.matter_id;
 
-      note.user_id = user_id;
+      const content = req.body.content;
+
+      const userId = req.user.id;
+      
+      const note = {
+        matter_id: matterId,
+        content: content,
+        user_id: userId
+      };
+
       const newNote = await this._matterNoteService.create(note);
 
-      const matter = await MatterService.getOne(newNote.matter_id);
-
-    resp.status(StatusConstants.OK).send(matter);
+      resp.status(StatusConstants.OK).send(newNote);
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
     }
   }
 
+  public async deleteNote(req: any, resp: Response): Promise<any> {
+    try {
+      const noteId = req.params.note_id;
 
+      const newNote = await this._matterNoteService.delete(noteId);
+
+      resp.status(StatusConstants.OK).send({success: true});
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
 }
