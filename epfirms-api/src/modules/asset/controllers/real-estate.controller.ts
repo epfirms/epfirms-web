@@ -16,7 +16,7 @@ export class RealEstateController {
 
       resp.status(StatusConstants.OK).send(created);
     } catch (error) {
-      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send({success: false, access_token: null, m: error.message});
     }
   }
 
@@ -26,7 +26,7 @@ export class RealEstateController {
       await AssetService.deleteRealEstate(parseInt(id));
         resp.status(StatusConstants.OK).send({success: true});
     } catch (error) {
-      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send({success: false, access_token: null, m: error.message});
     }
   }
 
@@ -37,7 +37,7 @@ export class RealEstateController {
       const updatedRealEstate = await AssetService.updateRealEstate(parseInt(id), data);
         resp.status(StatusConstants.OK).send({success: true});
     } catch (error) {
-      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send({success: false, access_token: null, m: error.message});
     }
   }
 }

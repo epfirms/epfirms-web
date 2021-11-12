@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ModalRef } from '@app/modal/modal-ref';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
+import { DialogRef } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-add-family-member',
@@ -32,8 +32,8 @@ export class AddFamilyMemberComponent implements OnInit {
     'other'
   ];
 
-  constructor(private _fb: FormBuilder, private _familyMemberService: FamilyMemberService, private _modalRef: ModalRef) {
-    this.familyMemberType = _modalRef.data.type;
+  constructor(private _fb: FormBuilder, private _familyMemberService: FamilyMemberService, private _dialogRef: DialogRef) {
+    this.familyMemberType = _dialogRef.data.type;
    }
 
   ngOnInit(): void {
@@ -60,7 +60,7 @@ export class AddFamilyMemberComponent implements OnInit {
   }
 
   close(newMember?: any) {
-    this._modalRef.close(newMember);
+    this._dialogRef.close(newMember);
   }
 
   setFamilyMemberType(type: string) {

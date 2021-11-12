@@ -1,4 +1,3 @@
-import { trigger, transition, style, animate } from '@angular/animations';
 import {
   Component,
   OnInit,
@@ -8,29 +7,17 @@ import { ClientService } from '@app/firm-portal/_services/client-service/client.
 import { LegalAreaService } from '@app/firm-portal/_services/legal-area-service/legal-area.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
-import { ModalRef } from '@app/modal/modal-ref';
-import { ModalService } from '@app/modal/modal.service';
-import { Client } from '@app/_models/client';
-import { LegalArea } from '@app/_models/legal-area';
-import { Staff } from '@app/_models/staff';
+import { Client } from '@app/core/interfaces/client';
+import { LegalArea } from '@app/core/interfaces/legal-area';
+import { Staff } from '@app/core/interfaces/staff';
 import { Observable } from 'rxjs';
 import { AddClientComponent } from '../add-client/add-client.component';
+import { DialogRef, DialogService } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-add-case',
   templateUrl: './add-case.component.html',
-  styleUrls: ['./add-case.component.scss'],
-  animations: [
-    trigger("toggleAnimation", [
-      transition(":enter", [
-        style({ opacity: 0, transform: "scale(0.95)" }),
-        animate("100ms ease-out", style({ opacity: 1, transform: "scale(1)" }))
-      ]),
-      transition(":leave", [
-        animate("75ms", style({ opacity: 0, transform: "scale(0.95)" }))
-      ])
-    ])
-  ]
+  styleUrls: ['./add-case.component.scss']
 })
 export class AddCaseComponent implements OnInit {
   matterType: string;
@@ -69,10 +56,10 @@ export class AddCaseComponent implements OnInit {
     private _clientService: ClientService,
     private _matterService: MatterService,
     private _legalAreaService: LegalAreaService,
-    private _modalService: ModalService,
-    private _modalRef: ModalRef
+    private _dialogRef: DialogRef,
+    private _dialogService: DialogService
   ) {
-    this.matterType = _modalRef.data.matter_type;
+    this.matterType = _dialogRef.data.matter_type;
     this.attorneys$ = _staffService.filteredEntities$;
     this.clients$ = _clientService.entities$;
     this.legalAreas$ = _legalAreaService.entities$;
@@ -95,7 +82,7 @@ export class AddCaseComponent implements OnInit {
   }
 
   close(data?: any) {
-    this._modalRef.close(data);
+    this._dialogRef.close(data);
   }
 
   selectEvent(item: any, controlName: string) {
@@ -109,11 +96,11 @@ export class AddCaseComponent implements OnInit {
   }
   
   openAddClient() {
-    const addClientDialog = this._modalService.open(AddClientComponent, {});
-    addClientDialog.afterClosed$.subscribe((close: any) => {
-      if (close.data && close.data.id) {
-      this.selectEvent(close.data.id, 'client_id');
-      this.clientId = close.data.id;
+    const addClientDialog = this._dialogService.open(AddClientComponent, {});
+    addClientDialog.afterClosed$.subscribe((data: any) => {
+      if (data && data.id) {
+      this.selectEvent(data.id, 'client_id');
+      this.clientId = data.id;
     }
     });
   }

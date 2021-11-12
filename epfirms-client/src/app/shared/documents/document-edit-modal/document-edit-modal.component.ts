@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AwsService } from '@app/shared/_services/aws.service';
 import { DocumentService } from '@app/shared/_services/document-service/document.service';
-import { Document } from '@app/_models/document';
-import legalDocumentTypes from '@app/_util/legalDocumentTypes';
+import { Document } from '@app/core/interfaces/document';
+import legalDocumentTypes from '@app/core/util/legalDocumentTypes';
 @Component({
   selector: 'app-document-edit-modal',
   templateUrl: './document-edit-modal.component.html',

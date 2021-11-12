@@ -7,7 +7,7 @@ import { DeleteFirmComponent } from './delete-firm/delete-firm/delete-firm.compo
 import { TaskTemplatesComponent } from './task-templates/task-templates/task-templates.component';
 import { FirmSettingsComponent } from './firm-settings.component';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@app/shared/_guards/auth.guard';
+import { AuthGuard } from '@app/core/guards/auth.guard';
 import { FirmDetailsComponent } from './firm-details/firm-details/firm-details.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { ManageStaffComponent } from './manage-staff/manage-staff.component';

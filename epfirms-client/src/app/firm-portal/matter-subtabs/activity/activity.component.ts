@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatterActivityService } from '@app/shared/_services/matter-activity-service/matter-activity.service';
-import { Matter } from '@app/_models/matter';
-import { MatterActivity } from '@app/_models/matter-activity';
+import { Matter } from '@app/core/interfaces/matter';
+import { MatterActivity } from '@app/core/interfaces/matter-activity';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

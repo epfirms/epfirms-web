@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
 import { Observable } from 'rxjs';
-import {Document} from '../../../_models/document';
+import {Document} from '../../../core/interfaces/document';
 
 @Injectable({
   providedIn: 'root'

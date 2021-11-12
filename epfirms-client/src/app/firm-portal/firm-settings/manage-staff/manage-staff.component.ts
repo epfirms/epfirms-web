@@ -4,8 +4,8 @@ import { MatterService } from '@app/firm-portal/_services/matter-service/matter.
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { MatterTabsService } from '@app/firm-portal/_services/matter-tabs-service/matter-tabs.service';
 import { Observable } from 'rxjs';
-import { Staff } from '@app/_models/staff';
-import { Firm } from '@app/_models/firm';
+import { Staff } from '@app/core/interfaces/staff';
+import { Firm } from '@app/core/interfaces/firm';
 import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 

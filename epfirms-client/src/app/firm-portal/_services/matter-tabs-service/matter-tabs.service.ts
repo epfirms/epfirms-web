@@ -10,7 +10,7 @@ import {
   setSelectedIndex,
 } from '@app/store/matter-tabs/matter-tabs.actions';
 import { Store } from '@ngrx/store';
-import { Tabs } from '@app/_models/tabs';
+import { Tabs } from '@app/core/interfaces/tabs';
 import { selectedOpenTabs } from '@app/store/matter-tabs/matter-tabs.reducer';
 
 @Injectable({

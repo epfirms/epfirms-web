@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from '../_services/auth-service/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { CurrentUserService } from '../_services/current-user-service/current-user.service';
 
 @Component({

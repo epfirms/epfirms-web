@@ -12,15 +12,10 @@ import { EditableAutocompleteComponent } from './editable-autocomplete/editable-
 import { EditableDatepickerComponent } from './editable-datepicker/editable-datepicker.component';
 import { TagComponent } from './tag/tag.component';
 import { AvatarComponent } from './avatar/avatar.component';
-import { SelectComponent } from './select/select.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { DocumentActionsComponent } from './documents/document-actions/document-actions.component';
 import { DocumentEditModalComponent } from './documents/document-edit-modal/document-edit-modal.component';
-import { SearchbarComponent } from './searchbar/searchbar/searchbar.component';
-import { SearchPipe } from './_pipes/search.pipe';
-import { InitialsPipe } from './_pipes/initials.pipe';
 import { PaginatorComponent } from './paginator/paginator.component';
-import { TableSectionComponent } from './table-section/table-section.component';
 import { MenuModule } from 'headlessui-angular';
 import { AddMoneyAccountComponent } from './add-money-account/add-money-account.component';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
@@ -37,6 +32,7 @@ import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {EditableModule} from '@ngneat/edit-in-place';
+import { PipesModule } from '@app/core/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -50,15 +46,10 @@ import {EditableModule} from '@ngneat/edit-in-place';
     EditableDatepickerComponent,
     TagComponent,
     AvatarComponent,
-    SelectComponent,
     DocumentsComponent,
     DocumentActionsComponent,
     DocumentEditModalComponent,
-    SearchbarComponent,
-    SearchPipe,
-    InitialsPipe,
     PaginatorComponent,
-    TableSectionComponent,
     AddMoneyAccountComponent,
     AddVehicleComponent,
     AddRealEstateComponent,
@@ -80,7 +71,8 @@ import {EditableModule} from '@ngneat/edit-in-place';
     InputMaskModule,
     TippyModule,
     PdfJsViewerModule,
-    EditableModule
+    EditableModule,
+    PipesModule
   ],
   exports: [
     InputComponent,
@@ -93,12 +85,8 @@ import {EditableModule} from '@ngneat/edit-in-place';
     EditableDatepickerComponent,
     TagComponent,
     AvatarComponent,
-    SelectComponent,
     DocumentsComponent,
-    SearchPipe,
-    InitialsPipe,
     PaginatorComponent,
-    TableSectionComponent,
     PdfViewerComponent
   ]
 })

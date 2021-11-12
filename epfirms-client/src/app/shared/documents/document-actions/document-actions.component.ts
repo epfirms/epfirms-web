@@ -4,8 +4,8 @@ import { AwsService } from '@app/shared/_services/aws.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { DocumentService } from '@app/shared/_services/document-service/document.service';
 import { MatterActivityService } from '@app/shared/_services/matter-activity-service/matter-activity.service';
-import { Document } from '@app/_models/document';
-import { MatterActivity } from '@app/_models/matter-activity';
+import { Document } from '@app/core/interfaces/document';
+import { MatterActivity } from '@app/core/interfaces/matter-activity';
 import { DialogService } from '@ngneat/dialog';
 
 @Component({

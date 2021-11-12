@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DocumentService } from '../_services/document-service/document.service';
-import {Document} from '../../_models/document';
-import legalDocumentTypes from '@app/_util/legalDocumentTypes';
+import {Document} from '../../core/interfaces/document';
+import legalDocumentTypes from '@app/core/util/legalDocumentTypes';
 import { AwsService } from '../_services/aws.service';
-import { MatterTab } from '@app/_models/matter-tab';
+import { MatterTab } from '@app/core/interfaces/matter-tab';
 import { FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
-import { Matter } from '@app/_models/matter';
+import { Matter } from '@app/core/interfaces/matter';
 
 @Component({
   selector: 'app-documents',

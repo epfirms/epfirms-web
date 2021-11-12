@@ -2,9 +2,9 @@ import { Component, Input, ViewChildren } from '@angular/core';
 import { TaskTemplateSelectionComponent } from '@app/features/task-template/task-template-selection/task-template-selection.component';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
-import { Matter } from '@app/_models/matter';
-import { MatterTask } from '@app/_models/matter-task';
-import { Staff } from '@app/_models/staff';
+import { Matter } from '@app/core/interfaces/matter';
+import { MatterTask } from '@app/core/interfaces/matter-task';
+import { Staff } from '@app/core/interfaces/staff';
 import { DialogService } from '@ngneat/dialog';
 import { Observable } from 'rxjs';
 

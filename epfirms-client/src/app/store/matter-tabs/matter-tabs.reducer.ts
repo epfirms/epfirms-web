@@ -1,5 +1,5 @@
-import { Matter } from '@app/_models/matter';
-import { Tabs } from '@app/_models/tabs';
+import { Matter } from '@app/core/interfaces/matter';
+import { Tabs } from '@app/core/interfaces/tabs';
 import { EntitySelectorsFactory } from '@ngrx/data';
 import {
   createFeatureSelector,

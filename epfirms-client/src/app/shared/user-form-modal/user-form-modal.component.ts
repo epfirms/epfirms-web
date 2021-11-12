@@ -1,10 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
-import { OverlayService } from '@app/firm-portal/_services/overlay-service/overlay.service';
-import { ModalRef } from '@app/modal/modal-ref';
-import { Client } from '@app/_models/client';
-import { take } from 'rxjs/operators';
+import { Client } from '@app/core/interfaces/client';
+import { DialogRef } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-user-form-modal',
@@ -20,8 +17,8 @@ export class UserFormModalComponent implements OnInit {
 
   title: string;
 
-  constructor(private _fb: FormBuilder, private _modalRef: ModalRef) {
-    this.title = _modalRef.data.title;
+  constructor(private _fb: FormBuilder, private _dialogRef: DialogRef) {
+    this.title = _dialogRef.data.title;
   }
 
   ngOnInit(): void {
@@ -42,6 +39,6 @@ export class UserFormModalComponent implements OnInit {
   }
 
   close(newClient?: Client) {
-    this._modalRef.close(newClient);
+    this._dialogRef.close(newClient);
   }
 }

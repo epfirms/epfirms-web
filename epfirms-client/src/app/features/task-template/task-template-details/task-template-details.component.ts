@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
-import { MatterTask } from '@app/_models/matter-task';
-import { Staff } from '@app/_models/staff';
-import { TemplateTask } from '@app/_models/template-task';
+import { MatterTask } from '@app/core/interfaces/matter-task';
+import { Staff } from '@app/core/interfaces/staff';
+import { TemplateTask } from '@app/core/interfaces/template-task';
 import { Observable } from 'rxjs';
 import { DialogRef } from '@ngneat/dialog';
 import { LegalAreaService } from '@app/firm-portal/_services/legal-area-service/legal-area.service';
-import { LegalArea } from '@app/_models/legal-area';
+import { LegalArea } from '@app/core/interfaces/legal-area';
 
 @Component({
   selector: 'app-task-template-details',

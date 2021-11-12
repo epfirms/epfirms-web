@@ -16,14 +16,13 @@ import { OverviewComponent } from './matter-subtabs/overview/overview.component'
 import { TasksComponent } from './matter-subtabs/tasks/tasks.component';
 import { ActivityComponent } from './matter-subtabs/activity/activity.component';
 import { NotesComponent } from './matter-subtabs/notes/notes.component';
-import { TabsModule } from '@app/tabs/tabs.module';
+import { TabsModule } from '@app/shared/tabs/tabs.module';
 import { MenuModule } from 'headlessui-angular';
 import { UserInfoComponent } from './matter-tabs/user-info/user-info.component';
-import { ModalModule } from '@app/modal/modal.module';
 import { LeadsComponent } from './leads/leads.component';
 import { AddStaffComponent } from './overlays/add-staff/add-staff.component';
 import { DeleteStaffComponent } from './overlays/delete-staff/delete-staff.component';
-import { IntakeModule } from '@app/intake/intake.module';
+import { IntakeModule } from '@app/features/intake/intake.module';
 import { EditClientComponent } from './overlays/edit-client/edit-client.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgxSelectModule } from 'ngx-select-ex';
@@ -64,7 +63,6 @@ import { TaskTemplateModule } from '@app/features/task-template/task-template.mo
     SharedModule,
     TabsModule,
     MenuModule,
-    ModalModule,
     IntakeModule,
     CdkTableModule,
     NgxSelectModule,

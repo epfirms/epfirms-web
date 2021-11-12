@@ -8,6 +8,7 @@ import { TaskTemplateDetailsComponent } from './task-template-details/task-templ
 import { FormsModule } from '@angular/forms';
 import { TaskTemplateSelectionComponent } from './task-template-selection/task-template-selection.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
+import { PipesModule } from '@app/core/pipes/pipes.module';
 
 
 
@@ -23,7 +24,8 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
     FormsModule,
     SharedModule,
     TippyModule,
-    AngularMyDatePickerModule
+    AngularMyDatePickerModule,
+    PipesModule
   ],
   exports: [
     TaskTemplateListComponent,

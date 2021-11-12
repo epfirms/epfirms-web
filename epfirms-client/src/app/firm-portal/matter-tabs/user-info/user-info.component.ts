@@ -3,9 +3,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AddClientComponent } from '@app/firm-portal/overlays/add-client/add-client.component';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
-import { ModalService } from '@app/modal/modal.service';
-import { Client } from '@app/_models/client';
+import { Client } from '@app/core/interfaces/client';
 import { Observable } from 'rxjs';
+import { DialogService } from '@ngneat/dialog';
 
 @Component({
   selector: 'user-info',
@@ -49,7 +49,7 @@ export class UserInfoComponent implements OnInit {
   private _label: string;
 
   private _user;
-  constructor(private _matterService: MatterService, private _modalService: ModalService, private _clientService: ClientService) {
+  constructor(private _matterService: MatterService, private _dialogService: DialogService, private _clientService: ClientService) {
     this.clients$ = _clientService.entities$;
   }
 
@@ -61,10 +61,10 @@ export class UserInfoComponent implements OnInit {
   }
 
   openAddClient(): void {
-    const addClientDialog = this._modalService.open(AddClientComponent, {});
-    addClientDialog.afterClosed$.subscribe((close: any) => {
-      if (close.data && close.data.id) {
-        this.addClicked.emit(close.data.id);
+    const addClientDialog = this._dialogService.open(AddClientComponent);
+    addClientDialog.afterClosed$.subscribe((data: any) => {
+      if (data && data.id) {
+        this.addClicked.emit(data.id);
     }
     });
   }

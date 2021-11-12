@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
-import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
-import { OverlayService } from '@app/firm-portal/_services/overlay-service/overlay.service';
-import { ModalRef } from '@app/modal/modal-ref';
-import { Client } from '@app/_models/client';
-import { take } from 'rxjs/operators';
+import { DialogRef } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-add-money-account',
@@ -23,7 +18,7 @@ export class AddMoneyAccountComponent implements OnInit {
     'checking/savings',
     'other'
   ]
-  constructor(private _fb: FormBuilder, private _assetService: AssetService, private _modalRef: ModalRef) { }
+  constructor(private _fb: FormBuilder, private _dialogRef: DialogRef) { }
 
   ngOnInit(): void {
     this.accountForm = this._fb.group({
@@ -33,9 +28,9 @@ export class AddMoneyAccountComponent implements OnInit {
       is_joint: [false, [Validators.required]]
     });
 
-    if (this._modalRef.data.asset) {
+    if (this._dialogRef.data.asset) {
       this.accountForm.addControl('id', new FormControl(''));
-      this.accountForm.patchValue(this._modalRef.data.asset);
+      this.accountForm.patchValue(this._dialogRef.data.asset);
       this.accountForm.updateValueAndValidity();
     }
   }
@@ -45,7 +40,7 @@ export class AddMoneyAccountComponent implements OnInit {
   }
 
   close(newAccount?: any) {
-    this._modalRef.close(newAccount);
+    this._dialogRef.close(newAccount);
   }
 
   setAccountType(type: string): void {

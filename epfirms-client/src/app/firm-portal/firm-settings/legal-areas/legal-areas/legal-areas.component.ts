@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LegalAreaService } from '@app/firm-portal/_services/legal-area-service/legal-area.service';
-import { Firm } from '@app/_models/firm';
-import { LegalArea } from '@app/_models/legal-area';
+import { Firm } from '@app/core/interfaces/firm';
+import { LegalArea } from '@app/core/interfaces/legal-area';
 import { Observable } from 'rxjs';
-import colors from '@app/_util/legalAreaColors';
+import colors from '@app/core/util/legalAreaColors';
 //import { FirmService } from '../_services/firm-service/firm.service';
 
 @Component({
