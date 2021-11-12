@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatterTabsService } from '@app/firm-portal/_services/matter-tabs-service/matter-tabs.service';
 import { MatterTaskService } from '@app/firm-portal/_services/matter-task-service/matter-task.service';
-import { MatterTab } from '@app/_models/matter-tab';
+import { MatterTab } from '@app/core/interfaces/matter-tab';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

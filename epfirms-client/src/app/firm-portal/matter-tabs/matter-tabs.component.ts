@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from '@app/modal/modal.service';
-import { matterTabsReducer } from '@app/store/matter-tabs/matter-tabs.reducer';
-import { LegalArea } from '@app/_models/legal-area';
-import { Matter } from '@app/_models/matter';
-import { Staff } from '@app/_models/staff';
-import { Tabs } from '@app/_models/tabs';
-import { combineLatest, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { LegalArea } from '@app/core/interfaces/legal-area';
+import { Matter } from '@app/core/interfaces/matter';
+import { Staff } from '@app/core/interfaces/staff';
+import { Tabs } from '@app/core/interfaces/tabs';
+import { Observable } from 'rxjs';
 import { EditClientComponent } from '../overlays/edit-client/edit-client.component';
-import { FirmService } from '../_services/firm-service/firm.service';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
 import { MatterTabsService } from '../_services/matter-tabs-service/matter-tabs.service';
 import { StaffService } from '../_services/staff-service/staff.service';
+import { DialogService } from '@ngneat/dialog';
 
 @Component({
   selector: 'matter-tabs',
@@ -70,7 +67,7 @@ export class MatterTabsComponent implements OnInit {
     private _staffService: StaffService,
     private _matterService: MatterService,
     private _legalAreaService: LegalAreaService,
-    private _modalService: ModalService
+    private _dialogService: DialogService
   ) {
     this.tabs$ = this._matterTabsService.tabs$;
 
@@ -121,9 +118,9 @@ export class MatterTabsComponent implements OnInit {
 
   handleUserInfoOption(matter, optionData) {
     if (optionData.option === 'edit') {
-      const editModal = this._modalService.open(EditClientComponent, {user: optionData.user});
-      editModal.afterClosed$.subscribe(closed => {
-        if (closed) {
+      const editModal = this._dialogService.open(EditClientComponent, {data: {user: optionData.user}});
+      editModal.afterClosed$.subscribe(data => {
+        if (data) {
           this._matterService.update({id: matter.id}).subscribe();
         }
       });
@@ -134,6 +131,10 @@ export class MatterTabsComponent implements OnInit {
         this._matterService.update({id: matter.id, point_of_contact_id: null}).subscribe();
       }
     }
+  }
+
+  changeSelectedIndex(index: number) {
+    this._matterTabsService.setSelectedIndex(index);
   }
 
   trackByIndex(index, item) {

@@ -16,24 +16,23 @@ import { OverviewComponent } from './matter-subtabs/overview/overview.component'
 import { TasksComponent } from './matter-subtabs/tasks/tasks.component';
 import { ActivityComponent } from './matter-subtabs/activity/activity.component';
 import { NotesComponent } from './matter-subtabs/notes/notes.component';
-import { TabsModule } from '@app/tabs/tabs.module';
+import { TabsModule } from '@app/shared/tabs/tabs.module';
 import { MenuModule } from 'headlessui-angular';
 import { UserInfoComponent } from './matter-tabs/user-info/user-info.component';
-import { ModalModule } from '@app/modal/modal.module';
 import { LeadsComponent } from './leads/leads.component';
 import { AddStaffComponent } from './overlays/add-staff/add-staff.component';
 import { DeleteStaffComponent } from './overlays/delete-staff/delete-staff.component';
-import { EditStaffComponent } from './overlays/edit-staff/edit-staff.component';
-import { IntakeModule } from '@app/intake/intake.module';
+import { IntakeModule } from '@app/features/intake/intake.module';
 import { EditClientComponent } from './overlays/edit-client/edit-client.component';
-import { CdkTableModule } from '@angular/cdk/table'
+import { CdkTableModule } from '@angular/cdk/table';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { BillingComponent } from './matter-subtabs/billing/billing.component';
-import { TaskTemplateModalComponent } from './matter-subtabs/tasks/task-template-modal/task-template-modal.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { EditableModule } from '@ngneat/edit-in-place';
 import { TippyModule } from '@ngneat/helipopper';
 import { QuillModule } from 'ngx-quill';
+import { DialogModule } from '@ngneat/dialog';
+import { TaskTemplateModule } from '@app/features/task-template/task-template.module';
 
 @NgModule({
   declarations: [
@@ -53,10 +52,8 @@ import { QuillModule } from 'ngx-quill';
     LeadsComponent,
     AddStaffComponent,
     DeleteStaffComponent,
-    EditStaffComponent,
     EditClientComponent,
-    BillingComponent,
-    TaskTemplateModalComponent
+    BillingComponent
   ],
   imports: [
     CommonModule,
@@ -66,14 +63,15 @@ import { QuillModule } from 'ngx-quill';
     SharedModule,
     TabsModule,
     MenuModule,
-    ModalModule,
     IntakeModule,
     CdkTableModule,
     NgxSelectModule,
     AngularMyDatePickerModule,
     EditableModule,
     TippyModule,
-    QuillModule
+    QuillModule,
+    DialogModule,
+    TaskTemplateModule
   ]
 })
-export class FirmPortalModule { }
+export class FirmPortalModule {}

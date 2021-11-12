@@ -1,10 +1,10 @@
 import { EntityMetadataMap, EntityDataModuleConfig } from '@ngrx/data';
-import { Matter } from './_models/matter';
-import { Staff } from './_models/staff';
-import { LegalArea } from './_models/legal-area';
-import {Document} from './_models/document';
-import { Client } from './_models/client';
-import { MatterTask } from './_models/matter-task';
+import { Matter } from './core/interfaces/matter';
+import { Staff } from './core/interfaces/staff';
+import { LegalArea } from './core/interfaces/legal-area';
+import {Document} from './core/interfaces/document';
+import { Client } from './core/interfaces/client';
+import { MatterTask } from './core/interfaces/matter-task';
 
 const entityMetadata: EntityMetadataMap = {
   Matter: {

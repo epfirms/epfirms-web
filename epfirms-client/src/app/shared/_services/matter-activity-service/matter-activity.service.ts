@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatterActivity } from '@app/_models/matter-activity';
+import { MatterActivity } from '@app/core/interfaces/matter-activity';
 import { Observable } from 'rxjs';
 import { CurrentUserService } from '../current-user-service/current-user.service';
 

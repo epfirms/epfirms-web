@@ -1,18 +1,16 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ModalService } from '@app/modal/modal.service';
-import { LegalArea } from '@app/_models/legal-area';
-import { Matter } from '@app/_models/matter';
-import { Staff } from '@app/_models/staff';
+import { LegalArea } from '@app/core/interfaces/legal-area';
+import { Matter } from '@app/core/interfaces/matter';
+import { Staff } from '@app/core/interfaces/staff';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AddCaseComponent } from '../overlays/add-case/add-case.component';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
 import { MatterTabsService } from '../_services/matter-tabs-service/matter-tabs.service';
-import { OverlayService } from '../_services/overlay-service/overlay.service';
 import { StaffService } from '../_services/staff-service/staff.service';
+import { DialogService } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-leads',
@@ -93,13 +91,11 @@ export class LeadsComponent implements OnInit {
   };
 
   constructor(
-    private _overlayService: OverlayService,
     private _matterService: MatterService,
     private _matterTabsService: MatterTabsService,
     private _legalAreaService: LegalAreaService,
-    private _router: Router,
-    private _modalService: ModalService,
-    private _staffService: StaffService
+    private _staffService: StaffService,
+    private _dialogService: DialogService
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.leads$ = _matterService.filteredEntities$;
@@ -116,19 +112,22 @@ export class LeadsComponent implements OnInit {
   }
 
   addLead() {
-    const addLeadModal = this._modalService.open(
-      AddCaseComponent,
-      { matter_type: 'lead' },
-      { type: 'slideOver' }
-    );
+    const addLeadModal = this._dialogService.open(AddCaseComponent, {
+      windowClass:'slide-over',
+      size: 'lgSlideOver',
+      data: {
+        matter_type: 'lead'
+      },
+      enableClose: false
+    });
 
-    addLeadModal.afterClosed$.subscribe((closed) => {
-      if (closed.data && closed.data.matter) {
-        this._matterService.create(closed.data.matter).subscribe((response) => {
+    addLeadModal.afterClosed$.subscribe((data) => {
+      if (data && data.matter) {
+        this._matterService.create(data.matter).subscribe((response) => {
           response.pipe(take(1)).subscribe((newMatter) => {
-            if (closed.data.note && closed.data.note.length && newMatter.id) {
-              if (closed.data.note && closed.data.note.length) {
-                this.addNote(newMatter.id, closed.data.note);
+            if (data.note && data.note.length && newMatter.id) {
+              if (data.note && data.note.length) {
+                this.addNote(newMatter.id, data.note);
               }
             }
           });

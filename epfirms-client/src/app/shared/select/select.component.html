@@ -1,7 +1,0 @@
-<div class="relative">
-    <button type="button" class="relative w-full" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label" (focus)="toggleOptions()" (blur)="toggleOptions()">
-        <ng-content></ng-content>
-    </button>
-
-  <ng-content select="[tw-options]" *ngIf="showOptions"></ng-content>
-</div>

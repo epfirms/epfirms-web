@@ -9,15 +9,19 @@ export class TaskTemplateService {
 
   constructor(private http: HttpClient) { }
 
+  get(): Observable<any> {
+    return this.http.get('/api/firm/task-templates');
+  }
+
   create(data):Observable<any> {
-    return this.http.post('/api/task-template', data);
+    return this.http.post('/api/firm/task-templates', data);
   }
 
   delete(id):Observable<any>{
-    return this.http.delete(`/api/task-template/${id}`);
+    return this.http.delete(`/api/firm/task-templates/${id}`);
   }
 
-  update(data):Observable<any> {
-    return this.http.put('/api/task-template', data);
+  update(templateId: number, data):Observable<any> {
+    return this.http.put(`/api/firm/task-templates/${templateId}`, data);
   }
 }

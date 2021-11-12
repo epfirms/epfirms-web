@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
-import { OverlayService } from '@app/firm-portal/_services/overlay-service/overlay.service';
-import { ModalRef } from '@app/modal/modal-ref';
-import { Client } from '@app/_models/client';
+import { Client } from '@app/core/interfaces/client';
 import { take } from 'rxjs/operators';
+import { DialogRef } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-edit-client',
@@ -18,17 +17,17 @@ export class EditClientComponent {
 
   clientForm: FormGroup;
 
-  constructor(private _overlayService: OverlayService, private _fb: FormBuilder, private _clientService: ClientService, private _modalRef: ModalRef) {
+  constructor(private _fb: FormBuilder, private _clientService: ClientService, private _dialogRef: DialogRef) {
     this.clientForm = this._fb.group({
-      id: [_modalRef.data.user.id, [Validators.required]],
-      first_name: [_modalRef.data.user.first_name, [Validators.required]],
-      last_name: [_modalRef.data.user.last_name, [Validators.required]],
-      phone: [_modalRef.data.user.phone],
-      email: [_modalRef.data.user.email, [Validators.email]],
-      address: [_modalRef.data.user.address],
-      city: [_modalRef.data.user.city],
-      state: [_modalRef.data.user.state],
-      zip: [_modalRef.data.user.zip]
+      id: [_dialogRef.data.user.id, [Validators.required]],
+      first_name: [_dialogRef.data.user.first_name, [Validators.required]],
+      last_name: [_dialogRef.data.user.last_name, [Validators.required]],
+      phone: [_dialogRef.data.user.phone],
+      email: [_dialogRef.data.user.email, [Validators.email]],
+      address: [_dialogRef.data.user.address],
+      city: [_dialogRef.data.user.city],
+      state: [_dialogRef.data.user.state],
+      zip: [_dialogRef.data.user.zip]
     });
   }
 
@@ -41,6 +40,6 @@ export class EditClientComponent {
   }
 
   close(newClient?: Client) {
-    this._modalRef.close(newClient);
+    this._dialogRef.close(newClient);
   }
 }

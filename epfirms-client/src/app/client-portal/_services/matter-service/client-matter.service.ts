@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Matter } from '@app/_models/matter';
+import { Matter } from '@app/core/interfaces/matter';
 import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,

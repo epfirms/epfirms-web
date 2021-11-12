@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ModalRef } from '@app/modal/modal-ref';
+import { DialogRef } from '@ngneat/dialog';
 import { createMask } from '@ngneat/input-mask';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 
@@ -26,7 +26,7 @@ export class PaymentFormModalComponent implements OnInit {
     placeholder: '0',
   });
 
-  constructor(private _formBuilder: FormBuilder, private _modalRef: ModalRef) { }
+  constructor(private _formBuilder: FormBuilder, private _dialogRef: DialogRef) { }
 
   ngOnInit(): void {
     this.paymentForm = this._formBuilder.group({
@@ -54,6 +54,6 @@ export class PaymentFormModalComponent implements OnInit {
   }
 
   close(data?: any) {
-    this._modalRef.close(data);
+    this._dialogRef.close(data);
   }
 }

@@ -6,7 +6,7 @@ import { fromEvent } from 'rxjs';
   templateUrl: './editable-autocomplete.component.html',
   styleUrls: ['./editable-autocomplete.component.scss']
 })
-export class EditableAutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
+export class EditableAutocompleteComponent implements OnInit {
   @Input() options;
 
   @Input() addButton: boolean;
@@ -31,34 +31,17 @@ export class EditableAutocompleteComponent implements OnInit, AfterViewInit, OnD
 
   selectedOption: {id:number, full_name: string, profile_image: string} = { id: 0, full_name: '', profile_image: '' };
 
-  displayOptionList = false;
-
-  clickEvent$ = fromEvent(document, 'click');
-
-  clickEventSubscription;
+  highlightedIndex: number = 0;
   
   constructor(private _eref: ElementRef) { }
 
 
   ngOnInit(): void {
     this.filteredOptions = [...this.options];
-  }
-
-  ngAfterViewInit() {
-    this.clickEventSubscription = this.clickEvent$.subscribe((e) => {
-      if (!this._eref.nativeElement.contains(e.target)) {
-        this.displayOptionList = false;
-      }
-    });
-  }
-  ngOnDestroy() {
-    this.clickEventSubscription.unsubscribe();
+    this.highlightedIndex = this.filteredOptions.findIndex(o => o.id === this.selectedOption.id);
   }
 
   filterOptions(inputValue) {
-    if (!this.displayOptionList) {
-      this.displayOptionList = true;
-    }
     this.selectedOption = { id: 0, full_name: '', profile_image: '' };
     const { value } = inputValue;
     if (value) {
@@ -72,9 +55,31 @@ export class EditableAutocompleteComponent implements OnInit, AfterViewInit, OnD
   }
 
   selectOption(item) {
-    this.displayOptionList = false;
     this.selectedOption = item;
     this.onSelect.emit(item.id);
   }
 
+  handleKeyboardNav(event) {
+    if (this.filteredOptions.length) {
+    switch(event.key) {
+      case 'ArrowDown':
+        if (this.highlightedIndex < this.filteredOptions.length - 1) {
+        this.highlightedIndex = this.highlightedIndex + 1;
+        this.selectedOption = this.filteredOptions[this.highlightedIndex];
+      }
+        break;
+      case 'ArrowUp':
+        if (this.highlightedIndex > 0) {
+          this.highlightedIndex = this.highlightedIndex - 1;
+          this.selectedOption = this.filteredOptions[this.highlightedIndex];
+        }
+        break;
+      case 'Enter':
+        this.onSelect.emit(this.selectedOption.id);
+        break;
+    }
+  }
+    console.log(event);
+    // console.log(event.keyCode);
+  }
 }

@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Matter } from '@app/_models/matter';
+import { Matter } from '@app/core/interfaces/matter';
 import { MatterService } from '../../_services/matter-service/matter.service';
 import { Observable, Subscription } from 'rxjs';
 import { MatterTabsService } from '@app/firm-portal/_services/matter-tabs-service/matter-tabs.service';
 import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
-import { MatterTab } from '@app/_models/matter-tab';
-import { Staff } from '@app/_models/staff';
+import { MatterTab } from '@app/core/interfaces/matter-tab';
+import { Staff } from '@app/core/interfaces/staff';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { DialogService } from '@ngneat/dialog';

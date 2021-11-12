@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
-import { ModalService } from '@app/modal/modal.service';
 import { BillFormModalComponent } from '@app/shared/bill-form-modal/bill-form-modal.component';
 import { PaymentFormModalComponent } from '@app/shared/payment-form-modal/payment-form-modal.component';
-import { Matter } from '@app/_models/matter';
+import { Matter } from '@app/core/interfaces/matter';
+import { DialogService } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-billing',
@@ -24,7 +24,7 @@ export class BillingComponent implements OnInit {
   bills: any[] = [];
   payments: any[] = [];
 
-  constructor(private _modalService: ModalService, private _matterService: MatterService) {}
+  constructor(private _dialogService: DialogService, private _matterService: MatterService) {}
   ngOnInit(): void {
     this.loadBillPayments();
   }
@@ -37,8 +37,8 @@ export class BillingComponent implements OnInit {
   }
   
   addBill(): void {
-    const billModal = this._modalService.open(BillFormModalComponent, {});
-    billModal.afterClosed$.subscribe(({ data }) => {
+    const billModal = this._dialogService.open(BillFormModalComponent, {});
+    billModal.afterClosed$.subscribe(( data ) => {
       if (data) {
         const bill = {
           ...data,
@@ -57,8 +57,8 @@ export class BillingComponent implements OnInit {
   }
 
   addPayment(): void {
-    const paymentModal = this._modalService.open(PaymentFormModalComponent, {});
-    paymentModal.afterClosed$.subscribe(({ data }) => {
+    const paymentModal = this._dialogService.open(PaymentFormModalComponent, {});
+    paymentModal.afterClosed$.subscribe(( data ) => {
       console.log(data);
       if (data) {
         const bill = {

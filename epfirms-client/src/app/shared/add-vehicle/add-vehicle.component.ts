@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
-import { ModalRef } from '@app/modal/modal-ref';
+import { DialogRef } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-add-vehicle',
@@ -11,7 +11,7 @@ import { ModalRef } from '@app/modal/modal-ref';
 export class AddVehicleComponent implements OnInit {
   vehicleForm: FormGroup;
 
-  constructor(private _fb: FormBuilder, private _assetService: AssetService, private _modalRef: ModalRef) { }
+  constructor(private _fb: FormBuilder, private _assetService: AssetService, private _dialogRef: DialogRef) { }
 
   ngOnInit(): void {
     this.vehicleForm = this._fb.group({
@@ -20,9 +20,9 @@ export class AddVehicleComponent implements OnInit {
       total_value: [null, [Validators.required]],
     });
 
-    if (this._modalRef.data.asset) {
+    if (this._dialogRef.data.asset) {
       this.vehicleForm.addControl('id', new FormControl(''));
-      this.vehicleForm.patchValue(this._modalRef.data.asset);
+      this.vehicleForm.patchValue(this._dialogRef.data.asset);
       this.vehicleForm.updateValueAndValidity();
     }
   }
@@ -32,6 +32,6 @@ export class AddVehicleComponent implements OnInit {
   }
 
   close(newVehicle?: any) {
-    this._modalRef.close(newVehicle);
+    this._dialogRef.close(newVehicle);
   }
 }

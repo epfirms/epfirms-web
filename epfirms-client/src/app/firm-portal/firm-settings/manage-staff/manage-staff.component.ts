@@ -1,23 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatterTabsComponent } from '@app/firm-portal/matter-tabs/matter-tabs.component';
-import { AddCaseComponent } from '@app/firm-portal/overlays/add-case/add-case.component';
-import { AddClientComponent } from '@app/firm-portal/overlays/add-client/add-client.component';
-import { AddStaffComponent } from '@app/firm-portal/overlays/add-staff/add-staff.component';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { MatterTabsService } from '@app/firm-portal/_services/matter-tabs-service/matter-tabs.service';
-import { OverlayService } from '@app/firm-portal/_services/overlay-service/overlay.service';
-import { Matter } from '@app/_models/matter';
 import { Observable } from 'rxjs';
-import { Staff } from '@app/_models/staff';
-import { EmployeeRole } from '@app/_models/role';
-import { DeleteStaffComponent } from '@app/firm-portal/overlays/delete-staff/delete-staff.component';
-import { Firm } from '@app/_models/firm';
+import { Staff } from '@app/core/interfaces/staff';
+import { Firm } from '@app/core/interfaces/firm';
 import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
-import { EditStaffComponent } from '@app/firm-portal/overlays/edit-staff/edit-staff.component';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-manage-staff',
@@ -35,7 +25,6 @@ export class ManageStaffComponent implements OnInit {
   user: any;
 
   constructor(
-    private _overlayService: OverlayService, 
     private _matterService: MatterService,
     private _staffService: StaffService,
     private _firmService: FirmService,
@@ -68,23 +57,23 @@ export class ManageStaffComponent implements OnInit {
   // }
 
   addStaff() {
-    this._overlayService.add(AddStaffComponent);
+    // this._overlayService.add(AddStaffComponent);
   }
 
   editStaff() {
-    this._overlayService.add(EditStaffComponent);
+    // this._overlayService.add(EditStaffComponent);
   }
 
   deleteStaff() {
-    this._overlayService.add(DeleteStaffComponent);
+    // this._overlayService.add(DeleteStaffComponent);
   }
 
   addClient() {
-    this._overlayService.add(AddClientComponent);
+    // this._overlayService.add(AddClientComponent);
   }
 
   openCase() {
-    this._overlayService.add(MatterTabsComponent);
+    // this._overlayService.add(MatterTabsComponent);
   }
 
 }

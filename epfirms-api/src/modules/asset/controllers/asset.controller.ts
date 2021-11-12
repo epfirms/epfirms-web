@@ -12,7 +12,7 @@ export class AssetController {
       
         resp.status(StatusConstants.OK).send(userAssets);
     } catch (error) {
-      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send({success: false, access_token: null, m: error.message});
     }
   }
 
@@ -24,7 +24,7 @@ export class AssetController {
       
         resp.status(StatusConstants.OK).send(userAssets);
     } catch (error) {
-      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send({success: false, access_token: null, m: error.message});
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Matter } from '@app/_models/matter';
+import { Matter } from '@app/core/interfaces/matter';
 import { EntityCollection, EntitySelectorsFactory } from '@ngrx/data';
 import { createSelector } from '@ngrx/store';
 import { selectClientById, selectClients } from '../client/client.selector';

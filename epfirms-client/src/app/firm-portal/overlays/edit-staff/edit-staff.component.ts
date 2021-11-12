@@ -2,10 +2,9 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
-import { OverlayService } from '@app/firm-portal/_services/overlay-service/overlay.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
-import { Client } from '@app/_models/client';
-import { Staff } from '@app/_models/staff';
+import { Client } from '@app/core/interfaces/client';
+import { Staff } from '@app/core/interfaces/staff';
 import { Observable } from 'rxjs';
 import { AddClientComponent } from '../add-client/add-client.component';
 
@@ -59,7 +58,6 @@ export class EditStaffComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _overlayService: OverlayService,
     private _renderer: Renderer2,
     private el: ElementRef,
     private _staffService: StaffService,
@@ -98,9 +96,6 @@ export class EditStaffComponent implements OnInit {
   close() {
     this._renderer.addClass(this.slideOver.nativeElement, 'translate-x-full');
     this._renderer.removeClass(this.slideOver.nativeElement, 'translate-x-0');
-    setTimeout(() => {
-      this._overlayService.clear();
-    }, 300);
   }
 
   selectEvent(item: any, controlName: string) {
@@ -121,7 +116,6 @@ export class EditStaffComponent implements OnInit {
   }
 
   openAddClient() {
-    this._overlayService.add(AddClientComponent);
   }
 
   openAddStaff() {

@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { OverlayService } from '@app/firm-portal/_services/overlay-service/overlay.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { AwsService } from '@app/shared/_services/aws.service';
-import { Staff } from '@app/_models/staff';
+import { Staff } from '@app/core/interfaces/staff';
 
 @Component({
   selector: 'app-delete-staff',
@@ -15,16 +14,12 @@ export class DeleteStaffComponent implements OnInit {
   constructor(
     private _staffService: StaffService,
     private _awsService: AwsService,
-    private _overlayService: OverlayService,
   ) { }
 
   ngOnInit(): void {
   }
 
   close() {
-    setTimeout(() => {
-      this._overlayService.clear();
-    }, 300);
   }
 
   deleteStaff(){

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from '@app/modal/modal.service';
 import { AwsService } from '@app/shared/_services/aws.service';
 import { DocumentService } from '@app/shared/_services/document-service/document.service';
-import { Document } from '@app/_models/document';
+import { Document } from '@app/core/interfaces/document';
 import { ClientDocumentUploadComponent } from '../client-document-upload/client-document-upload.component';
+import { DialogService } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-client-documents',
@@ -12,16 +12,18 @@ import { ClientDocumentUploadComponent } from '../client-document-upload/client-
 })
 export class ClientDocumentsComponent implements OnInit {
   documents: Document[];
-  constructor(private _documentService: DocumentService, private _modalService: ModalService, private _docService: DocumentService, private _awsService: AwsService) { }
+  constructor(private _documentService: DocumentService, private _dialogService: DialogService, private _docService: DocumentService, private _awsService: AwsService) { }
 
   ngOnInit(): void {
     this.load();
   }
 
   upload() {
-    const documentUploadModal = this._modalService.open(ClientDocumentUploadComponent, {});
+    const documentUploadModal = this._dialogService.open(ClientDocumentUploadComponent, {
+      enableClose: false
+    });
 
-    documentUploadModal.afterClosed$.subscribe(({data}) => {
+    documentUploadModal.afterClosed$.subscribe((data) => {
       if (data) {
         this.handleUpload(data.document, data.selectedFile);
         console.log(data);

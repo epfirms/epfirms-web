@@ -47,9 +47,10 @@ export class Database {
       appointee: require('../models/Appointee')(this.sequelize, Sequelize),
       password_reset_token: require('../models/PasswordResetToken')(this.sequelize, Sequelize),
       matter_billing: require('../models/MatterBilling')(this.sequelize, Sequelize),
-      template_task: require('../models/TemplateTask')(this.sequelize, Sequelize),
-      task_template: require('../models/TaskTemplate')(this.sequelize, Sequelize),
+      firm_template_task: require('../models/FirmTemplateTask')(this.sequelize, Sequelize),
+      firm_task_template: require('../models/FirmTaskTemplate')(this.sequelize, Sequelize),
       external_lead: require('../models/ExternalLead')(this.sequelize, Sequelize),
+      beta_signup: require('../models/BetaSignup')(this.sequelize, Sequelize)
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee });
@@ -231,20 +232,28 @@ export class Database {
       foreignKey: 'user_id'
     });
 
-    this.models.firm.hasMany(this.models.task_template, {
+    this.models.firm.hasMany(this.models.firm_task_template, {
       foreignKey: 'firm_id',
       onDelete: 'cascade'
     });
-    this.models.task_template.belongsTo(this.models.firm, {
+
+    this.models.firm_task_template.belongsTo(this.models.firm, {
       foreignKey: 'firm_id'
     });
 
-    this.models.task_template.hasMany(this.models.template_task, {
+    this.models.firm_task_template.hasMany(this.models.firm_template_task, {
       foreignKey: 'template_id',
       onDelete: 'cascade'
     });
-    this.models.template_task.belongsTo(this.models.task_template, {
+    this.models.firm_template_task.belongsTo(this.models.firm_task_template, {
       foreignKey: 'firm_id'
+    });
+
+    this.models.user.hasMany(this.models.firm_template_task, {
+      foreignKey: 'user_id'
+    });
+    this.models.firm_template_task.belongsTo(this.models.user, {
+      foreignKey: 'user_id'
     });
   }
 

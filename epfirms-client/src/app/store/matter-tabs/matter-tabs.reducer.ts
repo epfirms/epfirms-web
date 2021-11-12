@@ -1,5 +1,5 @@
-import { Matter } from '@app/_models/matter';
-import { Tabs } from '@app/_models/tabs';
+import { Matter } from '@app/core/interfaces/matter';
+import { Tabs } from '@app/core/interfaces/tabs';
 import { EntitySelectorsFactory } from '@ngrx/data';
 import {
   createFeatureSelector,
@@ -13,10 +13,12 @@ import {
   close,
   expand,
   minimize,
+  setSelectedIndex,
   toggleExpand,
 } from './matter-tabs.actions';
 
 export const initialState: Tabs = {
+  selectedIndex: null,
   expanded: false,
   openTabs: [],
   subtabs: ['tasks', 'activity', 'notes', 'documents', 'intake', 'billing'],
@@ -30,7 +32,8 @@ const _matterTabsReducer = createReducer(
     if (!idExists) {
       return {
         ...state,
-        openTabs: [payload, ...state.openTabs],
+        openTabs: [...state.openTabs, payload],
+        selectedIndex: state.openTabs.length + 1
       };
     }
 
@@ -79,6 +82,12 @@ const _matterTabsReducer = createReducer(
     return {
       ...state,
       expanded: !state.expanded,
+    };
+  }),
+  on(setSelectedIndex, (state, { payload }) => {
+    return {
+      ...state,
+      selectedIndex: payload,
     };
   })
 );

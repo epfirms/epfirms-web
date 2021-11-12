@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
-import { Firm } from '@app/_models/firm';
+import { Firm } from '@app/core/interfaces/firm';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

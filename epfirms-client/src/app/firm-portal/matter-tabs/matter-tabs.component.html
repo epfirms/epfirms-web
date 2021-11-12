@@ -3,6 +3,8 @@
     [expanded]="tabs.expanded"
     (expandedChange)="toggleExpanded($event)"
     (close)="closeTab($event)"
+    [selectedIndex]="tabs.selectedIndex"
+    (selectedIndexChange)="changeSelectedIndex($event)"
   >
     <tab
       *ngFor="let matter of matters$ | async; trackBy: trackByIndex"

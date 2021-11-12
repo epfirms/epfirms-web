@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Matter } from '@app/_models/matter';
+import { Matter } from '@app/core/interfaces/matter';
 import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
 import { concatMap, filter, map, reduce, take } from 'rxjs/operators';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
-import { SocketService } from '../socket-service/socket.service';
+import { SocketService } from '../../../core/services/socket.service';
 import { select } from '@ngrx/store';
 import { selectPopulatedMatters } from '@app/store/matter/matter.selector';
 

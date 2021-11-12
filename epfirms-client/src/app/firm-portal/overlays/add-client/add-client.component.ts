@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
-import { OverlayService } from '@app/firm-portal/_services/overlay-service/overlay.service';
-import { ModalRef } from '@app/modal/modal-ref';
-import { Client } from '@app/_models/client';
-import { take } from 'rxjs/operators';
+import { Client } from '@app/core/interfaces/client';
+import { DialogRef } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-add-client',
@@ -18,7 +16,7 @@ export class AddClientComponent implements OnInit {
 
   clientForm: FormGroup;
 
-  constructor(private _overlayService: OverlayService, private _fb: FormBuilder, private _clientService: ClientService, private _modalRef: ModalRef) { }
+  constructor(private _fb: FormBuilder, private _clientService: ClientService, private _dialogRef: DialogRef) { }
 
   ngOnInit(): void {
     this.clientForm = this._fb.group({
@@ -40,6 +38,6 @@ export class AddClientComponent implements OnInit {
   }
 
   close(newClient?: Client) {
-    this._modalRef.close(newClient);
+    this._dialogRef.close(newClient);
   }
 }

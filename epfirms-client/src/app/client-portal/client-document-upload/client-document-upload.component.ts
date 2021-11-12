@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Matter } from '@app/_models/matter';
+import { Matter } from '@app/core/interfaces/matter';
 import { Observable } from 'rxjs';
 import { ClientMatterService } from '../_services/matter-service/client-matter.service';
-import { Document } from '@app/_models/document';
-import { ModalRef } from '@app/modal/modal-ref';
-import legalDocumentTypes from '@app/_util/legalDocumentTypes';
+import { Document } from '@app/core/interfaces/document';
+import legalDocumentTypes from '@app/core/util/legalDocumentTypes';
+import { DialogRef } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-client-document-upload',
@@ -19,7 +19,7 @@ export class ClientDocumentUploadComponent {
   selectedDocumentType: any;
   legalDocumentTypes : Array<any> = legalDocumentTypes;
 
-  constructor(private _clientMatterService: ClientMatterService, private _modalRef: ModalRef) {
+  constructor(private _clientMatterService: ClientMatterService, private _dialogRef: DialogRef) {
     this.matters$ = _clientMatterService.entities$;
   }
 
@@ -61,6 +61,6 @@ export class ClientDocumentUploadComponent {
   }
 
   close(data?: any) {
-    this._modalRef.close(data);
+    this._dialogRef.close(data);
   }
 }

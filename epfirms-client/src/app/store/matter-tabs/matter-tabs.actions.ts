@@ -6,3 +6,4 @@ export const clear = createAction('[Matter Tab] Clear');
 export const expand = createAction('[Matter Tab] Expand');
 export const minimize = createAction('[Matter Tab] Minimize');
 export const toggleExpand = createAction('[Matter Tab] Toggle Expand');
+export const setSelectedIndex = createAction('[Matter Tab] Set Selected Index', props<{payload: number}>());

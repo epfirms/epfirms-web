@@ -6,9 +6,9 @@ import {
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
 import { map } from 'rxjs/operators';
-import { Client } from '@app/_models/client';
+import { Client } from '@app/core/interfaces/client';
 import { Socket } from 'ngx-socket-io';
-import { SocketService } from '../socket-service/socket.service';
+import { SocketService } from '../../../core/services/socket.service';
 
 @Injectable({
   providedIn: 'root',

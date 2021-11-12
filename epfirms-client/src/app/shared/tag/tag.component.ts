@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { TagColor } from '@app/_models/legal-area-color';
+import { TagColor } from '@app/core/interfaces/legal-area-color';
 import { fromEvent } from 'rxjs';
 
 @Component({
