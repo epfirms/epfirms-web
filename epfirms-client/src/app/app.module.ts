@@ -92,6 +92,7 @@ const quillConfig = [
     }),
     DialogModule.forRoot({
       closeButton: false,
+      enableClose: false,
       confirm: {
         component: ConfirmDialogComponent
       },
