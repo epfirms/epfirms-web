@@ -202,8 +202,6 @@ export class FirmService {
 
   public static async createStaffMember(staff,firmId): Promise<any> {
     this.createClient(staff,firmId)
-    console.log("I'mma HERE")
-    
   }
 
   public static async updateStaff(staff_id, newStaff) {

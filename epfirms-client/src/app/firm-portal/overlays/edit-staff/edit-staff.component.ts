@@ -75,7 +75,6 @@ export class EditStaffComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.Data, this.staffForm, this.ref.data)
 
     this.staffForm = this._fb.group({
       id: ['', [Validators.required]],
@@ -98,6 +97,14 @@ export class EditStaffComponent implements OnInit {
     this.staffForm.get('last_name').setValue(this.ref.data.staff.last_name);
     this.staffForm.get('id').setValue(this.ref.data.staff.id);
     this.staffForm.get('email').setValue(this.ref.data.staff.email);
+    this.staffForm.get('phone').setValue(this.ref.data.staff.phone);
+    this.staffForm.get('legal_assistant').setValue(this.ref.data.staff.firms[0].firm_employee.legal_assistant);
+    this.staffForm.get('attorney').setValue(this.ref.data.staff.firms[0].firm_employee.attorney);
+    this.staffForm.get('admin').setValue(this.ref.data.staff.firms[0].firm_employee.admin);
+    this.staffForm.get('paralegal').setValue(this.ref.data.staff.firms[0].firm_employee.paralegal);
+
+
+    console.log(this.Data, this.staffForm, this.ref.data)
   }
 
   ngAfterViewInit(): void {

@@ -133,9 +133,9 @@ export class FirmController {
   public async updateStaffMember(req: any, resp: Response): Promise<any> {
     try {
       console.log("Req", req.body)
-      const staff_id = req.body.staff.id;
-      console.log("MYID", req.body.staff.id)
-      const newStaffData = req.body.staff;
+      const staff_id = req.body.id;
+      console.log("MYID", req.body.id)
+      const newStaffData = req.body;
       const updatedStaff = await FirmService.updateStaff(staff_id, newStaffData);
 
       resp.status(StatusConstants.OK).send(updatedStaff);
