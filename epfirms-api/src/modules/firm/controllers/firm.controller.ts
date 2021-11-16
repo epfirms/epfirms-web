@@ -130,6 +130,20 @@ export class FirmController {
     }
   }
 
+  public async updateStaffMember(req: any, resp: Response): Promise<any> {
+    try {
+      console.log("Req", req.body)
+      const staff_id = req.body.staff.id;
+      console.log("MYID", req.body.staff.id)
+      const newStaffData = req.body.staff;
+      const updatedStaff = await FirmService.updateStaff(staff_id, newStaffData);
+
+      resp.status(StatusConstants.OK).send(updatedStaff);
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
   public async updateFirm(req: any, resp: Response): Promise<any> {
     try {
       const firm_id = req.params.id;

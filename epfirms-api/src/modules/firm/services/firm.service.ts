@@ -206,6 +206,17 @@ export class FirmService {
     
   }
 
+  public static async updateStaff(staff_id, newStaff) {
+    try {
+      const updatedStaff = await Database.models.firm_employee.update(newStaff, {
+        where: { id: staff_id }
+      });
+      return Promise.resolve(updatedStaff);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   public static async updateFirm(firm_id, newFirmData) {
     try {
       const updatedFirm = await Database.models.firm.update(newFirmData, {

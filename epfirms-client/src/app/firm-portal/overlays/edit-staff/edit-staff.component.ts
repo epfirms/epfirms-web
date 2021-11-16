@@ -78,7 +78,7 @@ export class EditStaffComponent implements OnInit {
     console.log(this.Data, this.staffForm, this.ref.data)
 
     this.staffForm = this._fb.group({
-      //id: ['', [Validators.required]],
+      id: ['', [Validators.required]],
       //firm_id: ['', [Validators.required]],
       //user_id: ['', [Validators.required]],
       first_name: ['', [Validators.required]],
@@ -93,20 +93,21 @@ export class EditStaffComponent implements OnInit {
       rate: [null],
     });
     this._staffService.setFilter('attorney');
+
+    this.staffForm.get('first_name').setValue(this.ref.data.staff.first_name);
+    this.staffForm.get('last_name').setValue(this.ref.data.staff.last_name);
+    this.staffForm.get('id').setValue(this.ref.data.staff.id);
+    this.staffForm.get('email').setValue(this.ref.data.staff.email);
   }
 
   ngAfterViewInit(): void {
     // setTimeout(() => {
     //   this._renderer.addClass(this.slideOver.nativeElement, 'translate-x-0');
     // }, 10);
+
   }
 
   close() {
-    // this._renderer.addClass(this.slideOver.nativeElement, 'translate-x-full');
-    // this._renderer.removeClass(this.slideOver.nativeElement, 'translate-x-0');
-    // setTimeout(() => {
-    //   this._overlayService.clear();
-    // }, 300);
     this.ref.close()
   }
 
@@ -116,12 +117,11 @@ export class EditStaffComponent implements OnInit {
   }
 
   onChangeSearch(val: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
+
   }
 
   onFocused(e) {
-    // do something when input is focused
+
   }
 
   onClosed(e) {
@@ -129,10 +129,6 @@ export class EditStaffComponent implements OnInit {
 
   openAddClient() {
 
-  }
-
-  openAddStaff() {
-    // this._overlayService.add(AddClientComponent);
   }
 
   onSubmit() {

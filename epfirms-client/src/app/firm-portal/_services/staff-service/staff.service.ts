@@ -52,6 +52,7 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
   }
 
   updateStaff(body): Observable<any> {
+    console.log("Woot")
     return this._http.post('http://localhost:4000/api/firm/staffUpdate', body).pipe(
       map((response: Staff) => {
         this._socketService.addOneToCacheSync('staff', response);

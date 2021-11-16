@@ -73,11 +73,11 @@ export class ManageStaffComponent implements OnInit {
     this._overlayService.add(AddStaffComponent);
   }
 
-  editStaff() {
+  editStaff(staff) {
     //opens the component in a dialog 
     const ref = this._dialogService.open(EditStaffComponent, {
       data: {
-        staff: 'staff'
+        staff: staff
       }
     });
   }
