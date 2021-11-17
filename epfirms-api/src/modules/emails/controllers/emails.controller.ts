@@ -1,15 +1,13 @@
-import { Response, Request } from 'express';
+import { Response } from 'express';
 import { emailsService } from '@modules/emails/services/emails.service';
-import { FirmService } from '@modules/firm/services/firm.service';
-import { reviewsService } from '@modules/reviews/services/reviews.service';
 import { StatusConstants } from '@src/constants/StatusConstants';
-
-const fs = require('fs');
-const passport = require('passport');
+import { Service } from 'typedi';
 const { EMAIL_API_KEY } = require('@configs/vars');
+
+@Service()
 export class emailsController {
     
-constructor() {}
+constructor(private _emailService: emailsService) {}
 
 theURL: String = "http://localhost:4200"
 
@@ -18,7 +16,7 @@ theURL: String = "http://localhost:4200"
             var API_KEY = EMAIL_API_KEY;
             var DOMAIN = 'mg.epfirms.com';
             var mailgun = require('mailgun-js')({apiKey: API_KEY, domain: DOMAIN});
-            var token = emailsService.createConfirmationToken(req.body);
+            var token = this._emailService.createConfirmationToken(req.body);
             var theHTML = 'Click <a href="' + this.theURL + '/verify?token=' + await(token) + '">here</a> to verify your account\'s email.'
             const data = {
                 from: 'EPFirms <me@mg.epfirms.com>',
@@ -40,7 +38,7 @@ theURL: String = "http://localhost:4200"
         // Get token out of request
 
         // Call the verify with the token
-        emailsService.verify(req.token)
+        this._emailService.verify(req.token)
     }
 
 
@@ -59,67 +57,65 @@ theURL: String = "http://localhost:4200"
             Sends an email requesting the client to submit a review for the firm.  Either they choose 1-4 stars, and go back to EPFirms to submit feedback, or they choose 5 starts, and
             go the firms Google Review Page to write a review.
     */
-    public async reviewFeedback(req: any, resp: Response): Promise<any> {
-        var firm_id = req.body.firm_id;
-        var reviewURL = FirmService.getReviewURL(await (firm_id));
-        var firmName = FirmService.getFirmName(await (firm_id));
+    // public async reviewFeedback(req: any, resp: Response): Promise<any> {
+    //     var firm_id = req.body.firm_id;
+    //     var reviewURL = this._firmService.getReviewURL(await (firm_id));
+    //     var firmName = this._firmService.getFirmName(await (firm_id));
 
-        var review = await reviewsService.getReviewFromDatabase(req.body.id);
-        if(req.body.reviews.length == 0) {
-            review = reviewsService.addReviewToDatabase("",0,req.body.id);
-        }
-        try {
-            var API_KEY = EMAIL_API_KEY;
-            var DOMAIN = 'mg.epfirms.com';
-            var mailgun = require('mailgun-js')({apiKey: API_KEY, domain: DOMAIN});
-            // The HTML here just has 2 links.  The first link, for 1-4 stars, takes the client back to EPFirms to fill out a review form for their specific case, denoted by "feedback/id="
-            // The second link, for 5 star ratings, sends the client to the Google Review Page (g) for the firm the client is working with.
-            // template files
-        var theTempHTML = await fs.readFileSync(
-        'src/modules/emails/templates/reviewEmail.html',
-        'utf-8',
-      );
-            var reviewU = await (reviewURL)
+    //     var review = await reviewsService.getReviewFromDatabase(req.body.id);
+    //     if(req.body.reviews.length == 0) {
+    //         review = reviewsService.addReviewToDatabase("",0,req.body.id);
+    //     }
+    //     try {
+    //         var API_KEY = EMAIL_API_KEY;
+    //         var DOMAIN = 'mg.epfirms.com';
+    //         var mailgun = require('mailgun-js')({apiKey: API_KEY, domain: DOMAIN});
 
-            var theHTML = ``
-            theTempHTML.split("__").forEach(element => {
-                if(element == "firstname"){
-                    element = "FIRST NAME"
-                } else if(element == "firmname") 
-                {
-                    element = "FIRM NAME"
-                } else if(element == "5StarLink") {
-                    element = reviewU
-                } else if(element == "14StarLink") {
-                    element = this.theURL + `/feedback?id=` + review.id
-                }
-                theHTML += element
-            });
-            const htmlFileData = {
-                first_name: "First",
-                firm_name: "FirmName"
-            };
-            const data = {
-                from: 'EPFirms <me@mg.epfirms.com>',
-                to: req.body.client.email,
-                subject: 'Confirm Email for EPFIRMS',
-                htmlFileData,
-                html: theHTML,
-            };
+    //     var theTempHTML = await fs.readFileSync(
+    //     'src/modules/emails/templates/reviewEmail.html',
+    //     'utf-8',
+    //   );
+    //         var reviewU = await (reviewURL)
 
-            mailgun.messages().send(data, function (error, body) {
-              });
+    //         var theHTML = ``
+    //         theTempHTML.split("__").forEach(element => {
+    //             if(element == "firstname"){
+    //                 element = "FIRST NAME"
+    //             } else if(element == "firmname") 
+    //             {
+    //                 element = "FIRM NAME"
+    //             } else if(element == "5StarLink") {
+    //                 element = reviewU
+    //             } else if(element == "14StarLink") {
+    //                 element = this.theURL + `/feedback?id=` + review.id
+    //             }
+    //             theHTML += element
+    //         });
+    //         const htmlFileData = {
+    //             first_name: "First",
+    //             firm_name: "FirmName"
+    //         };
+    //         const data = {
+    //             from: 'EPFirms <me@mg.epfirms.com>',
+    //             to: req.body.client.email,
+    //             subject: 'Confirm Email for EPFIRMS',
+    //             htmlFileData,
+    //             html: theHTML,
+    //         };
+
+    //         mailgun.messages().send(data, function (error, body) {
+    //           });
             
-        } catch(error) {
-        resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
-        }
-    }
+    //     } catch(error) {
+    //     resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    //     }
+    // }
 
     public async forgotPassword(req: any, resp: Response): Promise<any> {
         try {
           const { email } = req.body;
 
-          await emailsService.requestPasswordReset(email);
+          await this._emailService.requestPasswordReset(email);
     
           resp.status(StatusConstants.OK).send({success: true});
         } catch (error) {

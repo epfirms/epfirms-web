@@ -4,16 +4,17 @@ import { PaymentProcessorService } from '@modules/payment-processor/services/pay
 import { StatusConstants } from '@src/constants/StatusConstants';
 import { UserService } from '@modules/user/services/user.service';
 import { EmailsController } from '@modules/emails/controllers';
+import { ClientSearchService } from '../services/client-search.service';
+import { Service } from 'typedi';
 
-const passport = require('passport');
-
+@Service()
 export class FirmController {
-  constructor() { }
+  constructor(private _clientSearchService: ClientSearchService, private _firmService: FirmService, private _userService: UserService) { }
 
   public async getFirm(req: any, resp: Response): Promise<any> {
     try {
       const firm_id = req.user.firm_access.firm_id;
-      const firm = await FirmService.get(firm_id);
+      const firm = await this._firmService.get(firm_id);
 
       resp.status(StatusConstants.OK).send(firm);
     } catch (error) {
@@ -25,9 +26,9 @@ export class FirmController {
     try {
       const { user, firm, source } = req.body;
 
-      const createdUser = await UserService.create(user);
+      const createdUser = await this._userService.create(user);
 
-      const createdFirm: Firm = await FirmService.create(firm);
+      const createdFirm: Firm = await this._firmService.create(firm);
 
       const roles = {
         admin: true,
@@ -36,7 +37,7 @@ export class FirmController {
         paralegal: false
       };
 
-      await FirmService.addEmployee(createdUser.id, createdFirm.id, roles);
+      await this._firmService.addEmployee(createdUser.id, createdFirm.id, roles);
 
       const stripeCustomer = await PaymentProcessorService.createCustomer(user.email);
 
@@ -44,7 +45,7 @@ export class FirmController {
 
       const subscription = await PaymentProcessorService.subscribe(stripeCustomer.id);
 
-      await FirmService.createSubscription(createdFirm.id, subscription.customer, subscription.current_period_end);
+      await this._firmService.createSubscription(createdFirm.id, subscription.customer, subscription.current_period_end);
 
       resp.status(StatusConstants.CREATED).send({success: true});
 
@@ -60,7 +61,7 @@ export class FirmController {
     try {
       const { firm_id } = req.user.firm_access;
 
-      const clientList = await FirmService.getClients(firm_id);
+      const clientList = await this._firmService.getClients(firm_id);
 
       resp.status(StatusConstants.OK).send(clientList);
     } catch (error) {
@@ -73,8 +74,7 @@ export class FirmController {
       const { client } = req.body;
       const { firm_id } = req.user.firm_access;
 
-      const newClient = await FirmService.createClient(client, firm_id);
-
+      const newClient = await this._firmService.createClient(client, firm_id);
       resp.status(StatusConstants.CREATED).send(newClient);
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
@@ -85,7 +85,7 @@ export class FirmController {
     try {
       const { firm_id } = req.user.firm_access;
 
-      const staffList = await FirmService.getStaff(firm_id);
+      const staffList = await this._firmService.getStaff(firm_id);
 
       resp.status(StatusConstants.OK).send(staffList);
     } catch (error) {
@@ -98,7 +98,7 @@ export class FirmController {
       const { client } = req.body;
       const { firm_id } = req.user.firm_access;
 
-      await FirmService.createClient(client, firm_id);
+      await this._firmService.createClient(client, firm_id);
 
       resp.status(StatusConstants.CREATED).send({ success: true });
     } catch (error) {
@@ -110,9 +110,21 @@ export class FirmController {
     try {
       const firm_id = req.params.id;
       const newFirmData = req.body;
-      const updatedFirm = await FirmService.updateFirm(firm_id, newFirmData);
+      const updatedFirm = await this._firmService.updateFirm(firm_id, newFirmData);
 
       resp.status(StatusConstants.OK).send(updatedFirm);
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
+  public async getSearchKey(req: any, resp: Response): Promise<any> {
+    try {
+      const { firm_id } = req.user.firm_access;
+
+      const searchKey = await this._clientSearchService.generateClientSearchKey(parseInt(firm_id));
+
+      resp.status(StatusConstants.OK).send({key: searchKey});
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }

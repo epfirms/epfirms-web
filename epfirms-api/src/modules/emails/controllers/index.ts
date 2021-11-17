@@ -1,5 +1,6 @@
+import Container from 'typedi';
 import { emailsController } from './emails.controller';
 
-const EmailsController = new emailsController();
+const EmailsController = Container.get(emailsController);
 
 export { EmailsController };
