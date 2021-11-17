@@ -32,4 +32,6 @@ firmRouter.put('/task-templates/task/:firm_template_task_id', passport.authentic
 
 firmRouter.delete('/task-templates/task/:firm_template_task_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.deleteTask(req, res));
 
+firmRouter.get('/search-key', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getSearchKey(req, res));
+
 export { firmRouter };

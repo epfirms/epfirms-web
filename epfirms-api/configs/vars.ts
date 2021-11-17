@@ -21,5 +21,9 @@ module.exports = {
   AWS_BUCKET: process.env.AWS_BUCKET,
   CLIENT_URL: process.env.CLIENT_URL,
   REDIS_HOST: process.env.REDIS_HOST,
-  REDIS_PORT: process.env.REDIS_PORT
+  REDIS_PORT: process.env.REDIS_PORT,
+  ALGOLIA_APP_ID: process.env.ALGOLIA_APP_ID,
+  ALGOLIA_API_KEY: process.env.ALGOLIA_API_KEY,
+  ALGOLIA_INDEX_NAME: process.env.ALGOLIA_INDEX_NAME,
+  ALGOLIA_SEARCH_ONLY_API_KEY: process.env.ALGOLIA_SEARCH_ONLY_API_KEY
 };

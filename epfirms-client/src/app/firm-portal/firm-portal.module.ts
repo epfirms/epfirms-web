@@ -6,7 +6,6 @@ import { FirmPortalComponent } from './firm-portal.component';
 import { SharedModule } from '../shared/shared.module';
 import { FirmHomeComponent } from './firm-home/firm-home.component';
 import { ClientDirectoryComponent } from './client-directory/client-directory.component';
-import { CasesComponent } from './cases/cases.component';
 //import { FirmSettingsComponent } from './firm-settings/firm-settings.component';
 import { AddCaseComponent } from './overlays/add-case/add-case.component';
 import { AddClientComponent } from './overlays/add-client/add-client.component';
@@ -33,13 +32,13 @@ import { TippyModule } from '@ngneat/helipopper';
 import { QuillModule } from 'ngx-quill';
 import { DialogModule } from '@ngneat/dialog';
 import { TaskTemplateModule } from '@app/features/task-template/task-template.module';
+import { CoreModule } from '@app/core/core.module';
 
 @NgModule({
   declarations: [
     FirmPortalComponent,
     FirmHomeComponent,
     ClientDirectoryComponent,
-    CasesComponent,
     //FirmSettingsComponent,
     AddCaseComponent,
     AddClientComponent,
@@ -56,9 +55,7 @@ import { TaskTemplateModule } from '@app/features/task-template/task-template.mo
     BillingComponent
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    CoreModule,
     FirmPortalRoutingModule,
     SharedModule,
     TabsModule,

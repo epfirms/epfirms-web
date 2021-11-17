@@ -31,7 +31,10 @@ const routes: Routes = [
     children: [{ path: '', canActivate: [AuthGuard], children: [
       {path: '', component: FirmHomeComponent, canActivate: [AuthGuard]},
       {path: 'clients', component: ClientDirectoryComponent, canActivate: [AuthGuard]},
-      {path: 'cases', component: CasesComponent, canActivate: [AuthGuard]},
+      {path: 'cases', canActivate: [AuthGuard], loadChildren: () =>
+      import('./cases/cases.module').then(
+        (m) => m.CasesPageModule
+      )},
       {path: 'leads', component: LeadsComponent, canActivate: [AuthGuard]},
       {path: 'settings', canActivate: [AuthGuard], loadChildren: () =>
       import('./firm-settings/firm-settings.module').then(

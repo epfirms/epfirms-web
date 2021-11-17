@@ -3,6 +3,7 @@ import { Database } from '@src/core/Database';
 export class FirmTaskTemplateService {
   public static async get(firmId: number):Promise<any> {
     try {
+      const { sequelize } = Database;
       const {firm_task_template, firm_template_task, user} = Database.models;
 
       const taskTemplates = await firm_task_template.findAll({where: {
@@ -12,9 +13,17 @@ export class FirmTaskTemplateService {
         include: [
           {
             model: user
-          }
+          },
+        ],
+      },
+      order: [
+        [
+          sequelize.literal(
+            '`firm_template_tasks`.no_of_days_from_start_date asc'
+          )
         ]
-      }});
+      ]
+    });
       return Promise.resolve(taskTemplates);
     } catch (err) {
       console.error(err);
