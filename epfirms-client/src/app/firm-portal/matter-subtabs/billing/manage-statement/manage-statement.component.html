@@ -157,7 +157,7 @@
                   Statement Message
                 </label>
                 <div class="mt-1">
-                  <textarea id="about" name="about"  rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md">{{statement.statement_message}}</textarea>
+                  <textarea id="about" name="about"  rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"[(ngModel)]="statement.statement_message"></textarea>
                 </div>
               </div>
 
