@@ -19,7 +19,7 @@
             <div class="px-4 sm:px-6">
               <div class="flex items-start justify-between">
                 <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
-                  Create Bill
+                  Manage Bill
                 </h2>
                 <div class="ml-3 h-7 flex items-center">
                   <button (click)="toggleIsVisible()" type="button" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -36,20 +36,20 @@
               <!-- Replace with your content -->
 
 
-              <div>
+              <!-- <div>
                 <label for="location" class="block text-sm font-medium text-gray-700">Terms</label>
                 <select id="location"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                   <option>Custom</option>
                   <option>NET 30</option>
                 </select>
-              </div>
+              </div> -->
 
               <div class="sm:col-span-3">
                 <label for="first-name" class="block text-sm font-medium text-gray-700">
-                  Invoice Date
+                  Statement Date
                 </label>
                 <div class="mt-1">
-                  <!-- <editable-datepicker [date]="invoice.invoice_date"(dateChanged)="invoice.invoice_date=$event.toDateString()"></editable-datepicker> -->
+                  <editable-datepicker [date]="statement.created_at"(dateChanged)="statement.created_at=$event.toDateString()"></editable-datepicker>
                 </div>
               </div>
 
@@ -58,10 +58,10 @@
                   Due Date
                 </label>
                 <div class="mt-1">
-                  <!-- <editable-datepicker [date]="invoice.due_date" (dateChanged)="invoice.due_date=$event.toDateString()"></editable-datepicker> -->
+                  <editable-datepicker [date]="statement.due_date" (dateChanged)="statement.due_date=$event.toDateString()"></editable-datepicker>
                 </div>
               </div>
-              <h3>Invoice Items</h3>
+              <h3>Bills</h3>
               <!-- INVOICE ITEM TABLE -->
               <!-- This example requires Tailwind CSS v2.0+ -->
               <div class="flex flex-col">
@@ -75,16 +75,16 @@
                               #
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Product
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               Description
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Rate
+                              Date
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Quantity
+                              Type
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Hours
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               Amount
@@ -92,39 +92,39 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               Action
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               <button  type="button" name="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                 </svg></button>
-                            </th>
+                            </th> -->
                           </tr>
                         </thead>
                         <tbody>
                           <!-- Odd row -->
-                          <tr  class="bg-white">
+                          <tr *ngFor="let bill of bills"  class="bg-white">
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                               <div class="mt-1">
-                                <input type="text" name="email" id="email"  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
+                                <input type="text" name="email" id="email"  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" [(ngModel)]="bill.description">
                               </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              <input type="text" name="email" id="email" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
+                              <input type="text" name="email" id="email" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" [(ngModel)]="bill.date">
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              <input type="number" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
+                              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" [(ngModel)]="bill.payment_type">
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              <input type="number" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
+                              <input type="number" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" [(ngModel)]="bill.hours">
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              <input type="number"  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                              <input type="number"  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"[(ngModel)]="bill.amount">
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              Delete
+                              Remove
                             </td>
 
                           </tr>
@@ -144,18 +144,10 @@
                   Total
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-
+                  {{statement.balance_due}}
                 </dd>
               </div>
-              <div class="sm:col-span-6">
 
-                <label for="about" class="block text-sm font-medium text-gray-700">
-                  Invoice Message
-                </label>
-                <div class="mt-1">
-                  <textarea id="about" name="about"  rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
-                </div>
-              </div>
 
               <div class="sm:col-span-6">
 
@@ -163,14 +155,14 @@
                   Statement Message
                 </label>
                 <div class="mt-1">
-                  <textarea id="about" name="about"  rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
+                  <textarea id="about" name="about"  rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md">{{statement.statement_message}}</textarea>
                 </div>
               </div>
 
               <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense my-4">
                 <button type="button"
                   class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">
-                  <!-- <span *ngIf="!isEditMode">Create</span><span *ngIf="isEditMode">Edit</span> -->
+                  <span >Submit</span>
                 </button>
                 <button type="button" (click)="toggleIsVisible()"
                   class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm">

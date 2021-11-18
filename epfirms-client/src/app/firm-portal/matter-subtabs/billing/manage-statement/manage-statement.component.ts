@@ -10,11 +10,18 @@ export class ManageStatementComponent implements OnInit {
   //two way binding for visibility
   @Input() isVisible : boolean;
   @Output() isVisibleChange = new EventEmitter<boolean>();
+  @Input() bills;
+  @Input() statement;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.bills = this.bills.filter(bill => new Date().getMonth() === new Date(bill.date).getMonth());
+    console.log(this.statement);
+    console.log(this.bills);
   }
+
+
 
   //controls visibility
   toggleIsVisible() : void {

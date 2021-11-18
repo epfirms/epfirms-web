@@ -33,6 +33,7 @@ export class BillingComponent implements OnInit {
 
   //CONFIG FOR STATEMENT MANAGER
   isStatementManagerVisible : boolean = false;
+  currentStatement;
 
   constructor(private _modalService: ModalService, private _matterService: MatterService,
   private statementService : StatementService) {}
@@ -162,8 +163,9 @@ export class BillingComponent implements OnInit {
   }
 
   //statement manager helper methods
-  toggleStatementManager() : void {
+  toggleStatementManager(statement) : void {
     this.isStatementManagerVisible = !this.isStatementManagerVisible;
+    this.currentStatement = statement;
   }
 
 
