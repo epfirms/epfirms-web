@@ -16,7 +16,7 @@ export class ManageStatementComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.bills = this.bills.filter(bill => new Date().getMonth() === new Date(bill.date).getMonth());
+    this.bills = this.bills.filter(bill => bill.statement_id == this.statement.id);
     console.log(this.statement);
     console.log(this.bills);
   }
