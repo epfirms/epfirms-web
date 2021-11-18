@@ -31,6 +31,9 @@ export class BillingComponent implements OnInit {
   isBillManagerEditMode : boolean = false;
   currentBill;
 
+  //CONFIG FOR STATEMENT MANAGER
+  isStatementManagerVisible : boolean = false;
+
   constructor(private _modalService: ModalService, private _matterService: MatterService,
   private statementService : StatementService) {}
   ngOnInit(): void {
@@ -157,4 +160,14 @@ export class BillingComponent implements OnInit {
   deleteStatement(id) : void {
     this.statementService.delete(id).subscribe(res => this.loadStatements());
   }
+
+  //statement manager helper methods
+  toggleStatementManager() : void {
+    this.isStatementManagerVisible = !this.isStatementManagerVisible;
+  }
+
+
+
+
+  //----------------------
 }
