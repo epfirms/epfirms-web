@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 
 @Component({
   selector: 'app-manage-statement',
@@ -13,10 +14,12 @@ export class ManageStatementComponent implements OnInit {
   @Input() bills;
   @Input() statement;
 
-  constructor() { }
+  constructor(
+    private matterService : MatterService,
+  ) { }
 
   ngOnInit(): void {
-    this.bills = this.bills.filter(bill => bill.statement_id == this.statement.id);
+    this.loadBills();
     console.log(this.statement);
     console.log(this.bills);
   }
@@ -27,6 +30,24 @@ export class ManageStatementComponent implements OnInit {
   toggleIsVisible() : void {
     this.isVisible = !this.isVisible;
     this.isVisibleChange.emit(this.isVisible);
+  }
+
+  removeBill(bill) : void {
+    bill.statement_id = -1;
+    this.matterService.editMatterBillOrPayment(bill).subscribe(res => {
+      console.log(res);
+      this.loadBills();
+    });
+  }
+
+  loadBills(): void {
+    this.bills = this.bills.filter(bill => bill.statement_id == this.statement.id);
+    this.calcBalanceDue();
+  }
+
+  calcBalanceDue() : void {
+    this.statement.balance_due = 0;
+    this.bills.forEach(bill => this.statement.balance_due += parseFloat(bill.amount));
   }
 
 }
