@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { StatementService } from '@app/shared/_services/statement-service/statement.service';
 
 @Component({
   selector: 'app-manage-statement',
@@ -14,8 +15,11 @@ export class ManageStatementComponent implements OnInit {
   @Input() bills;
   @Input() statement;
 
+  //remove list: bills are temp added here and then unpaired with the statement on submit
+  removeList = [];
   constructor(
     private matterService : MatterService,
+    private statementService : StatementService,
   ) { }
 
   ngOnInit(): void {
@@ -34,10 +38,8 @@ export class ManageStatementComponent implements OnInit {
 
   removeBill(bill) : void {
     bill.statement_id = -1;
-    this.matterService.editMatterBillOrPayment(bill).subscribe(res => {
-      console.log(res);
-      this.loadBills();
-    });
+    this.removeList.push(bill);
+    this.loadBills();
   }
 
   loadBills(): void {
@@ -48,6 +50,18 @@ export class ManageStatementComponent implements OnInit {
   calcBalanceDue() : void {
     this.statement.balance_due = 0;
     this.bills.forEach(bill => this.statement.balance_due += parseFloat(bill.amount));
+  }
+
+  submit(): void {
+    this.bills.forEach(bill => {
+      console.log("bill", bill);
+      this.matterService.editMatterBillOrPayment(bill).subscribe();
+    });
+    this.removeList.forEach(bill => {
+      this.matterService.editMatterBillOrPayment(bill).subscribe();
+    });
+    this.statementService.update(this.statement).subscribe();
+    this.toggleIsVisible();
   }
 
 }

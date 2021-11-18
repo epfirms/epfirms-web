@@ -20,4 +20,8 @@ export class StatementService {
   delete(id): Observable<any> {
     return this.http.delete<any>(`/api/statement/${id}`);
   }
+
+  update(data): Observable<any> {
+    return this.http.put<any>("/api/statement/", data);
+  }
 }
