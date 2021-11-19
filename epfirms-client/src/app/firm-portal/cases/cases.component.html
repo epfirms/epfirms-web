@@ -469,7 +469,7 @@
               </div>
             </th>
             <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap w-2/12">
-              <ngx-select [items]="attorneys$ | async" (select)="setAttorney(case, $event)" [optionTextField]="'full_name'" [optionValueField]="'id'" [ngModel]="case.attorney_id" [keepSelectMenuOpened]="false">
+              <ngx-select class="table-cell" [items]="attorneys$ | async" (select)="setAttorney(case, $event)" [optionTextField]="'full_name'" [optionValueField]="'id'" [ngModel]="case.attorney_id" [keepSelectMenuOpened]="false">
                 <ng-template ngx-select-option ngx-select-option-selected let-option let-text="text">
                   <div class="flex items-center">
                     <tw-avatar

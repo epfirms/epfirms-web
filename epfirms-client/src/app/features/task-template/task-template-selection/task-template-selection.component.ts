@@ -54,7 +54,7 @@ export class TaskTemplateSelectionComponent implements OnInit {
 
   private formatTasks(tasks): MatterTask[] {
     return tasks.map(t => ({
-      name: t.task_description,
+      name: t.name,
       due: this.addDaysToDate(this.startDate, t.no_of_days_from_start_date).toString(),
       assignee_id: t.user_id
     }));

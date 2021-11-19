@@ -1,4 +1,4 @@
-module.exports = (sequelize, { INTEGER, STRING }) => {
+module.exports = (sequelize, { INTEGER, STRING, DATE }) => {
     const tableName = 'firm_template_task';
   
     const FirmTemplateTask = sequelize.define(
@@ -15,8 +15,8 @@ module.exports = (sequelize, { INTEGER, STRING }) => {
           user_id: {
               type: INTEGER,
           },
-          task_description: {
-              type: STRING,
+          name: {
+            type: STRING
           },
           no_of_days_from_start_date: {
               type: INTEGER,

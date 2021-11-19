@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { MatterTask } from '@app/core/interfaces/matter-task';
 import { Staff } from '@app/core/interfaces/staff';
-import { TemplateTask } from '@app/core/interfaces/template-task';
 import { Observable } from 'rxjs';
 import { DialogRef } from '@ngneat/dialog';
-import { LegalAreaService } from '@app/firm-portal/_services/legal-area-service/legal-area.service';
-import { LegalArea } from '@app/core/interfaces/legal-area';
+import { usaStatesFull } from '@app/shared/utils/us-states/states';
+import { FirmTaskTemplate } from '../interfaces/firm-task-template';
+import { TaskTemplateLawCategory, taskTemplateLawCategories } from '../enums/task-template-law-category';
+import { USAState } from '@app/shared/utils/us-states/typings';
 
 @Component({
   selector: 'app-task-template-details',
@@ -18,40 +19,46 @@ import { LegalArea } from '@app/core/interfaces/legal-area';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskTemplateDetailsComponent {
-  templateName = "";
+  public template: FirmTaskTemplate = {
+    template_name: '',
+    law_category: TaskTemplateLawCategory.OTHER,
+    state_category: '',
+    firm_template_tasks: []
+  };
 
-  templateTasks: any[] = [];
+  public staff$: Observable<Staff[]>;
 
-  staff$: Observable<Staff[]>;
+  public usaStates: USAState[] = usaStatesFull;
+
+  public taskTemplateLawCategories: TaskTemplateLawCategory[] = taskTemplateLawCategories;
   
   constructor(private staffService: StaffService, private dialogRef: DialogRef) {
     this.staff$ = staffService.entities$;
+
     if (dialogRef.data) {
-      const {template_name, firm_template_tasks}  = dialogRef.data;
-      this.templateName = template_name;
-      this.templateTasks = [...firm_template_tasks];
+      const { template }  = dialogRef.data;
+      this.template = Object.assign({}, template);
+      // Deep clone tasks -- needed for change comparison in task-template-list
+      this.template.firm_template_tasks = [...template.firm_template_tasks];
     }
   }
 
   addTemplateTask(): void {
-    this.templateTasks.push({
+    this.template.firm_template_tasks.push({
       user_id: null,
-      task_description: '',
+      name: '',
       no_of_days_from_start_date: null
     });
   }
 
   removeTemplateTask(taskIndex: number): void {
-    console.log(taskIndex)
-    this.templateTasks.splice(taskIndex, 1);
+    this.template.firm_template_tasks.splice(taskIndex, 1);
   }
 
   save() {
     this.close({
-      template: {
-        template_name: this.templateName,
-      },
-      tasks: this.templateTasks
+      template: this.template,
+      tasks: this.template.firm_template_tasks
     });
   }
 
@@ -60,11 +67,11 @@ export class TaskTemplateDetailsComponent {
   }
 
   setAssignee(event, index) {
-    this.templateTasks[index].user_id = event;
+    this.template.firm_template_tasks[index].user_id = event;
   }
 
   setDescription(event, index) {
-    this.templateTasks[index].task_description = event;
+    this.template.firm_template_tasks[index].name = event;
   }
 
 }

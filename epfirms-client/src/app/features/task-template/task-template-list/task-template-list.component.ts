@@ -46,8 +46,7 @@ export class TaskTemplateListComponent implements OnInit {
       size: 'lg',
       enableClose: false,
       data: {
-        template_name: template.template_name,
-        firm_template_tasks: template.firm_template_tasks
+        template: template
       }
     });
 
