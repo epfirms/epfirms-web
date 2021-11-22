@@ -21,14 +21,10 @@
           </label>
         </div>
         <div class="sm:col-span-2">
-          <!-- <ng-container *ngIf="clients$ | async as clients">
-            <ep-autocomplete 
-            [epOptions]="clients" 
-            [epOptionTextField]="'full_name'" 
-            [epOptionValueField]="'id'" 
-            [epFormControlName]="'client_id'">
-          </ep-autocomplete>
-          </ng-container> -->
+          <ng-container *ngIf="clients$ | async as clients">
+            <legacy-autocomplete [options]="clients" [selectedOptionId]="clientId" [addButton]="false"
+              [placeholder]="'Search client directory'" (onSelect)="selectEvent($event, 'client_id')"></legacy-autocomplete>
+          </ng-container>
           <div class="relative my-3">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">
               <div class="w-full border-t border-gray-300"></div>
@@ -60,18 +56,8 @@
           </label>
         </div>
         <div class="sm:col-span-2">
-          <ng-container *ngIf="attorneys$ | async as attorneys">
-          <!-- <ep-autocomplete 
-          [epOptions]="attorneys" 
-          [epOptionTextField]="'full_name'" 
-          [epOptionValueField]="'id'" 
-          [epFormControlName]="'attorney_id'"></ep-autocomplete> -->
-        </ng-container>
-
-          <!-- <autocomplete *ngIf="attorneys$ | async as attorneys" 
-            [options]="attorneys" [placeholder]="'Search attorneys'"
-            (addButtonClicked)="openAddStaff()" 
-            (onSelect)="selectEvent($event, 'attorney_id')"></autocomplete> -->
+          <legacy-autocomplete *ngIf="attorneys$ | async as attorneys" [options]="attorneys" [placeholder]="'Search attorneys'"
+            (addButtonClicked)="openAddStaff()" (onSelect)="selectEvent($event, 'attorney_id')"></legacy-autocomplete>
         </div>
       </div>
       <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
