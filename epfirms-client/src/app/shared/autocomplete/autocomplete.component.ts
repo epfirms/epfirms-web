@@ -16,14 +16,6 @@ export class AutocompleteComponent {
     return this._epValue;
   }
 
-  @Input()
-  set epFormControlName(formControlName: string) {
-    this._epFormControlName = formControlName;
-  }
-  get epFormControlName() {
-    return this._epFormControlName;
-  }
-
   @Input() epOptions: any[] = [];
 
   @Input() epOptionValueField: string = 'id';
@@ -35,8 +27,6 @@ export class AutocompleteComponent {
   @Output() epValueChange: EventEmitter<any> = new EventEmitter<any>();
 
   public selectFocused: boolean = false;
-
-  private _epFormControlName: string = null;
 
   private _epValue: any = null;
 

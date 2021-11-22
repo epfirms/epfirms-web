@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskTemplateService } from '@app/firm-portal/_services/task-template-service/task-template.service';
-import { TemplateTaskService } from '@app/firm-portal/_services/template-task-service/template-task.service';
+import { TaskTemplateService } from '@app/features/task-template/services/task-template.service';
+import { AwsService } from '@app/shared/_services/aws.service';
 import { DialogService } from '@ngneat/dialog';
+import { FirmTemplateTaskFile } from '../interfaces/firm-template-task-file';
 import { TaskTemplateDetailsComponent } from '../task-template-details/task-template-details.component';
 
 @Component({
@@ -14,9 +15,9 @@ export class TaskTemplateListComponent implements OnInit {
 
   constructor(
     private _taskTemplateService: TaskTemplateService,
-    private _templateTaskService: TemplateTaskService,
-    private _dialogService: DialogService
-  ) { }
+    private _dialogService: DialogService,
+    private _awsService: AwsService
+  ) {}
 
   ngOnInit(): void {
     this.loadTaskTemplates();
@@ -32,8 +33,10 @@ export class TaskTemplateListComponent implements OnInit {
       if (data) {
         this._taskTemplateService.create(data.template).subscribe((newTemplate) => {
           data.tasks.forEach((task) => {
-            this._templateTaskService.create(newTemplate.id, task).subscribe(() => {
-              this.loadTaskTemplates();
+            this._taskTemplateService.createTask(newTemplate.id, task).subscribe((newTask) => {
+              task.firm_template_task_files.forEach((file) => {
+                this.saveTaskFile(newTask.id, file);
+              });
             });
           });
         });
@@ -82,9 +85,19 @@ export class TaskTemplateListComponent implements OnInit {
   private saveTaskChanges(templateId: number, changes) {
     changes.forEach((change) => {
       if (change.id) {
-        this._templateTaskService.update(change.id, change).subscribe();
+        this._taskTemplateService.updateTask(change.id, change).subscribe(() => {
+          change.firm_template_task_files.forEach((file) => {
+            if (!file.id) {
+              this.saveTaskFile(change.id, file);
+            }
+          });
+        });
       } else {
-        this._templateTaskService.create(templateId, change).subscribe();
+        this._taskTemplateService.createTask(templateId, change).subscribe((newTask) => {
+          change.firm_template_task_files.forEach((file) => {
+            this.saveTaskFile(newTask.id, file);
+          });
+        });
       }
     });
   }
@@ -95,13 +108,31 @@ export class TaskTemplateListComponent implements OnInit {
     });
 
     deletedTasks.forEach((task) => {
-      this._templateTaskService.delete(task.id).subscribe();
+      this._taskTemplateService.deleteTask(task.id).subscribe();
     });
   }
 
   private loadTaskTemplates() {
     this._taskTemplateService.get().subscribe((templates) => {
       this.taskTemplates = templates;
+    });
+  }
+
+  private saveTaskFile(taskId: number, file) {
+    this._taskTemplateService.getTaskFileUploadURL(file.name, file.description).subscribe((res) => {
+      const taskFile: FirmTemplateTaskFile = {
+        name: file.name,
+        description: file.description,
+        key: res.key
+      };
+
+      this._awsService.uploadfileAWSS3(res.url, file.description, file.file).subscribe(
+        () => {},
+        () => {},
+        () => {
+          this._taskTemplateService.createTaskFile(taskId, taskFile).subscribe();
+        }
+      );
     });
   }
 }

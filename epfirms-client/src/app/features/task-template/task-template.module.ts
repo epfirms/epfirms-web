@@ -10,6 +10,7 @@ import { TaskTemplateSelectionComponent } from './task-template-selection/task-t
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module';
+import { TaskFileModule } from '../task-file/task-file.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module
     FormsModule,
     SharedModule,
     TippyModule,
+    TaskFileModule,
     AngularMyDatePickerModule,
     PipesModule,
     AutocompleteModule

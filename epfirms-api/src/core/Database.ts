@@ -50,7 +50,9 @@ export class Database {
       firm_template_task: require('../models/FirmTemplateTask')(this.sequelize, Sequelize),
       firm_task_template: require('../models/FirmTaskTemplate')(this.sequelize, Sequelize),
       external_lead: require('../models/ExternalLead')(this.sequelize, Sequelize),
-      beta_signup: require('../models/BetaSignup')(this.sequelize, Sequelize)
+      beta_signup: require('../models/BetaSignup')(this.sequelize, Sequelize),
+      firm_template_task_file: require('../models/FirmTemplateTaskFile')(this.sequelize, Sequelize),
+      matter_task_file: require('../models/MatterTaskFile')(this.sequelize, Sequelize)
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee });
@@ -255,6 +257,18 @@ export class Database {
     this.models.firm_template_task.belongsTo(this.models.user, {
       foreignKey: 'user_id'
     });
+
+    this.models.firm_template_task.hasMany(this.models.firm_template_task_file, {
+      foreignKey: 'firm_template_task_id'
+    });
+
+    this.models.firm_template_task_file.belongsTo(this.models.firm_template_task);
+
+    this.models.matter_task.hasMany(this.models.matter_task_file, {
+      foreignKey: 'matter_task_id'
+    });
+
+    this.models.matter_task_file.belongsTo(this.models.matter_task);
   }
 
   public static async start() {

@@ -1,16 +1,16 @@
 export enum TaskTemplateLawCategory {
-  TRUSTS_ESTATE = 'Trusts & Estate',
-  TORT = 'Tort',
-  REAL_ESTATE = 'Real Estate',
-  PROBATE = 'Probate',
-  FAMILY = 'Family',
-  CRIMINAL = 'Criminal',
-  LITIGATION = 'Litigation',
-  IMMIGRATION = 'Immigration',
-  ELDER = 'Elder',
-  BANKRUPTCY = 'Bankruptcy',
-  TAX = 'Tax',
-  BUSINESS = 'Business',
+  TRUSTS_ESTATE = 'Trusts & Estate Law',
+  TORT = 'Tort Law',
+  REAL_ESTATE = 'Real Estate Law',
+  PROBATE = 'Probate Law',
+  FAMILY = 'Family Law',
+  CRIMINAL = 'Criminal Law',
+  LITIGATION = 'Litigation Law',
+  IMMIGRATION = 'Immigration Law',
+  ELDER = 'Elder Law',
+  BANKRUPTCY = 'Bankruptcy Law',
+  TAX = 'Tax Law',
+  BUSINESS = 'Business Law',
   OTHER = 'Other'
 }
 

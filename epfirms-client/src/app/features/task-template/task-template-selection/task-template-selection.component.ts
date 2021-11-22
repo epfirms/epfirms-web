@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskTemplateService } from '@app/firm-portal/_services/task-template-service/task-template.service';
+import { TaskTemplateService } from '@app/features/task-template/services/task-template.service';
 import { MatterTask } from '@app/core/interfaces/matter-task';
 import { DialogRef } from '@ngneat/dialog';
 import { IAngularMyDpOptions } from 'angular-mydatepicker';

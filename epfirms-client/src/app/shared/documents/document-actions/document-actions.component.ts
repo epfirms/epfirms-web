@@ -57,7 +57,7 @@ export class DocumentActionsComponent {
   }
 
   downloadDocument(): void {
-    this._awsService.downLoadDocument(this.document).subscribe((res) => {
+    this._awsService.downLoadDocument(this.document.doc_key).subscribe((res) => {
       if (this.document.doc_key.endsWith('pdf')) {
         this._dialog.open(PdfViewerComponent, {
           data: { src: encodeURIComponent(res.url) },

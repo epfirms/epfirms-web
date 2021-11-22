@@ -34,10 +34,6 @@ module.exports = (sequelize, {
           type: STRING,
           allowNull: false,
         },
-        aws_link: {
-          type: TEXT,
-          allowNull: false,
-        },
         share_with: {
           type: STRING,
           allowNull: false,

@@ -114,9 +114,9 @@
                   text-gray-900
                   border-r border-t border-b border-gray-200
                 ">
-              <div>
-                <editable-input [value]="task.name" placeholder="Enter a task name" [enterKey]="true"
-                  #taskName (onChange)="setDescription($event, i)"></editable-input>
+              <div class="flex items-center">
+                <editable-input [value]="task.name" placeholder="Enter a task name" (onChange)="setDescription($event, i)" class="flex-1"></editable-input>
+                <app-task-file-button [files]="task.firm_template_task_files" (fileSelect)="attachFilesToTask($event, i)" (editFile)="editTaskFile($event)" (deleteFile)="deleteTaskFile($event, i)"></app-task-file-button>
               </div>
             </td>
             <td class="

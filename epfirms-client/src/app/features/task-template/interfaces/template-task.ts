@@ -5,4 +5,5 @@ export interface TemplateTask {
     name: string;
     no_of_days_from_start_date: number | null;
     user?: any;
+    duration_minutes?: number | null;
 }

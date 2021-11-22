@@ -1,5 +1,4 @@
 import express from 'express'
-import { appointeeRouter } from '@modules/appointee/routes';
 import { userRouter } from '@modules/user/routes';
 import { authRouter } from '@modules/auth/routes';
 import { firmRouter } from '@modules/firm/routes';
@@ -17,7 +16,6 @@ import { betaSignupRouter } from '@src/modules/beta-signup/routes';
 
 const v1Router = express.Router();
 
-v1Router.use('/appointee', appointeeRouter);
 v1Router.use('/user', userRouter);
 v1Router.use('/firm', firmRouter);
 v1Router.use('/auth', authRouter);

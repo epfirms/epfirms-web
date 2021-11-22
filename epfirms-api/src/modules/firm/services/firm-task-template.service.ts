@@ -1,10 +1,12 @@
 import { Database } from '@src/core/Database';
+import { Service } from 'typedi';
 
+@Service()
 export class FirmTaskTemplateService {
-  public static async get(firmId: number):Promise<any> {
+  public async get(firmId: number):Promise<any> {
     try {
       const { sequelize } = Database;
-      const {firm_task_template, firm_template_task, user} = Database.models;
+      const {firm_task_template, firm_template_task, firm_template_task_file, user} = Database.models;
 
       const taskTemplates = await firm_task_template.findAll({where: {
         firm_id: firmId
@@ -14,6 +16,9 @@ export class FirmTaskTemplateService {
           {
             model: user
           },
+          {
+            model: firm_template_task_file,
+          }
         ],
       },
       order: [
@@ -30,7 +35,7 @@ export class FirmTaskTemplateService {
     }
   }
 
-  public static async create(data):Promise<any> {
+  public async create(data):Promise<any> {
     try {
       const updated = await Database.models.firm_task_template.create(data);
       return Promise.resolve(updated);
@@ -39,7 +44,7 @@ export class FirmTaskTemplateService {
     }
   }
 
-  public static async update(id: number, data):Promise<any> {
+  public async update(id: number, data):Promise<any> {
     try {
       const updated = await Database.models.firm_task_template.update(data, {where: {id}});
       return Promise.resolve(updated);
@@ -48,7 +53,7 @@ export class FirmTaskTemplateService {
     }
   }
 
-  public static async delete(id):Promise<any> {
+  public async delete(id):Promise<any> {
     try {
       const deleted = await Database.models.firm_task_template.destroy({where: {id: id}});
       return Promise.resolve(deleted);
@@ -57,7 +62,7 @@ export class FirmTaskTemplateService {
     }
   }
 
-  public static async addTask(data):Promise<any> {
+  public async addTask(data):Promise<any> {
     try {
       const updated = await Database.models.firm_template_task.create(data);
       return Promise.resolve(updated);
@@ -66,7 +71,7 @@ export class FirmTaskTemplateService {
     }
   }
 
-  public static async updateTask(id, changes):Promise<any> {
+  public async updateTask(id, changes):Promise<any> {
     try {
       const updated = await Database.models.firm_template_task.update(changes, {where: {id}});
       return Promise.resolve(updated);
@@ -75,9 +80,41 @@ export class FirmTaskTemplateService {
     }
   }
 
-  public static async deleteTask(id):Promise<any> {
+  public async deleteTask(id):Promise<any> {
     try {
       const deleted = await Database.models.firm_template_task.destroy({where: {id: id}});
+      return Promise.resolve(true);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  public async attachFileToTask(id: number, file: any):Promise<any> {
+    try {
+      const { firm_template_task } = Database.models;
+      const task = await firm_template_task.findOne({where: {id}});
+      const newFile = await task.createFirm_template_task_file(file);
+
+      return Promise.resolve(newFile);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  public async updateFileOnTask(id: number, changes: any):Promise<any> {
+    try {
+      const { firm_template_task_file } = Database.models;
+      const updatedFile = await firm_template_task_file.update(changes, {where: {id}});
+      return Promise.resolve(updatedFile);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  public async removeFileFromTask(id: number):Promise<any> {
+    try {
+      const { firm_template_task_file } = Database.models;
+      await firm_template_task_file.destroy({where: {id}});
       return Promise.resolve(true);
     } catch (err) {
       console.error(err);

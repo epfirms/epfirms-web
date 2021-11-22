@@ -61,11 +61,11 @@
         </div>
         <div class="sm:col-span-2">
           <ng-container *ngIf="attorneys$ | async as attorneys">
-          <ep-autocomplete 
+          <!-- <ep-autocomplete 
           [epOptions]="attorneys" 
           [epOptionTextField]="'full_name'" 
           [epOptionValueField]="'id'" 
-          [epFormControlName]="'attorney_id'"></ep-autocomplete>
+          [epFormControlName]="'attorney_id'"></ep-autocomplete> -->
         </ng-container>
 
           <!-- <autocomplete *ngIf="attorneys$ | async as attorneys" 
