@@ -11,6 +11,7 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module';
 import { TaskFileModule } from '../task-file/task-file.module';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { TaskFileModule } from '../task-file/task-file.module';
     TaskFileModule,
     AngularMyDatePickerModule,
     PipesModule,
-    AutocompleteModule
+    AutocompleteModule,
+    InputMaskModule
   ],
   exports: [
     TaskTemplateListComponent,

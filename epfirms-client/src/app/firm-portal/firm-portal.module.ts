@@ -34,6 +34,7 @@ import { DialogModule } from '@ngneat/dialog';
 import { TaskTemplateModule } from '@app/features/task-template/task-template.module';
 import { CoreModule } from '@app/core/core.module';
 import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module';
+import { TaskFileModule } from '@app/features/task-file/task-file.module';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module
     QuillModule,
     DialogModule,
     TaskTemplateModule,
-    AutocompleteModule
+    AutocompleteModule,
+    TaskFileModule
   ]
 })
 export class FirmPortalModule {}

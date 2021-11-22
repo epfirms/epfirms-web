@@ -9,6 +9,7 @@ import { TaskTemplateLawCategory, taskTemplateLawCategories } from '../enums/tas
 import { USAState } from '@app/shared/utils/us-states/typings';
 import { FirmTemplateTaskFile } from '../interfaces/firm-template-task-file';
 import { TaskTemplateService } from '../services/task-template.service';
+import { createMask, InputmaskOptions } from '@ngneat/input-mask';
 
 @Component({
   selector: 'app-task-template-details',
@@ -32,6 +33,24 @@ export class TaskTemplateDetailsComponent {
   public usaStates: USAState[] = usaStatesFull;
 
   public taskTemplateLawCategories: TaskTemplateLawCategory[] = taskTemplateLawCategories;
+
+  public timeInputMask = createMask<number>({
+    alias: 'numeric',
+    groupSeparator: ':',
+    digits: 2,
+    placeholder: '00',
+    digitsOptional: false,
+    parser: (value: string) => {
+      console.log(value);
+      const values = value.split(':');
+      const minutesFromHours = parseInt(values[0]) * 60;
+      const minutes = parseInt(values[1]);
+
+      console.log(minutesFromHours + minutes);
+
+      return minutesFromHours + minutes;
+    }
+})
   
   constructor(private staffService: StaffService, private dialogRef: DialogRef, private _taskTemplateService: TaskTemplateService, private _dialogService: DialogService) {
     this.staff$ = staffService.entities$;

@@ -56,7 +56,8 @@ export class TaskTemplateSelectionComponent implements OnInit {
     return tasks.map(t => ({
       name: t.name,
       due: this.addDaysToDate(this.startDate, t.no_of_days_from_start_date).toString(),
-      assignee_id: t.user_id
+      assignee_id: t.user_id,
+      matter_task_files: [...t.firm_template_task_files]
     }));
   }
 

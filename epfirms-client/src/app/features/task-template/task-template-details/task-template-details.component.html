@@ -85,6 +85,23 @@
                 ">
             Days until due
           </th>
+          <!-- <th class="
+          hidden
+          md:table-cell
+          px-6
+          py-3
+          border-gray-200
+          bg-white
+          text-left text-xs
+          font-medium
+          text-gray-500
+          uppercase
+          tracking-wider
+          whitespace-nowrap
+          border-l
+        ">
+    Duration
+  </th> -->
           <th class="
                 table-cell
                 px-4
@@ -147,6 +164,18 @@
                 <input [(ngModel)]="task.no_of_days_from_start_date" type="number" min="0" class="bg-transparent text-sm text-gray-800 w-full px-2 py-1 text-center border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm">
               </div>
             </td>
+            <!-- <td class="
+            px-1
+            py-1
+            text-sm
+            font-medium
+            text-gray-900
+            border-t border-b border-gray-200
+            ">
+          <div>
+            <input [(ngModel)]="task.duration_minutes" [inputMask]="timeInputMask" class="bg-transparent text-sm text-gray-800 w-full px-2 py-1 text-center border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm">
+          </div>
+        </td> -->
             <td class="
               px-1
               py-1

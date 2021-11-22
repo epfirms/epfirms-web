@@ -78,6 +78,28 @@ export class AwsService {
     return Promise.resolve(false);
   }
 
+  public async copy(source: {
+    bucketName: string;
+    key: string;
+  }, target: {
+    bucketName: string;
+    key: string;
+  }): Promise<boolean> {
+    const params: AwsCopyObjectParams = {
+      Bucket: target.bucketName,
+      CopySource: `${source.bucketName}/${source.key}`,
+      Key: target.key
+    };
+
+    const result = await this.copyObject(params);
+
+    if (result.CopyObjectResult) {
+      return Promise.resolve(true);
+    }
+
+    return Promise.resolve(false);
+  }
+
   public formatObjectKey(id: number, folderName: string, objectName: string): string {
     return `${S3_ENV_FOLDER}/${id}/${folderName}/${objectName}`;
   }

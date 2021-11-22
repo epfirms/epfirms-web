@@ -21,6 +21,8 @@ export class TaskFileButtonComponent {
     return this._files;
   }
 
+  @Input() readonly: boolean = false;
+
   @Output() fileSelect: EventEmitter<FileList> = new EventEmitter<FileList>();
   @Output() editFile: EventEmitter<number> = new EventEmitter<number>();
   @Output() deleteFile: EventEmitter<number> = new EventEmitter<number>();

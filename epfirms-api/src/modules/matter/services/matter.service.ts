@@ -12,7 +12,7 @@ export class MatterService {
       user,
       legal_area,
       matter_intake,
-      review,
+      matter_task_file
     } = Database.models;
     const { sequelize } = Database;
     const matters = await matter.findOne({
@@ -72,12 +72,12 @@ export class MatterService {
             {
               model: user,
               as: 'assignee'
+            },
+            {
+              model: matter_task_file
             }
           ]
-        },
-        {
-          model: review
-        },
+        }
       ],
       order: [
         [
@@ -98,7 +98,7 @@ export class MatterService {
       user,
       legal_area,
       matter_intake,
-      review,
+      matter_task_file
     } = Database.models;
     const { sequelize } = Database;
     const matters = await matter.findAll({
@@ -158,12 +158,12 @@ export class MatterService {
             {
               model: user,
               as: 'assignee'
+            },
+            {
+              model: matter_task_file
             }
           ]
-        },
-        {
-          model: review
-        },
+        }
       ],
       order: [
         [
