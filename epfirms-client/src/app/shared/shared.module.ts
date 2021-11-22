@@ -5,7 +5,6 @@ import { LayoutComponent } from './layout/layout.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { TwInputDirective } from './_directives/tw-input.directive';
-import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditableInputComponent } from './editable-input/editable-input.component';
 import { EditableAutocompleteComponent } from './editable-autocomplete/editable-autocomplete.component';
@@ -40,7 +39,6 @@ import { PipesModule } from '@app/core/pipes/pipes.module';
     LayoutComponent,
     NavbarComponent,
     TwInputDirective,
-    AutocompleteComponent,
     EditableInputComponent,
     EditableAutocompleteComponent,
     EditableDatepickerComponent,
@@ -79,7 +77,6 @@ import { PipesModule } from '@app/core/pipes/pipes.module';
     LayoutComponent,
     NavbarComponent,
     TwInputDirective,
-    AutocompleteComponent,
     EditableInputComponent,
     EditableAutocompleteComponent,
     EditableDatepickerComponent,

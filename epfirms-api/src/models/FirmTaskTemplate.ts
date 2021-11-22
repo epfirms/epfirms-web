@@ -18,6 +18,12 @@ module.exports = (sequelize, { INTEGER, STRING, BOOLEAN }) => {
           template_name: {
               type: STRING,
           },
+          law_category: {
+            type: STRING
+          },
+          state_category: {
+            type: STRING
+          }
       },
       {
         tableName,

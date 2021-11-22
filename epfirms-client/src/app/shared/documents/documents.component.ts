@@ -169,23 +169,21 @@ export class DocumentsComponent implements OnInit {
   // then it loops through the selected FILE objects and uploads them to aws.
   upload(){
     this.selectedDocuments.forEach(doc => {
-      //create the doc key and assign into object
-      doc.doc_key = `${doc.user_id}/${doc.doc_type}/${doc.doc_name}`
       //make the call to the server to generate the upload url
-      this._awsService.getPresignedUrl(doc.doc_key, doc.doc_type).pipe().subscribe(res => {
-
-        //assign the created document their link
-        doc.aws_link = res.url
+      this._awsService.getPresignedUrl(doc.user_id, doc.doc_type, doc.doc_name).pipe().subscribe(res => {
         //remove the temp id because the database will assign one
         doc.id = undefined;
-        //set the case_id
-        //doc.matter_id = this._matter.id;
-        //add the doc to the database
-        this.createDocuments(doc);
+        doc.doc_key = res.key;
         // for every FILE in the selected files, upload them to the s3 bucket.
         for (let i = 0; i < this.selectedFiles.length; i++){
           let currentFile = this.selectedFiles[i];
-          this._awsService.uploadfileAWSS3(doc.aws_link, doc.doc_type, currentFile).subscribe();
+
+          this._awsService.uploadfileAWSS3(res.url, doc.doc_type, currentFile).subscribe(() => {
+          },
+          ()=> {},
+          ()=> {
+            this.createDocuments(doc);
+          });
         }
       });
 

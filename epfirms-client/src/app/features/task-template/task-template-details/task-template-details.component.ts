@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
-import { MatterTask } from '@app/core/interfaces/matter-task';
 import { Staff } from '@app/core/interfaces/staff';
-import { TemplateTask } from '@app/core/interfaces/template-task';
 import { Observable } from 'rxjs';
-import { DialogRef } from '@ngneat/dialog';
-import { LegalAreaService } from '@app/firm-portal/_services/legal-area-service/legal-area.service';
-import { LegalArea } from '@app/core/interfaces/legal-area';
+import { DialogRef, DialogService } from '@ngneat/dialog';
+import { usaStatesFull } from '@app/shared/utils/us-states/states';
+import { FirmTaskTemplate } from '../interfaces/firm-task-template';
+import { TaskTemplateLawCategory, taskTemplateLawCategories } from '../enums/task-template-law-category';
+import { USAState } from '@app/shared/utils/us-states/typings';
+import { FirmTemplateTaskFile } from '../interfaces/firm-template-task-file';
+import { TaskTemplateService } from '../services/task-template.service';
+import { createMask, InputmaskOptions } from '@ngneat/input-mask';
 
 @Component({
   selector: 'app-task-template-details',
@@ -18,40 +21,66 @@ import { LegalArea } from '@app/core/interfaces/legal-area';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskTemplateDetailsComponent {
-  templateName = "";
+  public template: FirmTaskTemplate = {
+    template_name: '',
+    law_category: TaskTemplateLawCategory.OTHER,
+    state_category: '',
+    firm_template_tasks: []
+  };
 
-  templateTasks: any[] = [];
+  public staff$: Observable<Staff[]>;
 
-  staff$: Observable<Staff[]>;
+  public usaStates: USAState[] = usaStatesFull;
+
+  public taskTemplateLawCategories: TaskTemplateLawCategory[] = taskTemplateLawCategories;
+
+  public timeInputMask = createMask<number>({
+    alias: 'numeric',
+    groupSeparator: ':',
+    digits: 2,
+    placeholder: '00',
+    digitsOptional: false,
+    parser: (value: string) => {
+      console.log(value);
+      const values = value.split(':');
+      const minutesFromHours = parseInt(values[0]) * 60;
+      const minutes = parseInt(values[1]);
+
+      console.log(minutesFromHours + minutes);
+
+      return minutesFromHours + minutes;
+    }
+})
   
-  constructor(private staffService: StaffService, private dialogRef: DialogRef) {
+  constructor(private staffService: StaffService, private dialogRef: DialogRef, private _taskTemplateService: TaskTemplateService, private _dialogService: DialogService) {
     this.staff$ = staffService.entities$;
+
     if (dialogRef.data) {
-      const {template_name, firm_template_tasks}  = dialogRef.data;
-      this.templateName = template_name;
-      this.templateTasks = [...firm_template_tasks];
+      const { template }  = dialogRef.data;
+      this.template = Object.assign({}, template);
+      // Deep clone tasks -- needed for change comparison in task-template-list
+      this.template.firm_template_tasks = [...template.firm_template_tasks];
     }
   }
 
   addTemplateTask(): void {
-    this.templateTasks.push({
+    this.template.firm_template_tasks.push({
       user_id: null,
-      task_description: '',
-      no_of_days_from_start_date: null
+      name: '',
+      no_of_days_from_start_date: null,
+      firm_template_task_files: [],
+      duration_minutes: null
     });
   }
 
   removeTemplateTask(taskIndex: number): void {
-    console.log(taskIndex)
-    this.templateTasks.splice(taskIndex, 1);
+    this.template.firm_template_tasks.splice(taskIndex, 1);
   }
 
   save() {
     this.close({
-      template: {
-        template_name: this.templateName,
-      },
-      tasks: this.templateTasks
+      template: this.template,
+      tasks: this.template.firm_template_tasks
     });
   }
 
@@ -60,11 +89,42 @@ export class TaskTemplateDetailsComponent {
   }
 
   setAssignee(event, index) {
-    this.templateTasks[index].user_id = event;
+    this.template.firm_template_tasks[index].user_id = event;
   }
 
   setDescription(event, index) {
-    this.templateTasks[index].task_description = event;
+    this.template.firm_template_tasks[index].name = event;
   }
 
+  attachFilesToTask(files: FileList, taskIndex: number) {
+    const file: File = files[0];
+
+    const taskFile: FirmTemplateTaskFile = {
+      name: file.name,
+      description: file.type,
+      file: file
+    };
+
+    this.template.firm_template_tasks[taskIndex].firm_template_task_files.push(taskFile);
+  }
+
+  editTaskFile(fileId: number) {}
+
+  deleteTaskFile(fileId: number, taskIndex: number) {
+    if (this.template.firm_template_tasks[taskIndex].id) {
+      const deleteDialogRef = this._dialogService.confirm({
+        title: `Remove task file`,
+        body: `Are you sure you want to remove this file? This action cannot be undone.`
+      });
+  
+      deleteDialogRef.afterClosed$.subscribe((confirmed) => {
+        if (confirmed) {
+          if (fileId) {
+            this._taskTemplateService.deleteTaskFile(fileId).subscribe();
+          }
+          this.template.firm_template_tasks[taskIndex].firm_template_task_files = this.template.firm_template_tasks[taskIndex].firm_template_task_files.filter(t => t.id !== fileId);
+        }
+      });
+    }
+  }
 }

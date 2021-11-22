@@ -4,20 +4,38 @@
       Task Template
     </h3>
     <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-      <div class="col-span-1 sm:col-span-6">
+      <div class="col-span-1 sm:col-span-3">
         <label for="template-name" class="block text-sm font-medium text-gray-700">
           Template name
         </label>
         <div class="mt-1">
-          <input [(ngModel)]="templateName" type="text" name="template-name" id="template-name" autocomplete="off"
+          <input [(ngModel)]="template.template_name" type="text" name="template-name" id="template-name" autocomplete="off"
             class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+        </div>
+      </div>
+
+      <div class="col-span-1 sm:col-span-2">
+        <label for="template-name" class="block text-sm font-medium text-gray-700">
+          Field of law
+        </label>
+        <div class="mt-1">
+          <ep-autocomplete [epOptions]="taskTemplateLawCategories" [(epValue)]="template.law_category"></ep-autocomplete>
+        </div>
+      </div>
+
+      <div class="col-span-1 sm:col-span-1">
+        <label for="template-name" class="block text-sm font-medium text-gray-700">
+          State
+        </label>
+        <div class="mt-1">
+          <ep-autocomplete [epOptions]="usaStates" [epOptionTextField]="'name'" [epOptionValueField]="'abbreviation'" [(epValue)]="template.state_category"></ep-autocomplete>
         </div>
       </div>
     </div>
   </div>
 
   <div class="mt-6">
-    <table class="min-w-full" *ngIf="templateTasks.length">
+    <table class="min-w-full" *ngIf="template.firm_template_tasks.length">
       <thead>
         <tr class="border-t border-gray-200">
           <th class="
@@ -31,7 +49,7 @@
                   uppercase
                   tracking-wider
                   whitespace-nowrap
-                  border-r border-gray-200
+                  border-r
                 ">
             <span>Task</span>
           </th>
@@ -46,7 +64,7 @@
                   uppercase
                   tracking-wider
                   whitespace-nowrap
-                  border-r border-l border-gray-200
+                  border-r border-l
                 ">
             Assignee
           </th>
@@ -63,10 +81,27 @@
                   uppercase
                   tracking-wider
                   whitespace-nowrap
-                  border-l border-gray-200
+                  border-l
                 ">
             Days until due
           </th>
+          <!-- <th class="
+          hidden
+          md:table-cell
+          px-6
+          py-3
+          border-gray-200
+          bg-white
+          text-left text-xs
+          font-medium
+          text-gray-500
+          uppercase
+          tracking-wider
+          whitespace-nowrap
+          border-l
+        ">
+    Duration
+  </th> -->
           <th class="
                 table-cell
                 px-4
@@ -84,7 +119,7 @@
       </thead>
       <tbody class="bg-white">
         <ng-container>
-          <tr class="task-row group" *ngFor="let task of templateTasks; let i=index;">
+          <tr class="task-row group" *ngFor="let task of template.firm_template_tasks; let i=index;">
             <td class="
                   px-1
                   py-1
@@ -96,9 +131,9 @@
                   text-gray-900
                   border-r border-t border-b border-gray-200
                 ">
-              <div>
-                <editable-input [value]="task.task_description" placeholder="Enter a task name" [enterKey]="true"
-                  #taskName (onChange)="setDescription($event, i)"></editable-input>
+              <div class="flex items-center">
+                <editable-input [value]="task.name" placeholder="Enter a task name" (onChange)="setDescription($event, i)" class="flex-1"></editable-input>
+                <app-task-file-button [files]="task.firm_template_task_files" (fileSelect)="attachFilesToTask($event, i)" (editFile)="editTaskFile($event)" (deleteFile)="deleteTaskFile($event, i)"></app-task-file-button>
               </div>
             </td>
             <td class="
@@ -129,6 +164,18 @@
                 <input [(ngModel)]="task.no_of_days_from_start_date" type="number" min="0" class="bg-transparent text-sm text-gray-800 w-full px-2 py-1 text-center border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm">
               </div>
             </td>
+            <!-- <td class="
+            px-1
+            py-1
+            text-sm
+            font-medium
+            text-gray-900
+            border-t border-b border-gray-200
+            ">
+          <div>
+            <input [(ngModel)]="task.duration_minutes" [inputMask]="timeInputMask" class="bg-transparent text-sm text-gray-800 w-full px-2 py-1 text-center border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm">
+          </div>
+        </td> -->
             <td class="
               px-1
               py-1
@@ -155,7 +202,7 @@
       </tbody>
     </table>
 
-    <div class="text-center my-2" *ngIf="!templateTasks.length">
+    <div class="text-center my-2" *ngIf="!template.firm_template_tasks.length">
       <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
         aria-hidden="true">
         <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -184,7 +231,7 @@
 <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
   <button type="button"
   (click)="save()"
-  [disabled]="!this.templateName"
+  [disabled]="!this.template.template_name"
     class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50">
     Save
   </button>

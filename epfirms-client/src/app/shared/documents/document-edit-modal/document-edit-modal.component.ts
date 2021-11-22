@@ -87,12 +87,17 @@ export class DocumentEditModalComponent implements OnInit {
   // submits the edited document to be changed on the cache, server, and aws
   submit(): void {
     //create the new key on the document
-    this.updatedDocument.doc_key = `${this.updatedDocument.user_id}/${this.updatedDocument.doc_type}/${this.updatedDocument.doc_name}`;
-    this.updatedDocument.aws_link = this.document.aws_link;
-    this.updatedDocument.matter_id = this.document.matter_id;
+    const updatedValues = {
+      userId: this.updatedDocument.user_id,
+      docType: this.updatedDocument.doc_type,
+      docName: this.updatedDocument.doc_name,
+      matter_id: this.document.matter_id
+    };
+
     // update the object in the cach and db
-    this._docService.update(this.updatedDocument).subscribe(onUpdateRes => {
-      this._awsService.updateDocument(this.updatedDocument, this.document.doc_key).subscribe();
+    this._awsService.updateDocument(this.document.doc_key, updatedValues).subscribe((res) => {
+      this.updatedDocument.doc_key = res.doc_key;
+      this._docService.update(this.updatedDocument).subscribe();
     });
   }
 

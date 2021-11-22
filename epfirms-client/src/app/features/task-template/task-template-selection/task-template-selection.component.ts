@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskTemplateService } from '@app/firm-portal/_services/task-template-service/task-template.service';
+import { TaskTemplateService } from '@app/features/task-template/services/task-template.service';
 import { MatterTask } from '@app/core/interfaces/matter-task';
 import { DialogRef } from '@ngneat/dialog';
 import { IAngularMyDpOptions } from 'angular-mydatepicker';
@@ -54,9 +54,10 @@ export class TaskTemplateSelectionComponent implements OnInit {
 
   private formatTasks(tasks): MatterTask[] {
     return tasks.map(t => ({
-      name: t.task_description,
+      name: t.name,
       due: this.addDaysToDate(this.startDate, t.no_of_days_from_start_date).toString(),
-      assignee_id: t.user_id
+      assignee_id: t.user_id,
+      matter_task_files: [...t.firm_template_task_files]
     }));
   }
 

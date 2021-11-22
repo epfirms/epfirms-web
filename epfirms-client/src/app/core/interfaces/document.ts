@@ -5,7 +5,6 @@ export class Document {
   doc_name: string;
   doc_type: string;
   doc_key: string;
-  aws_link: string;
   share_with: string;
   email_to_appointees: boolean;
   client_upload: boolean;

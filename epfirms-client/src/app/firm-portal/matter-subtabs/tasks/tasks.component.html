@@ -146,8 +146,10 @@
               border-r border-t border-b border-gray-200
             "
           >
-          <div>
-            <editable-input [value]="task.name" placeholder="Enter a task name" [enterKey]="true" (onChange)="updateTask(task, 'name', $event)" #taskName></editable-input>
+          <div class="flex items-center">
+            <editable-input [value]="task.name" placeholder="Enter a task name" [enterKey]="true" (onChange)="updateTask(task, 'name', $event)" #taskName class="flex-1"></editable-input>
+            <app-task-file-button *ngIf="task.matter_task_files.length" [files]="task.matter_task_files" [readonly]="true"></app-task-file-button>
+
           </div>
           </td>
           <td

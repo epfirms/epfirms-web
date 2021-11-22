@@ -96,7 +96,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
     return this._http.post<any>('/api/matters/task', task).pipe(
       map((response: Matter) => {
         this._socketService.updateCacheSync('matter', response);
-        return of(response);
+        return response;
       })
     );
   }
