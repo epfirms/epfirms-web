@@ -1,7 +1,7 @@
   <div class="relative">
     <div class="inline-flex items-center py-0.5 font-medium px-2.5 text-sm group hover:cursor-pointer select-none whitespace-nowrap"
     [ngClass]="{
-      'px-2 text-xs': twSize === 'small',
+      'px-2 text-xs': epSize === 'small',
       'rounded-md': !rounded,
       'rounded-full': rounded,
       'bg-sky-100 hover:bg-sky-200 focus-within:bg-sky-200 text-sky-800': color === 'sky',
@@ -21,7 +21,7 @@
       <svg
       class="h-2 w-2 mr-1.5"
       [ngClass]="{
-        '-ml-0.5': twSize === 'large',
+        '-ml-0.5': epSize === 'large',
         'text-fuchsia-500': !color && dotColor === 'fuchsia',
         'text-violet-500': !color && dotColor === 'violet',
         'text-emerald-500': !color && dotColor === 'emerald',
@@ -121,12 +121,12 @@
       -->
       <li class="text-gray-900 cursor-default select-none relative py-2 px-3" id="listbox-option-0" role="option" *ngFor="let option of options" (click)="selectOption(option)">
         <div class="flex items-center">
-          <tw-tag
+          <ep-tag
           [color]="option.color"
-          [twSize]="twSize"
+          [epSize]="epSize"
           >
             {{ option.name | titlecase}}
-          </tw-tag>
+        </ep-tag>
         </div>
       </li>
 

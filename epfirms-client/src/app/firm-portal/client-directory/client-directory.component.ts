@@ -6,7 +6,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { AddClientComponent } from '../overlays/add-client/add-client.component';
 import { Matter } from '@app/core/interfaces/matter';
 import { MatterService } from '../_services/matter-service/matter.service';
-import { MatterTabsService } from '../_services/matter-tabs-service/matter-tabs.service';
+import { MatterTabsService } from '../../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { DialogService } from '@ngneat/dialog';
 
 interface ClientDirectoryItem {

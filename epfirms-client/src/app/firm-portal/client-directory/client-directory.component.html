@@ -182,11 +182,11 @@
               >
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
-                    <tw-avatar
-                      twSize="small"
-                      [twSrc]="client.profile_image"
-                      [twText]="client.full_name"
-                    ></tw-avatar>
+                    <ep-avatar
+                      epSize="small"
+                      [epSrc]="client.profile_image"
+                      [epText]="client.full_name"
+                    ></ep-avatar>
                     <div class="ml-2">
                       <div class="text-sm font-medium text-gray-900">
                         {{ client.full_name | titlecase }}
@@ -315,11 +315,11 @@
     </div>
 
     <ng-container *ngIf="clients$ | async as clients">
-      <tw-paginator
-        [twPageSize]="10"
-        [twTotalSize]="clients.length"
-        (twCurrentPage)="setPagination($event)"
-      ></tw-paginator>
+      <ep-paginator
+        [epPageSize]="10"
+        [epTotalSize]="clients.length"
+        (epCurrentPage)="setPagination($event)"
+      ></ep-paginator>
     </ng-container>
     <!-- End main area -->
   </main>
@@ -331,11 +331,11 @@
         <div class="flex items-start space-x-5">
           <div class="flex-shrink-0">
             <div class="relative">
-              <tw-avatar
-              twSize="xlarge"
-              [twSrc]="selectedClient.profile_image"
-              [twText]="selectedClient.full_name"
-            ></tw-avatar>
+              <ep-avatar
+              epSize="xlarge"
+              [epSrc]="selectedClient.profile_image"
+              [epText]="selectedClient.full_name"
+            ></ep-avatar>
             <span class="absolute inset-0 shadow-inner rounded-full" aria-hidden="true"></span>
             </div>
           </div>

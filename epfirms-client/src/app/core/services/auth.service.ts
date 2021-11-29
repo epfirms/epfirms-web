@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { EntityCacheDispatcher } from '@ngrx/data';
-import { MatterTabsService } from '@app/firm-portal/_services/matter-tabs-service/matter-tabs.service';
+import { MatterTabsService } from '@app/features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { CurrentUserService } from '../../shared/_services/current-user-service/current-user.service';
 import { SocketService } from '@app/core/services/socket.service';
 import { Socket } from 'ngx-socket-io';

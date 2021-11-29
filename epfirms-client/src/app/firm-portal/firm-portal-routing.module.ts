@@ -8,11 +8,7 @@ import { DocumentResolver } from '@app/core/resolvers/firm-portal/document.resol
 import { LegalAreaResolver } from '@app/core/resolvers/firm-portal/legal-area.resolver';
 import { MatterResolver } from '@app/core/resolvers/firm-portal/matter.resolver';
 import { StaffResolver } from '@app/core/resolvers/firm-portal/staff.resolver';
-import { CasesComponent } from './cases/cases.component';
-import { ClientDirectoryComponent } from './client-directory/client-directory.component';
-import { FirmHomeComponent } from './firm-home/firm-home.component';
 import { FirmPortalComponent } from './firm-portal.component';
-import { LeadsComponent } from './leads/leads.component';
 
 const routes: Routes = [
   {
@@ -29,13 +25,22 @@ const routes: Routes = [
     },
     component: FirmPortalComponent,
     children: [{ path: '', canActivate: [AuthGuard], children: [
-      {path: '', component: FirmHomeComponent, canActivate: [AuthGuard]},
-      {path: 'clients', component: ClientDirectoryComponent, canActivate: [AuthGuard]},
+      {path: '', canActivate: [AuthGuard], loadChildren: () =>
+      import('./firm-home/firm-home.module').then(
+        (m) => m.FirmHomeModule
+      )},
+      {path: 'clients', canActivate: [AuthGuard], loadChildren: () =>
+      import('./client-directory/client-directory.module').then(
+        (m) => m.ClientDirectoryModule
+      )},
       {path: 'cases', canActivate: [AuthGuard], loadChildren: () =>
       import('./cases/cases.module').then(
         (m) => m.CasesPageModule
       )},
-      {path: 'leads', component: LeadsComponent, canActivate: [AuthGuard]},
+      {path: 'leads', canActivate: [AuthGuard], loadChildren: () =>
+      import('./leads/leads.module').then(
+        (m) => m.LeadsPageModule
+      )},
       {path: 'settings', canActivate: [AuthGuard], loadChildren: () =>
       import('./firm-settings/firm-settings.module').then(
         (m) => m.FirmSettingsModule

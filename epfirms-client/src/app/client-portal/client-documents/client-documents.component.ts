@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AwsService } from '@app/shared/_services/aws.service';
-import { DocumentService } from '@app/shared/_services/document-service/document.service';
+import { DocumentService } from '@app/features/documents/services/document.service';
 import { Document } from '@app/core/interfaces/document';
 import { ClientDocumentUploadComponent } from '../client-document-upload/client-document-upload.component';
 import { DialogService } from '@ngneat/dialog';

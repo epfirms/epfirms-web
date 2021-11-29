@@ -6,18 +6,18 @@
             <div class="flex-1 min-w-0">
               <!-- Profile -->
               <div class="flex items-center">
-                <tw-avatar
-                twSize="xlarge"
-                [twSrc]="currentUser.profile_image"
+                <ep-avatar
+                epSize="xlarge"
+                [epSrc]="currentUser.profile_image"
                 class="hidden sm:block"
-              ></tw-avatar>
+              ></ep-avatar>
                 <div>
                   <div class="flex items-center">
-                    <tw-avatar
-                    twSize="xlarge"
-                    [twSrc]="currentUser.profile_image"
+                    <ep-avatar
+                    epSize="xlarge"
+                    [epSrc]="currentUser.profile_image"
                     class="sm:hidden"
-                  ></tw-avatar>
+                  ></ep-avatar>
                     <h1 class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
                       Good {{ greeting }}, {{ currentUser.full_name | titlecase }}
                     </h1>

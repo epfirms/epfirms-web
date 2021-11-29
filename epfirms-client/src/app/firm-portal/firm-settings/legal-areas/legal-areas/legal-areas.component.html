@@ -61,14 +61,14 @@
                             </tr>
                             <tr *ngFor="let legalArea of legalAreas$ | async">
                               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <tw-tag
+                                <ep-tag
                                 [dot]="true"
                                 [color]="legalArea.color"
                                 [rounded]="false"
-                                twSize="large"
+                                epSize="large"
                               >
                                 {{ legalArea.name | titlecase}}
-                              </tw-tag>
+                              </ep-tag>
                               </td>
                               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ legalArea.description || 'Add a description'}}

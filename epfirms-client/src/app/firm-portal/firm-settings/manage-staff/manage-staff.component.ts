@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
-import { MatterTabsService } from '@app/firm-portal/_services/matter-tabs-service/matter-tabs.service';
+import { MatterTabsService } from '@app/features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { Observable } from 'rxjs';
 import { Staff } from '@app/core/interfaces/staff';
 import { Firm } from '@app/core/interfaces/firm';

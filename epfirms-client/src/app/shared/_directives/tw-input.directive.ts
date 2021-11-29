@@ -10,7 +10,7 @@ import { filter, takeUntil } from 'rxjs/operators';
   }
 })
 export class TwInputDirective implements OnChanges, OnInit, OnDestroy {
-  @Input() twSize = 'default';
+  @Input() epSize = 'default';
   @Input()
   get disabled(): boolean {
     if (this.ngControl && this.ngControl.disabled !== null) {

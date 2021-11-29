@@ -184,13 +184,13 @@
               </th>
               <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap border-r border-gray-200 w-4/12" (click)="openTab(lead)">
                 <div class="flex items-center">
-                  <tw-avatar
-                    twSize="medium"
-                    twShape="square"
-                    [twSrc]="lead.client.profile_image"
-                    [twText]="lead.client.full_name"
+                  <ep-avatar
+                    epSize="medium"
+                    epShape="square"
+                    [epSrc]="lead.client.profile_image"
+                    [epText]="lead.client.full_name"
                   >
-                  </tw-avatar>
+                  </ep-avatar>
                   <div class="ml-2">
                     <div class="text-sm font-medium text-gray-900">
                       {{ lead.client.full_name | titlecase }} <span class="text-xs text-gray-500" *ngIf="lead.spouse">& {{ lead.spouse.full_name | titlecase }}</span>
@@ -232,11 +232,11 @@
                 <a class="flex-shrink-0 group block" *ngIf="lead.matter_tasks.length">
                   <!-- <div class="flex items-center" *ngIf="!lead.matter_tasks[0].completed">
                     <div>
-                      <tw-avatar
-                        twSize="xsmall"
-                        [twSrc]="lead.matter_tasks[0].assignee?.profile_image"
-                        [twText]="lead.matter_tasks[0].assignee?.full_name"
-                      ></tw-avatar>
+                      <ep-avatar
+                        epSize="xsmall"
+                        [epSrc]="lead.matter_tasks[0].assignee?.profile_image"
+                        [epText]="lead.matter_tasks[0].assignee?.full_name"
+                      ></ep-avatar>
                     </div>
                     <div class="ml-2">
                       <p class="text-sm text-gray-900 max-w-xs truncate">
@@ -250,11 +250,11 @@
                   <a class="flex-shrink-0 group block" *ngIf="!lead.matter_tasks[0].completed">
                     <div class="flex items-center">
                       <div>
-                        <tw-avatar
-                        twSize="small"
-                        [twSrc]="lead.matter_tasks[0].assignee?.profile_image"
-                        [twText]="lead.matter_tasks[0].assignee?.full_name"
-                      ></tw-avatar>                    </div>
+                        <ep-avatar
+                        epSize="small"
+                        [epSrc]="lead.matter_tasks[0].assignee?.profile_image"
+                        [epText]="lead.matter_tasks[0].assignee?.full_name"
+                      ></ep-avatar>                    </div>
                       <div class="ml-3">
                         <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate" style="max-width: 12rem" [tippy]="lead.matter_tasks[0].name || null"  tabindex="0">
                           {{ lead.matter_tasks[0].name || "No task name" }}
@@ -455,15 +455,15 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap w-2/12">
-                <ngx-select [items]="attorneys$ | async" (select)="setAttorney(lead, $event)" [optionTextField]="'full_name'" [optionValueField]="'id'" [ngModel]="lead.attorney_id" [keepSelectMenuOpened]="false">
+                <ngx-select class="table-cell" [items]="attorneys$ | async" (select)="setAttorney(lead, $event)" [optionTextField]="'full_name'" [optionValueField]="'id'" [ngModel]="lead.attorney_id" [keepSelectMenuOpened]="false">
                   <ng-template ngx-select-option ngx-select-option-selected let-option let-text="text">
                     <div class="flex items-center">
-                      <tw-avatar
-                      twSize="xsmall"
-                      [twSrc]="option.data.profile_image"
-                      [twText]="option.data.full_name"
+                      <ep-avatar
+                      epSize="xsmall"
+                      [epSrc]="option.data.profile_image"
+                      [epText]="option.data.full_name"
                     >
-                    </tw-avatar>
+                    </ep-avatar>
                       <div class="text-sm font-normal ml-3 block truncate">
                         {{ option.text | titlecase }}
                       </div>
@@ -471,7 +471,6 @@
                 </ng-template>
                 
                 </ngx-select>
-  
               </td>
             </ng-container>
           
@@ -494,17 +493,17 @@
               </th>
               <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap w-1/12">
                 <div class="flex flex-col justify-center">
-                <tw-tag
+                <ep-tag
                   [dot]="true"
                   [dotColor]="lead.status === 'active' ? 'emerald' : 'gray'"
-                  [twSize]="'small'"
+                  [epSize]="'small'"
                   [rounded]="false"
                   [dropdown]="true"
                   [options]="statusOptions"
                   (selectedOptionChange)="setStatus(lead, $event)"
                 >
                   {{ lead.status + " " + lead.matter_type | titlecase }}
-                </tw-tag>
+                </ep-tag>
               </div>
               </td>
             </ng-container>
@@ -531,14 +530,14 @@
                 *cdkCellDef="let lead"
                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
               >
-              <tw-tag
+              <ep-tag
               [dot]="false"
               [color]="'sky'"
-              [twSize]="'small'"
+              [epSize]="'small'"
               [rounded]="true"
             >
             {{lead.matter_intake?.status ? `Intake ${lead.matter_intake.status}|| "No intake"}}
-            </tw-tag>
+            </ep-tag>
               </td>
             </ng-container>
             <!-- Symbol Column -->
@@ -666,11 +665,11 @@
     </div>
 
     <ng-container *ngIf="leads$ | async as leads">
-      <tw-paginator
-        [twPageSize]="20"
-        [twTotalSize]="leads.length"
-        (twCurrentPage)="setPagination($event)"
-      ></tw-paginator>
+      <ep-paginator
+        [epPageSize]="20"
+        [epTotalSize]="leads.length"
+        (epCurrentPage)="setPagination($event)"
+      ></ep-paginator>
     </ng-container>
     <!-- End main area -->
   </main>

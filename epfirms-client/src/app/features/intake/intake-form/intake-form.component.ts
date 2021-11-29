@@ -6,11 +6,11 @@ import { ClientMatterService } from '@app/client-portal/_services/matter-service
 import { EditClientComponent } from '@app/firm-portal/overlays/edit-client/edit-client.component';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
-import { AddAppointeeComponent } from '@app/shared/add-appointee/add-appointee.component';
-import { AddFamilyMemberComponent } from '@app/shared/add-family-member/add-family-member.component';
-import { AddMoneyAccountComponent } from '@app/shared/add-money-account/add-money-account.component';
-import { AddRealEstateComponent } from '@app/shared/add-real-estate/add-real-estate.component';
-import { AddVehicleComponent } from '@app/shared/add-vehicle/add-vehicle.component';
+import { AddAppointeeComponent } from '@app/features/intake/add-appointee/add-appointee.component';
+import { AddFamilyMemberComponent } from '@app/features/intake/add-family-member/add-family-member.component';
+import { AddMoneyAccountComponent } from '@app/features/intake/add-money-account/add-money-account.component';
+import { AddRealEstateComponent } from '@app/features/intake/add-real-estate/add-real-estate.component';
+import { AddVehicleComponent } from '@app/features/intake/add-vehicle/add-vehicle.component';
 import { UserFormModalComponent } from '@app/shared/user-form-modal/user-form-modal.component';
 import { Matter } from '@app/core/interfaces/matter';
 import { map } from 'rxjs/operators';

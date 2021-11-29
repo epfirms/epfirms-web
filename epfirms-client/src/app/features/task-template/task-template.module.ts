@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskTemplateListComponent } from './task-template-list/task-template-list.component';
 import { TaskTemplateListItemComponent } from './task-template-list-item/task-template-list-item.component';
-import { SharedModule } from '@app/shared/shared.module';
 import { TippyModule } from '@ngneat/helipopper';
 import { TaskTemplateDetailsComponent } from './task-template-details/task-template-details.component';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +11,7 @@ import { PipesModule } from '@app/core/pipes/pipes.module';
 import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module';
 import { TaskFileModule } from '../task-file/task-file.module';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { EditableModule } from '@app/shared/editable/editable.module';
 
 
 @NgModule({
@@ -24,13 +24,13 @@ import { InputMaskModule } from '@ngneat/input-mask';
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule,
     TippyModule,
     TaskFileModule,
     AngularMyDatePickerModule,
     PipesModule,
     AutocompleteModule,
-    InputMaskModule
+    InputMaskModule,
+    EditableModule
   ],
   exports: [
     TaskTemplateListComponent,

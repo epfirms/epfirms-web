@@ -4,12 +4,13 @@ import { MenuModule } from 'headlessui-angular';
 import { ClientPortalRoutingModule } from './client-portal-routing.module';
 import { ClientPortalComponent } from './client-portal.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
-import { SharedModule } from '@app/shared/shared.module';
 import { CaseListComponent } from './case-list/case-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IntakeModule } from '@app/features/intake/intake.module';
 import { ClientDocumentsComponent } from './client-documents/client-documents.component';
 import { ClientDocumentUploadComponent } from './client-document-upload/client-document-upload.component';
+import { AvatarModule } from '@app/shared/avatar/avatar.module';
+import { NavbarModule } from '@app/shared/navbar/navbar.module';
 
 
 @NgModule({
@@ -25,9 +26,10 @@ import { ClientDocumentUploadComponent } from './client-document-upload/client-d
     FormsModule,
     ReactiveFormsModule,
     ClientPortalRoutingModule,
-    SharedModule,
     IntakeModule,
-    MenuModule
+    MenuModule,
+    AvatarModule,
+    NavbarModule
   ]
 })
 export class ClientPortalModule { }
