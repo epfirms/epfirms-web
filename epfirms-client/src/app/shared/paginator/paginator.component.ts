@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'tw-paginator',
+  selector: 'ep-paginator',
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss']
 })
@@ -21,26 +21,26 @@ export class PaginatorComponent implements OnInit {
   }
 
   @Input() 
-  set twPageSize(value: number) {
+  set epPageSize(value: number) {
     this._pageSize = value;
   }
-  get twPageSize() {
+  get epPageSize() {
     return this._pageSize;
   }
 
   @Input() 
-  set twTotalSize(value: number) {
+  set epTotalSize(value: number) {
     this._length = value;
 
-    if (this.twTotalSize) {
-      this.pages = Array(Math.ceil(this.twTotalSize / this.twPageSize)).fill(0).map((x,i)=>i + 1)
+    if (this.epTotalSize) {
+      this.pages = Array(Math.ceil(this.epTotalSize / this.epPageSize)).fill(0).map((x,i)=>i + 1)
     }
   }
-  get twTotalSize() {
+  get epTotalSize() {
     return this._length;
   }
 
-  @Output() twCurrentPage: EventEmitter<{start: number, end: number}> = new EventEmitter<{start: number, end: number}>();
+  @Output() epCurrentPage: EventEmitter<{start: number, end: number}> = new EventEmitter<{start: number, end: number}>();
 
   private _current: {start: number, end: number};
   private _pageSize: number;
@@ -56,16 +56,16 @@ export class PaginatorComponent implements OnInit {
       this.twPageNumber = 1;
     }
 
-    this.twCurrent = this.paginate(this.twPageNumber, this.twPageSize);
-    this.twCurrentPage.emit(this.twCurrent);
+    this.twCurrent = this.paginate(this.twPageNumber, this.epPageSize);
+    this.epCurrentPage.emit(this.twCurrent);
   }
 
   setPageNumber(page: number) {
     this.twPageNumber = page;
-    this.paginate(this.twPageNumber, this.twPageSize);
+    this.paginate(this.twPageNumber, this.epPageSize);
 
-    this.twCurrent = this.paginate(this.twPageNumber, this.twPageSize);
-    this.twCurrentPage.emit(this.twCurrent);
+    this.twCurrent = this.paginate(this.twPageNumber, this.epPageSize);
+    this.epCurrentPage.emit(this.twCurrent);
   }
 
   toggleRest() {

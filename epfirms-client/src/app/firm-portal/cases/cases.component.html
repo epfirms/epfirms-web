@@ -198,13 +198,13 @@
             </th>
             <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap border-r border-gray-200 w-4/12" (click)="openTab(case)">
               <div class="flex items-center">
-                <tw-avatar
-                  twSize="medium"
-                  twShape="square"
-                  [twSrc]="case.client.profile_image"
-                  [twText]="case.client.full_name"
+                <ep-avatar
+                  epSize="medium"
+                  epShape="square"
+                  [epSrc]="case.client.profile_image"
+                  [epText]="case.client.full_name"
                 >
-                </tw-avatar>
+                </ep-avatar>
                 <div class="ml-2">
                   <div class="text-sm font-medium text-gray-900">
                     {{ case.client.full_name | titlecase }} <span class="text-xs text-gray-500" *ngIf="case.spouse">& {{ case.spouse.full_name | titlecase }}</span>
@@ -246,11 +246,11 @@
               <a class="flex-shrink-0 group block" *ngIf="case.matter_tasks.length">
                 <!-- <div class="flex items-center" *ngIf="!case.matter_tasks[0].completed">
                   <div>
-                    <tw-avatar
-                      twSize="xsmall"
-                      [twSrc]="case.matter_tasks[0].assignee?.profile_image"
-                      [twText]="case.matter_tasks[0].assignee?.full_name"
-                    ></tw-avatar>
+                    <ep-avatar
+                      epSize="xsmall"
+                      [epSrc]="case.matter_tasks[0].assignee?.profile_image"
+                      [epText]="case.matter_tasks[0].assignee?.full_name"
+                    ></ep-avatar>
                   </div>
                   <div class="ml-2">
                     <p class="text-sm text-gray-900 max-w-xs truncate">
@@ -264,11 +264,11 @@
                 <a class="flex-shrink-0 group block" *ngIf="!case.matter_tasks[0].completed">
                   <div class="flex items-center">
                     <div>
-                      <tw-avatar
-                      twSize="small"
-                      [twSrc]="case.matter_tasks[0].assignee?.profile_image"
-                      [twText]="case.matter_tasks[0].assignee?.full_name"
-                    ></tw-avatar>                    </div>
+                      <ep-avatar
+                      epSize="small"
+                      [epSrc]="case.matter_tasks[0].assignee?.profile_image"
+                      [epText]="case.matter_tasks[0].assignee?.full_name"
+                    ></ep-avatar>                    </div>
                     <div class="ml-3">
                       <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate" style="max-width: 12rem" [tippy]="case.matter_tasks[0].name || null" tabindex="0">
                         {{ case.matter_tasks[0].name || "No task name" }}
@@ -472,12 +472,12 @@
               <ngx-select class="table-cell" [items]="attorneys$ | async" (select)="setAttorney(case, $event)" [optionTextField]="'full_name'" [optionValueField]="'id'" [ngModel]="case.attorney_id" [keepSelectMenuOpened]="false">
                 <ng-template ngx-select-option ngx-select-option-selected let-option let-text="text">
                   <div class="flex items-center">
-                    <tw-avatar
-                    twSize="xsmall"
-                    [twSrc]="option.data.profile_image"
-                    [twText]="option.data.full_name"
+                    <ep-avatar
+                    epSize="xsmall"
+                    [epSrc]="option.data.profile_image"
+                    [epText]="option.data.full_name"
                   >
-                  </tw-avatar>
+                  </ep-avatar>
                     <div class="text-sm font-normal ml-3 block truncate">
                       {{ option.text | titlecase }}
                     </div>
@@ -508,17 +508,17 @@
             </th>
             <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap w-1/12">
               <div class="flex flex-col justify-center">
-              <tw-tag
+              <ep-tag
                 [dot]="true"
                 [dotColor]="case.status === 'active' ? 'emerald' : 'gray'"
-                [twSize]="'small'"
+                [epSize]="'small'"
                 [rounded]="false"
                 [dropdown]="true"
                 [options]="statusOptions"
                 (selectedOptionChange)="setStatus(case, $event)"
               >
                 {{ case.status + " " + case.matter_type | titlecase }}
-              </tw-tag>
+              </ep-tag>
             </div>
             </td>
           </ng-container>
@@ -545,14 +545,14 @@
               *cdkCellDef="let case"
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
             >
-            <tw-tag
+            <ep-tag
             [dot]="false"
             [color]="'sky'"
-            [twSize]="'small'"
+            [epSize]="'small'"
             [rounded]="true"
           >
           {{case.matter_intake?.status ? `Intake ${case.matter_intake.status}|| "No intake"}}
-          </tw-tag>
+          </ep-tag>
             </td>
           </ng-container>
           <!-- Symbol Column -->
@@ -718,11 +718,11 @@
     </div>
 
     <ng-container *ngIf="cases$ | async as cases">
-      <tw-paginator
-        [twPageSize]="20"
-        [twTotalSize]="cases.length"
-        (twCurrentPage)="setPagination($event)"
-      ></tw-paginator>
+      <ep-paginator
+        [epPageSize]="20"
+        [epTotalSize]="cases.length"
+        (epCurrentPage)="setPagination($event)"
+      ></ep-paginator>
     </ng-container>
     <!-- End main area -->
   </main>

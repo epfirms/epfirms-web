@@ -8,7 +8,7 @@ import { map, take } from 'rxjs/operators';
 import { AddCaseComponent } from '../overlays/add-case/add-case.component';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
-import { MatterTabsService } from '../_services/matter-tabs-service/matter-tabs.service';
+import { MatterTabsService } from '../../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { StaffService } from '../_services/staff-service/staff.service';
 import { DialogService } from '@ngneat/dialog';
 

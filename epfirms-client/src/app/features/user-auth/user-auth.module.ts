@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { UserAuthRoutingModule } from './user-auth-routing.module';
 import { UserAuthComponent } from './user-auth.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../shared/shared.module';
 import { NgxStripeModule } from 'ngx-stripe';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -32,7 +31,6 @@ import { InputMaskModule } from '@ngneat/input-mask';
     FormsModule,
     ReactiveFormsModule,
     UserAuthRoutingModule,
-    SharedModule,
     NgxStripeModule.forRoot('pk_test_NaQ0K78jrNRGyacbblmpM2RW00mvwDjEh6'),
     InputMaskModule
   ]

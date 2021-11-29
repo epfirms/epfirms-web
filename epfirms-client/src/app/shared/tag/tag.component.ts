@@ -3,12 +3,12 @@ import { TagColor } from '@app/core/interfaces/legal-area-color';
 import { fromEvent } from 'rxjs';
 
 @Component({
-  selector: 'tw-tag',
+  selector: 'ep-tag',
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.scss'],
 })
 export class TagComponent implements OnInit, OnDestroy {
-  @Input() twSize: 'small' | 'large' = 'large';
+  @Input() epSize: 'small' | 'large' = 'large';
 
   @Input() color: TagColor;
 

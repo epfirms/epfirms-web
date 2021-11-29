@@ -1,47 +1,47 @@
 <img
-  *ngIf="twSrc"
+  *ngIf="epSrc"
   class="avatar"
-  [src]="twSrc"
+  [src]="epSrc"
   alt=""
   [ngClass]="{
-    xs: twSize === 'xsmall',
-    sm: twSize === 'small',
-    md: twSize === 'medium' || !twSize,
-    lg: twSize === 'large',
-    xl: twSize === 'xlarge',
-    round: twShape === 'round' || !twShape,
-    square: twShape === 'square'
+    xs: epSize === 'xsmall',
+    sm: epSize === 'small',
+    md: epSize === 'medium' || !epSize,
+    lg: epSize === 'large',
+    xl: epSize === 'xlarge',
+    round: epShape === 'round' || !epShape,
+    square: epShape === 'square'
   }"
 />
 
-<ng-container *ngIf="!twSrc">
+<ng-container *ngIf="!epSrc">
   <span
-    *ngIf="twText"
+    *ngIf="epText"
     class="initials"
     [ngClass]="{
-      xs: twSize === 'xsmall',
-      sm: twSize === 'small',
-      md: twSize === 'medium' || !twSize,
-      lg: twSize === 'large',
-      xl: twSize === 'xlarge',
-      round: twShape === 'round' || !twShape,
-      square: twShape === 'square'
+      xs: epSize === 'xsmall',
+      sm: epSize === 'small',
+      md: epSize === 'medium' || !epSize,
+      lg: epSize === 'large',
+      xl: epSize === 'xlarge',
+      round: epShape === 'round' || !epShape,
+      square: epShape === 'square'
     }"
   >
-    <span>{{ twText | initials }}</span>
+    <span>{{ epText | initials }}</span>
   </span>
 
   <span
-    *ngIf="!twText"
+    *ngIf="!epText"
     class="icon"
     [ngClass]="{
-      xs: twSize === 'xsmall',
-      sm: twSize === 'small',
-      md: twSize === 'medium' || !twSize,
-      lg: twSize === 'large',
-      xl: twSize === 'xlarge',
-      round: twShape === 'round' || !twShape,
-      square: twShape === 'square'
+      xs: epSize === 'xsmall',
+      sm: epSize === 'small',
+      md: epSize === 'medium' || !epSize,
+      lg: epSize === 'large',
+      xl: epSize === 'xlarge',
+      round: epShape === 'round' || !epShape,
+      square: epShape === 'square'
     }"
   >
     <svg

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '@app/core/services/auth.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { take } from 'rxjs/operators';
-import { MatterTabsService } from './_services/matter-tabs-service/matter-tabs.service';
+import { MatterTabsService } from '../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { SocketService } from '../core/services/socket.service';
 
 @Component({
