@@ -125,4 +125,10 @@ export class ManageBillComponent implements OnInit {
   calculateAmount(): void {
     this.billForm.patchValue({amount: this.billForm.value.hourly_rate* this.billForm.value.hours})
   }
+
+  //setStaff is used to change the bill assignee, this should prefill eventually
+  setStaff(staff): void {
+    console.log("staff",staff);
+    this.billForm.patchValue({track_time_for: staff.id});
+  }
 }
