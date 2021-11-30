@@ -121,11 +121,24 @@
           <div class="mt-1">
 
             <div>
-              <label for="hours" class="block text-sm font-medium text-gray-700">Hours</label>
-              <input type="number" id="hours" formControlName="hours"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+              <label for="hours" class="block text-sm font-medium text-gray-700">Hourly Rate</label>
+              <input type="number" id="hours" formControlName="hourly_rate"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
             </div>
           </div>
         </div>
+
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+
+            <div>
+              <label for="hours" class="block text-sm font-medium text-gray-700">Hours</label>
+              <input type="number" (blur)="calculateAmount()" id="hours" formControlName="hours"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+            </div>
+          </div>
+        </div>
+
+
 
         <div class="sm:col-span-3">
 

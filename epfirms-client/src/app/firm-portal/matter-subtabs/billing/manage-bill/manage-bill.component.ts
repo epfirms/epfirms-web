@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
+import { Staff } from '@app/_models/staff';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-manage-bill',
@@ -38,13 +41,28 @@ export class ManageBillComponent implements OnInit {
   //due date
   date = new Date().toString()
 
+  // staff obs and list for getting staff information like default hourly rate
+  staff$: Observable<Staff[]>;
+  staffList;
 
 
-  constructor(private _matterService: MatterService) { }
+
+  constructor(private _matterService: MatterService,
+    private _staffService : StaffService,) {
+    this.staff$ = _staffService.entities$;
+   }
 
   ngOnInit(): void {
     console.log("Matter", this.matter);
     console.log(this.currentBill);
+
+    // get staff list from obs
+    this.staff$.subscribe(res => {
+      this.staffList = res;
+    });
+
+    //init some of the bill form values
+    this.initializeForm();
 
     // init for edit mode
     if (this.isEditMode === true) {
@@ -96,5 +114,15 @@ export class ManageBillComponent implements OnInit {
         this.closeBillManager();
       });
     }
+  }
+
+  // this is used to prefill some properties on the form from employee information
+  // such as hourly_rate
+  initializeForm():void {
+    this.billForm.patchValue({track_time_for: this.matter.attorney_id})
+  }
+
+  calculateAmount(): void {
+    this.billForm.patchValue({amount: this.billForm.value.hourly_rate* this.billForm.value.hours})
   }
 }
