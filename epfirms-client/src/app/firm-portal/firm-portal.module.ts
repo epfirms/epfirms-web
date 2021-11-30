@@ -16,6 +16,7 @@ import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { MatterTabModule } from '@app/features/matter-tab/matter-tab.module';
 import { NavbarModule } from '@app/shared/navbar/navbar.module';
 import { MenuModule } from 'headlessui-angular';
+import { SharedModule } from '@app/shared/shared.module';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { MenuModule } from 'headlessui-angular';
     AvatarModule,
     MatterTabModule,
     NavbarModule,
-    MenuModule
+    MenuModule,
+    SharedModule
   ]
 })
 export class FirmPortalModule {}

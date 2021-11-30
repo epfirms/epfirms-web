@@ -6,6 +6,7 @@ import { TippyModule } from '@ngneat/helipopper';
 import { CoreModule } from '@app/core/core.module';
 import { PdfViewerModule } from '@app/shared/pdf-viewer/pdf-viewer.module';
 import { PipesModule } from '@app/core/pipes/pipes.module';
+import { ButtonModule } from '@app/shared/button/button.module';
 
 
 
@@ -19,7 +20,8 @@ import { PipesModule } from '@app/core/pipes/pipes.module';
     CoreModule,
     TippyModule,
     PdfViewerModule,
-    PipesModule
+    PipesModule,
+    ButtonModule
   ],
   exports: [
     DocumentsComponent,

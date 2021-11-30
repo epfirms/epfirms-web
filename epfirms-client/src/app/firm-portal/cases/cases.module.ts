@@ -2,6 +2,7 @@ import { CdkTableModule } from '@angular/cdk/table'
 import { NgModule } from '@angular/core'
 import { CoreModule } from '@app/core/core.module'
 import { AvatarModule } from '@app/shared/avatar/avatar.module'
+import { ButtonModule } from '@app/shared/button/button.module'
 import { PaginatorModule } from '@app/shared/paginator/paginator.module'
 import { TagModule } from '@app/shared/tag/tag.module'
 import { DialogModule } from '@ngneat/dialog'
@@ -23,7 +24,8 @@ import { CasesComponent } from './cases.component'
         DialogModule,
         TagModule,
         AvatarModule,
-        PaginatorModule
+        PaginatorModule,
+        ButtonModule
     ],
 })
 export class CasesPageModule {}

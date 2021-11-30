@@ -11,6 +11,7 @@ import { TippyModule } from '@ngneat/helipopper';
 import { MenuModule } from 'headlessui-angular';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { ClientDirectoryComponent } from './client-directory.component';
+import { ButtonModule } from '@app/shared/button/button.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ClientDirectoryComponent } from './client-directory.component';
     DialogModule,
     TagModule,
     AvatarModule,
-    PaginatorModule
+    PaginatorModule,
+    ButtonModule
   ]
 })
 export class ClientDirectoryModule { }

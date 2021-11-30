@@ -63,6 +63,7 @@
             "
             placeholder="Search..."
             type="search"
+            autocomplete="off"
           />
         </div>
       </form>
@@ -70,10 +71,10 @@
     <div class="ml-4 flex items-center md:ml-6">
       <div class="mr-4">
         <div hlMenu class="relative inline-block text-left">
-          <button hlMenuButton class="button-white-icon-sm">
+          <button hlMenuButton ep-icon-button color="white">
             {{matterFilterValues.status + ' ' + matterFilterValues.matter_type + 's' | titlecase}}
 
-          <svg class="icon-end" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <svg ep-trailing-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
           </button>
@@ -121,24 +122,11 @@
       </div>
       <div>
         <button
+          ep-icon-button
           (click)="addLead()"
-          type="button"
-          class="button-primary-icon-sm"
         >
-          <!-- Heroicon name: solid/mail -->
-
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 22 22"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
+          <svg ep-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
           </svg>
           Add Lead
         </button>

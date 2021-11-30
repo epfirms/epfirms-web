@@ -10,6 +10,7 @@ import { TippyModule } from '@ngneat/helipopper';
 import { MenuModule } from 'headlessui-angular';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { LeadsComponent } from './leads.component';
+import { ButtonModule } from '@app/shared/button/button.module';
 
 
 
@@ -25,7 +26,8 @@ import { LeadsComponent } from './leads.component';
     DialogModule,
     TagModule,
     AvatarModule,
-    PaginatorModule
+    PaginatorModule,
+    ButtonModule
   ]
 })
 export class LeadsPageModule { }

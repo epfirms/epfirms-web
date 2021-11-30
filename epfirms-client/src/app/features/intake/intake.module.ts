@@ -6,6 +6,7 @@ import { AddMoneyAccountComponent } from './add-money-account/add-money-account.
 import { AddRealEstateComponent } from './add-real-estate/add-real-estate.component';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { CoreModule } from '@app/core/core.module';
+import { SharedModule } from '@app/shared/shared.module';
 
 
 
@@ -20,6 +21,7 @@ import { CoreModule } from '@app/core/core.module';
   ],
   imports: [
     CoreModule,
+    SharedModule
   ],
   exports: [
     IntakeFormComponent

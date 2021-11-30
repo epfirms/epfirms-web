@@ -1,7 +1,7 @@
 <ng-container *ngIf="matter">
   <div class="p-4">
-    <button class="button-white-icon-sm" (click)="fileList.click()">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
+    <button ep-icon-button (click)="fileList.click()">
+      <svg ep-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd"
           d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"
           clip-rule="evenodd" />
@@ -10,9 +10,9 @@
       <input type="file" (change)="onFilesSelected($event)" #fileList multiple style="display:none">
     </button>
     <div class="inline-block float-right">
-      <input type="text" id="email" [(ngModel)]="search"
-        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md ml-3"
-        placeholder="Search...">
+      <input type="text" id="email" [(ngModel)]="search" autocomplete="off"
+        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+        placeholder="Search documents">
     </div>
   </div>
   <div class="align-middle inline-block min-w-full">
@@ -22,10 +22,10 @@
           <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             <span>Name</span>
           </th>
-          <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
             Type
           </th>
-          <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
             Sharing
           </th>
           <th class="
@@ -39,6 +39,7 @@
               uppercase
               tracking-wider
               whitespace-nowrap
+              border-b border-gray-200
             ">
           </th>
         </tr>
@@ -51,11 +52,9 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
                 </svg>
-                <a class="truncate hover:text-gray-600">
-                  <span>
+                  <span class="truncate">
                     {{doc.doc_name}}
                   </span>
-                </a>
               </div>
             </td>
             <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
