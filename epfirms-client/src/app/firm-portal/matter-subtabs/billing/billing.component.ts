@@ -169,13 +169,15 @@ export class BillingComponent implements OnInit {
   }
 
   download(statement): void {
-    const rows = [
-    ["name1", "city1", "some other info"],
-    ["name2", "city2", "more info"]
-];
 
-let csvContent = "data:text/csv;charset=utf-8,"
-    + rows.map(e => e.join(",")).join("\n");
+
+    let csvContent = "data:text/csv;charset=utf-8,"
+
+    csvContent += "Employee ID,Hourly Rate, Hours, Amount, Description, Billing Type, Payment Type\n"
+
+    this.bills.filter(bill => bill.statement_id = statement.id).forEach(bill => {
+      csvContent += `${bill.track_time_for},${bill.hourly_rate},${bill.hours}, ${bill.amount},${bill.description},${bill.billing_type},${bill.payment_type}\n`
+    });
 
     var encodedUri = encodeURI(csvContent);
 window.open(encodedUri);
