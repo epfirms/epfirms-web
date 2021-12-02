@@ -175,7 +175,7 @@ export class BillingComponent implements OnInit {
 
     csvContent += "Employee ID,Hourly Rate, Hours, Amount, Description, Billing Type, Payment Type\n"
 
-    this.bills.filter(bill => bill.statement_id = statement.id).forEach(bill => {
+    this.bills.filter(bill => bill.statement_id == statement.id).forEach(bill => {
       csvContent += `${bill.track_time_for},${bill.hourly_rate},${bill.hours}, ${bill.amount},${bill.description},${bill.billing_type},${bill.payment_type}\n`
     });
 
