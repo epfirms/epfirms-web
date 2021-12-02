@@ -36,7 +36,8 @@ export class ManageBillComponent implements OnInit {
     payment_type: new FormControl('', Validators.required),
     hourly_rate: new FormControl(null),
     track_time_for: new FormControl(null, Validators.required),
-  })
+    employee_name: new FormControl(null, Validators.required),
+  });
 
   //due date
   date = new Date().toString()
@@ -80,6 +81,7 @@ export class ManageBillComponent implements OnInit {
         payment_type: this.currentBill.payment_type,
         hourly_rate: this.currentBill.hourly_rate,
         track_time_for: this.currentBill.track_time_for,
+        employee_name: this.currentBill.employee_name
       });
       this.date = this.currentBill.date;
     }
@@ -119,7 +121,7 @@ export class ManageBillComponent implements OnInit {
   // this is used to prefill some properties on the form from employee information
   // such as hourly_rate
   initializeForm():void {
-    this.billForm.patchValue({track_time_for: this.matter.attorney_id})
+    this.billForm.patchValue({track_time_for: this.matter.attorney_id, employee_name: this.matter.attorney.full_name})
   }
 
   calculateAmount(): void {
@@ -129,6 +131,6 @@ export class ManageBillComponent implements OnInit {
   //setStaff is used to change the bill assignee, this should prefill eventually
   setStaff(staff): void {
     console.log("staff",staff);
-    this.billForm.patchValue({track_time_for: staff.id});
+    this.billForm.patchValue({track_time_for: staff.id, employee_name: staff.full_name});
   }
 }

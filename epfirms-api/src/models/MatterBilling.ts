@@ -59,7 +59,10 @@ module.exports = (sequelize, { INTEGER, DATE, DECIMAL, STRING }) => {
           },
           statement_id: {
             type: INTEGER
-          }
+          },
+          employee_name: {
+            type: STRING
+          },
       },
       {
         tableName,

@@ -27,16 +27,16 @@ export class BillingComponent implements OnInit {
   payments: any[] = [];
 
   //CONFIG FOR BILL MANAGER SLIDE OVER
-  isBillManagerVisible : boolean = false;
-  isBillManagerEditMode : boolean = false;
+  isBillManagerVisible: boolean = false;
+  isBillManagerEditMode: boolean = false;
   currentBill;
 
   //CONFIG FOR STATEMENT MANAGER
-  isStatementManagerVisible : boolean = false;
+  isStatementManagerVisible: boolean = false;
   currentStatement;
 
   constructor(private _modalService: ModalService, private _matterService: MatterService,
-  private statementService : StatementService) {}
+    private statementService: StatementService) { }
   ngOnInit(): void {
     this.loadBillPayments();
     this.loadStatements();
@@ -96,7 +96,7 @@ export class BillingComponent implements OnInit {
   }
 
   //method for toggling visibility of bill manager
-  toggleBillManager():void {
+  toggleBillManager(): void {
     this.isBillManagerVisible = !this.isBillManagerVisible;
   }
 
@@ -127,12 +127,12 @@ export class BillingComponent implements OnInit {
     date.setDate(date.getDate() + 30);
 
     let statement = {
-      firm_id : this.matter.firm_id,
-      status : "UNPAID",
-      matter_id : this.matter.id,
-      due_date : date.toDateString(),
+      firm_id: this.matter.firm_id,
+      status: "UNPAID",
+      matter_id: this.matter.id,
+      due_date: date.toDateString(),
       balance_due: balance,
-      user_id : this.matter.attorney_id,
+      user_id: this.matter.attorney_id,
       message: `Statement Generated: ${new Date().toDateString()}`
     }
 
@@ -158,12 +158,12 @@ export class BillingComponent implements OnInit {
     });
   }
 
-  deleteStatement(id) : void {
+  deleteStatement(id): void {
     this.statementService.delete(id).subscribe(res => this.loadStatements());
   }
 
   //statement manager helper methods
-  toggleStatementManager(statement) : void {
+  toggleStatementManager(statement): void {
     this.isStatementManagerVisible = !this.isStatementManagerVisible;
     this.currentStatement = statement;
   }
@@ -173,14 +173,14 @@ export class BillingComponent implements OnInit {
 
     let csvContent = "data:text/csv;charset=utf-8,"
 
-    csvContent += "Employee ID,Hourly Rate, Hours, Amount, Description, Billing Type, Payment Type\n"
+    csvContent += "Employee ID, Employee Name, Hourly Rate, Hours, Amount, Description, Billing Type, Payment Type\n"
 
     this.bills.filter(bill => bill.statement_id == statement.id).forEach(bill => {
-      csvContent += `${bill.track_time_for},${bill.hourly_rate},${bill.hours}, ${bill.amount},${bill.description},${bill.billing_type},${bill.payment_type}\n`
+      csvContent += `${bill.track_time_for},${bill.employee_name},${bill.hourly_rate},${bill.hours}, ${bill.amount},${bill.description},${bill.billing_type},${bill.payment_type}\n`
     });
 
     var encodedUri = encodeURI(csvContent);
-window.open(encodedUri);
+    window.open(encodedUri);
   }
 
 
