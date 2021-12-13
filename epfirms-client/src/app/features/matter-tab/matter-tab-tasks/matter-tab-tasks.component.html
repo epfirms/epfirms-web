@@ -160,7 +160,7 @@
                     (ngModelChange)="filterStaffMembers($event)" [epAutocomplete]="auto">
                 </ep-input-group>
                 <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayFn"
-                  (optionSelected)="updateTask(task, 'assignee_id', $event)" panelWidth="auto">
+                  (optionSelected)="updateTask(task, 'assignee_id', $event.option.value)" panelWidth="auto">
                   <ep-option *ngFor="let staffMember of filteredStaffMembers" [value]="staffMember.user.id">
                     <ep-avatar epSize="xsmall" [epSrc]="staffMember.user.profile_image"
                       [epText]="staffMember.user.full_name">

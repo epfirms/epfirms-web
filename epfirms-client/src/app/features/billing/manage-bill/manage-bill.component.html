@@ -139,7 +139,7 @@
               <label for="staffSelect" class="block text-sm font-medium text-gray-700">Bill Assignee</label>
               <select id="staffSelect"   class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 <option></option>
-                <option (click)="setStaff(staff)" *ngFor="let staff of staffList">{{staff.first_name}} {{staff.last_name}}</option>
+                <option (click)="setStaff(staff)" *ngFor="let staff of staffList">{{staff.user.first_name}} {{staff.user.last_name}}</option>
 
               </select>
             </div>

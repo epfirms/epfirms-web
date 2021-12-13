@@ -73,8 +73,7 @@ export class MatterTabTasksComponent implements OnInit {
     this._matterService.addMatterTask(task).subscribe();
   }
 
-  updateTask(task, property, event) {
-    const value = event.option.value;
+  updateTask(task, property, value) {
     let taskChanges = {
       ...task,
       [property]: value

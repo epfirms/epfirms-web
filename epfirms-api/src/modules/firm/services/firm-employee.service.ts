@@ -57,7 +57,7 @@ export class FirmEmployeeService {
       },
       include: {
         model: firm_employee,
-        attributes: ['id', 'active'],
+        attributes: ['id', 'active', 'hourly_rate'],
         include: [
           {
             model: firm_role,
