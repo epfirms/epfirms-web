@@ -6,4 +6,5 @@ export class Staff {
   active: boolean;
   role: EmployeeRole[];
   user: UserProfile;
+  hourly_rate?: number;
 }
