@@ -12,6 +12,7 @@ export class MatterService {
       user,
       legal_area,
       matter_intake,
+      statement,
       matter_task_file
     } = Database.models;
     const { sequelize } = Database;
@@ -77,7 +78,10 @@ export class MatterService {
               model: matter_task_file
             }
           ]
-        }
+        },
+        {
+          model: statement
+        },
       ],
       order: [
         [
@@ -98,6 +102,7 @@ export class MatterService {
       user,
       legal_area,
       matter_intake,
+      statement,
       matter_task_file
     } = Database.models;
     const { sequelize } = Database;
@@ -163,7 +168,10 @@ export class MatterService {
               model: matter_task_file
             }
           ]
-        }
+        },
+        {
+          model: statement
+        },
       ],
       order: [
         [

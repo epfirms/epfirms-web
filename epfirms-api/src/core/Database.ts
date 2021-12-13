@@ -50,6 +50,7 @@ export class Database {
       firm_template_task: require('../models/FirmTemplateTask')(this.sequelize, Sequelize),
       firm_task_template: require('../models/FirmTaskTemplate')(this.sequelize, Sequelize),
       external_lead: require('../models/ExternalLead')(this.sequelize, Sequelize),
+      statement: require('../models/Statement')(this.sequelize, Sequelize),
       beta_signup: require('../models/BetaSignup')(this.sequelize, Sequelize),
       firm_template_task_file: require('../models/FirmTemplateTaskFile')(this.sequelize, Sequelize),
       matter_task_file: require('../models/MatterTaskFile')(this.sequelize, Sequelize)
@@ -251,6 +252,12 @@ export class Database {
       foreignKey: 'firm_id'
     });
 
+    this.models.matter.hasMany(this.models.statement, {
+      foreignKey: 'matter_id'
+    });
+    this.models.statement.belongsTo(this.models.matter, {
+      foreignKey: 'matter_id'
+    });
     this.models.user.hasMany(this.models.firm_template_task, {
       foreignKey: 'user_id'
     });

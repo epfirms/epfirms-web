@@ -20,6 +20,7 @@ import { TaskFileModule } from '../task-file/task-file.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { DocumentsModule } from '../documents/documents.module';
+import { BillingModule } from '../billing/billing.module';
 
 
 
@@ -47,7 +48,8 @@ import { DocumentsModule } from '../documents/documents.module';
     TaskFileModule,
     EditableModule,
     DocumentsModule,
-    SharedModule
+    SharedModule,
+    BillingModule
   ],
   exports: [
     MatterTabsComponent

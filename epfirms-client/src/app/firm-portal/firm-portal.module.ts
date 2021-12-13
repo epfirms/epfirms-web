@@ -25,7 +25,7 @@ import { MenuModule } from 'headlessui-angular';
     AddClientComponent,
     AddStaffComponent,
     DeleteStaffComponent,
-    EditClientComponent,
+    EditClientComponent
   ],
   imports: [
     CoreModule,

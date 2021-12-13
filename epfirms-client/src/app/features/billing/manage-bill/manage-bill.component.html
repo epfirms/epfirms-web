@@ -1,0 +1,235 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div *ngIf="isVisible" class="fixed inset-0 overflow-hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+  <div class="absolute inset-0 overflow-hidden">
+    <!-- Background overlay, show/hide based on slide-over state. -->
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16">
+        <!--
+          Slide-over panel, show/hide based on slide-over state.
+
+          Entering: "transform transition ease-in-out duration-500 sm:duration-700"
+            From: "translate-x-full"
+            To: "translate-x-0"
+          Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
+            From: "translate-x-0"
+            To: "translate-x-full"
+        -->
+        <div class="w-screen max-w-2xl">
+          <div class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
+            <div class="px-4 sm:px-6">
+              <div class="flex items-start justify-between">
+                <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+                  Manage Bill
+                </h2>
+                <div class="ml-3 h-7 flex items-center">
+                  <button type="button" (click)="closeBillManager()" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <span class="sr-only">Close panel</span>
+                    <!-- Heroicon name: outline/x -->
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="mt-6 relative flex-1 px-4 sm:px-6">
+              <!-- Replace with your content -->
+              <!--
+  This example requires Tailwind CSS v2.0+
+
+  This example requires some changes to your config:
+
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<form [formGroup]="billForm" class="space-y-8 divide-y divide-gray-200">
+  <div class="space-y-8 divide-y divide-gray-200">
+    <div>
+
+
+      <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+            <!--
+              This example requires Tailwind CSS v2.0+
+
+              This example requires some changes to your config:
+
+              ```
+              // tailwind.config.js
+              module.exports = {
+                // ...
+                plugins: [
+                  // ...
+                  require('@tailwindcss/forms'),
+                ],
+              }
+              ```
+            -->
+            <div>
+              <label for="billingStyle" class="block text-sm font-medium text-gray-700">Billing Style</label>
+              <select id="billingStyle" formControlName="billing_type"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                <option>Flat Rate</option>
+                <option >Hourly</option>
+                <option>Contingency</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+            <!--
+              This example requires Tailwind CSS v2.0+
+
+              This example requires some changes to your config:
+
+              ```
+              // tailwind.config.js
+              module.exports = {
+                // ...
+                plugins: [
+                  // ...
+                  require('@tailwindcss/forms'),
+                ],
+              }
+              ```
+            -->
+            <div>
+              <label for="paymentType" class="block text-sm font-medium text-gray-700">Payment Type</label>
+              <select id="paymentType" formControlName="payment_type"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                <option>Private Pay</option>
+                <option >Legal Insurance</option>
+
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+            <!--
+              This example requires Tailwind CSS v2.0+
+
+              This example requires some changes to your config:
+
+              ```
+              // tailwind.config.js
+              module.exports = {
+                // ...
+                plugins: [
+                  // ...
+                  require('@tailwindcss/forms'),
+                ],
+              }
+              ```
+            -->
+            <div>
+              <label for="staffSelect" class="block text-sm font-medium text-gray-700">Bill Assignee</label>
+              <select id="staffSelect"   class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                <option></option>
+                <option (click)="setStaff(staff)" *ngFor="let staff of staffList">{{staff.first_name}} {{staff.last_name}}</option>
+
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+
+            <div>
+              <label for="hours" class="block text-sm font-medium text-gray-700">Hourly Rate</label>
+              <input type="number" id="hours" formControlName="hourly_rate"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+
+            <div>
+              <label for="hours" class="block text-sm font-medium text-gray-700">Hours</label>
+              <input type="number" (blur)="calculateAmount()" id="hours" formControlName="hours"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+
+            <div>
+              <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+              <input type="number" id="amount" formControlName="amount"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+
+          <div class="mt-1">
+
+            <div>
+              <label for="hours" class="block text-sm font-medium text-gray-700">Due Date</label>
+              <editable-datepicker [date]="date" (dateChanged)="setDueDate($event)"></editable-datepicker>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="sm:col-span-6">
+          <label for="about" class="block text-sm font-medium text-gray-700">
+            Description
+          </label>
+          <div class="mt-1">
+            <textarea id="about" name="about" formControlName="description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+  <div class="pt-5">
+    <div class="flex justify-end">
+      <button type="button" (click)="closeBillManager()" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Cancel
+      </button>
+      <button (click)="submit()" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Save
+      </button>
+    </div>
+  </div>
+</form>
+
+              <!-- /End replace -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

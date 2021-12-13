@@ -104,6 +104,25 @@
             </th>
             <th
             class="
+              hidden
+              md:table-cell
+              px-6
+              py-3
+              border-gray-200
+              bg-white
+              text-left text-xs
+              font-medium
+              text-gray-500
+              uppercase
+              tracking-wider
+              whitespace-nowrap
+              border-l border-gray-200
+            "
+          >
+            Hours
+          </th>
+            <th
+            class="
               table-cell
               px-4
               py-3
@@ -176,13 +195,32 @@
               text-sm
               font-medium
               text-gray-900
-              border-t border-b border-gray-200
+              border-t border-b border-gray-200 border-r
               "
             >
               <div>
                 <editable-datepicker [date]="task.due" (dateChanged)="updateTask(task, 'due', $event)"></editable-datepicker>
             </div>
             </td>
+
+            <td
+            class="
+              px-1
+              py-1
+              max-w-0
+              w-full
+              whitespace-nowrap
+              text-sm
+              font-medium
+              text-gray-900
+              border-t border-b border-gray-200
+            "
+          >
+          <div>
+            <editable-input [value]="task.hours" placeholder="Enter hours" [enterKey]="false" (onChange)="updateTask(task, 'hours', $event)" #taskHours></editable-input>
+          </div>
+          </td>
+
             <td
             class="
             px-1
