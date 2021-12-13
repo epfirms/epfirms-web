@@ -1,5 +1,5 @@
 import express from 'express';
-import { firmController, firmTaskTemplateController } from '@modules/firm/controllers';
+import { firmController, firmEmployeeController, firmTaskTemplateController } from '@modules/firm/controllers';
 const passport = require('passport');
 
 const firmRouter = express.Router();
@@ -46,5 +46,13 @@ firmRouter.put('/task-templates/task/file/:file_id', passport.authenticate('bear
 firmRouter.delete('/task-templates/task/file/:file_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.deleteTaskFile(req, res));
 
 firmRouter.get('/search-key', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getSearchKey(req, res));
+
+firmRouter.get('/employees', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.getAll(req, res));
+
+firmRouter.post('/employees', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.create(req, res));
+
+firmRouter.put('/employees', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.update(req, res));
+
+firmRouter.delete('/employees', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.delete(req, res));
 
 export { firmRouter };

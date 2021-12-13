@@ -196,23 +196,6 @@
               </th>
               <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap w-3/12" (click)="openTab(case)">
                 <a class="flex-shrink-0 group block" *ngIf="case.matter_tasks.length">
-                  <!-- <div class="flex items-center" *ngIf="!case.matter_tasks[0].completed">
-                  <div>
-                    <ep-avatar
-                      epSize="xsmall"
-                      [epSrc]="case.matter_tasks[0].assignee?.profile_image"
-                      [epText]="case.matter_tasks[0].assignee?.full_name"
-                    ></ep-avatar>
-                  </div>
-                  <div class="ml-2">
-                    <p class="text-sm text-gray-900 max-w-xs truncate">
-                      {{ case.matter_tasks[0].name || "No task name" }}
-                    </p>
-                    <p class="text-sm text-gray-500">
-                      {{ case.matter_tasks[0].due | date }}
-                    </p>
-                  </div>
-                </div> -->
                   <a class="flex-shrink-0 group block" *ngIf="!case.matter_tasks[0].completed">
                     <div class="flex items-center">
                       <div>
@@ -371,14 +354,14 @@
                         normal-case
                         hover:bg-blue-500 hover:text-white hover:cursor-pointer
                       " [ngClass]="{
-                        'bg-blue-500 text-white': attorney.id === matterFilterValues.attorney_id
-                      }" (click)="filterAttorney(attorney.id)">
+                        'bg-blue-500 text-white': attorney.user.id === matterFilterValues.attorney_id
+                      }" (click)="filterAttorney(attorney.user.id)">
                         <div class="w-full">
-                          {{ attorney.first_name + ' ' + attorney.last_name | titlecase }}
+                          {{ attorney.user.first_name + ' ' + attorney.user.last_name | titlecase }}
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white hover:text-blue-200"
                           viewBox="0 0 20 20" fill="currentColor"
-                          *ngIf="attorney.id === matterFilterValues.attorney_id">
+                          *ngIf="attorney.user.id === matterFilterValues.attorney_id">
                           <path fill-rule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
                             clip-rule="evenodd" />
@@ -389,21 +372,23 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 whitespace-nowrap w-2/12">
-                <ngx-select class="table-cell" [items]="attorneys$ | async" (select)="setAttorney(case, $event)"
-                  [optionTextField]="'full_name'" [optionValueField]="'id'" [ngModel]="case.attorney_id"
-                  [keepSelectMenuOpened]="false">
-                  <ng-template ngx-select-option ngx-select-option-selected let-option let-text="text">
-                    <div class="flex items-center">
-                      <ep-avatar epSize="xsmall" [epSrc]="option.data.profile_image" [epText]="option.data.full_name">
-                      </ep-avatar>
-                      <div class="text-sm font-normal ml-3 block truncate">
-                        {{ option.text | titlecase }}
-                      </div>
-                    </div>
-                  </ng-template>
+                <ep-input-group>
+                  <ep-avatar ep-input-icon epSize="xsmall" [epSrc]="case.attorney.profile_image"
+                    [epText]="case.attorney.full_name"></ep-avatar>
 
-                </ngx-select>
+                  <input ep-input [epEditable]="true" type="text" [ngModel]="case.attorney_id"
+                    (ngModelChange)="filterAttorneys($event)" [epAutocomplete]="auto">
+                </ep-input-group>
 
+                <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayFn"
+                  (optionSelected)="setAttorney(case, $event)" panelWidth="auto">
+                  <ep-option *ngFor="let attorney of filteredAttorneys" [value]="attorney.user.id">
+                    <ep-avatar epSize="xsmall" [epSrc]="attorney.user.profile_image" [epText]="attorney.user.full_name">
+                    </ep-avatar> <span class="font-normal ml-3 block truncate">
+                      {{attorney.user.full_name}}
+                    </span>
+                  </ep-option>
+                </ep-autocomplete>
               </td>
             </ng-container>
 
@@ -575,20 +560,3 @@
     <!-- End main area -->
   </main>
 </div>
-
-<!-- This Button sends a review email to the client associated with the case.  TODO: Disable this on click to avoid multiple sendings, and make it clear to the user
-                      that something *happened*.  -->
-<!-- <td class="px-6 py-4 whitespace-nowrap text-center">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800" *ngIf="case.reviews.length === 0" (click)="sendReview(case,$event)">
-                          Send Review Request
-                        </span>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-200 text-gray-800" *ngIf="case.reviews.length !== 0 && !case.reviews[0].is_done">
-                          Review Request Sent!
-                        </span>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-200 text-gray-800" *ngIf="case.reviews.length !== 0 && !case.reviews[0].is_done" (click)="sendReview(case, $event)">
-                          Send Another?
-                        </span>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-200 text-gray-800" *ngIf="case.reviews.length !== 0 && case.reviews[0].is_done">
-                          Review Request Completed!
-                        </span>
-                      </td> -->

@@ -343,7 +343,7 @@
           -->
           <div>
             <h1 class="text-2xl font-bold text-gray-900">{{selectedClient.full_name | titlecase}}</h1>
-            <p class="text-sm font-medium text-gray-500">Added as a client on <span class="text-gray-900">{{selectedClient.firms[0].FirmClient.created_at | date}}</span></p>
+            <p class="text-sm font-medium text-gray-500">Added as a client on <span class="text-gray-900">{{selectedClient.client_firm[0].client.created_at | date}}</span></p>
           </div>
         </div>
       </div>

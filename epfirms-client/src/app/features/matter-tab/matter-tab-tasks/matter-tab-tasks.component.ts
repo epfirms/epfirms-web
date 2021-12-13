@@ -1,4 +1,4 @@
-import { Component, Input, ViewChildren } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren } from '@angular/core';
 import { TaskTemplateSelectionComponent } from '@app/features/task-template/task-template-selection/task-template-selection.component';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
@@ -7,13 +7,14 @@ import { MatterTask } from '@app/core/interfaces/matter-task';
 import { Staff } from '@app/core/interfaces/staff';
 import { DialogService } from '@ngneat/dialog';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-matter-tab-tasks',
   templateUrl: './matter-tab-tasks.component.html',
   styleUrls: ['./matter-tab-tasks.component.scss']
 })
-export class MatterTabTasksComponent {
+export class MatterTabTasksComponent implements OnInit {
   @Input()
   get matter() {
     return this._matter;
@@ -26,6 +27,9 @@ export class MatterTabTasksComponent {
 
   staff$: Observable<Staff[]>;
 
+  staffMembers: Staff[];
+  filteredStaffMembers: Staff[];
+
   @ViewChildren('taskName') taskNames;
 
   constructor(
@@ -34,6 +38,27 @@ export class MatterTabTasksComponent {
     private _dialog: DialogService
   ) {
     this.staff$ = _staffService.entities$;
+  }
+
+  ngOnInit() {
+    this.staff$.pipe(take(1)).subscribe(s => {
+      this.staffMembers = s;
+      this.filteredStaffMembers = s;
+    })
+  }
+
+  displayFn(value, options): string {
+    const selectedStaffMember = options.find((option) => option.value === value);
+    return selectedStaffMember ? selectedStaffMember.viewValue : 'Select a staff member';
+  }
+
+  filterStaffMembers(event) {
+    this.filteredStaffMembers =
+      event && event.length
+        ? this.staffMembers.filter((staff) =>
+            staff.user.full_name.toLowerCase().includes(event.toLowerCase())
+          )
+        : [...this.staffMembers];
   }
 
   trackByIndex(index, item) {
@@ -48,10 +73,10 @@ export class MatterTabTasksComponent {
     this._matterService.addMatterTask(task).subscribe();
   }
 
-  updateTask(task, property, value) {
+  updateTask(task, property, event) {
     let taskChanges = {
       ...task,
-      [property]: value
+      [property]: event.option.value
     };
 
     this._matterService.updateMatterTask(taskChanges).subscribe();

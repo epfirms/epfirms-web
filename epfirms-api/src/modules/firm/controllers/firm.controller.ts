@@ -6,10 +6,18 @@ import { UserService } from '@modules/user/services/user.service';
 import { EmailsController } from '@modules/emails/controllers';
 import { ClientSearchService } from '../services/client-search.service';
 import { Service } from 'typedi';
+import { FirmRoleService } from '../services/firm-role.service';
+import { FirmEmployeeService } from '../services/firm-employee.service';
 
 @Service()
 export class FirmController {
-  constructor(private _clientSearchService: ClientSearchService, private _firmService: FirmService, private _userService: UserService) { }
+  constructor(
+    private _clientSearchService: ClientSearchService,
+    private _firmService: FirmService,
+    private _userService: UserService,
+    private _firmRoleService: FirmRoleService,
+    private _firmEmployeeService: FirmEmployeeService
+  ) {}
 
   public async getFirm(req: any, resp: Response): Promise<any> {
     try {
@@ -37,7 +45,7 @@ export class FirmController {
         paralegal: false
       };
 
-      await this._firmService.addEmployee(createdUser.id, createdFirm.id, roles);
+      // await this._firmEmployeeService.add(createdUser.id, createdFirm.id, roles);
 
       const stripeCustomer = await PaymentProcessorService.createCustomer(user.email);
 
@@ -45,13 +53,17 @@ export class FirmController {
 
       const subscription = await PaymentProcessorService.subscribe(stripeCustomer.id);
 
-      await this._firmService.createSubscription(createdFirm.id, subscription.customer, subscription.current_period_end);
+      await this._firmService.createSubscription(
+        createdFirm.id,
+        subscription.customer,
+        subscription.current_period_end
+      );
 
-      resp.status(StatusConstants.CREATED).send({success: true});
+      await this._firmRoleService.initDefault(createdFirm.id);
+      
+      resp.status(StatusConstants.CREATED).send({ success: true });
 
       EmailsController.sendFirmConfirmation(req, resp);
-
-
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }
@@ -85,7 +97,7 @@ export class FirmController {
     try {
       const { firm_id } = req.user.firm_access;
 
-      const staffList = await this._firmService.getStaff(firm_id);
+      const staffList = await this._firmEmployeeService.getAll(firm_id);
 
       resp.status(StatusConstants.OK).send(staffList);
     } catch (error) {
@@ -124,7 +136,7 @@ export class FirmController {
 
       const searchKey = await this._clientSearchService.generateClientSearchKey(parseInt(firm_id));
 
-      resp.status(StatusConstants.OK).send({key: searchKey});
+      resp.status(StatusConstants.OK).send({ key: searchKey });
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }

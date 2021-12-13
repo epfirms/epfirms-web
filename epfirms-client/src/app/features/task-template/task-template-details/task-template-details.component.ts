@@ -9,18 +9,15 @@ import { TaskTemplateLawCategory, taskTemplateLawCategories } from '../enums/tas
 import { USAState } from '@app/shared/utils/us-states/typings';
 import { FirmTemplateTaskFile } from '../interfaces/firm-template-task-file';
 import { TaskTemplateService } from '../services/task-template.service';
-import { createMask, InputmaskOptions } from '@ngneat/input-mask';
+import { createMask } from '@ngneat/input-mask';
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-template-details',
   templateUrl: './task-template-details.component.html',
   styleUrls: ['./task-template-details.component.scss'],
-  host: {
-    'class': 'flex flex-col flex-auto'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskTemplateDetailsComponent {
+export class TaskTemplateDetailsComponent implements OnInit {
   public template: FirmTaskTemplate = {
     template_name: '',
     law_category: TaskTemplateLawCategory.OTHER,
@@ -29,6 +26,10 @@ export class TaskTemplateDetailsComponent {
   };
 
   public staff$: Observable<Staff[]>;
+
+  staffMembers: Staff[];
+
+  filteredStaffMembers: Staff[];
 
   public usaStates: USAState[] = usaStatesFull;
 
@@ -63,6 +64,27 @@ export class TaskTemplateDetailsComponent {
     }
   }
 
+  ngOnInit(): void {
+    this.staff$.pipe(take(1)).subscribe(s => {
+      this.staffMembers = s;
+      this.filteredStaffMembers = s;
+    })
+  }
+
+  displayFn(value, options): string {
+    const selectedStaffMember = options.find((option) => option.value === value);
+    return selectedStaffMember ? selectedStaffMember.viewValue : 'Select a staff member';
+  }
+
+  filterStaffMembers(event) {
+    this.filteredStaffMembers =
+      event && event.length
+        ? this.staffMembers.filter((staff) =>
+            staff.user.full_name.toLowerCase().includes(event.toLowerCase())
+          )
+        : [...this.staffMembers];
+  }
+
   addTemplateTask(): void {
     this.template.firm_template_tasks.push({
       user_id: null,
@@ -89,7 +111,13 @@ export class TaskTemplateDetailsComponent {
   }
 
   setAssignee(event, index) {
-    this.template.firm_template_tasks[index].user_id = event;
+    const staffMemberId = event.option.value;
+    this.template.firm_template_tasks[index].user_id = staffMemberId;
+    this.staff$.pipe(map((staff) => {
+      return staff.find((s) => s.user.id === staffMemberId)
+    }), take(1)).subscribe((staffMember) => {
+      this.template.firm_template_tasks[index].user = {...staffMember.user};
+    })
   }
 
   setDescription(event, index) {

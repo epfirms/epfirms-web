@@ -8,7 +8,6 @@ import { TagModule } from '@app/shared/tag/tag.module';
 import { DialogModule } from '@ngneat/dialog';
 import { TippyModule } from '@ngneat/helipopper';
 import { MenuModule } from 'headlessui-angular';
-import { NgxSelectModule } from 'ngx-select-ex';
 
 import { FirmHomeRoutingModule } from './firm-home-routing.module';
 import { FirmHomeComponent } from './firm-home.component';
@@ -21,7 +20,6 @@ import { FirmHomeComponent } from './firm-home.component';
     FirmHomeRoutingModule,
     MenuModule,
     CdkTableModule,
-    NgxSelectModule,
     TippyModule,
     DialogModule,
     TagModule,

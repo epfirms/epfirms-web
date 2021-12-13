@@ -12,6 +12,9 @@ import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module
 import { TaskFileModule } from '../task-file/task-file.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { EditableModule } from '@app/shared/editable/editable.module';
+import { CoreModule } from '@app/core/core.module';
+import { AvatarModule } from '@app/shared/avatar/avatar.module';
+import { InputModule } from '@app/shared/input/input.module';
 
 
 @NgModule({
@@ -22,15 +25,16 @@ import { EditableModule } from '@app/shared/editable/editable.module';
     TaskTemplateSelectionComponent
   ],
   imports: [
-    CommonModule,
-    FormsModule,
+    CoreModule,
     TippyModule,
     TaskFileModule,
     AngularMyDatePickerModule,
     PipesModule,
     AutocompleteModule,
     InputMaskModule,
-    EditableModule
+    EditableModule,
+    AvatarModule,
+    InputModule
   ],
   exports: [
     TaskTemplateListComponent,

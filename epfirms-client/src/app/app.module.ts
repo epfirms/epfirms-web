@@ -23,6 +23,7 @@ import { DialogModule } from '@ngneat/dialog';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { QuillConfig, QuillModule, QuillToolbarConfig } from 'ngx-quill';
+import { AutocompleteModule } from './shared/autocomplete/autocomplete.module';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -66,6 +67,7 @@ const quillConfig = [
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    AutocompleteModule,
     ReactiveFormsModule,
     NgxStripeModule.forRoot('pk_test_NaQ0K78jrNRGyacbblmpM2RW00mvwDjEh6'),
     StoreModule.forRoot({matterTabs: matterTabsReducer, currentUser: currentUserReducer}, {}),

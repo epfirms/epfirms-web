@@ -34,7 +34,7 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
   }
 
   getStaff(): Observable<any> {
-    return this._http.get('/api/firm/staff').pipe(
+    return this._http.get('/api/firm/employees').pipe(
       map((response: Staff[]) => {
         this.addAllToCache(response);
         return of(response);

@@ -52,19 +52,28 @@ export class Database {
       external_lead: require('../models/ExternalLead')(this.sequelize, Sequelize),
       beta_signup: require('../models/BetaSignup')(this.sequelize, Sequelize),
       firm_template_task_file: require('../models/FirmTemplateTaskFile')(this.sequelize, Sequelize),
-      matter_task_file: require('../models/MatterTaskFile')(this.sequelize, Sequelize)
+      matter_task_file: require('../models/MatterTaskFile')(this.sequelize, Sequelize),
+      community_task_template: require('../models/CommunityTaskTemplate')(this.sequelize, Sequelize),
+      community_template_task: require('../models/CommunityTemplateTask')(this.sequelize, Sequelize),
+      community_template_task_file: require('../models/CommunityTemplateTaskFile')(this.sequelize, Sequelize),
+      firm_team: require('../models/FirmTeam')(this.sequelize, Sequelize),
+      firm_team_member: require('../models/FirmTeamMember')(this.sequelize, Sequelize),
+      firm_role: require('../models/FirmRole')(this.sequelize, Sequelize),
+      firm_employee_role: require('../models/FirmEmployeeRole')(this.sequelize, Sequelize),
     };
 
-    this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee });
-    this.models.firm.belongsToMany(this.models.user, { through: this.models.firm_employee });
+    this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
+    this.models.firm.belongsToMany(this.models.user, { through: this.models.firm_employee, as: 'employee', foreignKey: 'firm_id' });
+    this.models.firm.hasMany(this.models.firm_employee);
+    this.models.firm_employee.belongsTo(this.models.user);
 
     this.models.user.belongsToMany(this.models.firm, {
       through: this.models.client,
-      as: 'FirmClient'
+      as: 'client_firm'
     });
     this.models.firm.belongsToMany(this.models.user, {
       through: this.models.client,
-      as: 'ClientFirm'
+      as: 'firm_client'
     });
 
     this.models.user.belongsToMany(this.models.user, {
@@ -248,7 +257,7 @@ export class Database {
       onDelete: 'cascade'
     });
     this.models.firm_template_task.belongsTo(this.models.firm_task_template, {
-      foreignKey: 'firm_id'
+      foreignKey: 'template_id'
     });
 
     this.models.user.hasMany(this.models.firm_template_task, {
@@ -269,6 +278,66 @@ export class Database {
     });
 
     this.models.matter_task_file.belongsTo(this.models.matter_task);
+
+
+    this.models.user.hasMany(this.models.community_task_template, {
+      foreignKey: 'created_by'
+    });
+
+    this.models.community_task_template.belongsTo(this.models.user, {
+      foreignKey: 'created_by'
+    });
+
+    this.models.community_task_template.hasMany(this.models.community_template_task, {
+      foreignKey: 'template_id',
+      onDelete: 'cascade'
+    });
+
+    this.models.community_template_task.belongsTo(this.models.community_task_template, {
+      foreignKey: 'template_id'
+    });
+
+    // this.models.firm_role.hasMany(this.models.community_template_task, {
+    //   foreignKey: 'firm_role_id'
+    // });
+
+    // this.models.community_template_task.belongsTo(this.models.firm_role, {
+    //   foreignKey: 'firm_role_id'
+    // });
+
+    this.models.community_template_task.hasMany(this.models.community_template_task_file, {
+      foreignKey: 'community_template_task_id'
+    });
+
+    this.models.community_template_task_file.belongsTo(this.models.community_template_task);
+
+    this.models.firm.hasMany(this.models.firm_team, {
+      foreignKey: 'firm_id'
+    });
+
+    this.models.firm_team.belongsTo(this.models.firm, {
+      foreignKey: 'firm_id'
+    });
+
+    this.models.firm_employee.hasMany(this.models.firm_team, {
+      foreignKey: 'owner'
+    });
+
+    this.models.firm_team.belongsTo(this.models.firm_employee, {
+      foreignKey: 'owner'
+    });
+
+    this.models.firm_team.belongsToMany(this.models.firm_employee, { through: 'firm_team_member'});
+    this.models.firm_employee.belongsToMany(this.models.firm_team, { through: 'firm_team_member'});
+
+    this.models.firm.hasMany(this.models.firm_role, {foreignKey: 'firm_id', as: 'firm_role'});
+    this.models.firm_role.belongsTo(this.models.firm, {
+      foreignKey: 'firm_id'
+    });
+
+    this.models.firm_employee.belongsToMany(this.models.firm_role, { through: 'firm_employee_role', as: 'role', foreignKey: 'firm_employee_id'});
+    this.models.firm_role.belongsToMany(this.models.firm_employee, { through: 'firm_employee_role', foreignKey: 'firm_role_id'});
+
   }
 
   public static async start() {

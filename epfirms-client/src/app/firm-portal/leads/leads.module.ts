@@ -8,9 +8,11 @@ import { TagModule } from '@app/shared/tag/tag.module';
 import { DialogModule } from '@ngneat/dialog';
 import { TippyModule } from '@ngneat/helipopper';
 import { MenuModule } from 'headlessui-angular';
-import { NgxSelectModule } from 'ngx-select-ex';
 import { LeadsComponent } from './leads.component';
 import { ButtonModule } from '@app/shared/button/button.module';
+import { EditableModule } from '@app/shared/editable/editable.module';
+import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module';
+import { InputModule } from '@app/shared/input/input.module';
 
 
 
@@ -21,13 +23,15 @@ import { ButtonModule } from '@app/shared/button/button.module';
     LeadsPageRoutingModule,
     MenuModule,
     CdkTableModule,
-    NgxSelectModule,
     TippyModule,
     DialogModule,
     TagModule,
     AvatarModule,
     PaginatorModule,
-    ButtonModule
+    ButtonModule,
+    EditableModule,
+    AutocompleteModule,
+    InputModule
   ]
 })
 export class LeadsPageModule { }

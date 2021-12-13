@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TwInputDirective } from './_directives/tw-input.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuModule } from 'headlessui-angular';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
@@ -13,10 +12,10 @@ import { TippyModule } from '@ngneat/helipopper';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { AvatarModule } from './avatar/avatar.module';
+import { InputModule } from './input/input.module';
 
 @NgModule({
   declarations: [
-    TwInputDirective,
     UserFormModalComponent,
     BillFormModalComponent,
     PaymentFormModalComponent,
@@ -32,10 +31,8 @@ import { AvatarModule } from './avatar/avatar.module';
     InputMaskModule,
     TippyModule,
     PipesModule,
-    AvatarModule
-  ],
-  exports: [
-    TwInputDirective,
+    AvatarModule,
+    InputModule
   ]
 })
 export class SharedModule { }

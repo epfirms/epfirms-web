@@ -1,0 +1,11 @@
+.ep-autocomplete-panel {
+    @apply w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm transition ease-in duration-100;
+}
+
+.ep-autocomplete-visible {
+    @apply opacity-100;
+}
+
+.ep-autocomplete-hidden {
+    @apply opacity-0;
+}

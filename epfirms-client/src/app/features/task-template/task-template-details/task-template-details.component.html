@@ -1,43 +1,49 @@
-<div class="px-4 pt-5 pb-12 sm:p-6 sm:pb-24 flex-auto">
+<div class="px-4 pt-5 pb-6 sm:p-6 sm:pb-12 flex-auto">
   <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
     <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
       Task Template
     </h3>
-    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-      <div class="col-span-1 sm:col-span-3">
-        <label for="template-name" class="block text-sm font-medium text-gray-700">
-          Template name
-        </label>
-        <div class="mt-1">
-          <input [(ngModel)]="template.template_name" type="text" name="template-name" id="template-name" autocomplete="off"
-            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
-        </div>
+  </div>
+  <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+    <div class="col-span-1 sm:col-span-3">
+      <label for="template-name" class="block text-sm font-medium text-gray-700">
+        Template name
+      </label>
+      <div class="mt-1">
+        <input [(ngModel)]="template.template_name" type="text" name="template-name" id="template-name"
+          autocomplete="off"
+          class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
       </div>
+    </div>
 
-      <div class="col-span-1 sm:col-span-2">
-        <label for="template-name" class="block text-sm font-medium text-gray-700">
-          Field of law
-        </label>
-        <div class="mt-1">
-          <ep-autocomplete [epOptions]="taskTemplateLawCategories" [(epValue)]="template.law_category"></ep-autocomplete>
-        </div>
+    <div class="col-span-1 sm:col-span-2">
+      <label for="template-name" class="block text-sm font-medium text-gray-700">
+        Field of law
+      </label>
+      <div class="mt-1">
+        <select [(ngModel)]="template.law_category"
+          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+          <option *ngFor="let lawCategory of taskTemplateLawCategories" [ngValue]="lawCategory">{{lawCategory}}</option>
+        </select>
       </div>
+    </div>
 
-      <div class="col-span-1 sm:col-span-1">
-        <label for="template-name" class="block text-sm font-medium text-gray-700">
-          State
-        </label>
-        <div class="mt-1">
-          <ep-autocomplete [epOptions]="usaStates" [epOptionTextField]="'name'" [epOptionValueField]="'abbreviation'" [(epValue)]="template.state_category"></ep-autocomplete>
-        </div>
+    <div class="col-span-1 sm:col-span-1">
+      <label for="template-name" class="block text-sm font-medium text-gray-700">
+        State
+      </label>
+      <div class="mt-1">
+        <select [(ngModel)]="template.state_category"
+          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+          <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{state.name}}</option>
+        </select>
       </div>
     </div>
   </div>
-
-  <div class="mt-6">
+  <div class="mt-6 max-h-72 overflow-y-auto rounded-md border border-gray-200">
     <table class="min-w-full" *ngIf="template.firm_template_tasks.length">
       <thead>
-        <tr class="border-t border-gray-200">
+        <tr>
           <th class="
                   px-3
                   py-3
@@ -119,7 +125,7 @@
       </thead>
       <tbody class="bg-white">
         <ng-container>
-          <tr class="task-row group" *ngFor="let task of template.firm_template_tasks; let i=index;">
+          <tr class="task-row group" *ngFor="let task of template.firm_template_tasks; let i=index; last as isLast">
             <td class="
                   px-1
                   py-1
@@ -129,11 +135,14 @@
                   text-sm
                   font-medium
                   text-gray-900
-                  border-r border-t border-b border-gray-200
-                ">
+                  border-r border-t border-gray-200
+                " [class.border-b]="!isLast">
               <div class="flex items-center">
-                <editable-input [value]="task.name" placeholder="Enter a task name" (onChange)="setDescription($event, i)" class="flex-1"></editable-input>
-                <app-task-file-button [files]="task.firm_template_task_files" (fileSelect)="attachFilesToTask($event, i)" (editFile)="editTaskFile($event)" (deleteFile)="deleteTaskFile($event, i)"></app-task-file-button>
+                <editable-input [value]="task.name" placeholder="Enter a task name"
+                  (onChange)="setDescription($event, i)" class="flex-1"></editable-input>
+                <app-task-file-button [files]="task.firm_template_task_files"
+                  (fileSelect)="attachFilesToTask($event, i)" (editFile)="editTaskFile($event)"
+                  (deleteFile)="deleteTaskFile($event, i)"></app-task-file-button>
               </div>
             </td>
             <td class="
@@ -144,11 +153,43 @@
                 text-sm
                 font-medium
                 text-gray-900
-                border-r border-t border-b border-gray-200
-                ">
+                border-r border-t border-gray-200
+                " [class.border-b]="!isLast">
               <div>
-                <editable-autocomplete *ngIf="staff$ | async as staff" [options]="staff" [selected]="task.user" (onSelect)="setAssignee($event, i)">
-                </editable-autocomplete>
+                <ep-input-group>
+                  <ep-avatar ep-input-icon epSize="xsmall" [epSrc]="task.user.profile_image" [epText]="task.user.full_name"></ep-avatar>
+
+                  <input ep-input [epEditable]="true" type="text" [ngModel]="task.user_id"
+                    (ngModelChange)="filterStaffMembers($event)" [epAutocomplete]="auto">
+                </ep-input-group>
+
+              <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayFn"
+                (optionSelected)="setAssignee($event, i)" panelWidth="auto">
+                <ep-option *ngFor="let staffMember of filteredStaffMembers" [value]="staffMember.user.id">
+                  <ep-avatar epSize="xsmall" [epSrc]="staffMember.user.profile_image"
+                    [epText]="staffMember.user.full_name">
+                  </ep-avatar> <span class="font-normal ml-3 block truncate">
+                    {{staffMember.user.full_name}}
+                  </span>
+                </ep-option>
+              </ep-autocomplete>
+                <!-- <ep-editable>
+                  <ng-template epEditableView>
+                    <div class="relative" tabindex="0">
+                      <div class="absolute inset-y-0 px-2 left-0 flex items-center pointer-events-none">
+                        <ep-avatar epSize="xsmall" [epSrc]="task.user.profile_image"
+                        [epText]="task.user.full_name">
+                      </ep-avatar>
+                      </div>
+                      <span class="text-sm font-normal pl-10 pr-2 block truncate">
+                        {{task.user.full_name}}
+                      </span>
+                    </div>
+                  </ng-template>
+                  <ng-template epEditableEdit>
+
+                  </ng-template>
+                </ep-editable> -->
               </div>
             </td>
 
@@ -158,10 +199,11 @@
                 text-sm
                 font-medium
                 text-gray-900
-                border-t border-b border-gray-200
-                ">
+                border-t border-gray-200
+                " [class.border-b]="!isLast">
               <div>
-                <input [(ngModel)]="task.no_of_days_from_start_date" type="number" min="0" class="bg-transparent text-sm text-gray-800 w-full px-2 py-1 text-center border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm">
+                <input [(ngModel)]="task.no_of_days_from_start_date" type="number" min="0"
+                  class="bg-transparent text-sm text-gray-800 w-full px-2 py-1 text-center border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm">
               </div>
             </td>
             <!-- <td class="
@@ -182,11 +224,12 @@
               text-sm
               font-medium
               text-gray-900
-              border-t border-b border-gray-200
-              ">
+              border-t border-gray-200
+              " [class.border-b]="!isLast">
               <div class="items-center flex">
 
-                <button (click)="removeTemplateTask(i)" type="button" class="-m-2 p-2 rounded-full flex items-center text-gray-300 hover:text-gray-600"
+                <button (click)="removeTemplateTask(i)" type="button"
+                  class="-m-2 p-2 rounded-full flex items-center text-gray-300 hover:text-gray-600"
                   id="options-menu-0-button" aria-expanded="false" aria-haspopup="true">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -213,30 +256,26 @@
         Get started by adding a task to this template.
       </p>
     </div>
-    <div class="mt-6 text-center">
-      <button (click)="addTemplateTask();" type="button"
-        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-        <!-- Heroicon name: solid/plus -->
-        <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-          aria-hidden="true">
-          <path fill-rule="evenodd"
-            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-            clip-rule="evenodd" />
-        </svg>
-        Add Task
-      </button>
-    </div>
+
+  </div>
+
+  <div class="mt-6 text-center">
+    <button class="button-white-icon-sm" (click)="addTemplateTask();">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd"
+          d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+          clip-rule="evenodd" />
+      </svg>
+      Add Task
+    </button>
   </div>
 </div>
 <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-  <button type="button"
-  (click)="save()"
-  [disabled]="!this.template.template_name"
+  <button type="button" (click)="save()" [disabled]="!this.template.template_name"
     class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50">
     Save
   </button>
-  <button type="button"
-  (click)="close()"
+  <button type="button" (click)="close()"
     class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
     Cancel
   </button>

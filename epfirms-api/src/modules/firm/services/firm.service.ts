@@ -16,19 +16,6 @@ export interface Firm {
   google_review_url?: string;
 }
 
-export interface FirmEmployee extends FirmEmployeeRole {
-  id?: number;
-  firm_id: number;
-  user_id: number;
-}
-
-export interface FirmEmployeeRole {
-  admin: boolean;
-  attorney: boolean;
-  legal_assistant: boolean;
-  paralegal: boolean;
-}
-
 @Service()
 export class FirmService {
   public async create(firmDetails): Promise<Firm> {
@@ -80,43 +67,19 @@ export class FirmService {
     return Promise.resolve(subscription);
   }
 
-  public async addEmployee(
-    userId: number,
-    firmId: number,
-    roles: FirmEmployeeRole
-  ): Promise<boolean> {
-    let firmEmployee: FirmEmployee = {
-      firm_id: firmId,
-      user_id: userId,
-      admin: false,
-      attorney: false,
-      legal_assistant: false,
-      paralegal: false
-    };
-
-    firmEmployee = {
-      ...firmEmployee,
-      ...roles
-    };
-
-    const createEmployee = await Database.models.firm_employee.create(firmEmployee);
-
-    return Promise.resolve(true);
-  }
-
   public async getClients(firmId: number): Promise<any> {
     const { user, firm, client, matter, legal_area } = Database.models;
     const { sequelize } = Database;
     const clients = await user.findAll({
       include: [{
         model: firm,
+        as: 'client_firm',
         // attributes: ['status'],
         required: true,
         through: {
           model: client,
           where: { firm_id: firmId },
           attributes: ['active', 'created_at'],
-          as: 'FirmClient'
         }
       },
       {
@@ -161,33 +124,14 @@ export class FirmService {
       });
     }
 
-    let clientFirm;
+    let firmClient;
     if (existingUser && existingUser.id) {
-      clientFirm = await firm.addClientFirm(existingUser);
+      firmClient = await firm.addFirm_client(existingUser);
     } else {
-      clientFirm = await firm.createClientFirm(clientInfo);
+      firmClient = await firm.createFirm_client(clientInfo);
     }
 
-    return Promise.resolve(clientFirm);
-  }
-
-  public async getStaff(firmId): Promise<boolean> {
-    const { user, firm, firm_employee } = Database.models;
-    const staff = await user.findAll({
-      include: {
-        model: firm,
-        required: true,
-        attributes: ['id'],
-        through: {
-          model: firm_employee,
-          where: { firm_id: firmId, active: true },
-          attributes: ['admin', 'attorney', 'legal_assistant', 'paralegal']
-        }
-      }
-    });
-
-    // await firm.createClientFirm(fi);
-    return Promise.resolve(staff);
+    return Promise.resolve(firmClient);
   }
 
   public async updateFirm(firm_id, newFirmData) {

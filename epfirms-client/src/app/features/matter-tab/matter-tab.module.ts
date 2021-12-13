@@ -20,6 +20,8 @@ import { TaskFileModule } from '../task-file/task-file.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { DocumentsModule } from '../documents/documents.module';
+import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module';
+import { InputModule } from '@app/shared/input/input.module';
 
 
 
@@ -47,7 +49,9 @@ import { DocumentsModule } from '../documents/documents.module';
     TaskFileModule,
     EditableModule,
     DocumentsModule,
-    SharedModule
+    SharedModule,
+    AutocompleteModule,
+    InputModule
   ],
   exports: [
     MatterTabsComponent

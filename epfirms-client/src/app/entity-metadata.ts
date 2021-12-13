@@ -15,7 +15,7 @@ const entityMetadata: EntityMetadataMap = {
     filterFn: clientFilter
   },
   Staff: {
-    filterFn: roleFilter
+    filterFn: staffFilter
   },
   Firm: {},
   Document: {
@@ -24,8 +24,13 @@ const entityMetadata: EntityMetadataMap = {
   LegalArea: {}
 };
 
-export function roleFilter(entities: Staff[], search: string) {
-  return entities.filter(e => e.firms[0].firm_employee[search]);
+export function staffFilter(entities: Staff[], staffFilters: {active?: boolean, role?: string[]}) {
+  return entities.filter(e => {
+    if (staffFilters.role && staffFilters.role.length) {
+      return e.active === staffFilters.active && e.role.some(s => staffFilters.role.includes(s.name));
+    }
+    return e.active === staffFilters.active;
+  });
 }
 
 export function matterFilter(entities: Matter[], search: {matter_type: string; status: string; attorney_id?: number; client_id?: number; searchTerm?: string}) {

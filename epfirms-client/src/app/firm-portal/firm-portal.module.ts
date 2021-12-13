@@ -17,6 +17,8 @@ import { MatterTabModule } from '@app/features/matter-tab/matter-tab.module';
 import { NavbarModule } from '@app/shared/navbar/navbar.module';
 import { MenuModule } from 'headlessui-angular';
 import { SharedModule } from '@app/shared/shared.module';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { InputModule } from '@app/shared/input/input.module';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { SharedModule } from '@app/shared/shared.module';
     MatterTabModule,
     NavbarModule,
     MenuModule,
-    SharedModule
+    SharedModule,
+    ScrollingModule,
+    InputModule
   ]
 })
 export class FirmPortalModule {}

@@ -1,0 +1,49 @@
+.ep-option-text {
+    @apply flex items-center;
+}
+
+.ep-selected {
+    &>.ep-option-text {
+        @apply font-semibold;
+    }
+
+    &>.ep-selected-checkmark {
+        @apply flex;
+    }
+
+    &:hover {
+        &>.ep-selected-checkmark {
+            @apply text-white;
+        }
+    }
+    &:not(:hover) {
+        &>.ep-selected-checkmark {
+            @apply text-blue-600;
+        }
+    }
+}
+
+.ep-active {
+    @apply text-white bg-blue-600;
+
+    &>.ep-selected-checkmark {
+        @apply text-white;
+    }
+}
+
+.ep-option {
+    @apply list-item list-none cursor-default py-2 pl-3 pr-9 relative hover:text-white hover:bg-blue-600 hover:cursor-pointer;
+
+    &:not(.ep-active):not(.ep-selected):not(:hover) {
+        @apply text-gray-900
+    }
+}
+
+.ep-selected-checkmark {
+    @apply absolute inset-y-0 right-0 hidden items-center pr-4;
+}
+
+
+// .ep-focus-indicator {
+//     background: pink;
+// }

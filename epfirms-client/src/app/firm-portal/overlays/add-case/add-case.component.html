@@ -21,10 +21,20 @@
           </label>
         </div>
         <div class="sm:col-span-2">
-          <ng-container *ngIf="clients$ | async as clients">
-            <legacy-autocomplete [options]="clients" [selectedOptionId]="clientId" [addButton]="false"
-              [placeholder]="'Search client directory'" (onSelect)="selectEvent($event, 'client_id')"></legacy-autocomplete>
-          </ng-container>
+            <input ep-input type="text" [ngModel]="clientId" [ngModelOptions]="{standalone: true}"
+            (ngModelChange)="filterClients($event)" [epAutocomplete]="auto">
+          <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="selectEvent($event, 'client_id')">
+            <cdk-virtual-scroll-viewport itemSize="40" class="w-full" style="height: 200px">
+            <ep-option *cdkVirtualFor="let client of filteredClients" [value]="client.id">
+              <ep-avatar epSize="xsmall" [epSrc]="client.profile_image"
+                [epText]="client.full_name">
+              </ep-avatar> <span class="font-normal ml-3 block truncate">
+                {{client.full_name}}
+              </span>
+            </ep-option>
+          </cdk-virtual-scroll-viewport>
+          </ep-autocomplete>
           <div class="relative my-3">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">
               <div class="w-full border-t border-gray-300"></div>

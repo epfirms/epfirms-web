@@ -7,6 +7,7 @@ import { AddRealEstateComponent } from './add-real-estate/add-real-estate.compon
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { CoreModule } from '@app/core/core.module';
 import { SharedModule } from '@app/shared/shared.module';
+import { InputModule } from '@app/shared/input/input.module';
 
 
 
@@ -21,7 +22,8 @@ import { SharedModule } from '@app/shared/shared.module';
   ],
   imports: [
     CoreModule,
-    SharedModule
+    SharedModule,
+    InputModule
   ],
   exports: [
     IntakeFormComponent
