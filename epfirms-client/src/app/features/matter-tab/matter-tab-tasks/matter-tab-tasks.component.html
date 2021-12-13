@@ -195,7 +195,7 @@
               text-sm
               font-medium
               text-gray-900
-              border-t border-b border-gray-200
+              border-t border-b border-gray-200 border-r
               "
             >
               <div>
@@ -213,11 +213,11 @@
               text-sm
               font-medium
               text-gray-900
-              border-r border-t border-b border-gray-200
+              border-t border-b border-gray-200
             "
           >
           <div>
-            <!-- <editable-input [value]="task.hours" placeholder="Enter hours" [enterKey]="true" (onChange)="updateTask(task, 'hours', $event)" #taskHours></editable-input> -->
+            <editable-input [value]="task.hours" placeholder="Enter hours" [enterKey]="false" (onChange)="updateTask(task, 'hours', $event)" #taskHours></editable-input>
           </div>
           </td>
 
