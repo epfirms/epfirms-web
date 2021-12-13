@@ -1,17 +1,14 @@
 import { Database } from '@src/core/Database';
-const bcrypt = require('bcrypt');
 
 export interface Document {
   id: number;
   user_id: number;
   doc_type: string;
   doc_key: string;
-  aws_link: string;
   share_with: string;
   email_to_appointees: boolean;
   client_upload: boolean;
 }
-
 
 export class DocumentService {
   public static async create(documentDetails): Promise<any>{

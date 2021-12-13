@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Document } from '@app/_models/document';
+import { Document } from '@app/core/interfaces/document';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +10,13 @@ export class AwsService {
 
   constructor(private _http : HttpClient) { }
 
-  getPresignedUrl(key, fileType) : Observable<any>{
+  getPresignedUrl(userId, docType, docName) : Observable<any>{
     const body = {
-      key: key,
-      fileType: fileType
-    }
+      userId: userId,
+      docType: docType,
+      docName: docName
+    };
+
     return this._http.post('/api/aws/generate', body);
   }
 
@@ -44,11 +46,11 @@ export class AwsService {
     return this._http.post("http://localhost:4000/api/aws/delete", staff);
   }
 
-  downLoadDocument(document: Document): Observable<any> {
-    return this._http.post("/api/aws/download", {key: document.doc_key})
+  downLoadDocument(key: string): Observable<any> {
+    return this._http.post("/api/aws/download", {key})
   }
 
-  updateDocument(document: Document, oldKey): Observable<any> {
-    return this._http.put("/api/aws/update", {oldKey: oldKey, key: document.doc_key});
+  updateDocument(sourceKey: string, updatedValues): Observable<any> {
+    return this._http.put("/api/aws/update", {source: sourceKey, updatedValues: updatedValues});
   }
 }

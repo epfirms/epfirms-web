@@ -1,4 +1,4 @@
-import { Client } from '@app/_models/client';
+import { Client } from '@app/core/interfaces/client';
 import { EntityCollection, EntitySelectorsFactory } from '@ngrx/data';
 import { createSelector } from '@ngrx/store';
 

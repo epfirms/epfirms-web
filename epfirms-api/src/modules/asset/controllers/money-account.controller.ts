@@ -16,7 +16,7 @@ export class MoneyAccountController {
       
       resp.status(StatusConstants.OK).send(createdAccount);
     } catch (error) {
-      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send({success: false, access_token: null, m: error.message});
     }
   }
 
@@ -28,7 +28,7 @@ export class MoneyAccountController {
       
         resp.status(StatusConstants.OK).send({success: true});
     } catch (error) {
-      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send({success: false, access_token: null, m: error.message});
     }
   }
 
@@ -39,7 +39,7 @@ export class MoneyAccountController {
       const updatedRealEstate = await AssetService.updateMoneyAccount(parseInt(id), data);
         resp.status(StatusConstants.OK).send({success: true});
     } catch (error) {
-      resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, m: error.message});
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send({success: false, access_token: null, m: error.message});
     }
   }
 }

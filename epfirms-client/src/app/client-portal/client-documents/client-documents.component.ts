@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from '@app/modal/modal.service';
 import { AwsService } from '@app/shared/_services/aws.service';
-import { DocumentService } from '@app/shared/_services/document-service/document.service';
-import { Document } from '@app/_models/document';
+import { DocumentService } from '@app/features/documents/services/document.service';
+import { Document } from '@app/core/interfaces/document';
 import { ClientDocumentUploadComponent } from '../client-document-upload/client-document-upload.component';
+import { DialogService } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-client-documents',
@@ -12,16 +12,18 @@ import { ClientDocumentUploadComponent } from '../client-document-upload/client-
 })
 export class ClientDocumentsComponent implements OnInit {
   documents: Document[];
-  constructor(private _documentService: DocumentService, private _modalService: ModalService, private _docService: DocumentService, private _awsService: AwsService) { }
+  constructor(private _documentService: DocumentService, private _dialogService: DialogService, private _docService: DocumentService, private _awsService: AwsService) { }
 
   ngOnInit(): void {
     this.load();
   }
 
   upload() {
-    const documentUploadModal = this._modalService.open(ClientDocumentUploadComponent, {});
+    const documentUploadModal = this._dialogService.open(ClientDocumentUploadComponent, {
+      enableClose: false
+    });
 
-    documentUploadModal.afterClosed$.subscribe(({data}) => {
+    documentUploadModal.afterClosed$.subscribe((data) => {
       if (data) {
         this.handleUpload(data.document, data.selectedFile);
         console.log(data);
@@ -30,13 +32,8 @@ export class ClientDocumentsComponent implements OnInit {
   }
 
   handleUpload(document, file){
-      //create the doc key and assign into object
-      document.doc_key = `${document.user_id}/${document.doc_type}/${document.doc_name}`
       //make the call to the server to generate the upload url
-      this._awsService.getPresignedUrl(document.doc_key, document.doc_type).pipe().subscribe(res => {
-
-        //assign the created document their link
-        document.aws_link = res.url
+      this._awsService.getPresignedUrl(document.user_id, document.doc_type, document.doc_name).pipe().subscribe(res => {
         //remove the temp id because the database will assign one
         document.id = undefined;
         //set the case_id
@@ -44,7 +41,7 @@ export class ClientDocumentsComponent implements OnInit {
         //add the doc to the database
         this.createDocuments(document);
         // for every FILE in the selected files, upload them to the s3 bucket.
-          this._awsService.uploadfileAWSS3(document.aws_link, document.doc_type, file).subscribe(() => {
+          this._awsService.uploadfileAWSS3(res.url, document.doc_type, file).subscribe(() => {
             this.load();
           });
       });
@@ -61,7 +58,7 @@ export class ClientDocumentsComponent implements OnInit {
   }
 
   downloadDocument(document): void {
-    this._awsService.downLoadDocument(document).subscribe(res => {
+    this._awsService.downLoadDocument(document.doc_key).subscribe(res => {
       window.open(res.url, "blank")
     });
   }

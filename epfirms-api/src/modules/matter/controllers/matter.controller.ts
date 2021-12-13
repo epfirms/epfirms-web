@@ -4,16 +4,16 @@ import { MatterService } from '@modules/matter/services/matter.service';
 import { UserService } from '@modules/user/services/user.service';
 import { emailsService } from '@src/modules/emails/services/emails.service';
 import { FirmService } from '@src/modules/firm/services/firm.service';
+import { Service } from 'typedi';
 
-const passport = require('passport');
-
+@Service()
 export class MatterController {
-  constructor() {}
+  constructor(private _firmService: FirmService, private _emailService: emailsService, private _matterService: MatterService, private _userService: UserService) {}
 
   public async getMattersForCurrentUser(req: any, resp: Response): Promise<any> {
     try {
       const { id } = req.user;
-      const matters = await MatterService.getByUserId(id);
+      const matters = await this._matterService.getByUserId(id);
 
       resp.status(StatusConstants.OK).send(matters);
     } catch (error) {
@@ -24,7 +24,7 @@ export class MatterController {
   public async getMattersForFirm(req: any, resp: Response): Promise<any> {
     try {
       const { firm_id } = req.user.firm_access;
-      const matters = await MatterService.getAll(firm_id);
+      const matters = await this._matterService.getAll(firm_id);
 
       resp.status(StatusConstants.OK).send(matters);
     } catch (error) {
@@ -43,15 +43,16 @@ export class MatterController {
         ...matter
       }
 
-      const createdMatter = await MatterService.create(matter, firm_id);
+      const createdMatter = await this._matterService.create(matter, firm_id);
       
-      const newMatter = await MatterService.getOne(createdMatter.id);
+      const newMatter = await this._matterService.getOne(createdMatter.id);
       
-      const matterClient = await UserService.get('id', newMatter.client_id);
+      const isClientRegistered = await this._userService.isRegistered(newMatter.client_id);
 
-      if (matterClient && matterClient.email && !matterClient.password) {
-        const firm = await FirmService.get(firm_id);
-        await emailsService.sendClientPortalInvite(matterClient.email, firm.name);
+      if (!isClientRegistered) {
+        const matterClient = await this._userService.get('id', newMatter.client_id);
+        const firm = await this._firmService.get(firm_id);
+        await this._emailService.sendClientPortalInvite(matterClient.email, firm.name);
       }
       
       resp.status(StatusConstants.OK).send(newMatter);
@@ -63,7 +64,7 @@ export class MatterController {
   public async deleteMatter(req: any, resp: Response): Promise<any> {
     try {
       const { id } = req.body;
-      await MatterService.delete(id);
+      await this._matterService.delete(id);
 
       resp.status(StatusConstants.OK).send({success: true});
     } catch (error) {
@@ -74,8 +75,8 @@ export class MatterController {
   public async updateMatter(req: any, resp: Response): Promise<any> {
     try {
       const matter = req.body;
-      await MatterService.update(matter);
-      const updatedMatter = await MatterService.getOne(matter.id);
+      await this._matterService.update(matter);
+      const updatedMatter = await this._matterService.getOne(matter.id);
 
       resp.status(StatusConstants.OK).send(updatedMatter);
     } catch (error) {

@@ -1,7 +1,8 @@
 
 module.exports = (sequelize, {
     INTEGER,
-    TEXT
+    TEXT,
+    JSON
   }) => {
     const tableName = 'matter_note';
   
@@ -20,6 +21,9 @@ module.exports = (sequelize, {
         },
         note_string: {
           type: TEXT
+        },
+        content: {
+          type: JSON
         }
       }, {
         tableName,

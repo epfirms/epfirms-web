@@ -216,11 +216,11 @@
                   (click)="openTab(taskData.matterId)"
                 >
                 <div class="flex items-center">
-                  <tw-avatar
-                    twSize="xsmall"
-                    [twSrc]="taskData.client.profile_image"
-                    [twText]="taskData.client.full_name"
-                  ></tw-avatar>
+                  <ep-avatar
+                    epSize="xsmall"
+                    [epSrc]="taskData.client.profile_image"
+                    [epText]="taskData.client.full_name"
+                  ></ep-avatar>
                   <div class="ml-2">
                     <div class="text-sm text-gray-900">
                       {{ taskData.client.full_name | titlecase }}
@@ -243,12 +243,12 @@
               >
                 <div>
                   <ng-container *ngIf="legalAreas$ | async as legalAreas">
-                    <tw-tag
+                    <ep-tag
                       (click)="$event.stopPropagation()"
                       [dot]="false"
                       [color]="taskData.legal_area?.color"
                       [rounded]="false"
-                      twSize="small"
+                      epSize="small"
                       [dropdown]="true"
                       [options]="legalAreas"
                       (selectedOptionChange)="setLegalArea(taskData.matterId, $event)"
@@ -257,7 +257,7 @@
                         taskData.legal_area?.name || "Select a legal area"
                           | titlecase
                       }}
-                    </tw-tag>
+                    </ep-tag>
                   </ng-container>
                 </div>
               </td>
@@ -340,11 +340,11 @@
               (click)="openTab(taskData.matterId)"
             >
             <div class="flex items-center">
-              <tw-avatar
-                twSize="xsmall"
-                [twSrc]="taskData.client.profile_image"
-                [twText]="taskData.client.full_name"
-              ></tw-avatar>
+              <ep-avatar
+                epSize="xsmall"
+                [epSrc]="taskData.client.profile_image"
+                [epText]="taskData.client.full_name"
+              ></ep-avatar>
               <div class="ml-2">
                 <div class="text-sm text-gray-900">
                   {{ taskData.client.full_name | titlecase }}
@@ -367,12 +367,12 @@
           >
             <div>
               <ng-container *ngIf="legalAreas$ | async as legalAreas">
-                <tw-tag
+                <ep-tag
                   (click)="$event.stopPropagation()"
                   [dot]="false"
                   [color]="taskData.legal_area?.color"
                   [rounded]="false"
-                  twSize="small"
+                  epSize="small"
                   [dropdown]="true"
                   [options]="legalAreas"
                   (selectedOptionChange)="setLegalArea(taskData.matterId, $event)"
@@ -381,7 +381,7 @@
                     taskData.legal_area?.name || "Select a legal area"
                       | titlecase
                   }}
-                </tw-tag>
+                </ep-tag>
               </ng-container>
             </div>
           </td>
@@ -464,11 +464,11 @@
           (click)="openTab(taskData.matterId)"
         >
         <div class="flex items-center">
-          <tw-avatar
-            twSize="xsmall"
-            [twSrc]="taskData.client.profile_image"
-            [twText]="taskData.client.full_name"
-          ></tw-avatar>
+          <ep-avatar
+            epSize="xsmall"
+            [epSrc]="taskData.client.profile_image"
+            [epText]="taskData.client.full_name"
+          ></ep-avatar>
           <div class="ml-2">
             <div class="text-sm text-gray-900">
               {{ taskData.client.full_name | titlecase }}
@@ -491,12 +491,12 @@
       >
         <div>
           <ng-container *ngIf="legalAreas$ | async as legalAreas">
-            <tw-tag
+            <ep-tag
               (click)="$event.stopPropagation()"
               [dot]="false"
               [color]="taskData.legal_area?.color"
               [rounded]="false"
-              twSize="small"
+              epSize="small"
               [dropdown]="true"
               [options]="legalAreas"
               (selectedOptionChange)="setLegalArea(taskData.matterId, $event)"
@@ -505,7 +505,7 @@
                 taskData.legal_area?.name || "Select a legal area"
                   | titlecase
               }}
-            </tw-tag>
+            </ep-tag>
           </ng-container>
         </div>
       </td>
@@ -588,11 +588,11 @@
       (click)="openTab(taskData.matterId)"
     >
     <div class="flex items-center">
-      <tw-avatar
-        twSize="xsmall"
-        [twSrc]="taskData.client.profile_image"
-        [twText]="taskData.client.full_name"
-      ></tw-avatar>
+      <ep-avatar
+        epSize="xsmall"
+        [epSrc]="taskData.client.profile_image"
+        [epText]="taskData.client.full_name"
+      ></ep-avatar>
       <div class="ml-2">
         <div class="text-sm text-gray-900">
           {{ taskData.client.full_name | titlecase }}
@@ -615,12 +615,12 @@
   >
     <div>
       <ng-container *ngIf="legalAreas$ | async as legalAreas">
-        <tw-tag
+        <ep-tag
           (click)="$event.stopPropagation()"
           [dot]="false"
           [color]="taskData.legal_area?.color"
           [rounded]="false"
-          twSize="small"
+          epSize="small"
           [dropdown]="true"
           [options]="legalAreas"
           (selectedOptionChange)="setLegalArea(taskData.matterId, $event)"
@@ -629,7 +629,7 @@
             taskData.legal_area?.name || "Select a legal area"
               | titlecase
           }}
-        </tw-tag>
+        </ep-tag>
       </ng-container>
     </div>
   </td>

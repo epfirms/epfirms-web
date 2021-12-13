@@ -1,5 +1,5 @@
 import express from 'express';
-import { matterController, matterIntakeController } from '@modules/matter/controllers';
+import { matterController, matterIntakeController, matterTaskFileController } from '@modules/matter/controllers';
 import { matterTaskController } from '@modules/matter/controllers';
 import { matterNoteController } from '@modules/matter/controllers';
 
@@ -17,7 +17,11 @@ matterRouter.put('/', passport.authenticate('bearer', { session: false }), (req,
 
 matterRouter.post('/task', passport.authenticate('bearer', { session: false }), (req, res) => matterTaskController.createTask(req, res));
 
-matterRouter.post('/note', passport.authenticate('bearer', { session: false }), (req, res) => matterNoteController.createNote(req, res));
+matterRouter.get('/:matter_id/notes', passport.authenticate('bearer', { session: false }), (req, res) => matterNoteController.getNotes(req, res));
+
+matterRouter.post('/:matter_id/notes', passport.authenticate('bearer', { session: false }), (req, res) => matterNoteController.createNote(req, res));
+
+matterRouter.delete('/notes/:note_id', passport.authenticate('bearer', { session: false }), (req, res) => matterNoteController.deleteNote(req, res));
 
 matterRouter.patch('/task', passport.authenticate('bearer', { session: false }), (req, res) => matterTaskController.updateTask(req, res));
 
@@ -33,4 +37,15 @@ matterRouter.post('/intake/spouse', passport.authenticate('bearer', { session: f
 
 matterRouter.patch('/intake/spouse', passport.authenticate('bearer', { session: false }), (req, res) => matterIntakeController.updateSpouse(req, res));
 
+// Matter task files
+
+matterRouter.get('/task/file/download', passport.authenticate('bearer', {session: false}), (req, res) => matterTaskFileController.getDownloadURL(req, res));
+
+matterRouter.get('/task/file/upload', passport.authenticate('bearer', {session: false}), (req, res) => matterTaskFileController.getUploadURL(req, res));
+
+matterRouter.post('/task/:matter_task_id/file', passport.authenticate('bearer', {session: false}), (req, res) => matterTaskFileController.add(req, res));
+
+matterRouter.put('/task/file/:file_id', passport.authenticate('bearer', {session: false}), (req, res) => matterTaskFileController.update(req, res));
+
+matterRouter.delete('/task/file/:file_id', passport.authenticate('bearer', {session: false}), (req, res) => matterTaskFileController.delete(req, res));
 export { matterRouter };

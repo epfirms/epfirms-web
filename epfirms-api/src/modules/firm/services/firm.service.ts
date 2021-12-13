@@ -1,5 +1,5 @@
 import { Database } from '@src/core/Database';
-const bcrypt = require('bcrypt');
+import { Service } from 'typedi';
 
 export interface Firm {
   id: number;
@@ -29,8 +29,9 @@ export interface FirmEmployeeRole {
   paralegal: boolean;
 }
 
+@Service()
 export class FirmService {
-  public static async create(firmDetails): Promise<Firm> {
+  public async create(firmDetails): Promise<Firm> {
     const firm = await Database.models.firm.create(firmDetails);
 
     return Promise.resolve(firm);
@@ -45,21 +46,21 @@ export class FirmService {
         Function:
           Finds the firm that matches the id, and returns the Google Review Page for that firm.
   */
-  public static async getReviewURL(id): Promise<any> {
+  public async getReviewURL(id): Promise<any> {
     const firm = await Database.models.firm.findOne({ where: { id } });
 
     return Promise.resolve(await (firm.google_review_url));
   }
 
-  public static async getFirmName(id): Promise<any> {
+  public async getFirmName(id): Promise<any> {
     const firm = await Database.models.firm.findOne({ where: { id } });
 
     return Promise.resolve(await (firm.name));
   }
 
-  public static async get(id): Promise<any> {
+  public async get(id): Promise<any> {
     try {
-      const firm = await Database.models.firm.findOne({ where: { id: id },include: {model: Database.models.task_template, include: {model:Database.models.template_task}} });
+      const firm = await Database.models.firm.findOne({ where: { id: id }});
 
       return Promise.resolve(firm);
     } catch (err) {
@@ -67,7 +68,7 @@ export class FirmService {
     }
   }
 
-  public static async createSubscription(id, customerId, currentPeriodEnd): Promise<string> {
+  public async createSubscription(id, customerId, currentPeriodEnd): Promise<string> {
     const current_period_end = new Date(currentPeriodEnd * 1000);
 
     const subscription = await Database.models.firm_subscription.create({
@@ -79,7 +80,7 @@ export class FirmService {
     return Promise.resolve(subscription);
   }
 
-  public static async addEmployee(
+  public async addEmployee(
     userId: number,
     firmId: number,
     roles: FirmEmployeeRole
@@ -103,7 +104,7 @@ export class FirmService {
     return Promise.resolve(true);
   }
 
-  public static async getClients(firmId: number): Promise<any> {
+  public async getClients(firmId: number): Promise<any> {
     const { user, firm, client, matter, legal_area } = Database.models;
     const { sequelize } = Database;
     const clients = await user.findAll({
@@ -133,7 +134,7 @@ export class FirmService {
     return Promise.resolve(clients);
   }
 
-  public static async deleteClient(clientId, firmId): Promise<any> {
+  public async deleteClient(clientId, firmId): Promise<any> {
     const deletedClient = await Database.models.client.delete({
       where: {
         clientId,
@@ -144,7 +145,7 @@ export class FirmService {
     return Promise.resolve(deletedClient);
   }
 
-  public static async createClient(clientInfo, firmId): Promise<any> {
+  public async createClient(clientInfo, firmId): Promise<any> {
     const firm = await Database.models.firm.findOne({
       where: {
         id: firmId
@@ -170,7 +171,7 @@ export class FirmService {
     return Promise.resolve(clientFirm);
   }
 
-  public static async getStaff(firmId): Promise<boolean> {
+  public async getStaff(firmId): Promise<boolean> {
     const { user, firm, firm_employee } = Database.models;
     const staff = await user.findAll({
       include: {
@@ -189,7 +190,7 @@ export class FirmService {
     return Promise.resolve(staff);
   }
 
-  public static async updateFirm(firm_id, newFirmData) {
+  public async updateFirm(firm_id, newFirmData) {
     try {
       const updatedFirm = await Database.models.firm.update(newFirmData, {
         where: { id: firm_id }

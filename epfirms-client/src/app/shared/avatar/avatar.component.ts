@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'tw-avatar',
+  selector: 'ep-avatar',
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
   host: {
@@ -10,34 +10,34 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AvatarComponent implements OnInit {
   @Input()
-  set twSize(value) {
+  set epSize(value) {
     this._size = value;
   }
-  get twSize() {
+  get epSize() {
     return this._size;
   }
 
   @Input()
-  set twShape(value) {
+  set epShape(value) {
     this._shape = value;
   }
-  get twShape() {
+  get epShape() {
     return this._shape;
   }
 
   @Input()
-  set twSrc(value) {
+  set epSrc(value) {
     this._src = value;
   }
-  get twSrc() {
+  get epSrc() {
     return this._src;
   }
 
   @Input()
-  set twText(value) {
+  set epText(value) {
     this._text = value;
   }
-  get twText() {
+  get epText() {
     return this._text;
   }
 

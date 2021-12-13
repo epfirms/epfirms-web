@@ -1,23 +1,16 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ModalService } from '@app/modal/modal.service';
-import { add } from '@app/store/matter-tabs/matter-tabs.actions';
-import { LegalArea } from '@app/_models/legal-area';
-import { Matter } from '@app/_models/matter';
-import { Store } from '@ngrx/store';
+import { LegalArea } from '@app/core/interfaces/legal-area';
+import { Matter } from '@app/core/interfaces/matter';
 import { Observable } from 'rxjs';
-import { MatterTabsComponent } from '../matter-tabs/matter-tabs.component';
 import { AddCaseComponent } from '../overlays/add-case/add-case.component';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
-import { MatterTabsService } from '../_services/matter-tabs-service/matter-tabs.service';
-import { OverlayService } from '../_services/overlay-service/overlay.service';
-import { emailService } from '../../shared/_services/email-service/email.service';
+import { MatterTabsService } from '../../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { map, take } from 'rxjs/operators';
-import { Staff } from '@app/_models/staff';
+import { Staff } from '@app/core/interfaces/staff';
 import { StaffService } from '../_services/staff-service/staff.service';
-import { TooltipOptions } from 'ng2-tooltip-directive';
+import { DialogService } from '@ngneat/dialog';
 
 @Component({
   selector: 'app-cases',
@@ -83,14 +76,6 @@ export class CasesComponent implements OnInit {
 
   paginator: { start: number; end: number } = { start: 0, end: 20 };
 
-  tooltipOptions: TooltipOptions = {
-    tooltipClass: 'border shadow-lg p-6 bg-white rounded-md text-gray-900 text-sm',
-    maxWidth: '32rem',
-    theme: "light",
-    hideDelay: 0,
-    animationDuration: 0
-  }
-
   searchTerm: string = '';
 
   matterFilterValues = {
@@ -109,7 +94,7 @@ export class CasesComponent implements OnInit {
     private _matterService: MatterService,
     private _matterTabsService: MatterTabsService,
     private _legalAreaService: LegalAreaService,
-    private _modalService: ModalService,
+    private _dialogService: DialogService,
     private _staffService: StaffService
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
@@ -127,19 +112,22 @@ export class CasesComponent implements OnInit {
   }
 
   addCase() {
-    const addCaseModal = this._modalService.open(
-      AddCaseComponent,
-      { matter_type: 'case' },
-      { type: 'slideOver' }
-    );
+    const addCaseModal = this._dialogService.open(AddCaseComponent, {
+      windowClass:'slide-over',
+      size: 'lgSlideOver',
+      data: {
+        matter_type: 'case'
+      },
+      enableClose: false
+    })
 
-    addCaseModal.afterClosed$.subscribe((closed) => {
-      if (closed.data && closed.data.matter) {
-        this._matterService.create(closed.data.matter).subscribe((response) => {
+    addCaseModal.afterClosed$.subscribe((data) => {
+      if (data && data.matter) {
+        this._matterService.create(data.matter).subscribe((response) => {
           response.pipe(take(1)).subscribe((newMatter) => {
-            if (closed.data.note && closed.data.note.length && newMatter.id) {
-              if (closed.data.note && closed.data.note.length) {
-                this.addNote(newMatter.id, closed.data.note);
+            if (data.note && data.note.length && newMatter.id) {
+              if (data.note && data.note.length) {
+                this.addNote(newMatter.id, data.note);
               }
             }
           });
@@ -147,13 +135,8 @@ export class CasesComponent implements OnInit {
       }
     });
   }
-  addNote(id: number, note: string) {
-    const noteBody = {
-      matter_id: id,
-      note_string: note,
-    };
-
-    this._matterService.addMatterNote(noteBody).subscribe();
+  addNote(id: number, note) {
+    this._matterService.addMatterNote(id, note).subscribe();
   }
   setLegalArea(matter: Matter, legalArea: LegalArea) {
     this._matterService

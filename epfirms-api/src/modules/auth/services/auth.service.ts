@@ -1,6 +1,6 @@
 import { Database } from '@src/core/Database';
 import { UserService } from '@src/modules/user/services/user.service';
-import { header } from 'express-validator';
+import { Service } from 'typedi';
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('@configs/vars');
@@ -14,8 +14,12 @@ export interface AccessToken {
   firm_access: any;
 }
 
+@Service()
 export class AuthService {
-  public static async validate(email, password): Promise<{valid: boolean, msg: string}> {
+  constructor(private _userService: UserService) {
+
+  }
+  public async validate(email, password): Promise<{valid: boolean, msg: string}> {
     const user = await Database.models.user.findOne({
       attributes: ['id', 'email', 'password'],
       where: {
@@ -34,7 +38,7 @@ export class AuthService {
     return Promise.reject({valid: false, msg: "incorrect username/password combination"});
   }
 
-  public static async generateToken(user, clientAccess, firmAccess): Promise<string> {
+  public async generateToken(user, clientAccess, firmAccess): Promise<string> {
     let payload: AccessToken = {
       id: user.id,
       first_name: user.first_name,
@@ -44,11 +48,11 @@ export class AuthService {
       firm_access: firmAccess
     };
 
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '10h' });
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '120h' });
     return Promise.resolve(token);
   }
 
-  public static async getFirmScope(userId: number): Promise<any> {
+  public async getFirmScope(userId: number): Promise<any> {
     const { firm_employee, firm_subscription } = Database.models;
 
     const firmScope = await firm_employee.findOne({
@@ -79,7 +83,7 @@ export class AuthService {
     return Promise.resolve(null);
   }
 
-  public static async isPastDate(date: Date): Promise<boolean> {
+  public async isPastDate(date: Date): Promise<boolean> {
     const today = new Date();
 
     if (date.setHours(0, 0, 0, 0) <= today.setHours(0, 0, 0, 0)) {
@@ -89,7 +93,7 @@ export class AuthService {
     return Promise.resolve(false);
   }
 
-  public static async getClientScope(userId: number): Promise<Array<any>> {
+  public async getClientScope(userId: number): Promise<Array<any>> {
     const { user, firm, client } = Database.models;
     const clientScope = await user.findOne({
       where: { id: userId },
@@ -113,7 +117,7 @@ export class AuthService {
     }
   }
 
-  public static async verifyEmail(token): Promise<any> {
+  public async verifyEmail(token): Promise<any> {
     var user_id;
     var booly = true;
     // verify token, and use database to connect with ID.
@@ -147,7 +151,7 @@ export class AuthService {
     return Promise.resolve(true);
   }
 
-  public static async verifyPasswordToken(userId: number, token: string): Promise<boolean> {
+  public async verifyPasswordToken(userId: number, token: string): Promise<boolean> {
     const { password_reset_token } = Database.models;
     const passwordResetToken = await password_reset_token.findOne({where: {user_id: userId}});
 
@@ -164,7 +168,7 @@ export class AuthService {
     return Promise.resolve(true);
   }
 
-  public static async resetPassword(userId: number, token: string, password: string): Promise<boolean> {
+  public async resetPassword(userId: number, token: string, password: string): Promise<boolean> {
     const { password_reset_token } = Database.models;
     const passwordResetToken = await password_reset_token.findOne({where: {user_id: userId}});
 
@@ -178,7 +182,7 @@ export class AuthService {
       return Promise.reject(false);
     }
 
-    await UserService.update({id: userId, password});
+    await this._userService.update({id: userId, password});
 
     await password_reset_token.destroy({where: {user_id: userId}});
 

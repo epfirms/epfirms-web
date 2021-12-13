@@ -25,4 +25,8 @@ export class emailService {
   sendReview(matter) {
     return this._http.post<any>('/api/emails/sendReview', matter);
   }
+  
+  sendForgotPasswordEmail(email: string) {
+    return this._http.post<any>('/api/emails/forgot-password', {email});
+  }
 }

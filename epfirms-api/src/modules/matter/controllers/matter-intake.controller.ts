@@ -1,13 +1,12 @@
 import { Response } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
 import { MatterService } from '@modules/matter/services/matter.service';
-import { MatterTaskService } from '../services/matter-task.service';
 import { UserService } from '@src/modules/user/services/user.service';
-import { FirmService } from '@src/modules/firm/services/firm.service';
-import { emailsService } from '@src/modules/emails/services/emails.service';
+import { Service } from 'typedi';
 
+@Service()
 export class MatterIntakeController {
-  constructor() {}
+  constructor(private _matterService: MatterService, private _userService: UserService) {}
 
   public async create(req: any, resp: Response): Promise<any> {
     try {
@@ -15,11 +14,11 @@ export class MatterIntakeController {
       const { firm_id } = req.user.firm_access;
       const matter_id = req.body.matter_id;
       
-      const createdIntake = await MatterService.createIntake(matter_id, id);
+      const createdIntake = await this._matterService.createIntake(matter_id, id);
 
-      await MatterService.update({id: createdIntake.matter_id, matter_intake_id: createdIntake.id});
+      await this._matterService.update({id: createdIntake.matter_id, matter_intake_id: createdIntake.id});
       
-      const matter = await MatterService.getOne(createdIntake.matter_id);
+      const matter = await this._matterService.getOne(createdIntake.matter_id);
       
       resp.status(StatusConstants.OK).send(matter);
     } catch (error) {
@@ -32,9 +31,9 @@ export class MatterIntakeController {
       const { id } = req.user;
       const matterIntakeData = req.body;
 
-      const updatedIntake = await MatterService.updateIntake(matterIntakeData);
+      const updatedIntake = await this._matterService.updateIntake(matterIntakeData);
       
-      const matter = await MatterService.getOne(updatedIntake.matter_id);
+      const matter = await this._matterService.getOne(updatedIntake.matter_id);
 
       resp.status(StatusConstants.OK).send(matter);
     } catch (error) {
@@ -48,13 +47,13 @@ export class MatterIntakeController {
       const spouseData = req.body.spouse;
       const matterId = req.body.matter_id;
 
-      const createdUser = await UserService.create(spouseData);
+      const createdUser = await this._userService.create(spouseData);
       
       if (createdUser) {
-        await MatterService.update({id: matterId, spouse_id: createdUser.id});
+        await this._matterService.update({id: matterId, spouse_id: createdUser.id});
       }
 
-      const matter = await MatterService.getOne(matterId);
+      const matter = await this._matterService.getOne(matterId);
 
       resp.status(StatusConstants.OK).send(matter);
     } catch (error) {
@@ -69,9 +68,9 @@ export class MatterIntakeController {
       const spouseData = req.body.spouse;
       const matterId = req.body.matter_id;
 
-      await UserService.update(spouseData);
+      await this._userService.update(spouseData);
       
-      const matter = await MatterService.getOne(matterId);
+      const matter = await this._matterService.getOne(matterId);
 
       resp.status(StatusConstants.OK).send(matter);
     } catch (error) {

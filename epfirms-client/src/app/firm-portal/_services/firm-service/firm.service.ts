@@ -6,8 +6,8 @@ import {
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
 import { map } from 'rxjs/operators';
-import { Firm } from '@app/_models/firm';
-import { SocketService } from '../socket-service/socket.service';
+import { Firm } from '@app/core/interfaces/firm';
+import { SocketService } from '../../../core/services/socket.service';
 
 @Injectable({
   providedIn: 'root',

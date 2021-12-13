@@ -7,11 +7,14 @@ import { DeleteFirmComponent } from './delete-firm/delete-firm/delete-firm.compo
 import { TaskTemplatesComponent } from './task-templates/task-templates/task-templates.component';
 import { FirmSettingsComponent } from './firm-settings.component';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@app/shared/_guards/auth.guard';
+import { AuthGuard } from '@app/core/guards/auth.guard';
 import { FirmDetailsComponent } from './firm-details/firm-details/firm-details.component';
-import { TextMaskModule } from 'angular2-text-mask';
-import { SharedModule } from '@app/shared/shared.module';
 import { ManageStaffComponent } from './manage-staff/manage-staff.component';
+import { DialogModule } from '@ngneat/dialog';
+import { TippyModule } from '@ngneat/helipopper';
+import { TaskTemplateModule } from '@app/features/task-template/task-template.module';
+import { TagModule } from '@app/shared/tag/tag.module';
+import { EditableModule } from '@app/shared/editable/editable.module';
 
 const FirmSettingsRoute: Routes = [
   {
@@ -38,9 +41,12 @@ const FirmSettingsRoute: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TextMaskModule,
     RouterModule.forChild(FirmSettingsRoute),
-    SharedModule
+    DialogModule,
+    TippyModule,
+    TaskTemplateModule,
+    TagModule,
+    EditableModule
   ]
 })
 export class FirmSettingsModule { }

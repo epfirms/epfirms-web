@@ -1,24 +1,12 @@
 import { Response, Request } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
-const { AWS_REGION, AWS_SECRET_KEY, AWS_ACCESS_KEY_ID, AWS_BUCKET } = require('@configs/vars')
-const aws = require('aws-sdk');
-require('dotenv').config();
+import { AwsService } from '../services/aws.service';
+import { Service } from 'typedi';
+const { AWS_BUCKET } = require('@configs/vars')
 
-
+@Service()
 export class AWSController {
-
-  s3;
-
-  constructor(){
-    // aws class properties
-    aws.config.update({
-      secretAccessKey: AWS_SECRET_KEY,
-      accessKeyId: AWS_ACCESS_KEY_ID,
-      region: AWS_REGION,
-    });
-
-    this.s3 = new aws.S3();
-  }
+  constructor(private _awsService: AwsService){}
 
   /**
   * @name /api/gen - POST
@@ -27,97 +15,53 @@ export class AWSController {
   * @return returns the presigned url to upload to
   */
   public async generatePresignedURL(req : Request, res: Response) : Promise<any> {
-
-      // create the params for the aws s3 api
-      const params = {
-        Bucket: AWS_BUCKET,
-        Key: req.body.key,
-        Expires: 40 * 60,
-        ACL: 'bucket-owner-full-control',
-        ContentType: req.body.fileType,
-      }
-
-      this.s3.getSignedUrl('putObject', params, async (err, url) => {
-        if (err){
-          res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({err: err});
-        }
-        else {
-          res.status(StatusConstants.OK).send({url: url});
-        }
-      });
-  }
-
-  public async deleteDocument(req, res ): Promise<any> {
     try {
-      const params = {
-        Bucket: AWS_BUCKET,
-        Key: req.body.doc_key
-      }
-      const result = await this.s3.deleteObject(params).promise();
+      const { userId, docType, docName } = req.body;
+      const key = this._awsService.formatObjectKey(userId, docType, docName);
+      const uploadURL = await this._awsService.getObjectUploadURL(AWS_BUCKET, key, docType);
 
-      if (result.DeleteMarker){
-        res.status(StatusConstants.OK).send({aws_res: result, deleted: true});
-      }
-      else {
-        res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({error: "AWS deletion error"});
-      }
-    } catch (err) {
-      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+      res.status(StatusConstants.OK).send({url: uploadURL, key: key});
+    } catch (error) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+  }
+}
 
+  public async deleteDocument(req : Request, res: Response): Promise<any> {
+    try {
+      const { doc_key } = req.body;
+
+      const isDeleted: boolean = await this._awsService.deleteObjectFromBucket(AWS_BUCKET, doc_key);
+
+      res.status(StatusConstants.OK).send({aws_res: isDeleted, deleted: true});
+    } catch (error) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }
   }
 
-  public async downloadDocumentFromPresignedURL(req, res): Promise<any> {
+  public async downloadDocumentFromPresignedURL(req : Request, res: Response): Promise<any> {
     try {
-      const getSignedURLParams = {
-        Bucket: AWS_BUCKET,
-        Key: req.body.key,
-        Expires: 60 * 5
-      }
-      const getObjectHeadParams = {
-        Bucket: AWS_BUCKET,
-        Key: req.body.key
-      }
+      const { key } = req.body;
 
-      this.s3.getSignedUrl('getObject', getSignedURLParams, (err, url)=> {
-        if (err){
-          res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
-        }
-        else {
-          res.status(StatusConstants.OK).send({url: url});
-        }
-      });
-
+      const downloadURL: string = await this._awsService.getObjectDownloadURL(AWS_BUCKET, key);
+      
+      res.status(StatusConstants.OK).send({url: downloadURL});
     } catch (err) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
     }
   }
 
 
-  public async updateDocument(req, res): Promise<any> {
+  public async updateDocument(req : Request, res: Response): Promise<any> {
     try {
+      const { source, updatedValues } = req.body;
 
-      const cloneParams = {
-        Bucket: AWS_BUCKET,
-        CopySource: AWS_BUCKET + '/' + req.body.oldKey,
-        Key: req.body.key
-      }
-      // clone the existing data in the s3 first
-      const cloned = await this.s3.copyObject(cloneParams).promise();
+      const updatedKey: string = this._awsService.formatObjectKey(updatedValues.userId, updatedValues.docType, updatedValues.docName);
+      const sourceCopied: boolean = await this._awsService.copySourceObject(AWS_BUCKET, {source: source, target: updatedKey});
+      
+      if (sourceCopied) {
+        const sourceObjectDeleted: boolean = await this._awsService.deleteObjectFromBucket(AWS_BUCKET, source);
 
-      if (cloned.CopyObjectResult){
-        // delete the old one
-        const deleteParams = {
-          Bucket: AWS_BUCKET,
-          Key: req.body.oldKey
-        }
-        const deleted = await this.s3.deleteObject(deleteParams).promise();
-        if (deleted.DeleteMarker){
-          res.status(StatusConstants.OK).send({deleted: deleted, updated: cloned, update_and_delete: true});
-        }
-        else {
-          res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({error: "AWS deletion error"});
-        }
+        res.status(StatusConstants.OK).send({deleted: sourceObjectDeleted, updated: sourceCopied, update_and_delete: true, doc_key: updatedKey});
       }
       else {
         res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({error: "AWS update error"});

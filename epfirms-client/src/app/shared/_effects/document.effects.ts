@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatterActivity } from '@app/_models/matter-activity';
+import { MatterActivity } from '@app/core/interfaces/matter-activity';
 import { EntityOp, ofEntityOp, ofEntityType } from '@ngrx/data';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';

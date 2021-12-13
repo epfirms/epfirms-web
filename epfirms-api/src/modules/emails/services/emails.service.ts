@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 import { Database } from '@src/core/Database';
+import { Service } from 'typedi';
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET, EMAIL_API_KEY, EMAIL_DOMAIN, CLIENT_URL } = require('@configs/vars');
 var mailgun = require('mailgun-js')({ apiKey: EMAIL_API_KEY, domain: EMAIL_DOMAIN });
@@ -11,8 +12,10 @@ export interface EmailContent {
   subject: string;
   html: string;
 }
+
+@Service()
 export class emailsService {
-  public static async createEmailContent(from, to, subject, html: string): Promise<EmailContent> {
+  public async createEmailContent(from, to, subject, html: string): Promise<EmailContent> {
     const emailContent = {
       from,
       to,
@@ -23,13 +26,13 @@ export class emailsService {
     return Promise.resolve(emailContent);
   }
 
-  public static async sendEmail(content: EmailContent): Promise<any> {
+  public async sendEmail(content: EmailContent): Promise<any> {
     const responseBody = await mailgun.messages().send(content);
 
     return Promise.resolve(responseBody);
   }
 
-  public static async createConfirmationToken(userT): Promise<String> {
+  public async createConfirmationToken(userT): Promise<String> {
     const user = await Database.models.user.findOne({
       attributes: ['id', 'email', 'password'],
       where: {
@@ -51,7 +54,7 @@ export class emailsService {
     return verification.dataValues.token;
   }
 
-  public static async verify(token): Promise<any> {
+  public async verify(token): Promise<any> {
     var user_id;
     // verify token, and use database to connect with ID.
     jwt.verify(token, JWT_SECRET, (err, payload) => {
@@ -76,36 +79,38 @@ export class emailsService {
     );
   }
 
-  public static async sendClientPortalInvite(email: string, firmName: string): Promise<boolean> {
+  public async sendClientPortalInvite(email: string, firmName: string): Promise<boolean> {
     const { user, password_reset_token } = Database.models;
-    const existingUser = await user.findOne({where: {email}});
+    const existingUser = await user.findOne({ where: { email } });
 
     if (!existingUser) {
-      Promise.reject(new Error("User not found"));
+      Promise.reject(new Error('User not found'));
     }
 
-    const existingToken = await password_reset_token.findOne({where: {user_id: existingUser.id}});
+    const existingToken = await password_reset_token.findOne({
+      where: { user_id: existingUser.id }
+    });
 
     if (existingToken) {
-      await password_reset_token.destroy({where: {user_id: existingUser.id}});
+      await password_reset_token.destroy({ where: { user_id: existingUser.id } });
     }
 
-    const token = crypto.randomBytes(32).toString("hex");
+    const token = crypto.randomBytes(32).toString('hex');
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(token, salt);
 
-    await password_reset_token.create({token: hash, user_id: existingUser.id});
+    await password_reset_token.create({ token: hash, user_id: existingUser.id });
 
     const encodedToken = encodeURIComponent(token);
     const url = `${CLIENT_URL}/password-reset?token=${encodedToken}&id=${existingUser.id}`;
 
     const data = {
-      from: "EPFirms <postmaster@mg.epfirms.com>",
+      from: 'EPFirms <postmaster@mg.epfirms.com>',
       to: email,
-      subject: "Confirm your account on EPFirms",
-      template: "client-portal-invite",
-      "v:url": url,
-      "v:firm_name": firmName
+      subject: 'Confirm your account on EPFirms',
+      template: 'client-portal-invite',
+      'v:url': url,
+      'v:firm_name': firmName
     };
 
     const responseBody = await mailgun.messages().send(data);
@@ -113,35 +118,37 @@ export class emailsService {
     return Promise.resolve(true);
   }
 
-  public static async requestPasswordReset(email: string): Promise<boolean> {
+  public async requestPasswordReset(email: string): Promise<boolean> {
     const { user, password_reset_token } = Database.models;
-    const existingUser = await user.findOne({where: {email}});
+    const existingUser = await user.findOne({ where: { email } });
 
     if (!existingUser) {
-      Promise.reject(new Error("User not found"));
+      Promise.reject(new Error('User not found'));
     }
 
-    const existingToken = await password_reset_token.findOne({where: {user_id: existingUser.id}});
+    const existingToken = await password_reset_token.findOne({
+      where: { user_id: existingUser.id }
+    });
 
     if (existingToken) {
-      await password_reset_token.destroy({where: {user_id: existingUser.id}});
+      await password_reset_token.destroy({ where: { user_id: existingUser.id } });
     }
 
-    const token = crypto.randomBytes(32).toString("hex");
+    const token = crypto.randomBytes(32).toString('hex');
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(token, salt);
 
-    await password_reset_token.create({token: hash, user_id: existingUser.id});
+    await password_reset_token.create({ token: hash, user_id: existingUser.id });
 
     const encodedToken = encodeURIComponent(token);
     const url = `${CLIENT_URL}/password-reset?token=${encodedToken}&id=${existingUser.id}`;
 
     const data = {
-      from: "EPFirms <postmaster@mg.epfirms.com>",
+      from: 'EPFirms <postmaster@mg.epfirms.com>',
       to: email,
-      subject: "Password reset request",
-      template: "password-reset-email",
-      "v:url": url
+      subject: 'Password reset request',
+      template: 'password-reset-email',
+      'v:url': url
     };
 
     const responseBody = await mailgun.messages().send(data);

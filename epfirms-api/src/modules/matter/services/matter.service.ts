@@ -1,19 +1,19 @@
 import { Database } from '@src/core/Database';
+import { Service } from 'typedi';
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 
+@Service()
 export class MatterService {
-  public static async getOne(id: number): Promise<any> {
+  public async getOne(id: number): Promise<any> {
     const {
       matter,
       matter_task,
       user,
       legal_area,
       matter_intake,
-      review,
-      matter_note,
-      matter_billing,
-      statement
+      statement,
+      matter_task_file
     } = Database.models;
     const { sequelize } = Database;
     const matters = await matter.findOne({
@@ -73,18 +73,9 @@ export class MatterService {
             {
               model: user,
               as: 'assignee'
-            }
-          ]
-        },
-        {
-          model: review
-        },
-        {
-          model: matter_note,
-          include: [
+            },
             {
-              model: user,
-              attributes: ['id', 'first_name', 'last_name', 'profile_image']
+              model: matter_task_file
             }
           ]
         },
@@ -104,17 +95,15 @@ export class MatterService {
     return Promise.resolve(matters);
   }
 
-  public static async getAll(firmId): Promise<any> {
+  public async getAll(firmId): Promise<any> {
     const {
       matter,
       matter_task,
       user,
       legal_area,
       matter_intake,
-      review,
-      matter_note,
-      matter_billing,
-      statement
+      statement,
+      matter_task_file
     } = Database.models;
     const { sequelize } = Database;
     const matters = await matter.findAll({
@@ -174,18 +163,9 @@ export class MatterService {
             {
               model: user,
               as: 'assignee'
-            }
-          ]
-        },
-        {
-          model: review
-        },
-        {
-          model: matter_note,
-          include: [
+            },
             {
-              model: user,
-              attributes: ['id', 'first_name', 'last_name', 'profile_image']
+              model: matter_task_file
             }
           ]
         },
@@ -205,7 +185,7 @@ export class MatterService {
     return Promise.resolve(matters);
   }
 
-  public static async create(matterData, firmId): Promise<any> {
+  public async create(matterData, firmId): Promise<any> {
     const { matter, user, legal_area, matter_task } = Database.models;
     let query = `
     SELECT concat(LPAD(${firmId}, 3, 0), "-", LPAD(MONTH(now()), 2, 0), "-", DATE_FORMAT(now(), "%y"), "-",
@@ -227,13 +207,13 @@ export class MatterService {
     return Promise.resolve(newMatter);
   }
 
-  public static async delete(id): Promise<any> {
+  public async delete(id): Promise<any> {
     const firm = await Database.models.matter.delete({ where: { id } });
 
     return Promise.resolve(firm);
   }
 
-  public static async update(matterDetails): Promise<any> {
+  public async update(matterDetails): Promise<any> {
     const firm = await Database.models.matter.update(matterDetails, {
       where: { id: matterDetails.id }
     });
@@ -241,7 +221,7 @@ export class MatterService {
     return Promise.resolve(firm);
   }
 
-  public static async getByUserId(userId: number): Promise<any> {
+  public async getByUserId(userId: number): Promise<any> {
     const { matter, user, legal_area, matter_intake } = Database.models;
 
     const matters = await matter.findAll({
@@ -288,7 +268,7 @@ export class MatterService {
   }
 
   //TODO: Email client when intake is sent
-  public static async createIntake(matterId: number, senderId: number): Promise<any> {
+  public async createIntake(matterId: number, senderId: number): Promise<any> {
     const { matter_intake } = Database.models;
 
     const matterIntake = await matter_intake.create({
@@ -300,7 +280,7 @@ export class MatterService {
     return Promise.resolve(matterIntake);
   }
 
-  public static async updateIntake(matterIntakeData): Promise<any> {
+  public async updateIntake(matterIntakeData): Promise<any> {
     const { matter_intake } = Database.models;
 
     const matterIntake = await matter_intake.update(matterIntakeData, {

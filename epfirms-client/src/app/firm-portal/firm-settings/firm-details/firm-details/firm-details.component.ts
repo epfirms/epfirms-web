@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
-import { Firm } from '@app/_models/firm';
+import { Firm } from '@app/core/interfaces/firm';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -15,8 +15,6 @@ export class FirmDetailsComponent implements OnInit, OnDestroy {
 
   firmForm: FormGroup;
 
-  mobileNumberMask: any[];
-
   firmSubscription: Subscription;
 
   constructor(
@@ -24,23 +22,6 @@ export class FirmDetailsComponent implements OnInit, OnDestroy {
     private _firmService : FirmService
   ) { 
     this.firm$ = _firmService.entities$;
-
-    this.mobileNumberMask = [
-      '(',
-      /[1-9]/,
-      /\d/,
-      /\d/,
-      ')',
-      ' ',
-      /\d/,
-      /\d/,
-      /\d/,
-      '-',
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/
-    ];
   }
 
   ngOnInit(): void {

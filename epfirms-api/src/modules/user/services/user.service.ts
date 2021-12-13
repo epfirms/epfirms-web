@@ -1,8 +1,10 @@
 import { Database } from '@src/core/Database';
+import { Service } from 'typedi';
 const bcrypt = require('bcrypt');
 
+@Service()
 export class UserService {
-  public static async isRegistered(userId: number): Promise<boolean> {
+  public async isRegistered(userId: number): Promise<boolean> {
     const user = await Database.models.user.findOne({
       attributes: ['id', 'email', 'password'],
       where: {
@@ -11,7 +13,7 @@ export class UserService {
     });
     
     if (!user.email) {
-      return Promise.resolve(false);
+      return Promise.resolve(true);
     }
 
     if (!user.password) {
@@ -20,7 +22,8 @@ export class UserService {
 
     return Promise.resolve(true);
   }
-  public static async get(attribute: string, value: any): Promise<any> {
+
+  public async get(attribute: string, value: any): Promise<any> {
     const user = await Database.models.user.findOne({
       where: {
         [attribute]: value
@@ -30,7 +33,7 @@ export class UserService {
     return Promise.resolve(user);
   }
 
-  public static async create(userData): Promise<any> {
+  public async create(userData): Promise<any> {
     if (userData.password) {
       const { password } = userData;
       const salt = await bcrypt.genSalt(10);
@@ -43,7 +46,7 @@ export class UserService {
     return Promise.resolve(user);
   }
   
-  public static async update(userData): Promise<any> {
+  public async update(userData): Promise<any> {
     if (userData.password) {
       const { password } = userData;
       const salt = await bcrypt.genSalt(10);
@@ -57,7 +60,7 @@ export class UserService {
     return Promise.resolve(updatedUserData);
   }
 
-  public static async getFamilyMemberById(id: number): Promise<any> {
+  public async getFamilyMemberById(id: number): Promise<any> {
     // const { family_member, user } = Database.models;
 
     // const member = await user.findOne({
@@ -78,7 +81,7 @@ export class UserService {
     // return Promise.resolve(member);
   }
 
-  public static async getAllFamilyMembers(userId: number): Promise<any> {
+  public async getAllFamilyMembers(userId: number): Promise<any> {
     const { family_member, user } = Database.models;
     const foundUser = await user.findByPk(userId);
     const familyMembers = await foundUser.getMember();
@@ -86,7 +89,7 @@ export class UserService {
     return Promise.resolve(familyMembers);
   }
 
-  public static async addFamilyMember(userId:number, familyMember): Promise<any> {
+  public async addFamilyMember(userId:number, familyMember): Promise<any> {
     const { user } = Database.models;
 
     const currentUser = await user.findByPk(userId);
@@ -111,13 +114,13 @@ export class UserService {
     return Promise.resolve({...member.dataValues, relationship_type: familyMember.relationship_type});
   }
 
-  public static async updateFamilyMember(familyMember): Promise<any> {
+  public async updateFamilyMember(familyMember): Promise<any> {
     const user = await Database.models.family_member.update(familyMember);
 
     return Promise.resolve(user);
   }
 
-  public static async removeFamilyMember(userId: number, familyMemberId: number): Promise<any> {
+  public async removeFamilyMember(userId: number, familyMemberId: number): Promise<any> {
     const { user } = Database.models;
 
     const currentUser = await user.findByPk(userId);
@@ -129,7 +132,7 @@ export class UserService {
     return Promise.resolve(removed);
   }
 
-  public static async getAllAppointees(userId: number): Promise<any> {
+  public async getAllAppointees(userId: number): Promise<any> {
     const { family_member, user } = Database.models;
     const foundUser = await user.findByPk(userId);
     const familyMembers = await foundUser.getAppointed_user();
@@ -137,7 +140,7 @@ export class UserService {
     return Promise.resolve(familyMembers);
   }
 
-  public static async addAppointee(userId:number, appointee): Promise<any> {
+  public async addAppointee(userId:number, appointee): Promise<any> {
     const { user } = Database.models;
 
     const currentUser = await user.findByPk(userId);
@@ -163,7 +166,7 @@ export class UserService {
     return Promise.resolve({...newAppointee.dataValues, appointee: {rank, executor, trustee, dpoa, mpoa, gop, goe, gomc}});
   }
 
-  public static async updateAppointee(appointeeId: number, data): Promise<any> {
+  public async updateAppointee(appointeeId: number, data): Promise<any> {
     const appointee = await Database.models.appointee.findOne({ where: { id: appointeeId }});
 
     if (appointee) {
@@ -179,7 +182,7 @@ export class UserService {
     return Promise.reject(new Error("Error updating appointee"));
   }
 
-  public static async removeAppointee(userId: number, appointedUserId: number): Promise<any> {
+  public async removeAppointee(userId: number, appointedUserId: number): Promise<any> {
     const { user } = Database.models;
 
     const currentUser = await user.findByPk(userId);

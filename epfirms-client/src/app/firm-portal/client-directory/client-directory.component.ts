@@ -1,14 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Client } from '@app/_models/client';
+import { Component, OnInit } from '@angular/core';
+import { Client } from '@app/core/interfaces/client';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ClientService } from '../_services/client-service/client.service';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ModalService } from '@app/modal/modal.service';
 import { AddClientComponent } from '../overlays/add-client/add-client.component';
-import { Matter } from '@app/_models/matter';
+import { Matter } from '@app/core/interfaces/matter';
 import { MatterService } from '../_services/matter-service/matter.service';
-import { MatterTabsService } from '../_services/matter-tabs-service/matter-tabs.service';
+import { MatterTabsService } from '../../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
+import { DialogService } from '@ngneat/dialog';
 
 interface ClientDirectoryItem {
   letter: string;
@@ -59,7 +58,7 @@ export class ClientDirectoryComponent implements OnInit {
 
   cases$: Observable<Matter[]>;
 
-  constructor(private _clientService: ClientService, private _matterService: MatterService, private _matterTabsService: MatterTabsService, private _modalService: ModalService) {
+  constructor(private _clientService: ClientService, private _matterService: MatterService, private _matterTabsService: MatterTabsService, private _dialogService: DialogService) {
     this.clients$ = _clientService.filteredEntities$;
     this.cases$ = _matterService.filteredEntities$;
   }
@@ -97,7 +96,7 @@ export class ClientDirectoryComponent implements OnInit {
   }
 
   addClient() {
-    this._modalService.open(AddClientComponent, {});
+    this._dialogService.open(AddClientComponent);
   }
 
   openTab(matter: Matter) {

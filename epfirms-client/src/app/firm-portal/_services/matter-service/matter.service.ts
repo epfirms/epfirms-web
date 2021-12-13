@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Matter } from '@app/_models/matter';
+import { Matter } from '@app/core/interfaces/matter';
 import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
 import { concatMap, filter, map, reduce, take } from 'rxjs/operators';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
-import { SocketService } from '../socket-service/socket.service';
+import { SocketService } from '../../../core/services/socket.service';
 import { select } from '@ngrx/store';
 import { selectPopulatedMatters } from '@app/store/matter/matter.selector';
 
@@ -80,31 +80,23 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
     );
   }
 
-  /*
-    addMatterNote()
-      Inputs:
-        note: A note object containing
-          user_id: The id of the user making the comment.
-          matter_id: The id of the matter (case, lead, etc), that the comment is related to.
-          note_string: The actual content of the comment, in the form of a String.
+  getNotes(matterId: number): Observable<any> {
+    return this._http.get<any>(`/api/matters/${matterId}/notes`);
+  }
 
-      Outputs:
-        Post request to the backend that sends the note object to be added to the database.
-  */
-  addMatterNote(note): Observable<any> {
-    return this._http.post<any>('/api/matters/note', note).pipe(
-      map((response: Matter) => {
-        this._socketService.updateCacheSync('matter', response);
-        return of(response);
-      })
-    );
+  addMatterNote(matterId: number, note): Observable<any> {
+    return this._http.post<any>(`/api/matters/${matterId}/notes`, {content: note});
+  }
+
+  deleteNote(id: number): Observable<any> {
+    return this._http.delete<any>(`/api/matters/notes/${id}`);
   }
 
   addMatterTask(task): Observable<any> {
     return this._http.post<any>('/api/matters/task', task).pipe(
       map((response: Matter) => {
         this._socketService.updateCacheSync('matter', response);
-        return of(response);
+        return response;
       })
     );
   }

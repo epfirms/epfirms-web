@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Client } from '@app/_models/client';
-import { LegalArea } from '@app/_models/legal-area';
+import { Client } from '@app/core/interfaces/client';
+import { LegalArea } from '@app/core/interfaces/legal-area';
 import { Observable, Subscription } from 'rxjs';
 import { ClientService } from '../_services/client-service/client.service';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
-import { MatterTabsService } from '../_services/matter-tabs-service/matter-tabs.service';
+import { MatterTabsService } from '../../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 
 @Component({
   selector: 'app-firm-home',

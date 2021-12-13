@@ -3,26 +3,28 @@ import { AuthService } from "@modules/auth/services/auth.service";
 import { StatusConstants } from "@src/constants/StatusConstants";
 import { UserService } from "@src/modules/user/services/user.service";
 import { emailsService } from "@src/modules/emails/services/emails.service";
+import { Service } from "typedi";
 
+@Service()
 export class AuthController {
-  constructor() {}
+  constructor(private _userService: UserService, private _emailService: emailsService, private _authService: AuthService) {}
 
   public async login(req: Request, resp: Response): Promise<any> {
     try {
       const { email, password } = req.body;
       
-      const {valid, msg} = await AuthService.validate(email, password);
+      const {valid, msg} = await this._authService.validate(email, password);
 
       if (valid) {
-        const user = await UserService.get('email', email);
-        const firmScope = await AuthService.getFirmScope(user.id);
-        const clientScope = await AuthService.getClientScope(user.id);
-        const token = await AuthService.generateToken(user, clientScope, firmScope);
+        const user = await this._userService.get('email', email);
+        const firmScope = await this._authService.getFirmScope(user.id);
+        const clientScope = await this._authService.getClientScope(user.id);
+        const token = await this._authService.generateToken(user, clientScope, firmScope);
 
         resp.status(StatusConstants.OK).send({success: true, access_token: token, msg});
       } else if (msg && msg === 'update'){
         // Send password reset email for users on the old password system
-        await emailsService.requestPasswordReset(email);
+        await this._emailService.requestPasswordReset(email);
         
         resp.status(StatusConstants.OK).send({success: false, access_token: null, msg})
       } else {
@@ -52,7 +54,7 @@ export class AuthController {
     try {
       // query params
       const token = req.body.token;
-      const isValid = await AuthService.verifyEmail(token);
+      const isValid = await this._authService.verifyEmail(token);
       if(isValid){
         resp.status(StatusConstants.OK).send({success: true});
       } else {
@@ -68,7 +70,7 @@ export class AuthController {
       const { token } = req.query;
       const { user_id } = req.params;
 
-      const isValid = await AuthService.verifyPasswordToken(user_id, token);
+      const isValid = await this._authService.verifyPasswordToken(user_id, token);
       resp.status(StatusConstants.OK).send(isValid);
     } catch (error) {
       resp.status(StatusConstants.FORBIDDEN).send(error.message);
@@ -78,7 +80,7 @@ export class AuthController {
   public async updatePassword(req: any, resp: Response): Promise<any> {
     try {
       const { id, token, password } = req.body;
-      await AuthService.resetPassword(id, token, password);
+      await this._authService.resetPassword(id, token, password);
       resp.status(StatusConstants.OK).send(true);
     } catch (error) {
       resp.status(StatusConstants.UNAUTHORIZED).send(error.message);

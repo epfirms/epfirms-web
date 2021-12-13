@@ -1,10 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
-import { ModalService } from '@app/modal/modal.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
-import { Matter } from '@app/_models/matter';
 import { Observable, Subscription } from 'rxjs';
-import { ClientMatterService } from '../_services/matter-service/client-matter.service';
 
 @Component({
   selector: 'app-client-home',
@@ -21,7 +17,7 @@ export class ClientHomeComponent implements OnInit, OnDestroy {
   currentUser$: Observable<any>;
   currentUser: any;
 
-  constructor(private _currentUserService: CurrentUserService, private _modalService: ModalService) {
+  constructor(private _currentUserService: CurrentUserService) {
     this.currentUser$ = this._currentUserService.getCurrentUser();
   }
 
