@@ -29,5 +29,5 @@ export class Matter {
     created_at?: string;
     total_billed?: string;
     total_paid?: string;
+    statement?: any;
   }
-  

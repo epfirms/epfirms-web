@@ -1,6 +1,6 @@
 import { DATEONLY } from 'sequelize/types';
 
-module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, DATE, DATEONLY }) => {
+module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, DATE, DATEONLY, FLOAT }) => {
   const tableName = 'matter_task';
 
   const MatterTask = sequelize.define(
@@ -25,6 +25,9 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, DATE, DATEONLY }) => {
       },
       end: {
         type: DATE
+      },
+      hours: {
+        type: STRING,
       },
       due: {
         type: DATE

@@ -12,6 +12,7 @@ import { legalAreaRouter } from '@src/modules/legal-area/routes';
 import { matterActivityRouter } from '@src/modules/matter-activity/routes';
 import { assetRouter } from '@src/modules/asset/routes';
 import { matterBillingRouter } from '@src/modules/matter-billing/routes';
+import { statementRouter } from '@src/modules/statement/routes';
 import { betaSignupRouter } from '@src/modules/beta-signup/routes';
 
 const v1Router = express.Router();
@@ -30,6 +31,7 @@ v1Router.use('/legal-area', legalAreaRouter);
 v1Router.use('/matter-activity', matterActivityRouter);
 v1Router.use('/asset', assetRouter);
 v1Router.use('/billing', matterBillingRouter);
+v1Router.use('/statement', statementRouter);
 v1Router.use('/sign-up', betaSignupRouter);
 
 export { v1Router }

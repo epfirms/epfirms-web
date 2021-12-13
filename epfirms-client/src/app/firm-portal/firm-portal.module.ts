@@ -28,7 +28,7 @@ import { InputModule } from '@app/shared/input/input.module';
     AddClientComponent,
     AddStaffComponent,
     DeleteStaffComponent,
-    EditClientComponent,
+    EditClientComponent
   ],
   imports: [
     CoreModule,

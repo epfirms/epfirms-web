@@ -1,10 +1,10 @@
 import { Database } from '@src/core/Database';
 
-export class MatterBillingService {
+export class StatementService {
 
   public static async create(data) : Promise<any> {
     try {
-      const created = await Database.models.matter_billing.create(data);
+      const created = await Database.models.statement.create(data);
       return Promise.resolve(created);
     } catch (err) {
       console.error(err);
@@ -12,7 +12,7 @@ export class MatterBillingService {
   }
   public static async getAllByMatterId(matterId) : Promise<any> {
     try {
-      const queried = await Database.models.matter_billing.findAll({where: {matter_id: matterId}});
+      const queried = await Database.models.statement.findAll({where: {matter_id: matterId}});
       return Promise.resolve(queried);
     }
     catch (err) {
@@ -21,7 +21,7 @@ export class MatterBillingService {
   }
   public static async update(body) : Promise<any> {
     try {
-      const updated = await Database.models.matter_billing.update(body, {where: {id: body.id}});
+      const updated = await Database.models.statement.update(body, {where: {id: body.id}});
       return Promise.resolve(updated);
     }
     catch (err) {
@@ -30,7 +30,7 @@ export class MatterBillingService {
   }
   public static async delete(id) : Promise<any> {
     try {
-      const deleted = await Database.models.matter_billing.destroy({where: {id: id}});
+      const deleted = await Database.models.statement.destroy({where: {id: id}});
       return Promise.resolve(deleted);
     }
     catch (err) {

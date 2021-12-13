@@ -1,10 +1,11 @@
 
 module.exports = (sequelize, {
     INTEGER,
-    BOOLEAN
+    BOOLEAN,
+    DECIMAL
   }) => {
     const tableName = 'firm_employee';
-  
+
     const FirmEmployee = sequelize.define(
       tableName, {
         id: {
@@ -33,6 +34,9 @@ module.exports = (sequelize, {
           active: {
             type: BOOLEAN,
             defaultValue: true
+          },
+          hourly_rate: {
+            type: DECIMAL
           }
       }, {
         tableName,
@@ -44,6 +48,6 @@ module.exports = (sequelize, {
         // }
       },
     );
-  
+
     return FirmEmployee;
   };

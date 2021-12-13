@@ -8,6 +8,6 @@ const matterBillingRouter = express.Router();
 matterBillingRouter.post('/', passport.authenticate('bearer', { session: false }), (req, res) => matterBillingController.create(req, res));
 matterBillingRouter.get('/:matter_id', passport.authenticate('bearer', { session: false }), (req, res) => matterBillingController.getAllByMatterId(req, res));
 matterBillingRouter.delete('/:id', passport.authenticate('bearer', { session: false }), (req, res) => matterBillingController.delete(req, res));
-matterBillingRouter.put('/:id', passport.authenticate('bearer', { session: false }), (req, res) => matterBillingController.update(req, res));
+matterBillingRouter.put('/', passport.authenticate('bearer', { session: false }), (req, res) => matterBillingController.update(req, res));
 
 export {matterBillingRouter}

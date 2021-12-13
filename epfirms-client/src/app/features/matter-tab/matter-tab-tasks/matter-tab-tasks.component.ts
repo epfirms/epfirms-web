@@ -74,10 +74,32 @@ export class MatterTabTasksComponent implements OnInit {
   }
 
   updateTask(task, property, event) {
+    const value = event.option.value;
     let taskChanges = {
       ...task,
-      [property]: event.option.value
+      [property]: value
     };
+
+    console.log("VALUE", value, property);
+    // add logic for adding a bill automatically
+    if (property === "completed" && value === true) {
+      console.log("TASK", task);
+
+      let hourlyRate = this.staffMembers.filter(staff => staff.id == task.assignee_id)[0].hourly_rate;
+      console.log(hourlyRate);
+      let bill = {
+        matter_id: task.matter_id,
+        hours: task.hours,
+        description: task.name,
+        track_time_for: task.assignee_id,
+        type: "0",
+        billing_type: "hourly",
+        payment_type: "private pay",
+        date: new Date(),
+        amount: task.hours * hourlyRate
+      }
+      this._matterService.createBillOrPayment(bill).subscribe();
+    }
 
     this._matterService.updateMatterTask(taskChanges).subscribe();
   }

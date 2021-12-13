@@ -22,6 +22,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { DocumentsModule } from '../documents/documents.module';
 import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module';
 import { InputModule } from '@app/shared/input/input.module';
+import { BillingModule } from '../billing/billing.module';
 
 
 
@@ -51,7 +52,8 @@ import { InputModule } from '@app/shared/input/input.module';
     DocumentsModule,
     SharedModule,
     AutocompleteModule,
-    InputModule
+    InputModule,
+    BillingModule
   ],
   exports: [
     MatterTabsComponent
