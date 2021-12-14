@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LegalAreasComponent } from './legal-areas/legal-areas/legal-areas.component';
 import { DeleteFirmComponent } from './delete-firm/delete-firm/delete-firm.component';
-import { TaskTemplatesComponent } from './task-templates/task-templates/task-templates.component';
+import { CaseTemplatesComponent } from './case-templates/case-templates/case-templates.component';
 import { FirmSettingsComponent } from './firm-settings.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
@@ -12,9 +12,10 @@ import { FirmDetailsComponent } from './firm-details/firm-details/firm-details.c
 import { ManageStaffComponent } from './manage-staff/manage-staff.component';
 import { DialogModule } from '@ngneat/dialog';
 import { TippyModule } from '@ngneat/helipopper';
-import { TaskTemplateModule } from '@app/features/task-template/task-template.module';
+import { CaseTemplateModule } from '@app/features/case-template/case-template.module';
 import { TagModule } from '@app/shared/tag/tag.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
+import { CaseTemplateCommunityComponent } from './case-template-community/case-template-community.component';
 
 const FirmSettingsRoute: Routes = [
   {
@@ -22,7 +23,8 @@ const FirmSettingsRoute: Routes = [
       { path: '', component: FirmDetailsComponent },
       { path: 'legal-areas', component: LegalAreasComponent },
       { path: 'manage-staff', component: ManageStaffComponent },
-      { path: 'task-templates', component: TaskTemplatesComponent },
+      { path: 'case-templates', component: CaseTemplatesComponent },
+      { path: 'case-template-community', component: CaseTemplateCommunityComponent },
       { path: 'delete-firm', component: DeleteFirmComponent }
     ]
   },
@@ -32,10 +34,11 @@ const FirmSettingsRoute: Routes = [
   declarations: [
     LegalAreasComponent,
     DeleteFirmComponent,
-    TaskTemplatesComponent,
+    CaseTemplatesComponent,
     FirmSettingsComponent,
     FirmDetailsComponent,
-    ManageStaffComponent
+    ManageStaffComponent,
+    CaseTemplateCommunityComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +47,7 @@ const FirmSettingsRoute: Routes = [
     RouterModule.forChild(FirmSettingsRoute),
     DialogModule,
     TippyModule,
-    TaskTemplateModule,
+    CaseTemplateModule,
     TagModule,
     EditableModule
   ]

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChildren } from '@angular/core';
-import { TaskTemplateSelectionComponent } from '@app/features/task-template/task-template-selection/task-template-selection.component';
+import { CaseTemplateSelectionComponent } from '@app/features/case-template/case-template-selection/case-template-selection.component';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { Matter } from '@app/core/interfaces/matter';
@@ -107,12 +107,12 @@ export class MatterTabTasksComponent implements OnInit {
     this._matterService.deleteMatterTask(taskId).subscribe();
   }
 
-  openTaskTemplateDialog(): void {
-    const taskTemplateDialog = this._dialog.open(TaskTemplateSelectionComponent, {
+  openCaseTemplateDialog(): void {
+    const caseTemplateDialog = this._dialog.open(CaseTemplateSelectionComponent, {
       size: 'lg'
     });
 
-    taskTemplateDialog.afterClosed$.subscribe((templateTasks) => {
+    caseTemplateDialog.afterClosed$.subscribe((templateTasks) => {
       if (templateTasks && templateTasks.length) {
         this.applyTemplateTasks(templateTasks, this.matter.id);
       }

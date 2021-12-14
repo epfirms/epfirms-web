@@ -1,5 +1,5 @@
 import express from 'express';
-import { firmController, firmEmployeeController, firmTaskTemplateController } from '@modules/firm/controllers';
+import { firmController, firmEmployeeController, firmCaseTemplateController } from '@modules/firm/controllers';
 const passport = require('passport');
 
 const firmRouter = express.Router();
@@ -18,32 +18,32 @@ firmRouter.get('/staff', passport.authenticate('bearer', { session: false }), (r
 
 firmRouter.post('/staff', passport.authenticate('bearer', { session: false }), (req, res) => firmController.createClient(req, res));
 
-// Firm task template routes
-firmRouter.get('/task-templates', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.get(req, res));
+// Firm case template routes
+firmRouter.get('/case-templates', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.get(req, res));
 
-firmRouter.post('/task-templates', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.create(req, res));
+firmRouter.post('/case-templates', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.create(req, res));
 
-firmRouter.put('/task-templates/:firm_task_template_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.update(req, res));
+firmRouter.put('/case-templates/:firm_case_template_id', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.update(req, res));
 
-firmRouter.delete('/task-templates/:firm_task_template_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.delete(req, res));
+firmRouter.delete('/case-templates/:firm_case_template_id', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.delete(req, res));
 
 // Firm template task routes
-firmRouter.post('/task-templates/:firm_task_template_id/task', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.addTask(req, res));
+firmRouter.post('/case-templates/:firm_case_template_id/task', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.addTask(req, res));
 
-firmRouter.put('/task-templates/task/:firm_template_task_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.updateTask(req, res));
+firmRouter.put('/case-templates/task/:firm_template_task_id', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.updateTask(req, res));
 
-firmRouter.delete('/task-templates/task/:firm_template_task_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.deleteTask(req, res));
+firmRouter.delete('/case-templates/task/:firm_template_task_id', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.deleteTask(req, res));
 
 // Firm template task file routes
-firmRouter.get('/task-templates/task/file/download', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.getTaskFileDownloadURL(req, res));
+firmRouter.get('/case-templates/task/file/download', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.getTaskFileDownloadURL(req, res));
 
-firmRouter.get('/task-templates/task/file/upload', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.getTaskFileUploadURL(req, res));
+firmRouter.get('/case-templates/task/file/upload', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.getTaskFileUploadURL(req, res));
 
-firmRouter.post('/task-templates/task/:firm_template_task_id/file', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.addTaskFile(req, res));
+firmRouter.post('/case-templates/task/:firm_template_task_id/file', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.addTaskFile(req, res));
 
-firmRouter.put('/task-templates/task/file/:file_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.updateTaskFile(req, res));
+firmRouter.put('/case-templates/task/file/:file_id', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.updateTaskFile(req, res));
 
-firmRouter.delete('/task-templates/task/file/:file_id', passport.authenticate('bearer', {session: false}), (req, res) => firmTaskTemplateController.deleteTaskFile(req, res));
+firmRouter.delete('/case-templates/task/file/:file_id', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.deleteTaskFile(req, res));
 
 firmRouter.get('/search-key', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getSearchKey(req, res));
 

@@ -48,13 +48,13 @@ export class Database {
       password_reset_token: require('../models/PasswordResetToken')(this.sequelize, Sequelize),
       matter_billing: require('../models/MatterBilling')(this.sequelize, Sequelize),
       firm_template_task: require('../models/FirmTemplateTask')(this.sequelize, Sequelize),
-      firm_task_template: require('../models/FirmTaskTemplate')(this.sequelize, Sequelize),
+      firm_case_template: require('../models/FirmCaseTemplate')(this.sequelize, Sequelize),
       external_lead: require('../models/ExternalLead')(this.sequelize, Sequelize),
       statement: require('../models/Statement')(this.sequelize, Sequelize),
       beta_signup: require('../models/BetaSignup')(this.sequelize, Sequelize),
       firm_template_task_file: require('../models/FirmTemplateTaskFile')(this.sequelize, Sequelize),
       matter_task_file: require('../models/MatterTaskFile')(this.sequelize, Sequelize),
-      community_task_template: require('../models/CommunityTaskTemplate')(this.sequelize, Sequelize),
+      community_case_template: require('../models/CommunityCaseTemplate')(this.sequelize, Sequelize),
       community_template_task: require('../models/CommunityTemplateTask')(this.sequelize, Sequelize),
       community_template_task_file: require('../models/CommunityTemplateTaskFile')(this.sequelize, Sequelize),
       firm_team: require('../models/FirmTeam')(this.sequelize, Sequelize),
@@ -244,20 +244,20 @@ export class Database {
       foreignKey: 'user_id'
     });
 
-    this.models.firm.hasMany(this.models.firm_task_template, {
+    this.models.firm.hasMany(this.models.firm_case_template, {
       foreignKey: 'firm_id',
       onDelete: 'cascade'
     });
 
-    this.models.firm_task_template.belongsTo(this.models.firm, {
+    this.models.firm_case_template.belongsTo(this.models.firm, {
       foreignKey: 'firm_id'
     });
 
-    this.models.firm_task_template.hasMany(this.models.firm_template_task, {
+    this.models.firm_case_template.hasMany(this.models.firm_template_task, {
       foreignKey: 'template_id',
       onDelete: 'cascade'
     });
-    this.models.firm_template_task.belongsTo(this.models.firm_task_template, {
+    this.models.firm_template_task.belongsTo(this.models.firm_case_template, {
       foreignKey: 'template_id'
     });
 
@@ -287,20 +287,20 @@ export class Database {
     this.models.matter_task_file.belongsTo(this.models.matter_task);
 
 
-    this.models.user.hasMany(this.models.community_task_template, {
+    this.models.user.hasMany(this.models.community_case_template, {
       foreignKey: 'created_by'
     });
 
-    this.models.community_task_template.belongsTo(this.models.user, {
+    this.models.community_case_template.belongsTo(this.models.user, {
       foreignKey: 'created_by'
     });
 
-    this.models.community_task_template.hasMany(this.models.community_template_task, {
+    this.models.community_case_template.hasMany(this.models.community_template_task, {
       foreignKey: 'template_id',
       onDelete: 'cascade'
     });
 
-    this.models.community_template_task.belongsTo(this.models.community_task_template, {
+    this.models.community_template_task.belongsTo(this.models.community_case_template, {
       foreignKey: 'template_id'
     });
 
