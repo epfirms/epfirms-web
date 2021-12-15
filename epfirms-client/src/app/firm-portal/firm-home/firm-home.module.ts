@@ -7,7 +7,6 @@ import { PaginatorModule } from '@app/shared/paginator/paginator.module';
 import { TagModule } from '@app/shared/tag/tag.module';
 import { DialogModule } from '@ngneat/dialog';
 import { TippyModule } from '@ngneat/helipopper';
-import { MenuModule } from 'headlessui-angular';
 
 import { FirmHomeRoutingModule } from './firm-home-routing.module';
 import { FirmHomeComponent } from './firm-home.component';
@@ -18,7 +17,6 @@ import { FirmHomeComponent } from './firm-home.component';
   imports: [
     CoreModule,
     FirmHomeRoutingModule,
-    MenuModule,
     CdkTableModule,
     TippyModule,
     DialogModule,

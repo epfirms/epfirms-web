@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MenuModule } from 'headlessui-angular';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { UserFormModalComponent } from './user-form-modal/user-form-modal.component';
 import { BillFormModalComponent } from './bill-form-modal/bill-form-modal.component';
@@ -26,7 +25,6 @@ import { InputModule } from './input/input.module';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    MenuModule,
     AngularMyDatePickerModule,
     InputMaskModule,
     TippyModule,

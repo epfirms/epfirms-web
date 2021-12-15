@@ -78,7 +78,7 @@
         </div>
         <div class="sm:col-span-2">
           <ng-container *ngIf="legalAreas$ | async as legalAreas">
-            <div hlMenu class="relative inline-block text-left">
+            <!-- <div hlMenu class="relative inline-block text-left">
               <button hlMenuButton class="button-white-icon-sm">
                 {{
                 selectedLegalArea.name || 'Select a legal area' | titlecase
@@ -103,7 +103,6 @@
                   ring-1 ring-black ring-opacity-5
                   focus:outline-none
                 ">
-                <!-- Use the `active` state to conditionally style the active item. -->
                 <div class="p-1" *ngFor="let legalArea of legalAreas">
                   <a *hlMenuItem="let item" class="
                       group
@@ -122,11 +121,10 @@
                   </a>
                 </div>
               </div>
-            </div>
+            </div> -->
           </ng-container>
         </div>
       </div>
-      <!-- Project description -->
       <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
           <label for="project-description" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">

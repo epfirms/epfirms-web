@@ -8,7 +8,6 @@ import { MatterTabUserCardComponent } from './matter-tab-user-card/matter-tab-us
 import { TabsModule } from '@app/shared/tabs/tabs.module';
 import { CoreModule } from '@app/core/core.module';
 import { TagModule } from '@app/shared/tag/tag.module';
-import { MenuModule } from 'headlessui-angular';
 import { MatterTabActivityComponent } from './matter-tab-activity/matter-tab-activity.component';
 import { MatterTabBillingComponent } from './matter-tab-billing/matter-tab-billing.component';
 import { MatterTabTasksComponent } from './matter-tab-tasks/matter-tab-tasks.component';
@@ -43,7 +42,6 @@ import { BillingModule } from '../billing/billing.module';
     CoreModule,
     TabsModule,
     TagModule,
-    MenuModule,
     AvatarModule,
     QuillModule,
     IntakeModule,

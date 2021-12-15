@@ -50,7 +50,7 @@
     </div>
     <div class="ml-4 flex items-center md:ml-6">
       <div class="mr-4">
-        <div hlMenu class="relative inline-block text-left">
+        <!-- <div hlMenu class="relative inline-block text-left">
           <button hlMenuButton ep-icon-button color="white">
             {{matterFilterValues.status + ' ' + matterFilterValues.matter_type + 's' | titlecase}}
 
@@ -73,7 +73,6 @@
               ring-1 ring-black ring-opacity-5
               focus:outline-none
             ">
-            <!-- Use the `active` state to conditionally style the active item. -->
             <div class="p-1" *ngFor="let status of statusFilterOptions">
               <a *hlMenuItem="let item" class="
                   group
@@ -92,7 +91,7 @@
               </a>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div>
         <button ep-icon-button (click)="addLead()">
@@ -262,7 +261,7 @@
               <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap w-1/12">
                 <div>
                   <ng-container *ngIf="legalAreas$ | async as legalAreas">
-                    <div hlMenu class="relative inline-block text-left text-gray-700">
+                    <!-- <div hlMenu class="relative inline-block text-left text-gray-700">
                       <button hlMenuButton class="table-dropdown" [class.text-gray-500]="!lead.legal_area?.name">
                         {{ lead.legal_area?.name || "Select a legal area" | titlecase }}
 
@@ -287,7 +286,6 @@
                           ring-1 ring-black ring-opacity-5
                           focus:outline-none
                         ">
-                        <!-- Use the `active` state to conditionally style the active item. -->
                         <div class="p-1" *ngFor="let legalArea of legalAreas">
                           <a *hlMenuItem="let item" class="
                               group
@@ -307,7 +305,7 @@
                           </a>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                   </ng-container>
                 </div>
               </td>
@@ -325,7 +323,7 @@
                   tracking-wider
                 " cdk-header-cell *cdkHeaderCellDef>
 
-                <div hlMenu class="relative inline-block text-left w-full">
+                <!-- <div hlMenu class="relative inline-block text-left w-full">
                   <div hlMenuButton class="flex w-full items-center group hover:cursor-pointer">
                     <div class="flex-1">
                       Attorney
@@ -350,7 +348,6 @@
                       ring-1 ring-black ring-opacity-5
                       focus:outline-none
                     ">
-                    <!-- Use the `active` state to conditionally style the active item. -->
                     <div class="p-1" *ngFor="let attorney of attorneys$ | async">
                       <a *hlMenuItem="let item" class="
                           group
@@ -381,7 +378,7 @@
                       </a>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </th>
               <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap w-2/12">
                 <ep-input-group>

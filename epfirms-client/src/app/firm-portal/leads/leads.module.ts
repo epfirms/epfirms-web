@@ -7,7 +7,6 @@ import { PaginatorModule } from '@app/shared/paginator/paginator.module';
 import { TagModule } from '@app/shared/tag/tag.module';
 import { DialogModule } from '@ngneat/dialog';
 import { TippyModule } from '@ngneat/helipopper';
-import { MenuModule } from 'headlessui-angular';
 import { LeadsComponent } from './leads.component';
 import { ButtonModule } from '@app/shared/button/button.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
@@ -21,7 +20,6 @@ import { InputModule } from '@app/shared/input/input.module';
   imports: [
     CoreModule,
     LeadsPageRoutingModule,
-    MenuModule,
     CdkTableModule,
     TippyModule,
     DialogModule,

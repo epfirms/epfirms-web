@@ -8,7 +8,6 @@ import { PaginatorModule } from '@app/shared/paginator/paginator.module';
 import { TagModule } from '@app/shared/tag/tag.module';
 import { DialogModule } from '@ngneat/dialog';
 import { TippyModule } from '@ngneat/helipopper';
-import { MenuModule } from 'headlessui-angular';
 import { ClientDirectoryComponent } from './client-directory.component';
 import { ButtonModule } from '@app/shared/button/button.module';
 
@@ -18,7 +17,6 @@ import { ButtonModule } from '@app/shared/button/button.module';
   imports: [
     CoreModule,
     ClientDirectoryRoutingModule,
-    MenuModule,
     CdkTableModule,
     TippyModule,
     DialogModule,

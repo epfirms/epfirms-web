@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuModule } from 'headlessui-angular';
 import { ClientPortalRoutingModule } from './client-portal-routing.module';
 import { ClientPortalComponent } from './client-portal.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
@@ -27,7 +26,6 @@ import { NavbarModule } from '@app/shared/navbar/navbar.module';
     ReactiveFormsModule,
     ClientPortalRoutingModule,
     IntakeModule,
-    MenuModule,
     AvatarModule,
     NavbarModule
   ]

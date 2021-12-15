@@ -10,7 +10,6 @@ import { PaginatorModule } from '@app/shared/paginator/paginator.module'
 import { TagModule } from '@app/shared/tag/tag.module'
 import { DialogModule } from '@ngneat/dialog'
 import { TippyModule } from '@ngneat/helipopper'
-import { MenuModule } from 'headlessui-angular'
 import { CasesPageRoutingModule } from './cases-routing.module'
 import { CasesComponent } from './cases.component'
 
@@ -19,7 +18,6 @@ import { CasesComponent } from './cases.component'
     imports: [
         CoreModule,
         CasesPageRoutingModule,
-        MenuModule,
         CdkTableModule,
         TippyModule,
         DialogModule,
