@@ -210,7 +210,7 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
         group.assignees = [...assignees];
         this.assigneeGroups = [...this.assigneeGroups, assigneeGroup];
-        // Firm roles are sorted to the top of the list for display.
+        // Sort to make 'Role' group display first in the ep-option-group.
         this.filteredAssigneeGroups = [...this.assigneeGroups.sort((a,b) => a.type === 'Role' ? -1 : 1)];
     });
   }
