@@ -3,6 +3,8 @@ import { Service } from 'typedi';
 
 @Service()
 export class BetaSignupService {
+  constructor() {}
+  
   public async create(contactDetails: any): Promise<any> {
     try {
       await Database.models.beta_signup.create(contactDetails);

@@ -3,7 +3,7 @@ const crypto = require('crypto');
 import { Database } from '@src/core/Database';
 import { Service } from 'typedi';
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET, EMAIL_API_KEY, EMAIL_DOMAIN, CLIENT_URL } = require('@configs/vars');
+const { JWT_SECRET, EMAIL_API_KEY, EMAIL_DOMAIN, CLIENT_URL, TEAM_EMAIL_ADDRESS } = require('@configs/vars');
 var mailgun = require('mailgun-js')({ apiKey: EMAIL_API_KEY, domain: EMAIL_DOMAIN });
 
 export interface EmailContent {
@@ -149,6 +149,24 @@ export class emailsService {
       subject: 'Password reset request',
       template: 'password-reset-email',
       'v:url': url
+    };
+
+    const responseBody = await mailgun.messages().send(data);
+
+    return Promise.resolve(true);
+  }
+
+  public async sendBetaSignupNotification(contactDetails: any): Promise<boolean> {
+    const data = {
+      from: 'EPFirms <postmaster@mg.epfirms.com>',
+      to: TEAM_EMAIL_ADDRESS,
+      subject: 'EPFirms has a new beta signup!',
+      template: 'beta-signup-notification',
+      'v:first_name': contactDetails.first_name,
+      'v:last_name': contactDetails.last_name,
+      'v:firm_name': contactDetails.firm_name,
+      'v:email': contactDetails.email,
+      'v:phone': contactDetails.phone
     };
 
     const responseBody = await mailgun.messages().send(data);
