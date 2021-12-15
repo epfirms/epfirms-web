@@ -22,8 +22,10 @@ import {
 } from '@angular/core';
 
 import {Subscription} from 'rxjs';
+import { OPTGROUP, _OptgroupBase } from '../option/directives/option-group.directive';
 import { _OptionBase } from '../option/directives/option.directive';
 import { OPTION_PARENT_COMPONENT } from '../option/interfaces/option-parent';
+import { Optgroup } from '../option/option-group/option-group.component';
 import { OptionComponent } from '../option/option/option.component';
 
 /**
@@ -115,6 +117,9 @@ export abstract class _AutocompleteBase
   /** Reference to all options within the autocomplete. */
   abstract options: QueryList<_OptionBase>;
 
+  /** Reference to all option groups within the autocomplete. */
+  abstract optionGroups: QueryList<_OptgroupBase>;
+  
   /** Aria label of the autocomplete. */
   @Input('aria-label') ariaLabel: string;
 
@@ -180,6 +185,12 @@ export abstract class _AutocompleteBase
 
   /** Unique ID to be used by autocomplete trigger's "aria-owns" property. */
   id: string = `ep-autocomplete-${_uniqueAutocompleteIdCounter++}`;
+  
+  /**
+   * Tells any descendant `optgroup` to use the inert a11y pattern.
+   * @docs-private
+   */
+   readonly inertGroups: boolean;
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -188,6 +199,7 @@ export abstract class _AutocompleteBase
     platform?: Platform,
   ) {
     super();
+    this.inertGroups = false;
 
     this._autoActiveFirstOption = !!defaults.autoActiveFirstOption;
   }
@@ -268,6 +280,9 @@ export abstract class _AutocompleteBase
   providers: [{provide: OPTION_PARENT_COMPONENT, useExisting: AutocompleteComponent}],
 })
 export class AutocompleteComponent extends _AutocompleteBase {
+    /** Reference to all option groups within the autocomplete. */
+    @ContentChildren(OPTGROUP, {descendants: true}) optionGroups: QueryList<Optgroup>;
+
   /** Reference to all options within the autocomplete. */
   @ContentChildren(OptionComponent, {descendants: true}) options: QueryList<OptionComponent>;
   protected _visibleClass = 'ep-autocomplete-visible';

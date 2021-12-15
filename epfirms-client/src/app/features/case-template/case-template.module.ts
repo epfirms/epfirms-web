@@ -13,6 +13,7 @@ import { EditableModule } from '@app/shared/editable/editable.module';
 import { CoreModule } from '@app/core/core.module';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { InputModule } from '@app/shared/input/input.module';
+import { CaseTemplateCommunityComponent } from './case-template-community/case-template-community.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { InputModule } from '@app/shared/input/input.module';
     CaseTemplateListItemComponent,
     CaseTemplateListComponent,
     CaseTemplateDetailsComponent,
-    CaseTemplateSelectionComponent
+    CaseTemplateSelectionComponent,
+    CaseTemplateCommunityComponent
   ],
   imports: [
     CoreModule,

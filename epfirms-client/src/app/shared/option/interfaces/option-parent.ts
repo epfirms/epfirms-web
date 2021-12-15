@@ -7,6 +7,7 @@ import { InjectionToken } from "@angular/core";
  */
 export interface OptionParentComponent {
   multiple?: boolean;
+  inertGroups?: boolean;
 }
 
 /**

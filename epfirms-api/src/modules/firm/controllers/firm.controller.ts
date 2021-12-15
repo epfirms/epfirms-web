@@ -38,13 +38,6 @@ export class FirmController {
 
       const createdFirm: Firm = await this._firmService.create(firm);
 
-      const roles = {
-        admin: true,
-        attorney: true,
-        legal_assistant: false,
-        paralegal: false
-      };
-
       // await this._firmEmployeeService.add(createdUser.id, createdFirm.id, roles);
 
       const stripeCustomer = await PaymentProcessorService.createCustomer(user.email);
@@ -137,6 +130,18 @@ export class FirmController {
       const searchKey = await this._clientSearchService.generateClientSearchKey(parseInt(firm_id));
 
       resp.status(StatusConstants.OK).send({ key: searchKey });
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
+  public async getRoles(req: any, resp: Response): Promise<any> {
+    try {
+      const { firm_id } = req.user.firm_access;
+
+      const roles = await this._firmRoleService.get(parseInt(firm_id));
+
+      resp.status(StatusConstants.OK).send({ roles: roles });
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }

@@ -304,13 +304,13 @@ export class Database {
       foreignKey: 'template_id'
     });
 
-    // this.models.firm_role.hasMany(this.models.community_template_task, {
-    //   foreignKey: 'firm_role_id'
-    // });
+    this.models.firm_role.hasMany(this.models.community_template_task, {
+      foreignKey: 'firm_role_id'
+    });
 
-    // this.models.community_template_task.belongsTo(this.models.firm_role, {
-    //   foreignKey: 'firm_role_id'
-    // });
+    this.models.community_template_task.belongsTo(this.models.firm_role, {
+      foreignKey: 'firm_role_id'
+    });
 
     this.models.community_template_task.hasMany(this.models.community_template_task_file, {
       foreignKey: 'community_template_task_id'

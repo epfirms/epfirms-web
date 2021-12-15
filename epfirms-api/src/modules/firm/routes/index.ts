@@ -55,4 +55,6 @@ firmRouter.put('/employees', passport.authenticate('bearer', {session: false}), 
 
 firmRouter.delete('/employees', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.delete(req, res));
 
+firmRouter.get('/roles', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getRoles(req, res));
+
 export { firmRouter };

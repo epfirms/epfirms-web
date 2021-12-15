@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, ChangeDetectorRef, Optional, Inject } from "@angular/core";
+import { OPTGROUP } from "../directives/option-group.directive";
 import { _OptionBase } from "../directives/option.directive";
 import { OptionParentComponent, OPTION_PARENT_COMPONENT } from "../interfaces/option-parent";
+import { Optgroup } from "../option-group/option-group.component";
 
 /**
  * Single option inside of a `<ep-select>` element.
@@ -31,7 +33,8 @@ export class OptionComponent extends _OptionBase {
     element: ElementRef<HTMLElement>,
     changeDetectorRef: ChangeDetectorRef,
     @Optional() @Inject(OPTION_PARENT_COMPONENT) parent: OptionParentComponent,
+    @Optional() @Inject(OPTGROUP) group: Optgroup,
   ) {
-    super(element, changeDetectorRef);
+    super(element, changeDetectorRef, group);
   }
 }

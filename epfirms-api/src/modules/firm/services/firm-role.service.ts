@@ -3,7 +3,7 @@ import { Service } from 'typedi';
 
 @Service()
 export class FirmRoleService {
-  private defaultRoles = ['admin', 'attorney', 'paralegal', 'legal assistant', 'secretary', 'other'];
+  private defaultRoles = ['attorney', 'associate attorney', 'paralegal', 'legal assistant', 'receptionist', 'office manager', 'other'];
   
   constructor() {}
 
@@ -11,7 +11,7 @@ export class FirmRoleService {
    * Creates default roles for a newly created firm.
    *
    * @remarks
-   * This method should
+   * This method should only be used on creation of a firm.
    *
    * @param firmId
    * @returns The newly created roles
@@ -41,4 +41,27 @@ export class FirmRoleService {
       console.error(err);
     }
   }
+
+    /**
+   * Gets a list of roles for a specified firm.
+   *
+   * @param firmId
+   * @returns Roles belonging to a firm
+   *
+   */
+     public async get(firmId: number): Promise<any> {
+      try {
+        const { firm } = Database.models;
+        const currentFirm = await firm.findByPk(firmId);
+  
+        if (currentFirm) {
+            const roles = await currentFirm.getFirm_role({attributes: ['id', 'name']});
+            return Promise.resolve(roles);
+        } else {
+          return Promise.reject(new Error('Firm not found'));
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
 }

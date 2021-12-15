@@ -72,7 +72,7 @@
                   whitespace-nowrap
                   border-r border-l
                 ">
-            Assignee
+            Assignee / role
           </th>
           <th class="
                   hidden
@@ -157,21 +157,34 @@
                 " [class.border-b]="!isLast">
               <div>
                 <ep-input-group>
-                  <ep-avatar ep-input-icon epSize="xsmall" [epSrc]="task.user.profile_image" [epText]="task.user.full_name"></ep-avatar>
+                  <ep-avatar ep-input-icon epSize="xsmall" [epSrc]="task.user?.profile_image" [epText]="task.user?.full_name"></ep-avatar>
 
-                  <input ep-input [epEditable]="true" type="text" [ngModel]="task.user_id"
-                    (ngModelChange)="filterStaffMembers($event)" [epAutocomplete]="auto">
+                  <input ep-input [epEditable]="true" type="text" [ngModel]="task.assignee_id"
+                    (ngModelChange)="filterStaffMembers($event)" [epAutocomplete]="auto" placeholder="Select assignee/role">
                 </ep-input-group>
 
               <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayFn"
                 (optionSelected)="setAssignee($event, i)" panelWidth="auto">
-                <ep-option *ngFor="let staffMember of filteredStaffMembers" [value]="staffMember.user.id">
-                  <ep-avatar epSize="xsmall" [epSrc]="staffMember.user.profile_image"
-                    [epText]="staffMember.user.full_name">
-                  </ep-avatar> <span class="font-normal ml-3 block truncate">
-                    {{staffMember.user.full_name}}
-                  </span>
-                </ep-option>
+                <ep-option-group [label]="assigneeGroup.type" *ngFor="let assigneeGroup of filteredAssigneeGroups">
+                  <ep-option *ngFor="let assignee of assigneeGroup.assignees" [value]="assignee.id">
+                    <ep-avatar *ngIf="assigneeGroup.type === 'Staff'" epSize="xsmall" [epSrc]="assignee.profile_image"
+                    [epText]="assignee.name">
+                  </ep-avatar>
+                  <span class="font-normal ml-3 block truncate">
+                    {{assignee.name | titlecase}}
+                    </span>
+                  </ep-option>
+                </ep-option-group>
+
+                <!-- <ep-option-group [label]="'Staff'">
+                  <ep-option *ngFor="let staffMember of filteredStaffMembers" [value]="staffMember.user.id">
+                    <ep-avatar epSize="xsmall" [epSrc]="staffMember.user.profile_image"
+                      [epText]="staffMember.user.full_name">
+                    </ep-avatar> <span class="font-normal ml-3 block truncate">
+                      {{staffMember.user.full_name}}
+                    </span>
+                  </ep-option>
+                </ep-option-group> -->
               </ep-autocomplete>
                 <!-- <ep-editable>
                   <ng-template epEditableView>

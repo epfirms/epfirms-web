@@ -23,6 +23,12 @@ module.exports = (sequelize, { INTEGER, STRING }) => {
       },
       duration_minutes: {
         type: INTEGER
+      },
+      assignee_type: {
+        type: STRING
+      },
+      assignee_id: {
+        type: INTEGER
       }
     },
     {

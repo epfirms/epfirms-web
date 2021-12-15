@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { OptionComponent } from './option/option.component';
 import { _OptionBase } from './directives/option.directive';
+import { Optgroup } from './option-group/option-group.component';
+import { CoreModule } from '@app/core/core.module';
 
 
 @NgModule({
   declarations: [
     OptionComponent,
+    Optgroup,
   ],
   imports: [
-    CommonModule
+    CoreModule
   ],
   exports: [
-    OptionComponent
+    OptionComponent,
+    Optgroup
   ]
 })
 export class OptionModule { }

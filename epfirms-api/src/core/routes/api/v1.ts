@@ -14,6 +14,7 @@ import { assetRouter } from '@src/modules/asset/routes';
 import { matterBillingRouter } from '@src/modules/matter-billing/routes';
 import { statementRouter } from '@src/modules/statement/routes';
 import { betaSignupRouter } from '@src/modules/beta-signup/routes';
+import { caseTemplateCommunityRouter } from '@src/modules/case-template-community/routes';
 
 const v1Router = express.Router();
 
@@ -33,5 +34,6 @@ v1Router.use('/asset', assetRouter);
 v1Router.use('/billing', matterBillingRouter);
 v1Router.use('/statement', statementRouter);
 v1Router.use('/sign-up', betaSignupRouter);
+v1Router.use('/case-templates', caseTemplateCommunityRouter);
 
 export { v1Router }

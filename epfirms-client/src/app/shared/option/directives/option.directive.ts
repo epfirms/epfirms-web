@@ -9,10 +9,14 @@ import {
   OnDestroy,
   Output,
   Directive,
+  QueryList,
 } from '@angular/core';
 import {FocusOptions, FocusableOption, FocusOrigin} from '@angular/cdk/a11y';
 import {Subject} from 'rxjs';
 import {OptionParentComponent} from '../interfaces/option-parent';
+import { OptionComponent } from '../option/option.component';
+import { Optgroup } from '../option-group/option-group.component';
+import { _OptgroupBase } from './option-group.directive';
 
 /**
  * Option IDs need to be unique across components, so this counter exists outside of
@@ -54,7 +58,7 @@ export class _OptionBase implements FocusableOption, AfterViewChecked, OnDestroy
   /** Whether the option is disabled. */
   @Input()
   get disabled() {
-    return this._disabled;
+    return (this.group && this.group.disabled) || this._disabled;
   }
   set disabled(value: any) {
     this._disabled = coerceBooleanProperty(value);
@@ -69,7 +73,8 @@ export class _OptionBase implements FocusableOption, AfterViewChecked, OnDestroy
 
   constructor(
     private _element: ElementRef<HTMLElement>,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    readonly group: _OptgroupBase,
   ) {}
 
   /**
@@ -212,6 +217,35 @@ export class _OptionBase implements FocusableOption, AfterViewChecked, OnDestroy
   }
 
   static ngAcceptInputType_disabled: BooleanInput;
+}
+
+/**
+ * Counts the amount of option group labels that precede the specified option.
+ * @param optionIndex Index of the option at which to start counting.
+ * @param options Flat list of all of the options.
+ * @param optionGroups Flat list of all of the option groups.
+ * @docs-private
+ */
+ export function _countGroupLabelsBeforeOption(
+  optionIndex: number,
+  options: QueryList<OptionComponent>,
+  optionGroups: QueryList<Optgroup>,
+): number {
+  if (optionGroups.length) {
+    let optionsArray = options.toArray();
+    let groups = optionGroups.toArray();
+    let groupCounter = 0;
+
+    for (let i = 0; i < optionIndex + 1; i++) {
+      if (optionsArray[i].group && optionsArray[i].group === groups[groupCounter]) {
+        groupCounter++;
+      }
+    }
+
+    return groupCounter;
+  }
+
+  return 0;
 }
 
 /**

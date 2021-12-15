@@ -1,21 +1,27 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { Staff } from '@app/core/interfaces/staff';
-import { Observable } from 'rxjs';
+import { merge, Observable } from 'rxjs';
 import { DialogRef, DialogService } from '@ngneat/dialog';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { FirmCaseTemplate } from '../interfaces/firm-case-template';
-import { CaseTemplateLawCategory, caseTemplateLawCategories } from '../enums/case-template-law-category';
+import {
+  CaseTemplateLawCategory,
+  caseTemplateLawCategories
+} from '../enums/case-template-law-category';
 import { USAState } from '@app/shared/utils/us-states/typings';
 import { FirmTemplateTaskFile } from '../interfaces/firm-template-task-file';
 import { CaseTemplateService } from '../services/case-template.service';
 import { createMask } from '@ngneat/input-mask';
 import { map, take } from 'rxjs/operators';
+import { firmRoleOptions, FirmStaffRole } from '@app/features/firm-staff/enums/firm-staff-role';
+import { AssigneeGroup, AssigneeType, TemplateTaskAssignee } from '../interfaces/template-task-assignee';
+import { FirmRoleService } from '@app/features/firm-staff/services/firm-role.service';
 
 @Component({
   selector: 'app-case-template-details',
   templateUrl: './case-template-details.component.html',
-  styleUrls: ['./case-template-details.component.scss'],
+  styleUrls: ['./case-template-details.component.scss']
 })
 export class CaseTemplateDetailsComponent implements OnInit {
   public template: FirmCaseTemplate = {
@@ -29,7 +35,15 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
   staffMembers: Staff[];
 
-  filteredStaffMembers: Staff[];
+  filteredStaffMembers: TemplateTaskAssignee[];
+
+  firmRoles: FirmStaffRole[] = firmRoleOptions;
+
+  filteredFirmRoles: TemplateTaskAssignee[];
+
+  assigneeGroups: AssigneeGroup[] = [];
+
+  filteredAssigneeGroups: AssigneeGroup[] = [];
 
   public usaStates: USAState[] = usaStatesFull;
 
@@ -51,13 +65,19 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
       return minutesFromHours + minutes;
     }
-})
-  
-  constructor(private staffService: StaffService, private dialogRef: DialogRef, private _caseTemplateService: CaseTemplateService, private _dialogService: DialogService) {
+  });
+
+  constructor(
+    private staffService: StaffService,
+    private dialogRef: DialogRef,
+    private _caseTemplateService: CaseTemplateService,
+    private _dialogService: DialogService,
+    private _firmRoleService: FirmRoleService
+  ) {
     this.staff$ = staffService.entities$;
 
     if (dialogRef.data) {
-      const { template }  = dialogRef.data;
+      const { template } = dialogRef.data;
       this.template = Object.assign({}, template);
       // Deep clone tasks -- needed for change comparison in case-template-list
       this.template.firm_template_tasks = [...template.firm_template_tasks];
@@ -65,24 +85,25 @@ export class CaseTemplateDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.staff$.pipe(take(1)).subscribe(s => {
-      this.staffMembers = s;
-      this.filteredStaffMembers = s;
-    })
+    this._createAssigneeGroups();
   }
 
   displayFn(value, options): string {
-    const selectedStaffMember = options.find((option) => option.value === value);
-    return selectedStaffMember ? selectedStaffMember.viewValue : 'Select a staff member';
+    const selectedAssignee = options.find((option) => option.value === value);
+    return selectedAssignee ? selectedAssignee.viewValue : '';
   }
 
   filterStaffMembers(event) {
-    this.filteredStaffMembers =
-      event && event.length
-        ? this.staffMembers.filter((staff) =>
-            staff.user.full_name.toLowerCase().includes(event.toLowerCase())
-          )
-        : [...this.staffMembers];
+    // this.filteredStaffMembers =
+    //   event && event.length
+    //     ? this.staffMembers.filter((staff) =>
+    //         staff.user.full_name.toLowerCase().includes(event.toLowerCase())
+    //       )
+    //     : [...this.staffMembers];
+    // this.filteredFirmRoles =
+    //   event && event.length
+    //     ? this.firmRoles.filter((role) => role.includes(event.toLowerCase()))
+    //     : [...this.firmRoles];
   }
 
   addTemplateTask(): void {
@@ -111,13 +132,22 @@ export class CaseTemplateDetailsComponent implements OnInit {
   }
 
   setAssignee(event, index) {
-    const staffMemberId = event.option.value;
-    this.template.firm_template_tasks[index].user_id = staffMemberId;
-    this.staff$.pipe(map((staff) => {
-      return staff.find((s) => s.user.id === staffMemberId)
-    }), take(1)).subscribe((staffMember) => {
-      this.template.firm_template_tasks[index].user = {...staffMember.user};
-    })
+    const selectedOption = event.option.value;
+    this.template.firm_template_tasks[index].assignee_type = selectedOption.type;
+    this.template.firm_template_tasks[index].assignee_id = selectedOption.id;
+
+    if (selectedOption.type === 'staff') {
+      this.staff$
+        .pipe(
+          map((staff) => {
+            return staff.find((s) => s.user.id === selectedOption);
+          }),
+          take(1)
+        )
+        .subscribe((staffMember) => {
+          this.template.firm_template_tasks[index].user = { ...staffMember.user };
+        });
+    }
   }
 
   setDescription(event, index) {
@@ -144,15 +174,44 @@ export class CaseTemplateDetailsComponent implements OnInit {
         title: `Remove task file`,
         body: `Are you sure you want to remove this file? This action cannot be undone.`
       });
-  
+
       deleteDialogRef.afterClosed$.subscribe((confirmed) => {
         if (confirmed) {
           if (fileId) {
             this._caseTemplateService.deleteTaskFile(fileId).subscribe();
           }
-          this.template.firm_template_tasks[taskIndex].firm_template_task_files = this.template.firm_template_tasks[taskIndex].firm_template_task_files.filter(t => t.id !== fileId);
+          this.template.firm_template_tasks[taskIndex].firm_template_task_files =
+            this.template.firm_template_tasks[taskIndex].firm_template_task_files.filter(
+              (t) => t.id !== fileId
+            );
         }
       });
     }
+  }
+
+  /** Populates assignee groups with staff members and firm roles. */
+  private _createAssigneeGroups(): void {
+    const getStaff = this.staff$.pipe(take(1), map(staff => ({type: 'Staff', assignees: [...staff]})));
+    const getRoles = this._firmRoleService.get().pipe(map(response => ({type: 'Role', assignees: [...response.roles]})));
+
+    merge(getStaff, getRoles).pipe().subscribe((group) => {
+      // Assignees are normalized for consistent use.
+      const assignees: TemplateTaskAssignee[] = group.assignees.map(a => (
+        {
+          id: group.type === 'Staff' ? a.user.id : a.id,
+          name: group.type === 'Staff' ? a.user.full_name : a.name,
+          profile_image: group.type === 'Staff' ? a.user.profile_image : null
+        } as TemplateTaskAssignee
+        ));
+        const assigneeGroup: AssigneeGroup = {
+          type: group.type as AssigneeType,
+          assignees
+        }
+
+        group.assignees = [...assignees];
+        this.assigneeGroups = [...this.assigneeGroups, assigneeGroup];
+        // Firm roles are sorted to the top of the list for display.
+        this.filteredAssigneeGroups = [...this.assigneeGroups.sort((a,b) => a.type === 'Role' ? -1 : 1)];
+    });
   }
 }

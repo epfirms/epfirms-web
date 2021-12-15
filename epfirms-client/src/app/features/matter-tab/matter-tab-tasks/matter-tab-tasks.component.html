@@ -153,11 +153,11 @@
               ">
               <div>
                 <ep-input-group>
-                  <ep-avatar ep-input-icon epSize="xsmall" [epSrc]="task.assignee.profile_image"
-                    [epText]="task.assignee.full_name"></ep-avatar>
+                  <ep-avatar ep-input-icon epSize="xsmall" [epSrc]="task.assignee?.profile_image"
+                    [epText]="task.assignee?.full_name"></ep-avatar>
 
                   <input ep-input [epEditable]="true" type="text" [ngModel]="task.assignee_id"
-                    (ngModelChange)="filterStaffMembers($event)" [epAutocomplete]="auto">
+                    (ngModelChange)="filterStaffMembers($event)" [epAutocomplete]="auto" placeholder="Select assignee">
                 </ep-input-group>
                 <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayFn"
                   (optionSelected)="updateTask(task, 'assignee_id', $event.option.value)" panelWidth="auto">

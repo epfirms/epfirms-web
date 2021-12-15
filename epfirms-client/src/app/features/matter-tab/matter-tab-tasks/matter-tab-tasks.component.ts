@@ -49,7 +49,7 @@ export class MatterTabTasksComponent implements OnInit {
 
   displayFn(value, options): string {
     const selectedStaffMember = options.find((option) => option.value === value);
-    return selectedStaffMember ? selectedStaffMember.viewValue : 'Select a staff member';
+    return selectedStaffMember ? selectedStaffMember.viewValue : '';
   }
 
   filterStaffMembers(event) {

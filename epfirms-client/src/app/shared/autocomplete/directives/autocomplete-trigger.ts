@@ -34,6 +34,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
   OptionSelectionChange,
+  _countGroupLabelsBeforeOption,
   _getOptionScrollPosition
 } from '@app/shared/option/directives/option.directive';
 import { OptionComponent } from '@app/shared/option/option/option.component';
@@ -730,8 +731,18 @@ export abstract class _AutocompleteTriggerBase
     // will become the offset. If that offset is visible within the panel already, the scrollTop is
     // not adjusted.
     const autocomplete = this.autocomplete;
+    const labelCount = _countGroupLabelsBeforeOption(
+      index,
+      autocomplete.options,
+      autocomplete.optionGroups,
+    );
 
-    if (autocomplete.panel) {
+    if (index === 0 && labelCount === 1) {
+      // If we've got one group label before the option and we're at the top option,
+      // scroll the list to the top. This is better UX than scrolling the list to the
+      // top of the option, because it allows the user to read the top group's label.
+      autocomplete._setScrollTop(0);
+    } else if (autocomplete.panel) {
       const option = autocomplete.options.toArray()[index];
 
       if (option) {
