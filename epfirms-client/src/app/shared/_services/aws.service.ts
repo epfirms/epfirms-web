@@ -10,11 +10,12 @@ export class AwsService {
 
   constructor(private _http : HttpClient) { }
 
-  getPresignedUrl(userId, docType, docName) : Observable<any>{
+  getPresignedUrl(userId, docType, docName, contentType) : Observable<any>{
     const body = {
       userId: userId,
       docType: docType,
-      docName: docName
+      docName: docName,
+      contentType: contentType
     };
 
     return this._http.post('/api/aws/generate', body);

@@ -33,7 +33,7 @@ export class ClientDocumentsComponent implements OnInit {
 
   handleUpload(document, file){
       //make the call to the server to generate the upload url
-      this._awsService.getPresignedUrl(document.user_id, document.doc_type, document.doc_name).pipe().subscribe(res => {
+      this._awsService.getPresignedUrl(document.user_id, document.doc_type, document.doc_name, file.type).pipe().subscribe(res => {
         //remove the temp id because the database will assign one
         document.id = undefined;
         //set the case_id
@@ -41,7 +41,7 @@ export class ClientDocumentsComponent implements OnInit {
         //add the doc to the database
         this.createDocuments(document);
         // for every FILE in the selected files, upload them to the s3 bucket.
-          this._awsService.uploadfileAWSS3(res.url, document.doc_type, file).subscribe(() => {
+          this._awsService.uploadfileAWSS3(res.url, file.type, file).subscribe(() => {
             this.load();
           });
       });

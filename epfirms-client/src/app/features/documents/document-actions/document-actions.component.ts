@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PdfViewerComponent } from '@app/shared/pdf-viewer/pdf-viewer.component';
 import { AwsService } from '@app/shared/_services/aws.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { DocumentService } from '@app/features/documents/services/document.service';
@@ -58,14 +57,7 @@ export class DocumentActionsComponent {
 
   downloadDocument(): void {
     this._awsService.downLoadDocument(this.document.doc_key).subscribe((res) => {
-      if (this.document.doc_key.endsWith('pdf')) {
-        this._dialog.open(PdfViewerComponent, {
-          data: { src: encodeURIComponent(res.url) },
-          size: 'fullScreen'
-        });
-      } else {
         window.open(res.url, '_blank');
-      }
     });
   }
 }
