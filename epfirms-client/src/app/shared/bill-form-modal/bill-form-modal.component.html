@@ -14,8 +14,8 @@
                     class="block text-sm font-medium text-gray-700"
                     >Billing style</label
                   >
-                  <!-- <div hlMenu class="relative inline-block text-left">
-                    <button hlMenuButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <div Menu class="relative inline-block text-left">
+                    <button MenuButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                       <span class="block truncate">
                         {{billForm.get('billing_type').value || 'Select billing type'}}
                       </span>
@@ -26,7 +26,7 @@
                       </span>
                   </button>
                     <div
-                      *hlMenuItems
+                      *MenuItems
                       class="
                         z-10
                         absolute
@@ -43,7 +43,7 @@
                     >
                       <div class="p-1" *ngFor="let option of billingTypeOptions">
                         <a
-                          *hlMenuItem="let item"
+                          MenuItem
                           class="
                             group
                             flex
@@ -63,7 +63,7 @@
                         </a>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
                 </div>
   
                 <div class="col-span-6 sm:col-span-3">
@@ -72,8 +72,8 @@
                     class="block text-sm font-medium text-gray-700"
                     >Payment Type</label
                   >
-                  <!-- <div hlMenu class="relative inline-block text-left">
-                    <button hlMenuButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <div Menu class="relative inline-block text-left">
+                    <button MenuButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <span class="block truncate">
                           {{billForm.get('payment_type').value || 'Select payment type'}}
                         </span>
@@ -84,7 +84,7 @@
                         </span>
                     </button>
                     <div
-                      *hlMenuItems
+                      *MenuItems
                       class="
                         z-10
                         absolute
@@ -101,7 +101,7 @@
                     >
                       <div class="p-1" *ngFor="let option of paymentTypeOptions">
                         <a
-                          *hlMenuItem="let item"
+                          MenuItem
                           class="
                             group
                             flex
@@ -121,7 +121,7 @@
                         </a>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
                 </div>
                 <ng-container *ngIf="billForm.get('billing_type').value === 'flat rate'">
                 <div class="col-span-6 sm:col-span-2">
@@ -170,8 +170,8 @@
                     class="block text-sm font-medium text-gray-700"
                     >Track time for</label
                   >
-                  <!-- <div hlMenu class="relative inline-block text-left">
-                    <button hlMenuButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <div Menu class="relative inline-block text-left">
+                    <button MenuButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                       <span class="block truncate">
                         {{billForm.get('payment_type').value || 'Select'}}
                       </span>
@@ -182,7 +182,7 @@
                       </span>
                   </button>
                     <div
-                      *hlMenuItems
+                      *MenuItems
                       class="
                         z-10
                         absolute
@@ -199,7 +199,7 @@
                     >
                       <div class="p-1" *ngFor="let option of trackTimeForOptions">
                         <a
-                          *hlMenuItem="let item"
+                          MenuItem
                           class="
                             group
                             flex
@@ -219,7 +219,7 @@
                         </a>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
                     <!-- track_time_for -->
                 </div>
   

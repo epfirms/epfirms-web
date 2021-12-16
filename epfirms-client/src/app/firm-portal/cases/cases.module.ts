@@ -6,6 +6,7 @@ import { AvatarModule } from '@app/shared/avatar/avatar.module'
 import { ButtonModule } from '@app/shared/button/button.module'
 import { EditableModule } from '@app/shared/editable/editable.module'
 import { InputModule } from '@app/shared/input/input.module'
+import { MenuModule } from '@app/shared/menu/menu.module'
 import { PaginatorModule } from '@app/shared/paginator/paginator.module'
 import { TagModule } from '@app/shared/tag/tag.module'
 import { DialogModule } from '@ngneat/dialog'
@@ -27,7 +28,8 @@ import { CasesComponent } from './cases.component'
         ButtonModule,
         AutocompleteModule,
         EditableModule,
-        InputModule
+        InputModule,
+        MenuModule
     ],
 })
 export class CasesPageModule {}

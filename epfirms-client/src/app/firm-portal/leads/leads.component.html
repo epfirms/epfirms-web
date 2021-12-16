@@ -50,8 +50,8 @@
     </div>
     <div class="ml-4 flex items-center md:ml-6">
       <div class="mr-4">
-        <!-- <div hlMenu class="relative inline-block text-left">
-          <button hlMenuButton ep-icon-button color="white">
+        <div Menu class="relative inline-block text-left">
+          <button MenuButton ep-icon-button color="white">
             {{matterFilterValues.status + ' ' + matterFilterValues.matter_type + 's' | titlecase}}
 
             <svg ep-trailing-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -60,7 +60,7 @@
                 clip-rule="evenodd" />
             </svg>
           </button>
-          <div *hlMenuItems @toggleAnimation class="
+          <div *MenuItems @toggleAnimation class="
               z-10
               absolute
               right-0
@@ -74,7 +74,7 @@
               focus:outline-none
             ">
             <div class="p-1" *ngFor="let status of statusFilterOptions">
-              <a *hlMenuItem="let item" class="
+              <a MenuItem class="
                   group
                   flex
                   rounded-md
@@ -91,7 +91,7 @@
               </a>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
       <div>
         <button ep-icon-button (click)="addLead()">
@@ -261,8 +261,8 @@
               <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap w-1/12">
                 <div>
                   <ng-container *ngIf="legalAreas$ | async as legalAreas">
-                    <!-- <div hlMenu class="relative inline-block text-left text-gray-700">
-                      <button hlMenuButton class="table-dropdown" [class.text-gray-500]="!lead.legal_area?.name">
+                    <div Menu class="relative inline-block text-left text-gray-700">
+                      <button MenuButton class="table-dropdown" [class.text-gray-500]="!lead.legal_area?.name">
                         {{ lead.legal_area?.name || "Select a legal area" | titlecase }}
 
                         <svg class="icon-end" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -272,7 +272,7 @@
                             clip-rule="evenodd" />
                         </svg>
                       </button>
-                      <div *hlMenuItems @toggleAnimation class="
+                      <div *MenuItems @toggleAnimation class="
                           z-10
                           absolute
                           right-0
@@ -287,7 +287,7 @@
                           focus:outline-none
                         ">
                         <div class="p-1" *ngFor="let legalArea of legalAreas">
-                          <a *hlMenuItem="let item" class="
+                          <a MenuItem class="
                               group
                               flex
                               rounded-md
@@ -305,7 +305,7 @@
                           </a>
                         </div>
                       </div>
-                    </div> -->
+                    </div>
                   </ng-container>
                 </div>
               </td>
@@ -323,8 +323,8 @@
                   tracking-wider
                 " cdk-header-cell *cdkHeaderCellDef>
 
-                <!-- <div hlMenu class="relative inline-block text-left w-full">
-                  <div hlMenuButton class="flex w-full items-center group hover:cursor-pointer">
+                <div Menu class="relative inline-block text-left w-full">
+                  <div MenuButton class="flex w-full items-center group hover:cursor-pointer">
                     <div class="flex-1">
                       Attorney
                     </div>
@@ -335,7 +335,7 @@
                         clip-rule="evenodd" />
                     </svg>
                   </div>
-                  <div *hlMenuItems @toggleAnimation class="
+                  <div *MenuItems @toggleAnimation class="
                       z-10
                       absolute
                       right-0
@@ -349,7 +349,7 @@
                       focus:outline-none
                     ">
                     <div class="p-1" *ngFor="let attorney of attorneys$ | async">
-                      <a *hlMenuItem="let item" class="
+                      <a MenuItem class="
                           group
                           flex
                           rounded-md
@@ -378,7 +378,7 @@
                       </a>
                     </div>
                   </div>
-                </div> -->
+                </div>
               </th>
               <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 whitespace-nowrap w-2/12">
                 <ep-input-group>

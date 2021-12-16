@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { AvatarModule } from './avatar/avatar.module';
 import { InputModule } from './input/input.module';
+import { MenuModule } from './menu/menu.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { InputModule } from './input/input.module';
     TippyModule,
     PipesModule,
     AvatarModule,
-    InputModule
+    InputModule,
+    MenuModule
   ]
 })
 export class SharedModule { }

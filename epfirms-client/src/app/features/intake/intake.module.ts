@@ -8,6 +8,7 @@ import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { CoreModule } from '@app/core/core.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { InputModule } from '@app/shared/input/input.module';
+import { MenuModule } from '@app/shared/menu/menu.module';
 
 
 
@@ -23,7 +24,8 @@ import { InputModule } from '@app/shared/input/input.module';
   imports: [
     CoreModule,
     SharedModule,
-    InputModule
+    InputModule,
+    MenuModule
   ],
   exports: [
     IntakeFormComponent

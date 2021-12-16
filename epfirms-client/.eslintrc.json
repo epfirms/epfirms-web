@@ -1,22 +1,16 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
-        ],
+        "project": ["tsconfig.json", "e2e/tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
+        "plugin:import/recommended",
         "airbnb-typescript/base",
         "prettier"
       ],
@@ -35,17 +29,22 @@
             "type": "attribute"
           }
         ],
-        "@angular-eslint/no-host-metadata-property": "off"
+        "@angular-eslint/no-host-metadata-property": "off",
+        "@typescript-eslint/no-implied-eval": "off"
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
-      "rules": {}
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {
+        "max-len": [
+          1,
+          {
+            "tabWidth": 2,
+            "code": 100
+          }
+        ]
+      }
     },
     {
       "files": ["*.component.ts"],

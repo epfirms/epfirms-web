@@ -12,6 +12,7 @@ import { ButtonModule } from '@app/shared/button/button.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module';
 import { InputModule } from '@app/shared/input/input.module';
+import { MenuModule } from '@app/shared/menu/menu.module';
 
 
 
@@ -29,7 +30,8 @@ import { InputModule } from '@app/shared/input/input.module';
     ButtonModule,
     EditableModule,
     AutocompleteModule,
-    InputModule
+    InputModule,
+    MenuModule
   ]
 })
 export class LeadsPageModule { }

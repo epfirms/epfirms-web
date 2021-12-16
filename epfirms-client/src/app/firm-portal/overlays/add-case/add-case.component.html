@@ -78,8 +78,8 @@
         </div>
         <div class="sm:col-span-2">
           <ng-container *ngIf="legalAreas$ | async as legalAreas">
-            <!-- <div hlMenu class="relative inline-block text-left">
-              <button hlMenuButton class="button-white-icon-sm">
+            <div Menu class="relative inline-block text-left">
+              <button MenuButton class="button-white-icon-sm">
                 {{
                 selectedLegalArea.name || 'Select a legal area' | titlecase
                 }}
@@ -90,7 +90,7 @@
                     clip-rule="evenodd" />
                 </svg>
               </button>
-              <div *hlMenuItems class="
+              <div *MenuItems class="
                   z-10
                   absolute
                   right-0
@@ -104,7 +104,7 @@
                   focus:outline-none
                 ">
                 <div class="p-1" *ngFor="let legalArea of legalAreas">
-                  <a *hlMenuItem="let item" class="
+                  <a MenuItem class="
                       group
                       flex
                       rounded-md
@@ -121,7 +121,7 @@
                   </a>
                 </div>
               </div>
-            </div> -->
+            </div>
           </ng-container>
         </div>
       </div>

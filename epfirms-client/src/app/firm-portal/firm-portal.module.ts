@@ -18,6 +18,7 @@ import { NavbarModule } from '@app/shared/navbar/navbar.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InputModule } from '@app/shared/input/input.module';
+import { MenuModule } from '@app/shared/menu/menu.module';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { InputModule } from '@app/shared/input/input.module';
     NavbarModule,
     SharedModule,
     ScrollingModule,
-    InputModule
+    InputModule,
+    MenuModule
   ]
 })
 export class FirmPortalModule {}

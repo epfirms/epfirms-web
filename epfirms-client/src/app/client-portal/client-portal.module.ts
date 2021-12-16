@@ -10,6 +10,7 @@ import { ClientDocumentsComponent } from './client-documents/client-documents.co
 import { ClientDocumentUploadComponent } from './client-document-upload/client-document-upload.component';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { NavbarModule } from '@app/shared/navbar/navbar.module';
+import { MenuModule } from '@app/shared/menu/menu.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { NavbarModule } from '@app/shared/navbar/navbar.module';
     ClientPortalRoutingModule,
     IntakeModule,
     AvatarModule,
-    NavbarModule
+    NavbarModule,
+    MenuModule
   ]
 })
 export class ClientPortalModule { }
