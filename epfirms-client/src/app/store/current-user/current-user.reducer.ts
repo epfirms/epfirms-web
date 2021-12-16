@@ -1,6 +1,4 @@
-import { Tabs } from '@app/core/interfaces/tabs';
 import { createReducer, on } from '@ngrx/store';
-import { MergeScanOperator } from 'rxjs/internal/operators/mergeScan';
 import {
   clearCurrentUser,
   loadCurrentUser
