@@ -1,6 +1,5 @@
 import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
 import {BooleanInput, coerceBooleanProperty, coerceStringArray} from '@angular/cdk/coercion';
-import {Platform} from '@angular/cdk/platform';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -64,6 +63,11 @@ export interface AutocompleteDefaultOptions {
   overlayPanelClass?: string | string[];
 }
 
+/** @docs-private */
+export function AUTOCOMPLETE_DEFAULT_OPTIONS_FACTORY(): AutocompleteDefaultOptions {
+  return {autoActiveFirstOption: false};
+}
+
 /** Injection token to be used to override the default options for `ep-autocomplete`. */
 export const AUTOCOMPLETE_DEFAULT_OPTIONS = new InjectionToken<AutocompleteDefaultOptions>(
   'ep-autocomplete-default-options',
@@ -72,11 +76,6 @@ export const AUTOCOMPLETE_DEFAULT_OPTIONS = new InjectionToken<AutocompleteDefau
     factory: AUTOCOMPLETE_DEFAULT_OPTIONS_FACTORY,
   },
 );
-
-/** @docs-private */
-export function AUTOCOMPLETE_DEFAULT_OPTIONS_FACTORY(): AutocompleteDefaultOptions {
-  return {autoActiveFirstOption: false};
-}
 
 /** Base class with all of the `AutocompleteComponent` functionality. */
 @Directive()
@@ -102,6 +101,7 @@ export abstract class _AutocompleteBase
   get isOpen(): boolean {
     return this._isOpen && this.showPanel;
   }
+
   _isOpen: boolean = false;
 
   // The @ViewChild query for TemplateRef here needs to be static because some code paths
@@ -137,9 +137,11 @@ export abstract class _AutocompleteBase
   get autoActiveFirstOption(): boolean {
     return this._autoActiveFirstOption;
   }
+
   set autoActiveFirstOption(value: boolean) {
     this._autoActiveFirstOption = coerceBooleanProperty(value);
   }
+
   private _autoActiveFirstOption: boolean;
 
   /**
@@ -181,6 +183,7 @@ export abstract class _AutocompleteBase
     this._setVisibilityClasses(this._classList);
     this._elementRef.nativeElement.className = '';
   }
+
   _classList: {[key: string]: boolean} = {};
 
   /** Unique ID to be used by autocomplete trigger's "aria-owns" property. */
@@ -195,8 +198,7 @@ export abstract class _AutocompleteBase
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private _elementRef: ElementRef<HTMLElement>,
-    @Inject(AUTOCOMPLETE_DEFAULT_OPTIONS) defaults: AutocompleteDefaultOptions,
-    platform?: Platform,
+    @Inject(AUTOCOMPLETE_DEFAULT_OPTIONS) defaults: AutocompleteDefaultOptions
   ) {
     super();
     this.inertGroups = false;
@@ -285,6 +287,8 @@ export class AutocompleteComponent extends _AutocompleteBase {
 
   /** Reference to all options within the autocomplete. */
   @ContentChildren(OptionComponent, {descendants: true}) options: QueryList<OptionComponent>;
+
   protected _visibleClass = 'ep-autocomplete-visible';
+
   protected _hiddenClass = 'ep-autocomplete-hidden';
 }

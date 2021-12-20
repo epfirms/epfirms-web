@@ -109,7 +109,10 @@ export class MatterTabTasksComponent implements OnInit {
 
   openCaseTemplateDialog(): void {
     const caseTemplateDialog = this._dialog.open(CaseTemplateSelectionComponent, {
-      size: 'lg'
+      size: 'lg',
+      data: {
+        attorney_id: this.matter.attorney_id
+      }
     });
 
     caseTemplateDialog.afterClosed$.subscribe((templateTasks) => {

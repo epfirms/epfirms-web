@@ -47,7 +47,7 @@ import {
   Subject,
   Subscription
 } from 'rxjs';
-import { delay, filter, map, skip, switchMap, take, tap } from 'rxjs/operators';
+import { delay, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import {
   AutocompleteDefaultOptions,
   AUTOCOMPLETE_DEFAULT_OPTIONS,
@@ -78,6 +78,7 @@ export const AUTOCOMPLETE_SCROLL_STRATEGY_FACTORY_PROVIDER = {
  */
 export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   useExisting: forwardRef(() => AutocompleteTrigger),
   multi: true
 };
@@ -100,9 +101,13 @@ export abstract class _AutocompleteTriggerBase
   implements ControlValueAccessor, AfterViewInit, OnChanges, OnDestroy
 {
   private _overlayRef: OverlayRef | null;
+
   private _portal: TemplatePortal;
+
   private _componentDestroyed = false;
+
   private _autocompleteDisabled = false;
+
   private _scrollStrategy: () => ScrollStrategy;
 
   /** Old value of the native input. Used to work around issues with the `input` event on IE. */
@@ -184,6 +189,7 @@ export abstract class _AutocompleteTriggerBase
   get autocompleteDisabled(): boolean {
     return this._autocompleteDisabled;
   }
+
   set autocompleteDisabled(value: boolean) {
     this._autocompleteDisabled = coerceBooleanProperty(value);
   }
@@ -217,6 +223,7 @@ export abstract class _AutocompleteTriggerBase
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    // eslint-disable-next-line @typescript-eslint/dot-notation
     if (changes['position'] && this._positionStrategy) {
       this._setStrategyPositions(this._positionStrategy);
 
@@ -243,6 +250,7 @@ export abstract class _AutocompleteTriggerBase
   get panelOpen(): boolean {
     return this._overlayAttached && this.autocomplete.showPanel;
   }
+
   private _overlayAttached: boolean = false;
 
   /** Opens the autocomplete suggestion panel. */
@@ -769,12 +777,7 @@ export abstract class _AutocompleteTriggerBase
     '[attr.autocomplete]': 'autocompleteAttribute',
     '[attr.role]': 'autocompleteDisabled ? null : "combobox"',
     '[attr.aria-autocomplete]': 'autocompleteDisabled ? null : "list"',
-    // '[attr.aria-activedescendant]': '(panelOpen && activeOption) ? activeOption.id : null',
-    // '[attr.aria-expanded]': 'autocompleteDisabled ? null : panelOpen.toString()',
-    // '[attr.aria-owns]': '(autocompleteDisabled || !panelOpen) ? null : autocomplete?.id',
     '[attr.aria-haspopup]': '!autocompleteDisabled',
-    // Note: we use `focusin`, as opposed to `focus`, in order to open the panel
-    // a little earlier. This avoids issues where IE delays the focusing of the input.
     '(focusin)': '_handleFocus()',
     '(blur)': '_onTouched()',
     '(input)': '_handleInput($event)',

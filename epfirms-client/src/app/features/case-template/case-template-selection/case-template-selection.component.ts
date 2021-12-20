@@ -7,7 +7,7 @@ import { IAngularMyDpOptions } from 'angular-mydatepicker';
 @Component({
   selector: 'app-case-template-selection',
   templateUrl: './case-template-selection.component.html',
-  styleUrls: ['./case-template-selection.component.scss']
+  styleUrls: ['./case-template-selection.component.scss'],
 })
 export class CaseTemplateSelectionComponent implements OnInit {
   MS_IN_DAY = 86400000;
@@ -21,16 +21,13 @@ export class CaseTemplateSelectionComponent implements OnInit {
   options: IAngularMyDpOptions = {
     dateRange: false,
     dateFormat: 'mmm d, yyyy',
-    alignSelectorRight: true
+    alignSelectorRight: true,
   };
 
-  constructor(
-    private _caseTemplateService: CaseTemplateService,
-    private _dialogRef: DialogRef
-  ) { }
+  constructor(private _caseTemplateService: CaseTemplateService, private _dialogRef: DialogRef) {}
 
   ngOnInit(): void {
-    this._caseTemplateService.get().subscribe(templates => {
+    this._caseTemplateService.get().subscribe((templates) => {
       this.caseTemplates = templates;
     });
   }
@@ -53,15 +50,26 @@ export class CaseTemplateSelectionComponent implements OnInit {
   }
 
   private formatTasks(tasks): MatterTask[] {
-    return tasks.map(t => ({
-      name: t.name,
-      due: this.addDaysToDate(this.startDate, t.no_of_days_from_start_date).toString(),
-      assignee_id: t.user_id,
-      matter_task_files: [...t.firm_template_task_files]
-    }));
+    return tasks.map((t) => {
+      // Get an employee based on the specified user_id or firm_role
+      const assigneeId: number | null = t.firm_role_id && !t.user_id ? this.getAssigneeIdFromRole(t.firm_role_id) : t.user_id;
+
+      return {
+        name: t.name,
+        due: this.addDaysToDate(this.startDate, t.no_of_days_from_start_date).toString(),
+        assignee_id: assigneeId,
+        matter_task_files: [...t.firm_template_task_files],
+      };
+    });
+  }
+
+  private getAssigneeIdFromRole(firm_role_id: number): number | null {
+    const attorneyId = this._dialogRef.data.attorney_id;
+    // TODO: Find the team member under the attorney with the specified role. If none exist, return null.
+    return 0;
   }
 
   private addDaysToDate(date: Date, numberOfDays: number): Date {
-    return new Date(date.getTime() + (numberOfDays * this.MS_IN_DAY));
-  };
+    return new Date(date.getTime() + numberOfDays * this.MS_IN_DAY);
+  }
 }

@@ -274,6 +274,13 @@ export class Database {
       foreignKey: 'user_id'
     });
 
+    this.models.firm_role.hasMany(this.models.firm_template_task, {
+      foreignKey: 'firm_role_id'
+    });
+    this.models.firm_template_task.belongsTo(this.models.firm_role, {
+      foreignKey: 'firm_role_id'
+    });
+
     this.models.firm_template_task.hasMany(this.models.firm_template_task_file, {
       foreignKey: 'firm_template_task_id'
     });

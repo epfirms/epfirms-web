@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import {FocusOptions, FocusableOption, FocusOrigin} from '@angular/cdk/a11y';
 import {Subject} from 'rxjs';
-import {OptionParentComponent} from '../interfaces/option-parent';
 import { OptionComponent } from '../option/option.component';
 import { Optgroup } from '../option-group/option-group.component';
 import { _OptgroupBase } from './option-group.directive';
@@ -40,8 +39,11 @@ export class OptionSelectionChange {
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class _OptionBase implements FocusableOption, AfterViewChecked, OnDestroy {
   private _selected = false;
+
   private _active = false;
+
   private _disabled = false;
+
   private _mostRecentViewValue = '';
 
   /** Whether or not the option is currently selected. */
@@ -52,6 +54,9 @@ export class _OptionBase implements FocusableOption, AfterViewChecked, OnDestroy
   /** The form value of the option. */
   @Input() value: any;
 
+  /** The value used in a displayWith function */
+  @Input() displayValue: any;
+
   /** The unique ID of the option. */
   @Input() id: string = `ep-option-${_uniqueIdCounter++}`;
 
@@ -60,6 +65,7 @@ export class _OptionBase implements FocusableOption, AfterViewChecked, OnDestroy
   get disabled() {
     return (this.group && this.group.disabled) || this._disabled;
   }
+
   set disabled(value: any) {
     this._disabled = coerceBooleanProperty(value);
   }
@@ -92,7 +98,6 @@ export class _OptionBase implements FocusableOption, AfterViewChecked, OnDestroy
    * select's trigger.
    */
   get viewValue(): string {
-    // TODO(kara): Add input property alternative for node envs.
     return (this._getHostElement().textContent || '').trim();
   }
 

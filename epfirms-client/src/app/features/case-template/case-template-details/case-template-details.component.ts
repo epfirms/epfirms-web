@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { Staff } from '@app/core/interfaces/staff';
-import { merge, Observable } from 'rxjs';
+import { forkJoin, merge, Observable } from 'rxjs';
 import { DialogRef, DialogService } from '@ngneat/dialog';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { FirmCaseTemplate } from '../interfaces/firm-case-template';
@@ -43,7 +43,7 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
   assigneeGroups: AssigneeGroup[] = [];
 
-  filteredAssigneeGroups: AssigneeGroup[] = [];
+  filteredAssigneeGroups: AssigneeGroup[];
 
   public usaStates: USAState[] = usaStatesFull;
 
@@ -89,6 +89,7 @@ export class CaseTemplateDetailsComponent implements OnInit {
   }
 
   displayFn(value, options): string {
+    console.log(value);
     const selectedAssignee = options.find((option) => option.value === value);
     return selectedAssignee ? selectedAssignee.viewValue : '';
   }
@@ -112,7 +113,8 @@ export class CaseTemplateDetailsComponent implements OnInit {
       name: '',
       no_of_days_from_start_date: null,
       firm_template_task_files: [],
-      duration_minutes: null
+      duration_minutes: null,
+      firm_role_id: null
     });
   }
 
@@ -133,10 +135,20 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
   setAssignee(event, index) {
     const selectedOption = event.option.value;
-    this.template.firm_template_tasks[index].assignee_type = selectedOption.type;
-    this.template.firm_template_tasks[index].assignee_id = selectedOption.id;
+    const assigneeType = event.option.group.label;
 
-    if (selectedOption.type === 'staff') {
+    if (assigneeType === 'Role') {
+      this.template.firm_template_tasks[index].user_id = null;
+      this.template.firm_template_tasks[index].firm_role_id = selectedOption
+    } else if (assigneeType === 'Staff') {
+      this.template.firm_template_tasks[index].user_id = selectedOption;
+      this.template.firm_template_tasks[index].firm_role_id = null;
+    }
+
+    // this.template.firm_template_tasks[index].assignee_type = selectedOption.type;
+    // this.template.firm_template_tasks[index].assignee_id = selectedOption.id;
+    console.log(event);
+    if (assigneeType === 'Staff') {
       this.staff$
         .pipe(
           map((staff) => {
@@ -194,24 +206,34 @@ export class CaseTemplateDetailsComponent implements OnInit {
     const getStaff = this.staff$.pipe(take(1), map(staff => ({type: 'Staff', assignees: [...staff]})));
     const getRoles = this._firmRoleService.get().pipe(map(response => ({type: 'Role', assignees: [...response.roles]})));
 
-    merge(getStaff, getRoles).pipe().subscribe((group) => {
-      // Assignees are normalized for consistent use.
-      const assignees: TemplateTaskAssignee[] = group.assignees.map(a => (
+    forkJoin({staff: getStaff, roles: getRoles}).pipe().subscribe(({staff, roles}) => {
+      const staffAssignees: TemplateTaskAssignee[] = staff.assignees.map(a => (
         {
-          id: group.type === 'Staff' ? a.user.id : a.id,
-          name: group.type === 'Staff' ? a.user.full_name : a.name,
-          profile_image: group.type === 'Staff' ? a.user.profile_image : null
+          id: a.user.id,
+          name:a.user.full_name,
+          profile_image: a.user.profile_image
         } as TemplateTaskAssignee
         ));
-        const assigneeGroup: AssigneeGroup = {
-          type: group.type as AssigneeType,
-          assignees
+      // Assignees are normalized for consistent use.
+      const roleAssignees: TemplateTaskAssignee[] = roles.assignees.map(a => (
+        {
+          id:a.id,
+          name: a.name
+        } as TemplateTaskAssignee
+        ));
+        
+        const rolesGroup: AssigneeGroup = {
+          type: "Role",
+          assignees: roleAssignees
         }
 
-        group.assignees = [...assignees];
-        this.assigneeGroups = [...this.assigneeGroups, assigneeGroup];
-        // Sort to make 'Role' group display first in the ep-option-group.
-        this.filteredAssigneeGroups = [...this.assigneeGroups.sort((a,b) => a.type === 'Role' ? -1 : 1)];
+        const staffGroup: AssigneeGroup = {
+          type: "Staff",
+          assignees: staffAssignees
+        }
+
+        this.assigneeGroups = [rolesGroup, staffGroup];
+        this.filteredAssigneeGroups = [rolesGroup, staffGroup];
     });
   }
 }
