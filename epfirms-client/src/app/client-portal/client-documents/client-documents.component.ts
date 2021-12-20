@@ -12,7 +12,12 @@ import { DialogService } from '@ngneat/dialog';
 })
 export class ClientDocumentsComponent implements OnInit {
   documents: Document[];
-  constructor(private _documentService: DocumentService, private _dialogService: DialogService, private _docService: DocumentService, private _awsService: AwsService) { }
+  constructor(
+    private _documentService: DocumentService,
+    private _dialogService: DialogService,
+    private _docService: DocumentService,
+    private _awsService: AwsService
+  ) {}
 
   ngOnInit(): void {
     this.load();
@@ -28,38 +33,41 @@ export class ClientDocumentsComponent implements OnInit {
         this.handleUpload(data.document, data.selectedFile);
         console.log(data);
       }
-    })
+    });
   }
 
-  handleUpload(document, file){
-      //make the call to the server to generate the upload url
-      this._awsService.getPresignedUrl(document.user_id, document.doc_type, document.doc_name).pipe().subscribe(res => {
+  handleUpload(document, file) {
+    //make the call to the server to generate the upload url
+    this._awsService
+      .getPresignedUrl(document.user_id, document.doc_type, document.doc_name, file.type)
+      .pipe()
+      .subscribe((res) => {
         //remove the temp id because the database will assign one
         document.id = undefined;
-        //set the case_id
-        //doc.matter_id = this._matter.id;
+        document.doc_key = res.key;
+
         //add the doc to the database
         this.createDocuments(document);
         // for every FILE in the selected files, upload them to the s3 bucket.
-          this._awsService.uploadfileAWSS3(res.url, document.doc_type, file).subscribe(() => {
-            this.load();
-          });
+        this._awsService.uploadfileAWSS3(res.url, file.type, file).subscribe(() => {
+          this.load();
+        });
       });
   }
 
-  createDocuments(doc : Document){
+  createDocuments(doc: Document) {
     this._docService.add(doc);
-}
+  }
 
   load() {
-    this._documentService.getOwn().subscribe(res => {
+    this._documentService.getOwn().subscribe((res) => {
       this.documents = res;
     });
   }
 
   downloadDocument(document): void {
-    this._awsService.downLoadDocument(document.doc_key).subscribe(res => {
-      window.open(res.url, "blank")
+    this._awsService.downLoadDocument(document.doc_key).subscribe((res) => {
+      window.open(res.url, 'blank');
     });
   }
 }

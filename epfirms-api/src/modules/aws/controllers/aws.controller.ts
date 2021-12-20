@@ -16,9 +16,9 @@ export class AWSController {
   */
   public async generatePresignedURL(req : Request, res: Response) : Promise<any> {
     try {
-      const { userId, docType, docName } = req.body;
+      const { userId, docType, docName, contentType } = req.body;
       const key = this._awsService.formatObjectKey(userId, docType, docName);
-      const uploadURL = await this._awsService.getObjectUploadURL(AWS_BUCKET, key, docType);
+      const uploadURL = await this._awsService.getObjectUploadURL(AWS_BUCKET, key, contentType);
 
       res.status(StatusConstants.OK).send({url: uploadURL, key: key});
     } catch (error) {

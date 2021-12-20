@@ -167,28 +167,32 @@ export class DocumentsComponent implements OnInit {
   // it then gets the generated URL for uploading to aws.
   // the FILE references are saved to the db with their appropriate DOCUMENT object.
   // then it loops through the selected FILE objects and uploads them to aws.
-  upload(){
-    this.selectedDocuments.forEach(doc => {
-      //make the call to the server to generate the upload url
-      this._awsService.getPresignedUrl(doc.user_id, doc.doc_type, doc.doc_name).pipe().subscribe(res => {
-        //remove the temp id because the database will assign one
-        doc.id = undefined;
-        doc.doc_key = res.key;
-        // for every FILE in the selected files, upload them to the s3 bucket.
-        for (let i = 0; i < this.selectedFiles.length; i++){
-          let currentFile = this.selectedFiles[i];
+  upload() {
+      // for every FILE in the selected files, upload them to the s3 bucket.
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        let currentFile = this.selectedFiles[i];
 
-          this._awsService.uploadfileAWSS3(res.url, doc.doc_type, currentFile).subscribe((res) => {
-          console.log(res);
-          },
-          ()=> {},
-          ()=> {
-            this.createDocuments(doc);
+        //make the call to the server to generate the upload url
+        this._awsService
+          .getPresignedUrl(this.userId, this.currentDocument.doc_type, currentFile.name, currentFile.type)
+          .pipe()
+          .subscribe((res) => {
+            let document = new Document(i, currentFile.name, this.userId, this.firmId, "Firm Only", this.matter.id);
+            delete document.id;
+            document.doc_key = res.key;
+            document.doc_type = this.currentDocument.doc_type;
+
+            this._awsService.uploadfileAWSS3(res.url, currentFile.type, currentFile).subscribe(
+              (res) => {
+                console.log(res);
+              },
+              () => {},
+              () => {
+                this.createDocuments(document);
+              }
+            );
           });
-        }
-      });
-
-    })
+      }
     this.toggleManageDocs();
   }
 
