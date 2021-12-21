@@ -179,13 +179,39 @@
 
         <div class="sm:col-span-3">
 
-          <div class="mt-1">
+          <!--
+  This example requires Tailwind CSS v2.0+
 
-            <div>
-              <label for="hours" class="block text-sm font-medium text-gray-700">Hourly Rate</label>
-              <input type="number" id="hours" formControlName="hourly_rate"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-            </div>
-          </div>
+  This example requires some changes to your config:
+
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<div>
+  <label for="hourly_rate" class="block text-sm font-medium text-gray-700">Hourly Rate</label>
+  <div class="mt-1 relative rounded-md shadow-sm">
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <span class="text-gray-500 sm:text-sm">
+        $
+      </span>
+    </div>
+    <input type="number" step="0.01" id="hourly_rate" formControlName="hourly_rate" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0.00" aria-describedby="price-currency">
+    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+      <span class="text-gray-500 sm:text-sm" id="price-currency">
+        USD
+      </span>
+    </div>
+  </div>
+</div>
+
         </div>
 
         <div class="sm:col-span-3">
@@ -203,13 +229,39 @@
 
         <div class="sm:col-span-3">
 
-          <div class="mt-1">
+          <!--
+  This example requires Tailwind CSS v2.0+
 
-            <div>
-              <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-              <input type="number" id="amount" formControlName="amount"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-            </div>
-          </div>
+  This example requires some changes to your config:
+
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<div>
+  <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+  <div class="mt-1 relative rounded-md shadow-sm">
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <span class="text-gray-500 sm:text-sm">
+        $
+      </span>
+    </div>
+    <input type="number"  id="amount"step="0.01" formControlName="amount" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0.00" aria-describedby="price-currency">
+    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+      <span class="text-gray-500 sm:text-sm" id="price-currency">
+        USD
+      </span>
+    </div>
+  </div>
+</div>
+
         </div>
 
         <div class="sm:col-span-3">
