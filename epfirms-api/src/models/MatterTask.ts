@@ -27,7 +27,7 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, DATE, DATEONLY, FLOAT }
         type: DATE
       },
       hours: {
-        type: STRING,
+        type: FLOAT,
       },
       due: {
         type: DATE
