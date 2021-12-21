@@ -46,6 +46,9 @@ export class ManageBillComponent implements OnInit {
   staff$: Observable<Staff[]>;
   staffList;
 
+  //properties for select component
+  selectHidden : boolean = true;
+
 
 
   constructor(private _matterService: MatterService,
@@ -132,5 +135,10 @@ export class ManageBillComponent implements OnInit {
   setStaff(staff): void {
     console.log("staff",staff);
     this.billForm.patchValue({track_time_for: staff.id, employee_name: staff.full_name});
+  }
+
+  // toggles the state of the select
+  toggleSelectEmployee(): void {
+    this.selectHidden = !this.selectHidden;
   }
 }
