@@ -69,6 +69,7 @@ export class MatterTabTasksComponent implements OnInit {
 
       let hourlyRate = this.staffList.filter(staff => staff.id == task.assignee_id)[0].firms[0].firm_employee.hourly_rate;
       console.log(hourlyRate);
+      console.log("HOURS", task.hours);
       let bill = {
         matter_id: task.matter_id,
         hours: task.hours,
@@ -80,6 +81,8 @@ export class MatterTabTasksComponent implements OnInit {
         date: new Date(),
         amount: task.hours * hourlyRate
       }
+      console.log("THE NEW BILL", bill);
+      console.log(typeof(bill.hours))
       this._matterService.createBillOrPayment(bill).subscribe();
     }
 
