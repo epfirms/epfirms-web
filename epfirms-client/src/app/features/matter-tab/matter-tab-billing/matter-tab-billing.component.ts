@@ -165,10 +165,10 @@ export class MatterTabBillingComponent implements OnInit {
 
     let csvContent = "data:text/csv;charset=utf-8,"
 
-    csvContent += "Employee ID, Employee Name, Hourly Rate, Hours, Amount, Description, Billing Type, Payment Type\n"
+    csvContent += "Employee ID, Date, Employee Name, Hourly Rate, Hours, Amount, Description\n"
 
     this.bills.filter(bill => bill.statement_id == statement.id).forEach(bill => {
-      csvContent += `${bill.track_time_for},${bill.employee_name},${bill.hourly_rate},${bill.hours}, ${bill.amount},${bill.description},${bill.billing_type},${bill.payment_type}\n`
+      csvContent += `${bill.track_time_for},${new Date(bill.date).toDateString()},${bill.employee_name},${bill.hourly_rate},${bill.hours}, ${bill.amount},${bill.description}\n`
     });
 
     var encodedUri = encodeURI(csvContent);
