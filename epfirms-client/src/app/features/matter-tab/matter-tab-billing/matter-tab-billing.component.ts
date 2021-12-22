@@ -27,6 +27,10 @@ export class MatterTabBillingComponent implements OnInit {
   bills: any[] = [];
   payments: any[] = [];
 
+  totalBilled : number = 0;
+  totalPayments : number = 0;
+  balance : number;
+
   //CONFIG FOR BILL MANAGER SLIDE OVER
   isBillManagerVisible: boolean = false;
   isBillManagerEditMode: boolean = false;
@@ -49,6 +53,11 @@ export class MatterTabBillingComponent implements OnInit {
     this._matterService.getMatterBillingById(this.matter.id).subscribe((response) => {
       this.bills = response.filter((b) => b.type === '0');
       this.payments = response.filter((b) => b.type === '1');
+      console.log("bills",this.bills);
+      console.log(this.payments);
+      this.bills.forEach(bill => this.totalBilled += bill.amount);
+      this.payments.forEach(payment => this.totalPayments += payment.amount);
+      this.balance = this.totalBilled - this.totalPayments;
     });
   }
 
