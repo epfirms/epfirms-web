@@ -49,6 +49,8 @@ export class ManageBillComponent implements OnInit {
   //properties for select component
   selectHidden : boolean = true;
 
+  isHourly : boolean = false;
+
 
 
   constructor(private _matterService: MatterService,
@@ -91,6 +93,11 @@ export class ManageBillComponent implements OnInit {
 
     //patch in the matter_id for the bill
     this.billForm.patchValue({ 'matter_id': this.matter.id });
+
+    //create listener on billing style form property
+    this.billForm.get("billing_type").valueChanges.subscribe(onChange => {
+      this.toggleHourly(onChange);
+    });
   }
 
   closeBillManager(): void {
@@ -140,5 +147,14 @@ export class ManageBillComponent implements OnInit {
   // toggles the state of the select
   toggleSelectEmployee(): void {
     this.selectHidden = !this.selectHidden;
+  }
+
+  toggleHourly(status):void {
+    if (status == "Hourly"){
+      this.isHourly = true;
+    }
+    else {
+      this.isHourly = false;
+    }
   }
 }
