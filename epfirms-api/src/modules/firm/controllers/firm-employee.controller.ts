@@ -21,14 +21,17 @@ export class FirmEmployeeController {
 
   public async create(req: any, resp: Response): Promise<any> {
     try {
-      const { user, roles } = req.body;
+      const firmEmployee = req.body;
+      const { role } = firmEmployee;
       const { firm_id } = req.user.firm_access;
 
-      const newEmployee = await this._firmEmployeeService.add(firm_id, user);
+      const newEmployee = await this._firmEmployeeService.add(firm_id, firmEmployee);
 
-      await this._firmEmployeeService.setRoles(newEmployee.id, roles);
+      await this._firmEmployeeService.setRoles(newEmployee.id, role);
 
-      resp.status(StatusConstants.CREATED).send({ success: true, data: newEmployee });
+      const employee = await this._firmEmployeeService.getByUserId(firm_id, newEmployee.id);
+
+      resp.status(StatusConstants.CREATED).send({ success: true, data: employee });
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }
@@ -36,14 +39,15 @@ export class FirmEmployeeController {
 
   public async update(req: any, resp: Response): Promise<any> {
     try {
-      const { user, roles } = req.body;
+      const { id } = req.params;
+      const updatedEmployee = req.body;
       const { firm_id } = req.user.firm_access;
 
-      const newEmployee = await this._firmEmployeeService.add(firm_id, user);
+      await this._firmEmployeeService.update(id, updatedEmployee);
 
-      await this._firmEmployeeService.setRoles(newEmployee.id, roles);
+      const employee = await this._firmEmployeeService.getByUserId(firm_id, updatedEmployee.user.id);
 
-      resp.status(StatusConstants.CREATED).send({ success: true, data: newEmployee });
+      resp.status(StatusConstants.CREATED).send({ success: true, data: employee });
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }
@@ -51,14 +55,11 @@ export class FirmEmployeeController {
 
   public async delete(req: any, resp: Response): Promise<any> {
     try {
-      const { user, roles } = req.body;
-      const { firm_id } = req.user.firm_access;
+      const { id } = req.params;
 
-      const newEmployee = await this._firmEmployeeService.add(firm_id, user);
+      await this._firmEmployeeService.update(id, {active: false});
 
-      await this._firmEmployeeService.setRoles(newEmployee.id, roles);
-
-      resp.status(StatusConstants.CREATED).send({ success: true, data: newEmployee });
+      resp.status(StatusConstants.OK).send({ success: true, data: {id, active: false} });
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }

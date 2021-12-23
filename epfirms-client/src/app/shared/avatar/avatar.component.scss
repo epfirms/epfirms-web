@@ -1,75 +1,92 @@
-.avatar {
-  @apply inline-block;
-  image-rendering: -webkit-optimize-contrast;
-}
-
-.initials {
-  @apply inline-flex items-center justify-center bg-gray-300;
-
-  & > span {
-    @apply font-medium leading-none text-white uppercase;
+  .avatar {
+    @apply inline-block;
+    image-rendering: -webkit-optimize-contrast;
   }
-
-  &.xs {
+  
+  .initials {
+    @apply inline-flex items-center justify-center bg-gray-300;
+  
     & > span {
-      @apply text-xs;
+      @apply font-medium leading-none text-white uppercase;
+    }
+  
+    &.xs {
+      & > span {
+        @apply text-xs;
+      }
+    }
+  
+    &.sm {
+      & > span {
+        @apply text-sm;
+      }
+    }
+  
+    &.lg {
+      & > span {
+        @apply text-lg;
+      }
+    }
+  
+    &.xl {
+      & > span {
+        @apply text-xl;
+      }
     }
   }
-
-  &.sm {
-    & > span {
-      @apply text-sm;
+  
+  .icon {
+    @apply inline-block overflow-hidden bg-gray-100;
+  
+    & > svg {
+      @apply h-full w-full text-gray-300;
     }
   }
-
-  &.lg {
-    & > span {
-      @apply text-lg;
-    }
+  
+  .round {
+    @apply rounded-full;
+  }
+  
+  .square {
+    @apply rounded-md;
+  }
+  
+  .xs {
+    min-width: 1.5rem;
+    @apply h-6 w-6;
+  }
+  
+  .sm {
+    min-width: 2rem;
+    @apply h-8 w-8;
+  }
+  
+  .md {
+    min-width: 2.5rem;
+    @apply h-10 w-10;
+  }
+  
+  .lg {
+    @apply h-12 w-12;
+  }
+  
+  .xl {
+    @apply h-14 w-14;
   }
 
-  &.xl {
-    & > span {
-      @apply text-xl;
-    }
+
+
+.ep-avatar-group > ep-avatar {
+  &:nth-child(0) > .av {
+    @apply relative z-30 ring-2 ring-white;
   }
-}
-
-.icon {
-  @apply inline-block overflow-hidden bg-gray-100;
-
-  & > svg {
-    @apply h-full w-full text-gray-300;
+  &:nth-child(1) > .av {
+    @apply relative z-20 ring-2 ring-white;
   }
-}
-
-.round {
-  @apply rounded-full;
-}
-
-.square {
-  @apply rounded-md;
-}
-
-.xs {
-  min-width: 1.5rem;
-  @apply h-6 w-6;
-}
-
-.sm {
-  min-width: 2rem;
-  @apply h-8 w-8;
-}
-
-.md {
-  min-width: 2.5rem;
-  @apply h-10 w-10;
-}
-
-.lg {
-  @apply h-12 w-12;
-}
-
-.xl {
-  @apply h-14 w-14;
+  &:nth-child(2) > .av {
+    @apply relative z-10 ring-2 ring-white;
+  }
+  &:nth-child(3) > .av {
+    @apply relative z-0 ring-2 ring-white;
+  }
 }

@@ -23,23 +23,24 @@ export class FirmEmployeeService {
    * @returns Employee
    *
    */
-  //    public async getOne(userId: number): Promise<boolean> {
-  //     const { user, firm, firm_employee } = Database.models;
-  //     const staff = await user.findAll({
-  //       include: {
-  //         model: firm,
-  //         required: true,
-  //         attributes: ['id'],
-  //         through: {
-  //           model: firm_employee,
-  //           where: { firm_id: firmId, active: true },
-  //           attributes: ['admin', 'attorney', 'legal_assistant', 'paralegal']
-  //         }
-  //       }
-  //     });
-
-  //     return Promise.resolve(staff);
-  //   }
+     public async getByUserId(firmId: number, userId: number): Promise<any> {
+      const { firm_employee, firm_role, user } = Database.models;
+      const employeeInstance = await firm_employee.findOne({where: {
+        firm_id: firmId,
+        user_id: userId
+      },        attributes: ['id', 'active', 'hourly_rate', 'admin'],
+      include: [
+        {
+          model: firm_role,
+          as: 'role',
+          attributes: ['id', 'name']
+        },
+        {
+          model: user
+        }
+      ]});
+      return Promise.resolve(employeeInstance);
+    }
 
   /**
    * Get all employees for a firm.
@@ -57,7 +58,7 @@ export class FirmEmployeeService {
       },
       include: {
         model: firm_employee,
-        attributes: ['id', 'active', 'hourly_rate'],
+        attributes: ['id', 'active', 'hourly_rate', 'admin'],
         include: [
           {
             model: firm_role,
@@ -74,19 +75,19 @@ export class FirmEmployeeService {
     return Promise.resolve(staff.firm_employees);
   }
 
-  public async add(firmId: number, userData): Promise<any> {
+  public async add(firmId: number, employeeData): Promise<any> {
     const { firm, user } = Database.models;
     const firmInstance = await firm.findByPk(firmId);
 
-    if (userData.email && userData.email.length) {
-      const userInstance = await user.findOne({ where: { email: userData.email } });
+    if (employeeData.user.email && employeeData.user.email.length) {
+      const userInstance = await user.findOne({ where: { email: employeeData.user.email } });
       if (userInstance && userInstance.id) {
         await this._addFromExistingUser(firmInstance, userInstance);
         return Promise.resolve(userInstance.dataValues);
       }
     }
 
-    const employee = await firmInstance.createEmployee(userData);
+    const employee = await firmInstance.createEmployee(employeeData.user, {through: {hourly_rate: employeeData.hourly_rate}});
     return Promise.resolve(employee.dataValues);
   }
 
@@ -106,6 +107,12 @@ export class FirmEmployeeService {
 
       return Promise.resolve(roleInstances);
     }
+  }
+
+  public async update(id: number, data): Promise<any> {
+    const { firm_employee } = Database.models;
+    await firm_employee.update(data, {where: {id}});
+    return Promise.resolve(true);
   }
 
   private async _addFromExistingUser(firmInstance, userInstance) {

@@ -1,0 +1,140 @@
+<div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+  <div class="sm:flex sm:items-start">
+    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+      <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+        Staff Member
+      </h3>
+      <div class="mt-6">
+          <div>
+            <form [formGroup]="staffForm">
+            <div class="grid grid-cols-6 gap-6" formGroupName="user">
+              <div class="col-span-6 sm:col-span-3">
+                <label for="roles" class="block text-sm font-medium text-gray-700">Role</label>
+                <select [(ngModel)]="role" [ngModelOptions]="{standalone: true}" id="roles" name="roles" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                  <option *ngFor="let role of roleOptions" [ngValue]="role.id">{{role.name | titlecase}}</option>
+                </select>
+              </div>
+              
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="first-name"
+                  class="block text-sm font-medium text-gray-700"
+                  >First name</label
+                >
+                <input
+                  formControlName="first_name"
+                  ep-input
+                  type="text"
+                  name="first-name"
+                  id="first-name"
+                  autocomplete="given-name"
+                  class="mt-1"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="last-name"
+                  class="block text-sm font-medium text-gray-700"
+                  >Last name</label
+                >
+                <input
+                  formControlName="last_name"
+                  ep-input
+                  type="text"
+                  name="last-name"
+                  id="last-name"
+                  autocomplete="family-name"
+                  class="mt-1"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-4">
+                <label
+                  for="email-address"
+                  class="block text-sm font-medium text-gray-700"
+                  >Email address</label
+                >
+                <input
+                  formControlName="email"
+                  ep-input
+                  type="text"
+                  name="email-address"
+                  id="email-address"
+                  autocomplete="email"
+                  class="mt-1"
+                />
+              </div>
+
+              <div class="col-span-6 sm:col-span-2">
+                <label
+                  for="phone"
+                  class="block text-sm font-medium text-gray-700"
+                  >Phone</label
+                >
+                <input
+                  formControlName="phone"
+                  ep-input
+                  type="text"
+                  name="phone"
+                  id="phone"
+                  class="mt-1"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div class="col-span-6 sm:col-span-3">
+                <label
+                  for="rate"
+                  class="block text-sm font-medium text-gray-700"
+                  >Hourly rate</label
+                >
+                <div class="mt-1 relative rounded-md shadow-sm">
+
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">
+                    $
+                  </span>
+                </div>
+                <input
+                  formControlName="hourly_rate"
+                  ep-input
+                  [inputMask]="currencyInputMask"
+                  placeholder="0.00"
+                  type="text"
+                  name="rate"
+                  id="rate"
+                  class="pl-7 pr-12"
+                />
+
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm" id="price-currency">
+                    USD
+                  </span>
+                </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          </div>
+      </div>
+      <div class="mt-6">
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="rounded-b-lg bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+  <button
+    (click)="add()"
+    [disabled]="!staffForm.valid"
+    type="button"
+    class="button-primary"
+  >
+    Add
+  </button>
+  <button (click)="close()" type="button" class="button-white">
+    Cancel
+  </button>
+</div>

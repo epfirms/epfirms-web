@@ -16,6 +16,7 @@ import { CaseTemplateModule } from '@app/features/case-template/case-template.mo
 import { TagModule } from '@app/shared/tag/tag.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { CaseTemplateCommunityComponent } from './case-template-community/case-template-community.component';
+import { FirmStaffModule } from '@app/features/firm-staff/firm-staff.module';
 
 const FirmSettingsRoute: Routes = [
   {
@@ -49,7 +50,8 @@ const FirmSettingsRoute: Routes = [
     TippyModule,
     CaseTemplateModule,
     TagModule,
-    EditableModule
+    EditableModule,
+    FirmStaffModule
   ]
 })
 export class FirmSettingsModule { }

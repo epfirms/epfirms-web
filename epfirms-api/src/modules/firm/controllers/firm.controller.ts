@@ -8,6 +8,7 @@ import { ClientSearchService } from '../services/client-search.service';
 import { Service } from 'typedi';
 import { FirmRoleService } from '../services/firm-role.service';
 import { FirmEmployeeService } from '../services/firm-employee.service';
+import { FirmTeamService } from '../services/firm-team.service';
 
 @Service()
 export class FirmController {
@@ -16,7 +17,8 @@ export class FirmController {
     private _firmService: FirmService,
     private _userService: UserService,
     private _firmRoleService: FirmRoleService,
-    private _firmEmployeeService: FirmEmployeeService
+    private _firmEmployeeService: FirmEmployeeService,
+    private _firmTeamService: FirmTeamService
   ) {}
 
   public async getFirm(req: any, resp: Response): Promise<any> {
@@ -142,6 +144,60 @@ export class FirmController {
       const roles = await this._firmRoleService.get(parseInt(firm_id));
 
       resp.status(StatusConstants.OK).send({ roles: roles });
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
+  public async getTeams(req: any, resp: Response): Promise<any> {
+    try {
+      const { firm_id } = req.user.firm_access;
+
+      const teams = await this._firmTeamService.getAllByFirmId(firm_id);
+
+      resp.status(StatusConstants.OK).send({ teams: teams });
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
+  public async createTeam(req: any, resp: Response): Promise<any> {
+    try {
+      const { employeeId } = req.body;
+      const { firm_id } = req.user.firm_access;
+
+        // Create a team for attorney employees.
+        const newTeam = await this._firmTeamService.create(firm_id, employeeId);
+
+        // Add firm employee to team.
+        await this._firmTeamService.addMember(newTeam.id, employeeId, 1);
+      resp.status(StatusConstants.OK).send({ team: newTeam });
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
+  public async addTeamMember(req: any, resp: Response): Promise<any> {
+    try {
+      const { employeeId, teamId, roleId } = req.body;
+
+        // Add firm employee to team.
+        const member = await this._firmTeamService.addMember(teamId, employeeId, roleId);
+
+      resp.status(StatusConstants.OK).send({ member });
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
+  public async getTeamMembers(req: any, resp: Response): Promise<any> {
+    try {
+      const { teamId } = req.params;
+
+        // Add firm employee to team.
+        const members = await this._firmTeamService.getMembersForTeam(teamId);
+
+      resp.status(StatusConstants.OK).send({ members });
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }

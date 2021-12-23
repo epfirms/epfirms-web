@@ -51,10 +51,22 @@ firmRouter.get('/employees', passport.authenticate('bearer', {session: false}), 
 
 firmRouter.post('/employees', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.create(req, res));
 
-firmRouter.put('/employees', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.update(req, res));
+firmRouter.patch('/employees/:id', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.update(req, res));
 
-firmRouter.delete('/employees', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.delete(req, res));
+firmRouter.delete('/employees/:id', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.delete(req, res));
 
 firmRouter.get('/roles', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getRoles(req, res));
+
+firmRouter.get('/team', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getTeams(req, res));
+
+firmRouter.post('/team', passport.authenticate('bearer', {session: false}), (req, res) => firmController.createTeam(req, res));
+
+// firmRouter.put('/team', passport.authenticate('bearer', {session: false}), (req, res) => firmController.update(req, res));
+
+// firmRouter.delete('/team', passport.authenticate('bearer', {session: false}), (req, res) => firmController.delete(req, res));
+
+firmRouter.get('/team/:teamId/members', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getTeamMembers(req, res));
+
+firmRouter.post('/team/members', passport.authenticate('bearer', {session: false}), (req, res) => firmController.addTeamMember(req, res));
 
 export { firmRouter };

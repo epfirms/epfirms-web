@@ -14,6 +14,9 @@ module.exports = (sequelize, { INTEGER }) => {
         },
         firm_employee_id: {
           type: INTEGER
+        },
+        firm_role_id: {
+          type: INTEGER
         }
       },
       {

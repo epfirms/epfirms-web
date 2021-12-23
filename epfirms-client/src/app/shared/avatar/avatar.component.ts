@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'ep-avatar',
@@ -6,13 +6,17 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./avatar.component.scss'],
   host: {
     class: 'flex'
-  }
+  },
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
-export class AvatarComponent implements OnInit {
+export class AvatarComponent {
   @Input()
   set epSize(value) {
     this._size = value;
   }
+
   get epSize() {
     return this._size;
   }
@@ -21,6 +25,7 @@ export class AvatarComponent implements OnInit {
   set epShape(value) {
     this._shape = value;
   }
+
   get epShape() {
     return this._shape;
   }
@@ -29,6 +34,7 @@ export class AvatarComponent implements OnInit {
   set epSrc(value) {
     this._src = value;
   }
+
   get epSrc() {
     return this._src;
   }
@@ -37,16 +43,16 @@ export class AvatarComponent implements OnInit {
   set epText(value) {
     this._text = value;
   }
+
   get epText() {
     return this._text;
   }
 
   private _shape: 'round' | 'square';
+
   private _size: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+
   private _src: string | null;
+
   private _text: string | null;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }
