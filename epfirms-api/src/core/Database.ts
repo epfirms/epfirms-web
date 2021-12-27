@@ -53,7 +53,8 @@ export class Database {
       statement: require('../models/Statement')(this.sequelize, Sequelize),
       beta_signup: require('../models/BetaSignup')(this.sequelize, Sequelize),
       firm_template_task_file: require('../models/FirmTemplateTaskFile')(this.sequelize, Sequelize),
-      matter_task_file: require('../models/MatterTaskFile')(this.sequelize, Sequelize)
+      matter_task_file: require('../models/MatterTaskFile')(this.sequelize, Sequelize),
+      matter_billing_settings: require('../models/MatterBillingSettings')(this.sequelize, Sequelize)
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee });
@@ -276,6 +277,14 @@ export class Database {
     });
 
     this.models.matter_task_file.belongsTo(this.models.matter_task);
+
+    this.models.matter.hasOne(this.models.matter_billing_settings, {
+      foreignKey: 'matter_id'
+    });
+
+    this.models.matter_billing_settings.belongsTo(this.models.matter, {
+      foreignKey: 'matter_id'
+    });
   }
 
   public static async start() {
