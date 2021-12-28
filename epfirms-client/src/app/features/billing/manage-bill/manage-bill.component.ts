@@ -21,6 +21,8 @@ export class ManageBillComponent implements OnInit {
   @Input() currentBill;
   // matter properties
   @Input() matter;
+  @Input() defaultPaymentType;
+  @Input() defaultBillingStyle;
 
   // bill form group
   billForm = new FormGroup({
@@ -131,7 +133,8 @@ export class ManageBillComponent implements OnInit {
   // this is used to prefill some properties on the form from employee information
   // such as hourly_rate
   initializeForm():void {
-    this.billForm.patchValue({track_time_for: this.matter.attorney_id, employee_name: this.matter.attorney.full_name})
+    this.billForm.patchValue({track_time_for: this.matter.attorney_id, employee_name: this.matter.attorney.full_name,
+    billing_type: this.defaultBillingStyle, payment_type: this.defaultPaymentType});
   }
 
   calculateAmount(): void {

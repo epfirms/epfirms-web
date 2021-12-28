@@ -403,7 +403,7 @@
 
 <app-manage-bill *ngIf="isBillManagerVisible" [(isVisible)]="isBillManagerVisible"
   (isVisibleChange)="isBillManagerVisible=$event; loadBillPayments(); clearEditMode()" [matter]="matter"
-  [isEditMode]="isBillManagerEditMode" [currentBill]="currentBill"></app-manage-bill>
+  [isEditMode]="isBillManagerEditMode" [currentBill]="currentBill" [defaultPaymentType]="defaultPaymentType" [defaultBillingStyle]="defaultBillingStyle"></app-manage-bill>
 
 <app-manage-statement *ngIf="isStatementManagerVisible" [(isVisible)]="isStatementManagerVisible"
   (isVisibleChange)="isStatementManagerVisible=$event" [statement]="currentStatement" [bills]="bills">
