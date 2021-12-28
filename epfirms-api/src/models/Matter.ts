@@ -1,4 +1,4 @@
-module.exports = (sequelize, { INTEGER, STRING, BOOLEAN }) => {
+module.exports = (sequelize, { INTEGER, STRING, BOOLEAN, FLOAT }) => {
   const tableName = 'matter';
 
   const Matter = sequelize.define(
@@ -45,6 +45,9 @@ module.exports = (sequelize, { INTEGER, STRING, BOOLEAN }) => {
       deleted: {
         type: BOOLEAN,
         defaultValue: false
+      },
+      iolta_balance: {
+        type: FLOAT
       }
     },
     {

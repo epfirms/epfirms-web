@@ -30,5 +30,6 @@ export class Matter {
     total_billed?: string;
     total_paid?: string;
     statement?: any;
-    matter_billing_setting?: any
+    matter_billing_setting?: any;
+    iolta_balance?: number;
   }

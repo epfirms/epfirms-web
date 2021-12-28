@@ -32,6 +32,9 @@ export class MatterTabBillingComponent implements OnInit {
   totalPayments : number = 0;
   balance : number;
 
+  //bindings for IOLTA
+  ioltaBalance : number = 0;
+
   //CONFIG FOR BILL MANAGER SLIDE OVER
   isBillManagerVisible: boolean = false;
   isBillManagerEditMode: boolean = false;
@@ -58,6 +61,8 @@ export class MatterTabBillingComponent implements OnInit {
     this.defaultBillingStyle = this.matter.matter_billing_setting.billing_type;
     this.defaultPaymentType = this.matter.matter_billing_setting.payment_type;
 
+    //init the iolta balance from matter
+    this.ioltaBalance = this.matter.iolta_balance;
   }
 
   loadBillPayments() {
@@ -206,6 +211,11 @@ export class MatterTabBillingComponent implements OnInit {
     this._matterBillingSettingsService.create(settings).subscribe(onRes => {
       console.log(onRes);
     });
+  }
+
+  updateIOLTA():void {
+    this.matter.iolta_balance = this.ioltaBalance;
+    this._matterService.update(this.matter).subscribe(res => console.log(res));
   }
 
 
