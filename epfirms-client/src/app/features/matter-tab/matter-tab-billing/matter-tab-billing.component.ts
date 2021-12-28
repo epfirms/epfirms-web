@@ -40,6 +40,11 @@ export class MatterTabBillingComponent implements OnInit {
   isStatementManagerVisible: boolean = false;
   currentStatement;
 
+  // bindings for default billing settings
+  // these should load into the matter from MatterBillingSettings
+  defaultBillingStyle : string;
+  defaultPaymentType : string;
+
   constructor(private _dialogService: DialogService, private _matterService: MatterService,
     private statementService: StatementService) { }
   ngOnInit(): void {
