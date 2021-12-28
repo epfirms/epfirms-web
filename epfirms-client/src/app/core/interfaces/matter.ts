@@ -30,4 +30,5 @@ export class Matter {
     total_billed?: string;
     total_paid?: string;
     statement?: any;
+    matter_billing_settings?: any
   }

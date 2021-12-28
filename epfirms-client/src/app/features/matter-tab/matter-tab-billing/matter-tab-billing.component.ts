@@ -52,6 +52,10 @@ export class MatterTabBillingComponent implements OnInit {
     this.loadStatements();
     console.log(this.payments);
 
+    //init the default billing settings if applicable
+    this.defaultBillingStyle = this.matter.matter_billing_settings.billing_type;
+    this.defaultPaymentType = this.matter.matter_billing_settings.payment_type;
+
   }
 
   loadBillPayments() {
