@@ -4,7 +4,7 @@ const passport = require('passport');
 
 const matterBillingSettingsRouter = express.Router();
 
-// matterBillingSettingsRouter.post('/', passport.authenticate('bearer', { session: false }), (req, res) => matterBillingSettingsController.createDocument(req, res));
+matterBillingSettingsRouter.post('/', passport.authenticate('bearer', { session: false }), (req, res) => matterBillingSettingsController.create(req, res));
 // matterBillingSettingsRouter.get('/', passport.authenticate('bearer', { session: false }), (req, res) => matterBillingSettingsController.getAllFirmDocuments(req, res));
 // matterBillingSettingsRouter.delete('/:id', passport.authenticate('bearer', { session: false }), (req, res) => matterBillingSettingsController.delete(req, res));
 // matterBillingSettingsRouter.put('/:id', passport.authenticate('bearer', { session: false }), (req, res) => matterBillingSettingsController.update(req, res));

@@ -79,9 +79,9 @@
                     <div>
                       <label for="billingStyle" class="block text-sm font-medium text-gray-700">Billing Style</label>
                       <select id="billingStyle" [(ngModel)]="defaultBillingStyle"   class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option>Flat Rate</option>
-                        <option >Hourly</option>
-                        <option>Contingency</option>
+                        <option (click)="upsertDefaultBillingSettings()">Flat Rate</option>
+                        <option (click)="upsertDefaultBillingSettings()">Hourly</option>
+                        <option (click)="upsertDefaultBillingSettings()">Contingency</option>
                       </select>
                     </div>
                   </td>
@@ -89,8 +89,8 @@
                     <div>
                       <label for="paymentType" class="block text-sm font-medium text-gray-700">Payment Type</label>
                       <select id="paymentType" [(ngModel)]="defaultPaymentType"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option>Private Pay</option>
-                        <option >Legal Insurance</option>
+                        <option (click)="upsertDefaultBillingSettings()">Private Pay</option>
+                        <option (click)="upsertDefaultBillingSettings()">Legal Insurance</option>
                       </select>
                     </div>
                   </td>

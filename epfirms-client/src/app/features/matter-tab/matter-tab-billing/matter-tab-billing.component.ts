@@ -5,6 +5,7 @@ import { PaymentFormModalComponent } from '@app/shared/payment-form-modal/paymen
 import { StatementService } from '@app/shared/_services/statement-service/statement.service';
 import { Matter } from '@app/core/interfaces/matter';
 import { DialogService } from '@ngneat/dialog';
+import { MatterBillingSettingsService } from '@app/shared/_services/matter-billing-settings-service/matter-billing-settings.service';
 
 @Component({
   selector: 'app-matter-tab-billing',
@@ -46,15 +47,16 @@ export class MatterTabBillingComponent implements OnInit {
   defaultPaymentType : string;
 
   constructor(private _dialogService: DialogService, private _matterService: MatterService,
-    private statementService: StatementService) { }
+    private statementService: StatementService, private _matterBillingSettingsService : MatterBillingSettingsService) { }
   ngOnInit(): void {
     this.loadBillPayments();
     this.loadStatements();
     console.log(this.payments);
 
+    console.log(this.matter);
     //init the default billing settings if applicable
-    this.defaultBillingStyle = this.matter.matter_billing_settings.billing_type;
-    this.defaultPaymentType = this.matter.matter_billing_settings.payment_type;
+    this.defaultBillingStyle = this.matter.matter_billing_setting.billing_type;
+    this.defaultPaymentType = this.matter.matter_billing_setting.payment_type;
 
   }
 
@@ -191,6 +193,19 @@ export class MatterTabBillingComponent implements OnInit {
 
     var encodedUri = encodeURI(csvContent);
     window.open(encodedUri);
+  }
+
+  //create or apply default billing settings for the matter/case
+  upsertDefaultBillingSettings(): void {
+    let settings = {
+      id: this.matter.matter_billing_setting.id,
+      matter_id: this.matter.id,
+      billing_type: this.defaultBillingStyle,
+      payment_type: this.defaultPaymentType
+    }
+    this._matterBillingSettingsService.create(settings).subscribe(onRes => {
+      console.log(onRes);
+    });
   }
 
 
