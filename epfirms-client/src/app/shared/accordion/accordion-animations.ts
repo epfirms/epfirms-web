@@ -41,7 +41,7 @@ export const expansionAnimations: {
 } = {
   /** Animation that rotates the indicator arrow. */
   indicatorRotate: trigger('indicatorRotate', [
-    state('collapsed, void', style({transform: 'rotate(0deg)'})),
+    state('collapsed, void', style({transform: 'rotate(90deg)'})),
     state('expanded', style({transform: 'rotate(180deg)'})),
     transition(
       'expanded => collapsed, void => collapsed',
@@ -52,9 +52,7 @@ export const expansionAnimations: {
       animate(EXPAND_ANIMATION_TIMING),
     ),
   ]),
-  // 'transition-property': 'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter',
-  //       'transition-duration': '100ms',
-  //       'transition-timing-funciton': 'cubic-bezier(0, 0, 0.2, 1)'
+
   /** Animation that expands and collapses the panel content. */
   bodyExpansion: trigger('bodyExpansion', [
     state('collapsed, void', style({transform: 'scaleY(0)', height: '0px', opacity: '0'})),

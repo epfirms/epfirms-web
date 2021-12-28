@@ -4,19 +4,24 @@ import { AwsService } from '@app/shared/_services/aws.service';
 import { DialogService } from '@ngneat/dialog';
 import { FirmTemplateTaskFile } from '../interfaces/firm-template-task-file';
 import { CaseTemplateDetailsComponent } from '../case-template-details/case-template-details.component';
+import { map } from 'rxjs';
+import {
+  caseTemplateLawCategories,
+  CaseTemplateLawCategory,
+} from '../enums/case-template-law-category';
 
 @Component({
   selector: 'app-case-template-list',
   templateUrl: './case-template-list.component.html',
-  styleUrls: ['./case-template-list.component.scss']
+  styleUrls: ['./case-template-list.component.scss'],
 })
 export class CaseTemplateListComponent implements OnInit {
-  caseTemplates = [];
+  templateGroups: { name: string; templates: any[] }[] = [];
 
   constructor(
     private _caseTemplateService: CaseTemplateService,
     private _dialogService: DialogService,
-    private _awsService: AwsService
+    private _awsService: AwsService,
   ) {}
 
   ngOnInit(): void {
@@ -26,7 +31,7 @@ export class CaseTemplateListComponent implements OnInit {
   openAddTemplateDialog(): void {
     const ref = this._dialogService.open(CaseTemplateDetailsComponent, {
       size: 'lg',
-      enableClose: false
+      enableClose: false,
     });
 
     ref.afterClosed$.subscribe((data) => {
@@ -49,8 +54,8 @@ export class CaseTemplateListComponent implements OnInit {
       size: 'lg',
       enableClose: false,
       data: {
-        template: template
-      }
+        template: template,
+      },
     });
 
     ref.afterClosed$.subscribe((data) => {
@@ -66,7 +71,7 @@ export class CaseTemplateListComponent implements OnInit {
   deleteTemplate(template) {
     const deleteDialogRef = this._dialogService.confirm({
       title: `Delete case template`,
-      body: `Are you sure you want to delete ${template.template_name}? This action cannot be undone.`
+      body: `Are you sure you want to delete ${template.template_name}? This action cannot be undone.`,
     });
 
     deleteDialogRef.afterClosed$.subscribe((confirmed) => {
@@ -113,9 +118,35 @@ export class CaseTemplateListComponent implements OnInit {
   }
 
   private loadCaseTemplates() {
-    this._caseTemplateService.get().subscribe((templates) => {
-      this.caseTemplates = templates;
-    });
+    this._caseTemplateService
+      .get()
+      .pipe(
+        map((templates) => {
+          const lawCategories: CaseTemplateLawCategory[] = [...caseTemplateLawCategories];
+          const categoryGroups = [];
+
+          lawCategories.forEach((category) => {
+            const matchingTemplates = templates.filter(
+              (template) => template.law_category === category,
+            );
+            categoryGroups.push({ name: category, templates: matchingTemplates });
+          });
+
+          /** Sort categories with 0 templates to the end. */
+          return categoryGroups.sort((a, b) => {
+            if (!a.templates.length) {
+              return 1;
+            }
+            if (!b.templates.length) {
+              return -1;
+            }
+            return 0;
+          });
+        }),
+      )
+      .subscribe((templates) => {
+        this.templateGroups = templates;
+      });
   }
 
   private saveTaskFile(taskId: number, file) {
@@ -123,7 +154,7 @@ export class CaseTemplateListComponent implements OnInit {
       const taskFile: FirmTemplateTaskFile = {
         name: file.name,
         description: file.description,
-        key: res.key
+        key: res.key,
       };
 
       this._awsService.uploadfileAWSS3(res.url, file.description, file.file).subscribe(
@@ -131,7 +162,7 @@ export class CaseTemplateListComponent implements OnInit {
         () => {},
         () => {
           this._caseTemplateService.createTaskFile(taskId, taskFile).subscribe();
-        }
+        },
       );
     });
   }

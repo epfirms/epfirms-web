@@ -34,7 +34,7 @@ export const ACCORDION_ITEM_DEFAULT_OPTIONS = new InjectionToken<AccordionItemDe
     {provide: ACCORDION, useValue: undefined}
   ],
   host: {
-    'class': 'ep-expansion-panel block p-2',
+    'class': 'ep-accordion-item block py-2',
     '[class.ep-expanded]': 'expanded',
   }
 })

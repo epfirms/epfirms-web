@@ -7,17 +7,21 @@
     </button>
 </div>
 
-<div>
-    <ep-accordion>
-        <ep-accordion-item>
+<div class="-ml-4">
+    <ep-accordion multi togglePosition="before">
+        <ep-accordion-item *ngFor="let group of templateGroups" [expanded]="group.templates.length > 0">
             <ep-accordion-item-header>
-                <ep-accordion-item-title>This is the title</ep-accordion-item-title>
-                <ep-accordion-item-description>Summary of panel</ep-accordion-item-description>
+                <ep-accordion-item-title>{{group.name | titlecase}}</ep-accordion-item-title>
+                <ep-accordion-item-description>
+                    <span class="px-2 py-0.5 rounded-full text-xs font-medium" [ngClass]="{
+                        'bg-blue-100 text-sky-800': group.templates.length > 0,
+                        'bg-gray-100 text-gray-800': group.templates.length <= 0
+                    }">{{group.templates.length}}</span>
+                </ep-accordion-item-description>
             </ep-accordion-item-header>
-            <p>content of panel</p>
+            <ul role="list" class="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 xl:grid-cols-4">
+                <app-case-template-list-item class="col-span-1" *ngFor="let template of group.templates" [template]="template" (editTemplate)="editTemplateDialog(template)" (deleteTemplate)="deleteTemplate(template)"></app-case-template-list-item>
+            </ul>
         </ep-accordion-item>
     </ep-accordion>
-    <ul role="list" class="mt-5 overflow-y-auto">
-        <app-case-template-list-item *ngFor="let template of caseTemplates" [template]="template" (editTemplate)="editTemplateDialog(template)" (deleteTemplate)="deleteTemplate(template)"></app-case-template-list-item>
-    </ul> 
 </div>
