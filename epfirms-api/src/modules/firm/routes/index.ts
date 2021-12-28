@@ -69,4 +69,6 @@ firmRouter.get('/team/:teamId/members', passport.authenticate('bearer', {session
 
 firmRouter.post('/team/members', passport.authenticate('bearer', {session: false}), (req, res) => firmController.addTeamMember(req, res));
 
+firmRouter.get('/team/owner/:id', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getTeamsByOwner(req, res));
+
 export { firmRouter };

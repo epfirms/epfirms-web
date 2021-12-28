@@ -14,6 +14,7 @@ import { CoreModule } from '@app/core/core.module';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { InputModule } from '@app/shared/input/input.module';
 import { CaseTemplateCommunityComponent } from './case-template-community/case-template-community.component';
+import { AccordionModule } from '@app/shared/accordion/accordion.module';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { CaseTemplateCommunityComponent } from './case-template-community/case-t
     InputMaskModule,
     EditableModule,
     AvatarModule,
-    InputModule
+    InputModule,
+    AccordionModule
   ],
   exports: [
     CaseTemplateListComponent,

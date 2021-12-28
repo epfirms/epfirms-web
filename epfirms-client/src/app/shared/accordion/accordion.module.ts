@@ -1,27 +1,38 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccordionComponent } from './accordion/accordion.component';
 import { AccordionItemComponent } from './accordion-item/accordion-item.component';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
-import { AccordionBodyDirective } from './directives/accordion-body.directive';
-import { AccordionHeaderDirective } from './directives/accordion-header.directive';
+import { AccordionDirective } from './directives/accordion.directive';
+import { AccordionItemHeaderComponent } from './accordion-item-header/accordion-item-header.component';
+import { AccordionItemActionDirective } from './directives/accordion-item-action.directive';
+import { AccordionItemContentDirective } from './directives/accordion-item-content.directive';
+import { AccordionItemDescriptionDirective } from './directives/accordion-item-description.directive';
+import { AccordionItemTitleDirective } from './directives/accordion-item-title.directive';
+import { PortalModule } from '@angular/cdk/portal';
 
 @NgModule({
   declarations: [
-    AccordionComponent,
     AccordionItemComponent,
-    AccordionBodyDirective,
-    AccordionHeaderDirective
+    AccordionDirective,
+    AccordionItemHeaderComponent,
+    AccordionItemActionDirective,
+    AccordionItemContentDirective,
+    AccordionItemDescriptionDirective,
+    AccordionItemTitleDirective,
   ],
   imports: [
     CommonModule,
-    CdkAccordionModule
+    CdkAccordionModule,
+    PortalModule
   ],
   exports: [
-    AccordionComponent,
     AccordionItemComponent,
-    AccordionBodyDirective,
-    AccordionHeaderDirective
+    AccordionDirective,
+    AccordionItemHeaderComponent,
+    AccordionItemActionDirective,
+    AccordionItemContentDirective,
+    AccordionItemTitleDirective,
+    AccordionItemDescriptionDirective
   ]
 })
 export class AccordionModule { }

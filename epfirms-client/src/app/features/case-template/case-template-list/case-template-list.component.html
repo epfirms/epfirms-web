@@ -7,6 +7,17 @@
     </button>
 </div>
 
-<ul role="list" class="mt-5 overflow-y-auto">
-    <app-case-template-list-item *ngFor="let template of caseTemplates" [template]="template" (editTemplate)="editTemplateDialog(template)" (deleteTemplate)="deleteTemplate(template)"></app-case-template-list-item>
-</ul>
+<div>
+    <ep-accordion>
+        <ep-accordion-item>
+            <ep-accordion-item-header>
+                <ep-accordion-item-title>This is the title</ep-accordion-item-title>
+                <ep-accordion-item-description>Summary of panel</ep-accordion-item-description>
+            </ep-accordion-item-header>
+            <p>content of panel</p>
+        </ep-accordion-item>
+    </ep-accordion>
+    <ul role="list" class="mt-5 overflow-y-auto">
+        <app-case-template-list-item *ngFor="let template of caseTemplates" [template]="template" (editTemplate)="editTemplateDialog(template)" (deleteTemplate)="deleteTemplate(template)"></app-case-template-list-item>
+    </ul> 
+</div>

@@ -3,6 +3,26 @@ import { Service } from 'typedi';
 
 @Service()
 export class FirmTeamService {
+  public async getAllByOwnerId(ownerId: number): Promise<any> {
+    const { firm, firm_employee, user, firm_role } = Database.models;
+    const employeeInstance = await firm_employee.findOne({where: {user_id: ownerId}});
+    const teams = await employeeInstance.getFirm_teams({
+      include: [
+        {
+          model: firm_employee,
+          as: 'member',
+          attributes: ['user_id'],
+          include: [
+            {
+              model: user
+            }
+          ]
+        }
+      ]
+    });
+    return Promise.resolve(teams);
+  }
+
   public async getAllByFirmId(firmId: number): Promise<any> {
     const { firm, firm_employee, user, firm_role } = Database.models;
     const firmInstance = await firm.findByPk(firmId);

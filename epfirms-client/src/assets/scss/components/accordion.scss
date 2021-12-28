@@ -1,0 +1,7 @@
+.ep-accordion {
+  &:not(.mat-expanded) {
+    .ep-accordion-item-header:hover:not([aria-disabled=true]) {
+      @apply hover:bg-gray-100;
+    }
+  }
+}

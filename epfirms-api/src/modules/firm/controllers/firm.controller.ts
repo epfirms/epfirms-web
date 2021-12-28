@@ -161,6 +161,18 @@ export class FirmController {
     }
   }
 
+  public async getTeamsByOwner(req: any, resp: Response): Promise<any> {
+    try {
+      const { id } = req.params;
+
+      const teams = await this._firmTeamService.getAllByOwnerId(id);
+
+      resp.status(StatusConstants.OK).send({ teams: teams });
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
   public async createTeam(req: any, resp: Response): Promise<any> {
     try {
       const { employeeId } = req.body;

@@ -28,4 +28,8 @@ export class FirmTeamService {
   getMembersByTeam(teamId: number): Observable<any> {
     return this.http.get(`/api/firm/team/${teamId}/members`);
   }
+
+  getTeamsByOwner(ownerId: number): Observable<any> {
+    return this.http.get(`/api/firm/team/owner/${ownerId}`);
+  }
 }

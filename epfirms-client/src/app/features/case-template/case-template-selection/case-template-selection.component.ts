@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CaseTemplateService } from '@app/features/case-template/services/case-template.service';
 import { MatterTask } from '@app/core/interfaces/matter-task';
 import { DialogRef } from '@ngneat/dialog';
-import { IAngularMyDpOptions } from 'angular-mydatepicker';
+import { IAngularMyDpOptions, M } from 'angular-mydatepicker';
+import { FirmTeamService } from '@app/features/firm-staff/services/firm-team.service';
 
 @Component({
   selector: 'app-case-template-selection',
@@ -24,12 +25,18 @@ export class CaseTemplateSelectionComponent implements OnInit {
     alignSelectorRight: true,
   };
 
-  constructor(private _caseTemplateService: CaseTemplateService, private _dialogRef: DialogRef) {}
+  members: any[] = [];
+
+  constructor(private _caseTemplateService: CaseTemplateService, private _dialogRef: DialogRef, private _firmTeamService: FirmTeamService) {}
 
   ngOnInit(): void {
     this._caseTemplateService.get().subscribe((templates) => {
       this.caseTemplates = templates;
     });
+
+    this._firmTeamService.getTeamsByOwner(this._dialogRef.data.attorney_id).subscribe(res => {
+      this.members =  res.teams.length ? res.teams[0].member : [];
+    })
   }
 
   selectTemplate(template) {
@@ -52,7 +59,7 @@ export class CaseTemplateSelectionComponent implements OnInit {
   private formatTasks(tasks): MatterTask[] {
     return tasks.map((t) => {
       // Get an employee based on the specified user_id or firm_role
-      const assigneeId: number | null = t.firm_role_id && !t.user_id ? this.getAssigneeIdFromRole(t.firm_role_id) : t.user_id;
+      const assigneeId: number = t.firm_role_id && !t.user_id ? this.getAssigneeIdFromRole(t.firm_role_id) : t.user_id;
 
       return {
         name: t.name,
@@ -63,10 +70,14 @@ export class CaseTemplateSelectionComponent implements OnInit {
     });
   }
 
-  private getAssigneeIdFromRole(firm_role_id: number): number | null {
-    const attorneyId = this._dialogRef.data.attorney_id;
-    // TODO: Find the team member under the attorney with the specified role. If none exist, return null.
-    return 0;
+  /** 
+   * Gets the user id from the member on the attorney's team with a matching role.
+   * If there is no team member assigned to that role, use the attorney id instead.
+  */
+  private getAssigneeIdFromRole(firm_role_id: number): number {
+    const attorneyId: number = this._dialogRef.data.attorney_id;
+   const employee = this.members.find((m) => m.firm_team_member.firm_role_id === firm_role_id);
+   return employee ? employee.user_id : attorneyId;
   }
 
   private addDaysToDate(date: Date, numberOfDays: number): Date {
