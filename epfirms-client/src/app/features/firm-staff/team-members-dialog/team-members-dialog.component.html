@@ -6,7 +6,7 @@
             <div *ngFor="let group of memberGroups" class="relative bg-white px-6 py-2 flex items-center space-x-3">
               <div class="flex-1 min-w-0">
                   <span class="absolute inset-0" aria-hidden="true"></span>
-                  <p class="text-sm text-gray-500 truncate">
+                  <p class="text-sm text-slate-500 truncate">
                     {{group.role.name | titlecase}}
                   </p>
                   <ep-input-group>
@@ -35,7 +35,7 @@
     </div>
   </div>
 </div>
-<div class="rounded-b-lg bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+<div class="rounded-b-lg bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
   <button (click)="close()" type="button" class="button-white">
     Close
   </button>

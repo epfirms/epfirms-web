@@ -15,8 +15,8 @@
         rounded-t-md
         text-sm
         border-l
-        text-gray-500
-        border-r border-t border-gray-200
+        text-slate-500
+        border-r border-t border-slate-200
         mr-1
         shadow-sm
         font-medium;
@@ -27,7 +27,7 @@
 }
 
 .not-selected {
-  @apply bg-gray-100;
+  @apply bg-slate-100;
 }
 
 .remove-tab-button {
@@ -37,8 +37,8 @@
         items-center
         border border-transparent
         rounded-md
-        text-gray-400
-        hover:bg-gray-300
+        text-slate-400
+        hover:bg-slate-300
         focus:outline-none
         focus:ring-2
         focus:ring-offset-2

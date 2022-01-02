@@ -4,23 +4,23 @@
         <div class="relative rounded-md shadow-sm">
           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <img *ngIf="selectedOption.profile_image" [src]="selectedOption.profile_image" alt="" class="flex-shrink-0 h-6 w-6 rounded-full">
-            <span class="flex-shrink-0 h-6 w-6 rounded-full overflow-hidden bg-gray-100" *ngIf="!selectedOption.profile_image">
-              <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+            <span class="flex-shrink-0 h-6 w-6 rounded-full overflow-hidden bg-slate-100" *ngIf="!selectedOption.profile_image">
+              <svg class="h-full w-full text-slate-300" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             </span>
           </div>
-          <input (click)="displayOptionList = !displayOptionList" (input)="filterOptions($event.target)" [value]="selectedOption.full_name" type="text" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 text-sm border-gray-300 rounded-md" [placeholder]="placeholder">
+          <input (click)="displayOptionList = !displayOptionList" (input)="filterOptions($event.target)" [value]="selectedOption.full_name" type="text" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 text-sm border-slate-300 rounded-md" [placeholder]="placeholder">
         </div>
       </div>
   
       <ul *ngIf="displayOptionList" class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-64 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3" (blur)="displayOptionList = !displayOptionList">
   
-        <li class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:text-white hover:bg-blue-600" id="listbox-option-0" role="option" *ngFor="let option of filteredOptions | slice:0:5" (click)="selectOption(option)">
+        <li class="text-slate-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:text-white hover:bg-blue-600" id="listbox-option-0" role="option" *ngFor="let option of filteredOptions | slice:0:5" (click)="selectOption(option)">
           <div class="flex items-center">
             <img *ngIf="option.profile_image" [src]="option.profile_image" alt="" class="flex-shrink-0 h-6 w-6 rounded-full">
-            <span class="flex-shrink-0 h-6 w-6 rounded-full overflow-hidden bg-gray-100" *ngIf="!option.profile_image">
-              <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+            <span class="flex-shrink-0 h-6 w-6 rounded-full overflow-hidden bg-slate-100" *ngIf="!option.profile_image">
+              <svg class="h-full w-full text-slate-300" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             </span>
@@ -42,7 +42,7 @@
           </span>
         </li>
   
-        <li class="text-gray-900 cursor-default select-none relative px-3 py-2 border-t border-gray-200" id="listbox-option-0" role="option" (click)="addButtonClicked.emit(true)" *ngIf="addButton">
+        <li class="text-slate-900 cursor-default select-none relative px-3 py-2 border-t border-slate-200" id="listbox-option-0" role="option" (click)="addButtonClicked.emit(true)" *ngIf="addButton">
           <div class="flex items-center justify-center">
             <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
             <button class="pre-icon-button-sm w-full">

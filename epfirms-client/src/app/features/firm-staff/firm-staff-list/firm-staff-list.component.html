@@ -8,40 +8,40 @@
   Add staff member
 </button>
 </div>
-<div class="align-middle inline-block min-w-full border-b border-gray-200">
+<div class="align-middle inline-block min-w-full border-b border-slate-200">
   <table class="min-w-full">
     <thead>
-      <tr class="border-t border-gray-200">
-        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+      <tr class="border-t border-slate-200">
+        <th class="px-6 py-3 border-b border-slate-200 bg-slate-50 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
           Name
         </th>
-        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <th class="px-6 py-3 border-b border-slate-200 bg-slate-50 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
           Role
         </th>
-        <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+        <th class="hidden md:table-cell px-6 py-3 border-b border-slate-200 bg-slate-50 text-right text-xs font-medium text-slate-500 uppercase tracking-wider whitespace-nowrap">
           Hourly rate
         </th>
-        <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+        <th class="pr-6 py-3 border-b border-slate-200 bg-slate-50 text-right text-xs font-medium text-slate-500 uppercase tracking-wider"></th>
       </tr>
     </thead>
-    <tbody class="bg-white divide-y divide-gray-100">
+    <tbody class="bg-white divide-y divide-slate-100">
       <tr *ngFor="let staff of staff$ | async">
-        <td class="px-6 py-3 max-w-0 w-full whitespace-nowrap text-sm font-medium text-gray-900">
+        <td class="px-6 py-3 max-w-0 w-full whitespace-nowrap text-sm font-medium text-slate-900">
           <div class="flex items-center space-x-3 lg:pl-2">
             <div class="flex-shrink-0">
               <ep-avatar epSize="xsmall" [epSrc]="staff.user.profile_image" [epText]="staff.user.full_name"></ep-avatar>
             </div>
-            <a href="#" class="truncate hover:text-gray-600">
+            <a href="#" class="truncate hover:text-slate-600">
               <span>
                 {{staff.user.full_name | titlecase}}
               </span>
             </a>
           </div>
         </td>
-        <td class="px-6 py-3 text-sm text-gray-500 font-medium">
+        <td class="px-6 py-3 text-sm text-slate-500 font-medium">
           <span class="truncate" *ngFor="let role of staff.role; last as isLast; count as length">{{role.name | titlecase}}<span *ngIf="!isLast && length > 1">, </span></span>
         </td>
-        <td class="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
+        <td class="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-slate-500 text-right">
           {{staff.hourly_rate || 0 | currency}}
         </td>
         <td class="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
@@ -49,7 +49,7 @@
             <button (click)="openEditStaffDialog(staff)" type="button" class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
               Update
             </button>
-            <span class="text-gray-300" aria-hidden="true">|</span>
+            <span class="text-slate-300" aria-hidden="true">|</span>
             <button (click)="removeStaffMember(staff)" type="button" class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
               Remove
             </button>

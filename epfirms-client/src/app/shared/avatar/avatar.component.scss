@@ -4,7 +4,7 @@
   }
   
   .initials {
-    @apply inline-flex items-center justify-center bg-gray-300;
+    @apply inline-flex items-center justify-center bg-slate-300;
   
     & > span {
       @apply font-medium leading-none text-white uppercase;
@@ -36,10 +36,10 @@
   }
   
   .icon {
-    @apply inline-block overflow-hidden bg-gray-100;
+    @apply inline-block overflow-hidden bg-slate-100;
   
     & > svg {
-      @apply h-full w-full text-gray-300;
+      @apply h-full w-full text-slate-300;
     }
   }
   

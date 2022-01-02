@@ -1,10 +1,10 @@
 <ng-container *ngIf="!selectedMatter">
   <div class="px-4 sm:px-0">
-    <h2 class="text-lg font-medium text-gray-900">Cases</h2>
+    <h2 class="text-lg font-medium text-slate-900">Cases</h2>
   </div>
 
   <!-- Stacked list -->
-  <ul role="list" class="mt-5 border-t border-b border-gray-200 divide-y divide-gray-200"
+  <ul role="list" class="mt-5 border-t border-b border-slate-200 divide-y divide-slate-200"
     *ngIf="matters$ | async as matters">
     <li *ngFor="let matter of matters">
       <a (click)="openIntake(matter)" class="block" [class.group]="matter.matter_intake_id">
@@ -17,17 +17,17 @@
                   <span class="text-sm font-medium text-sky-600 truncate group-hover:text-sky-700">{{
                     matter.legal_area?.name || 'No legal area' | titlecase }}</span>
                 </div>
-                <p class="mt-2 flex items-center text-sm text-gray-500 group-hover:text-gray-600">
+                <p class="mt-2 flex items-center text-sm text-slate-500 group-hover:text-slate-600">
                   <span class="truncate">Attorney: {{ matter.attorney.full_name | titlecase }}</span>
                 </p>
               </div>
               <div class="hidden md:block">
                 <div>
-                  <p class="text-sm text-gray-800 group-hover:text-gray-900">
+                  <p class="text-sm text-slate-800 group-hover:text-slate-900">
                     Created on
                     <time datetime="2020-07-01T15:34:56">{{ matter.created_at | date }}</time>
                   </p>
-                  <p class="mt-2 flex items-center text-sm text-gray-500"
+                  <p class="mt-2 flex items-center text-sm text-slate-500"
                     *ngIf="matter.matter_intake?.status === 'complete'">
                     <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -37,7 +37,7 @@
                     </svg>
                     Intake form complete
                   </p>
-                  <p class="mt-2 flex items-center text-sm text-gray-500 group-hover:text-gray-600"
+                  <p class="mt-2 flex items-center text-sm text-slate-500 group-hover:text-slate-600"
                     *ngIf="matter.matter_intake?.status === 'sent'">
                     <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 h-5 w-5 text-red-400"
                       viewBox="0 0 20 20" fill="currentColor">
@@ -47,7 +47,7 @@
                     </svg>
                     Fill out intake form
                   </p>
-                  <p class="mt-2 flex items-center text-sm text-gray-500 group-hover:text-gray-600"
+                  <p class="mt-2 flex items-center text-sm text-slate-500 group-hover:text-slate-600"
                     *ngIf="!matter.matter_intake">
                     --
                   </p>
@@ -57,7 +57,7 @@
           </div>
           <div>
             <!-- Heroicon name: solid/chevron-right -->
-            <svg class="h-5 w-5 text-gray-400 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg"
+            <svg class="h-5 w-5 text-slate-400 group-hover:text-slate-700" xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd"
                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
@@ -74,7 +74,7 @@
   <app-intake-form [matter]="selectedMatter"></app-intake-form>
 
   <div class="pb-24 px-24 text-right">
-    <button (click)="closeIntake()" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+    <button (click)="closeIntake()" type="button" class="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
       Close
     </button>
 

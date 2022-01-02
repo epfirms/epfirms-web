@@ -1,12 +1,12 @@
 input {
-  @apply bg-transparent text-sm text-gray-800 w-full px-2 py-1 border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm;
+  @apply bg-transparent text-sm text-slate-800 w-full px-2 py-1 border border-transparent border-dashed hover:bg-white hover:border-slate-300 focus:bg-white focus:border-transparent focus:shadow-sm;
 
   &:focus + .kbd-icon {
     @apply visible;
   }
 
   &::placeholder {
-    @apply text-gray-400 font-normal;
+    @apply text-slate-400 font-normal;
   }
 }
 
@@ -14,6 +14,6 @@ input {
   @apply invisible absolute inset-y-0 right-0 flex py-1 pr-1.5;
 
   & > kbd {
-    @apply inline-flex items-center border border-gray-200 rounded-sm px-2 text-sm font-sans font-medium text-gray-400;
+    @apply inline-flex items-center border border-slate-200 rounded-sm px-2 text-sm font-sans font-medium text-slate-400;
   }
 }

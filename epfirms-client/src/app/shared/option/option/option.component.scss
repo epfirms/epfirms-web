@@ -35,7 +35,7 @@
     @apply list-item list-none cursor-default py-2 pl-3 pr-9 relative hover:text-white hover:bg-blue-600 hover:cursor-pointer;
 
     &:not(.ep-active):not(.ep-selected):not(:hover) {
-        @apply text-gray-900
+        @apply text-slate-900
     }
 }
 

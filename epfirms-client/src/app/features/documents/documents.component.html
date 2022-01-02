@@ -11,45 +11,45 @@
     </button>
     <div class="inline-block float-right">
       <input type="text" id="email" [(ngModel)]="search" autocomplete="off"
-        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-slate-300 rounded-md"
         placeholder="Search documents">
     </div>
   </div>
   <div class="align-middle inline-block min-w-full">
     <table class="min-w-full">
       <thead>
-        <tr class="border-t border-gray-200">
-          <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <tr class="border-t border-slate-200">
+          <th class="px-6 py-3 border-b border-slate-200 bg-slate-50 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
             <span>Name</span>
           </th>
-          <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th class="px-6 py-3 border-b border-slate-200 bg-slate-50 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
             Type
           </th>
-          <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th class="px-6 py-3 border-b border-slate-200 bg-slate-50 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
             Sharing
           </th>
           <th class="
               table-cell
               px-4
               py-3
-              bg-gray-50
+              bg-slate-50
               text-left text-xs
               font-medium
-              text-gray-500
+              text-slate-500
               uppercase
               tracking-wider
               whitespace-nowrap
-              border-b border-gray-200
+              border-b border-slate-200
             ">
           </th>
         </tr>
       </thead>
       <tbody class="bg-white">
         <ng-container *ngIf="documents$ | async as docs; else emptyDocs">
-          <tr class="task-row group border-t border-b border-gray-200" *ngFor="let doc of docs | search:search">
-            <td class="px-6 py-3 max-w-0 w-full whitespace-nowrap text-sm font-medium text-gray-900">
+          <tr class="task-row group border-t border-b border-slate-200" *ngFor="let doc of docs | search:search">
+            <td class="px-6 py-3 max-w-0 w-full whitespace-nowrap text-sm font-medium text-slate-900">
               <div class="flex items-center space-x-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 text-slate-400" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
                 </svg>
                   <span class="truncate">
@@ -57,13 +57,13 @@
                   </span>
               </div>
             </td>
-            <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
+            <td class="px-6 py-3 whitespace-nowrap text-sm text-slate-500 text-right">
               <div>
                 {{doc.doc_type}}
               </div>
             </td>
 
-            <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
+            <td class="px-6 py-3 whitespace-nowrap text-sm text-slate-500 text-right">
               <div>
                 {{doc.share_with}}
               </div>
@@ -81,12 +81,12 @@
                 class="relative block w-full rounded-lg p-12 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
 
 
-                <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none"
+                <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-slate-400" fill="none"
                   viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                 </svg>
-                <span class="mt-2 block text-sm font-medium text-gray-400">
+                <span class="mt-2 block text-sm font-medium text-slate-400">
                   No documents
                 </span>
               </button>
@@ -110,7 +110,7 @@
           From: "opacity-100"
           To: "opacity-0"
       -->
-      <div class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+      <div class="absolute inset-0 bg-slate-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
       <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex">
         <!--
@@ -135,7 +135,7 @@
               To: "opacity-0"
           -->
           <div class="absolute top-0 left-0 -ml-8 pt-4 pr-2 flex sm:-ml-10 sm:pr-4">
-            <button (click)="toggleManageDocs()" class="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
+            <button (click)="toggleManageDocs()" class="rounded-md text-slate-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
               <span class="sr-only">Close panel</span>
               <!-- Heroicon name: outline/x -->
               <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -146,17 +146,17 @@
 
           <div class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
             <div class="px-4 sm:px-6">
-              <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+              <h2 class="text-lg font-medium text-slate-900" id="slide-over-title">
                 Manage Document Uploads
               </h2>
             </div>
             <div class="mt-6 relative flex-1 px-4 sm:px-6">
               <!-- Replace with your content -->
               <div *ngFor="let document of selectedDocuments">
-                <label for="price" class="block text-sm font-medium text-gray-700">Document Name</label>
+                <label for="price" class="block text-sm font-medium text-slate-700">Document Name</label>
                 <div class="mt-1 relative rounded-md shadow-sm">
 
-                  <input type="text" value="{{document.doc_name}}" (blur)="setDocName(document, $event)" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                  <input type="text" value="{{document.doc_name}}" (blur)="setDocName(document, $event)" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-slate-300 rounded-md">
                 </div>
                 <!-- This example requires Tailwind CSS v2.0+ -->
                 <!--
@@ -168,12 +168,12 @@
     https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.html
   -->
                 <div>
-                  <label id="listbox-label" class="block text-sm font-medium text-gray-700">
+                  <label id="listbox-label" class="block text-sm font-medium text-slate-700">
                     Document Type
                   </label>
                   <div class="mt-1 relative">
                     <button (click)="toggleDisplayDocTypeSelection(document)" type="button"
-                      class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox"
+                      class="relative w-full bg-white border border-slate-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox"
                       aria-expanded="true" aria-labelledby="listbox-label">
                       <span class="flex items-center">
                         <span class="ml-3 block truncate">
@@ -182,7 +182,7 @@
                       </span>
                       <span class="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <!-- Heroicon name: solid/selector -->
-                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                           <path fill-rule="evenodd"
                             d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
                             clip-rule="evenodd" />
@@ -206,9 +206,9 @@
                       <!--
           Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-          Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
+          Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-slate-900"
         -->
-                      <li *ngFor="let doc_type of legalDocumentTypes" (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0"
+                      <li *ngFor="let doc_type of legalDocumentTypes" (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-slate-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0"
                         role="option">
                         <div (click)="setType(doc_type.value); toggleDisplayDocTypeSelection(document)" class="flex items-center">
                           <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
@@ -237,12 +237,12 @@
 
                 <!-- SELECT DOCUMENT SHARING -->
                 <div>
-                  <label id="listbox-label" class="block text-sm font-medium text-gray-700">
+                  <label id="listbox-label" class="block text-sm font-medium text-slate-700">
                     Document Sharing
                   </label>
                   <div class="mt-1 relative">
                     <button (click)="toggleDisplaySharing(document)" type="button"
-                      class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox"
+                      class="relative w-full bg-white border border-slate-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox"
                       aria-expanded="true" aria-labelledby="listbox-label">
                       <span class="flex items-center">
                         <span class="ml-3 block truncate">
@@ -251,7 +251,7 @@
                       </span>
                       <span class="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <!-- Heroicon name: solid/selector -->
-                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                           <path fill-rule="evenodd"
                             d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
                             clip-rule="evenodd" />
@@ -275,9 +275,9 @@
                       <!--
           Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-          Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
+          Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-slate-900"
         -->
-                      <li (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
+                      <li (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-slate-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
                         <div (click)="setSharing('Firm Only'); toggleDisplaySharing(document)" class="flex items-center">
                           <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                           <span class="font-normal ml-3 block truncate">
@@ -298,7 +298,7 @@
                         </span>
                       </li>
 
-                      <li (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
+                      <li (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-slate-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
                         <div (click)="setSharing('Firm and Clients'); toggleDisplaySharing(document)" class="flex items-center">
                           <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                           <span class="font-normal ml-3 block truncate">

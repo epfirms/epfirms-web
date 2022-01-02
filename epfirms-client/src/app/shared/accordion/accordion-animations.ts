@@ -55,8 +55,8 @@ export const expansionAnimations: {
 
   /** Animation that expands and collapses the panel content. */
   bodyExpansion: trigger('bodyExpansion', [
-    state('collapsed, void', style({transform: 'scaleY(0)', height: '0px', opacity: '0'})),
-    state('expanded', style({transform: 'scaleY(1)', height: '*', opacity: '1'})),
+    state('collapsed, void', style({height: '0px', opacity: '0', visibility: 'hidden'})),
+    state('expanded', style({height: '*', opacity: '1', visibility: 'visible'})),
     transition(
       'expanded => collapsed, void => collapsed',
       animate(CLOSE_ANIMATION_TIMING),
