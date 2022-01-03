@@ -52,6 +52,8 @@ export class MatterTabBillingComponent implements OnInit {
   constructor(private _dialogService: DialogService, private _matterService: MatterService,
     private statementService: StatementService, private _matterBillingSettingsService : MatterBillingSettingsService) { }
   ngOnInit(): void {
+    this.totalBilled = 0;
+    this.totalPayments = 0;
     this.loadBillPayments();
     this.loadStatements();
     console.log(this.payments);
@@ -69,8 +71,9 @@ export class MatterTabBillingComponent implements OnInit {
     this._matterService.getMatterBillingById(this.matter.id).subscribe((response) => {
       this.bills = response.filter((b) => b.type === '0');
       this.payments = response.filter((b) => b.type === '1');
-      console.log("bills",this.bills);
-      console.log(this.payments);
+      // reset the values for total billed and payed to eliminate double amount bug
+      this.totalBilled = 0;
+      this.totalPayments = 0;
       this.bills.forEach(bill => this.totalBilled += bill.amount);
       this.payments.forEach(payment => this.totalPayments += payment.amount);
       this.balance = this.totalBilled - this.totalPayments;
@@ -93,8 +96,8 @@ export class MatterTabBillingComponent implements OnInit {
   addPayment(): void {
     const paymentModal = this._dialogService.open(PaymentFormModalComponent, {});
     paymentModal.afterClosed$.subscribe((data) => {
-      console.log(data);
-      if (data) {
+      console.log("MODal data", data);
+      if (data != undefined) {
         const bill = {
           ...data,
           matter_id: this.matter.id
