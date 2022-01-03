@@ -53,7 +53,8 @@ export class Database {
       statement: require('../models/Statement')(this.sequelize, Sequelize),
       beta_signup: require('../models/BetaSignup')(this.sequelize, Sequelize),
       firm_template_task_file: require('../models/FirmTemplateTaskFile')(this.sequelize, Sequelize),
-      matter_task_file: require('../models/MatterTaskFile')(this.sequelize, Sequelize)
+      matter_task_file: require('../models/MatterTaskFile')(this.sequelize, Sequelize),
+      stripe_account: require("../models/StripeAccount")(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee });
@@ -276,6 +277,9 @@ export class Database {
     });
 
     this.models.matter_task_file.belongsTo(this.models.matter_task);
+
+    this.models.firm.hasOne(this.models.stripe_account, {foreignKey: 'firm_id', onDelete: 'cascade'});
+    this.models.stripe_account.belongsTo(this.models.stripe_account, {foreignKey: 'firm_id'});
   }
 
   public static async start() {
