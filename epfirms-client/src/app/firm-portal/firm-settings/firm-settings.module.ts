@@ -15,6 +15,7 @@ import { TippyModule } from '@ngneat/helipopper';
 import { TaskTemplateModule } from '@app/features/task-template/task-template.module';
 import { TagModule } from '@app/shared/tag/tag.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
+import { BillingIntegrationComponent } from './billing-integration/billing-integration/billing-integration.component';
 
 const FirmSettingsRoute: Routes = [
   {
@@ -23,7 +24,8 @@ const FirmSettingsRoute: Routes = [
       { path: 'legal-areas', component: LegalAreasComponent },
       { path: 'manage-staff', component: ManageStaffComponent },
       { path: 'task-templates', component: TaskTemplatesComponent },
-      { path: 'delete-firm', component: DeleteFirmComponent }
+      { path: 'delete-firm', component: DeleteFirmComponent },
+      { path: 'billing-integration', component: BillingIntegrationComponent}
     ]
   },
 ]
@@ -35,7 +37,8 @@ const FirmSettingsRoute: Routes = [
     TaskTemplatesComponent,
     FirmSettingsComponent,
     FirmDetailsComponent,
-    ManageStaffComponent
+    ManageStaffComponent,
+    BillingIntegrationComponent
   ],
   imports: [
     CommonModule,
