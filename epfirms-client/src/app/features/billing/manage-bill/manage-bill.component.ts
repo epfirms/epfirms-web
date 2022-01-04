@@ -21,6 +21,8 @@ export class ManageBillComponent implements OnInit {
   @Input() currentBill;
   // matter properties
   @Input() matter;
+  @Input() defaultPaymentType;
+  @Input() defaultBillingStyle;
 
   // bill form group
   billForm = new FormGroup({
@@ -45,6 +47,11 @@ export class ManageBillComponent implements OnInit {
   // staff obs and list for getting staff information like default hourly rate
   staff$: Observable<Staff[]>;
   staffList;
+
+  //properties for select component
+  selectHidden : boolean = true;
+
+  isHourly : boolean = false;
 
 
 
@@ -88,6 +95,11 @@ export class ManageBillComponent implements OnInit {
 
     //patch in the matter_id for the bill
     this.billForm.patchValue({ 'matter_id': this.matter.id });
+
+    //create listener on billing style form property
+    this.billForm.get("billing_type").valueChanges.subscribe(onChange => {
+      this.toggleHourly(onChange);
+    });
   }
 
   closeBillManager(): void {
@@ -121,7 +133,8 @@ export class ManageBillComponent implements OnInit {
   // this is used to prefill some properties on the form from employee information
   // such as hourly_rate
   initializeForm():void {
-    this.billForm.patchValue({track_time_for: this.matter.attorney_id, employee_name: this.matter.attorney.full_name})
+    this.billForm.patchValue({track_time_for: this.matter.attorney_id, employee_name: this.matter.attorney.full_name,
+    billing_type: this.defaultBillingStyle, payment_type: this.defaultPaymentType});
   }
 
   calculateAmount(): void {
@@ -132,5 +145,19 @@ export class ManageBillComponent implements OnInit {
   setStaff(staff): void {
     console.log("staff",staff);
     this.billForm.patchValue({track_time_for: staff.id, employee_name: staff.full_name});
+  }
+
+  // toggles the state of the select
+  toggleSelectEmployee(): void {
+    this.selectHidden = !this.selectHidden;
+  }
+
+  toggleHourly(status):void {
+    if (status == "Hourly"){
+      this.isHourly = true;
+    }
+    else {
+      this.isHourly = false;
+    }
   }
 }

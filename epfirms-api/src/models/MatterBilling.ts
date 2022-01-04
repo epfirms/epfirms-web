@@ -1,4 +1,4 @@
-module.exports = (sequelize, { INTEGER, DATE, DECIMAL, STRING }) => {
+module.exports = (sequelize, { INTEGER, DATE, FLOAT, STRING }) => {
     const tableName = 'matter_billing';
 
     const MatterBilling = sequelize.define(
@@ -16,13 +16,13 @@ module.exports = (sequelize, { INTEGER, DATE, DECIMAL, STRING }) => {
             type: STRING,
           },
           amount: {
-            type: DECIMAL(15, 2),
+            type: FLOAT,
           },
           date: {
             type: DATE,
           },
           hours: {
-            type: INTEGER
+            type: FLOAT
           },
           description: {
             type: STRING,
@@ -34,7 +34,7 @@ module.exports = (sequelize, { INTEGER, DATE, DECIMAL, STRING }) => {
             type: STRING,
           },
           hourly_rate: {
-            type: DECIMAL(15, 2),
+            type: FLOAT,
           },
           track_time_for: {
             type: INTEGER,
@@ -55,7 +55,7 @@ module.exports = (sequelize, { INTEGER, DATE, DECIMAL, STRING }) => {
             type: INTEGER,
           },
           settlement_amount: {
-            type: DECIMAL(15, 2),
+            type: FLOAT,
           },
           statement_id: {
             type: INTEGER

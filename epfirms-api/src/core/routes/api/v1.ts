@@ -14,6 +14,8 @@ import { assetRouter } from '@src/modules/asset/routes';
 import { matterBillingRouter } from '@src/modules/matter-billing/routes';
 import { statementRouter } from '@src/modules/statement/routes';
 import { betaSignupRouter } from '@src/modules/beta-signup/routes';
+
+import { matterBillingSettingsRouter } from '@src/modules/matter-billing-settings/routes';
 import { stripeRouter } from '@src/modules/stripe/routes';
 
 const v1Router = express.Router();
@@ -34,6 +36,7 @@ v1Router.use('/asset', assetRouter);
 v1Router.use('/billing', matterBillingRouter);
 v1Router.use('/statement', statementRouter);
 v1Router.use('/sign-up', betaSignupRouter);
+v1Router.use('/matter-billing-settings', matterBillingSettingsRouter)
 v1Router.use('/stripe', stripeRouter);
 
 export { v1Router }

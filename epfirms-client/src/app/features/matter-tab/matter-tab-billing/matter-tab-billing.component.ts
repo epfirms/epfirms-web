@@ -5,6 +5,7 @@ import { PaymentFormModalComponent } from '@app/shared/payment-form-modal/paymen
 import { StatementService } from '@app/shared/_services/statement-service/statement.service';
 import { Matter } from '@app/core/interfaces/matter';
 import { DialogService } from '@ngneat/dialog';
+import { MatterBillingSettingsService } from '@app/shared/_services/matter-billing-settings-service/matter-billing-settings.service';
 
 @Component({
   selector: 'app-matter-tab-billing',
@@ -27,6 +28,13 @@ export class MatterTabBillingComponent implements OnInit {
   bills: any[] = [];
   payments: any[] = [];
 
+  totalBilled : number = 0;
+  totalPayments : number = 0;
+  balance : number;
+
+  //bindings for IOLTA
+  ioltaBalance : number = 0;
+
   //CONFIG FOR BILL MANAGER SLIDE OVER
   isBillManagerVisible: boolean = false;
   isBillManagerEditMode: boolean = false;
@@ -36,19 +44,39 @@ export class MatterTabBillingComponent implements OnInit {
   isStatementManagerVisible: boolean = false;
   currentStatement;
 
+  // bindings for default billing settings
+  // these should load into the matter from MatterBillingSettings
+  defaultBillingStyle : string;
+  defaultPaymentType : string;
+
   constructor(private _dialogService: DialogService, private _matterService: MatterService,
-    private statementService: StatementService) { }
+    private statementService: StatementService, private _matterBillingSettingsService : MatterBillingSettingsService) { }
   ngOnInit(): void {
+    this.totalBilled = 0;
+    this.totalPayments = 0;
     this.loadBillPayments();
     this.loadStatements();
     console.log(this.payments);
 
+    console.log(this.matter);
+    //init the default billing settings if applicable
+    this.defaultBillingStyle = this.matter.matter_billing_setting.billing_type;
+    this.defaultPaymentType = this.matter.matter_billing_setting.payment_type;
+
+    //init the iolta balance from matter
+    this.ioltaBalance = this.matter.iolta_balance;
   }
 
   loadBillPayments() {
     this._matterService.getMatterBillingById(this.matter.id).subscribe((response) => {
       this.bills = response.filter((b) => b.type === '0');
       this.payments = response.filter((b) => b.type === '1');
+      // reset the values for total billed and payed to eliminate double amount bug
+      this.totalBilled = 0;
+      this.totalPayments = 0;
+      this.bills.forEach(bill => this.totalBilled += bill.amount);
+      this.payments.forEach(payment => this.totalPayments += payment.amount);
+      this.balance = this.totalBilled - this.totalPayments;
     });
   }
 
@@ -68,8 +96,8 @@ export class MatterTabBillingComponent implements OnInit {
   addPayment(): void {
     const paymentModal = this._dialogService.open(PaymentFormModalComponent, {});
     paymentModal.afterClosed$.subscribe((data) => {
-      console.log(data);
-      if (data) {
+      console.log("MODal data", data);
+      if (data != undefined) {
         const bill = {
           ...data,
           matter_id: this.matter.id
@@ -165,14 +193,32 @@ export class MatterTabBillingComponent implements OnInit {
 
     let csvContent = "data:text/csv;charset=utf-8,"
 
-    csvContent += "Employee ID, Employee Name, Hourly Rate, Hours, Amount, Description, Billing Type, Payment Type\n"
+    csvContent += "Employee ID, Date, Employee Name, Hourly Rate, Hours, Amount, Description\n"
 
     this.bills.filter(bill => bill.statement_id == statement.id).forEach(bill => {
-      csvContent += `${bill.track_time_for},${bill.employee_name},${bill.hourly_rate},${bill.hours}, ${bill.amount},${bill.description},${bill.billing_type},${bill.payment_type}\n`
+      csvContent += `${bill.track_time_for},${new Date(bill.date).toDateString()},${bill.employee_name},${bill.hourly_rate},${bill.hours}, ${bill.amount},${bill.description}\n`
     });
 
     var encodedUri = encodeURI(csvContent);
     window.open(encodedUri);
+  }
+
+  //create or apply default billing settings for the matter/case
+  upsertDefaultBillingSettings(): void {
+    let settings = {
+      id: this.matter.matter_billing_setting.id,
+      matter_id: this.matter.id,
+      billing_type: this.defaultBillingStyle,
+      payment_type: this.defaultPaymentType
+    }
+    this._matterBillingSettingsService.create(settings).subscribe(onRes => {
+      console.log(onRes);
+    });
+  }
+
+  updateIOLTA():void {
+    this.matter.iolta_balance = this.ioltaBalance;
+    this._matterService.update(this.matter).subscribe(res => console.log(res));
   }
 
 
