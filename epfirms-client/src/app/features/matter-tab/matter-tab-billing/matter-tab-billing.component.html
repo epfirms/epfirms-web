@@ -285,13 +285,7 @@
           Billing
         </h3>
       </div>
-      <div>
-        <button (click)="addBill()" type="button"
-          class="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
 
-          Add bill
-        </button>
-      </div>
     </div>
     <div class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -354,7 +348,11 @@
                 </tr>
               </tbody>
             </table>
+
           </div>
+          <button (click)="addBill()" type="button" class="inline-flex items-center px-4 py-2 my-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+             Add Bill
+            </button>
 
           <div class="text-center" *ngIf="!bills.length">
 
@@ -373,17 +371,7 @@
           Payment
         </h3>
       </div>
-      <div>
-        <button type="button" (click)="addPayment()"
-          class="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-          <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-              clip-rule="evenodd" />
-          </svg>
-          Add payment
-        </button>
-      </div>
+
     </div>
     <div class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -436,6 +424,9 @@
               </tbody>
             </table>
           </div>
+          <button (click)="addPayment()" type="button" class="inline-flex items-center px-4 py-2 my-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-green-700 bg-white hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+             Add Payment
+            </button>
 
           <div class="text-center" *ngIf="!payments.length">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-gray-400" fill="none"
@@ -458,17 +449,7 @@
           Statements
         </h3>
       </div>
-      <div>
-        <button type="button" (click)="generateStatement()"
-          class="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-          <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-              clip-rule="evenodd" />
-          </svg>
-          Generate Statement
-        </button>
-      </div>
+
     </div>
     <div class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -541,6 +522,9 @@
               </tbody>
             </table>
           </div>
+          <button (click)="generateStatement()" type="button" class="inline-flex items-center px-4 py-2 my-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+             Generate Statement
+            </button>
 
           <div class="text-center" *ngIf="!statements.length">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-gray-400" fill="none"
