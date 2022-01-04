@@ -13,6 +13,8 @@ import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { NavbarModule } from '@app/shared/navbar/navbar.module';
 import { ClientFinancialsComponent } from './client-financials/client-financials.component';
 import { TransactionsComponent } from './client-financials/transactions/transactions.component';
+import { StoreModule } from '@ngrx/store';
+import { currentUserReducer } from '@app/store/current-user/current-user.reducer';
 
 
 @NgModule({
@@ -33,7 +35,7 @@ import { TransactionsComponent } from './client-financials/transactions/transact
     IntakeModule,
     MenuModule,
     AvatarModule,
-    NavbarModule
+    NavbarModule,
   ]
 })
 export class ClientPortalModule { }
