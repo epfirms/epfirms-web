@@ -11,6 +11,8 @@ import { ClientDocumentsComponent } from './client-documents/client-documents.co
 import { ClientDocumentUploadComponent } from './client-document-upload/client-document-upload.component';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { NavbarModule } from '@app/shared/navbar/navbar.module';
+import { ClientFinancialsComponent } from './client-financials/client-financials.component';
+import { TransactionsComponent } from './client-financials/transactions/transactions.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { NavbarModule } from '@app/shared/navbar/navbar.module';
     ClientHomeComponent,
     CaseListComponent,
     ClientDocumentsComponent,
-    ClientDocumentUploadComponent
+    ClientDocumentUploadComponent,
+    ClientFinancialsComponent,
+    TransactionsComponent
   ],
   imports: [
     CommonModule,
