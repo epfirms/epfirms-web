@@ -66,8 +66,10 @@ export class MatterTabTasksComponent implements OnInit {
     // add logic for adding a bill automatically
     if (property === "completed" && value === true) {
       console.log("TASK", task);
-
-      let hourlyRate = this.staffList.filter(staff => staff.id == task.assignee_id)[0].firms[0].firm_employee.hourly_rate;
+      let employee : any = this.staffList.filter(staff => staff.id == task.assignee_id)[0]
+      console.log("employee", employee);
+      let hourlyRate = employee.firms[0].firm_employee.hourly_rate;
+      let employeeName = employee.full_name;
       console.log(hourlyRate);
       console.log("HOURS", task.hours);
       let bill = {
@@ -76,10 +78,11 @@ export class MatterTabTasksComponent implements OnInit {
         description: task.name,
         track_time_for: task.assignee_id,
         type: "0",
-        billing_type: "hourly",
-        payment_type: "private pay",
+        billing_type: "Hourly",
+        payment_type: "Private Pay",
         date: new Date(),
-        amount: task.hours * hourlyRate
+        amount: task.hours * hourlyRate,
+        employee_name: employeeName
       }
       console.log("THE NEW BILL", bill);
       console.log(typeof(bill.hours))
