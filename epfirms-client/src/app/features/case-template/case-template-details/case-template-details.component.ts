@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { Staff } from '@app/core/interfaces/staff';
-import { forkJoin, merge, Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { DialogRef, DialogService } from '@ngneat/dialog';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { FirmCaseTemplate } from '../interfaces/firm-case-template';
@@ -15,8 +15,9 @@ import { CaseTemplateService } from '../services/case-template.service';
 import { createMask } from '@ngneat/input-mask';
 import { map, take } from 'rxjs/operators';
 import { firmRoleOptions, FirmStaffRole } from '@app/features/firm-staff/enums/firm-staff-role';
-import { AssigneeGroup, AssigneeType, TemplateTaskAssignee } from '../interfaces/template-task-assignee';
+import { AssigneeGroup, TemplateTaskAssignee } from '../interfaces/template-task-assignee';
 import { FirmRoleService } from '@app/features/firm-staff/services/firm-role.service';
+import { CaseTemplateCommunityService } from '../services/case-template-community.service';
 
 @Component({
   selector: 'app-case-template-details',
@@ -56,12 +57,9 @@ export class CaseTemplateDetailsComponent implements OnInit {
     placeholder: '00',
     digitsOptional: false,
     parser: (value: string) => {
-      console.log(value);
       const values = value.split(':');
       const minutesFromHours = parseInt(values[0]) * 60;
       const minutes = parseInt(values[1]);
-
-      console.log(minutesFromHours + minutes);
 
       return minutesFromHours + minutes;
     }
@@ -72,7 +70,8 @@ export class CaseTemplateDetailsComponent implements OnInit {
     private dialogRef: DialogRef,
     private _caseTemplateService: CaseTemplateService,
     private _dialogService: DialogService,
-    private _firmRoleService: FirmRoleService
+    private _firmRoleService: FirmRoleService,
+    private _caseTemplateCommunityService: CaseTemplateCommunityService
   ) {
     this.staff$ = staffService.entities$;
 
@@ -95,16 +94,16 @@ export class CaseTemplateDetailsComponent implements OnInit {
   }
 
   filterStaffMembers(event) {
-    // this.filteredStaffMembers =
-    //   event && event.length
-    //     ? this.staffMembers.filter((staff) =>
-    //         staff.user.full_name.toLowerCase().includes(event.toLowerCase())
-    //       )
-    //     : [...this.staffMembers];
-    // this.filteredFirmRoles =
-    //   event && event.length
-    //     ? this.firmRoles.filter((role) => role.includes(event.toLowerCase()))
-    //     : [...this.firmRoles];
+
+    this.filteredAssigneeGroups =
+      event && event.length
+        ?     this.assigneeGroups.map(group => {
+          return {
+            type: group.type,
+            assignees: group.assignees.filter(assignee => assignee.name.toLowerCase().includes(event.toLowerCase()))
+          }
+        })
+        : [...this.assigneeGroups];
   }
 
   addTemplateTask(): void {
@@ -235,5 +234,16 @@ export class CaseTemplateDetailsComponent implements OnInit {
         this.assigneeGroups = [rolesGroup, staffGroup];
         this.filteredAssigneeGroups = [rolesGroup, staffGroup];
     });
+  }
+
+  share(): void {
+    this._dialogService.confirm({
+      title: `Create community template`,
+      body: `A copy of this template will be created and shared with other users in the case template community.`
+    }).afterClosed$.subscribe((confirm) => {
+      if (confirm) {
+        this._caseTemplateCommunityService.create(this.template).subscribe();
+      }
+    })
   }
 }

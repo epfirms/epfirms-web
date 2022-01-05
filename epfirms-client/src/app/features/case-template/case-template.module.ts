@@ -13,8 +13,8 @@ import { EditableModule } from '@app/shared/editable/editable.module';
 import { CoreModule } from '@app/core/core.module';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { InputModule } from '@app/shared/input/input.module';
-import { CaseTemplateCommunityComponent } from './case-template-community/case-template-community.component';
 import { AccordionModule } from '@app/shared/accordion/accordion.module';
+import { CaseTemplateTaskListComponent } from './case-template-task-list/case-template-task-list.component';
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { AccordionModule } from '@app/shared/accordion/accordion.module';
     CaseTemplateListComponent,
     CaseTemplateDetailsComponent,
     CaseTemplateSelectionComponent,
-    CaseTemplateCommunityComponent
+    CaseTemplateTaskListComponent
   ],
   imports: [
     CoreModule,
@@ -40,7 +40,8 @@ import { AccordionModule } from '@app/shared/accordion/accordion.module';
   ],
   exports: [
     CaseTemplateListComponent,
-    CaseTemplateSelectionComponent
+    CaseTemplateSelectionComponent,
+    CaseTemplateTaskListComponent
   ]
 })
 export class CaseTemplateModule { }

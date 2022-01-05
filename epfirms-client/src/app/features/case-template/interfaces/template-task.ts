@@ -1,5 +1,3 @@
-import { AssigneeType } from "./template-task-assignee";
-
 export interface TemplateTask {
     id?: number;
     template_id?: number;
@@ -9,4 +7,5 @@ export interface TemplateTask {
     user?: any;
     duration_minutes?: number | null;
     firm_role_id: number | null;
+    firm_role?: any;
 }

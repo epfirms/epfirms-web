@@ -15,18 +15,26 @@ import { TippyModule } from '@ngneat/helipopper';
 import { CaseTemplateModule } from '@app/features/case-template/case-template.module';
 import { TagModule } from '@app/shared/tag/tag.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
-import { CaseTemplateCommunityComponent } from './case-template-community/case-template-community.component';
 import { FirmStaffModule } from '@app/features/firm-staff/firm-staff.module';
+import { CaseTemplateCommunityModule } from '@app/features/case-template-community/case-template-community.module';
+import { CaseTemplateCommunityComponent } from './case-template-community/case-template-community.component';
+import { CaseTemplateCommunityTableComponent } from '@app/features/case-template-community/case-template-community-table/case-template-community-table.component';
+import { CaseTemplateCommunityTemplatePageComponent } from '@app/features/case-template-community/case-template-community-template-page/case-template-community-template-page.component';
 
 const FirmSettingsRoute: Routes = [
   {
     path: '', component: FirmSettingsComponent, canActivate: [AuthGuard], children: [
-      { path: '', component: FirmDetailsComponent },
       { path: 'legal-areas', component: LegalAreasComponent },
       { path: 'manage-staff', component: ManageStaffComponent },
       { path: 'case-templates', component: CaseTemplatesComponent },
-      { path: 'case-template-community', component: CaseTemplateCommunityComponent },
-      { path: 'delete-firm', component: DeleteFirmComponent }
+      {path: 'community-templates', children: [
+        {path: 'all', component: CaseTemplateCommunityTableComponent},
+      {path: ':id', component: CaseTemplateCommunityTemplatePageComponent},
+      {path: '', pathMatch: 'full', redirectTo: 'all'}
+      ]},
+      { path: 'delete-firm', component: DeleteFirmComponent },
+      { path: 'profile', component: FirmDetailsComponent },
+      { path: '', pathMatch: 'full', redirectTo: 'profile'}
     ]
   },
 ]
@@ -39,7 +47,7 @@ const FirmSettingsRoute: Routes = [
     FirmSettingsComponent,
     FirmDetailsComponent,
     ManageStaffComponent,
-    CaseTemplateCommunityComponent
+    CaseTemplateCommunityComponent,
   ],
   imports: [
     CommonModule,
@@ -51,7 +59,8 @@ const FirmSettingsRoute: Routes = [
     CaseTemplateModule,
     TagModule,
     EditableModule,
-    FirmStaffModule
+    FirmStaffModule,
+    CaseTemplateCommunityModule
   ]
 })
 export class FirmSettingsModule { }

@@ -17,11 +17,11 @@ import { currentUserReducer } from './store/current-user/current-user.reducer';
 import { MatterActivityInterceptor } from './core/interceptors/matter-activity.interceptor';
 import { extModules } from 'src/environments/development/modules.dev';
 import { InputMaskModule } from '@ngneat/input-mask';
-import { popperVariation, TippyModule, withContextMenuVariation } from '@ngneat/helipopper';
+import { popperVariation, TippyModule } from '@ngneat/helipopper';
 import { TippyProps } from '@ngneat/helipopper/lib/tippy.types';
 import { DialogModule } from '@ngneat/dialog';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
-import { QuillConfig, QuillModule, QuillToolbarConfig } from 'ngx-quill';
+import { QuillModule } from 'ngx-quill';
 import { AutocompleteModule } from './shared/autocomplete/autocomplete.module';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
