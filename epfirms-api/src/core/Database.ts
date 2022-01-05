@@ -294,12 +294,12 @@ export class Database {
     this.models.matter_task_file.belongsTo(this.models.matter_task);
 
 
-    this.models.user.hasMany(this.models.community_case_template, {
-      foreignKey: 'created_by'
+    this.models.firm.hasMany(this.models.community_case_template, {
+      foreignKey: 'firm_id'
     });
 
-    this.models.community_case_template.belongsTo(this.models.user, {
-      foreignKey: 'created_by'
+    this.models.community_case_template.belongsTo(this.models.firm, {
+      foreignKey: 'firm_id'
     });
 
     this.models.community_case_template.hasMany(this.models.community_template_task, {

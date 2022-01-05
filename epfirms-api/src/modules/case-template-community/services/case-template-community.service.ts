@@ -3,13 +3,13 @@ import { Service } from 'typedi';
 
 @Service()
 export class CaseTemplateCommunityService {
-  public async get():Promise<any> {
+  public async getAllByFirmId(firmId: number):Promise<any> {
     try {
       const { sequelize } = Database;
-      const {community_case_template, community_template_task, community_template_task_file, firm_role} = Database.models;
+      const {community_case_template, community_template_task, community_template_task_file, firm_role, firm} = Database.models;
 
       const caseTemplates = await community_case_template.findAll({
-        include: {
+        include: [{
         model: community_template_task,
         include: [
           {
@@ -21,6 +21,82 @@ export class CaseTemplateCommunityService {
           }
         ],
       },
+      {
+        model: firm,
+        where: {
+          id: firmId
+        },
+        required: true
+      }
+    ],
+      order: [
+        [
+          sequelize.literal(
+            '`community_template_tasks`.no_of_days_from_start_date asc'
+          )
+        ]
+      ]
+    });
+      return Promise.resolve(caseTemplates);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  public async getById(id: number):Promise<any> {
+    try {
+      const { sequelize } = Database;
+      const {community_case_template, community_template_task, community_template_task_file, firm_role, firm} = Database.models;
+
+      const caseTemplates = await community_case_template.findOne({
+        where: {
+          id
+        },
+        include: [{
+        model: community_template_task,
+        include: [
+          {
+            model: firm_role,
+            attributes: ['name']
+          },
+          {
+            model: community_template_task_file,
+          }
+        ],
+      },
+    ],
+      order: [
+        [
+          sequelize.literal(
+            '`community_template_tasks`.no_of_days_from_start_date asc'
+          )
+        ]
+      ]
+    });
+      return Promise.resolve(caseTemplates);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  public async get(firmId: number):Promise<any> {
+    try {
+      const { sequelize } = Database;
+      const {community_case_template, community_template_task, community_template_task_file, firm_role, firm} = Database.models;
+
+      const caseTemplates = await community_case_template.findAll({
+        include: [{
+        model: community_template_task,
+        include: [
+          {
+            model: firm_role,
+            attributes: ['name']
+          },
+          {
+            model: community_template_task_file,
+          }
+        ],
+      }
+    ],
       order: [
         [
           sequelize.literal(

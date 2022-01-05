@@ -9,9 +9,6 @@ module.exports = (sequelize, { INTEGER, STRING }) => {
         primaryKey: true,
         autoIncrement: true
       },
-      legal_area: {
-        type: STRING
-      },
       template_name: {
         type: STRING
       },
@@ -22,14 +19,13 @@ module.exports = (sequelize, { INTEGER, STRING }) => {
         type: STRING
       },
       download_count: {
-        type: INTEGER
+        type: INTEGER,
+        defaultValue: 0
       },
       rating: {
-        type: INTEGER
-      },
-      created_by: {
-        type: INTEGER
-      },
+        type: INTEGER,
+        defaultValue: 0
+      }
     },
     {
       tableName,
