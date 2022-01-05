@@ -22,6 +22,9 @@ export class ClientFinancialsComponent implements OnInit {
   // dictionary that holds each statement list by case_id key
   matterStatements = {};
 
+  //matter balances due
+  matterBalances = {};
+
   constructor(
     private store : Store<{currentUser: any}>,
     private matterService : MatterService,
@@ -43,12 +46,27 @@ export class ClientFinancialsComponent implements OnInit {
         this.statementService.getAllByMatterId(matter.id).subscribe(statements => {
           // assign the statements into the dictionary based on the matter case_id for ease of access
           this.matterStatements[`${matter.case_id}`] = statements;
-          console.log(this.matterStatements);
+          this.calculateBalanceDue(matter, statements);
         });
       });
     });
 
 
+  }
+
+  // this calculates the balance due for each matter/case
+  private calculateBalanceDue(matter, statements) : void {
+    // initialize a balance due
+    let balanceDue = 0;
+    // iterate through each statement and add it to the balance due for case if
+    // it is UNPAID
+    statements.forEach(statement => {
+      console.log(statement);
+      if (statement.status === "UNPAID") {
+        balanceDue += statement.balance_due;
+      }
+    });
+    this.matterBalances[`${matter.case_id}`] = balanceDue;
   }
 
 }

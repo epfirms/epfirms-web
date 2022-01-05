@@ -5,6 +5,7 @@ module.exports = (sequelize, {
     STRING,
     TEXT,
     DATE,
+    FLOAT
   }) => {
     const tableName = 'statement';
 
@@ -56,11 +57,11 @@ module.exports = (sequelize, {
           type: STRING,
         },
         balance_due: {
-          type: INTEGER,
+          type: FLOAT,
         },
         total: {
           type: INTEGER,
-          
+
         },
       }, {
         tableName,
