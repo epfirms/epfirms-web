@@ -13,9 +13,8 @@ export class ClientFinancialsComponent implements OnInit {
   // properties
   currentUser$ : any;
   constructor(private store : Store<{currentUser: any}>) {
+      // grab the current user from the user store and stream Observable
       this.currentUser$ = this.store.select('currentUser');
-      this.currentUser$.subscribe(res => console.log(res));
-
    }
 
   ngOnInit(): void {
