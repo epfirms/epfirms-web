@@ -3,6 +3,7 @@ import { StatusConstants } from '@src/constants/StatusConstants';
 import { StripeService } from '../services/stripe.service';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const passport = require('passport');
+const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
 
 export class StripeController {
   constructor() {}
@@ -109,7 +110,39 @@ export class StripeController {
         cancel_url: req.headers.referer
       });
 
+
+      console.log("SESSION", session);
       res.status(StatusConstants.OK).send({url: session.url});
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  //handler for webhook events from Stripe; might need to modulize the respective events later
+  public async eventHandler(req, res : Response) : Promise<any> {
+    try {
+      console.log("EVENT HANDLER FOR STRIPE REACHED");
+
+      const payload = req.body;
+      console.log("payload", payload);
+
+      const sig = req.headers['stripe-signature'];
+      console.log("sig", typeof(sig), "key", typeof(stripeWebhookSig));
+      let event;
+      console.log("before event");
+      console.log(sig, stripeWebhookSig);
+      event = stripe.webhooks.constructEvent(payload, sig, stripeWebhookSig)
+      console.log("after event");
+      console.log("session", event);
+      if (event.type === 'checkout.session.completed'){
+        const session = event.data.object;
+        console.log("SESSION",session);
+        res.status(200).send();
+      }
+      else {
+        res.status(StatusConstants.INTERNAL_SERVER_ERROR).send("WEBHOOK ERROR");
+      }
     } catch (err) {
       console.error(err);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
