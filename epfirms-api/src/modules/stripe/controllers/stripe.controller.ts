@@ -11,7 +11,7 @@ export class StripeController {
   //stripe integration
   private _generateAccountLink(accountID, origin) {
 
-    
+
   return stripe.accountLinks
     .create({
       type: "account_onboarding",
@@ -80,6 +80,35 @@ export class StripeController {
 
 
 
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  public async createPaymentSession(req, res : Response) : Promise<any> {
+    try {
+      console.log(req.body);
+      // create stripe checkout session
+      const session = await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: 'FIRM NAME BILLING VAR'
+              },
+              unit_amount: 2000
+            },
+            quantity: 1,
+          }
+        ],
+        mode: 'payment',
+        success_url: 'https://example.com/success',
+        cancel_url: 'https://example.com/cancel'
+      });
+
+      res.redirect(303, session.url);
     } catch (err) {
       console.error(err);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);

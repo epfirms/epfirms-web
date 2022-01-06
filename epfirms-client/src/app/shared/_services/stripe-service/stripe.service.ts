@@ -16,4 +16,8 @@ export class StripeService {
   getConnectionStatus() : Observable<any> {
     return this._http.get('/api/stripe/status');
   }
+
+  createPaymentSession(data) : Observable<any> {
+    return this._http.post('/api/stripe/payment', data);
+  }
 }

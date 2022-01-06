@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Matter } from '@app/core/interfaces/matter';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { StatementService } from '@app/shared/_services/statement-service/statement.service';
+import { StripeService } from '@app/shared/_services/stripe-service/stripe.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -29,6 +30,7 @@ export class ClientFinancialsComponent implements OnInit {
     private store : Store<{currentUser: any}>,
     private matterService : MatterService,
     private statementService : StatementService,
+    private stripeService : StripeService,
   ) {
       // grab the current user from the user store and stream Observable
       this.currentUser$ = this.store.select('currentUser');
@@ -67,6 +69,13 @@ export class ClientFinancialsComponent implements OnInit {
       }
     });
     this.matterBalances[`${matter.case_id}`] = balanceDue;
+  }
+
+  createPaymentSession(matter, balance) : void {
+    let paymentData = {
+      balance: balance,
+    }
+    this.stripeService.createPaymentSession(paymentData).subscribe(res => console.log(res));
   }
 
 }
