@@ -98,7 +98,8 @@ export class StripeController {
               product_data: {
                 name: 'FIRM NAME BILLING VAR'
               },
-              unit_amount: 2000
+              //conversion to cents since Stripe API uses this; might need a better way
+              unit_amount: req.body.balance * 100
             },
             quantity: 1,
           }
