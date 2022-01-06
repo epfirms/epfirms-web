@@ -24,7 +24,7 @@
             <input ep-input type="text" [ngModel]="clientId" [ngModelOptions]="{standalone: true}"
             (ngModelChange)="filterClients($event)" [epAutocomplete]="auto">
           <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayFn"
-            (optionSelected)="selectEvent($event, 'client_id')">
+            (optionSelected)="selectEvent($event.option.value, 'client_id')">
             <cdk-virtual-scroll-viewport itemSize="40" class="w-full" style="height: 200px">
             <ep-option *cdkVirtualFor="let client of filteredClients" [value]="client.id">
               <ep-avatar epSize="xsmall" [epSrc]="client.profile_image"
@@ -46,7 +46,7 @@
             </div>
           </div>
           <div>
-            <button class="button-white-icon-sm" (click)="openAddClient()">
+            <button class="button-white-icon-sm" type="button" (click)="openAddClient()">
               <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
                   d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
@@ -66,8 +66,18 @@
           </label>
         </div>
         <div class="sm:col-span-2">
-          <legacy-autocomplete *ngIf="attorneys$ | async as attorneys" [options]="attorneys" [placeholder]="'Search attorneys'"
-            (addButtonClicked)="openAddStaff()" (onSelect)="selectEvent($event, 'attorney_id')"></legacy-autocomplete>
+              <input ep-input type="text" [ngModel]="attorneyId" [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="filterAttorneys($event)" [epAutocomplete]="autoAttorney" placeholder="Search attorneys">
+            <ep-autocomplete #autoAttorney="epAutocomplete" [displayWith]="displayFn"
+              (optionSelected)="selectEvent($event.option.value, 'attorney_id')" panelWidth="auto">
+              <ep-option *ngFor="let attorney of filteredAttorneys" [value]="attorney.user.id">
+                <ep-avatar epSize="xsmall" [epSrc]="attorney.user.profile_image"
+                  [epText]="attorney.user.full_name">
+                </ep-avatar> <span class="font-normal ml-3 block truncate">
+                  {{attorney.user.full_name}}
+                </span>
+              </ep-option>
+            </ep-autocomplete>
         </div>
       </div>
       <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">

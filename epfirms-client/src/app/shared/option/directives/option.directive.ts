@@ -98,6 +98,10 @@ export class _OptionBase implements FocusableOption, AfterViewChecked, OnDestroy
    * select's trigger.
    */
   get viewValue(): string {
+    const firstChild = this._getHostElement().firstChild.firstChild;
+    if (firstChild && firstChild.nodeName.includes('AVATAR')) {
+      return (this._getHostElement().textContent || '').replace(firstChild.textContent, '').trim();
+    }
     return (this._getHostElement().textContent || '').trim();
   }
 

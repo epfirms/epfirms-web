@@ -23,6 +23,7 @@ import { DialogModule } from '@ngneat/dialog';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { QuillModule } from 'ngx-quill';
 import { AutocompleteModule } from './shared/autocomplete/autocomplete.module';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -120,6 +121,9 @@ const quillConfig = [
           width: '42rem'
         }
       }
+    }),
+    HotToastModule.forRoot({
+      position: 'top-right'
     })
   ],
   providers: [

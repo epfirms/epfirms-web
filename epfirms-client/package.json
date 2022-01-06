@@ -23,6 +23,7 @@
     "@ngneat/dialog": "^2.0.0",
     "@ngneat/edit-in-place": "^1.6.1",
     "@ngneat/helipopper": "^5.0.2",
+    "@ngneat/hot-toast": "^4.1.0",
     "@ngneat/input-mask": "^5.0.1",
     "@ngneat/overview": "^3.0.0",
     "@ngneat/tailwind": "^7.0.3",

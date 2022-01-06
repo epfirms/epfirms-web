@@ -38,6 +38,8 @@ export class CaseTemplateCommunityController {
         }
       }
 
+      await this._communityCaseTemplateService.update(id, {download_count: communityTemplate.download_count + 1});
+
       res.status(StatusConstants.OK).send({ success: true });
     } catch (err) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
@@ -47,10 +49,17 @@ export class CaseTemplateCommunityController {
   public async getById(req: any, res: Response): Promise<any> {
     try {
       const { id } = req.params;
-
-      const created = await this._communityCaseTemplateService.getById(parseInt(id));
-
-      res.status(StatusConstants.OK).send(created);
+      const { firm_id } = req.user.firm_access;
+      let permissions = {
+        read: true,
+        write: false,
+        delete: false
+      };
+      const template = await this._communityCaseTemplateService.getById(parseInt(id));
+      if(template.firm_id === firm_id) {
+        permissions.write = permissions.delete = true;
+      }
+      res.status(StatusConstants.OK).send({template, permissions});
     } catch (err) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
     }
@@ -110,10 +119,14 @@ export class CaseTemplateCommunityController {
     }
   }
 
-  public async delete(req: Request, res: Response): Promise<any> {
+  /** Deletes a case template from the community templates if the current user's
+   *  firm_id matches the creating firm_id in the case template. */
+  public async delete(req: any, res: Response): Promise<any> {
     try {
       const { case_template_id } = req.params;
-      const deleted = await this._communityCaseTemplateService.delete(case_template_id);
+      const { firm_id } = req.user.firm_access;
+
+      const deleted = await this._communityCaseTemplateService.delete(case_template_id, firm_id);
       res.status(StatusConstants.OK).send({ id: deleted });
     } catch (err) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err.message);

@@ -18,6 +18,7 @@ import { firmRoleOptions, FirmStaffRole } from '@app/features/firm-staff/enums/f
 import { AssigneeGroup, TemplateTaskAssignee } from '../interfaces/template-task-assignee';
 import { FirmRoleService } from '@app/features/firm-staff/services/firm-role.service';
 import { CaseTemplateCommunityService } from '../services/case-template-community.service';
+import {HotToastService} from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-case-template-details',
@@ -71,7 +72,8 @@ export class CaseTemplateDetailsComponent implements OnInit {
     private _caseTemplateService: CaseTemplateService,
     private _dialogService: DialogService,
     private _firmRoleService: FirmRoleService,
-    private _caseTemplateCommunityService: CaseTemplateCommunityService
+    private _caseTemplateCommunityService: CaseTemplateCommunityService,
+    private _toastService: HotToastService
   ) {
     this.staff$ = staffService.entities$;
 
@@ -242,7 +244,9 @@ export class CaseTemplateDetailsComponent implements OnInit {
       body: `A copy of this template will be created and shared with other users in the case template community.`
     }).afterClosed$.subscribe((confirm) => {
       if (confirm) {
-        this._caseTemplateCommunityService.create(this.template).subscribe();
+        this._caseTemplateCommunityService.create(this.template).subscribe(() => {
+          this._toastService.success('Successfully created community template');
+        });
       }
     })
   }

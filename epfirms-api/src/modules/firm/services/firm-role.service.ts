@@ -23,13 +23,13 @@ export class FirmRoleService {
       const currentFirm = await firm.findByPk(firmId);
 
       if (currentFirm) {
-        const roleCount = await currentFirm.countFirm_roles();
+        const roleCount = await currentFirm.countFirm_role();
         if (roleCount <= 0) {
           for (const role of this.defaultRoles) {
             await currentFirm.createFirm_role({ name: role });
           }
 
-          const addedRoles = await currentFirm.getFirm_roles();
+          const addedRoles = await currentFirm.getFirm_role({attributes: ['id', 'name']});
           return Promise.resolve(addedRoles);
         }
 

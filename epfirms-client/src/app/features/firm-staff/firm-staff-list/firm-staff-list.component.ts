@@ -4,6 +4,7 @@ import { StaffService } from '@app/firm-portal/_services/staff-service/staff.ser
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { DialogService } from '@ngneat/dialog';
 import { Observable } from 'rxjs';
+import { FirmTeamService } from '../services/firm-team.service';
 import { StaffMemberDialogComponent } from '../staff-member-dialog/staff-member-dialog.component';
 
 @Component({
@@ -24,6 +25,7 @@ export class FirmStaffListComponent implements OnInit {
     private _staffService: StaffService,
     private _currentUserService: CurrentUserService,
     private _dialog: DialogService,
+    private _teamService: FirmTeamService
   ) {
     this.staff$ = _staffService.filteredEntities$;
     this.user$ = this._currentUserService.user$;
@@ -40,7 +42,11 @@ export class FirmStaffListComponent implements OnInit {
     const dialog = this._dialog.open(StaffMemberDialogComponent);
     dialog.afterClosed$.subscribe((data) => {
       if (data) {
-        this._staffService.createStaff(data).subscribe();
+        this._staffService.createStaff(data).subscribe((res) => {
+          if (res.data.role[0].name === "attorney"){
+            this._teamService.create(res.data.id).subscribe();
+          }
+        });
       }
     });
   }

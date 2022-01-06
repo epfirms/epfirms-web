@@ -129,9 +129,9 @@ export class CaseTemplateCommunityService {
     }
   }
 
-  public async delete(id):Promise<any> {
+  public async delete(id, firmId):Promise<any> {
     try {
-      const deleted = await Database.models.community_case_template.destroy({where: {id: id}});
+      const deleted = await Database.models.community_case_template.destroy({where: {id: id, firm_id: firmId}});
       return Promise.resolve(deleted);
     } catch (err) {
       console.error(err);

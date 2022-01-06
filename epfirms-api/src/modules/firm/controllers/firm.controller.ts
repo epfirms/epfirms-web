@@ -141,8 +141,10 @@ export class FirmController {
     try {
       const { firm_id } = req.user.firm_access;
 
-      const roles = await this._firmRoleService.get(parseInt(firm_id));
-
+      let roles = await this._firmRoleService.get(parseInt(firm_id));
+      if (!(roles && roles.length)) {
+       roles = this._firmRoleService.initDefault(firm_id);
+      }
       resp.status(StatusConstants.OK).send({ roles: roles });
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);

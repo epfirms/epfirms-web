@@ -46,7 +46,7 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
     return this._http.post('/api/firm/employees', body).pipe(
       map((response: any) => {
         this._socketService.addOneToCacheSync('staff', response.data);
-        return of(response);
+        return response;
       })
     );
   }

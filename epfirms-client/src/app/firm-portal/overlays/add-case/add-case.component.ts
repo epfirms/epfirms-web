@@ -52,6 +52,8 @@ export class AddCaseComponent implements OnInit, OnDestroy {
 
   clientId: number;
 
+  attorneyId: number;
+
   clients: Client[] = [];
 
   filteredClients: Client[] = [];
@@ -111,6 +113,8 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   }
 
   displayFn(value, options): string {
+    console.log(value);
+    console.log(options);
     const selectedStaffMember = options.find((option) => option.value === value);
     return selectedStaffMember ? selectedStaffMember.viewValue : 'Select a staff member';
   }
@@ -124,11 +128,16 @@ export class AddCaseComponent implements OnInit, OnDestroy {
         : [...this.clients];
   }
 
+  filterAttorneys(event) {
+    this.filteredAttorneys = event && event.length ? this.attorneys.filter((a) => a.user.full_name.toLowerCase().includes(event.toLowerCase())) : [...this.attorneys];
+  }
+
   close(data?: any) {
     this._dialogRef.close(data);
   }
 
   selectEvent(item: any, controlName: string) {
+    console.log(item);
     this.caseForm.patchValue({[controlName]: item});
     this.caseForm.updateValueAndValidity();
   }
