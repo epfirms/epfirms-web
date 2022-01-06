@@ -75,7 +75,9 @@ export class ClientFinancialsComponent implements OnInit {
     let paymentData = {
       balance: balance,
     }
-    this.stripeService.createPaymentSession(paymentData).subscribe(res => console.log(res));
+    this.stripeService.createPaymentSession(paymentData).subscribe(res => {
+      window.location.replace(res.url);
+    });
   }
 
 }

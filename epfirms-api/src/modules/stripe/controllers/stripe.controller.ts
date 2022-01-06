@@ -88,7 +88,7 @@ export class StripeController {
 
   public async createPaymentSession(req, res : Response) : Promise<any> {
     try {
-      console.log(req.body);
+      
       // create stripe checkout session
       const session = await stripe.checkout.sessions.create({
         line_items: [
@@ -106,10 +106,10 @@ export class StripeController {
         ],
         mode: 'payment',
         success_url: 'https://example.com/success',
-        cancel_url: 'https://example.com/cancel'
+        cancel_url: req.headers.referer
       });
 
-      res.redirect(303, session.url);
+      res.status(StatusConstants.OK).send({url: session.url});
     } catch (err) {
       console.error(err);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
