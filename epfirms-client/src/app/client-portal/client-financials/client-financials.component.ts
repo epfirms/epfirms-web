@@ -76,7 +76,25 @@ export class ClientFinancialsComponent implements OnInit {
       balance: balance,
     }
     this.stripeService.createPaymentSession(paymentData).subscribe(res => {
-      window.location.replace(res.url);
+      // we receive the session url and the id
+      let sessionId = res.session_id;
+      let url = res.url;
+      // we need to add the session id to the statement to verify payment
+      // when the webhook sends back a request to the server on fufillment
+      // ideally, we don't want to navigate to the new window until this session
+      // has been saved as we don't ever want there to be a time when the session
+      // id's do not match for some reason
+      let statementCount = 0;
+      this.matterStatements[`${matter.case_id}`].forEach(statement => {
+        statementCount += 1;
+        statement.stripe_session_id = sessionId;
+        this.statementService.update(statement).subscribe(res => {
+          // only change the window after the last statement has been updated
+          if (statementCount == this.matterStatements[`${matter.case_id}`].length){
+            window.location.replace(res.url);
+          }
+        });
+      });
     });
   }
 

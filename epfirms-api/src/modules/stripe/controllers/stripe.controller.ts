@@ -112,7 +112,7 @@ export class StripeController {
 
 
       console.log("SESSION", session);
-      res.status(StatusConstants.OK).send({url: session.url});
+      res.status(StatusConstants.OK).send({url: session.url, session_id: session.id});
     } catch (err) {
       console.error(err);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);

@@ -24,4 +24,12 @@ export class StripeService {
       console.error(err);
     }
   }
+
+  public static async fufillPaymentSession(session): Promise<any> {
+    try {
+      
+    } catch (err) {
+      console.error(err);
+    }
+  }
 }

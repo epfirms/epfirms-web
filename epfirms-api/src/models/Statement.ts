@@ -61,8 +61,10 @@ module.exports = (sequelize, {
         },
         total: {
           type: INTEGER,
-
         },
+        stripe_session_id: {
+          type: STRING
+        }
       }, {
         tableName,
         defaultScope: {
