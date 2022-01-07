@@ -53,7 +53,7 @@ export class CaseTemplateCommunityTemplatePageComponent implements OnInit {
     }).afterClosed$.subscribe((confirm) => {
       if (confirm) {
         this._caseTemplateCommunityService.delete(this.template.id).subscribe(() => {
-          this._toastService.info('Template deleted');
+          this._toastService.show('Template deleted');
           this._routerService.navigate(['..', 'all'], {relativeTo: this._route});
         });
       }

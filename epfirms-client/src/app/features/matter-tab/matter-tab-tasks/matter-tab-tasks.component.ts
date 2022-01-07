@@ -85,9 +85,9 @@ export class MatterTabTasksComponent implements OnInit {
     // add logic for adding a bill automatically
     if (property === "completed" && value === true) {
       console.log("TASK", task);
-      let employee : any = this.staffMembers.filter(staff => staff.id == task.assignee_id)[0]
+      let employee : any = this.staffMembers.find(staff => staff.user.id == task.assignee_id);
       console.log("employee", employee);
-      let hourlyRate = employee.firms[0].firm_employee.hourly_rate;
+      let hourlyRate = employee.hourly_rate || 0;
       let employeeName = employee.full_name;
       console.log(hourlyRate);
       console.log("HOURS", task.hours);

@@ -123,7 +123,25 @@ const quillConfig = [
       }
     }),
     HotToastModule.forRoot({
-      position: 'top-right'
+      position: 'top-right',
+      className: 'duration-300 ease-out hot-toast-w',
+      style: {
+        'color': 'rgb(15, 23, 42)',
+        'font-weight': '500',
+        'font-size': '0.875rem',
+        'background-color': 'rgb(255, 255, 255)',
+        'border-radius': '0.5rem',
+        'overflow': 'hidden',
+        'width': '24rem',
+        'max-width': '24rem',
+        'padding': '1rem',
+        'box-shadow': '0 0 0 0px #fff, 0 0 0 1px rgba(0, 0, 0, .05), 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+      },
+      iconTheme: {
+        'primary': 'rgb(255, 255, 255)',
+        'secondary': 'rgb(52,211,153)'
+      },
+      dismissible: true,
     })
   ],
   providers: [

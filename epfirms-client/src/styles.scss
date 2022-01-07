@@ -37,3 +37,20 @@ html {
       Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
   }
 }
+
+.hot-toast-w{
+  &>.hot-toast-icon {
+    margin-right: 0.5rem !important;
+  }
+
+  &>.hot-toast-message {
+    justify-content: flex-start !important;
+    margin: 0 !important;
+  }
+
+  &>.hot-toast-close-btn {
+    padding: .25rem !important;
+    margin: 0 !important;
+    align-self: center !important;
+  }
+}
