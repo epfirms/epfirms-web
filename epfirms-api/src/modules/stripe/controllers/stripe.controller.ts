@@ -111,7 +111,7 @@ export class StripeController {
       });
 
 
-      console.log("SESSION", session);
+      
       res.status(StatusConstants.OK).send({url: session.url, session_id: session.id});
     } catch (err) {
       console.error(err);
@@ -122,23 +122,23 @@ export class StripeController {
   //handler for webhook events from Stripe; might need to modulize the respective events later
   public async eventHandler(req, res : Response) : Promise<any> {
     try {
-      console.log("EVENT HANDLER FOR STRIPE REACHED");
+
 
       const payload = req.body;
-      console.log("payload", payload);
+
 
       const sig = req.headers['stripe-signature'];
-      console.log("sig", typeof(sig), "key", typeof(stripeWebhookSig));
+
       let event;
-      console.log("before event");
-      console.log(sig, stripeWebhookSig);
+
+
       event = stripe.webhooks.constructEvent(payload, sig, stripeWebhookSig)
-      console.log("after event");
-      console.log("session", event);
+
+
       if (event.type === 'checkout.session.completed'){
         const session = event.data.object;
         const fufillment = await StripeService.fufillPaymentSession(session);
-        console.log("SESSION",session);
+
         res.status(200).send();
       }
       else {

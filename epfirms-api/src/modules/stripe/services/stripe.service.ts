@@ -16,9 +16,9 @@ export class StripeService {
 
   public static async createStripeAccount(accountId, firmId): Promise<any> {
     try {
-      console.log(accountId, firmId);
+
       const account = await Database.models.stripe_account.create({account_id: accountId, firm_id: firmId});
-      console.log("created account", account);
+
       return Promise.resolve(account);
     } catch (err) {
       console.error(err);
@@ -28,10 +28,10 @@ export class StripeService {
   public static async fufillPaymentSession(session): Promise<any> {
     try {
       const statements = await Database.models.statement.findAll({where: {stripe_session_id: session.id}});
-      console.log("SHOULD BE FUFILL SERVICE");
-      console.log("FUFILL", statements);
+
+
       if (statements) {
-        console.log("ABLE TO FIND MATCHING SESSIONS\n\n\n");
+
         const updatedStatements = await Database.models.statement.update({status: "PAID"}, {where: {stripe_session_id: session.id}});
         let statement = statements[0];
         let paymentRecord = {
