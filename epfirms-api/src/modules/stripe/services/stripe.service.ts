@@ -27,7 +27,23 @@ export class StripeService {
 
   public static async fufillPaymentSession(session): Promise<any> {
     try {
-      
+      const statements = await Database.models.statement.findAll({where: {stripe_session_id: session.id}});
+      console.log("SHOULD BE FUFILL SERVICE");
+      console.log("FUFILL", statements);
+      if (statements) {
+        console.log("ABLE TO FIND MATCHING SESSIONS\n\n\n");
+        const updatedStatements = await Database.models.statement.update({status: "PAID"}, {where: {stripe_session_id: session.id}});
+        let statement = statements[0];
+        let paymentRecord = {
+          matter_id: statement.matter_id,
+          amount: session.amount_total / 100,
+          payment_type: "Private Pay",
+          date: Date(),
+          type: 1
+        }
+        const payment = await Database.models.matter_billing.create(paymentRecord);
+      }
+      return Promise.resolve(statements);
     } catch (err) {
       console.error(err);
     }

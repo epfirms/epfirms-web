@@ -100,7 +100,7 @@ export class StripeController {
                 name: 'FIRM NAME BILLING VAR'
               },
               //conversion to cents since Stripe API uses this; might need a better way
-              unit_amount: req.body.balance * 100
+              unit_amount_decimal: (req.body.balance.toFixed(2) / 0.01)
             },
             quantity: 1,
           }
@@ -137,6 +137,7 @@ export class StripeController {
       console.log("session", event);
       if (event.type === 'checkout.session.completed'){
         const session = event.data.object;
+        const fufillment = await StripeService.fufillPaymentSession(session);
         console.log("SESSION",session);
         res.status(200).send();
       }
