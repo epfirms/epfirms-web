@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FirmTemplateTaskFile } from '@app/features/task-template/interfaces/firm-template-task-file';
-import { TaskTemplateService } from '@app/features/task-template/services/task-template.service';
+import { FirmTemplateTaskFile } from '@app/features/case-template/interfaces/firm-template-task-file';
+import { CaseTemplateService } from '@app/features/case-template/services/case-template.service';
 import { AwsService } from '@app/shared/_services/aws.service';
 import { TaskFile } from '../interfaces/task-file';
 
@@ -29,7 +29,7 @@ export class TaskFileButtonComponent {
 
   private _files: TaskFile[] | FirmTemplateTaskFile[] = [];
 
-  constructor(private _taskTemplateService: TaskTemplateService) {}
+  constructor(private _caseTemplateService: CaseTemplateService) {}
 
   emitAttach(event): void {
     const files: FileList = event.target.files;
@@ -48,7 +48,7 @@ export class TaskFileButtonComponent {
   }
 
   openFile(file) {
-    this._taskTemplateService.getTaskFileDownloadURL(file.key).subscribe((res) => {
+    this._caseTemplateService.getTaskFileDownloadURL(file.key).subscribe((res) => {
       window.open(res.url, '_blank');
     });
   }

@@ -1,0 +1,42 @@
+<div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+  <div>
+    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+      <div class="mt-6">
+          <div class="grid grid-cols-1 gap-4 w-full">
+            <div *ngFor="let group of memberGroups" class="relative bg-white px-6 py-2 flex items-center space-x-3">
+              <div class="flex-1 min-w-0">
+                  <span class="absolute inset-0" aria-hidden="true"></span>
+                  <p class="text-sm text-slate-500 truncate">
+                    {{group.role.name | titlecase}}
+                  </p>
+                  <ep-input-group>
+                    <input *ngIf="group.member" ep-input type="text" [ngModel]="group.member.firm_team_member.firm_employee_id"
+                      (ngModelChange)="filterStaffMembers($event)" [epAutocomplete]="auto">
+                      <input *ngIf="!group.member" ep-input type="text" [ngModel]="newMember"
+                      (ngModelChange)="filterStaffMembers($event)" [epAutocomplete]="auto">
+                  </ep-input-group>
+
+                  <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayFn"
+                    (optionSelected)="setRole($event, group.role.id)" panelWidth="auto">
+                    <ep-option *ngFor="let staff of filteredStaffMembers" [value]="staff.id">
+                      <ep-avatar epSize="xsmall" [epSrc]="staff.user.profile_image" [epText]="staff.user.full_name">
+                      </ep-avatar> <span class="font-normal ml-3 block truncate">
+                        {{staff.user.full_name}}
+                      </span>
+                    </ep-option>
+                  </ep-autocomplete>
+
+              </div>
+            </div>
+          
+            <!-- More people... -->
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="rounded-b-lg bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+  <button (click)="close()" type="button" class="button-white">
+    Close
+  </button>
+</div>

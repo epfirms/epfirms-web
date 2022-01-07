@@ -1,12 +1,7 @@
 import { Matter } from '@app/core/interfaces/matter';
 import { Tabs } from '@app/core/interfaces/tabs';
 import { EntitySelectorsFactory } from '@ngrx/data';
-import {
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  on,
-} from '@ngrx/store';
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import {
   add,
   clear,
@@ -33,7 +28,7 @@ const _matterTabsReducer = createReducer(
       return {
         ...state,
         openTabs: [...state.openTabs, payload],
-        selectedIndex: state.openTabs.length + 1
+        selectedIndex: state.openTabs.length + 1,
       };
     }
 
@@ -53,7 +48,7 @@ const _matterTabsReducer = createReducer(
       openTabs: state.openTabs.filter((_, index) => index !== payload),
     };
   }),
-  on(clear, (state) => {
+  on(clear, () => {
     return {
       ...initialState,
     };
@@ -89,26 +84,21 @@ const _matterTabsReducer = createReducer(
       ...state,
       selectedIndex: payload,
     };
-  })
+  }),
 );
 
 export function matterTabsReducer(state, action) {
   return _matterTabsReducer(state, action);
 }
 
-export const matterSelectors = new EntitySelectorsFactory().create<Matter>(
-  'Matter'
-);
+export const matterSelectors = new EntitySelectorsFactory().create<Matter>('Matter');
 const selectTabState = createFeatureSelector<Tabs>('matterTabs');
-export const selectOpenTabsState = createSelector(
-  selectTabState,
-  (tabs: Tabs) => tabs.openTabs
-);
+export const selectOpenTabsState = createSelector(selectTabState, (tabs: Tabs) => tabs.openTabs);
 export const selectedOpenTabs = createSelector(
   matterSelectors.selectEntityMap,
   selectOpenTabsState,
   (matters, openTabs) =>
     openTabs.map((t) => ({
       ...matters[t],
-    }))
+    })),
 );

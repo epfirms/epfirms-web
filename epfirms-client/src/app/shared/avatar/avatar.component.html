@@ -1,6 +1,6 @@
 <img
   *ngIf="epSrc"
-  class="avatar"
+  class="av avatar"
   [src]="epSrc"
   alt=""
   [ngClass]="{
@@ -17,7 +17,7 @@
 <ng-container *ngIf="!epSrc">
   <span
     *ngIf="epText"
-    class="initials"
+    class="av initials"
     [ngClass]="{
       xs: epSize === 'xsmall',
       sm: epSize === 'small',
@@ -33,7 +33,7 @@
 
   <span
     *ngIf="!epText"
-    class="icon"
+    class="av icon"
     [ngClass]="{
       xs: epSize === 'xsmall',
       sm: epSize === 'small',
@@ -45,7 +45,7 @@
     }"
   >
     <svg
-      class="h-full w-full text-gray-300"
+      class="h-full w-full text-slate-300"
       fill="currentColor"
       viewBox="0 0 24 24"
     >

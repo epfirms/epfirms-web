@@ -1,7 +1,7 @@
 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
     <div class="sm:flex sm:items-start">
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+        <h3 class="text-lg leading-6 font-medium text-slate-900" id="modal-title">
           Add Payment
         </h3>
         <div class="mt-6">
@@ -12,20 +12,20 @@
                 <div class="col-span-6 sm:col-span-3">
                   <label
                     for="amount"
-                    class="block text-sm font-medium text-gray-700"
+                    class="block text-sm font-medium text-slate-700"
                     >Amount Paid</label
                   >
                   <div class="mt-1 relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <span class="text-gray-500 sm:text-sm">
+                      <span class="text-slate-500 sm:text-sm">
                         $
                       </span>
                     </div>
                     <input formControlName="amount"
                     [inputMask]="currencyInputMask"
-                    placeholder="0.00" type="text" name="amount" id="amount" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0.00" aria-describedby="price-currency">
+                    placeholder="0.00" type="text" name="amount" id="amount" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-slate-300 rounded-md" placeholder="0.00" aria-describedby="price-currency">
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <span class="text-gray-500 sm:text-sm" id="price-currency">
+                      <span class="text-slate-500 sm:text-sm" id="price-currency">
                         USD
                       </span>
                     </div>
@@ -36,12 +36,12 @@
                 <div class="col-span-6 sm:col-span-3">
                   <label
                     for="bill-date"
-                    class="block text-sm font-medium text-gray-700"
+                    class="block text-sm font-medium text-slate-700"
                     >Date</label
                   >
                   <div class="relative mt-1">
 
-                    <input (dateChanged)="setDate($event)" (click)="dpBillDate.toggleCalendar()" class="py-2 px-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder="Select a date" angular-mydatepicker id="bill-date" name="bill-date" 
+                    <input (dateChanged)="setDate($event)" (click)="dpBillDate.toggleCalendar()" class="py-2 px-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-slate-300 rounded-md" placeholder="Select a date" angular-mydatepicker id="bill-date" name="bill-date" 
                       formControlName="date" [options]="myOptions" #dpBillDate="angular-mydatepicker"/>
                     </div>
                     <!-- date -->
@@ -50,12 +50,12 @@
                   <div class="col-span-6">
                     <label
                       for="description"
-                      class="block text-sm font-medium text-gray-700"
+                      class="block text-sm font-medium text-slate-700"
                       >Description</label
                     >
                       <!-- description -->
                       <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        <textarea id="description" name="description" formControlName="description" rows="3" class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
+                        <textarea id="description" name="description" formControlName="description" rows="3" class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-slate-300 rounded-md"></textarea>
                       </div>
                   </div>
               </div>
@@ -65,7 +65,7 @@
       </div>
     </div>
   </div>
-  <div class="rounded-b-lg bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+  <div class="rounded-b-lg bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
     <button
       (click)="submit()"
       type="button"

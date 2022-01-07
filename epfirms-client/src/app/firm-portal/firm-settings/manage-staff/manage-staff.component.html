@@ -1,181 +1,43 @@
-<div class="bg-gray-100 border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
-    <div class="w-full md:flex md:items-center md:justify-between">
-        <div class="flex-1 min-w-0">
-            <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-                Staff
-              </h1>
-        </div>
-        <div class="mt-4 flex md:mt-0 md:ml-4">
-              <!-- Search bar is commented out for now -->
-              <!-- <div class="mr-4">
-                <div class="relative rounded-md shadow-sm">
-                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                  </div>
-                  <input type="text" name="search" id="search" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md" placeholder="Search Staff">
-                </div>
-              </div> -->
+<main class="pt-8 pb-16">
+  <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="px-4 sm:px-0">
+      <h2 class="text-lg font-medium text-slate-900">Manage Staff</h2>
 
-              <div>
-          <button (click)="addStaff()" type="button" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            <!-- Heroicon name: solid/mail -->
+      <!-- Tabs -->
+      <div class="sm:hidden">
+        <label for="tabs" class="sr-only">Select a tab</label>
+        <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
+        <select id="tabs" name="tabs" class="mt-4 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+          <option>Applied</option>
 
+          <option>Phone Screening</option>
 
-            <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 22 22" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-            Add Staff Member
-          </button>
-        </div>
+          <option selected>Interview</option>
+
+          <option>Offer</option>
+
+          <option>Disqualified</option>
+        </select>
+      </div>
+      <div class="hidden sm:block">
+        <div>
+          <nav class="mt-2 -mb-px flex space-x-8" aria-label="Tabs">
+            <!-- Current: "border-blue-500 text-blue-600", Default: "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-200" -->
+            <a (click)="changePage('staff')" class="hover:cursor-pointer whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"  [ngClass]="{'border-blue-500 text-blue-600': currentPage === 'staff', 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-200': currentPage !== 'staff'}">
+              Staff members
+            </a>
+            
+            <a (click)="changePage('teams')" class="hover:cursor-pointer whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" [ngClass]="{'border-blue-500 text-blue-600': currentPage === 'teams', 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-200': currentPage !== 'teams'}">
+              Legal teams
+            </a>
+          </nav>
         </div>
       </div>
+    </div>
+
+    <!-- Stacked list -->
+    <app-firm-staff-list *ngIf="currentPage === 'staff'"></app-firm-staff-list>
+
+    <app-firm-team-list *ngIf="currentPage === 'teams'"></app-firm-team-list>
   </div>
-
-  <div class="flex flex-1">
-    <main class="flex flex-col flex-1 relative z-0 overflow-y-auto focus:outline-none">
-
-  
-        <!-- Projects table (small breakpoint and up) -->
-        <div class="hidden sm:block flex-1 bg-white">
-          <div class="align-middle inline-block min-w-full">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                  <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Name
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Role
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Hourly Rate
-                    </th>
-                    <th scope="col" class="relative px-6 py-3">
-                      <span class="sr-only">Edit</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <ng-container *ngIf="staff$ | async as staff_members">
-                  <!-- <tr *ngFor="let staff of staff" class="hover:cursor-pointer hover:bg-gray-50" (click)="openTab(staff)"> -->
-                  <tr *ngFor="let staff of staff_members" class="hover:cursor-pointer hover:bg-gray-50">
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="flex items-center">
-                        <div class="flex-shrink-0 h-10 w-10">
-                          <img *ngIf="staff.profile_image" class="h-10 w-10 rounded-full" [src]="staff.profile_image" alt="">
-                          <span *ngIf="!staff.profile_image" class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-gray-400">
-                            <span class="font-medium leading-none text-white">{{staff.first_name.charAt(0) + staff.last_name.charAt(0)}}</span>
-                          </span>
-                        </div>
-                        <div class="ml-4">
-                          <div class="text-sm font-medium text-gray-900">
-                            {{staff.first_name + " " + staff.last_name}}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <!-- <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800"> -->
-                      <span class="text-sm text-gray-900">
-                        {{staff.email || 'No Email'}}
-                      </span>                    
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-
-                      <span *ngIf="staff.firms[0].firm_employee.admin" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        Admin
-                      </span>
-                      <span *ngIf="staff.firms[0].firm_employee.attorney" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        Attorney
-                      </span>
-                      <span *ngIf="staff.firms[0].firm_employee.paralegal" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        Paralegal
-                      </span>
-                      <span *ngIf="staff.firms[0].firm_employee.legal_assistant" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        Legal Assistant
-                      </span>
-                        
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">$3,523 billed</div>
-                        <div class="text-sm text-green-500">$1,523 paid</div>
-                    </td>
-                    
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <ng-container *ngIf="user$ | async as current_user">
-                      <div *ngIf="!current_user.scope.admin" class="flex items-center">
-                        <div class="px-3 py-4 whitespace-nowrap">
-                          <button  type="submit" (click)="addStaff()">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" clip-rule="evenodd" />
-                            </svg>
-                          </button>
-                        </div>
-                    
-
-                        <div *ngIf="!staff.firms[0].firm_employee.admin" class="px-3 py-4 whitespace-nowrap">
-                          <button  type="submit" (click)="addStaff()">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
-                            </svg>
-                          </button>
-                        </div>
-                    
-                          <!-- Heroicon name: outline/plus -->
-                          <!-- <svg class="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white border-blue-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                          </svg> -->
-                        <div *ngIf="user$" class="px-3 py-4 whitespace-nowrap">
-                          <button  type="submit" (click)="deleteStaff()">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </ng-container>
-                    </td>
-
-                  </tr>
-                </ng-container>
-
-
-                  <!-- More people... -->
-                </tbody>
-              </table>
-
-
-          </div>
-
-          <ng-container *ngIf="staff$ | async as staff">
-            <div *ngIf="!staff.length" class="text-center mt-24">
-              <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-              </svg>
-              <h3 class="mt-2 text-sm font-medium text-gray-900">No staff</h3>
-              <p class="mt-1 text-sm text-gray-500">
-                Get started by adding some staff members.
-              </p>
-              <div class="mt-6">
-                <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="addStaff()">
-                  <!-- Heroicon name: solid/plus -->
-                  <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                  </svg>
-                  Add Staff Member
-                </button>
-              </div>
-            </div>
-          </ng-container>
-        </div>
-      <!-- End main area -->
-    </main>
-  </div>
+</main>

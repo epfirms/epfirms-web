@@ -1,13 +1,11 @@
-<ngx-select
-  [items]="epOptions"
-  [optionTextField]="epOptionTextField"
-  [optionValueField]="epOptionValueField"
-  [ngModel]="epValue"
-  (ngModelChange)="emitChangedValue($event)"
-  [isFocused]="selectFocused"
-  (focus)="setSelectFocused(true)"
-  (select)="setSelectFocused(false)"
-  (blur)="setSelectFocused(false)"
-  (typed)="setSelectFocused(true)"
-  [placeholder]="epPlaceholder"
-></ngx-select>
+<ng-template let-formFieldId="id">
+  <div class="ep-autocomplete-panel"
+       role="listbox"
+       [id]="id"
+       [attr.aria-label]="ariaLabel || null"
+       [attr.aria-labelledby]="_getPanelAriaLabelledby(formFieldId)"
+       [ngClass]="_classList"
+       #panel>
+    <ng-content></ng-content>
+  </div>
+</ng-template>

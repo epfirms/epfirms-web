@@ -53,7 +53,7 @@ export class AuthService {
   }
 
   public async getFirmScope(userId: number): Promise<any> {
-    const { firm_employee, firm_subscription } = Database.models;
+    const { firm_employee, firm_subscription, firm_role } = Database.models;
 
     const firmScope = await firm_employee.findOne({
       attributes: {
@@ -62,7 +62,14 @@ export class AuthService {
       where: {
         user_id: userId,
         active: true
-      }
+      },
+      include: [
+        {
+          model: firm_role,
+          as: 'role',
+          attributes: ['id', 'name']
+        }
+      ]
     });
 
     if (firmScope && firmScope.firm_id) {
@@ -76,6 +83,7 @@ export class AuthService {
       const subscriptionExpired = await this.isPastDate(currentPeriodEnd);
 
       if (subscription && !subscriptionExpired) {
+        delete firmScope.role.firm_employee_role;
         return Promise.resolve(firmScope);
       }
     }
@@ -102,6 +110,7 @@ export class AuthService {
         model: firm,
         attributes: ['id'],
         required: true,
+        as: 'client_firm',
         through: {
           model: client,
           where: { active: true },
@@ -111,7 +120,7 @@ export class AuthService {
     });
 
     if (clientScope) {
-      return Promise.resolve(clientScope.firms);
+      return Promise.resolve(clientScope.client_firm);
     } else {
       return Promise.resolve([]);
     }

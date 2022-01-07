@@ -5,11 +5,11 @@
 
             <div class="ml-2 flex-1 truncate">
                 <div class="flex items-center space-x-3">
-                    <h3 class="text-gray-900 text-sm font-medium truncate">
+                    <h3 class="text-slate-900 text-sm font-medium truncate">
                         {{ user.full_name | titlecase }}
                     </h3>
                 </div>
-                <p class="text-gray-500 text-sm truncate">
+                <p class="text-slate-500 text-sm truncate">
                     {{label | titlecase}}
                 </p>
             </div>
@@ -18,19 +18,18 @@
         <div class="flex-shrink-0 self-center flex">
             <div class="relative inline-block text-left">
                 <div>
-                    <div hlMenu class="relative inline-block text-left">
-                        <button hlMenuButton type="button"
-                            class="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600"
+                    <div Menu class="relative inline-block text-left">
+                        <button MenuButton type="button"
+                            class="-m-2 p-2 rounded-full flex items-center text-slate-400 hover:text-slate-600"
                             id="options-menu-0-button" aria-expanded="false" aria-haspopup="true">
                             <span class="sr-only">Open options</span>
-                            <!-- Heroicon name: solid/dots-vertical -->
                             <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                 fill="currentColor" aria-hidden="true">
                                 <path
                                     d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                             </svg>
                         </button>
-                        <div *hlMenuItems @toggleAnimation class="
+                        <div *MenuItems @toggleAnimation class="
                  z-10
                  absolute
                  right-0
@@ -43,9 +42,8 @@
                  ring-1 ring-black ring-opacity-5
                  focus:outline-none
                ">
-                            <!-- Use the `active` state to conditionally style the active item. -->
                             <div class="p-1">
-                                <a *hlMenuItem="let item" class="
+                                <a MenuItem class="
                      group
                      flex
                      rounded-md
@@ -53,7 +51,7 @@
                      w-full
                      px-2
                      py-2
-                     text-gray-700
+                     text-slate-700
                      font-medium
                      text-sm
                      hover:bg-blue-500 hover:text-white hover:cursor-pointer
@@ -61,7 +59,7 @@
                                     Edit
                                 </a>
                                 <ng-container *ngIf="label !== 'client'">
-                                    <a *hlMenuItem="let item" class="
+                                    <a MenuItem class="
                    group
                    flex
                    rounded-md
@@ -69,7 +67,7 @@
                    w-full
                    px-2
                    py-2
-                   text-gray-700
+                   text-slate-700
                    font-medium
                    text-sm
                    hover:bg-blue-500 hover:text-white hover:cursor-pointer
@@ -87,31 +85,31 @@
     </div>
     <dl class="
          mt-2
-         border-b border-gray-200
+         border-b border-slate-200
          pb-3
        ">
         <div class="py-2 flex justify-between text-sm">
-            <dt class="text-gray-500">Date of birth</dt>
-            <dd class="text-gray-900">{{user.dob | date}}</dd>
+            <dt class="text-slate-500">Date of birth</dt>
+            <dd class="text-slate-900">{{user.dob | date}}</dd>
         </div>
 
         <div class="py-2 flex justify-between text-sm">
-            <dt class="text-gray-500">Email</dt>
-            <dd class="text-gray-900">
+            <dt class="text-slate-500">Email</dt>
+            <dd class="text-slate-900">
                 {{ user.email || "" }}
             </dd>
         </div>
 
         <div class="py-2 flex justify-between text-sm">
-            <dt class="text-gray-500">Phone</dt>
-            <dd class="text-gray-900">
+            <dt class="text-slate-500">Phone</dt>
+            <dd class="text-slate-900">
                 {{ user.phone || "" }}
             </dd>
         </div>
 
         <div class="py-2 flex justify-between text-sm">
-            <dt class="text-gray-500">Address</dt>
-            <dd class="text-gray-900">
+            <dt class="text-slate-500">Address</dt>
+            <dd class="text-slate-900">
                 <ng-container *ngIf="user.address">
                     <div class="text-right">{{ user.address }}</div>
                     <div class="text-right">
@@ -129,14 +127,14 @@
 </ng-container>
 
 <ng-container *ngIf="!user">
-    <div class="border-b border-gray-200">
+    <div class="border-b border-slate-200">
         <div class="mb-4">
             <div class="flex space-x-2">
                 <button type="button"
                     class="group -ml-1 bg-white p-1 rounded-md flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500"
                     (click)="openAddClient()">
                     <span
-                        class="w-8 h-8 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400">
+                        class="w-8 h-8 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400">
                         <!-- Heroicon name: solid/plus -->
                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                             aria-hidden="true">

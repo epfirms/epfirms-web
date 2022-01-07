@@ -1,7 +1,7 @@
 <div
   class="
     bg-white
-    border-b border-gray-200
+    border-b border-slate-200
     px-4
     py-3.5
     sm:flex sm:items-center sm:justify-between sm:px-6
@@ -10,13 +10,13 @@
 >
   <div class="flex-1 flex justify-between">
     <div class="flex-1 flex items-center">
-      <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+      <h1 class="text-lg font-medium leading-6 text-slate-900 sm:truncate">
         Client Directory
       </h1>
 
       <form class="flex-1 w-full flex ml-12" action="#" method="GET">
         <label for="search-field" class="sr-only">Search</label>
-        <div class="relative w-full text-gray-400 focus-within:text-gray-600">
+        <div class="relative w-full text-slate-400 focus-within:text-slate-600">
           <div
             class="
               absolute
@@ -56,8 +56,8 @@
               pr-3
               py-0
               border-transparent
-              text-gray-900
-              placeholder-gray-500
+              text-slate-900
+              placeholder-slate-500
               focus:outline-none focus:ring-0 focus:border-transparent
               sm:text-sm
             "
@@ -70,13 +70,11 @@
     <div class="ml-4 flex items-center md:ml-6">
       <div>
         <button
+          ep-icon-button
           (click)="addClient()"
-          type="button"
-          class="button-primary-icon-sm"
         >
-          <!-- Heroicon name: solid/mail -->
-
           <svg
+            ep-icon
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
             viewBox="0 0 22 22"
@@ -103,8 +101,8 @@
     <!-- Projects table (small breakpoint and up) -->
     <div class="hidden sm:block flex-1 bg-white">
       <div class="align-middle inline-block min-w-full">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
+        <table class="min-w-full divide-y divide-slate-200">
+          <thead class="bg-slate-50">
             <tr>
               <th
                 scope="col"
@@ -113,7 +111,7 @@
                   py-3
                   text-left text-xs
                   font-medium
-                  text-gray-500
+                  text-slate-500
                   uppercase
                   tracking-wider
                 "
@@ -127,7 +125,7 @@
                   py-3
                   text-left text-xs
                   font-medium
-                  text-gray-500
+                  text-slate-500
                   uppercase
                   tracking-wider
                 "
@@ -141,7 +139,7 @@
                   py-3
                   text-left text-xs
                   font-medium
-                  text-gray-500
+                  text-slate-500
                   uppercase
                   tracking-wider
                 "
@@ -156,7 +154,7 @@
                   py-3
                   text-left text-xs
                   font-medium
-                  text-gray-500
+                  text-slate-500
                   uppercase
                   tracking-wider
                   text-center
@@ -170,14 +168,14 @@
               </th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody class="bg-white divide-y divide-slate-200">
             <ng-container *ngIf="clients$ | async as clients">
               <tr
                 *ngFor="
                   let client of clients | slice: paginator.start:paginator.end
                 "
-                class="hover:cursor-pointer hover:bg-gray-50"
-                [class.bg-gray-50]="selectedClient === client"
+                class="hover:cursor-pointer hover:bg-slate-50"
+                [class.bg-slate-50]="selectedClient === client"
                 (click)="setSelectedClient(client)"
               >
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -188,25 +186,25 @@
                       [epText]="client.full_name"
                     ></ep-avatar>
                     <div class="ml-2">
-                      <div class="text-sm font-medium text-gray-900">
+                      <div class="text-sm font-medium text-slate-900">
                         {{ client.full_name | titlecase }}
                       </div>
                     </div>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">
+                  <div class="text-sm text-slate-900">
                     {{ client.phone }}
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">
+                  <div class="text-sm text-slate-900">
                     {{ client.email }}
                   </div>
                 </td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-center">
-                  <div class="text-sm text-gray-900">
+                  <div class="text-sm text-slate-900">
                     {{ client.client.length }}
                   </div>
                 </td>
@@ -218,7 +216,7 @@
                     whitespace-nowrap
                     text-right text-sm
                     font-medium
-                    text-gray-400
+                    text-slate-400
                   "
                 >
                 <button
@@ -229,13 +227,13 @@
                   rounded-full
                   flex
                   items-center
-                  text-gray-400
-                  hover:text-gray-600
+                  text-slate-400
+                  hover:text-slate-600
                 "
                 id="menu-0-button"
                 aria-expanded="false"
                 aria-haspopup="true"
-                [class.text-gray-600]="selectedClient === client"
+                [class.text-slate-600]="selectedClient === client"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -253,7 +251,7 @@
       <ng-container *ngIf="clients$ | async as clients">
         <div *ngIf="!clients.length" class="text-center mt-24">
           <svg
-            class="mx-auto h-12 w-12 text-gray-400"
+            class="mx-auto h-12 w-12 text-slate-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -267,8 +265,8 @@
               d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
             />
           </svg>
-          <h3 class="mt-2 text-sm font-medium text-gray-900">No clients</h3>
-          <p class="mt-1 text-sm text-gray-500">
+          <h3 class="mt-2 text-sm font-medium text-slate-900">No clients</h3>
+          <p class="mt-1 text-sm text-slate-500">
             Get started by adding a client.
           </p>
           <div class="mt-6">
@@ -324,7 +322,7 @@
     <!-- End main area -->
   </main>
   
-  <aside class="flex-shrink-0 relative z-0 overflow-y-auto focus:outline-none xl:order-last border-l border-gray-200 ease-in-out duration-500" style="transition: all 500ms;" [class.opacity-0]="!selectedClient" [class.flex-0]="!selectedClient" [class.flex-1]="selectedClient" [class.opacity-100]="selectedClient" [class.min-width-aside]="selectedClient">
+  <aside class="flex-shrink-0 relative z-0 overflow-y-auto focus:outline-none xl:order-last border-l border-slate-200 ease-in-out duration-500" style="transition: all 500ms;" [class.opacity-0]="!selectedClient" [class.flex-0]="!selectedClient" [class.flex-1]="selectedClient" [class.opacity-100]="selectedClient" [class.min-width-aside]="selectedClient">
     <article *ngIf="selectedClient">
       <!-- Profile header -->
       <div class="md:flex md:items-center md:justify-between md:space-x-5 p-4 sm:p-6 lg:p-8 pb-0">
@@ -344,37 +342,37 @@
             but preserve the same layout if the text wraps without making the image jump around.
           -->
           <div>
-            <h1 class="text-2xl font-bold text-gray-900">{{selectedClient.full_name | titlecase}}</h1>
-            <p class="text-sm font-medium text-gray-500">Added as a client on <span class="text-gray-900">{{selectedClient.firms[0].FirmClient.created_at | date}}</span></p>
+            <h1 class="text-2xl font-bold text-slate-900">{{selectedClient.full_name | titlecase}}</h1>
+            <p class="text-sm font-medium text-slate-500">Added as a client on <span class="text-slate-900">{{selectedClient.client_firm[0].client.created_at | date}}</span></p>
           </div>
         </div>
       </div>
 
       <!-- Tabs -->
       <div>
-        <div class="border-b border-gray-200">
+        <div class="border-b border-slate-200">
           <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-              <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
+              <!-- Current: "border-indigo-500 text-slate-900", Default: "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300" -->
               <a (click)="asideTab = 'profile'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm hover:cursor-pointer" aria-current="page" [ngClass]="{
-                'border-indigo-500 text-gray-900': asideTab === 'profile',
-                'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': asideTab !== 'profile'
+                'border-indigo-500 text-slate-900': asideTab === 'profile',
+                'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300': asideTab !== 'profile'
               }">
                 Profile
               </a>
 
               <a (click)="asideTab = 'cases'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm hover:cursor-pointer" 
               [ngClass]="{
-                'border-indigo-500 text-gray-900': asideTab === 'cases',
-                'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': asideTab !== 'cases'
+                'border-indigo-500 text-slate-900': asideTab === 'cases',
+                'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300': asideTab !== 'cases'
               }">
                 Leads/Cases
               </a>
 
               <a (click)="asideTab = 'documents'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm hover:cursor-pointer"
               [ngClass]="{
-                'border-indigo-500 text-gray-900': asideTab === 'documents',
-                'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': asideTab !== 'documents'
+                'border-indigo-500 text-slate-900': asideTab === 'documents',
+                'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300': asideTab !== 'documents'
               }">
                 Documents
               </a>
@@ -387,37 +385,37 @@
       <div class="mt-6 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" *ngIf="asideTab === 'profile'">
         <dl class="grid grid-cols-1 gap-x-4 gap-y-8">
           <div>
-            <dt class="text-sm font-medium text-gray-500">
+            <dt class="text-sm font-medium text-slate-500">
               Email
             </dt>
-            <dd class="mt-1 text-sm text-gray-900">
+            <dd class="mt-1 text-sm text-slate-900">
               {{selectedClient.email}}
             </dd>
           </div>
 
           <div>
-            <dt class="text-sm font-medium text-gray-500">
+            <dt class="text-sm font-medium text-slate-500">
               Phone
             </dt>
-            <dd class="mt-1 text-sm text-gray-900">
+            <dd class="mt-1 text-sm text-slate-900">
               {{selectedClient.phone}}
             </dd>
           </div>
 
           <div>
-            <dt class="text-sm font-medium text-gray-500">
+            <dt class="text-sm font-medium text-slate-500">
               Date of birth
             </dt>
-            <dd class="mt-1 text-sm text-gray-900">
+            <dd class="mt-1 text-sm text-slate-900">
               {{selectedClient.dob}}
             </dd>
           </div>
 
           <div>
-            <dt class="text-sm font-medium text-gray-500">
+            <dt class="text-sm font-medium text-slate-500">
               Address
             </dt>
-            <dd class="mt-1 text-sm text-gray-900">
+            <dd class="mt-1 text-sm text-slate-900">
               <div>{{selectedClient.address}}</div>
               <div>{{selectedClient.city}} {{selectedClient.state}}</div>
               <div>{{selectedClient.zip}}</div>
@@ -427,8 +425,8 @@
       </div>
 
       <div class="max-w-5xl mx-auto" *ngIf="asideTab === 'cases'">
-          <ul role="list" class="divide-y divide-gray-200 overflow-y-auto">
-            <li *ngFor="let matter of selectedClientMatters" class="hover:bg-gray-100 hover:cursor-pointer" (click)="openTab(matter)">
+          <ul role="list" class="divide-y divide-slate-200 overflow-y-auto">
+            <li *ngFor="let matter of selectedClientMatters" class="hover:bg-slate-100 hover:cursor-pointer" (click)="openTab(matter)">
               <a class="block">
                 <div class="px-4 py-4">
                   <div class="flex items-center justify-between">
@@ -443,14 +441,14 @@
                   </div>
                   <div class="mt-2">
                     <div>
-                      <p class="flex items-center text-sm text-gray-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                      <p class="flex items-center text-sm text-slate-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 h-5 w-5 text-slate-400" viewBox="0 0 20 20" fill="currentColor">
                           <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
                         </svg>
                         {{matter.attorney.full_name | titlecase}}
                       </p>
-                      <p class="mt-2 flex items-center text-sm text-gray-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                      <p class="mt-2 flex items-center text-sm text-slate-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 h-5 w-5 text-slate-400" viewBox="0 0 20 20" fill="currentColor">
                           <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                           <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
                         </svg>
@@ -472,9 +470,9 @@
                       </span>
                       </p>
                     </div>
-                    <div class="mt-2 flex items-center text-sm text-gray-500">
+                    <div class="mt-2 flex items-center text-sm text-slate-500">
                       <!-- Heroicon name: solid/calendar -->
-                      <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
                       </svg>
                       <p>

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuModule } from 'headlessui-angular';
 import { ClientPortalRoutingModule } from './client-portal-routing.module';
 import { ClientPortalComponent } from './client-portal.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
@@ -11,6 +10,7 @@ import { ClientDocumentsComponent } from './client-documents/client-documents.co
 import { ClientDocumentUploadComponent } from './client-document-upload/client-document-upload.component';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { NavbarModule } from '@app/shared/navbar/navbar.module';
+import { MenuModule } from '@app/shared/menu/menu.module';
 
 
 @NgModule({
@@ -27,9 +27,9 @@ import { NavbarModule } from '@app/shared/navbar/navbar.module';
     ReactiveFormsModule,
     ClientPortalRoutingModule,
     IntakeModule,
-    MenuModule,
     AvatarModule,
-    NavbarModule
+    NavbarModule,
+    MenuModule
   ]
 })
 export class ClientPortalModule { }

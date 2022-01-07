@@ -82,7 +82,7 @@ export class DocumentEditModalComponent implements OnInit {
   // changes the class on selections on mouse over
   toggleMouseLeave(event) : void {
 
-    event.target.className = "text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9"
+    event.target.className = "text-slate-900 cursor-default select-none relative py-2 pl-3 pr-9"
   }
   // submits the edited document to be changed on the cache, server, and aws
   submit(): void {

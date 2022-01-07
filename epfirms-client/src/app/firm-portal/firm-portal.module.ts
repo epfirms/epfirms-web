@@ -15,7 +15,10 @@ import { TagModule } from '@app/shared/tag/tag.module';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { MatterTabModule } from '@app/features/matter-tab/matter-tab.module';
 import { NavbarModule } from '@app/shared/navbar/navbar.module';
-import { MenuModule } from 'headlessui-angular';
+import { SharedModule } from '@app/shared/shared.module';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { InputModule } from '@app/shared/input/input.module';
+import { MenuModule } from '@app/shared/menu/menu.module';
 
 
 @NgModule({
@@ -37,6 +40,9 @@ import { MenuModule } from 'headlessui-angular';
     AvatarModule,
     MatterTabModule,
     NavbarModule,
+    SharedModule,
+    ScrollingModule,
+    InputModule,
     MenuModule
   ]
 })

@@ -14,6 +14,7 @@ import { assetRouter } from '@src/modules/asset/routes';
 import { matterBillingRouter } from '@src/modules/matter-billing/routes';
 import { statementRouter } from '@src/modules/statement/routes';
 import { betaSignupRouter } from '@src/modules/beta-signup/routes';
+import { caseTemplateCommunityRouter } from '@src/modules/case-template-community/routes';
 
 import { matterBillingSettingsRouter } from '@src/modules/matter-billing-settings/routes';
 import { stripeRouter } from '@src/modules/stripe/routes';
@@ -38,5 +39,6 @@ v1Router.use('/statement', statementRouter);
 v1Router.use('/sign-up', betaSignupRouter);
 v1Router.use('/matter-billing-settings', matterBillingSettingsRouter)
 v1Router.use('/stripe', stripeRouter);
+v1Router.use('/case-templates', caseTemplateCommunityRouter);
 
 export { v1Router }

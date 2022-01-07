@@ -1,5 +1,6 @@
 import {
   Component,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,16 +11,17 @@ import { StaffService } from '@app/firm-portal/_services/staff-service/staff.ser
 import { Client } from '@app/core/interfaces/client';
 import { LegalArea } from '@app/core/interfaces/legal-area';
 import { Staff } from '@app/core/interfaces/staff';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AddClientComponent } from '../add-client/add-client.component';
 import { DialogRef, DialogService } from '@ngneat/dialog';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-case',
   templateUrl: './add-case.component.html',
   styleUrls: ['./add-case.component.scss']
 })
-export class AddCaseComponent implements OnInit {
+export class AddCaseComponent implements OnInit, OnDestroy {
   matterType: string;
   
   keyword = 'full_name';
@@ -50,6 +52,20 @@ export class AddCaseComponent implements OnInit {
 
   clientId: number;
 
+  attorneyId: number;
+
+  clients: Client[] = [];
+
+  filteredClients: Client[] = [];
+
+  attorneys: Staff[] = [];
+
+  filteredAttorneys: Staff[] = [];
+
+  clientFilterHandler:Subscription;
+
+  attorneyFilterHandler: Subscription;
+
   constructor(
     private _fb: FormBuilder,
     private _staffService: StaffService,
@@ -78,7 +94,42 @@ export class AddCaseComponent implements OnInit {
       opposing_counsel_id: [null],
       reviews: [null]
     });
-    this._staffService.setFilter('attorney');
+    this._staffService.setFilter({active: true, role: ['attorney']});
+
+    this.attorneyFilterHandler = this.attorneys$.subscribe(a => {
+      this.attorneys = a;
+      this.filteredAttorneys = a;
+    });
+
+    this.clientFilterHandler = this.clients$.subscribe(c => {
+      this.clients = c;
+      this.filteredClients = c;
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.clientFilterHandler.unsubscribe();
+    this.attorneyFilterHandler.unsubscribe();
+  }
+
+  displayFn(value, options): string {
+    console.log(value);
+    console.log(options);
+    const selectedStaffMember = options.find((option) => option.value === value);
+    return selectedStaffMember ? selectedStaffMember.viewValue : 'Select a staff member';
+  }
+
+  filterClients(event) {
+    this.filteredClients =
+      event && event.length
+        ? this.clients.filter((c) =>
+            c.full_name.toLowerCase().includes(event.toLowerCase())
+          )
+        : [...this.clients];
+  }
+
+  filterAttorneys(event) {
+    this.filteredAttorneys = event && event.length ? this.attorneys.filter((a) => a.user.full_name.toLowerCase().includes(event.toLowerCase())) : [...this.attorneys];
   }
 
   close(data?: any) {
@@ -86,6 +137,7 @@ export class AddCaseComponent implements OnInit {
   }
 
   selectEvent(item: any, controlName: string) {
+    console.log(item);
     this.caseForm.patchValue({[controlName]: item});
     this.caseForm.updateValueAndValidity();
   }

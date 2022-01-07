@@ -8,9 +8,8 @@ import { PaginatorModule } from '@app/shared/paginator/paginator.module';
 import { TagModule } from '@app/shared/tag/tag.module';
 import { DialogModule } from '@ngneat/dialog';
 import { TippyModule } from '@ngneat/helipopper';
-import { MenuModule } from 'headlessui-angular';
-import { NgxSelectModule } from 'ngx-select-ex';
 import { ClientDirectoryComponent } from './client-directory.component';
+import { ButtonModule } from '@app/shared/button/button.module';
 
 
 @NgModule({
@@ -18,14 +17,13 @@ import { ClientDirectoryComponent } from './client-directory.component';
   imports: [
     CoreModule,
     ClientDirectoryRoutingModule,
-    MenuModule,
     CdkTableModule,
-    NgxSelectModule,
     TippyModule,
     DialogModule,
     TagModule,
     AvatarModule,
-    PaginatorModule
+    PaginatorModule,
+    ButtonModule
   ]
 })
 export class ClientDirectoryModule { }

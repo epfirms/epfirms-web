@@ -18,20 +18,20 @@
 }
 
 .button-white-xs {
-    @apply inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-semibold rounded text-gray-700 bg-white hover:bg-gray-50;
+    @apply inline-flex items-center px-2.5 py-1.5 border border-slate-300 shadow-sm text-xs font-semibold rounded text-slate-700 bg-white hover:bg-slate-50;
 }
 
 .button-white-sm {
-    @apply inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+    @apply inline-flex items-center px-3 py-2 border border-slate-300 shadow-sm text-sm leading-4 font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
 }
 
 .button-white {
-    @apply  inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+    @apply  inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
 }
 
 
 .button-white-icon-sm-end {
-    @apply inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded text-gray-700 bg-white hover:bg-gray-50;
+    @apply inline-flex items-center px-2.5 py-1.5 border border-slate-300 shadow-sm text-sm leading-4 font-medium rounded text-slate-700 bg-white hover:bg-slate-50;
 
     &>svg {
         @apply -ml-1 mr-1 h-3 w-3;
@@ -39,7 +39,7 @@
 }
 
 .button-white-icon-sm {
-    @apply inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs leading-4 font-medium rounded text-gray-700 bg-white hover:bg-gray-50;
+    @apply inline-flex items-center px-2.5 py-1.5 border border-slate-300 shadow-sm text-xs leading-4 font-medium rounded text-slate-700 bg-white hover:bg-slate-50;
 
     &>svg.icon {
         @apply -ml-1 mr-1 h-3 w-3;
@@ -51,7 +51,7 @@
 }
 
 .table-dropdown {
-    @apply inline-flex items-center px-2.5 py-1 text-sm leading-4 font-normal rounded bg-white hover:bg-gray-100 transition-colors;
+    @apply inline-flex items-center px-2.5 py-1 text-sm leading-4 font-normal rounded bg-white hover:bg-slate-100 transition-colors;
 
     &:hover {
         &>svg.icon-end {

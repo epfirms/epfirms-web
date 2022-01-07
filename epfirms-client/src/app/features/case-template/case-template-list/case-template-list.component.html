@@ -1,0 +1,28 @@
+
+  <div class="h-16 flex items-center sticky top-0 z-10 bg-slate-50 border-b border-slate-200 sm:flex sm:items-center sm:justify-between w-full">
+        <div class="flex-1 min-w-0">
+            <h1 class="text-lg font-medium leading-6 text-slate-900 sm:truncate">
+              Case Templates
+            </h1>
+          </div>
+          <div class="mt-4 flex sm:mt-0 sm:ml-4">
+              <button (click)="openAddTemplateDialog()" type="button" class="inline-flex items-center flex-end px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  Create
+              </button>
+          </div>
+  </div>
+<div class="pt-6">
+    <ep-accordion multi togglePosition="before">
+        <ep-accordion-item *ngFor="let group of templateGroups" [expanded]="group.templates.length > 0">
+            <ep-accordion-item-header>
+                <ep-accordion-item-title>{{group.name | titlecase}}</ep-accordion-item-title>
+            </ep-accordion-item-header>
+            
+            <div class="bg-white shadow overflow-hidden sm:rounded-md">
+            <ul role="list" class="divide-y divide-slate-200">
+                <app-case-template-list-item *ngFor="let template of group.templates" [template]="template" (editTemplate)="editTemplateDialog(template)" (deleteTemplate)="deleteTemplate(template)"></app-case-template-list-item>
+            </ul>
+        </div>
+        </ep-accordion-item>
+    </ep-accordion>
+</div>

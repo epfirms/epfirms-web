@@ -11,37 +11,31 @@ import { MatterService } from '../_services/matter-service/matter.service';
 import { MatterTabsService } from '../../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { StaffService } from '../_services/staff-service/staff.service';
 import { DialogService } from '@ngneat/dialog';
+import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete.component';
 
 @Component({
   selector: 'app-leads',
   templateUrl: './leads.component.html',
   styleUrls: ['./leads.component.scss'],
   host: {
-    class: 'flex-1 relative z-0 flex flex-col overflow-hidden',
+    class: 'flex-1 relative z-0 flex flex-col overflow-hidden'
   },
   animations: [
     trigger('toggleAnimation', [
       transition(':enter', [
         style({ opacity: 0, transform: 'scale(0.95)' }),
-        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
+        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
       ]),
-      transition(':leave', [
-        animate('75ms', style({ opacity: 0, transform: 'scale(0.95)' })),
-      ]),
-    ]),
-  ],
+      transition(':leave', [animate('75ms', style({ opacity: 0, transform: 'scale(0.95)' }))])
+    ])
+  ]
 })
 export class LeadsComponent implements OnInit {
-  displayedColumns = [
-    'client',
-    'task',
-    'legal-area',
-    'attorney',
-    'status',
-  ];
+  displayedColumns = ['client', 'task', 'legal-area', 'attorney', 'status'];
 
   attorneys$: Observable<Staff[]>;
-
+  attorneys: Staff[] = [];
+  filteredAttorneys: Staff[] = [];
   leads$: Observable<Matter[]>;
   legalAreas$: Observable<LegalArea[]>;
   statusFilterOptions: any[] = ['active', 'inactive'];
@@ -54,40 +48,40 @@ export class LeadsComponent implements OnInit {
     {
       name: 'active case',
       status: 'active',
-      matter_type: 'case',
+      matter_type: 'case'
     },
     {
       name: 'inactive case',
       status: 'inactive',
-      matter_type: 'case',
+      matter_type: 'case'
     },
     {
       name: 'active lead',
       status: 'active',
-      matter_type: 'lead',
+      matter_type: 'lead'
     },
     {
       name: 'inactive lead',
       status: 'inactive',
-      matter_type: 'lead',
+      matter_type: 'lead'
     },
     {
       name: 'completed case',
       status: 'complete',
-      matter_type: 'case',
-    },
+      matter_type: 'case'
+    }
   ];
 
   matterFilterValues = {
     matter_type: 'lead',
     status: 'active',
     searchTerm: '',
-    attorney_id: null,
+    attorney_id: null
   };
 
   sortValues: { column: string; direction: string } = {
     column: null,
-    direction: null,
+    direction: null
   };
 
   constructor(
@@ -104,7 +98,25 @@ export class LeadsComponent implements OnInit {
 
   ngOnInit(): void {
     this.filter();
-    this._staffService.setFilter('attorney');
+    this._staffService.setFilter({ active: true, role: ['attorney'] });
+    this.attorneys$.pipe(take(1)).subscribe((a) => {
+      this.attorneys = [...a];
+      this.filteredAttorneys = [...a];
+    });
+  }
+
+  displayFn(value, options): string {
+    const selectedAttorney = options.find((option) => option.value === value);
+    return selectedAttorney ? selectedAttorney.viewValue : 'Select an attorney';
+  }
+
+  filterAttorneys(event) {
+    this.filteredAttorneys =
+      event && event.length
+        ? this.attorneys.filter((attorney) =>
+            attorney.user.full_name.toLowerCase().includes(event.toLowerCase())
+          )
+        : [...this.attorneys];
   }
 
   openTab(matter: Matter) {
@@ -113,7 +125,7 @@ export class LeadsComponent implements OnInit {
 
   addLead() {
     const addLeadModal = this._dialogService.open(AddCaseComponent, {
-      windowClass:'slide-over',
+      windowClass: 'slide-over',
       size: 'lgSlideOver',
       data: {
         matter_type: 'lead'
@@ -135,10 +147,11 @@ export class LeadsComponent implements OnInit {
       }
     });
   }
-  setAttorney(matter: Matter, value) {
-    this._matterService
-    .update({ id: matter.id, attorney_id: value })
-    .subscribe();
+  
+  setAttorney(matter: Matter, event: AutocompleteSelectedEvent) {
+    const selectedOptionValue = event.option.value;
+    this._matterService.update({ id: matter.id, attorney_id: selectedOptionValue }).subscribe();
+    this.filteredAttorneys = [...this.attorneys];
   }
 
   addNote(id: number, note) {
@@ -146,9 +159,7 @@ export class LeadsComponent implements OnInit {
   }
 
   setLegalArea(matter: Matter, legalArea: LegalArea) {
-    this._matterService
-      .update({ id: matter.id, legal_area_id: legalArea.id })
-      .subscribe();
+    this._matterService.update({ id: matter.id, legal_area_id: legalArea.id }).subscribe();
   }
 
   // TODO: Rewrite this abomination to be generic
@@ -168,9 +179,7 @@ export class LeadsComponent implements OnInit {
       if (this.sortValues.column === 'first_name') {
         this.leads$ = this._matterService.filteredEntities$.pipe(
           map((matters) => {
-            return matters.sort(
-              this.sortByFirstName(this.sortValues.direction)
-            );
+            return matters.sort(this.sortByFirstName(this.sortValues.direction));
           })
         );
       } else if (this.sortValues.column === 'task') {
@@ -209,20 +218,13 @@ export class LeadsComponent implements OnInit {
         } else {
           if (a.matter_tasks[0].completed && !b.matter_tasks[0].completed) {
             return 1;
-          } else if (
-            !a.matter_tasks[0].completed &&
-            b.matter_tasks[0].completed
-          ) {
+          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
             return -1;
-          } else if (
-            !a.matter_tasks[0].completed &&
-            b.matter_tasks[0].completed
-          ) {
+          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
             return 0;
           } else {
             return (
-              new Date(a.matter_tasks[0].due).getTime() -
-              new Date(b.matter_tasks[0].due).getTime()
+              new Date(a.matter_tasks[0].due).getTime() - new Date(b.matter_tasks[0].due).getTime()
             );
           }
         }
@@ -236,20 +238,13 @@ export class LeadsComponent implements OnInit {
         } else {
           if (a.matter_tasks[0].completed && !b.matter_tasks[0].completed) {
             return -1;
-          } else if (
-            !a.matter_tasks[0].completed &&
-            b.matter_tasks[0].completed
-          ) {
+          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
             return 1;
-          } else if (
-            !a.matter_tasks[0].completed &&
-            b.matter_tasks[0].completed
-          ) {
+          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
             return 0;
           } else {
             return (
-              new Date(a.matter_tasks[0].due).getTime() -
-              new Date(b.matter_tasks[0].due).getTime()
+              new Date(a.matter_tasks[0].due).getTime() - new Date(b.matter_tasks[0].due).getTime()
             );
           }
         }

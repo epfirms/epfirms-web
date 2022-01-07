@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChildren } from '@angular/core';
-import { TaskTemplateSelectionComponent } from '@app/features/task-template/task-template-selection/task-template-selection.component';
+import { CaseTemplateSelectionComponent } from '@app/features/case-template/case-template-selection/case-template-selection.component';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { Matter } from '@app/core/interfaces/matter';
@@ -7,6 +7,7 @@ import { MatterTask } from '@app/core/interfaces/matter-task';
 import { Staff } from '@app/core/interfaces/staff';
 import { DialogService } from '@ngneat/dialog';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-matter-tab-tasks',
@@ -18,6 +19,7 @@ export class MatterTabTasksComponent implements OnInit {
   get matter() {
     return this._matter;
   }
+
   set matter(value: Matter) {
     this._matter = value;
   }
@@ -26,7 +28,9 @@ export class MatterTabTasksComponent implements OnInit {
 
   staff$: Observable<Staff[]>;
 
-  staffList: Staff[];
+  staffMembers: Staff[];
+  
+  filteredStaffMembers: Staff[];
 
   @ViewChildren('taskName') taskNames;
 
@@ -38,10 +42,25 @@ export class MatterTabTasksComponent implements OnInit {
     this.staff$ = _staffService.entities$;
   }
 
-  ngOnInit(): void {
-    this.staff$.subscribe(res => {
-      this.staffList = res;
-    });
+  ngOnInit() {
+    this.staff$.pipe(take(1)).subscribe(s => {
+      this.staffMembers = s;
+      this.filteredStaffMembers = s;
+    })
+  }
+
+  displayFn(value, options): string {
+    const selectedStaffMember = options.find((option) => option.value === value);
+    return selectedStaffMember ? selectedStaffMember.viewValue : '';
+  }
+
+  filterStaffMembers(event) {
+    this.filteredStaffMembers =
+      event && event.length
+        ? this.staffMembers.filter((staff) =>
+            staff.user.full_name.toLowerCase().includes(event.toLowerCase())
+          )
+        : [...this.staffMembers];
   }
 
   trackByIndex(index, item) {
@@ -66,7 +85,7 @@ export class MatterTabTasksComponent implements OnInit {
     // add logic for adding a bill automatically
     if (property === "completed" && value === true) {
       console.log("TASK", task);
-      let employee : any = this.staffList.filter(staff => staff.id == task.assignee_id)[0]
+      let employee : any = this.staffMembers.filter(staff => staff.id == task.assignee_id)[0]
       console.log("employee", employee);
       let hourlyRate = employee.firms[0].firm_employee.hourly_rate;
       let employeeName = employee.full_name;
@@ -96,12 +115,15 @@ export class MatterTabTasksComponent implements OnInit {
     this._matterService.deleteMatterTask(taskId).subscribe();
   }
 
-  openTaskTemplateDialog(): void {
-    const taskTemplateDialog = this._dialog.open(TaskTemplateSelectionComponent, {
-      size: 'lg'
+  openCaseTemplateDialog(): void {
+    const caseTemplateDialog = this._dialog.open(CaseTemplateSelectionComponent, {
+      size: 'lg',
+      data: {
+        attorney_id: this.matter.attorney_id
+      }
     });
 
-    taskTemplateDialog.afterClosed$.subscribe((templateTasks) => {
+    caseTemplateDialog.afterClosed$.subscribe((templateTasks) => {
       if (templateTasks && templateTasks.length) {
         this.applyTemplateTasks(templateTasks, this.matter.id);
       }

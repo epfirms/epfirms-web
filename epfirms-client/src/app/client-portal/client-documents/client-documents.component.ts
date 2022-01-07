@@ -12,6 +12,7 @@ import { DialogService } from '@ngneat/dialog';
 })
 export class ClientDocumentsComponent implements OnInit {
   documents: Document[];
+
   constructor(
     private _documentService: DocumentService,
     private _dialogService: DialogService,
