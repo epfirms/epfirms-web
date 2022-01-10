@@ -18,12 +18,15 @@ module.exports = (sequelize, {
         matter_id: {
           type: INTEGER,
           allowNull: false,
+          
         },
         billing_type: {
           type: STRING,
+          defaultValue: 'Hourly'
         },
         payment_type: {
           type: STRING,
+          defaultValue: 'Private Pay'
         }
       }, {
         tableName,
