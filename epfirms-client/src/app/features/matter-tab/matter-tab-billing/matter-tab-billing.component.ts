@@ -77,6 +77,7 @@ export class MatterTabBillingComponent implements OnInit {
     this._matterService.getMatterBillingById(this.matter.id).subscribe((response) => {
       this.bills = response.filter((b) => b.type === '0');
       this.payments = response.filter((b) => b.type === '1');
+      console.log("BILLs", this.bills);
       // reset the values for total billed and payed to eliminate double amount bug
       this.totalBilled = 0;
       this.totalPayments = 0;

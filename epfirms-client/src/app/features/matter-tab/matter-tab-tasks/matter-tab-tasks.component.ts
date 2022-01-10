@@ -88,7 +88,7 @@ export class MatterTabTasksComponent implements OnInit {
       let employee : any = this.staffMembers.find(staff => staff.user.id == task.assignee_id);
       console.log("employee", employee);
       let hourlyRate = employee.hourly_rate || 0;
-      let employeeName = employee.full_name;
+      let employeeName = employee.user.full_name;
       console.log(hourlyRate);
       console.log("HOURS", task.hours);
       let bill = {
