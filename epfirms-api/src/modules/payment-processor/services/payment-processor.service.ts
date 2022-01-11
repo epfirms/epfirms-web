@@ -30,7 +30,7 @@ export class PaymentProcessorService {
   }
 
   public static async handlePaidInvoice(customerId, currentPeriodEnd): Promise<any> {
-    const currentPeriodEndDate = new Date(currentPeriodEnd);
+    const currentPeriodEndDate = new Date(currentPeriodEnd * 1000);
 
     const updateSubscription = await Database.models.firm_subscription.update(
       {
