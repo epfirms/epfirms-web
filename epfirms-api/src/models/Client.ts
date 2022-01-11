@@ -1,7 +1,8 @@
 
 module.exports = (sequelize, {
     INTEGER,
-    BOOLEAN
+    BOOLEAN, 
+    FLOAT
   }) => {
     const tableName = 'client';
   
@@ -15,6 +16,9 @@ module.exports = (sequelize, {
         active: {
           type: BOOLEAN,
           defaultValue: true
+        },
+        iolta_balance: {
+          type: FLOAT
         }
       }, {
         tableName,
