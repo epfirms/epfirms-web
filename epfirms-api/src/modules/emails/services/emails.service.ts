@@ -3,7 +3,7 @@ const crypto = require('crypto');
 import { Database } from '@src/core/Database';
 import { Service } from 'typedi';
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET, EMAIL_API_KEY, EMAIL_DOMAIN, CLIENT_URL, TEAM_EMAIL_ADDRESS } = require('@configs/vars');
+const { JWT_SECRET, EMAIL_API_KEY, EMAIL_DOMAIN, CLIENT_URL, TEAM_EMAIL_ADDRESS, NODE_ENV } = require('@configs/vars');
 var mailgun = require('mailgun-js')({ apiKey: EMAIL_API_KEY, domain: EMAIL_DOMAIN });
 
 export interface EmailContent {
@@ -170,6 +170,21 @@ export class emailsService {
     };
 
     const responseBody = await mailgun.messages().send(data);
+
+    return Promise.resolve(true);
+  }
+
+  public async sendFromTemplate(emailAddress: string, subject: string, templateName: string, templateVars: any) {
+    const data = {
+      from: 'EPFirms <postmaster@mg.epfirms.com>',
+      to: emailAddress,
+      subject: subject,
+      template: templateName,
+      ...templateVars,
+      'o:testmode': NODE_ENV !== 'production'
+    }
+
+    const response = await mailgun.messages().send(data);
 
     return Promise.resolve(true);
   }

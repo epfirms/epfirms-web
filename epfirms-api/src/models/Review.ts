@@ -1,6 +1,5 @@
 
 module.exports = (sequelize, {
-    BOOLEAN,
     INTEGER,
     STRING
   }) => {
@@ -22,14 +21,15 @@ module.exports = (sequelize, {
         comment: {
           type: STRING,
         },
-        is_sent: {
-          type: BOOLEAN,
-          default: false,
+        status: {
+          type: STRING,
+          defaultValue: 'sent',
         },
-        is_done: {
-          type: BOOLEAN,
-          default: false,
-        },
+        uid: {
+          type: STRING,
+          required: true,
+          unique: true
+        }
       }, {
         tableName,
         defaultScope: {
