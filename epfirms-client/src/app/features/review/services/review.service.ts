@@ -13,7 +13,15 @@ export class ReviewService {
     return this.http.get(`/api/review/${id}`);
   }
 
+  getAllByFirm(): Observable<any> {
+    return this.http.get(`/api/review`);
+  }
+
   saveReview(reviewFields: any): Observable<any> {
     return this.http.patch(`/api/review/${reviewFields.uid}`, reviewFields);
+  }
+
+  sendReview(email: string, matterId: number) {
+    return this.http.post('/api/review', {email, matterId});
   }
 }

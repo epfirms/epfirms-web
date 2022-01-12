@@ -31,6 +31,28 @@ export class ReviewService {
     return Promise.resolve(reviewInstance);
   }
 
+  public async getByFirmId(firmId: number): Promise<any> {
+    const { review, matter, user } = Database.models;
+    const reviewInstance = await review.findAll({
+      include: {
+        model: matter,
+        where: {firm_id: firmId},
+        include: [
+          {
+            model: user,
+            as: 'client',
+          },
+          {
+            model: user,
+            as: 'attorney',
+          },
+        ]
+      },
+    });
+
+    return Promise.resolve(reviewInstance);
+  }
+
   public async update(uid: string, values: any) {
     const { review } = Database.models;
     const reviewInstance = await review.update(values, {
