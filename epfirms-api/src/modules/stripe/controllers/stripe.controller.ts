@@ -8,6 +8,25 @@ const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
 export class StripeController {
   constructor() {}
 
+  //IMPORTANT: This is how we collect fees from the customers on every transaction.
+  // c: what we actually charge the customer
+  // p: the principle amount of the charge
+  // fixedFee: the fixed fee from stripe. This is currently $0.30
+  // fixedPercent: the percent fee from stripe.
+  // revenuePercent: the percent we want to charge and collect.
+  // charge = (p + fixedFee)/(1-(fixedPercent + revenuePercent)) aka the fees amount
+  private _calcFees(p): any {
+    let c = 0;
+    const fixedFee = 0.30;
+    const fixedPercent = 0.029;
+    const revenuePercent = 0.01;
+    c = (p + fixedFee) / (1-(fixedPercent + revenuePercent));
+    // get the fees only since it will be in an itemized charge
+    let fee = c - p;
+    // convert to cents for stripe and return
+    return (Math.round(100* fee)/100) / 0.01
+  }
+
   //takes the stripe accountId and origin or request and creates the secure link to setup
   //stripe integration
   private _generateAccountLink(accountID, origin) {
@@ -103,11 +122,24 @@ export class StripeController {
               unit_amount_decimal: (req.body.balance.toFixed(2) / 0.01)
             },
             quantity: 1,
-          }
+          },
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: "Processing Fee"
+              },
+              unit_amount_decimal: (this._calcFees(req.body.balance))
+            },
+            quantity: 1,
+          },
         ],
         mode: 'payment',
         success_url: req.headers.referer,
-        cancel_url: req.headers.referer
+        cancel_url: req.headers.referer,
+        metadata: {
+          principle_charge: req.body.balance
+        }
       });
 
 

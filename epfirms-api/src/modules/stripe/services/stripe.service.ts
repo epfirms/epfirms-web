@@ -34,12 +34,14 @@ export class StripeService {
 
         const updatedStatements = await Database.models.statement.update({status: "PAID"}, {where: {stripe_session_id: session.id}});
         let statement = statements[0];
+        console.log("SESSION", session);
         let paymentRecord = {
           matter_id: statement.matter_id,
-          amount: session.amount_total / 100,
+          amount: session.metadata.principle_charge,
           payment_type: "Private Pay",
           date: Date(),
-          type: 1
+          type: 1,
+          description: "Client Portal Payment"
         }
         const payment = await Database.models.matter_billing.create(paymentRecord);
       }
