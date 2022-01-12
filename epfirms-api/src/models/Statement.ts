@@ -64,6 +64,14 @@ module.exports = (sequelize, {
         },
         stripe_session_id: {
           type: STRING
+        },
+        is_approved: {
+          type: BOOLEAN,
+          defaultValue: 0
+        },
+        is_client_visible: {
+          type: BOOLEAN,
+          defaultValue: 0
         }
       }, {
         tableName,
