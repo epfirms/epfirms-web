@@ -35,10 +35,7 @@ import { MenuModule } from '@app/shared/menu/menu.module';
     IntakeModule,
     AvatarModule,
     NavbarModule,
-<<<<<<< HEAD
-=======
     MenuModule
->>>>>>> main
   ]
 })
 export class ClientPortalModule { }
