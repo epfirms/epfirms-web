@@ -1,7 +1,7 @@
 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
   <div class="sm:flex sm:items-start">
     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-      <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+      <h3 class="text-lg leading-6 font-medium text-slate-900" id="modal-title">
         Add Client
       </h3>
       <div class="mt-6">
@@ -11,12 +11,12 @@
               <div class="col-span-6 sm:col-span-3">
                 <label
                   for="first-name"
-                  class="block text-sm font-medium text-gray-700"
+                  class="block text-sm font-medium text-slate-700"
                   >First name</label
                 >
                 <input
                   formControlName="first_name"
-                  tw-input
+                  ep-input
                   type="text"
                   name="first-name"
                   id="first-name"
@@ -28,12 +28,12 @@
               <div class="col-span-6 sm:col-span-3">
                 <label
                   for="last-name"
-                  class="block text-sm font-medium text-gray-700"
+                  class="block text-sm font-medium text-slate-700"
                   >Last name</label
                 >
                 <input
                   formControlName="last_name"
-                  tw-input
+                  ep-input
                   type="text"
                   name="last-name"
                   id="last-name"
@@ -45,12 +45,12 @@
               <div class="col-span-6 sm:col-span-2">
                 <label
                   for="phone"
-                  class="block text-sm font-medium text-gray-700"
+                  class="block text-sm font-medium text-slate-700"
                   >Phone</label
                 >
                 <input
                   formControlName="phone"
-                  tw-input
+                  ep-input
                   type="text"
                   name="phone"
                   id="phone"
@@ -61,12 +61,12 @@
               <div class="col-span-6 sm:col-span-4">
                 <label
                   for="email-address"
-                  class="block text-sm font-medium text-gray-700"
+                  class="block text-sm font-medium text-slate-700"
                   >Email address</label
                 >
                 <input
                   formControlName="email"
-                  tw-input
+                  ep-input
                   type="text"
                   name="email-address"
                   id="email-address"
@@ -78,12 +78,12 @@
               <div class="col-span-6">
                 <label
                   for="street-address"
-                  class="block text-sm font-medium text-gray-700"
+                  class="block text-sm font-medium text-slate-700"
                   >Street address</label
                 >
                 <input
                   formControlName="address"
-                  tw-input
+                  ep-input
                   type="text"
                   name="street-address"
                   id="street-address"
@@ -95,12 +95,12 @@
               <div class="col-span-6 sm:col-span-6 lg:col-span-2">
                 <label
                   for="city"
-                  class="block text-sm font-medium text-gray-700"
+                  class="block text-sm font-medium text-slate-700"
                   >City</label
                 >
                 <input
                   formControlName="city"
-                  tw-input
+                  ep-input
                   type="text"
                   name="city"
                   id="city"
@@ -111,12 +111,12 @@
               <div class="col-span-6 sm:col-span-3 lg:col-span-2">
                 <label
                   for="state"
-                  class="block text-sm font-medium text-gray-700"
+                  class="block text-sm font-medium text-slate-700"
                   >State</label
                 >
                 <input
                   formControlName="state"
-                  tw-input
+                  ep-input
                   type="text"
                   name="state"
                   id="state"
@@ -127,12 +127,12 @@
               <div class="col-span-6 sm:col-span-3 lg:col-span-2">
                 <label
                   for="postal-code"
-                  class="block text-sm font-medium text-gray-700"
+                  class="block text-sm font-medium text-slate-700"
                   >ZIP</label
                 >
                 <input
                   formControlName="zip"
-                  tw-input
+                  ep-input
                   type="text"
                   name="postal-code"
                   id="postal-code"
@@ -147,7 +147,7 @@
     </div>
   </div>
 </div>
-<div class="rounded-b-lg bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+<div class="rounded-b-lg bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
   <button
     (click)="submit()"
     [disabled]="!clientForm.valid"

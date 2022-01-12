@@ -1,10 +1,10 @@
 <form [formGroup]="caseForm" class="flex flex-col overflow-y-auto h-screen">
   <div class="flex-1">
     <!-- Header -->
-    <div class="px-4 py-6 bg-gray-50 sm:px-6">
+    <div class="px-4 py-6 bg-slate-50 sm:px-6">
       <div class="flex items-start justify-between space-x-3">
         <div class="space-y-1">
-          <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+          <h2 class="text-lg font-medium text-slate-900" id="slide-over-title">
             New {{ matterType | titlecase }}
           </h2>
         </div>
@@ -12,31 +12,41 @@
     </div>
 
     <!-- Divider container -->
-    <div class="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-gray-200">
+    <div class="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-slate-200">
       <!-- Project name -->
       <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
-          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
+          <label for="project-name" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
             Client
           </label>
         </div>
         <div class="sm:col-span-2">
-          <ng-container *ngIf="clients$ | async as clients">
-            <legacy-autocomplete [options]="clients" [selectedOptionId]="clientId" [addButton]="false"
-              [placeholder]="'Search client directory'" (onSelect)="selectEvent($event, 'client_id')"></legacy-autocomplete>
-          </ng-container>
+            <input ep-input type="text" [ngModel]="clientId" [ngModelOptions]="{standalone: true}"
+            (ngModelChange)="filterClients($event)" [epAutocomplete]="auto">
+          <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="selectEvent($event.option.value, 'client_id')">
+            <cdk-virtual-scroll-viewport itemSize="40" class="w-full" style="height: 200px">
+            <ep-option *cdkVirtualFor="let client of filteredClients" [value]="client.id">
+              <ep-avatar epSize="xsmall" [epSrc]="client.profile_image"
+                [epText]="client.full_name">
+              </ep-avatar> <span class="font-normal ml-3 block truncate">
+                {{client.full_name}}
+              </span>
+            </ep-option>
+          </cdk-virtual-scroll-viewport>
+          </ep-autocomplete>
           <div class="relative my-3">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">
-              <div class="w-full border-t border-gray-300"></div>
+              <div class="w-full border-t border-slate-300"></div>
             </div>
             <div class="relative flex justify-start">
-              <span class="pr-2 bg-white text-sm text-gray-500">
+              <span class="pr-2 bg-white text-sm text-slate-500">
                 or
               </span>
             </div>
           </div>
           <div>
-            <button class="button-white-icon-sm" (click)="openAddClient()">
+            <button class="button-white-icon-sm" type="button" (click)="openAddClient()">
               <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
                   d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
@@ -51,25 +61,35 @@
 
       <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
-          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
+          <label for="project-name" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
             Attorney
           </label>
         </div>
         <div class="sm:col-span-2">
-          <legacy-autocomplete *ngIf="attorneys$ | async as attorneys" [options]="attorneys" [placeholder]="'Search attorneys'"
-            (addButtonClicked)="openAddStaff()" (onSelect)="selectEvent($event, 'attorney_id')"></legacy-autocomplete>
+              <input ep-input type="text" [ngModel]="attorneyId" [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="filterAttorneys($event)" [epAutocomplete]="autoAttorney" placeholder="Search attorneys">
+            <ep-autocomplete #autoAttorney="epAutocomplete" [displayWith]="displayFn"
+              (optionSelected)="selectEvent($event.option.value, 'attorney_id')" panelWidth="auto">
+              <ep-option *ngFor="let attorney of filteredAttorneys" [value]="attorney.user.id">
+                <ep-avatar epSize="xsmall" [epSrc]="attorney.user.profile_image"
+                  [epText]="attorney.user.full_name">
+                </ep-avatar> <span class="font-normal ml-3 block truncate">
+                  {{attorney.user.full_name}}
+                </span>
+              </ep-option>
+            </ep-autocomplete>
         </div>
       </div>
       <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
-          <label for="project-name" class="block text-sm font-medium text-gray-900 ">
+          <label for="project-name" class="block text-sm font-medium text-slate-900 ">
             Legal Area
           </label>
         </div>
         <div class="sm:col-span-2">
           <ng-container *ngIf="legalAreas$ | async as legalAreas">
-            <div hlMenu class="relative inline-block text-left">
-              <button hlMenuButton class="button-white-icon-sm">
+            <div Menu class="relative inline-block text-left">
+              <button MenuButton class="button-white-icon-sm">
                 {{
                 selectedLegalArea.name || 'Select a legal area' | titlecase
                 }}
@@ -80,7 +100,7 @@
                     clip-rule="evenodd" />
                 </svg>
               </button>
-              <div *hlMenuItems class="
+              <div *MenuItems class="
                   z-10
                   absolute
                   right-0
@@ -93,9 +113,8 @@
                   ring-1 ring-black ring-opacity-5
                   focus:outline-none
                 ">
-                <!-- Use the `active` state to conditionally style the active item. -->
                 <div class="p-1" *ngFor="let legalArea of legalAreas">
-                  <a *hlMenuItem="let item" class="
+                  <a MenuItem class="
                       group
                       flex
                       rounded-md
@@ -103,7 +122,7 @@
                       w-full
                       px-2
                       py-2
-                      text-gray-700
+                      text-slate-700
                       font-medium
                       text-sm
                       hover:bg-blue-500 hover:text-white hover:cursor-pointer
@@ -116,10 +135,9 @@
           </ng-container>
         </div>
       </div>
-      <!-- Project description -->
       <div class="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
-          <label for="project-description" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
+          <label for="project-description" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
             Notes
           </label>
         </div>
@@ -134,7 +152,7 @@
   </div>
 
   <!-- Action buttons -->
-  <div class="flex-shrink-0 px-4 border-t border-gray-200 py-5 sm:px-6">
+  <div class="flex-shrink-0 px-4 border-t border-slate-200 py-5 sm:px-6">
     <div class="space-x-3 flex justify-end">
       <button (click)="close()" type="button" class="button-white">
         Cancel

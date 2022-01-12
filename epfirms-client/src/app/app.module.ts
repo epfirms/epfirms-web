@@ -17,12 +17,13 @@ import { currentUserReducer } from './store/current-user/current-user.reducer';
 import { MatterActivityInterceptor } from './core/interceptors/matter-activity.interceptor';
 import { extModules } from 'src/environments/development/modules.dev';
 import { InputMaskModule } from '@ngneat/input-mask';
-import { popperVariation, TippyModule, withContextMenuVariation } from '@ngneat/helipopper';
+import { popperVariation, TippyModule } from '@ngneat/helipopper';
 import { TippyProps } from '@ngneat/helipopper/lib/tippy.types';
 import { DialogModule } from '@ngneat/dialog';
-import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
-import { QuillConfig, QuillModule, QuillToolbarConfig } from 'ngx-quill';
+import { QuillModule } from 'ngx-quill';
+import { AutocompleteModule } from './shared/autocomplete/autocomplete.module';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -66,6 +67,7 @@ const quillConfig = [
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    AutocompleteModule,
     ReactiveFormsModule,
     NgxStripeModule.forRoot('pk_test_NaQ0K78jrNRGyacbblmpM2RW00mvwDjEh6'),
     StoreModule.forRoot({matterTabs: matterTabsReducer, currentUser: currentUserReducer}, {}),
@@ -120,7 +122,27 @@ const quillConfig = [
         }
       }
     }),
-    PdfJsViewerModule
+    HotToastModule.forRoot({
+      position: 'top-right',
+      className: 'duration-300 ease-out hot-toast-w',
+      style: {
+        'color': 'rgb(15, 23, 42)',
+        'font-weight': '500',
+        'font-size': '0.875rem',
+        'background-color': 'rgb(255, 255, 255)',
+        'border-radius': '0.5rem',
+        'overflow': 'hidden',
+        'width': '24rem',
+        'max-width': '24rem',
+        'padding': '1rem',
+        'box-shadow': '0 0 0 0px #fff, 0 0 0 1px rgba(0, 0, 0, .05), 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+      },
+      iconTheme: {
+        'primary': 'rgb(255, 255, 255)',
+        'secondary': 'rgb(52,211,153)'
+      },
+      dismissible: true,
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

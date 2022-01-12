@@ -1,8 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LegalArea } from '@app/core/interfaces/legal-area';
 import { Matter } from '@app/core/interfaces/matter';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AddCaseComponent } from '../overlays/add-case/add-case.component';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
@@ -11,6 +11,7 @@ import { map, take } from 'rxjs/operators';
 import { Staff } from '@app/core/interfaces/staff';
 import { StaffService } from '../_services/staff-service/staff.service';
 import { DialogService } from '@ngneat/dialog';
+import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete.component';
 
 @Component({
   selector: 'app-cases',
@@ -45,7 +46,8 @@ export class CasesComponent implements OnInit {
   cases$: Observable<Matter[]>;
   legalAreas$: Observable<LegalArea[]>;
   statusFilterOptions: any[] = ['active', 'inactive', 'complete'];
-
+  attorneys: Staff[] = [];
+  filteredAttorneys: Staff[] = [];
   statusOptions: any[] = [
     {
       name: 'active case',
@@ -102,9 +104,22 @@ export class CasesComponent implements OnInit {
     this.attorneys$ = _staffService.filteredEntities$;
   }
 
+  displayFn(value, options): string {
+    const selectedAttorney = options.find((option) => option.value === value);
+    return selectedAttorney ? selectedAttorney.viewValue : 'Select an attorney';
+  }
+
+  filterAttorneys(event) {
+    this.filteredAttorneys = event && event.length ? this.attorneys.filter(attorney => attorney.user.full_name.toLowerCase().includes(event.toLowerCase())) : [...this.attorneys]; 
+  }
+
   ngOnInit(): void {
     this.filter();
-    this._staffService.setFilter('attorney');
+    this._staffService.setFilter({active: true, role: ['attorney']});
+    this.attorneys$.pipe(take(1)).subscribe(a => {
+      this.attorneys = [...a];
+      this.filteredAttorneys = [...a];
+    })
   }
 
   openTab(matter: Matter) {
@@ -144,10 +159,12 @@ export class CasesComponent implements OnInit {
       .subscribe();
   }
 
-  setAttorney(matter: Matter, value) {
+  setAttorney(matter: Matter, event: AutocompleteSelectedEvent) {
+    const selectedOptionValue = event.option.value;
     this._matterService
-    .update({ id: matter.id, attorney_id: value })
+    .update({ id: matter.id, attorney_id: selectedOptionValue })
     .subscribe();
+    this.filteredAttorneys = [...this.attorneys];
   }
 
   // TODO: Rewrite this abomination to be generic

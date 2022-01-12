@@ -29,7 +29,7 @@ export class ClientSearchService {
             through: {
               model: client,
               attributes: ['active', 'created_at'],
-              as: 'FirmClient'
+              as: 'client_firm'
             }
           },
           {

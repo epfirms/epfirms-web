@@ -1,0 +1,25 @@
+.ep-accordion-item {
+  &:not(.ep-expanded) {
+    .ep-accordion-item-header:hover:not([aria-disabled=true]) {
+      @apply hover:bg-slate-100;
+    }
+  }
+}
+
+.ep-accordion-item-header {  
+  &.ep-accordion-toggle-indicator-before {
+    flex-direction: row-reverse;
+
+    .ep-expansion-indicator {
+      @apply mr-2;
+
+      [dir='rtl'] & {
+        margin: 0 0 0 16px;
+      }
+    }
+  }
+}
+
+.ep-header-content {
+  @apply flex-1;
+}

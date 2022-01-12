@@ -34,7 +34,7 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
   }
 
   getStaff(): Observable<any> {
-    return this._http.get('/api/firm/staff').pipe(
+    return this._http.get('/api/firm/employees').pipe(
       map((response: Staff[]) => {
         this.addAllToCache(response);
         return of(response);
@@ -43,10 +43,10 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
   }
 
   createStaff(body): Observable<any> {
-    return this._http.post('http://localhost:4000/api/firm/staff', body).pipe(
-      map((response: Staff) => {
-        this._socketService.addOneToCacheSync('staff', response);
-        return of(response);
+    return this._http.post('/api/firm/employees', body).pipe(
+      map((response: any) => {
+        this._socketService.addOneToCacheSync('staff', response.data);
+        return response;
       })
     );
   }
@@ -55,5 +55,23 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
     return this._http.post<any>('/api/firm/clients', {
       client,
     });
+  }
+
+  updateStaff(id, staff): Observable<any> {
+    return this._http.patch<any>(`/api/firm/employees/${id}`, staff).pipe(
+      map((response: any) => {
+        this._socketService.updateCacheSync('staff', response.data);
+        return of(response);
+      })
+    );
+  }
+
+  removeStaff(id): Observable<any> {
+    return this._http.delete<any>(`/api/firm/employees/${id}`).pipe(
+      map((response: any) => {
+        this._socketService.updateCacheSync('staff', response.data);
+        return of(response);
+      })
+    );
   }
 }

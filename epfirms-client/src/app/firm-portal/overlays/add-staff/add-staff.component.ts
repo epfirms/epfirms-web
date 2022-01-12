@@ -7,6 +7,7 @@ import { Client } from '@app/core/interfaces/client';
 import { Staff } from '@app/core/interfaces/staff';
 import { Observable } from 'rxjs';
 import { AddClientComponent } from '../add-client/add-client.component';
+import { FirmTeamService } from '@app/features/firm-staff/services/firm-team.service';
 
 export interface Select {
   value: string;
@@ -62,7 +63,8 @@ export class AddStaffComponent implements OnInit {
     private el: ElementRef,
     private _staffService: StaffService,
     private _clientService: ClientService,
-    private _matterService: MatterService
+    private _matterService: MatterService,
+    private _teamService: FirmTeamService
   ) { 
     this.attorneys$ = _staffService.filteredEntities$;
     this.clients$ = _clientService.entities$;
@@ -118,7 +120,12 @@ export class AddStaffComponent implements OnInit {
 
   onSubmit() {
     this._staffService.createStaff(this.staffForm.value).subscribe(res => {
-      this.close();
+      console.log(res.data);
+      if (res.data.role[0].name === "attorney"){
+      this._teamService.create(res.data.id).subscribe(()=> {
+        this.close();
+      });
+    }
     });
   }
 

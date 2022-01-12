@@ -9,7 +9,7 @@ import { CurrentUserService } from '../_services/current-user-service/current-us
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   host: {
-    'class': 'hidden md:flex md:flex-shrink-0 md:bg-gray-800 md:overflow-y-auto'
+    'class': 'flex flex-shrink-0 bg-slate-800 overflow-y-auto'
   },
   animations: [
     trigger("toggleAnimation", [

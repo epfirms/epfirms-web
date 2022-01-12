@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuModule } from 'headlessui-angular';
 import { ClientPortalRoutingModule } from './client-portal-routing.module';
 import { ClientPortalComponent } from './client-portal.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
@@ -15,6 +14,7 @@ import { ClientFinancialsComponent } from './client-financials/client-financials
 import { TransactionsComponent } from './client-financials/transactions/transactions.component';
 import { StoreModule } from '@ngrx/store';
 import { currentUserReducer } from '@app/store/current-user/current-user.reducer';
+import { MenuModule } from '@app/shared/menu/menu.module';
 
 
 @NgModule({
@@ -33,9 +33,12 @@ import { currentUserReducer } from '@app/store/current-user/current-user.reducer
     ReactiveFormsModule,
     ClientPortalRoutingModule,
     IntakeModule,
-    MenuModule,
     AvatarModule,
     NavbarModule,
+<<<<<<< HEAD
+=======
+    MenuModule
+>>>>>>> main
   ]
 })
 export class ClientPortalModule { }

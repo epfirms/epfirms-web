@@ -1,0 +1,30 @@
+.ep-input {
+    @apply shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-slate-300 rounded-md;
+}
+
+.ep-input-editable {
+    @apply bg-transparent text-sm text-slate-800 w-full px-2 py-1 border border-transparent border-dashed hover:bg-white hover:border-slate-300 focus:bg-white focus:border-transparent focus:shadow-sm;
+    min-width: 150px;
+  
+    &::placeholder {
+      @apply text-slate-400 font-normal;
+    }
+
+    &.ep-input-editable-view {
+
+    }
+
+    &.ep-input-editable-edit {
+        
+    }
+}
+
+ep-input-group {
+    &>.ep-input-editable {
+        @apply pl-9;
+    }
+}
+
+.ep-input-disabled {
+
+}
