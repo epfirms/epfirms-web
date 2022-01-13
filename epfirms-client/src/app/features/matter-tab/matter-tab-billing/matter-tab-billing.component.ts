@@ -46,8 +46,11 @@ export class MatterTabBillingComponent implements OnInit {
 
   // bindings for default billing settings
   // these should load into the matter from MatterBillingSettings
-  defaultBillingStyle : string;
-  defaultPaymentType : string;
+  defaultBillingStyle : string = "hourly";
+  defaultPaymentType : string = "private pay";
+
+  billingSettingOptions : string[] = ["hourly", "flat rate", "contingency"];
+  billingPaymentOptions : string[] = ["private pay", "legal insurance"];
 
   constructor(private _dialogService: DialogService, private _matterService: MatterService,
     private statementService: StatementService, private _matterBillingSettingsService : MatterBillingSettingsService) { }
@@ -58,10 +61,16 @@ export class MatterTabBillingComponent implements OnInit {
     this.loadStatements();
     console.log(this.payments);
 
-    console.log(this.matter);
+    console.log("MATTER", this.matter);
     //init the default billing settings if applicable
-    this.defaultBillingStyle = this.matter.matter_billing_setting.billing_type;
-    this.defaultPaymentType = this.matter.matter_billing_setting.payment_type;
+    if (this.matter.matter_billing_setting == null){
+      this.upsertDefaultBillingSettings()
+    }
+    else {
+      this.defaultBillingStyle = this.matter.matter_billing_setting.billing_type;
+      this.defaultPaymentType = this.matter.matter_billing_setting.payment_type;
+    }
+    
 
     //init the iolta balance from matter
     this.ioltaBalance = this.matter.iolta_balance;
@@ -71,6 +80,7 @@ export class MatterTabBillingComponent implements OnInit {
     this._matterService.getMatterBillingById(this.matter.id).subscribe((response) => {
       this.bills = response.filter((b) => b.type === '0');
       this.payments = response.filter((b) => b.type === '1');
+      console.log("BILLs", this.bills);
       // reset the values for total billed and payed to eliminate double amount bug
       this.totalBilled = 0;
       this.totalPayments = 0;
@@ -205,13 +215,28 @@ export class MatterTabBillingComponent implements OnInit {
 
   //create or apply default billing settings for the matter/case
   upsertDefaultBillingSettings(): void {
-    let settings = {
-      id: this.matter.matter_billing_setting.id,
-      matter_id: this.matter.id,
-      billing_type: this.defaultBillingStyle,
-      payment_type: this.defaultPaymentType
+    let settings;
+    console.log("current defaults", this.defaultBillingStyle, this.defaultPaymentType);
+    if (this.matter.matter_billing_setting != null){
+      settings = {
+        id: this.matter.matter_billing_setting.id,
+        matter_id: this.matter.id,
+        billing_type: this.defaultBillingStyle,
+        payment_type: this.defaultPaymentType
+      }
     }
+    else {
+      settings = {
+        matter_id: this.matter.id,
+        billing_type: "hourly",
+        payment_type: "private pay"
+      }
+    }
+    this.matter.matter_billing_setting = settings;
+    
+    this._matterService.update(this.matter).subscribe();
     this._matterBillingSettingsService.create(settings).subscribe(onRes => {
+      console.log("This should be updating settings");
       console.log(onRes);
     });
   }
