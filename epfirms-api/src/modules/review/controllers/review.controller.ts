@@ -3,6 +3,7 @@ import { Service } from 'typedi';
 import { emailsService } from '@src/modules/emails/services/emails.service';
 import { IdService } from '@src/modules/id/services/id.service';
 import { StatusConstants } from '@src/constants/StatusConstants';
+import { FirmService } from '@src/modules/firm/services/firm.service';
 const { CLIENT_URL } = require('@configs/vars');
 
 @Service()
@@ -11,16 +12,19 @@ export class ReviewController {
     private _emailService: emailsService,
     private _idService: IdService,
     private _reviewService: ReviewService,
+    private _firmService: FirmService
   ) {}
 
   public async add(req, res) {
     const { email, matterId } = req.body;
-    const { firm_name } = req.user;
-    const subject = `A reminder to review ${firm_name}`;
+    const { firm_id } = req.user.firm_access;
+
+    const firmName = await this._firmService.getFirmName(firm_id);
+    const subject = `A reminder to review ${firmName}`;
     const reviewId = await this._idService.generate();
     const reviewData = await this._reviewService.add(matterId, reviewId);
     const templateVars = {
-      'v:firm_name': firm_name,
+      'v:firm_name': firmName,
       'v:url': `${CLIENT_URL}/review/${reviewId}`,
     };
     await this._emailService.sendFromTemplate(email, subject, 'firm-review', templateVars);
