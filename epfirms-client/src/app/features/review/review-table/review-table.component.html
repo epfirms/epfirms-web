@@ -63,5 +63,5 @@
   </tbody>
 </table>
 
-<ep-paginator [epPageSize]="15" [epTotalSize]="reviews.length" (epCurrentPage)="setPagination($event)">
+<ep-paginator *ngIf="reviews" [epPageSize]="15" [epTotalSize]="reviews.length" (epCurrentPage)="setPagination($event)">
 </ep-paginator>
