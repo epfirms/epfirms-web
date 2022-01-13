@@ -10,6 +10,7 @@ import { StaffService } from '@app/firm-portal/_services/staff-service/staff.ser
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { LegalAreaService } from '@app/firm-portal/_services/legal-area-service/legal-area.service';
 import { EditClientComponent } from '@app/firm-portal/overlays/edit-client/edit-client.component';
+import { ReviewService } from '@app/features/review/services/review.service';
 
 @Component({
   selector: 'app-matter-tabs',
@@ -67,7 +68,8 @@ export class MatterTabsComponent implements OnInit {
     private _staffService: StaffService,
     private _matterService: MatterService,
     private _legalAreaService: LegalAreaService,
-    private _dialogService: DialogService
+    private _dialogService: DialogService,
+    private _reviewService: ReviewService
   ) {
     this.tabs$ = this._matterTabsService.tabs$;
 
@@ -139,5 +141,11 @@ export class MatterTabsComponent implements OnInit {
 
   trackByIndex(index, item) {
     return item.id;
+  }
+
+  sendReview(matterId: number, clientEmail: string): void {
+    if (clientEmail.length) {
+      this._reviewService.sendReview(clientEmail, matterId).subscribe();
+    }
   }
 }

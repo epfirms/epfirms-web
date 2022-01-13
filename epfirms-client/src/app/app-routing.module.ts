@@ -20,6 +20,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'review/:uid',
+    loadChildren: () =>
+    import('./pages/feedback-page/feedback-page.module').then(
+      (m) => m.FeedbackPageModule
+    )
+  },
+  {
     path: '',
     loadChildren: () =>
       import('./features/user-auth/user-auth.module').then((m) => m.UserAuthModule),
