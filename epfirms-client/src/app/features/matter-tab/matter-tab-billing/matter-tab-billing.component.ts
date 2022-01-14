@@ -6,6 +6,7 @@ import { StatementService } from '@app/shared/_services/statement-service/statem
 import { Matter } from '@app/core/interfaces/matter';
 import { DialogService } from '@ngneat/dialog';
 import { MatterBillingSettingsService } from '@app/shared/_services/matter-billing-settings-service/matter-billing-settings.service';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-matter-tab-billing',
@@ -48,6 +49,9 @@ export class MatterTabBillingComponent implements OnInit {
   // these should load into the matter from MatterBillingSettings
   defaultBillingStyle : string = "Hourly";
   defaultPaymentType : string = "Private Pay";
+
+  subTabs : string[] = ["overview", "bills", "payments", "statements", "monthly payments", "insurance", "billing settings"];
+  selectedTab : any = "overview";
 
   constructor(private _dialogService: DialogService, private _matterService: MatterService,
     private statementService: StatementService, private _matterBillingSettingsService : MatterBillingSettingsService) { }
@@ -240,6 +244,14 @@ export class MatterTabBillingComponent implements OnInit {
     this.matter.iolta_balance = this.ioltaBalance;
     this._matterService.update(this.matter).subscribe(res => console.log(res));
   }
+
+  selectTab(tab) : void {
+    console.log("before", this.selectedTab);
+    this.selectedTab = tab;
+    console.log("after", this.selectedTab);
+  }
+
+  
 
 
 
