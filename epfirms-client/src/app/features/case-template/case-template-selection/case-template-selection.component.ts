@@ -35,7 +35,7 @@ export class CaseTemplateSelectionComponent implements OnInit {
     });
 
     this._firmTeamService.getTeamsByOwner(this._dialogRef.data.attorney_id).subscribe(res => {
-      this.members =  res.teams.length ? res.teams[0].member : [];
+      this.members =  res.teams.length ? res.teams[0].firm_team_members : [];
     })
   }
 
@@ -76,8 +76,8 @@ export class CaseTemplateSelectionComponent implements OnInit {
   */
   private getAssigneeIdFromRole(firm_role_id: number): number {
     const attorneyId: number = this._dialogRef.data.attorney_id;
-   const employee = this.members.find((m) => m.firm_team_member.firm_role_id === firm_role_id);
-   return employee ? employee.user_id : attorneyId;
+   const teamMember = this.members.find((m) => m.firm_role_id === firm_role_id);
+   return teamMember ? teamMember.firm_employee.user_id : attorneyId;
   }
 
   private addDaysToDate(date: Date, numberOfDays: number): Date {

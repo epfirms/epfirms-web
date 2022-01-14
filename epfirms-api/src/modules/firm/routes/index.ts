@@ -71,4 +71,6 @@ firmRouter.post('/team/members', passport.authenticate('bearer', {session: false
 
 firmRouter.get('/team/owner/:id', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getTeamsByOwner(req, res));
 
+firmRouter.delete('/team/members/:id', passport.authenticate('bearer', {session: false}), (req, res) => firmController.removeTeamMember(req, res));
+
 export { firmRouter };

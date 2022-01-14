@@ -204,6 +204,19 @@ export class FirmController {
     }
   }
 
+  public async removeTeamMember(req: any, resp: Response): Promise<any> {
+    try {
+      const { id } = req.params;
+
+        // Add firm employee to team.
+        const removed = await this._firmTeamService.removeMember(id);
+
+      resp.status(StatusConstants.OK).send({ removed });
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
   public async getTeamMembers(req: any, resp: Response): Promise<any> {
     try {
       const { teamId } = req.params;
