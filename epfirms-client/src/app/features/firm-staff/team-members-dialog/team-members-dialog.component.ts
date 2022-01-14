@@ -32,7 +32,7 @@ export class TeamMembersDialogComponent implements OnInit {
     private _staffService: StaffService,
     private _firmTeamService: FirmTeamService,
   ) {
-    this.members = [...this._dialogRef.data.team.member];
+    this.members = [...this._dialogRef.data.team.firm_team_members];
     this.staff$ = _staffService.filteredEntities$;
   }
 
@@ -42,13 +42,17 @@ export class TeamMembersDialogComponent implements OnInit {
       this.staffMembers = [...staff];
       this.filteredStaffMembers = [...staff];
     });
+    this.getMemberGroups();
+  }
+
+  getMemberGroups(){
     this._firmRoleService.get().subscribe((response) => {
       this.firmRoles = [...response.roles];
 
       this.memberGroups = this.firmRoles.map((role) => {
         return {
           role: role,
-          member: this.members.find((m) => role.id === m.firm_team_member.firmRoleId),
+          member: this.members.find((m) => role.id === m.firm_role_id),
         };
       });
     });
@@ -72,6 +76,13 @@ export class TeamMembersDialogComponent implements OnInit {
             staff.user.full_name.toLowerCase().includes(event.toLowerCase()),
           )
         : [...this.staffMembers];
+  }
+
+  removeMember(id: number): void{
+    this._firmTeamService.removeMember(id).subscribe(() => {
+      const removedIndex = this.memberGroups.findIndex((g) => g.member && (g.member.id === id));
+      this.memberGroups[removedIndex].member = undefined;
+    });
   }
 
   close() {
