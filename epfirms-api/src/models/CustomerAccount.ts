@@ -24,6 +24,9 @@ module.exports = (sequelize, {
           type: INTEGER,
           allowNull: false,
         },
+        matter_id: {
+            type: INTEGER
+        },
         balance: {
             type: FLOAT
         },
