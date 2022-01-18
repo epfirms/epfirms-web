@@ -4,17 +4,18 @@ import { ManageStatementComponent } from './manage-statement/manage-statement.co
 import { CoreModule } from '@app/core/core.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { LegalInsuranceComponent } from './legal-insurance/legal-insurance.component';
+import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.component';
 
 
 
 @NgModule({
-  declarations: [ManageBillComponent, ManageStatementComponent, LegalInsuranceComponent],
+  declarations: [ManageBillComponent, ManageStatementComponent, LegalInsuranceComponent, MonthlyPaymentComponent],
   imports: [
     CoreModule,
     EditableModule
   ],
   exports: [
-    ManageBillComponent, ManageStatementComponent, LegalInsuranceComponent
+    ManageBillComponent, ManageStatementComponent, LegalInsuranceComponent, MonthlyPaymentComponent
   ]
 })
 export class BillingModule { }
