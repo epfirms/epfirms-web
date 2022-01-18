@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './firm-reviews-page.component.html',
   styleUrls: ['./firm-reviews-page.component.scss'],
   host: {
-    class: 'flex-1 relative z-0 flex flex-col overflow-hidden',
+    class: 'flex-1 relative z-0 flex flex-col overflow-y-auto',
   },
 })
 export class FirmReviewsPageComponent implements OnInit {

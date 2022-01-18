@@ -48,6 +48,12 @@ export class ReviewService {
           },
         ]
       },
+      order: [
+        [
+          'created_at',
+          'DESC'
+        ]
+      ]
     });
 
     return Promise.resolve(reviewInstance);
