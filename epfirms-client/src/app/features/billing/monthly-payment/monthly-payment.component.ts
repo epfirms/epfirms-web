@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Matter } from '@app/core/interfaces/matter';
 
 @Component({
@@ -17,9 +18,30 @@ export class MonthlyPaymentComponent implements OnInit {
   }
 
   private _matter: Matter;
+  // property for holding the value of the editable datepicker form
+  dueDate;
+
+  enableMonthlyPayments : boolean = false;
+
+  //form group for monthly payment / customer account stuff
+  customerAccountForm = new FormGroup({
+    user_id: new FormControl(),
+    matter_id: new FormControl(),
+    payment_agreement: new FormControl(),
+    min_payment: new FormControl(),
+    due_date: new FormControl(),
+    apply_late_fee: new FormControl(),
+    grace_period: new FormControl(),
+    late_fee_amount: new FormControl()
+  });
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  toggleMonthlyPayments() : void {
+    this.enableMonthlyPayments = !this.enableMonthlyPayments;
   }
 
 }
