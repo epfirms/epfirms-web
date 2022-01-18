@@ -25,7 +25,8 @@ module.exports = (sequelize, {
           allowNull: false,
         },
         matter_id: {
-            type: INTEGER
+            type: INTEGER,
+            unique: true
         },
         policy_number: {
             type: STRING

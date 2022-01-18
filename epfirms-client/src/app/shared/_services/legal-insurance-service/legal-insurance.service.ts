@@ -15,4 +15,8 @@ export class LegalInsuranceService {
     console.log(data)
     return this.http.post('/api/legal-insurance/', data);
   }
+
+  get(matterId) : Observable<any> {
+    return this.http.get(`/api/legal-insurance/${matterId}`);
+  }
 }
