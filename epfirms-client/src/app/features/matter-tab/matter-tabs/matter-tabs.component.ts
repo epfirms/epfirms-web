@@ -3,7 +3,7 @@ import { LegalArea } from '@app/core/interfaces/legal-area';
 import { Matter } from '@app/core/interfaces/matter';
 import { Staff } from '@app/core/interfaces/staff';
 import { Tabs } from '@app/core/interfaces/tabs';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { DialogService } from '@ngneat/dialog';
 import { MatterTabsService } from '@app/features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
@@ -11,6 +11,7 @@ import { MatterService } from '@app/firm-portal/_services/matter-service/matter.
 import { LegalAreaService } from '@app/firm-portal/_services/legal-area-service/legal-area.service';
 import { EditClientComponent } from '@app/firm-portal/overlays/edit-client/edit-client.component';
 import { ReviewService } from '@app/features/review/services/review.service';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-matter-tabs',
@@ -69,7 +70,8 @@ export class MatterTabsComponent implements OnInit {
     private _matterService: MatterService,
     private _legalAreaService: LegalAreaService,
     private _dialogService: DialogService,
-    private _reviewService: ReviewService
+    private _reviewService: ReviewService,
+    private _toastService: HotToastService
   ) {
     this.tabs$ = this._matterTabsService.tabs$;
 
@@ -145,7 +147,14 @@ export class MatterTabsComponent implements OnInit {
 
   sendReview(matterId: number, clientEmail: string): void {
     if (clientEmail.length) {
-      this._reviewService.sendReview(clientEmail, matterId).subscribe();
+      this._reviewService.sendReview(clientEmail, matterId).pipe(
+        this._toastService.observe({
+          loading: 'Sending...',
+          success: () => 'Review email sent',
+          error: () => 'An error occurred. Review email was not sent'
+        }),
+        catchError((error) => of(error))
+      ).subscribe();
     }
   }
 }
