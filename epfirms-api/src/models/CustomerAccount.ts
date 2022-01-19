@@ -25,7 +25,8 @@ module.exports = (sequelize, {
           allowNull: false,
         },
         matter_id: {
-            type: INTEGER
+            type: INTEGER,
+            unique: true,
         },
         balance: {
             type: FLOAT
@@ -43,7 +44,7 @@ module.exports = (sequelize, {
             type: FLOAT
         },
         due_date: {
-            type: DATE
+            type: INTEGER
         },
         apply_late_fee: {
             type: BOOLEAN
