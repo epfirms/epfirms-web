@@ -47,8 +47,17 @@ export class StripeController {
   // it returns true if the account_id can be matched in the list of connected accounts
   public async getConnectionStatus(req, res: Response): Promise<any> {
     try {
+      // there are two cases in which we might need to grab the firm_id
+      // a connection status request from the client portal or the firm portal
+      let firm_id;
+      if (req.user.firm_access == null){
+        firm_id = req.user.client_access[0].id;
+      }
+      else {
+        firm_id = req.user.firm_access.firm_id
+      }
       // get the stripe account record if it exists in db
-      const stripeAccount = await StripeService.getStripeAccountId(req.user.firm_access.firm_id);
+      const stripeAccount = await StripeService.getStripeAccountId(firm_id);
       // if there is an existing stripe account, use the stripe api to compare it to connected
       // accounts.
       if (stripeAccount !== null){
@@ -69,6 +78,7 @@ export class StripeController {
         res.status(StatusConstants.OK).send({isConnected: false});
       }
     } catch (err) {
+      console.error(err);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
     }
   }
