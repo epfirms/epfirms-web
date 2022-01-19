@@ -44,4 +44,8 @@ export class MonthlyPaymentComponent implements OnInit {
     this.enableMonthlyPayments = !this.enableMonthlyPayments;
   }
 
+  // submit() : void {
+
+  // }
+
 }
