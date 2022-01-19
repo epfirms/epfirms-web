@@ -19,7 +19,7 @@
     <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
     <div class="max-w-3xl mx-auto">
       <!-- Content goes here -->
-      <form  class="space-y-8 divide-y divide-gray-200">
+      <form [formGroup]="customerAccountForm"  class="space-y-8 divide-y divide-gray-200">
         <div class="space-y-8 divide-y divide-gray-200">
           
       
@@ -77,21 +77,14 @@
       
               <div class="sm:col-span-4">
                 <label  class="block text-sm font-medium text-gray-700">
-                  Claim Number
+                  Minimum Monthly Payment
                 </label>
                 <div class="mt-1">
-                  <input  type="number"   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                  <input  type="number" formControlName="min_payment"   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                 </div>
               </div>
 
-              <div class="sm:col-span-4">
-                <label for="password" class="block text-sm font-medium text-gray-700">
-                  Social Security
-                </label>
-                <div class="mt-1">
-                  <input  type="password"   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
-                </div>
-              </div>
+              
       
               
       
