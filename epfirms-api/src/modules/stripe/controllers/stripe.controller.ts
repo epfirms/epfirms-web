@@ -27,6 +27,10 @@ export class StripeController {
     return (Math.round(100* fee)/100) / 0.01
   }
 
+  private _roundToCurrency(n): number {
+    return Math.round(100* n) / 100
+  }
+
   //takes the stripe accountId and origin or request and creates the secure link to setup
   //stripe integration
   private _generateAccountLink(accountID, origin) {
@@ -118,7 +122,7 @@ export class StripeController {
 
   public async createPaymentSession(req, res : Response) : Promise<any> {
     try {
-
+      let amount = this._roundToCurrency(req.body.balance);
       // create stripe checkout session
       const session = await stripe.checkout.sessions.create({
         line_items: [
@@ -129,7 +133,11 @@ export class StripeController {
                 name: 'FIRM NAME BILLING VAR'
               },
               //conversion to cents since Stripe API uses this; might need a better way
-              unit_amount_decimal: (req.body.balance.toFixed(2) / 0.01)
+              unit_amount_decimal: amount / 0.01,
+              // recurring: {
+              //   interval: "month",
+              //   interval_count: 1,
+              // },
             },
             quantity: 1,
           },
@@ -139,7 +147,7 @@ export class StripeController {
               product_data: {
                 name: "Processing Fee"
               },
-              unit_amount_decimal: (this._calcFees(req.body.balance))
+              unit_amount_decimal: (this._calcFees(amount))
             },
             quantity: 1,
           },
