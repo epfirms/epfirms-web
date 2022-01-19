@@ -112,6 +112,7 @@ export class ManageBillComponent implements OnInit {
   }
 
   submit(): void {
+    this.billForm.patchValue({amount: (Math.round(100 * this.billForm.get('amount').value)) / 100});
     if (this.isEditMode) {
       let bill = this.billForm.value;
       console.log("EDITED BILL ", bill);
