@@ -24,7 +24,7 @@ export class StripeController {
     // get the fees only since it will be in an itemized charge
     let fee = c - p;
     // convert to cents for stripe and return
-    return (Math.round(100* fee)/100) / 0.01
+    return Math.round((Math.round(100* fee)/100) / 0.01)
   }
 
   private _roundToCurrency(n): number {
@@ -133,7 +133,7 @@ export class StripeController {
                 name: 'FIRM NAME BILLING VAR'
               },
               //conversion to cents since Stripe API uses this; might need a better way
-              unit_amount_decimal: amount / 0.01,
+              unit_amount_decimal: Math.round(amount / 0.01),
               // recurring: {
               //   interval: "month",
               //   interval_count: 1,
