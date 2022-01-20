@@ -61,6 +61,9 @@ export class MatterTabBillingComponent implements OnInit {
   ];
   selectedTab: any = 'overview';
 
+  //manage the state of the statement generation workflow
+  generateStatementState : boolean = false;
+
   constructor(
     private _dialogService: DialogService,
     private _matterService: MatterService,
@@ -259,6 +262,11 @@ export class MatterTabBillingComponent implements OnInit {
     console.log('before', this.selectedTab);
     this.selectedTab = tab;
     console.log('after', this.selectedTab);
+  }
+
+
+  toggleGenerateStatement() : void {
+    this.generateStatementState = !this.generateStatementState;
   }
 
   //----------------------

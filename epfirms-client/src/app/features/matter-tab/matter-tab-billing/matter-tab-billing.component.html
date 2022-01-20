@@ -517,7 +517,7 @@
               </tbody>
             </table>
           </div>
-          <button (click)="generateStatement()" type="button"
+          <button (click)="toggleGenerateStatement()" type="button"
             class="inline-flex items-center px-4 py-2 my-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
             Generate Statement
           </button>
@@ -532,7 +532,7 @@
         </div>
       </div>
     </div>
-    <app-generate-statement [bills]="bills"></app-generate-statement>
+    <app-generate-statement *ngIf="generateStatementState" [bills]="bills" [state]="generateStatementState" (stateChanged)="generateStatementState = $event"></app-generate-statement>
   </div>
 
 
