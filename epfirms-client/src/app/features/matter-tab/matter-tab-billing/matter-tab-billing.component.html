@@ -532,7 +532,8 @@
         </div>
       </div>
     </div>
-    <app-generate-statement *ngIf="generateStatementState" [bills]="bills" [state]="generateStatementState" (stateChanged)="generateStatementState = $event"></app-generate-statement>
+    <app-generate-statement *ngIf="generateStatementState" [bills]="bills" [state]="generateStatementState"
+    [matter]="matter" (stateChanged)="handleStateChange($event)"></app-generate-statement>
   </div>
 
 

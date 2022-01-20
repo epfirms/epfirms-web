@@ -269,5 +269,10 @@ export class MatterTabBillingComponent implements OnInit {
     this.generateStatementState = !this.generateStatementState;
   }
 
+  handleStateChange(event): void {
+    this.generateStatementState = event;
+    this.loadStatements();
+  }
+
   //----------------------
 }
