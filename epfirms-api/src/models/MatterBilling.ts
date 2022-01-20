@@ -63,6 +63,9 @@ module.exports = (sequelize, { INTEGER, DATE, FLOAT, STRING }) => {
           employee_name: {
             type: STRING
           },
+          status: {
+            type: STRING
+          }
       },
       {
         tableName,
