@@ -47,7 +47,6 @@ export class GenerateStatementComponent implements OnInit {
   }
 
   submit(): void {
-    this.close();
     let statement = {
       firm_id: this.matter.firm_id,
       status: 'UNPAID',
@@ -62,6 +61,7 @@ export class GenerateStatementComponent implements OnInit {
       this.bills.forEach((bill) => {
         this.updateBills(res.id);
       });
+      this.close()
     });
   }
 
