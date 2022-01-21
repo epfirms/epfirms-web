@@ -10,7 +10,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { RegisterComponent } from './register/register.component';
 import { LoginSelectComponent } from './login-select/login-select.component';
 import { VerifyEmailComponent } from './verifyEmail/VerifyEmail.component';
-import { FeedbackPageComponent } from './feedback-page/feedback-page.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { InputMaskModule } from '@ngneat/input-mask';
 
@@ -23,7 +22,6 @@ import { InputMaskModule } from '@ngneat/input-mask';
     RegisterComponent,
     LoginSelectComponent,
     VerifyEmailComponent,
-    FeedbackPageComponent,
     UpdatePasswordComponent
   ],
   imports: [

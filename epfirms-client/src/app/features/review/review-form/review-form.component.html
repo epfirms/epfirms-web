@@ -1,0 +1,71 @@
+<div class="relative flex flex-col justify-center min-h-screen py-6 overflow-hidden bg-slate-100 sm:py-12">
+  <div class="relative px-6 pt-10 pb-8 bg-white shadow-xl ring-1 ring-gray-900/5 sm:max-w-lg sm:mx-auto sm:rounded-lg sm:px-10">
+    <div class="w-full max-w-md mx-auto" *ngIf="!status">
+      <div class="flex space-x-4 animate-pulse">
+        <div class="flex-1 py-1 space-y-6">
+          <div class="w-48 h-2 mx-auto bg-gray-300 rounded"></div>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-md mx-auto" *ngIf="status">
+      <h1 class="text-lg font-medium text-center" *ngIf="status === 'sent'">{{firmName || 'Law firm' | titlecase}}</h1>
+      <div class="divide-y divide-gray-300/50">
+        <div class="py-6 space-y-6 text-sm leading-7 text-gray-600">
+          <p *ngIf="status === 'sent'">Please take a moment to review your experience with us. Your feedback not only helps us, it helps other potential clients.</p>
+          <p *ngIf="status === 'complete'">Thank you for your feedback. Your review has been saved.</p>
+
+            <div class="flex items-center rating-group" *ngIf="status === 'sent'">
+              <div class="rating-group">
+                <input disabled checked class="rating__input rating__input--none" name="rating3" id="rating3-none" [value]="0" type="radio" [(ngModel)]="rating">
+                <label aria-label="1 star" class="rating__label" for="rating3-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-7 w-7 rating__icon rating__icon--star" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </label>
+                <input class="rating__input" name="rating3" id="rating3-1" [value]="1" type="radio" [(ngModel)]="rating">
+                <label aria-label="2 stars" class="rating__label" for="rating3-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-7 w-7 rating__icon rating__icon--star" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </label>
+                <input class="rating__input" name="rating3" id="rating3-2" [value]="2" type="radio" [(ngModel)]="rating">
+                <label aria-label="3 stars" class="rating__label" for="rating3-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-7 w-7 rating__icon rating__icon--star" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </label>
+                <input class="rating__input" name="rating3" id="rating3-3" [value]="3" type="radio" [(ngModel)]="rating">
+                <label aria-label="4 stars" class="rating__label" for="rating3-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-7 w-7 rating__icon rating__icon--star" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </label>
+                <input class="rating__input" name="rating3" id="rating3-4" [value]="4" type="radio" [(ngModel)]="rating">
+                <label aria-label="5 stars" class="rating__label" for="rating3-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-7 w-7 rating__icon rating__icon--star" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </label>
+                <input class="rating__input" name="rating3" id="rating3-5" [value]="5" type="radio" [(ngModel)]="rating">
+            </div>
+            </div>
+                <div *ngIf="status === 'sent'">
+                  <div class="flex justify-between">
+                    <label for="message" class="block text-sm font-medium text-slate-600">Message</label>
+                    <span id="message-max" class="text-sm text-slate-500">Max. 500 characters</span>
+                  </div>
+                  <div class="mt-1">
+                    <textarea [(ngModel)]="comment" id="message" name="message" rows="4" class="block w-full px-4 py-3 border rounded-md shadow-sm text-slate-900 focus:ring-blue-500 focus:border-blue-500 border-slate-300" aria-describedby="message-max"></textarea>
+                  </div>
+                </div>
+          </div>          
+
+        </div>
+        <div class="text-base font-semibold leading-7 text-right" *ngIf="status === 'sent'">
+<button (click)="submit()" type="button" [disabled]="status !== 'sent'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50">
+  Submit
+</button>
+        </div>
+      </div>
+    </div>
+  </div>

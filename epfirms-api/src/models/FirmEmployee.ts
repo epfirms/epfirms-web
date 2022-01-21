@@ -22,15 +22,6 @@ module.exports = (sequelize, {
         admin: {
             type: BOOLEAN,
           },
-          attorney: {
-            type: BOOLEAN,
-          },
-          legal_assistant: {
-            type: BOOLEAN,
-          },
-          paralegal: {
-            type: BOOLEAN,
-          },
           active: {
             type: BOOLEAN,
             defaultValue: true

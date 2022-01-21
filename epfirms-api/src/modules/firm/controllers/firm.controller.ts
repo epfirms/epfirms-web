@@ -84,7 +84,7 @@ export class FirmController {
       const newClient = await this._firmService.createClient(client, firm_id);
       resp.status(StatusConstants.CREATED).send(newClient);
     } catch (error) {
-      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send({message: error.message});
     }
   }
 
@@ -199,6 +199,19 @@ export class FirmController {
         const member = await this._firmTeamService.addMember(teamId, employeeId, roleId);
 
       resp.status(StatusConstants.OK).send({ member });
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
+  public async removeTeamMember(req: any, resp: Response): Promise<any> {
+    try {
+      const { id } = req.params;
+
+        // Add firm employee to team.
+        const removed = await this._firmTeamService.removeMember(id);
+
+      resp.status(StatusConstants.OK).send({ removed });
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }

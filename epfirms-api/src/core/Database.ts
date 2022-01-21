@@ -354,10 +354,21 @@ export class Database {
       foreignKey: 'owner'
     });
 
-    this.models.firm_team.belongsToMany(this.models.firm_employee, { through: { model: this.models.firm_team_member, unique: false }, as: 'member'});
-    this.models.firm_employee.belongsToMany(this.models.firm_team, { through: { model: this.models.firm_team_member, unique: false }, as: 'team'});
+    this.models.firm_employee.hasMany(this.models.firm_team_member, {
+      foreignKey: 'firm_employee_id'
+    });
+    this.models.firm_team_member.belongsTo(this.models.firm_employee);
 
-    this.models.firm_role.hasMany(this.models.firm_team_member);
+    this.models.firm_team.hasMany(this.models.firm_team_member, {
+      foreignKey: 'firm_team_id'
+    });
+    this.models.firm_team_member.belongsTo(this.models.firm_team);
+    // this.models.firm_team.belongsToMany(this.models.firm_employee, { through: { model: this.models.firm_team_member, unique: false }, as: 'member', unique: false, foreignKey: 'firm_team_id'});
+    // this.models.firm_employee.belongsToMany(this.models.firm_team, { through: { model: this.models.firm_team_member, unique: false }, as: 'team', unique: false, foreignKey: 'firm_employee_id'});
+
+    this.models.firm_role.hasMany(this.models.firm_team_member, {
+      foreignKey: 'firm_role_id'
+    });
     this.models.firm_team_member.belongsTo(this.models.firm_role);
 
     this.models.firm.hasMany(this.models.firm_role, {foreignKey: 'firm_id', as: 'firm_role'});

@@ -22,11 +22,11 @@ module.exports = (sequelize, {
         },
         billing_type: {
           type: STRING,
-          defaultValue: 'Hourly'
+          defaultValue: 'hourly'
         },
         payment_type: {
           type: STRING,
-          defaultValue: 'Private Pay'
+          defaultValue: 'private pay'
         }
       }, {
         tableName,

@@ -32,4 +32,8 @@ export class FirmTeamService {
   getTeamsByOwner(ownerId: number): Observable<any> {
     return this.http.get(`/api/firm/team/owner/${ownerId}`);
   }
+
+  removeMember(teamMemberId: number): Observable<any> {
+    return this.http.delete(`/api/firm/team/members/${teamMemberId}`);
+  }
 }

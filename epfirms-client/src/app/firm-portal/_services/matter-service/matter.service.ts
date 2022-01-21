@@ -6,11 +6,12 @@ import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
-import { concatMap, filter, map, reduce, take } from 'rxjs/operators';
+import { catchError, concatMap, filter, map, reduce, take } from 'rxjs/operators';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { SocketService } from '../../../core/services/socket.service';
 import { select } from '@ngrx/store';
 import { selectPopulatedMatters } from '@app/store/matter/matter.selector';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,8 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
     private _http: HttpClient,
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
     private _currentUserService: CurrentUserService,
-    private _socketService: SocketService
+    private _socketService: SocketService,
+    private _toastService: HotToastService
   ) {
     super('Matter', serviceElementsFactory);
 
@@ -44,6 +46,11 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
 
   create(matter): Observable<any> {
     return this._http.post<any>('/api/matters', { matter }).pipe(
+      this._toastService.observe({
+        loading: `Adding ${matter.matter_type || 'matter'}...`,
+        success: () => 'Successfully added!',
+        error: () => 'An error occurred. Unable to add matter.',
+      }),
       map((response: Matter) => {
         this._socketService.addOneToCacheSync('matter', response);
         return of(response);

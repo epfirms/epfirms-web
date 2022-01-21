@@ -41,6 +41,10 @@ const routes: Routes = [
       import('./leads/leads.module').then(
         (m) => m.LeadsPageModule
       )},
+      {path: 'reviews', canActivate: [AuthGuard], loadChildren: () =>
+      import('../pages/firm-reviews-page/firm-reviews-page.module').then(
+        (m) => m.FirmReviewsPageModule
+      ),},
       {path: 'settings', canActivate: [AuthGuard], loadChildren: () =>
       import('./firm-settings/firm-settings.module').then(
         (m) => m.FirmSettingsModule

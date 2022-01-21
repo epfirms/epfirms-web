@@ -47,8 +47,11 @@ export class MatterTabBillingComponent implements OnInit {
 
   // bindings for default billing settings
   // these should load into the matter from MatterBillingSettings
-  defaultBillingStyle: string = 'Hourly';
-  defaultPaymentType: string = 'Private Pay';
+  defaultBillingStyle : string = "hourly";
+  defaultPaymentType : string = "private pay";
+
+  billingSettingOptions : string[] = ["hourly", "flat rate", "contingency"];
+  billingPaymentOptions : string[] = ["private pay", "legal insurance"];
 
   //filters for the bills
   displayReconciled : boolean = false;
@@ -212,13 +215,15 @@ export class MatterTabBillingComponent implements OnInit {
     } else {
       settings = {
         matter_id: this.matter.id,
-        billing_type: 'Hourly',
-        payment_type: 'Private Pay',
-      };
+        billing_type: "hourly",
+        payment_type: "private pay"
+      }
     }
-
-    this._matterBillingSettingsService.create(settings).subscribe((onRes) => {
-      console.log('This should be updating settings');
+    this.matter.matter_billing_setting = settings;
+    
+    this._matterService.update(this.matter).subscribe();
+    this._matterBillingSettingsService.create(settings).subscribe(onRes => {
+      console.log("This should be updating settings");
       console.log(onRes);
     });
   }

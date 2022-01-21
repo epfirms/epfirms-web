@@ -14,7 +14,6 @@ import { Staff } from '@app/core/interfaces/staff';
 import { Observable, Subscription } from 'rxjs';
 import { AddClientComponent } from '../add-client/add-client.component';
 import { DialogRef, DialogService } from '@ngneat/dialog';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-case',
@@ -137,7 +136,6 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   }
 
   selectEvent(item: any, controlName: string) {
-    console.log(item);
     this.caseForm.patchValue({[controlName]: item});
     this.caseForm.updateValueAndValidity();
   }

@@ -109,29 +109,33 @@ export class FirmService {
   }
 
   public async createClient(clientInfo, firmId): Promise<any> {
-    const firm = await Database.models.firm.findOne({
-      where: {
-        id: firmId
-      }
-    });
-
-    let existingUser;
-    if (clientInfo.email && clientInfo.email.length) {
-      existingUser = await Database.models.user.findOne({
-        where: {
-          email: clientInfo.email
+      const result = await Database.sequelize.transaction(async (t) => {
+        const firm = await Database.models.firm.findOne({
+          where: {
+            id: firmId
+          }
+        });
+    
+        let existingUser;
+        if (clientInfo.email && clientInfo.email.length) {
+          existingUser = await Database.models.user.findOne({
+            where: {
+              email: clientInfo.email
+            }
+          });
         }
+    
+        let firmClient;
+        if (existingUser && existingUser.id) {
+          firmClient = await firm.addFirm_client(existingUser, {transaction: t});
+        } else {
+          firmClient = await firm.createFirm_client(clientInfo, {transaction: t});
+        }
+    
+        return firmClient;
       });
-    }
 
-    let firmClient;
-    if (existingUser && existingUser.id) {
-      firmClient = await firm.addFirm_client(existingUser);
-    } else {
-      firmClient = await firm.createFirm_client(clientInfo);
-    }
-
-    return Promise.resolve(firmClient);
+      return Promise.resolve(result);
   }
 
   public async updateFirm(firm_id, newFirmData) {
