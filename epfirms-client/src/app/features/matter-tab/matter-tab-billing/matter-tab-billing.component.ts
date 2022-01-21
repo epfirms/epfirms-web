@@ -50,6 +50,9 @@ export class MatterTabBillingComponent implements OnInit {
   defaultBillingStyle: string = 'Hourly';
   defaultPaymentType: string = 'Private Pay';
 
+  //filters for the bills
+  displayReconciled : boolean = false;
+
   subTabs: string[] = [
     'overview',
     'bills',
@@ -102,6 +105,10 @@ export class MatterTabBillingComponent implements OnInit {
       this.payments.forEach((payment) => (this.totalPayments += payment.amount));
       this.balance = this.totalBilled - this.totalPayments;
     });
+  }
+
+  toggleBillFilter() : void {
+    this.displayReconciled = !this.displayReconciled;
   }
 
   addBill(): void {
