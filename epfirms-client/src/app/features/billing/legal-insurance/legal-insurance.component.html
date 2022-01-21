@@ -1,0 +1,86 @@
+<!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
+    <div class="max-w-3xl mx-auto">
+      <!-- Content goes here -->
+      <form [formGroup]="insuranceForm" class="space-y-8 divide-y divide-gray-200">
+        <div class="space-y-8 divide-y divide-gray-200">
+          
+      
+          <div class="pt-8">
+            <div>
+              <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Legal Insurance
+              </h3>
+              
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+              <div class="sm:col-span-3">
+                <label for="first-name" class="block text-sm font-medium text-gray-700">
+                  Insurance Company
+                </label>
+                <div class="mt-1">
+                  <input type="text" (blur)="submit()" formControlName="company_name" name="first-name" id="first-name" autocomplete="given-name" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                </div>
+              </div>
+      
+              <div class="sm:col-span-3">
+                <label for="last-name"  class="block text-sm font-medium text-gray-700">
+                  Policyholder
+                </label>
+                <div class="mt-1">
+                  <input type="text" (blur)="submit()" formControlName="policy_holder" name="last-name" id="last-name" autocomplete="family-name" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                </div>
+              </div>
+      
+              <div class="sm:col-span-4">
+                <label  class="block text-sm font-medium text-gray-700">
+                  Claim Number
+                </label>
+                <div class="mt-1">
+                  <input  type="number" (blur)="submit()" formControlName="policy_number"  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                </div>
+              </div>
+
+              <div class="sm:col-span-4">
+                <label for="password" class="block text-sm font-medium text-gray-700">
+                  Social Security
+                </label>
+                <div class="mt-1">
+                  <input  type="password" (blur)="submit()" formControlName="social_security"  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                </div>
+              </div>
+      
+              
+      
+              
+            </div>
+          </div>
+      
+          
+        </div>
+      
+        
+      </form>
+
+    </div>
+  </div>
+  
+
+  

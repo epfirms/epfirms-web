@@ -1,4 +1,4 @@
-module.exports = (sequelize, { INTEGER, DATE, FLOAT, STRING }) => {
+module.exports = (sequelize, { INTEGER, DATE, BOOLEAN, FLOAT, STRING }) => {
     const tableName = 'matter_billing';
 
     const MatterBilling = sequelize.define(
@@ -63,6 +63,10 @@ module.exports = (sequelize, { INTEGER, DATE, FLOAT, STRING }) => {
           employee_name: {
             type: STRING
           },
+          reconciled: {
+            type: BOOLEAN,
+            defaultValue: false
+          }
       },
       {
         tableName,

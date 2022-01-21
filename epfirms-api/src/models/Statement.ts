@@ -5,6 +5,7 @@ module.exports = (sequelize, {
     STRING,
     TEXT,
     DATE,
+    FLOAT
   }) => {
     const tableName = 'statement';
 
@@ -56,12 +57,22 @@ module.exports = (sequelize, {
           type: STRING,
         },
         balance_due: {
-          type: INTEGER,
+          type: FLOAT,
         },
         total: {
           type: INTEGER,
-          
         },
+        stripe_session_id: {
+          type: STRING
+        },
+        is_approved: {
+          type: BOOLEAN,
+          defaultValue: 0
+        },
+        is_client_visible: {
+          type: BOOLEAN,
+          defaultValue: 0
+        }
       }, {
         tableName,
         defaultScope: {

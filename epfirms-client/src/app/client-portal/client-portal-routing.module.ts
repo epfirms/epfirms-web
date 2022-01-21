@@ -5,6 +5,7 @@ import { ClientMatterResolver } from '@app/core/resolvers/client-portal/client-m
 import { CurrentUserResolver } from '@app/core/resolvers/current-user.resolver';
 import { CaseListComponent } from './case-list/case-list.component';
 import { ClientDocumentsComponent } from './client-documents/client-documents.component';
+import { ClientFinancialsComponent } from './client-financials/client-financials.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
 import { ClientPortalComponent } from './client-portal.component';
 
@@ -21,7 +22,8 @@ const routes: Routes = [
       {path: '', component: ClientHomeComponent, canActivate: [AuthGuard], children: [
         {path: '', component: CaseListComponent, canActivate: [AuthGuard]}
       ]},
-      {path: 'documents', component: ClientDocumentsComponent, canActivate: [AuthGuard]}
+      {path: 'documents', component: ClientDocumentsComponent, canActivate: [AuthGuard]},
+      {path: 'financials', component: ClientFinancialsComponent, canActivate: [AuthGuard]}
     ] }],
   },
 ];

@@ -18,6 +18,8 @@ import { caseTemplateCommunityRouter } from '@src/modules/case-template-communit
 
 import { matterBillingSettingsRouter } from '@src/modules/matter-billing-settings/routes';
 import { stripeRouter } from '@src/modules/stripe/routes';
+import { legalInsuranceRouter } from '@src/modules/legal-insurance/routes';
+import { customerAccountRouter } from '@src/modules/customer-account/routes';
 
 const v1Router = express.Router();
 
@@ -40,5 +42,6 @@ v1Router.use('/sign-up', betaSignupRouter);
 v1Router.use('/matter-billing-settings', matterBillingSettingsRouter)
 v1Router.use('/stripe', stripeRouter);
 v1Router.use('/case-templates', caseTemplateCommunityRouter);
-
+v1Router.use('/legal-insurance', legalInsuranceRouter);
+v1Router.use('/customer-account', customerAccountRouter)
 export { v1Router }

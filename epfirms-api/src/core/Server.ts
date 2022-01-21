@@ -20,6 +20,7 @@ export async function server() {
 
   await Database.connect();
   await Database.start();
+  await InitializeRoutes.InitializeStripeRoutes(app);
   await InitializeMiddleWare.InitializeCommonMiddleware(app);
   await InitializeRoutes.Initialize(app);
   await InitializeMiddleWare.InitializeErrorHandlingMiddleware(app);

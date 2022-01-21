@@ -63,6 +63,8 @@ export class Database {
       firm_team_member: require('../models/FirmTeamMember')(this.sequelize, Sequelize),
       firm_role: require('../models/FirmRole')(this.sequelize, Sequelize),
       firm_employee_role: require('../models/FirmEmployeeRole')(this.sequelize, Sequelize),
+      legal_insurance: require('../models/LegalInsurance')(this.sequelize, Sequelize),
+      customer_account: require('../models/CustomerAccount')(this.sequelize, Sequelize)
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -377,6 +379,11 @@ export class Database {
     this.models.firm_employee.belongsToMany(this.models.firm_role, { through: 'firm_employee_role', as: 'role', foreignKey: 'firm_employee_id'});
     this.models.firm_role.belongsToMany(this.models.firm_employee, { through: 'firm_employee_role', foreignKey: 'firm_role_id'});
 
+    this.models.matter.hasOne(this.models.customer_account, {foreignKey: 'matter_id'});
+    this.models.customer_account.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+
+    this.models.matter.hasOne(this.models.legal_insurance, {foreignKey: 'matter_id'});
+    this.models.legal_insurance.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
   }
 
   public static async start() {
