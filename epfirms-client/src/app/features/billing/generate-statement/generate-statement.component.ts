@@ -58,15 +58,18 @@ export class GenerateStatementComponent implements OnInit {
     };
 
     this.statementService.create(statement).subscribe((res) => {
-      this.bills.forEach((bill) => {
-        this.updateBills(res.id);
-      });
+      
+      this.updateBills(res.id);
+      
       this.close()
     });
   }
 
   updateBills(statementId): void {
-    this.bills.forEach(bill => this.matterService.editMatterBillOrPayment(bill).subscribe());
+    this.bills.filter(bill => bill.reconciled).forEach(bill => {
+      bill.statement_id = statementId;
+      this.matterService.editMatterBillOrPayment(bill).subscribe()
+    });
   }
 
 }
