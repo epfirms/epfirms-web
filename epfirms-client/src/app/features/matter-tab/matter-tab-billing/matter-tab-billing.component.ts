@@ -162,44 +162,7 @@ export class MatterTabBillingComponent implements OnInit {
     this.currentBill = null;
   }
 
-  // STATEMENT GENERATION CODE
-  generateStatement(): void {
-    // get the bills for the month
-    let monthlyBills = this.bills.filter(
-      (bill) => new Date().getMonth() === new Date(bill.date).getMonth(),
-    );
-    console.log(monthlyBills);
-    let balance = 0;
-    monthlyBills.forEach((bill) => {
-      balance += parseFloat(bill.amount);
-    });
 
-    console.log(balance);
-    console.log(this.matter);
-    let date = new Date();
-    date.setDate(date.getDate() + 30);
-
-    let statement = {
-      firm_id: this.matter.firm_id,
-      status: 'UNPAID',
-      matter_id: this.matter.id,
-      due_date: date.toDateString(),
-      balance_due: balance,
-      user_id: this.matter.attorney_id,
-      message: `Statement Generated: ${new Date().toDateString()}`,
-    };
-
-    this.statementService.create(statement).subscribe((res) => {
-      console.log(res);
-      monthlyBills.forEach((bill) => {
-        bill.statement_id = res.id;
-        this._matterService.editMatterBillOrPayment(bill).subscribe();
-        this.loadStatements();
-      });
-    });
-  }
-
-  // EOSTATEMENT GENERATION CODE
 
   // load all statements for the matter
   loadStatements(): void {
