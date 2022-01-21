@@ -18,6 +18,9 @@ export class GenerateStatementComponent implements OnInit {
 
   //properties for the new statement
   statementTotal : number = 0;
+
+  //checkbox for sending to client
+  sendToClient : boolean = true;
   
   constructor(
     private matterService : MatterService,
@@ -55,6 +58,8 @@ export class GenerateStatementComponent implements OnInit {
       balance_due: this.statementTotal,
       user_id: this.matter.client.id,
       message: `Statement Generated: ${new Date().toDateString()}`,
+      is_approved: true,
+      is_client_visible: this.sendToClient
     };
 
     this.statementService.create(statement).subscribe((res) => {
