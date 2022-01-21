@@ -15,6 +15,7 @@ import { TransactionsComponent } from './client-financials/transactions/transact
 import { StoreModule } from '@ngrx/store';
 import { currentUserReducer } from '@app/store/current-user/current-user.reducer';
 import { MenuModule } from '@app/shared/menu/menu.module';
+import { StatementViewComponent } from './client-financials/statement-view/statement-view.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MenuModule } from '@app/shared/menu/menu.module';
     ClientDocumentsComponent,
     ClientDocumentUploadComponent,
     ClientFinancialsComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    StatementViewComponent
   ],
   imports: [
     CommonModule,

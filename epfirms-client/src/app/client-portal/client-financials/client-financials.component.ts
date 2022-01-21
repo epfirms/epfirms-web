@@ -26,6 +26,10 @@ export class ClientFinancialsComponent implements OnInit {
   //matter balances due
   matterBalances = {};
 
+  //bindings for child component statement-view
+  currentStatements;
+  displayStatementView : boolean = false;
+
   constructor(
     private store : Store<{currentUser: any}>,
     private matterService : MatterService,
@@ -100,4 +104,9 @@ export class ClientFinancialsComponent implements OnInit {
     });
   }
 
+  openStatementView(matter) : void {
+    console.log(matter);
+    this.currentStatements = this.matterStatements[matter.case_id];
+    this.displayStatementView = true;
+  }
 }
