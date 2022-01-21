@@ -2,6 +2,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   Directive,
   ElementRef,
+  HostListener,
   Input,
   OnChanges,
   OnDestroy,
@@ -25,6 +26,14 @@ import { filter, takeUntil } from 'rxjs/operators';
   }
 })
 export class InputDirective implements OnChanges, OnInit, OnDestroy {
+  @HostListener('blur') trimOnBlur() {
+    const trimmedValue = this.elementRef.nativeElement.value.trim();
+    this.elementRef.nativeElement.value = trimmedValue;
+    if (this.ngControl) {
+      this.ngControl.control.setValue(trimmedValue);
+    }
+  }
+  
   @Input()
   get disabled(): boolean {
     if (this.ngControl && this.ngControl.disabled !== null) {
@@ -33,6 +42,7 @@ export class InputDirective implements OnChanges, OnInit, OnDestroy {
 
     return this._disabled;
   }
+
   set disabled(value: boolean) {
     this._disabled = coerceBooleanProperty(value);
   }
@@ -41,14 +51,17 @@ export class InputDirective implements OnChanges, OnInit, OnDestroy {
   get editable(): boolean {
     return this._editable;
   }
+
   set editable(value: boolean) {
     this._editable = coerceBooleanProperty(value);
   }
 
   private _disabled = false;
+
   private _editable = false;
 
   disabled$ = new Subject<boolean>();
+
   editable$ = new Subject<boolean>();
 
   private destroy$ = new Subject<void>();

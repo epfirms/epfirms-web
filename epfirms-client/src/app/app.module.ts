@@ -24,6 +24,7 @@ import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.c
 import { QuillModule } from 'ngx-quill';
 import { AutocompleteModule } from './shared/autocomplete/autocomplete.module';
 import { HotToastModule } from '@ngneat/hot-toast';
+import ImageCompress from 'quill-image-compress';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -59,7 +60,7 @@ const quillConfig = [
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -75,8 +76,17 @@ const quillConfig = [
     EntityDataModule.forRoot(entityConfig),
     QuillModule.forRoot({
       modules: {
-        toolbar: quillConfig
+        toolbar: quillConfig,
+        imageCompress: {
+          quality: 0.7
+        }
       },
+      customModules: [
+        {
+          implementation: ImageCompress,
+          path: 'modules/imageCompress'
+        }
+      ],
       format: 'json'
     }),
     extModules,

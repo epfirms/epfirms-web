@@ -10,7 +10,10 @@ import { MatterService } from '@app/firm-portal/_services/matter-service/matter.
 @Component({
   selector: 'app-matter-tab-notes',
   templateUrl: './matter-tab-notes.component.html',
-  styleUrls: ['./matter-tab-notes.component.scss']
+  styleUrls: ['./matter-tab-notes.component.scss'],
+  host: {
+    'class': 'flex flex-row-reverse h-full'
+  }
 })
 export class MatterTabNotesComponent {
   @Input()
