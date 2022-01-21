@@ -257,16 +257,16 @@
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     <div>
                       <label for="billingStyle" class="block text-sm font-medium text-gray-700">Billing Style</label>
-                      <select id="billingStyle" [(ngModel)]="defaultBillingStyle" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option *ngFor="let setting of billingSettingOptions" (click)="upsertDefaultBillingSettings()">{{setting | titlecase}}</option>
+                      <select (change)="upsertDefaultBillingSettings()" id="billingStyle" [(ngModel)]="defaultBillingStyle" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <option *ngFor="let setting of billingSettingOptions" >{{setting | titlecase}}</option>
                       </select>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     <div>
                       <label for="paymentType" class="block text-sm font-medium text-gray-700">Payment Type</label>
-                      <select id="paymentType" [(ngModel)]="defaultPaymentType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option *ngFor="let setting of billingPaymentOptions" (click)="upsertDefaultBillingSettings()">{{setting | titlecase}}</option>
+                      <select (change)="upsertDefaultBillingSettings()" id="paymentType" [(ngModel)]="defaultPaymentType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <option *ngFor="let setting of billingPaymentOptions" >{{setting | titlecase}}</option>
                         
                       </select>
                     </div>
