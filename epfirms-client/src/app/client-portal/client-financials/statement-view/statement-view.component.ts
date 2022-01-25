@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { StatementService } from '@app/shared/_services/statement-service/statement.service';
+import { StripeService } from '@app/shared/_services/stripe-service/stripe.service';
 
 @Component({
   selector: 'app-statement-view',
@@ -17,7 +19,9 @@ export class StatementViewComponent implements OnInit {
   statementBill = {};
 
   constructor(
-    private matterService : MatterService
+    private matterService : MatterService,
+    private stripeService : StripeService,
+    private statementService : StatementService
   ) { }
 
   ngOnInit(): void {
@@ -40,4 +44,25 @@ export class StatementViewComponent implements OnInit {
     });
   }
 
+  createPaymentSession(statement) : void {
+    let paymentData = {
+      balance: statement.balance_due,
+    }
+    this.stripeService.createPaymentSession(paymentData).subscribe(res => {
+      // we receive the session url and the id
+      let sessionId = res.session_id;
+      let url = res.url;
+      console.log("URL", url);
+      // we need to add the session id to the statement to verify payment
+      // when the webhook sends back a request to the server on fufillment
+      // ideally, we don't want to navigate to the new window until this session
+      // has been saved as we don't ever want there to be a time when the session
+      // id's do not match for some reason
+      statement.stripe_session_id = sessionId;
+        this.statementService.update(statement).subscribe(res => {
+          // only change the window after the last statement has been updated
+          window.location.replace(url);
+        });
+      });
+  }
 }
