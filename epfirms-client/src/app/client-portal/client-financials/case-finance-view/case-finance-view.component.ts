@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 
 @Component({
   selector: 'app-case-finance-view',
@@ -21,11 +22,19 @@ export class CaseFinanceViewComponent implements OnInit {
 
   balanceDue : number = 0;
 
+  //payments on the case
+  payments = [];
+  lastPaymentAmount = 0;
 
-  constructor() { }
+
+
+  constructor(
+    private matterService : MatterService
+  ) { }
 
   ngOnInit(): void {
     this.calculateBalanceDue()
+    this.loadPayments()
   }
 
   selectTab(tab): void {
@@ -44,6 +53,16 @@ export class CaseFinanceViewComponent implements OnInit {
       }
     });
     
+  }
+
+  private loadPayments() : void {
+      this.matterService.getMatterBillingById(this.matter.id).subscribe(res => {
+        // get all of the reconciled bills associated with that statement_id
+        this.payments = res.filter(bill => bill.type == 1);
+        console.log("res",res.filter(bill => bill.type == 1));
+        console.log("payments", this.payments);
+        this.lastPaymentAmount = this.payments[this.payments.length - 1].amount;
+      });
   }
 
 }
