@@ -54,6 +54,13 @@ module.exports = (sequelize, {
         },
         late_fee_amount: {
             type: FLOAT
+        },
+        subscription_id : {
+          type: STRING,
+        },
+        subscription_active : {
+          type: BOOLEAN,
+          defaultValue: false
         }
       }, {
         tableName,
