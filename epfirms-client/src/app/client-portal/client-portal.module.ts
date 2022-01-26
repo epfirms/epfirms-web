@@ -16,6 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import { currentUserReducer } from '@app/store/current-user/current-user.reducer';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { StatementViewComponent } from './client-financials/statement-view/statement-view.component';
+import { CaseFinanceViewComponent } from './client-financials/case-finance-view/case-finance-view.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { StatementViewComponent } from './client-financials/statement-view/state
     ClientDocumentUploadComponent,
     ClientFinancialsComponent,
     TransactionsComponent,
-    StatementViewComponent
+    StatementViewComponent,
+    CaseFinanceViewComponent
   ],
   imports: [
     CommonModule,
