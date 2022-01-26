@@ -137,7 +137,7 @@
                 </div>
                 <div class="bg-gray-50 px-5 py-3">
                   <div class="text-sm">
-                    <a (click)="openStatementView(matter)" class="font-medium text-cyan-700 hover:text-cyan-900">
+                    <a (click)="openCaseView(matter)" class="font-medium text-cyan-700 hover:text-cyan-900">
                       View Now
                     </a>
                   </div>
@@ -157,7 +157,7 @@
       </ng-container>
 
     </main>
-    <app-case-finance-view *ngIf="displayCaseView" [isVisible]="displayCaseView" [statements]="currentStatements"></app-case-finance-view>
+    <app-case-finance-view *ngIf="displayCaseView" [isVisible]="displayCaseView" [statements]="currentStatements" [matter]="currentMatter"></app-case-finance-view>
   </ng-container>
 
   </div>
