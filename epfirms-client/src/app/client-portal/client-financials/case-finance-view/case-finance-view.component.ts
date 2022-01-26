@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { CustomerAccountService } from '@app/shared/_services/customer-account.service';
 
 @Component({
   selector: 'app-case-finance-view',
@@ -15,8 +16,7 @@ export class CaseFinanceViewComponent implements OnInit {
 
   subTabs: string[] = [
     'activity',
-    'statements',
-    'monthly payments',
+    'statements'
   ];
   selectedTab: any = 'overview';
 
@@ -26,15 +26,24 @@ export class CaseFinanceViewComponent implements OnInit {
   payments = [];
   lastPaymentAmount = 0;
 
+  //customer account
+  // the custome account object contains details that are determined when
+  // a firm sets up monthly payments for the client. This enables the 
+  // visability of the monthly payments tab
+  customerAccount;
+  displayMonthlyPaymentTab : boolean = false;
+
 
 
   constructor(
-    private matterService : MatterService
+    private matterService : MatterService,
+    private customerAccountService : CustomerAccountService
   ) { }
 
   ngOnInit(): void {
-    this.calculateBalanceDue()
-    this.loadPayments()
+    this.calculateBalanceDue();
+    this.loadPayments();
+    this.loadCustomerAccount();
   }
 
   selectTab(tab): void {
@@ -63,6 +72,14 @@ export class CaseFinanceViewComponent implements OnInit {
         console.log("payments", this.payments);
         this.lastPaymentAmount = this.payments[this.payments.length - 1].amount;
       });
+  }
+
+  private loadCustomerAccount() : void {
+    this.customerAccountService.get(this.matter.id).subscribe(res => {
+      this.customerAccount = res;
+      this.displayMonthlyPaymentTab = res.payment_agreement;
+      console.log("Customer Account", res);
+    });
   }
 
 }
