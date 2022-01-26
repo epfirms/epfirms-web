@@ -179,7 +179,30 @@ export class StripeController {
             price_data: {
               currency: 'usd',
               product_data: {
-                name: 'FIRM NAME BILLING VAR'
+                name: 'First Payment'
+              },
+              //conversion to cents since Stripe API uses this; might need a better way
+              unit_amount_decimal: Math.round(amount / 0.01),
+               
+            },
+            quantity: 1,
+          },
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: "Processing Fee"
+              },
+              unit_amount_decimal: (this._calcFees(amount)),
+              
+            },
+            quantity: 1,
+          },
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: 'Billing Subscription'
               },
               //conversion to cents since Stripe API uses this; might need a better way
               unit_amount_decimal: Math.round(amount / 0.01),
