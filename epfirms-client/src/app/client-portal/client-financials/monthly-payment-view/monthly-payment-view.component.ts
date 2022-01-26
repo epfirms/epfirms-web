@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CustomerAccountService } from '@app/shared/_services/customer-account.service';
+import { StripeService } from '@app/shared/_services/stripe-service/stripe.service';
 
 @Component({
   selector: 'app-monthly-payment-view',
@@ -10,10 +12,33 @@ export class MonthlyPaymentViewComponent implements OnInit {
   @Input() customerAccount;
 
   additionalAmount : number = 0;
-  
-  constructor() { }
+
+  constructor(
+    private stripeService : StripeService,
+    private customerAccountService : CustomerAccountService
+  ) { }
 
   ngOnInit(): void {
   }
 
+
+  createSubscriptionSession() : void {
+    let paymentData = {
+      balance: this.customerAccount.min_payment + this.additionalAmount,
+    }
+    this.stripeService.createSubscriptionSession(paymentData).subscribe(res => {
+      // we receive the session url and the id
+      let sessionId = res.session_id;
+      let url = res.url;
+      console.log("URL", url);
+      console.log("RES", res);
+      // we need to add the session id to the statement to verify payment
+      // when the webhook sends back a request to the server on fufillment
+      // ideally, we don't want to navigate to the new window until this session
+      // has been saved as we don't ever want there to be a time when the session
+      // id's do not match for some reason
+      
+        window.location.replace(url);
+      });
+  }
 }

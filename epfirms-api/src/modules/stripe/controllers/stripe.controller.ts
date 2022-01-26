@@ -169,6 +169,59 @@ export class StripeController {
     }
   }
 
+  public async createSubscriptionSession(req, res : Response) : Promise<any> {
+    try {
+      let amount = this._roundToCurrency(req.body.balance);
+      // create stripe checkout session
+      const session = await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: 'FIRM NAME BILLING VAR'
+              },
+              //conversion to cents since Stripe API uses this; might need a better way
+              unit_amount_decimal: Math.round(amount / 0.01),
+               recurring: {
+                 interval: "month",
+                 interval_count: 1,
+               },
+            },
+            quantity: 1,
+          },
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: "Processing Fee"
+              },
+              unit_amount_decimal: (this._calcFees(amount)),
+              recurring: {
+                interval: "month",
+                interval_count: 1,
+              },
+            },
+            quantity: 1,
+          },
+        ],
+        mode: 'subscription',
+        success_url: req.headers.referer,
+        cancel_url: req.headers.referer,
+        metadata: {
+          principle_charge: req.body.balance
+        }
+      });
+
+
+      console.log("SESSION", session);
+      res.status(StatusConstants.OK).send({url: session.url, session_id: session.id});
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
   //handler for webhook events from Stripe; might need to modulize the respective events later
   public async eventHandler(req, res : Response) : Promise<any> {
     try {
