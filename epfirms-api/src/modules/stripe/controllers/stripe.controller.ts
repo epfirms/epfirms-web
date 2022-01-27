@@ -244,16 +244,12 @@ export class StripeController {
         
         const fufillment = await StripeService.fufillPaymentSession(session);
         if (session.subscription){
-          const subscription =await StripeService.fufillSubscriptionSession(session);
+          const subscription = await StripeService.fufillSubscriptionSession(session);
         }
 
         res.status(200).send();
       }
-      // else if (event.type === 'customer.subscription.created'){
-      //   console.log("SUbscription session", event);
-      //   const subscription =await StripeService.fufillSubscriptionSession(session);
-      //   res.status(200).send()
-      // }
+      
       else {
         res.status(StatusConstants.INTERNAL_SERVER_ERROR).send("WEBHOOK ERROR");
       }
