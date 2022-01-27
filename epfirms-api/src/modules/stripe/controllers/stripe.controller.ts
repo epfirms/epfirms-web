@@ -175,29 +175,8 @@ export class StripeController {
       // create stripe checkout session
       const session = await stripe.checkout.sessions.create({
         line_items: [
-          {
-            price_data: {
-              currency: 'usd',
-              product_data: {
-                name: 'First Payment'
-              },
-              //conversion to cents since Stripe API uses this; might need a better way
-              unit_amount_decimal: Math.round(amount / 0.01),
-               
-            },
-            quantity: 1,
-          },
-          {
-            price_data: {
-              currency: 'usd',
-              product_data: {
-                name: "Processing Fee"
-              },
-              unit_amount_decimal: (this._calcFees(amount)),
-              
-            },
-            quantity: 1,
-          },
+          
+          
           {
             price_data: {
               currency: 'usd',
@@ -237,7 +216,7 @@ export class StripeController {
       });
 
 
-      console.log("SESSION", session);
+      console.log(" SUB SESSION", session);
       res.status(StatusConstants.OK).send({url: session.url, session_id: session.id});
     } catch (err) {
       console.error(err);
@@ -259,14 +238,22 @@ export class StripeController {
 
 
       event = stripe.webhooks.constructEvent(payload, sig, stripeWebhookSig)
-
+      const session = event.data.object;
 
       if (event.type === 'checkout.session.completed'){
-        const session = event.data.object;
+        
         const fufillment = await StripeService.fufillPaymentSession(session);
+        if (session.subscription){
+          const subscription =await StripeService.fufillSubscriptionSession(session);
+        }
 
         res.status(200).send();
       }
+      // else if (event.type === 'customer.subscription.created'){
+      //   console.log("SUbscription session", event);
+      //   const subscription =await StripeService.fufillSubscriptionSession(session);
+      //   res.status(200).send()
+      // }
       else {
         res.status(StatusConstants.INTERNAL_SERVER_ERROR).send("WEBHOOK ERROR");
       }

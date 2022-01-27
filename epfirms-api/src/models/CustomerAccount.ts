@@ -58,6 +58,9 @@ module.exports = (sequelize, {
         subscription_id : {
           type: STRING,
         },
+        stripe_session_id : {
+          type: STRING
+        },
         subscription_active : {
           type: BOOLEAN,
           defaultValue: false

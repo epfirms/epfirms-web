@@ -28,7 +28,7 @@ export class MonthlyPaymentViewComponent implements OnInit {
     }
     this.stripeService.createSubscriptionSession(paymentData).subscribe(res => {
       // we receive the session url and the id
-      let sessionId = res.session_id;
+      let subscriptionId = res.session_id;
       let url = res.url;
       console.log("URL", url);
       console.log("RES", res);
@@ -37,8 +37,11 @@ export class MonthlyPaymentViewComponent implements OnInit {
       // ideally, we don't want to navigate to the new window until this session
       // has been saved as we don't ever want there to be a time when the session
       // id's do not match for some reason
-      
-        window.location.replace(url);
+        this.customerAccount.stripe_session_id = subscriptionId;
+        this.customerAccountService.upsert(this.customerAccount).subscribe(onres => {
+          console.log("UPSERTRES",onres);
+          window.location.replace(url);
+        });
       });
   }
 }

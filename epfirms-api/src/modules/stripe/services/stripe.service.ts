@@ -50,4 +50,26 @@ export class StripeService {
       console.error(err);
     }
   }
+
+  public static async fufillSubscriptionSession(session): Promise<any> {
+    try {
+      console.log("FUFILL SUB", session);
+      const customerAccount = await Database.models.customer_account.findAll({where: {stripe_session_id: session.id}});
+      console.log("customerAccount", customerAccount);
+      if (customerAccount) {
+        const updatedAccount = await Database.models.customer_account.update({
+          subscription_id: session.subscription,
+          subscription_active: true
+        }, {
+          where: {
+            stripe_session_id: session.id
+          }
+        });
+
+      }
+      return Promise.resolve(customerAccount);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 }
