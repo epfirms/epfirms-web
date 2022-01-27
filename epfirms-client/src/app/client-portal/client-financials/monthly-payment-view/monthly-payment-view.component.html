@@ -1,3 +1,9 @@
+
+
+<!-- IF SUBSCRIPTION IS NOT ACTIVE -->
+<div *ngIf="customerAccount.subscription_active == false">
+
+
 <!--
   This example requires Tailwind CSS v2.0+ 
   
@@ -15,53 +21,62 @@
   ```
 -->
 <div>
-    <label class="text-base font-medium text-gray-900">Monthly Payment Amount</label>
-    <p class="text-sm leading-5 text-gray-500">Select the minimum payment amount or add additional amount to minimum.</p>
-    <fieldset class="mt-4">
-      <div class="space-y-4">
-        <div class="flex items-center">
-          <label for="email" class="ml-3 block text-sm font-medium text-gray-700">
-            Minimum Amount: {{customerAccount.min_payment | currency}}
-          </label>
-        </div>
-  
-        <div class="flex items-center">
-          <!--
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
+  <label class="text-base font-medium text-gray-900">Monthly Payment Amount</label>
+  <p class="text-sm leading-5 text-gray-500">Select the minimum payment amount or add additional amount to minimum.</p>
+  <fieldset class="mt-4">
+    <div class="space-y-4">
+      <div class="flex items-center">
+        <label for="email" class="ml-3 block text-sm font-medium text-gray-700">
+          Minimum Amount: {{customerAccount.min_payment | currency}}
+        </label>
+      </div>
+
+      <div class="flex items-center">
+        <!--
+This example requires Tailwind CSS v2.0+ 
+
+This example requires some changes to your config:
+
+```
+// tailwind.config.js
+module.exports = {
+  // ...
+  plugins: [
     // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
+    require('@tailwindcss/forms'),
+  ],
+}
+```
 -->
 <div>
-    <label for="price" class="block text-sm font-medium text-gray-700">Additional Amount</label>
-    <div class="mt-1 relative rounded-md shadow-sm">
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <span class="text-gray-500 sm:text-sm">
-          $
-        </span>
+  <label for="price" class="block text-sm font-medium text-gray-700">Additional Amount</label>
+  <div class="mt-1 relative rounded-md shadow-sm">
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <span class="text-gray-500 sm:text-sm">
+        $
+      </span>
+    </div>
+    <input type="text" [(ngModel)]="additionalAmount" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0.00">
+    
+  </div>
+</div>
+
       </div>
-      <input type="text" [(ngModel)]="additionalAmount" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0.00">
+
       
     </div>
-  </div>
-  
-        </div>
-  
-        
-      </div>
-    </fieldset>
-  </div>
-  <button (click)="createSubscriptionSession()" type="button" class="inline-flex items-center px-4 py-2 mt-5 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-  Continue to Setup
+  </fieldset>
+</div>
+<button (click)="createSubscriptionSession()" type="button" class="inline-flex items-center px-4 py-2 mt-5 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+Continue to Setup
 </button>
+</div>
+
+<!-- IF SUBSCRIPTION IS ACTIVE -->
+<div *ngIf="customerAccount.subscription_active">
+
+<h1 class="text-lg">
+Subscription active. Talk to your attorney's billing if you need to make changes to subscription.
+</h1>
+</div>
   
