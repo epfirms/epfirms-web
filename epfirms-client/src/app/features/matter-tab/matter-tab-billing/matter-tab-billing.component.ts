@@ -249,5 +249,10 @@ export class MatterTabBillingComponent implements OnInit {
     this.loadStatements();
   }
 
+  toggleWaive(bill) : void {
+    bill.waive = !bill.waive;
+    this._matterService.editMatterBillOrPayment(bill).subscribe();
+  }
+
   //----------------------
 }
