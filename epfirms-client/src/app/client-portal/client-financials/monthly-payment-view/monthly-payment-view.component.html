@@ -75,8 +75,45 @@ Continue to Setup
 <!-- IF SUBSCRIPTION IS ACTIVE -->
 <div *ngIf="customerAccount.subscription_active">
 
-<h1 class="text-lg">
-Subscription active. Talk to your attorney's billing if you need to make changes to subscription.
-</h1>
+
+  <!-- This example requires Tailwind CSS v2.0+ -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Content goes here -->
+
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div>
+  <h1 class="text-lg leading-6 font-medium text-gray-900">
+    Monthly Payment Agreement
+  </h1>
+  <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        Auto Pay Date
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        Auto Pay Amount
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        Subscription Status
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        
+      </dd>
+    </div>
+  </dl>
+</div>
+
 </div>
   
