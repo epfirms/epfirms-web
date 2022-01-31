@@ -28,6 +28,7 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, DATE, DATEONLY, FLOAT }
       },
       hours: {
         type: FLOAT,
+        defaultValue: 0.25
       },
       due: {
         type: DATE

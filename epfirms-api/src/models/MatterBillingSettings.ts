@@ -4,7 +4,9 @@ module.exports = (sequelize, {
     BOOLEAN,
     STRING,
     TEXT,
-    JSON
+    JSON,
+    FLOAT,
+    DATE
   }) => {
     const tableName = 'matter_billing_settings';
 
@@ -27,6 +29,15 @@ module.exports = (sequelize, {
         payment_type: {
           type: STRING,
           defaultValue: 'private pay'
+        },
+        before_settlement: {
+          type: FLOAT
+        },
+        after_settlement: {
+          type: FLOAT
+        },
+        settlement_date: {
+          type: DATE
         }
       }, {
         tableName,
