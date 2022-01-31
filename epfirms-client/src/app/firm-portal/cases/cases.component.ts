@@ -12,6 +12,7 @@ import { Staff } from '@app/core/interfaces/staff';
 import { StaffService } from '../_services/staff-service/staff.service';
 import { DialogService } from '@ngneat/dialog';
 import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete.component';
+import { MatterTaskService } from '../_services/matter-task-service/matter-task.service';
 
 @Component({
   selector: 'app-cases',
@@ -97,7 +98,7 @@ export class CasesComponent implements OnInit {
     private _matterTabsService: MatterTabsService,
     private _legalAreaService: LegalAreaService,
     private _dialogService: DialogService,
-    private _staffService: StaffService
+    private _staffService: StaffService,
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.cases$ = _matterService.filteredEntities$;
@@ -266,6 +267,10 @@ export class CasesComponent implements OnInit {
   }
 
   setStatus(matter: Matter, status) {
+    // automatically create tasks based on conditions
+    if (matter.matter_billing_setting.payment_type.toLowerCase() == "legal insurance" && status.status == "complete"){
+      this._matterService.addMatterTask({name: "Make Insurance Claim", matter_id: matter.id}).subscribe(res => console.log(res));
+    }
     this._matterService.update({ id: matter.id, ...status }).subscribe();
   }
 

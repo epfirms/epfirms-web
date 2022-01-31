@@ -41,12 +41,13 @@ export class CommonMiddleware {
   }
 
   public async useBodyParser() {
-    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.json({limit: '5mb'}));
   }
 
   public async useURLencoded() {
     this.app.use(
       bodyParser.urlencoded({
+        limit: '5mb',
         extended: true
       })
     );

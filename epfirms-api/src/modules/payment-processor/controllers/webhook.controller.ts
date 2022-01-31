@@ -8,11 +8,11 @@ export class PaymentProcessorWebhookController {
   public async handleInvoiceWebhook(req: Request, resp: Response): Promise<any> {
     try {
       const event = req.body;
-      const { customer, period_end, customer_email } = event.data.object;
-
+      const { customer, customer_email, lines } = event.data.object;
+      const current_period_end = lines.data[0].period.end;
       switch (event.type) {
         case 'invoice.paid':
-          await PaymentProcessorService.handlePaidInvoice(customer, period_end);
+          await PaymentProcessorService.handlePaidInvoice(customer, current_period_end);
           break;
         case 'invoice.upcoming':
           await PaymentProcessorService.handleUpcomingInvoice(customer_email);

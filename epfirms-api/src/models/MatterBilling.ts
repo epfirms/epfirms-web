@@ -66,6 +66,10 @@ module.exports = (sequelize, { INTEGER, DATE, BOOLEAN, FLOAT, STRING }) => {
           reconciled: {
             type: BOOLEAN,
             defaultValue: false
+          },
+          waive: {
+            type: BOOLEAN,
+            defaultValue: false
           }
       },
       {
