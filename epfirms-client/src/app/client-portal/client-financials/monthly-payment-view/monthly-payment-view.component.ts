@@ -10,8 +10,13 @@ import { StripeService } from '@app/shared/_services/stripe-service/stripe.servi
 export class MonthlyPaymentViewComponent implements OnInit {
 
   @Input() customerAccount;
+  @Input() matter;
 
   additionalAmount : number = 0;
+
+  //the connected account is the stripe account id of the firm 
+  // this is what will be used to transfer the funds to
+  connectedAccount;
 
   constructor(
     private stripeService : StripeService,
@@ -19,12 +24,18 @@ export class MonthlyPaymentViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log("MATTER", this.matter);
+    console.log("customeraccount", this.customerAccount);
+    this.initConnectedAccount();
   }
 
 
   createSubscriptionSession() : void {
     let paymentData = {
       balance: this.customerAccount.min_payment + this.additionalAmount,
+      case_id: this.matter.case_id,
+      due_date: this.customerAccount.due_date,
+      connected_account: this.connectedAccount
     }
     this.stripeService.createSubscriptionSession(paymentData).subscribe(res => {
       // we receive the session url and the id
@@ -43,5 +54,13 @@ export class MonthlyPaymentViewComponent implements OnInit {
           window.location.replace(url);
         });
       });
+  }
+
+
+  initConnectedAccount() : void {
+    this.stripeService.getConnectionStatus().subscribe(res => {
+      console.log(res);
+      this.connectedAccount = res.account.account_id;
+    });
   }
 }

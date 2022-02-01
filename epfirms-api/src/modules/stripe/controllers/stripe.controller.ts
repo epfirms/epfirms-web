@@ -6,25 +6,23 @@ const passport = require('passport');
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
 
 export class StripeController {
+
+
+  // fee rate: better way of calculating fees
+  // in general all fees get passed to firm not customer
+  feeRate : number = 0.029 + 0.011;
+  feePercent : number = 4;
+  
   constructor() {}
 
-  //IMPORTANT: This is how we collect fees from the customers on every transaction.
-  // c: what we actually charge the customer
-  // p: the principle amount of the charge
-  // fixedFee: the fixed fee from stripe. This is currently $0.30
-  // fixedPercent: the percent fee from stripe.
-  // revenuePercent: the percent we want to charge and collect.
-  // charge = (p + fixedFee)/(1-(fixedPercent + revenuePercent)) aka the fees amount
-  private _calcFees(p): any {
-    let c = 0;
-    const fixedFee = 0.30;
-    const fixedPercent = 0.029;
-    const revenuePercent = 0.01;
-    c = (p + fixedFee) / (1-(fixedPercent + revenuePercent));
-    // get the fees only since it will be in an itemized charge
-    let fee = c - p;
-    // convert to cents for stripe and return
-    return Math.round((Math.round(100* fee)/100) / 0.01)
+  
+
+  // This method takes the day in a month that the billing cycle will bill on
+  // It then sets the anchor to be in the next month
+  private _generateDateAnchor(day) : number {
+    let date = new Date();
+    date.setMonth(date.getMonth() + 1, day);
+    return date.getTime();
   }
 
   private _roundToCurrency(n): number {
@@ -76,7 +74,7 @@ export class StripeController {
           }
         });
         // send the response and whether or not there was a connection
-        res.status(StatusConstants.OK).send({isConnected: match});
+        res.status(StatusConstants.OK).send({isConnected: match, account: stripeAccount});
       }
       else {
         res.status(StatusConstants.OK).send({isConnected: false});
@@ -141,20 +139,18 @@ export class StripeController {
             },
             quantity: 1,
           },
-          {
-            price_data: {
-              currency: 'usd',
-              product_data: {
-                name: "Processing Fee"
-              },
-              unit_amount_decimal: (this._calcFees(amount))
-            },
-            quantity: 1,
-          },
         ],
         mode: 'payment',
+        payment_intent_data : {
+          application_fee_amount: Math.round((amount * this.feeRate) / 0.01),
+          transfer_data: {
+            destination: req.body.connected_account
+          }
+        },
         success_url: req.headers.referer,
         cancel_url: req.headers.referer,
+        
+
         metadata: {
           principle_charge: req.body.balance
         }
@@ -172,6 +168,7 @@ export class StripeController {
   public async createSubscriptionSession(req, res : Response) : Promise<any> {
     try {
       let amount = this._roundToCurrency(req.body.balance);
+      console.log("REQ.BODY", req.body);
       // create stripe checkout session
       const session = await stripe.checkout.sessions.create({
         line_items: [
@@ -192,24 +189,18 @@ export class StripeController {
             },
             quantity: 1,
           },
-          {
-            price_data: {
-              currency: 'usd',
-              product_data: {
-                name: "Processing Fee"
-              },
-              unit_amount_decimal: (this._calcFees(amount)),
-              recurring: {
-                interval: "month",
-                interval_count: 1,
-              },
-            },
-            quantity: 1,
-          },
         ],
+        // billing cycle anchor does not exist in StripeCheckout atm
+        // billing_cycle_anchor: this._generateDateAnchor(req.body.due_date),
         mode: 'subscription',
         success_url: req.headers.referer,
         cancel_url: req.headers.referer,
+        subscription_data : {
+          application_fee_percent: this.feePercent,
+          transfer_data: {
+            destination: req.body.connected_account
+          }
+        },
         metadata: {
           principle_charge: req.body.balance
         }

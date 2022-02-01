@@ -18,6 +18,9 @@ export class StatementViewComponent implements OnInit {
   // key => value will be matter_id => array of bills
   statementBill = {};
 
+  //connected account_id of the firm
+  connectedAccout;
+
   constructor(
     private matterService : MatterService,
     private stripeService : StripeService,
@@ -27,6 +30,9 @@ export class StatementViewComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.statements);
     this.loadBills();
+    this.stripeService.getConnectionStatus().subscribe(res => {
+      this.connectedAccout = res.account.account_id;
+    });
   }
 
   close() : void {
@@ -47,6 +53,7 @@ export class StatementViewComponent implements OnInit {
   createPaymentSession(statement) : void {
     let paymentData = {
       balance: statement.balance_due,
+      connected_account: this.connectedAccout
     }
     this.stripeService.createPaymentSession(paymentData).subscribe(res => {
       // we receive the session url and the id
