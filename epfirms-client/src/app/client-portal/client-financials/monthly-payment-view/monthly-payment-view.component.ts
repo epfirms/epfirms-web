@@ -31,12 +31,15 @@ export class MonthlyPaymentViewComponent implements OnInit {
 
 
   createSubscriptionSession() : void {
+    console.log("ADDITIONAL AMOUNT",this.customerAccount.min_payment, this.additionalAmount);
     let paymentData = {
       balance: this.customerAccount.min_payment + this.additionalAmount,
       case_id: this.matter.case_id,
       due_date: this.customerAccount.due_date,
       connected_account: this.connectedAccount
     }
+    // update the customer account object to have the active subscription amount
+    this.customerAccount.active_payment_amount = paymentData.balance
     this.stripeService.createSubscriptionSession(paymentData).subscribe(res => {
       // we receive the session url and the id
       let subscriptionId = res.session_id;

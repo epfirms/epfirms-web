@@ -64,6 +64,9 @@ module.exports = (sequelize, {
         subscription_active : {
           type: BOOLEAN,
           defaultValue: false
+        },
+        active_payment_amount : {
+          type: FLOAT
         }
       }, {
         tableName,
