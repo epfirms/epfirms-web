@@ -39,7 +39,8 @@ export class MonthlyPaymentViewComponent implements OnInit {
       connected_account: this.connectedAccount
     }
     // update the customer account object to have the active subscription amount
-    this.customerAccount.active_payment_amount = paymentData.balance
+    this.customerAccount.active_payment_amount = paymentData.balance;
+    this.customerAccount.due_date = new Date().getDate();
     this.stripeService.createSubscriptionSession(paymentData).subscribe(res => {
       // we receive the session url and the id
       let subscriptionId = res.session_id;

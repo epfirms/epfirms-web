@@ -240,6 +240,10 @@ export class StripeController {
 
         res.status(200).send();
       }
+      else if (event.type === 'customer.subscription.created'){
+        console.log("SESSION CREATED");
+        console.log(session);
+      }
       
       else {
         res.status(StatusConstants.INTERNAL_SERVER_ERROR).send("WEBHOOK ERROR");

@@ -91,7 +91,7 @@ Continue to Setup
         Auto Pay Date
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        
+        {{customerAccount.due_date}} of Month
       </dd>
     </div>
 
@@ -109,7 +109,7 @@ Continue to Setup
         Subscription Status
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        
+        <span *ngIf="customerAccount.subscription_active"> Active </span>
       </dd>
     </div>
   </dl>
