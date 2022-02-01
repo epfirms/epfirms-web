@@ -44,7 +44,7 @@ export class StatementViewComponent implements OnInit {
     this.statements.forEach(statement => {
       this.matterService.getMatterBillingById(statement.matter_id).subscribe(res => {
         // get all of the reconciled bills associated with that statement_id
-        this.statementBill[statement.matter_id] = res.filter(bill => bill.type == 0 && bill.reconciled);
+        this.statementBill[statement.id] = res.filter(bill => bill.type == 0 && bill.reconciled && bill.statement_id == statement.id);
         console.log(this.statementBill);
       });
     });
