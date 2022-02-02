@@ -78,7 +78,7 @@
                   <td class="hidden py-6 pr-8 sm:table-cell">
                     {{bill.hours}}
                   </td>
-                  <td class="hidden py-6 pr-8 sm:table-cell">
+                  <td class="hidden py-6 pr-8 sm:table-cell" [ngClass]="{'line-through' : bill.waive}">
                     {{bill.amount | currency}}
                   </td>
                 </tr>

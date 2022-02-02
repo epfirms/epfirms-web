@@ -34,10 +34,10 @@ export class GenerateStatementComponent implements OnInit {
 
   toggleCheckbox(bill):void {
     bill.reconciled = !bill.reconciled;
-    if (bill.reconciled) {
+    if (bill.reconciled && !bill.waive) {
       this.statementTotal += bill.amount;
     }
-    else {
+    else if (!bill.waive){
       this.statementTotal -= bill.amount;
     }
     console.log(bill);
