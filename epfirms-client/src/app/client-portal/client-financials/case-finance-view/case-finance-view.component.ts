@@ -15,9 +15,10 @@ export class CaseFinanceViewComponent implements OnInit {
 
 
   subTabs: string[] = [
-    'statements'
+    'transactions',
+    'statements',
   ];
-  selectedTab: any = 'statements';
+  selectedTab: any = 'transactions';
 
   balanceDue : number = 0;
 

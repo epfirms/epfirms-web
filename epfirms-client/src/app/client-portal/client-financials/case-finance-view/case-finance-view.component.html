@@ -94,6 +94,7 @@
   </div>
   <app-statement-view *ngIf="selectedTab == 'statements'" [statements]="statements"></app-statement-view>
   <app-monthly-payment-view *ngIf="selectedTab == 'monthly payments'" [customerAccount]="customerAccount" [matter]="matter"></app-monthly-payment-view>
+  <app-transactions *ngIf="selectedTab == 'transactions'" [payments]="payments"></app-transactions>
   <!-- END OF CONTAINER -->
   </div>
   
