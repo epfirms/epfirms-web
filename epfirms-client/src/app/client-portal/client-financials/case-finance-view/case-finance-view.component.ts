@@ -24,7 +24,7 @@ export class CaseFinanceViewComponent implements OnInit {
   //payments on the case
   payments = [];
   lastPaymentAmount = 0;
-
+  totalPayments = 0;
   //customer account
   // the custome account object contains details that are determined when
   // a firm sets up monthly payments for the client. This enables the 
@@ -67,6 +67,9 @@ export class CaseFinanceViewComponent implements OnInit {
       this.matterService.getMatterBillingById(this.matter.id).subscribe(res => {
         // get all of the reconciled bills associated with that statement_id
         this.payments = res.filter(bill => bill.type == 1);
+        this.payments.forEach(payment => {
+          this.totalPayments += payment.amount;
+        });
         console.log("res",res.filter(bill => bill.type == 1));
         console.log("payments", this.payments);
         this.lastPaymentAmount = this.payments[this.payments.length - 1].amount;
