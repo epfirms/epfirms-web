@@ -1,6 +1,7 @@
 import { Response, Request } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
 import { StripeService } from '../services/stripe.service';
+import { send } from 'process';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const passport = require('passport');
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
@@ -244,6 +245,20 @@ export class StripeController {
         console.log("CUSTOMER SUB CREATED SESSION CREATED");
         console.log(session);
         res.status(200).send();
+      }
+
+      else if (event.type === 'invoice.created'){
+        console.log("INVOICE CREATED SESSION");
+        console.log(session);
+      }
+      else if (event.type === 'invoice.payment_succeeded'){
+        console.log("INVOICE PAYMENT SUCCESS SESSION");
+        console.log(session);
+        if (session.subscription) {
+          
+          const updatedCustomerAccount = await StripeService.fufillInvoicePaymentSuccess(session);
+          res.status(200).send();
+        }
       }
       
       else {
