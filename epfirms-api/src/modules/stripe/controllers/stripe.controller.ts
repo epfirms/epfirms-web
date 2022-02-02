@@ -241,8 +241,9 @@ export class StripeController {
         res.status(200).send();
       }
       else if (event.type === 'customer.subscription.created'){
-        console.log("SESSION CREATED");
+        console.log("CUSTOMER SUB CREATED SESSION CREATED");
         console.log(session);
+        res.status(200).send();
       }
       
       else {
