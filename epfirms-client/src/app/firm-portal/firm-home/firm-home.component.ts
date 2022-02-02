@@ -12,7 +12,7 @@ import { MatterTabsService } from '../../features/matter-tab/services/matter-tab
   templateUrl: './firm-home.component.html',
   styleUrls: ['./firm-home.component.scss'],
   host: {
-    'class': 'flex-1 relative z-0 flex flex-col overflow-hidden'
+    'class': 'flex-1 h-full'
   }
 })
 export class FirmHomeComponent implements OnInit, OnDestroy {

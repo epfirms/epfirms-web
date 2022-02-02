@@ -18,9 +18,7 @@ import { HotToastService } from '@ngneat/hot-toast';
   templateUrl: './matter-tabs.component.html',
   styleUrls: ['./matter-tabs.component.scss'],
   host: {
-    'class': 'fixed inset-0 left-20 transition-expand ease-in-out duration-500 lg:left-64',
-    '[class.translate-y-tabs]': '!expanded',
-    '[class.translate-y-0]': 'expanded'
+    'class': 'z-10 w-full h-screen',
   }
 })
 export class MatterTabsComponent implements OnInit {

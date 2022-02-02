@@ -1,8 +1,5 @@
-<div class="flex flex-shrink-0" *ngIf="currentUser$ | async as currentUser">
-  <div class="flex flex-col w-20 lg:w-64 transition-all ease-in-out">
-    <!-- Sidebar component, swap this element with another sidebar if you like -->
-    <div class="flex-1 flex flex-col min-h-0">
-      <div class="flex items-center h-16 flex-shrink-0 px-5 bg-slate-900">
+   <!-- Sidebar component, swap this element with another sidebar if you like -->
+      <div class="flex items-center flex-shrink-0 h-16 px-5 bg-slate-900">
         <svg class="h-9" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="0 0 279.01 110.78">
           <defs/>
           <g id="Layer 2" vectornator:layerName="Layer 2">
@@ -19,68 +16,31 @@
           </g>
           </svg>
       </div>
-      <div class="flex-1 flex flex-col overflow-y-auto">
-        <nav class="flex-1 px-2 py-4 bg-slate-800">
+      <div class="flex flex-col flex-1 h-0 overflow-y-auto bg-slate-800">
+        <nav class="flex-1 px-2 py-4">
           <ng-content></ng-content>
         </nav>
 
-        <div class="flex-shrink-0 flex border-t border-slate-700 p-4 justify-center lg:justify-start">
+        <div class="flex justify-center flex-shrink-0 p-4 border-t border-slate-700 lg:justify-start">
           <div Menu class="relative inline-block text-left">
-            <div *MenuItems @toggleAnimation class="
-                z-10
-                absolute
-                left-0
-                bottom-10
-                w-56
-                mt-2
-                origin-bottom-left
-                bg-white
-                rounded-md
-                shadow-lg
-                ring-1 ring-black ring-opacity-5
-                focus:outline-none
-              ">
+            <div *MenuItems @toggleAnimation class="absolute left-0 z-10 w-56 mt-2 origin-bottom-left bg-white rounded-md shadow-lg bottom-10 ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div class="p-1">
-                <a MenuItem class="
-                    group
-                    flex
-                    rounded-md
-                    items-center
-                    w-full
-                    px-2
-                    py-2
-                    text-slate-700
-                    font-medium
-                    text-sm
-                    hover:bg-blue-500 hover:text-white hover:cursor-pointer
-                  " (click)="goToPortalSelect()">
+                <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="goToPortalSelect()">
                   Switch to client portal
                 </a>
 
-                <a MenuItem class="
-                  group
-                  flex
-                  rounded-md
-                  items-center
-                  w-full
-                  px-2
-                  py-2
-                  text-slate-700
-                  font-medium
-                  text-sm
-                  hover:bg-blue-500 hover:text-white hover:cursor-pointer
-                " (click)="logout()">
+                <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="logout()">
                   Logout
                 </a>
               </div>
             </div>
-            <button MenuButton class="flex-shrink-0 w-full group block text-left">
-              <div class="flex items-center">
+            <button MenuButton class="flex-shrink-0 block w-full text-left group">
+              <div class="flex items-center" *ngIf="currentUser$ | async as currentUser">
                 <div>
                   <ep-avatar epSize="medium" [epSrc]="currentUser.user.profile_image"
                     [epText]="currentUser.user.full_name"></ep-avatar>
                 </div>
-                <div class="hidden lg:block lg:ml-3 truncate">
+                <div class="hidden truncate lg:block lg:ml-3">
                   <p class="text-sm font-medium text-white">
                     {{ currentUser.user.full_name | titlecase }}
                   </p>
@@ -94,6 +54,3 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>

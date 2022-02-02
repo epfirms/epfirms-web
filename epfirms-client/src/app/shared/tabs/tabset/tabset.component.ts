@@ -30,7 +30,7 @@ let nextId = 0;
     },
   ],
   host: {
-    'class': 'flex flex-col h-screen',
+    'class': 'flex flex-col h-full',
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })

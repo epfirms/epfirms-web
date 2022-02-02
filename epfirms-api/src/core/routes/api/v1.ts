@@ -2,7 +2,7 @@ import express from 'express'
 import { userRouter } from '@modules/user/routes';
 import { authRouter } from '@modules/auth/routes';
 import { firmRouter } from '@modules/firm/routes';
-import { taskRouter } from '@modules/task/routes';
+import { taskRouter } from '@modules/task/task.routes';
 import { matterRouter } from '@modules/matter/routes';
 import { emailsRouter } from '@modules/emails/routes';
 import { reviewRouter } from '@src/modules/review/routes';
@@ -24,7 +24,7 @@ const v1Router = express.Router();
 v1Router.use('/user', userRouter);
 v1Router.use('/firm', firmRouter);
 v1Router.use('/auth', authRouter);
-v1Router.use('/task', taskRouter);
+v1Router.use('/tasks', taskRouter);
 v1Router.use('/matters', matterRouter);
 v1Router.use('/emails', emailsRouter);
 v1Router.use('/review', reviewRouter);

@@ -10,7 +10,7 @@ import { SocketService } from '../core/services/socket.service';
   templateUrl: './firm-portal.component.html',
   styleUrls: ['./firm-portal.component.scss'],
   host: {
-    class: 'inset-0 flex flex-col absolute overflow-hidden',
+    class: 'min-h-full',
   },
 })
 export class FirmPortalComponent {
@@ -41,6 +41,10 @@ export class FirmPortalComponent {
       const accessToken = _authService.accessTokenValue;
       this._socketService.connect(scope.firm_access.firm_id, accessToken);
     });
+  }
+
+  ngOnInit() {
+    this._matterTabsService.init();
   }
 
   minimizeMatterTabs(): void {
