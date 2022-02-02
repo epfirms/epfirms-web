@@ -78,6 +78,8 @@ export class StripeService {
   public static async fufillInvoicePaymentSuccess(session): Promise<any> {
     try {
         let amountPaid = session.amount_paid / 100;
+        const matterId = await Database.models.customer_account.findOne({where: {subscription_id: session.subscription}});
+        console.log("MATTER ID", matterId);
         const customerAccount = await Database.models.customer_account.update({
           last_payment: amountPaid,
           last_payment_date: new Date(),
@@ -86,7 +88,7 @@ export class StripeService {
         });
 
         let paymentRecord = {
-          matter_id: customerAccount.matter_id,
+          matter_id: matterId.dataValues.matter_id,
           amount: amountPaid,
           type: 1,
           date: new Date(),
