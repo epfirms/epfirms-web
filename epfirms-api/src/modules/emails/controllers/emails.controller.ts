@@ -129,9 +129,12 @@ theURL: String = "http://localhost:4200"
                 email: req.body.email,
                 origin: req.headers.origin
             }
+
             console.log(notificationData);
             console.log("SEND STATEMENT NOTIFICATION");
-            const email = await this._emailService.sendFromTemplate(notificationData.email, "New Statement", "<html>TEST</html>", notificationData)
+            const email = await this._emailService.sendFromTemplate(notificationData.email, "EPFirms Billing Alert: New Statement Available",
+             "statement-notification", {'v:url': notificationData.origin});
+            res.status(200).send();
         }
         catch(err) {
             console.error(err);

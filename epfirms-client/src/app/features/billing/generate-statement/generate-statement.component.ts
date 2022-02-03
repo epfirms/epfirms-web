@@ -67,8 +67,10 @@ export class GenerateStatementComponent implements OnInit {
 
     //send an email to the client letting them know that they have a new
     // statement
-    console.log("send email to", this.matter.client.email);
-    this.emailService.sendStatementNotifcation(this.matter.client.email).subscribe(res => console.log(res));
+    if (this.sendToClient) {
+      this.emailService.sendStatementNotifcation(this.matter.client.email).subscribe();
+
+    }
 
     this.statementService.create(statement).subscribe((res) => {
       
