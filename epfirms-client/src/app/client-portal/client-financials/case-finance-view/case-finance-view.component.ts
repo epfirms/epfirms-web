@@ -57,9 +57,9 @@ export class CaseFinanceViewComponent implements OnInit {
     
     this.statements.forEach(statement => {
       
-      if (statement.status === "UNPAID") {
+      
         this.balanceDue += statement.balance_due;
-      }
+      
     });
     
   }
