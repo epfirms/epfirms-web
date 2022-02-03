@@ -15,4 +15,8 @@ export class emailService {
   sendForgotPasswordEmail(email: string) {
     return this._http.post<any>('/api/emails/forgot-password', {email});
   }
+
+  sendStatementNotifcation(email: string) {
+    return this._http.post<any>('/api/emails/statement', {email: email});
+  }
 }

@@ -122,6 +122,22 @@ theURL: String = "http://localhost:4200"
           resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
         }
       }
+
+    public async sendStatementNotification(req, res : Response) : Promise<any> {
+        try{
+            let notificationData = {
+                email: req.body.email,
+                origin: req.headers.origin
+            }
+            console.log(notificationData);
+            console.log("SEND STATEMENT NOTIFICATION");
+            const email = await this._emailService.sendFromTemplate(notificationData.email, "New Statement", "<html>TEST</html>", notificationData)
+        }
+        catch(err) {
+            console.error(err);
+            res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+        }
+    }
 }
 /*
                       <a href="` + this.theURL + `/feedback?id=` + await review.id + `" class="mt-2 text-base text-slate-500">1-4 Stars!</a>
