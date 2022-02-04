@@ -20,4 +20,8 @@ export class StripeService {
   createPaymentSession(data) : Observable<any> {
     return this._http.post('/api/stripe/payment', data);
   }
+  
+  createSubscriptionSession(data) : Observable<any> {
+    return this._http.post('/api/stripe/subscription', data);
+  }
 }

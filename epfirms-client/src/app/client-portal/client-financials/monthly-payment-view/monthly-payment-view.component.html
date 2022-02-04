@@ -1,0 +1,119 @@
+
+
+<!-- IF SUBSCRIPTION IS NOT ACTIVE -->
+<div *ngIf="customerAccount.subscription_active == false">
+
+
+<!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<div>
+  <label class="text-base font-medium text-gray-900">Monthly Payment Amount</label>
+  <p class="text-sm leading-5 text-gray-500">Select the minimum payment amount or add additional amount to minimum.</p>
+  <fieldset class="mt-4">
+    <div class="space-y-4">
+      <div class="flex items-center">
+        <label for="email" class="ml-3 block text-sm font-medium text-gray-700">
+          Minimum Amount: {{customerAccount.min_payment | currency}}
+        </label>
+      </div>
+
+      <div class="flex items-center">
+        <!--
+This example requires Tailwind CSS v2.0+ 
+
+This example requires some changes to your config:
+
+```
+// tailwind.config.js
+module.exports = {
+  // ...
+  plugins: [
+    // ...
+    require('@tailwindcss/forms'),
+  ],
+}
+```
+-->
+<div>
+  <label for="price" class="block text-sm font-medium text-gray-700">Additional Amount</label>
+  <div class="mt-1 relative rounded-md shadow-sm">
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <span class="text-gray-500 sm:text-sm">
+        $
+      </span>
+    </div>
+    <input type="number" [(ngModel)]="additionalAmount" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0.00">
+    
+  </div>
+</div>
+
+      </div>
+
+      
+    </div>
+  </fieldset>
+</div>
+<button (click)="createSubscriptionSession()" type="button" class="inline-flex items-center px-4 py-2 mt-5 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+Continue to Setup
+</button>
+</div>
+
+<!-- IF SUBSCRIPTION IS ACTIVE -->
+<div *ngIf="customerAccount.subscription_active">
+
+
+  <!-- This example requires Tailwind CSS v2.0+ -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Content goes here -->
+
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div>
+  <h1 class="text-lg leading-6 font-medium text-gray-900">
+    Monthly Payment Agreement
+  </h1>
+  <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        Auto Pay Date
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        {{customerAccount.due_date}} of Month
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        Auto Pay Amount
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        {{customerAccount.active_payment_amount || 0 | currency}}
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        Subscription Status
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        <span *ngIf="customerAccount.subscription_active"> Active </span>
+      </dd>
+    </div>
+  </dl>
+</div>
+
+</div>
+  

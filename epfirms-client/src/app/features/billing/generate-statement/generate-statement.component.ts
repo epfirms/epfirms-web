@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { emailService } from '@app/shared/_services/email-service/email.service';
 import { StatementService } from '@app/shared/_services/statement-service/statement.service';
 
 @Component({
@@ -25,19 +26,21 @@ export class GenerateStatementComponent implements OnInit {
   constructor(
     private matterService : MatterService,
     private statementService : StatementService,
+    private emailService : emailService
   ) { }
 
   ngOnInit(): void {
+    console.log(this.matter);
     console.log(this.bills);
     this.bills = this.bills.filter(bill => !bill.reconciled);
   }
 
   toggleCheckbox(bill):void {
     bill.reconciled = !bill.reconciled;
-    if (bill.reconciled) {
+    if (bill.reconciled && !bill.waive) {
       this.statementTotal += bill.amount;
     }
-    else {
+    else if (!bill.waive){
       this.statementTotal -= bill.amount;
     }
     console.log(bill);
@@ -61,6 +64,13 @@ export class GenerateStatementComponent implements OnInit {
       is_approved: true,
       is_client_visible: this.sendToClient
     };
+
+    //send an email to the client letting them know that they have a new
+    // statement
+    if (this.sendToClient) {
+      this.emailService.sendStatementNotifcation(this.matter.client.email).subscribe();
+
+    }
 
     this.statementService.create(statement).subscribe((res) => {
       

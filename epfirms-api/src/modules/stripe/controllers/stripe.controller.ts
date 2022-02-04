@@ -1,30 +1,29 @@
 import { Response, Request } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
 import { StripeService } from '../services/stripe.service';
+import { send } from 'process';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const passport = require('passport');
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
 
 export class StripeController {
+
+
+  // fee rate: better way of calculating fees
+  // in general all fees get passed to firm not customer
+  feeRate : number = 0.029 + 0.011;
+  feePercent : number = 4;
+  
   constructor() {}
 
-  //IMPORTANT: This is how we collect fees from the customers on every transaction.
-  // c: what we actually charge the customer
-  // p: the principle amount of the charge
-  // fixedFee: the fixed fee from stripe. This is currently $0.30
-  // fixedPercent: the percent fee from stripe.
-  // revenuePercent: the percent we want to charge and collect.
-  // charge = (p + fixedFee)/(1-(fixedPercent + revenuePercent)) aka the fees amount
-  private _calcFees(p): any {
-    let c = 0;
-    const fixedFee = 0.30;
-    const fixedPercent = 0.029;
-    const revenuePercent = 0.01;
-    c = (p + fixedFee) / (1-(fixedPercent + revenuePercent));
-    // get the fees only since it will be in an itemized charge
-    let fee = c - p;
-    // convert to cents for stripe and return
-    return Math.round((Math.round(100* fee)/100) / 0.01)
+  
+
+  // This method takes the day in a month that the billing cycle will bill on
+  // It then sets the anchor to be in the next month
+  private _generateDateAnchor(day) : number {
+    let date = new Date();
+    date.setMonth(date.getMonth() + 1, day);
+    return date.getTime();
   }
 
   private _roundToCurrency(n): number {
@@ -76,7 +75,7 @@ export class StripeController {
           }
         });
         // send the response and whether or not there was a connection
-        res.status(StatusConstants.OK).send({isConnected: match});
+        res.status(StatusConstants.OK).send({isConnected: match, account: stripeAccount});
       }
       else {
         res.status(StatusConstants.OK).send({isConnected: false});
@@ -141,20 +140,18 @@ export class StripeController {
             },
             quantity: 1,
           },
-          {
-            price_data: {
-              currency: 'usd',
-              product_data: {
-                name: "Processing Fee"
-              },
-              unit_amount_decimal: (this._calcFees(amount))
-            },
-            quantity: 1,
-          },
         ],
         mode: 'payment',
+        payment_intent_data : {
+          application_fee_amount: Math.round((amount * this.feeRate) / 0.01),
+          transfer_data: {
+            destination: req.body.connected_account
+          }
+        },
         success_url: req.headers.referer,
         cancel_url: req.headers.referer,
+        
+
         metadata: {
           principle_charge: req.body.balance
         }
@@ -162,6 +159,56 @@ export class StripeController {
 
 
       
+      res.status(StatusConstants.OK).send({url: session.url, session_id: session.id});
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  public async createSubscriptionSession(req, res : Response) : Promise<any> {
+    try {
+      let amount = this._roundToCurrency(req.body.balance);
+      console.log("REQ.BODY", req.body);
+      // create stripe checkout session
+      const session = await stripe.checkout.sessions.create({
+        line_items: [
+          
+          
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: 'Billing Subscription'
+              },
+              //conversion to cents since Stripe API uses this; might need a better way
+              unit_amount_decimal: Math.round(amount / 0.01),
+               recurring: {
+                 interval: "month",
+                 interval_count: 1,
+               },
+            },
+            quantity: 1,
+          },
+        ],
+        // billing cycle anchor does not exist in StripeCheckout atm
+        // billing_cycle_anchor: this._generateDateAnchor(req.body.due_date),
+        mode: 'subscription',
+        success_url: req.headers.referer,
+        cancel_url: req.headers.referer,
+        subscription_data : {
+          application_fee_percent: this.feePercent,
+          transfer_data: {
+            destination: req.body.connected_account
+          }
+        },
+        metadata: {
+          principle_charge: req.body.balance
+        }
+      });
+
+
+      console.log(" SUB SESSION", session);
       res.status(StatusConstants.OK).send({url: session.url, session_id: session.id});
     } catch (err) {
       console.error(err);
@@ -183,14 +230,37 @@ export class StripeController {
 
 
       event = stripe.webhooks.constructEvent(payload, sig, stripeWebhookSig)
-
+      const session = event.data.object;
 
       if (event.type === 'checkout.session.completed'){
-        const session = event.data.object;
+        
         const fufillment = await StripeService.fufillPaymentSession(session);
+        if (session.subscription){
+          const subscription = await StripeService.fufillSubscriptionSession(session);
+        }
 
         res.status(200).send();
       }
+      else if (event.type === 'customer.subscription.created'){
+        console.log("CUSTOMER SUB CREATED SESSION CREATED");
+        console.log(session);
+        res.status(200).send();
+      }
+
+      else if (event.type === 'invoice.created'){
+        console.log("INVOICE CREATED SESSION");
+        console.log(session);
+      }
+      else if (event.type === 'invoice.payment_succeeded'){
+        console.log("INVOICE PAYMENT SUCCESS SESSION");
+        console.log(session);
+        if (session.subscription) {
+          
+          const updatedCustomerAccount = await StripeService.fufillInvoicePaymentSuccess(session);
+          res.status(200).send();
+        }
+      }
+      
       else {
         res.status(StatusConstants.INTERNAL_SERVER_ERROR).send("WEBHOOK ERROR");
       }

@@ -50,4 +50,59 @@ export class StripeService {
       console.error(err);
     }
   }
+
+  public static async fufillSubscriptionSession(session): Promise<any> {
+    try {
+      console.log("FUFILL SUB", session);
+      const customerAccount = await Database.models.customer_account.findAll({where: {stripe_session_id: session.id}});
+      console.log("customerAccount", customerAccount);
+      if (customerAccount) {
+        const updatedAccount = await Database.models.customer_account.update({
+          subscription_id: session.subscription,
+          subscription_active: true
+        }, {
+          where: {
+            stripe_session_id: session.id
+          }
+        });
+
+      }
+      return Promise.resolve(customerAccount);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  
+  // this method will find the associated customer account and update it
+  // this method will also add a payment to the matterbill records
+  public static async fufillInvoicePaymentSuccess(session): Promise<any> {
+    try {
+        let amountPaid = session.amount_paid / 100;
+        const matterId = await Database.models.customer_account.findOne({where: {subscription_id: session.subscription}});
+        console.log("MATTER ID", matterId);
+        const customerAccount = await Database.models.customer_account.update({
+          last_payment: amountPaid,
+          last_payment_date: new Date(),
+        }, {
+          where: {subscription_id: session.subscription}
+        });
+
+        let paymentRecord = {
+          matter_id: matterId.dataValues.matter_id,
+          amount: amountPaid,
+          type: 1,
+          date: new Date(),
+          description: "MONTHLY AUTO PAY"
+        }
+
+        const payment = await Database.models.matter_billing.create(paymentRecord);
+        return Promise.resolve(customerAccount);
+      
+      
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  
 }
