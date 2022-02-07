@@ -52,6 +52,7 @@ export class StatementViewComponent implements OnInit {
 
   createPaymentSession(statement) : void {
     let paymentData = {
+      description: `Statement for: ${statement.due_date}`,
       balance: statement.balance_due,
       connected_account: this.connectedAccout
     }

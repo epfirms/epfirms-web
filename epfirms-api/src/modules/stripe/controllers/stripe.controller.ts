@@ -129,7 +129,7 @@ export class StripeController {
             price_data: {
               currency: 'usd',
               product_data: {
-                name: 'FIRM NAME BILLING VAR'
+                name: req.body.description
               },
               //conversion to cents since Stripe API uses this; might need a better way
               unit_amount_decimal: Math.round(amount / 0.01),

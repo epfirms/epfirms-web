@@ -35,14 +35,7 @@
   <body class="h-full">
   ```
 -->
-<div class="min-h-full">
-  <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
 
-
-  <!-- Static sidebar for desktop -->
-
-
-  <div class=" flex flex-col flex-1">
     <div class="relative z-10 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 lg:border-none">
 
       <!-- Search bar -->
@@ -157,9 +150,8 @@
       </ng-container>
 
     </main>
-    <app-case-finance-view *ngIf="displayCaseView" [isVisible]="displayCaseView" [statements]="currentStatements" [matter]="currentMatter"></app-case-finance-view>
+    <app-case-finance-view *ngIf="displayCaseView" [isVisible]="displayCaseView" [statements]="currentStatements" [matter]="currentMatter" (isVisibleChange)="displayCaseView = $event"></app-case-finance-view>
   </ng-container>
 
-  </div>
-</div>
+  
 
