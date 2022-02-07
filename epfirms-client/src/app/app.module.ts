@@ -1,7 +1,7 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgxStripeModule } from 'ngx-stripe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -36,8 +36,9 @@ const tooltipConfig: Partial<TippyProps> = {
   trigger: 'mouseenter focus',
   arrow: false,
   animation: 'shift-away-subtle',
-  offset: [0, 5],
-  duration: [150, 100]
+  offset: [0, 0],
+  duration: [75, 25],
+  delay: [150, 0]
 };
 
 const dropdownConfig: Partial<TippyProps> = {
@@ -158,7 +159,8 @@ const quillConfig = [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: MatterActivityInterceptor, multi: true },
-    { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig }
+    { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig },
+    Title
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import {
   add,
   expand,
@@ -12,6 +12,9 @@ import {
 import { Store } from '@ngrx/store';
 import { Tabs } from '@app/core/interfaces/tabs';
 import { selectedOpenTabs } from '@app/store/matter-tabs/matter-tabs.reducer';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { MatterTabsComponent } from '../../matter-tabs/matter-tabs.component';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +22,12 @@ import { selectedOpenTabs } from '@app/store/matter-tabs/matter-tabs.reducer';
 export class MatterTabsService {
   tabs$: Observable<Tabs>;
 
-  constructor(private store: Store<{ matterTabs: Tabs }>) {
-    this.tabs$ = store.select('matterTabs');
+  tabsOverlay: OverlayRef;
+
+  constructor(private store: Store<{ matterTabs: Tabs }>, private overlay: Overlay) {
+    this.tabs$ = store.select('matterTabs').pipe(tap(tabs => {
+      this.toggleExpandStyle(tabs.expanded);
+    }));
   }
 
   getOpenTabs() {
@@ -50,5 +57,22 @@ export class MatterTabsService {
 
   setSelectedIndex(index: number): void {
     this.store.dispatch(setSelectedIndex({ payload: index }));
+  }
+
+  init(): void {
+
+    this.tabsOverlay = this.overlay.create({disposeOnNavigation: false, hasBackdrop: false, panelClass: 'matter-tab-overlay'});
+    const matterTabPortal = new ComponentPortal(MatterTabsComponent);
+    this.tabsOverlay.attach(matterTabPortal);
+  }
+
+  toggleExpandStyle(isExpanded: boolean){
+    if (isExpanded) {
+      this.tabsOverlay.addPanelClass('translate-y-0');
+      this.tabsOverlay.removePanelClass('translate-y-tabs');
+    } else {
+      this.tabsOverlay.removePanelClass('translate-y-0');
+      this.tabsOverlay.addPanelClass('translate-y-tabs');
+    }
   }
 }
