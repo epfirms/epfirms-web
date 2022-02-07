@@ -2,14 +2,9 @@
 @import '~tippy.js/animations/shift-away-subtle.css';
 
 .tippy-box[data-theme~='tooltip-dark'] {
-  box-shadow: inset 0 2px 1px -1px rgba(156, 163, 175, .5);
-  background-color: rgb(55, 65, 81);
-  color: rgb(255, 255, 255);
-  border-radius: .25rem;
-
+  @apply bg-slate-800 rounded-lg ring-slate-900/10 ring-1 shadow-md text-slate-400 font-bold;
   & > .tippy-content {
-    font-size: .75rem;
-    font-weight: 500;
+    @apply text-xs leading-6;
   }
 }
 
