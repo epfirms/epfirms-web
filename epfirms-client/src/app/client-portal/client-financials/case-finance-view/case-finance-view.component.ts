@@ -66,22 +66,32 @@ export class CaseFinanceViewComponent implements OnInit {
 
   private loadPayments() : void {
       this.matterService.getMatterBillingById(this.matter.id).subscribe(res => {
-        // get all of the reconciled bills associated with that statement_id
+
+        if (res != null) {
+          // get all of the reconciled bills associated with that statement_id
         this.payments = res.filter(bill => bill.type == 1);
         this.payments.forEach(payment => {
           this.totalPayments += payment.amount;
         });
         console.log("res",res.filter(bill => bill.type == 1));
         console.log("payments", this.payments);
-        this.lastPaymentAmount = this.payments[this.payments.length - 1].amount;
+        if (this.payments.length != 0) {
+          this.lastPaymentAmount = this.payments[this.payments.length - 1].amount;
+
+        }
+        }
+        
       });
   }
 
   private loadCustomerAccount() : void {
     this.customerAccountService.get(this.matter.id).subscribe(res => {
-      this.customerAccount = res;
-      this.displayMonthlyPaymentTab = res.payment_agreement;
-      console.log("Customer Account", res);
+      if (res != null) {
+        this.customerAccount = res;
+        this.displayMonthlyPaymentTab = res.payment_agreement;
+        console.log("Customer Account", res);
+      }
+      
     });
   }
 
