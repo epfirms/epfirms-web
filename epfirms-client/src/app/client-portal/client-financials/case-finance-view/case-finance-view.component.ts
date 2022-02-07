@@ -95,4 +95,9 @@ export class CaseFinanceViewComponent implements OnInit {
     });
   }
 
+  closeCaseView() : void {
+    this.isVisible = false;
+    this.isVisibleChange.emit(this.isVisible);
+  }
+
 }
