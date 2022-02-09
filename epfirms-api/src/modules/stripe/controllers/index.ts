@@ -1,5 +1,6 @@
 import { StripeController } from "./stripe.controller";
+import Container from "typedi";
 
-const stripeController = new StripeController();
+const stripeController = Container.get(StripeController)
 
 export { stripeController };
