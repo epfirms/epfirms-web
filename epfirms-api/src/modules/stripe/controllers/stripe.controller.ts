@@ -269,6 +269,20 @@ export class StripeController {
           res.status(200).send();
         }
       }
+      else if (event.type === 'invoice.payment_failed'){
+        console.log("INVOICE PAYMENT FAILED SESSION");
+        console.log(session);
+        if (session.subscription) {
+          //send an email template for failed payment on subscription
+          const email = await this._emailService.sendFromTemplate(
+            session.customer_email,
+            "Auto Payment Failed",
+            "auto-pay-declined",
+            {}
+          );
+          res.status(200).send();
+        }
+      }
       
       else {
         res.status(StatusConstants.INTERNAL_SERVER_ERROR).send("WEBHOOK ERROR");
