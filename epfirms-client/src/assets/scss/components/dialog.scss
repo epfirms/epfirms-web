@@ -41,7 +41,7 @@ ngneat-dialog.slide-over {
     animation: 500ms cubic-bezier(0, 0, 0.2, 1) slide-over-backdrop-open;
     justify-content: flex-end;
     padding: 0;
-    z-index: 999;
+    z-index: 945;
 
     .ngneat-dialog-content {
       @apply shadow-xl overflow-y-auto;
