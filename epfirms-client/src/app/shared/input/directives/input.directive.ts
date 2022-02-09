@@ -10,7 +10,7 @@ import {
   Optional,
   Renderer2,
   Self,
-  SimpleChanges
+  SimpleChanges,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -22,18 +22,19 @@ import { filter, takeUntil } from 'rxjs/operators';
   host: {
     '[class.ep-input]': '!editable',
     '[class.ep-input-editable]': 'editable',
-    '[class.ep-input-disabled]': 'disabled'
-  }
+    '[class.ep-input-disabled]': 'disabled',
+  },
 })
 export class InputDirective implements OnChanges, OnInit, OnDestroy {
-  @HostListener('blur') trimOnBlur() {
-    const trimmedValue = this.elementRef.nativeElement.value.trim();
+  @HostListener('change') trimOnBlur() {
+    const inputValue = this.elementRef.nativeElement.value;
+    const trimmedValue = inputValue.trim();
     this.elementRef.nativeElement.value = trimmedValue;
     if (this.ngControl) {
       this.ngControl.control.setValue(trimmedValue);
     }
   }
-  
+
   @Input()
   get disabled(): boolean {
     if (this.ngControl && this.ngControl.disabled !== null) {
@@ -69,16 +70,15 @@ export class InputDirective implements OnChanges, OnInit, OnDestroy {
   constructor(
     @Optional() @Self() public ngControl: NgControl,
     private renderer: Renderer2,
-    private elementRef: ElementRef
-  ) {
-  }
+    private elementRef: ElementRef,
+  ) {}
 
   ngOnInit(): void {
     if (this.ngControl) {
       this.ngControl.statusChanges
         ?.pipe(
           filter(() => this.ngControl.disabled !== null),
-          takeUntil(this.destroy$)
+          takeUntil(this.destroy$),
         )
         .subscribe(() => {
           this.disabled$.next(this.ngControl.disabled!);
@@ -93,7 +93,7 @@ export class InputDirective implements OnChanges, OnInit, OnDestroy {
     }
     if (editable) {
       this._subscribeToEditableChanges();
-    } 
+    }
   }
 
   ngOnDestroy(): void {
