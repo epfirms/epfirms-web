@@ -2,10 +2,13 @@ import { Response, Request } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
 import { StripeService } from '../services/stripe.service';
 import { send } from 'process';
+import { emailsService } from '@src/modules/emails/services/emails.service';
+import { Service } from 'typedi';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const passport = require('passport');
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
 
+@Service()
 export class StripeController {
 
 
@@ -14,7 +17,7 @@ export class StripeController {
   feeRate : number = 0.029 + 0.011;
   feePercent : number = 4;
   
-  constructor() {}
+  constructor(private _emailService : emailsService) {}
 
   
 
@@ -255,7 +258,13 @@ export class StripeController {
         console.log("INVOICE PAYMENT SUCCESS SESSION");
         console.log(session);
         if (session.subscription) {
-          
+          //send an email template for successful payment
+          const email = await this._emailService.sendFromTemplate(
+            session.customer_email,
+            "Auto Payment Success",
+            "successful-auto-payment",
+            {"v:amount": session.amount_paid / 100}
+          );
           const updatedCustomerAccount = await StripeService.fufillInvoicePaymentSuccess(session);
           res.status(200).send();
         }
