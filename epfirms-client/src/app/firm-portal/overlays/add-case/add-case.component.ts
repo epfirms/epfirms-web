@@ -18,7 +18,10 @@ import { DialogRef, DialogService } from '@ngneat/dialog';
 @Component({
   selector: 'app-add-case',
   templateUrl: './add-case.component.html',
-  styleUrls: ['./add-case.component.scss']
+  styleUrls: ['./add-case.component.scss'],
+  host: {
+    'class': 'contents'
+  }
 })
 export class AddCaseComponent implements OnInit, OnDestroy {
   matterType: string;
