@@ -70,6 +70,10 @@ export class MatterTabBillingComponent implements OnInit {
   //manage the state of the statement generation workflow
   generateStatementState : boolean = false;
 
+  // state for the setup flow
+  // this should only happen on the first time somebody opens the billing on this case
+  isSetupFlowVisible : boolean = true;
+
   constructor(
     private _dialogService: DialogService,
     private _matterService: MatterService,

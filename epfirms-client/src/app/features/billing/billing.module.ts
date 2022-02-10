@@ -7,6 +7,7 @@ import { LegalInsuranceComponent } from './legal-insurance/legal-insurance.compo
 import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.component';
 import { GenerateStatementComponent } from './generate-statement/generate-statement.component';
 import { OverviewComponent } from './overview/overview.component';
+import { SetupFlowComponent } from './setup-flow/setup-flow.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { OverviewComponent } from './overview/overview.component';
     MonthlyPaymentComponent,
     GenerateStatementComponent,
     OverviewComponent,
+    SetupFlowComponent,
   ],
   imports: [CoreModule, EditableModule],
   exports: [
@@ -25,6 +27,7 @@ import { OverviewComponent } from './overview/overview.component';
     MonthlyPaymentComponent,
     GenerateStatementComponent,
     OverviewComponent,
+    SetupFlowComponent
   ],
 })
 export class BillingModule {}

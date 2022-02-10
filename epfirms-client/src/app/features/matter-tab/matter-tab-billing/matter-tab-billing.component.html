@@ -1,4 +1,14 @@
 
+<div *ngIf="isSetupFlowVisible">
+<app-setup-flow></app-setup-flow>
+
+</div>
+
+
+
+<div *ngIf="!isSetupFlowVisible">
+
+
 
 
 
@@ -583,3 +593,5 @@
 <app-monthly-payment *ngIf="selectedTab == 'monthly payments'" [matter]="matter"></app-monthly-payment>
 
 <app-overview *ngIf="selectedTab == 'overview'" [matter]="matter"></app-overview>
+
+</div>
