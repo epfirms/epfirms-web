@@ -1,0 +1,15 @@
+.ep-zoom-enter {
+  @apply translate-x-full;
+}
+
+.ep-zoom-enter-active {
+  @apply translate-x-0;
+}
+
+.ep-zoom-leave {
+  @apply translate-x-0;
+}
+
+.ep-zoom-leave-active {
+  @apply translate-x-full;
+}

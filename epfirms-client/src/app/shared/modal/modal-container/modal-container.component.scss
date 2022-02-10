@@ -1,0 +1,31 @@
+.ep-zoom-enter {
+  @apply opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95;
+}
+
+.ep-zoom-enter-active {
+  @apply opacity-100 translate-y-0 sm:scale-100;
+}
+
+.ep-zoom-leave {
+  @apply opacity-100 translate-y-0 sm:scale-100;
+}
+
+.ep-zoom-leave-active {
+  @apply opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95;
+}
+
+.ep-fade-enter {
+  @apply opacity-0 ease-out duration-300;
+}
+
+.ep-fade-enter-active {
+  @apply opacity-100;
+}
+
+.ep-fade-leave {
+  @apply opacity-100 ease-in duration-200;
+}
+
+.ep-fade-leave-active {
+  @apply opacity-0;
+}

@@ -10,34 +10,39 @@ import { LegalAreaService } from '../_services/legal-area-service/legal-area.ser
 import { MatterService } from '../_services/matter-service/matter.service';
 import { MatterTabsService } from '../../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { StaffService } from '../_services/staff-service/staff.service';
-import { DialogService } from '@ngneat/dialog';
 import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete.component';
+import { EpModalService } from '@app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-leads',
   templateUrl: './leads.component.html',
   styleUrls: ['./leads.component.scss'],
   host: {
-    class: 'flex-1 relative z-0 flex flex-col overflow-hidden'
+    class: 'flex-1 relative z-0 flex flex-col overflow-hidden',
   },
   animations: [
     trigger('toggleAnimation', [
       transition(':enter', [
         style({ opacity: 0, transform: 'scale(0.95)' }),
-        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
+        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
       ]),
-      transition(':leave', [animate('75ms', style({ opacity: 0, transform: 'scale(0.95)' }))])
-    ])
-  ]
+      transition(':leave', [animate('75ms', style({ opacity: 0, transform: 'scale(0.95)' }))]),
+    ]),
+  ],
 })
 export class LeadsComponent implements OnInit {
   displayedColumns = ['client', 'task', 'legal-area', 'attorney', 'status'];
 
   attorneys$: Observable<Staff[]>;
+
   attorneys: Staff[] = [];
+
   filteredAttorneys: Staff[] = [];
+
   leads$: Observable<Matter[]>;
+
   legalAreas$: Observable<LegalArea[]>;
+
   statusFilterOptions: any[] = ['active', 'inactive'];
 
   paginator: { start: number; end: number } = { start: 0, end: 20 };
@@ -48,40 +53,40 @@ export class LeadsComponent implements OnInit {
     {
       name: 'active case',
       status: 'active',
-      matter_type: 'case'
+      matter_type: 'case',
     },
     {
       name: 'inactive case',
       status: 'inactive',
-      matter_type: 'case'
+      matter_type: 'case',
     },
     {
       name: 'active lead',
       status: 'active',
-      matter_type: 'lead'
+      matter_type: 'lead',
     },
     {
       name: 'inactive lead',
       status: 'inactive',
-      matter_type: 'lead'
+      matter_type: 'lead',
     },
     {
       name: 'completed case',
       status: 'complete',
-      matter_type: 'case'
-    }
+      matter_type: 'case',
+    },
   ];
 
   matterFilterValues = {
     matter_type: 'lead',
     status: 'active',
     searchTerm: '',
-    attorney_id: null
+    attorney_id: null,
   };
 
   sortValues: { column: string; direction: string } = {
     column: null,
-    direction: null
+    direction: null,
   };
 
   constructor(
@@ -89,7 +94,7 @@ export class LeadsComponent implements OnInit {
     private _matterTabsService: MatterTabsService,
     private _legalAreaService: LegalAreaService,
     private _staffService: StaffService,
-    private _dialogService: DialogService
+    private _modalService: EpModalService,
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.leads$ = _matterService.filteredEntities$;
@@ -114,7 +119,7 @@ export class LeadsComponent implements OnInit {
     this.filteredAttorneys =
       event && event.length
         ? this.attorneys.filter((attorney) =>
-            attorney.user.full_name.toLowerCase().includes(event.toLowerCase())
+            attorney.user.full_name.toLowerCase().includes(event.toLowerCase()),
           )
         : [...this.attorneys];
   }
@@ -124,16 +129,16 @@ export class LeadsComponent implements OnInit {
   }
 
   addLead() {
-    const addLeadModal = this._dialogService.open(AddCaseComponent, {
-      windowClass: 'slide-over',
-      size: 'lgSlideOver',
-      data: {
-        matter_type: 'lead'
+    const addCaseModal = this._modalService.create({
+      epContent: AddCaseComponent,
+      epModalType: 'slideOver',
+      epComponentParams: {
+        matterType: 'lead',
       },
-      enableClose: false
+      epAutofocus: null,
     });
 
-    addLeadModal.afterClosed$.subscribe((data) => {
+    addCaseModal.afterClose.subscribe((data) => {
       if (data && data.matter) {
         this._matterService.create(data.matter).subscribe((response) => {
           response.pipe(take(1)).subscribe((newMatter) => {
@@ -147,7 +152,7 @@ export class LeadsComponent implements OnInit {
       }
     });
   }
-  
+
   setAttorney(matter: Matter, event: AutocompleteSelectedEvent) {
     const selectedOptionValue = event.option.value;
     this._matterService.update({ id: matter.id, attorney_id: selectedOptionValue }).subscribe();
@@ -180,13 +185,13 @@ export class LeadsComponent implements OnInit {
         this.leads$ = this._matterService.filteredEntities$.pipe(
           map((matters) => {
             return matters.sort(this.sortByFirstName(this.sortValues.direction));
-          })
+          }),
         );
       } else if (this.sortValues.column === 'task') {
         this.leads$ = this._matterService.filteredEntities$.pipe(
           map((matters) => {
             return matters.sort(this.sortByTaskDate(this.sortValues.direction));
-          })
+          }),
         );
       }
     } else {

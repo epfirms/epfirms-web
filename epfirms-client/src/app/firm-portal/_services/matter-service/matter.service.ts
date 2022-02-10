@@ -52,6 +52,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
         error: () => 'An error occurred. Unable to add matter.',
       }),
       map((response: Matter) => {
+        this.addOneToCache(response);
         this._socketService.addOneToCacheSync('matter', response);
         return of(response);
       })
@@ -65,6 +66,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   update(matter): Observable<any> {
     return this._http.put<any>('/api/matters', matter).pipe(
       map((response: Matter) => {
+        this.updateOneInCache(response);
         this._socketService.updateCacheSync('matter', response);
         return of(response);
       })
@@ -102,6 +104,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   addMatterTask(task): Observable<any> {
     return this._http.post<any>('/api/matters/task', task).pipe(
       map((response: Matter) => {
+        this.updateOneInCache(response);
         this._socketService.updateCacheSync('matter', response);
         return response;
       })
@@ -111,6 +114,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   updateMatterTask(task): Observable<any> {
     return this._http.patch<any>('/api/matters/task', task).pipe(
       map((response: Matter) => {
+        this.updateOneInCache(response);
         this._socketService.updateCacheSync('matter', response);
         return of(response);
       })
@@ -124,6 +128,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
       })
       .pipe(
         map((response: Matter) => {
+          this.updateOneInCache(response);
           this._socketService.updateCacheSync('matter', response);
           return of(response);
         })
@@ -138,16 +143,16 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
           map((matters: Matter[]) => {
             return matters.reduce((acc, matter) => {
               const filteredMatterTasks = matter.matter_tasks.reduce(
-                (acc, task) => {
-                  if (task.assignee_id === user.id) {
-                    acc.push({
+                (a, task) => {
+                  if (task.assignee_id === user.id && matter.status === 'active') {
+                    a.push({
                       task,
                       legal_area: matter.legal_area,
                       client: matter.client,
                       matterId: matter.id,
                     });
                   }
-                  return acc;
+                  return a;
                 },
                 []
               );
@@ -164,6 +169,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
       .post<any>('/api/matters/intake', { matter_id: matterId })
       .pipe(
         map((response: Matter) => {
+          this.updateOneInCache(response);
           this._socketService.updateCacheSync('matter', response);
           return of(response);
         })

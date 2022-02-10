@@ -1,0 +1,27 @@
+
+        <!--
+          Slide-over panel, show/hide based on slide-over state.
+
+          Entering: "transform transition ease-in-out duration-500 sm:duration-700"
+            From: "translate-x-full"
+            To: "translate-x-0"
+          Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
+            From: "translate-x-0"
+            To: "translate-x-full"
+        -->
+        <div class="w-screen max-w-2xl transition duration-700 ease-in-out transform ep-zoom-enter" #modalElement [ngClass]="config.epClassName!"
+        [ngStyle]="config.epStyle!"
+        [style.width]="config?.epWidth!">
+          <div class="flex flex-col h-full overflow-y-scroll bg-white shadow-xl">
+            <ng-template cdkPortalOutlet></ng-template>
+
+            <!-- Action buttons -->
+            <!-- <div *ngIf="config.epFooter !== null" ep-modal-footer class="flex-shrink-0 px-4 py-5 border-t border-gray-200 sm:px-6"  [modalRef]="modalRef"     (cancelTriggered)="onCloseClick()"
+            (okTriggered)="onOkClick()">
+              <div class="flex justify-end space-x-3">
+                <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
+                <button type="submit" class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Create</button>
+              </div>
+            </div> -->
+          </div>
+        </div>

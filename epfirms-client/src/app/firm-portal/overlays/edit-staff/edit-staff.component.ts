@@ -6,7 +6,6 @@ import { StaffService } from '@app/firm-portal/_services/staff-service/staff.ser
 import { Client } from '@app/core/interfaces/client';
 import { Staff } from '@app/core/interfaces/staff';
 import { Observable } from 'rxjs';
-import { AddClientComponent } from '../add-client/add-client.component';
 
 export interface Select {
   value: string;
@@ -119,7 +118,6 @@ export class EditStaffComponent implements OnInit {
   }
 
   openAddStaff() {
-    // this._overlayService.add(AddClientComponent);
   }
 
   onSubmit() {

@@ -1,5 +1,6 @@
 import {
   Component,
+  Input,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -13,7 +14,8 @@ import { LegalArea } from '@app/core/interfaces/legal-area';
 import { Staff } from '@app/core/interfaces/staff';
 import { Observable, Subscription } from 'rxjs';
 import { AddClientComponent } from '../add-client/add-client.component';
-import { DialogRef, DialogService } from '@ngneat/dialog';
+import { EpModalRef } from '@app/shared/modal/modal-ref';
+import { EpModalService } from '@app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-add-case',
@@ -21,7 +23,7 @@ import { DialogRef, DialogService } from '@ngneat/dialog';
   styleUrls: ['./add-case.component.scss']
 })
 export class AddCaseComponent implements OnInit, OnDestroy {
-  matterType: string;
+  @Input() matterType?: string;
   
   keyword = 'full_name';
 
@@ -71,10 +73,9 @@ export class AddCaseComponent implements OnInit, OnDestroy {
     private _clientService: ClientService,
     private _matterService: MatterService,
     private _legalAreaService: LegalAreaService,
-    private _dialogRef: DialogRef,
-    private _dialogService: DialogService
+    private _modalRef: EpModalRef,
+    private _modalService: EpModalService
   ) {
-    this.matterType = _dialogRef.data.matter_type;
     this.attorneys$ = _staffService.filteredEntities$;
     this.clients$ = _clientService.entities$;
     this.legalAreas$ = _legalAreaService.entities$;
@@ -85,7 +86,7 @@ export class AddCaseComponent implements OnInit, OnDestroy {
       status: ['active', [Validators.required]],
       legal_area_id: [null, [Validators.required]],
       matter_type: [this.matterType],
-      client_id: ['', [Validators.required]],
+      client_id: [null, [Validators.required]],
       attorney_id: [null, [Validators.required]],
       case_id: [null],
       spouse_id: [null],
@@ -111,11 +112,14 @@ export class AddCaseComponent implements OnInit, OnDestroy {
     this.attorneyFilterHandler.unsubscribe();
   }
 
-  displayFn(value, options): string {
-    console.log(value);
-    console.log(options);
+  displayClient(value, options): string {
     const selectedStaffMember = options.find((option) => option.value === value);
-    return selectedStaffMember ? selectedStaffMember.viewValue : 'Select a staff member';
+    return selectedStaffMember ? selectedStaffMember.viewValue : 'Search clients';
+  }
+
+  displayAttorney(value, options): string {
+    const selectedStaffMember = options.find((option) => option.value === value);
+    return selectedStaffMember ? selectedStaffMember.viewValue : 'Search attorneys';
   }
 
   filterClients(event) {
@@ -132,7 +136,7 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   }
 
   close(data?: any) {
-    this._dialogRef.close(data);
+    this._modalRef.close(data);
   }
 
   selectEvent(item: any, controlName: string) {
@@ -144,19 +148,24 @@ export class AddCaseComponent implements OnInit, OnDestroy {
     this.selectedLegalArea = legalArea;
     this.selectEvent(legalArea.id, 'legal_area_id');
   }
+
+  trackById(index, item) {
+    return item.id;
+  }
   
   openAddClient() {
-    const addClientDialog = this._dialogService.open(AddClientComponent, {});
-    addClientDialog.afterClosed$.subscribe((data: any) => {
-      if (data && data.id) {
-      this.selectEvent(data.id, 'client_id');
-      this.clientId = data.id;
-    }
+    this._modalService.create({
+      epContent: AddClientComponent,
+      epOkText: 'Add client',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epOnOk: (componentInstance) => {
+        this._clientService.createClient(componentInstance.clientForm.value).subscribe(response => {
+          this.selectEvent(response.id, 'client_id');
+          this.clientId = response.id;
+        });
+      }
     });
-  }
-
-  openAddStaff() {
-    // this._overlayService.add(AddClientComponent);
   }
 
   onSubmit() {
