@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-setup-flow',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./setup-flow.component.scss']
 })
 export class SetupFlowComponent implements OnInit {
+
+  @Input() matter;
 
   configuration = {
     billingType: "Flat Rate",
@@ -63,7 +65,7 @@ export class SetupFlowComponent implements OnInit {
   }
 
   submit() : void {
-    
+
   }
 
 }

@@ -1,12 +1,12 @@
 
-<div *ngIf="isSetupFlowVisible">
-<app-setup-flow></app-setup-flow>
+<div *ngIf="!matter.billing_setup">
+<app-setup-flow [matter]="matter"></app-setup-flow>
 
 </div>
 
 
 
-<div *ngIf="!isSetupFlowVisible">
+<div *ngIf="matter.billing_setup">
 
 
 
