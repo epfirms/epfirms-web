@@ -21,6 +21,9 @@ export class SetupFlowComponent implements OnInit {
     contingencyPercent: 0
   }
 
+  triggerHourlyAutomation : boolean = true;
+  triggerFlatRateAutomation : boolean = true;
+
   state = 0;
   
   stateHistory = [];
@@ -49,6 +52,14 @@ export class SetupFlowComponent implements OnInit {
 
   back(): void {
     this.state = this.stateHistory.pop();
+  }
+
+  toggleHourlyAutomation() : void {
+    this.triggerHourlyAutomation = !this.triggerHourlyAutomation;
+  }
+
+  toggleFlatRateAutomation() : void {
+    this.triggerFlatRateAutomation = !this.triggerFlatRateAutomation;
   }
 
 }
