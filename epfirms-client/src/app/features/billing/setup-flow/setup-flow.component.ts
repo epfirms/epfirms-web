@@ -62,4 +62,8 @@ export class SetupFlowComponent implements OnInit {
     this.triggerFlatRateAutomation = !this.triggerFlatRateAutomation;
   }
 
+  submit() : void {
+    
+  }
+
 }

@@ -38,6 +38,12 @@ module.exports = (sequelize, {
         },
         settlement_date: {
           type: DATE
+        },
+        retainer_amount: {
+          type: FLOAT
+        },
+        contingency_percent: {
+          type: FLOAT
         }
       }, {
         tableName,
