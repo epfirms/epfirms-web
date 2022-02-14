@@ -20,7 +20,10 @@ import { EpModalService } from '@app/shared/modal/modal.service';
 @Component({
   selector: 'app-add-case',
   templateUrl: './add-case.component.html',
-  styleUrls: ['./add-case.component.scss']
+  styleUrls: ['./add-case.component.scss'],
+  host: {
+    'class': 'contents'
+  }
 })
 export class AddCaseComponent implements OnInit, OnDestroy {
   @Input() matterType?: string;

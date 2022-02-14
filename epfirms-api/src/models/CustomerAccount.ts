@@ -38,7 +38,8 @@ module.exports = (sequelize, {
             type: DATE
         },
         payment_agreement: {
-            type: BOOLEAN
+            type: BOOLEAN,
+            defaultValue: false
         },
         min_payment: {
             type: FLOAT

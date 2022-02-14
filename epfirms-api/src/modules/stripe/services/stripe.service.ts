@@ -1,9 +1,10 @@
 import { Database } from '@src/core/Database';
+import { Service } from 'typedi';
 const bcrypt = require('bcrypt');
 
 
 
-
+@Service()
 export class StripeService {
   public static async getStripeAccountId(firmId): Promise<any> {
     try {

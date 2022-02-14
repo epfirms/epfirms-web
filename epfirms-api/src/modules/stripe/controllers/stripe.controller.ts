@@ -2,10 +2,13 @@ import { Response, Request } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
 import { StripeService } from '../services/stripe.service';
 import { send } from 'process';
+import { emailsService } from '@src/modules/emails/services/emails.service';
+import { Service } from 'typedi';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const passport = require('passport');
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
 
+@Service()
 export class StripeController {
 
 
@@ -14,7 +17,7 @@ export class StripeController {
   feeRate : number = 0.029 + 0.011;
   feePercent : number = 4;
   
-  constructor() {}
+  constructor(private _emailService : emailsService) {}
 
   
 
@@ -129,7 +132,7 @@ export class StripeController {
             price_data: {
               currency: 'usd',
               product_data: {
-                name: 'FIRM NAME BILLING VAR'
+                name: req.body.description
               },
               //conversion to cents since Stripe API uses this; might need a better way
               unit_amount_decimal: Math.round(amount / 0.01),
@@ -255,8 +258,28 @@ export class StripeController {
         console.log("INVOICE PAYMENT SUCCESS SESSION");
         console.log(session);
         if (session.subscription) {
-          
+          //send an email template for successful payment
+          const email = await this._emailService.sendFromTemplate(
+            session.customer_email,
+            "Auto Payment Success",
+            "successful-auto-payment",
+            {"v:amount": session.amount_paid / 100}
+          );
           const updatedCustomerAccount = await StripeService.fufillInvoicePaymentSuccess(session);
+          res.status(200).send();
+        }
+      }
+      else if (event.type === 'invoice.payment_failed'){
+        console.log("INVOICE PAYMENT FAILED SESSION");
+        console.log(session);
+        if (session.subscription) {
+          //send an email template for failed payment on subscription
+          const email = await this._emailService.sendFromTemplate(
+            session.customer_email,
+            "Auto Payment Failed",
+            "auto-pay-declined",
+            {}
+          );
           res.status(200).send();
         }
       }
