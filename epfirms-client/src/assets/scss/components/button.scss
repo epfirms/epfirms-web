@@ -42,7 +42,7 @@
     @apply inline-flex items-center px-2.5 py-1.5 border border-slate-300 shadow-sm text-xs leading-4 font-medium rounded text-slate-700 bg-white hover:bg-slate-50;
 
     &>svg.icon {
-        @apply -ml-1 mr-1 h-3 w-3;
+        @apply -ml-1 mr-1 h-3 w-3 bg-white;
     }
 
     &>svg.icon-end {

@@ -25,6 +25,7 @@ import { QuillModule } from 'ngx-quill';
 import { AutocompleteModule } from './shared/autocomplete/autocomplete.module';
 import { HotToastModule } from '@ngneat/hot-toast';
 import ImageCompress from 'quill-image-compress';
+import { ModalModule } from './shared/modal/modal.module';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -153,7 +154,8 @@ const quillConfig = [
         'secondary': 'rgb(52,211,153)'
       },
       dismissible: true,
-    })
+    }),
+    ModalModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

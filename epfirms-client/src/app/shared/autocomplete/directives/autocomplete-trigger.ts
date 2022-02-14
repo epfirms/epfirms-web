@@ -518,8 +518,7 @@ export abstract class _AutocompleteTriggerBase
     const toDisplay =
       this.autocomplete &&
       this.autocomplete.displayWith &&
-      this.autocomplete.options &&
-      this.autocomplete.options.length
+      this.autocomplete.options
         ? this.autocomplete.displayWith(value, this.autocomplete.options)
         : value;
 

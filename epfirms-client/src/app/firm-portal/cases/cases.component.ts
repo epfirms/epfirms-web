@@ -13,6 +13,7 @@ import { StaffService } from '../_services/staff-service/staff.service';
 import { DialogService } from '@ngneat/dialog';
 import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete.component';
 import { MatterTaskService } from '../_services/matter-task-service/matter-task.service';
+import { EpModalService } from '@app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-cases',
@@ -27,28 +28,24 @@ import { MatterTaskService } from '../_services/matter-task-service/matter-task.
         style({ opacity: 0, transform: 'scale(0.95)' }),
         animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
       ]),
-      transition(':leave', [
-        animate('75ms', style({ opacity: 0, transform: 'scale(0.95)' })),
-      ]),
+      transition(':leave', [animate('75ms', style({ opacity: 0, transform: 'scale(0.95)' }))]),
     ]),
   ],
 })
 export class CasesComponent implements OnInit {
-  displayedColumns = [
-    'client',
-    'task',
-    'legal-area',
-    'attorney',
-    'billing',
-    'status',
-  ];
+  displayedColumns = ['client', 'task', 'legal-area', 'attorney', 'billing', 'status'];
 
   attorneys$: Observable<Staff[]>;
   cases$: Observable<Matter[]>;
+
   legalAreas$: Observable<LegalArea[]>;
+
   statusFilterOptions: any[] = ['active', 'inactive', 'complete'];
+
   attorneys: Staff[] = [];
+
   filteredAttorneys: Staff[] = [];
+
   statusOptions: any[] = [
     {
       name: 'active case',
@@ -99,6 +96,7 @@ export class CasesComponent implements OnInit {
     private _legalAreaService: LegalAreaService,
     private _dialogService: DialogService,
     private _staffService: StaffService,
+    private _modalService: EpModalService,
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.cases$ = _matterService.filteredEntities$;
@@ -111,16 +109,21 @@ export class CasesComponent implements OnInit {
   }
 
   filterAttorneys(event) {
-    this.filteredAttorneys = event && event.length ? this.attorneys.filter(attorney => attorney.user.full_name.toLowerCase().includes(event.toLowerCase())) : [...this.attorneys]; 
+    this.filteredAttorneys =
+      event && event.length
+        ? this.attorneys.filter((attorney) =>
+            attorney.user.full_name.toLowerCase().includes(event.toLowerCase()),
+          )
+        : [...this.attorneys];
   }
 
   ngOnInit(): void {
     this.filter();
-    this._staffService.setFilter({active: true, role: ['attorney']});
-    this.attorneys$.pipe(take(1)).subscribe(a => {
+    this._staffService.setFilter({ active: true, role: ['attorney'] });
+    this.attorneys$.pipe(take(1)).subscribe((a) => {
       this.attorneys = [...a];
       this.filteredAttorneys = [...a];
-    })
+    });
   }
 
   openTab(matter: Matter) {
@@ -128,16 +131,16 @@ export class CasesComponent implements OnInit {
   }
 
   addCase() {
-    const addCaseModal = this._dialogService.open(AddCaseComponent, {
-      windowClass:'slide-over',
-      size: 'lgSlideOver',
-      data: {
-        matter_type: 'case'
+    const addCaseModal = this._modalService.create({
+      epContent: AddCaseComponent,
+      epModalType: 'slideOver',
+      epComponentParams: {
+        matterType: 'case',
       },
-      enableClose: false
-    })
+      epAutofocus: null,
+    });
 
-    addCaseModal.afterClosed$.subscribe((data) => {
+    addCaseModal.afterClose.subscribe((data) => {
       if (data && data.matter) {
         this._matterService.create(data.matter).subscribe((response) => {
           response.pipe(take(1)).subscribe((newMatter) => {
@@ -151,20 +154,18 @@ export class CasesComponent implements OnInit {
       }
     });
   }
+
   addNote(id: number, note) {
     this._matterService.addMatterNote(id, note).subscribe();
   }
+
   setLegalArea(matter: Matter, legalArea: LegalArea) {
-    this._matterService
-      .update({ id: matter.id, legal_area_id: legalArea.id })
-      .subscribe();
+    this._matterService.update({ id: matter.id, legal_area_id: legalArea.id }).subscribe();
   }
 
   setAttorney(matter: Matter, event: AutocompleteSelectedEvent) {
     const selectedOptionValue = event.option.value;
-    this._matterService
-    .update({ id: matter.id, attorney_id: selectedOptionValue })
-    .subscribe();
+    this._matterService.update({ id: matter.id, attorney_id: selectedOptionValue }).subscribe();
     this.filteredAttorneys = [...this.attorneys];
   }
 
@@ -185,16 +186,14 @@ export class CasesComponent implements OnInit {
       if (this.sortValues.column === 'first_name') {
         this.cases$ = this._matterService.filteredEntities$.pipe(
           map((matters) => {
-            return matters.sort(
-              this.sortByFirstName(this.sortValues.direction)
-            );
-          })
+            return matters.sort(this.sortByFirstName(this.sortValues.direction));
+          }),
         );
       } else if (this.sortValues.column === 'task') {
         this.cases$ = this._matterService.filteredEntities$.pipe(
           map((matters) => {
             return matters.sort(this.sortByTaskDate(this.sortValues.direction));
-          })
+          }),
         );
       }
     } else {
@@ -226,25 +225,18 @@ export class CasesComponent implements OnInit {
         } else {
           if (a.matter_tasks[0].completed && !b.matter_tasks[0].completed) {
             return 1;
-          } else if (
-            !a.matter_tasks[0].completed &&
-            b.matter_tasks[0].completed
-          ) {
+          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
             return -1;
-          } else if (
-            !a.matter_tasks[0].completed &&
-            b.matter_tasks[0].completed
-          ) {
+          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
             return 0;
           } else {
             return (
-              new Date(a.matter_tasks[0].due).getTime() -
-              new Date(b.matter_tasks[0].due).getTime()
+              new Date(a.matter_tasks[0].due).getTime() - new Date(b.matter_tasks[0].due).getTime()
             );
           }
         }
       } else {
-        if (a.matter_tasks.length && !b.matter_tasks.length){
+        if (a.matter_tasks.length && !b.matter_tasks.length) {
           return 1;
         } else if (!a.matter_tasks.length && b.matter_tasks.length) {
           return -1;
@@ -253,23 +245,29 @@ export class CasesComponent implements OnInit {
         } else {
           if (a.matter_tasks[0].completed && !b.matter_tasks[0].completed) {
             return -1;
-          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed){
-            return 1
+          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
+            return 1;
           } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
             return 0;
           } else {
-            return new Date(a.matter_tasks[0].due).getTime() - new Date(b.matter_tasks[0].due).getTime()
+            return (
+              new Date(a.matter_tasks[0].due).getTime() - new Date(b.matter_tasks[0].due).getTime()
+            );
           }
         }
       }
-
-  }
+    };
   }
 
   setStatus(matter: Matter, status) {
     // automatically create tasks based on conditions
-    if (matter.matter_billing_setting.payment_type.toLowerCase() == "legal insurance" && status.status == "complete"){
-      this._matterService.addMatterTask({name: "Make Insurance Claim", matter_id: matter.id}).subscribe(res => console.log(res));
+    if (
+      matter.matter_billing_setting.payment_type.toLowerCase() == 'legal insurance' &&
+      status.status == 'complete'
+    ) {
+      this._matterService
+        .addMatterTask({ name: 'Make Insurance Claim', matter_id: matter.id })
+        .subscribe((res) => console.log(res));
     }
     this._matterService.update({ id: matter.id, ...status }).subscribe();
   }

@@ -26,14 +26,14 @@ import { filter, takeUntil } from 'rxjs/operators';
   },
 })
 export class InputDirective implements OnChanges, OnInit, OnDestroy {
-  @HostListener('change') trimOnBlur() {
-    const inputValue = this.elementRef.nativeElement.value;
-    const trimmedValue = inputValue.trim();
-    this.elementRef.nativeElement.value = trimmedValue;
-    if (this.ngControl) {
-      this.ngControl.control.setValue(trimmedValue);
-    }
-  }
+  // @HostListener('change') trimOnBlur() {
+  //   const inputValue = this.elementRef.nativeElement.value;
+  //   const trimmedValue = inputValue.trim();
+  //   this.elementRef.nativeElement.value = trimmedValue;
+  //   if (this.ngControl) {
+  //     this.ngControl.control.setValue(trimmedValue);
+  //   }
+  // }
 
   @Input()
   get disabled(): boolean {

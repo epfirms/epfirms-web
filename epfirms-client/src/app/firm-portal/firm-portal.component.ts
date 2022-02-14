@@ -4,6 +4,7 @@ import { CurrentUserService } from '@app/shared/_services/current-user-service/c
 import { take } from 'rxjs/operators';
 import { MatterTabsService } from '../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { SocketService } from '../core/services/socket.service';
+import { ChatService } from '@app/features/chat/chat.service';
 
 @Component({
   selector: 'app-firm-portal',
@@ -39,6 +40,7 @@ export class FirmPortalComponent implements OnInit {
     private _currentUserService: CurrentUserService,
     private _authService: AuthService,
     private _matterTabsService: MatterTabsService,
+    private _chatService: ChatService
   ) {
     this._currentUserService
       .getCurrentUser()
@@ -51,6 +53,7 @@ export class FirmPortalComponent implements OnInit {
 
   ngOnInit() {
     this._matterTabsService.init();
+    this._chatService.init();
   }
 
   minimizeMatterTabs(): void {
