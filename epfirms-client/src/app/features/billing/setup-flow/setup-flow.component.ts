@@ -20,7 +20,8 @@ export class SetupFlowComponent implements OnInit {
     minimumPayment: 0,
     lateFee: 0,
     retainerAmount: 0,
-    contingencyPercent: 0
+    contingencyPercent: 0,
+    generateContract: "Yes",
   }
 
   triggerHourlyAutomation : boolean = true;
