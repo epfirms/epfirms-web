@@ -1,0 +1,147 @@
+<div
+class="flex flex-col pb-2 mr-4 overflow-hidden bg-white rounded-t-lg shadow-lg w-96 ring-1 ring-black ring-opacity-5"
+>
+<div class="flex px-4 py-3 space-x-4 shadow-sm ring-1 ring-black ring-opacity-5">
+  <div class="flex-shrink-0">
+    <img
+      *ngIf="recipient?.attributes.profile_image"
+      class="inline-block w-8 h-8 rounded-full"
+      [src]="recipient.attributes.profile_image"
+      alt=""
+    />
+
+    <span class="inline-flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full" *ngIf="!recipient?.attributes.profile_image">
+      <span class="text-sm font-medium leading-none text-white">{{recipient?.friendlyName | initials}}</span>
+    </span>
+  </div>
+  
+  <div class="self-center flex-1 min-w-0">
+    <p class="text-sm font-semibold text-gray-800">
+      <a href="#" class="hover:underline">{{recipient?.friendlyName | titlecase}}</a>
+    </p>
+  </div>
+  <div class="flex self-center flex-shrink-0 space-x-2">
+    <div>
+      <button
+        type="button"
+        class="flex items-center p-2 -m-2 text-gray-400 rounded-full hover:text-gray-600"
+        id="menu-0-button"
+        aria-expanded="false"
+        aria-haspopup="true"
+        (click)="minimizeWindow()"
+      >
+        <span class="sr-only">Close message</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </div>
+    <div>
+      <button
+        type="button"
+        class="flex items-center p-2 -m-2 text-gray-400 rounded-full hover:text-gray-600"
+        id="menu-0-button"
+        aria-expanded="false"
+        aria-haspopup="true"
+        (click)="closeWindow()"
+      >
+        <span class="sr-only">Close message</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="flex flex-col-reverse overflow-y-auto h-80">
+  <ul class="px-3 py-2">
+    <li class="py-3 text-sm" *ngFor="let message of messages">
+      <div *ngIf="message.author !== currentUser.identity" class="flex-shrink-0 block group">
+        <div class="flex items-start">
+          <div
+            class="px-3 py-2 ml-2 bg-gray-100 rounded-bl-none shadow-sm rounded-2xl ring-1 ring-black ring-opacity-5"
+          >
+            <p class="text-sm font-normal text-gray-800">
+              {{message.body}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="message.author === currentUser.identity" class="flex-shrink-0 block group">
+        <div class="flex items-end justify-end">
+          <div class="px-3 py-2 ml-24 bg-blue-500 rounded-br-none rounded-2xl">
+            <p class="text-sm text-white">
+              {{message.body}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="px-3 py-2">
+  <div class="flex-1 min-w-0">
+    <div class="flex items-start space-x-4">
+      <div class="flex-1 min-w-0">
+        <form action="#" class="relative group">
+          <div
+            class="relative overflow-hidden border border-gray-300 rounded-lg shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500"
+          >
+            <label for="comment" class="sr-only">Add your comment</label>
+            <textarea
+              rows="1"
+              name="comment"
+              id="comment"
+              class="block w-full py-3 border-0 focus:ring-0 sm:text-sm placeholder:text-gray-300"
+              placeholder="Write a message..."
+              [(ngModel)]="newMessage"
+              (keyup.enter)="sendMessage()"
+            ></textarea>
+          </div>
+
+          <div class="absolute right-0 inset-y-0 flex py-1.5 px-1.5">
+            <div>
+              <button
+                (click)="sendMessage()"
+                type="submit"
+                [disabled]="!(newMessage && newMessage.length)"
+                class="items-center hidden px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm group-focus-within:inline-flex hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4 rotate-90"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
