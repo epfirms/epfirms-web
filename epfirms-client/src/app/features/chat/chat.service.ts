@@ -42,7 +42,9 @@ export class ChatService {
     return this.getAccessToken().pipe(
       pluck('data'),
       switchMap(token => {
-        this.conversationsClient = new ConversationsClient(token, {logLevel: 'error'});    
+        this.conversationsClient = new ConversationsClient(token, {logLevel: 'error'});
+        
+        // Should be moved to when connectionStateChanged = 'connected'
         this.emitConversationsValue();
         return fromEvent(this.conversationsClient, 'connectionStateChanged');
       }),
@@ -58,12 +60,10 @@ export class ChatService {
 
   addParticipant(conversation, identity: string):Observable<any>{
     return from(conversation.add(identity)).pipe(tap(() => {
+      // Check both participant values. Might need 
+      console.log(conversation.attributes);
       from(conversation.updateAttributes({...conversation.attributes, "participants": [...conversation.attributes.participants, identity]})).subscribe();
     }));
-  }
-
-  getMessages(conversationSid: string, opts?: { limit?: number; order?: 'asc' | 'desc' }): Observable<any> {
-    return this._http.get(`/api/chat/conversation/${conversationSid}/messages`, {params: opts});
   }
 
   sendMessage(conversation, message: string): Observable<any> {
@@ -93,7 +93,11 @@ export class ChatService {
     return from(this.conversationsClient.user.updateAttributes({"profileImage": profileImage}));
   }
 
-  // addParticipants(conversationSid: string, participants: {identity: string}[]): Observable<any> {
-  //   return this._http.post(`/api/chat/conversation/${conversationSid}/participants`, {participants});
-  // }
+  conversationAddedEvent() {
+    return fromEvent(this.conversationsClient, 'conversationAdded');
+  }
+
+  conversationUpdateEvent() {
+    return fromEvent(this.conversationsClient, 'conversationUpdated');
+  }
 }

@@ -82,7 +82,6 @@ export class ChatWindowComponent implements OnDestroy {
     }),
     takeUntil(this.destroy$)).subscribe((recipient) => {
       this.recipient = recipient;
-      console.log(this.recipient)
     });
   }
 
@@ -90,5 +89,9 @@ export class ChatWindowComponent implements OnDestroy {
     fromEvent(this.conversation, 'messageAdded').pipe(takeUntil(this.destroy$)).subscribe((message) => {
       this.messages.push(message);
     });
+  }
+
+  delete(){
+    this.conversation.delete();
   }
 }

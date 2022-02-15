@@ -34,8 +34,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._chatService.conversation$.pipe(takeUntil(this.destroy$)).subscribe((conversations) => {
-      this.conversationItems = [...conversations];
-      this.conversationItems.forEach((c) => console.log(new Date(c.dateUpdated)))
+      this.conversationItems = conversations;
     });
 
     this._chatService
@@ -49,10 +48,15 @@ export class ChatComponent implements OnInit, OnDestroy {
             });
           }
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((state) => {
         this.connectionState = state;
+        if (state === 'connected') {
+          this._chatService.conversationAddedEvent().subscribe((conversation) => {
+            this.conversationItems.push(conversation);
+          });
+        }
       });
   }
 
@@ -69,51 +73,65 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.openedConversationItems.delete(conversation);
   }
 
-  //TODO: Catch error and delete created conversation.
-  startNewConversation(): void {
-    this._chatService
-      .createConversation()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe((response) => {
-        console.log(response);
-      });
-  }
-
   toggleNewChatWindow(): void {
     this.newChat = !this.newChat;
   }
 
   createConversation(value): void {
-    this._chatService.createConversation().pipe(takeUntil(this.destroy$)).subscribe(conversation => {
-      const existingConversation = this.findDirectConversation(conversation.createdBy, value.userId)
-      if (!existingConversation) {
-      this._chatService.addParticipant(conversation, value.userId.toString()).pipe(takeUntil(this.destroy$)).subscribe(() => {
-        this._chatService.sendMessage(conversation, value.body).pipe(takeUntil(this.destroy$)).subscribe(() => {
-          this.toggleNewChatWindow();
-          this.openChat(conversation);
+    const userIdentity = this._chatService.conversationsClient.user.identity;
+    const recipientIdentity = value.userId;
+
+    const existingConversation = this.findDirectConversation(userIdentity, recipientIdentity);
+    if (!existingConversation) {
+      this._chatService
+        .createConversation()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((conversation) => {
+          this._chatService
+            .addParticipant(conversation, value.userId.toString())
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+              this._chatService
+                .sendMessage(conversation, value.body)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(() => {
+                  this.toggleNewChatWindow();
+                  this.openChat(conversation);
+                });
+            });
         });
-      });
     } else {
-      this._chatService.sendMessage(existingConversation, value.body).pipe(takeUntil(this.destroy$)).subscribe(() => {
-        this.toggleNewChatWindow();
-        this.openChat(existingConversation);
-      });
+      this._chatService
+        .sendMessage(existingConversation, value.body)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.toggleNewChatWindow();
+        });
     }
-    });
   }
 
-  findDirectConversation(current, recipient) {
-    return [...this.conversationItems, ...this.openedConversationItems].find(conversation => {
+  findDirectConversation(currentIdentity: string, recipientIdentity: string) {
+    return this.conversationItems.find((conversation) => {
+      console.log(conversation);
       const attributes = conversation.attributes;
-      return attributes.type === 'direct' && attributes.participants.includes(current) && attributes.participants.includes(recipient);
-    })
+      const participants = [...conversation.participants.values()];
+      console.log(participants);
+      console.log(conversation.participants.values());
+      return (
+        attributes.type === 'direct' &&
+        participants.some((p) => p.identity === currentIdentity) &&
+        participants.some((p) => p.identity === recipientIdentity)
+      );
+    });
   }
 
   delete(conversation) {
-    conversation.delete().then(c => {
-      console.log(c)
+    conversation.delete().then((c) => {
+      console.log(c);
     });
+  }
+
+  conversationIsOpen(conversation) {
+    return this.openedConversationItems.has(conversation);
   }
 }
