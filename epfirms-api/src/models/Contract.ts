@@ -82,7 +82,7 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE }) =>
       post_settlement_percent: {
         type: FLOAT,
       },
-      retainer: {
+      retainer_amount: {
         type: FLOAT
       }
     },
