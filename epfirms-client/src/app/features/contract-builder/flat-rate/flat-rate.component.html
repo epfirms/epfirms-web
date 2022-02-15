@@ -98,8 +98,8 @@
             {{flatRateForm.value.date}}.<br /><br />{{flatRateForm.value.attorney}}<br /><br /><br />BY: &nbsp; &nbsp; &nbsp;<br />Attorney<br />ATTORNEY-CLIENT
             COMMUNICATION: &nbsp;THIS DOCUMENT AND ITS<br />CONTENTS CONSTITUTE LEGALLY PRIVILEGED
             INFORMATION<br /><br />EXHIBIT &quot;A&quot; Flat Fee Covered<br /><br /><br />
-            <ol *ngFor="let item of flatRateForm.value.coveredItems.split(',')">
-                <li>{{item}}</li>
+            <ol class="list-decimal" >
+                <li *ngFor="let item of flatRateForm.value.coveredItems.split(',')">{{item}}</li>
             </ol>
             
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
