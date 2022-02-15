@@ -4,13 +4,17 @@ import { ContractEditorComponent } from './contract-editor/contract-editor.compo
 import { FlatRateComponent } from './flat-rate/flat-rate.component';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HourlyComponent } from './hourly/hourly.component';
+import { ContingencyComponent } from './contingency/contingency.component';
 
 
 
 @NgModule({
   declarations: [
     ContractEditorComponent,
-    FlatRateComponent
+    FlatRateComponent,
+    HourlyComponent,
+    ContingencyComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +24,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     ContractEditorComponent,
-    FlatRateComponent
+    FlatRateComponent,
+    ContingencyComponent,
+    HourlyComponent
   ]
 })
 export class ContractBuilderModule { }

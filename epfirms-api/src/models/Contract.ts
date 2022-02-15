@@ -15,7 +15,7 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE }) =>
       },
       matter_id: {
         type: INTEGER,
-        allowNull: true,
+        
         unique: true
       },
       attorney_id: {
@@ -53,11 +53,11 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE }) =>
       },
       fee: {
         type: FLOAT,
-        allowNull: false,
+        
       },
       covered_items: {
         type: STRING,
-        allowNull: false,
+        
       },
       date: {
         type: DATE,
@@ -76,6 +76,15 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE }) =>
         type: INTEGER,
         allowNull: false,
       },
+      pre_settlement_percent: {
+        type: FLOAT,
+      },
+      post_settlement_percent: {
+        type: FLOAT,
+      },
+      retainer: {
+        type: FLOAT
+      }
     },
     {
       tableName,
