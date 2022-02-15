@@ -20,6 +20,7 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE }) =>
       attorney_id: {
         type: INTEGER,
         allowNull: false,
+        unique: true
       },
       county: {
         type: STRING,
