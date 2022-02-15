@@ -18,7 +18,7 @@
           <p>
             ATTORNEY FLAT FEE AGREEMENT<br /><br />THIS AGREEMENT (&quot;Agreement&quot;) is made on
             {{flatRateForm.value.date | date}}, in {{flatRateForm.value.county}} County, {{flatRateForm.value.state}}, between {{flatRateForm.value.client}} (&quot;Client&quot;), {{flatRateForm.value.attorney}}
-            and {{flatRateForm.value.lawFirm}}, of {{flatRateForm.value.attorneyCity}}, {{flatRateForm.value.attorneyCounty}} County, {{flatRateForm.value.attorneyState}}
+            and {{flatRateForm.value.law_firm}}, of {{flatRateForm.value.attorney_city}}, {{flatRateForm.value.attorney_county}} County, {{flatRateForm.value.attorney_state}}
             (hereinafter known as &quot;Attorney&quot;):<br /><br />In consideration of the mutual
             promises herein contained, the parties hereto agree as follows:<br /><br />I.
             &nbsp;PURPOSE OF REPRESENTATION<br /><br />The Client hereby retains and employs the
@@ -70,16 +70,16 @@
             expenses. &nbsp;If payments are not made promptly to us as requested, we reserve the
             right to immediately withdraw from representing you in any and all matters that the law
             firm is handling. &nbsp;You agree to the withdrawal.<br /><br />VII. OTHER ISSUES<br /><br />This
-            Agreement is performable in [ATTORNEY COUNTY]. &nbsp;All monies owed hereunder are to be
+            Agreement is performable in {{flatRateForm.value.attorney_county}}. &nbsp;All monies owed hereunder are to be
             paid through EPFirms online portal system or paid directly to our office.
             &nbsp;Jurisdiction and venue of any dispute arising hereunder are also performable in
-            [ATTORNEY COUNTY].<br /><br />You authorize us with your power of attorney to sign court
+            {{flatRateForm.value.attorney_county}}.<br /><br />You authorize us with your power of attorney to sign court
             or other legal documents which may be required in the course of the case. &nbsp;Also,
             you also will designate our law firm as your attorney-at-law and in-fact to act in your
             name, sign legal pleadings on your behalf and to perform the acts necessary and
             appropriate to affect the above-described legal representation.<br /><br />If the
             attorney were to pass away or no longer practicing law, this contract is enforceable by
-            [LAW FIRM] or any subsequent law firm which may purchase it. If both the law firm no
+            {{flatRateForm.value.law_firm}} or any subsequent law firm which may purchase it. If both the law firm no
             longer exists and the attorney no longer is practicing law, then client understands that
             the attorney nor law firm can revise the plan. &nbsp;<br /><br />TAX DISCLOSURE AND
             ACKNOWLEDGMENT:<br /><br />THE CLIENT IS ADVISED TO OBTAIN INDEPENDENT AND COMPETENT TAX
@@ -99,7 +99,7 @@
             COMMUNICATION: &nbsp;THIS DOCUMENT AND ITS<br />CONTENTS CONSTITUTE LEGALLY PRIVILEGED
             INFORMATION<br /><br />EXHIBIT &quot;A&quot; Flat Fee Covered<br /><br /><br />
             <ol class="list-decimal" >
-                <li *ngFor="let item of flatRateForm.value.coveredItems.split(',')">{{item}}</li>
+                <li *ngFor="let item of flatRateForm.value.covered_items.split(',')">{{item}}</li>
             </ol>
             
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -168,7 +168,7 @@
               <div class="mt-1">
                 <input
                   type="text"
-                  formControlName="lawFirm"
+                  formControlName="law_firm"
                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
@@ -179,7 +179,7 @@
               <div class="mt-1">
                 <input
                   type="text"
-                  formControlName="attorneyCity"
+                  formControlName="attorney_city"
                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
@@ -190,7 +190,7 @@
               <div class="mt-1">
                 <input
                   type="text"
-                  formControlName="attorneyCounty"
+                  formControlName="attorney_county"
                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
@@ -201,7 +201,7 @@
               <div class="mt-1">
                 <input
                   type="text"
-                  formControlName="attorneyState"
+                  formControlName="attorney_state"
                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
@@ -250,7 +250,7 @@
               <div class="mt-1">
                 <textarea
                   id="about"
-                  formControlName="coveredItems"
+                  formControlName="covered_items"
                   name="about"
                   rows="3"
                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
@@ -258,6 +258,7 @@
               </div>
               <p class="mt-2 text-sm text-gray-500">Seperate items with commas.</p>
             </div>
+            <button type="button" (click)="submit()" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Submit</button>
           </div>
         </aside>
       </div>

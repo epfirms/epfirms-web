@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ContractService } from '../contract.service';
 
 @Component({
   selector: 'app-flat-rate',
@@ -16,16 +17,22 @@ export class FlatRateComponent implements OnInit {
     state: new FormControl('[STATE]'),
     client: new FormControl('[CLIENT]'),
     attorney: new FormControl('[ATTORNEY]'),
-    lawFirm: new FormControl('[LAW FIRM]'),
-    attorneyCity: new FormControl('[ATTORNEY CITY]'),
-    attorneyCounty: new FormControl('[ATTORNEY COUNTY]'),
-    attorneyState: new FormControl('[ATTORNEY STATE]'),
+    law_firm: new FormControl('[LAW FIRM]'),
+    attorney_city: new FormControl('[ATTORNEY CITY]'),
+    attorney_county: new FormControl('[ATTORNEY COUNTY]'),
+    attorney_state: new FormControl('[ATTORNEY STATE]'),
     description: new FormControl('[DESCRIPTION]'),
     fee: new FormControl('[FEE]'),
-    coveredItems : new FormControl('[COVERED ITEMS]')
+    covered_items : new FormControl('[COVERED ITEMS]'),
+    user_id : new FormControl(),
+    matter_id : new FormControl(),
+    firm_id : new FormControl(),
+    attorney_id : new FormControl(),
    });
 
-  constructor() { }
+  constructor(
+    private contractService : ContractService
+  ) { }
 
   ngOnInit(): void {
     console.log(this.matter);
@@ -42,9 +49,17 @@ export class FlatRateComponent implements OnInit {
       attorneyCity: this.matter.attorney.city,
       attoneyState: this.matter.attorney.state,
       description: this.matter.case_id,
+      firm_id: this.matter.firm_id,
+      user_id: this.matter.client.id,
+      matter_id: this.matter.id,
+      attorney_id: this.matter.attorney.id
       
 
     });
+  }
+
+  submit() : void {
+    this.contractService.upsert(this.flatRateForm.value).subscribe(res => console.log(res));
   }
 
 }
