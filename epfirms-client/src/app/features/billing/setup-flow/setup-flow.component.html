@@ -29,7 +29,7 @@
       src="https://tailwindui.com/img/logos/workflow-mark-blue-600.svg"
       alt="Workflow"
     />
-    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Billing Setup</h2>
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900"> Contract and Billing Setup</h2>
     <p class="mt-2 text-center text-sm text-gray-600">Automations to help billing be a breeze!</p>
   </div>
 
@@ -438,7 +438,7 @@
 
         <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
           <button
-          (click)="setState(6)" 
+          (click)="handleContractGeneration()" 
             type="button"
             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm"
           >
@@ -455,6 +455,6 @@
     </div>
   </div>
   
-<app-contract-editor [matter]="matter" [isVisible]="true" [billingConfig]="configuration"></app-contract-editor>
+<app-contract-editor *ngIf="state === 7" [matter]="matter" [isComplete]="isContractComplete" [billingConfig]="configuration" (isCompleteChange)="contractCallback($event)"></app-contract-editor>
   
 </div>

@@ -12,8 +12,8 @@ export class ContractEditorComponent implements OnInit {
 
   @Input() matter;
   @Input() billingConfig;
-  @Input() isVisible;
-  @Output() isVisibleChange = new EventEmitter<boolean>();
+  @Input() isComplete;
+  @Output() isCompleteChange = new EventEmitter<boolean>();
 
   form = new FormGroup({
    date : new FormControl(),
@@ -67,11 +67,13 @@ export class ContractEditorComponent implements OnInit {
 
  submit() : void {
    this.contractService.upsert(this.form.value).subscribe(res => console.log(res));
+   this.isComplete = true;
+  this.isCompleteChange.emit(true);
  }
 
- close() : void {
-  this.isVisible = false;
-  this.isVisibleChange.emit(this.isVisible);
+ back() : void {
+  this.isComplete = false;
+  this.isCompleteChange.emit(false);
 }
 
 

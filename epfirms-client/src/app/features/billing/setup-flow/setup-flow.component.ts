@@ -31,6 +31,8 @@ export class SetupFlowComponent implements OnInit {
   
   stateHistory = [];
 
+  isContractComplete : boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -67,6 +69,26 @@ export class SetupFlowComponent implements OnInit {
 
   submit() : void {
 
+  }
+
+  
+
+  handleContractGeneration() : void {
+    if (this.configuration.generateContract == 'Yes'){
+      this.setState(7);
+    }
+    else {
+      this.setState(6);
+    }
+  }
+
+  contractCallback(contractCompleted):void {
+    if (contractCompleted){
+      this.setState(6);
+    }
+    else {
+      this.back();
+    }
   }
 
 }
