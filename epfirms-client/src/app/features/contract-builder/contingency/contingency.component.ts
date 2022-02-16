@@ -65,5 +65,10 @@ export class ContingencyComponent implements OnInit {
    this.contractService.upsert(this.form.value).subscribe(res => console.log(res));
  }
 
+ close() : void {
+  this.isVisible = false;
+  this.isVisibleChange.emit(this.isVisible);
+}
+
 
 }

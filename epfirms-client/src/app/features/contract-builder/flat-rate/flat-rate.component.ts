@@ -66,4 +66,9 @@ export class FlatRateComponent implements OnInit {
     this.contractService.upsert(this.flatRateForm.value).subscribe(res => console.log(res));
   }
 
+  close() : void {
+    this.isVisible = false;
+    this.isVisibleChange.emit(this.isVisible);
+  }
+
 }
