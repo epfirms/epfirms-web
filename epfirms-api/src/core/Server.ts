@@ -116,15 +116,16 @@ export async function socketServer(httpServer) {
     // }
     // });
     socket.on('add', (message) => {
-      namespace.emit(`add:${message.name}`, message.data);
+      socket.broadcast.emit(`add:${message.name}`, message.data);
+      // namespace.emit(`add:${message.name}`, message.data);
     });
 
     socket.on('update', (message) => {
-      namespace.emit(`update:${message.name}`, message.data);
+      socket.broadcast.emit(`update:${message.name}`, message.data);
     });
 
     socket.on('delete', (message) => {
-      namespace.emit(`delete:${message.name}`, message.data);
+      socket.broadcast.emit(`delete:${message.name}`, message.data);
     });
 
     socket.on('test', (test) => {

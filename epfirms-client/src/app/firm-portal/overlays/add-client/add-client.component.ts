@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
-import { Client } from '@app/core/interfaces/client';
-import { DialogRef } from '@ngneat/dialog';
+import { EpModalRef } from '@app/shared/modal/modal-ref';
 
 @Component({
   selector: 'app-add-client',
@@ -10,13 +8,9 @@ import { DialogRef } from '@ngneat/dialog';
   styleUrls: ['./add-client.component.scss']
 })
 export class AddClientComponent implements OnInit {
-  @ViewChild('overlay') overlay;
-
-  @ViewChild('modal') modal;
-
   clientForm: FormGroup;
 
-  constructor(private _fb: FormBuilder, private _clientService: ClientService, private _dialogRef: DialogRef) { }
+  constructor(private _fb: FormBuilder, private _modalRef: EpModalRef) { }
 
   ngOnInit(): void {
     this.clientForm = this._fb.group({
@@ -29,15 +23,5 @@ export class AddClientComponent implements OnInit {
       state: [null],
       zip: [null]
     });
-  }
-
-  submit() {
-    this._clientService.createClient(this.clientForm.value).subscribe(response => {
-      this.close(response);
-    });
-  }
-
-  close(newClient?: Client) {
-    this._dialogRef.close(newClient);
   }
 }

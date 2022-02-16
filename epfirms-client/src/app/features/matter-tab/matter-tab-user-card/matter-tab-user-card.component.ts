@@ -5,7 +5,7 @@ import { ClientService } from '@app/firm-portal/_services/client-service/client.
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { Client } from '@app/core/interfaces/client';
 import { Observable } from 'rxjs';
-import { DialogService } from '@ngneat/dialog';
+import { EpModalService } from '@app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-matter-tab-user-card',
@@ -26,6 +26,7 @@ export class MatterTabUserCardComponent {
   set user(value) {
     this._user = value;
   }
+
   get user() {
     return this._user;
   }
@@ -34,6 +35,7 @@ export class MatterTabUserCardComponent {
   set label(value: string) {
     this._label = value;
   }
+
   get label() {
     return this._label;
   }
@@ -47,9 +49,10 @@ export class MatterTabUserCardComponent {
   private _label: string;
 
   private _user;
+
   constructor(
     private _matterService: MatterService,
-    private _dialogService: DialogService,
+    private _modalService: EpModalService,
     private _clientService: ClientService
   ) {
     this.clients$ = _clientService.entities$;
@@ -58,10 +61,15 @@ export class MatterTabUserCardComponent {
   add(): void {}
 
   openAddClient(): void {
-    const addClientDialog = this._dialogService.open(AddClientComponent);
-    addClientDialog.afterClosed$.subscribe((data: any) => {
-      if (data && data.id) {
-        this.addClicked.emit(data.id);
+    this._modalService.create({
+      epContent: AddClientComponent,
+      epOkText: 'Add client',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epOnOk: (componentInstance) => {
+        this._clientService.createClient(componentInstance.clientForm.value).subscribe(response => {
+          this.addClicked.emit(response.id);
+        });
       }
     });
   }

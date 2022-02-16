@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeleteStaffComponent } from './delete-staff.component';
+import { ChatComponent } from './chat.component';
 
-describe('DeleteStaffComponent', () => {
-  let component: DeleteStaffComponent;
-  let fixture: ComponentFixture<DeleteStaffComponent>;
+describe('ChatComponent', () => {
+  let component: ChatComponent;
+  let fixture: ComponentFixture<ChatComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeleteStaffComponent ]
+      declarations: [ ChatComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeleteStaffComponent);
+    fixture = TestBed.createComponent(ChatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

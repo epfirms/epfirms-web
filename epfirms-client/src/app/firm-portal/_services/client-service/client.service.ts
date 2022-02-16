@@ -67,6 +67,7 @@ export class ClientService extends EntityCollectionServiceBase<Client> {
           error: () => 'An error occurred when adding the client',
         }),
         map((response: Client) => {
+          this.addOneToCache(response);
           this._socketService.addOneToCacheSync('client', response);
           return response;
         }),
@@ -76,6 +77,7 @@ export class ClientService extends EntityCollectionServiceBase<Client> {
   updateClient(client): Observable<any> {
     return this._http.patch<any>('/api/user', client).pipe(
       map((response: Client) => {
+        this.updateOneInCache(response);
         this._socketService.updateCacheSync('client', response);
         return of(response);
       }),

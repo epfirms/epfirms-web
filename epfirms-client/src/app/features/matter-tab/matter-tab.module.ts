@@ -24,6 +24,7 @@ import { InputModule } from '@app/shared/input/input.module';
 import { BillingModule } from '../billing/billing.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { ContractBuilderModule } from '../contract-builder/contract-builder.module';
+import { ModalModule } from '@app/shared/modal/modal.module';
 
 
 
@@ -55,7 +56,8 @@ import { ContractBuilderModule } from '../contract-builder/contract-builder.modu
     InputModule,
     BillingModule,
     MenuModule,
-    ContractBuilderModule
+    ContractBuilderModule,
+    ModalModule
   ],
   exports: [
     MatterTabsComponent

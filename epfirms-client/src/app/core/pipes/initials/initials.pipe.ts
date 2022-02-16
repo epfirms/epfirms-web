@@ -6,6 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 export class InitialsPipe implements PipeTransform {
   transform(value: string) {
-    return value.split(" ").map(c => c.charAt(0).toUpperCase()).join("").concat(value.charAt(1)).substring(0,2);
+    return value ? value.split(" ").map(c => c.charAt(0).toUpperCase()).join("").concat(value.charAt(1)).substring(0,2) : value;
   }
 }

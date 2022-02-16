@@ -4,8 +4,6 @@ import { FirmPortalRoutingModule } from './firm-portal-routing.module';
 import { FirmPortalComponent } from './firm-portal.component';
 import { AddCaseComponent } from './overlays/add-case/add-case.component';
 import { AddClientComponent } from './overlays/add-client/add-client.component';
-import { AddStaffComponent } from './overlays/add-staff/add-staff.component';
-import { DeleteStaffComponent } from './overlays/delete-staff/delete-staff.component';
 import { EditClientComponent } from './overlays/edit-client/edit-client.component';
 import { QuillModule } from 'ngx-quill';
 import { DialogModule } from '@ngneat/dialog';
@@ -19,6 +17,8 @@ import { SharedModule } from '@app/shared/shared.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InputModule } from '@app/shared/input/input.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
+import { ModalModule } from '@app/shared/modal/modal.module';
+import { ChatModule } from '@app/features/chat/chat.module';
 
 
 @NgModule({
@@ -26,8 +26,6 @@ import { MenuModule } from '@app/shared/menu/menu.module';
     FirmPortalComponent,
     AddCaseComponent,
     AddClientComponent,
-    AddStaffComponent,
-    DeleteStaffComponent,
     EditClientComponent
   ],
   imports: [
@@ -43,7 +41,9 @@ import { MenuModule } from '@app/shared/menu/menu.module';
     SharedModule,
     ScrollingModule,
     InputModule,
-    MenuModule
+    MenuModule,
+    ModalModule,
+    ChatModule
   ]
 })
 export class FirmPortalModule {}

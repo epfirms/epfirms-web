@@ -45,6 +45,7 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
   createStaff(body): Observable<any> {
     return this._http.post('/api/firm/employees', body).pipe(
       map((response: any) => {
+        this.addOneToCache(response.data);
         this._socketService.addOneToCacheSync('staff', response.data);
         return response;
       })
@@ -60,6 +61,7 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
   updateStaff(id, staff): Observable<any> {
     return this._http.patch<any>(`/api/firm/employees/${id}`, staff).pipe(
       map((response: any) => {
+        this.updateOneInCache(response.data);
         this._socketService.updateCacheSync('staff', response.data);
         return of(response);
       })
@@ -69,6 +71,7 @@ export class StaffService extends EntityCollectionServiceBase<Staff> {
   removeStaff(id): Observable<any> {
     return this._http.delete<any>(`/api/firm/employees/${id}`).pipe(
       map((response: any) => {
+        this.updateOneInCache(response.data);
         this._socketService.updateCacheSync('staff', response.data);
         return of(response);
       })
