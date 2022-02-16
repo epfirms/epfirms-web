@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ContractService } from '../contract.service';
 
@@ -10,6 +10,9 @@ import { ContractService } from '../contract.service';
 export class ContingencyComponent implements OnInit {
 
   @Input() matter;
+  @Input() billingConfig;
+  @Input() isVisible;
+  @Output() isVisibleChange = new EventEmitter<boolean>();
 
   form = new FormGroup({
    date : new FormControl(),
