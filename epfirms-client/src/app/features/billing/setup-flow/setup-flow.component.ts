@@ -36,6 +36,7 @@ export class SetupFlowComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log("SETUP FLOW",this.matter);
   }
 
   setState(next): void {
