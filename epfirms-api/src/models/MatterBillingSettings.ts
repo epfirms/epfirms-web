@@ -44,6 +44,9 @@ module.exports = (sequelize, {
         },
         contingency_percent: {
           type: FLOAT
+        },
+        flat_rate_amount: {
+          type: FLOAT
         }
       }, {
         tableName,

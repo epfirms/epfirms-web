@@ -105,7 +105,7 @@
           >
           <div class="mt-1 relative rounded-md shadow-sm">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></div>
-            <editable-datepicker></editable-datepicker>
+            <editable-datepicker [date]="configuration.due_date.toDateString()"></editable-datepicker>
           </div>
         </div>
 
@@ -308,11 +308,11 @@
         <!-- //inputs -->
         <div>
           <label class="block text-sm font-medium text-gray-700">
-            Contingency Settlement Percent
+            Contingency Before Settlement Percent
           </label>
           <div class="mt-1">
             <input
-            [(ngModel)]="configuration.contingencyPercent"
+            [(ngModel)]="configuration.beforeSettlementPercent"
               type="number"
               min="0"
               max="100"
@@ -320,6 +320,20 @@
             />
           </div>
         </div>
+        <div>
+        <label class="block text-sm font-medium text-gray-700">
+          Contingency After Settlement Percent
+        </label>
+        <div class="mt-1">
+          <input
+          [(ngModel)]="configuration.afterSettlementPercent"
+            type="number"
+            min="0"
+            max="100"
+            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
+      </div>
 
         <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
           <button (click)="setState(2)"
@@ -397,7 +411,7 @@
 
         <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
           <button
-          
+            (click)="submit()"
             type="button"
             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm"
           >

@@ -30,9 +30,9 @@ export class ContractEditorComponent implements OnInit {
    matter_id : new FormControl(),
    firm_id : new FormControl(),
    attorney_id : new FormControl(),
-   pre_settlement_percent : new FormControl('[CONTINGENCY1]'),
-   post_settlement_percent : new FormControl('[CONTINGENCY2]'),
-   fee: new FormControl('[FEE]'),
+   pre_settlement_percent : new FormControl(0),
+   post_settlement_percent : new FormControl(0),
+   fee: new FormControl(0),
    covered_items : new FormControl('[COVERED ITEMS]'),
    retainer_amount: new FormControl(0)
   });
@@ -59,7 +59,11 @@ export class ContractEditorComponent implements OnInit {
      firm_id: this.matter.firm_id,
      user_id: this.matter.client.id,
      matter_id: this.matter.id,
-     attorney_id: this.matter.attorney.id
+     attorney_id: this.matter.attorney.id,
+     fee: this.billingConfig.flatRateAmount,
+     pre_settlement_percent: this.billingConfig.beforeSettlementPercent,
+     post_settlement_percent: this.billingConfig.afterSettlementPercent,
+     retainer_amount: this.billingConfig.retainerAmount
      
 
    });
