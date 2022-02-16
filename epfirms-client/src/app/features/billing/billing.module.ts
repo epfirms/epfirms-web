@@ -8,6 +8,7 @@ import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.compo
 import { GenerateStatementComponent } from './generate-statement/generate-statement.component';
 import { OverviewComponent } from './overview/overview.component';
 import { SetupFlowComponent } from './setup-flow/setup-flow.component';
+import { ContractBuilderModule } from '../contract-builder/contract-builder.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { SetupFlowComponent } from './setup-flow/setup-flow.component';
     OverviewComponent,
     SetupFlowComponent,
   ],
-  imports: [CoreModule, EditableModule],
+  imports: [CoreModule, EditableModule, ContractBuilderModule],
   exports: [
     ManageBillComponent,
     ManageStatementComponent,
