@@ -172,4 +172,10 @@ export class SetupFlowComponent implements OnInit {
     }
   }
 
+  markAsDone(): void {
+    this.matter.billing_setup = true;
+    this.matterService.update(this.matter).subscribe();
+    this.isContractComplete = true;
+  }
+
 }
