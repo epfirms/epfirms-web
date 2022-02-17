@@ -36,6 +36,6 @@
 </ng-container>
 
 
-<app-contract-viewer [isVisible]="isContractViewerVisible" [contract]="currentContract" (isVisibleChange)="isContractViewerVisible = $event"></app-contract-viewer>
+<app-contract-viewer [isVisible]="isContractViewerVisible" [contract]="currentContract" [requireClientSignature]="true" (isVisibleChange)="isContractViewerVisible = $event"></app-contract-viewer>
 
   

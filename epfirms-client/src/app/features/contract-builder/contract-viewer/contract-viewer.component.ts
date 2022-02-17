@@ -11,6 +11,7 @@ export class ContractViewerComponent implements OnInit {
   @Input() contract;
   @Input() isVisible : boolean;
   @Output() isVisibleChange = new EventEmitter<boolean>();
+  @Input() requireClientSignature : boolean = false;
 
   constructor(private contractService : ContractService) { }
 
