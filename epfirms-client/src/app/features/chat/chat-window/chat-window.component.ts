@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { concatMap, from, fromEvent, Subject, takeUntil, tap } from 'rxjs';
 import { ChatService } from '../chat.service';
 
@@ -7,7 +7,7 @@ import { ChatService } from '../chat.service';
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss'],
 })
-export class ChatWindowComponent implements OnDestroy {
+export class ChatWindowComponent implements OnDestroy, OnInit {
   /** Sets conversation value and loads messages. */
   @Input()
   set conversation(value) {
@@ -43,6 +43,10 @@ export class ChatWindowComponent implements OnDestroy {
 
   constructor(private _chatService: ChatService) {
     this.currentUser = this._chatService.conversationsClient.user;
+  }
+
+  ngOnInit(): void {
+      this.setAllMessagesRead();
   }
 
   ngOnDestroy(): void {
@@ -82,13 +86,21 @@ export class ChatWindowComponent implements OnDestroy {
     }),
     takeUntil(this.destroy$)).subscribe((recipient) => {
       this.recipient = recipient;
-      console.log(this.recipient)
     });
   }
 
   subscribeToAddedMessage() {
     fromEvent(this.conversation, 'messageAdded').pipe(takeUntil(this.destroy$)).subscribe((message) => {
       this.messages.push(message);
+      this.setAllMessagesRead();
     });
+  }
+
+  delete(){
+    this.conversation.delete();
+  }
+
+  setAllMessagesRead() {
+    from(this.conversation.setAllMessagesRead()).subscribe();
   }
 }

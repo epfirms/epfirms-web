@@ -2,13 +2,39 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, from, fromEvent, Observable, of, pluck, Subject, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  from,
+  fromEvent,
+  Observable,
+  of,
+  pluck,
+  Subject,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { ChatComponent } from './chat/chat.component';
 import { Client as ConversationsClient } from '@twilio/conversations';
 
-export type ClientEvent = 'connectionError' |  'connectionStateChanged' | 'conversationAdded' | 'conversationJoined' | 'conversationLeft' | 'conversationUpdated' | 'messagedAdded' | 'participantJoined' | 'participantLeft' | 'pushNotification';
+export type ClientEvent =
+  | 'connectionError'
+  | 'connectionStateChanged'
+  | 'conversationAdded'
+  | 'conversationJoined'
+  | 'conversationLeft'
+  | 'conversationUpdated'
+  | 'messagedAdded'
+  | 'participantJoined'
+  | 'participantLeft'
+  | 'pushNotification';
 
-export type ConnectionState = 'connecting' | 'connected' | 'disconnecting' | 'disconnected' | 'denied';
+export type ConnectionState =
+  | 'connecting'
+  | 'connected'
+  | 'disconnecting'
+  | 'disconnected'
+  | 'denied';
 
 @Injectable({
   providedIn: 'root',
@@ -20,10 +46,8 @@ export class ChatService {
 
   connectionState: Subject<ConnectionState> = new Subject<ConnectionState>();
 
-  conversation$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  
   constructor(private _overlay: Overlay, private _http: HttpClient) {}
-  
+
   init(): void {
     this.chatOverlay = this._overlay.create({
       disposeOnNavigation: false,
@@ -41,59 +65,70 @@ export class ChatService {
   initConversations(): any {
     return this.getAccessToken().pipe(
       pluck('data'),
-      switchMap(token => {
-        this.conversationsClient = new ConversationsClient(token, {logLevel: 'error'});    
-        this.emitConversationsValue();
+      switchMap((token) => {
+        this.conversationsClient = new ConversationsClient(token, { logLevel: 'error' });
         return fromEvent(this.conversationsClient, 'connectionStateChanged');
       }),
-      catchError(err => of(err))
-    )
+      catchError((err) => of(err)),
+    );
+  }
+
+  disconnect(): any {
+    this.chatOverlay.detach();
+    this.chatOverlay.dispose();
+    return from(this.conversationsClient.shutdown());
   }
 
   createConversation(conversationType: 'direct' | 'group' = 'direct'): Observable<any> {
-    return from(this.conversationsClient.createConversation({attributes: {"type": conversationType, "participants": []}})).pipe(tap((conversation) => {
-      this.addParticipant(conversation, conversation.createdBy).subscribe();
-    }));
+    return from(
+      this.conversationsClient.createConversation({ attributes: { type: conversationType } }),
+    ).pipe(
+      tap((conversation) => {
+        this.addParticipant(conversation, conversation.createdBy).subscribe();
+      }),
+    );
   }
 
-  addParticipant(conversation, identity: string):Observable<any>{
-    return from(conversation.add(identity)).pipe(tap(() => {
-      from(conversation.updateAttributes({...conversation.attributes, "participants": [...conversation.attributes.participants, identity]})).subscribe();
-    }));
+  addParticipant(conversation, identity: string): Observable<any> {
+    return from(this.conversationsClient.getUser(identity)).pipe(
+      concatMap((user) => {
+        console.log(user);
+        return from(conversation.add(identity, { friendlyName: user.friendlyName }));
+      }),
+      catchError((err) => {
+        if (err.message === 'Not Found') {
+          return this.createUser(identity).pipe(
+            concatMap((response) => {
+              return from(conversation.add(identity, { friendlyName: response.data.friendlyName }));
+            }),
+          );
+        }
+        throw err;
+      }),
+    );
   }
 
-  getMessages(conversationSid: string, opts?: { limit?: number; order?: 'asc' | 'desc' }): Observable<any> {
-    return this._http.get(`/api/chat/conversation/${conversationSid}/messages`, {params: opts});
+  createUser(identity): Observable<any> {
+    return this._http.post('/api/chat', { identity });
   }
 
   sendMessage(conversation, message: string): Observable<any> {
     return from(conversation.sendMessage(message));
   }
 
-  getConversations() {
-    return from(this.conversationsClient.getSubscribedConversations());
-  }
-
   updateFriendlyName(name: string) {
-    return from(this.conversationsClient.user.updateFriendlyName(name))
-  }
-
-  emitConversationsValue() {
-    this.getConversations().subscribe(async conversations => {
-      const items = [...conversations.items];
-      while (conversations.hasNextPage) {
-        const nextPage = await conversations.nextPage();
-        items.push(...nextPage.items);
-      }
-      this.conversation$.next(items);
-    });
+    return from(this.conversationsClient.user.updateFriendlyName(name));
   }
 
   updateUserAttributes(profileImage) {
-    return from(this.conversationsClient.user.updateAttributes({"profileImage": profileImage}));
+    return from(this.conversationsClient.user.updateAttributes({ profileImage: profileImage }));
   }
 
-  // addParticipants(conversationSid: string, participants: {identity: string}[]): Observable<any> {
-  //   return this._http.post(`/api/chat/conversation/${conversationSid}/participants`, {participants});
-  // }
+  conversationJoinedEvent() {
+    return fromEvent(this.conversationsClient, 'conversationJoined');
+  }
+
+  conversationUpdateEvent() {
+    return fromEvent(this.conversationsClient, 'conversationUpdated');
+  }
 }

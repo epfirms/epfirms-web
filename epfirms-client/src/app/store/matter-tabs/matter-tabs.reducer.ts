@@ -22,9 +22,9 @@ export const initialState: Tabs = {
 const _matterTabsReducer = createReducer(
   initialState,
   on(add, (state, { payload }) => {
-    const idExists = state.openTabs.includes(payload);
+    const existingIndex = state.openTabs.indexOf(payload);
 
-    if (!idExists) {
+    if (existingIndex < 0) {
       return {
         ...state,
         openTabs: [...state.openTabs, payload],
@@ -32,7 +32,10 @@ const _matterTabsReducer = createReducer(
       };
     }
 
-    return state;
+    return {
+      ...state,
+      selectedIndex: existingIndex,
+    };
   }),
   on(close, (state, { payload }) => {
     if (state.openTabs.length > 1) {

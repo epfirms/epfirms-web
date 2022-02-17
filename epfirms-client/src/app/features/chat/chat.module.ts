@@ -7,19 +7,25 @@ import { ChatCreationWindowComponent } from './chat-creation-window/chat-creatio
 import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module';
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
+import { ChatConversationButtonComponent } from './chat-conversation-button/chat-conversation-button.component';
+import { TippyModule } from '@ngneat/helipopper';
+import {TextFieldModule} from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [
     ChatButtonComponent,
     ChatWindowComponent,
     ChatComponent,
-    ChatCreationWindowComponent
+    ChatCreationWindowComponent,
+    ChatConversationButtonComponent
   ],
   imports: [
     CoreModule,
     AutocompleteModule,
     PipesModule,
-    MenuModule
+    MenuModule,
+    TippyModule,
+    TextFieldModule
   ],
   exports: [
     ChatComponent

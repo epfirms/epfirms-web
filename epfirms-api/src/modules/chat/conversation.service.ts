@@ -48,68 +48,8 @@ export class ConversationService {
     return Promise.resolve(token);
   }
 
-  /**
-   * Creates a conversation.
-   */
-  public async create(name: string): Promise<any> {
-    const conversation = await this.twilioClient.conversations.conversations.create({
-      friendlyName: name,
-    });
-
-    return Promise.resolve(conversation);
-  }
-
-  /**
-   * Fetches a conversation by sid.
-   */
-  public async get(sid: string): Promise<any> {
-    const conversation = await this.twilioClient.conversations.conversations(sid).fetch();
-
-    return Promise.resolve(conversation);
-  }
-
-  public async addSMSParticipant(
-    sid: string,
-    phoneNumber: string,
-    proxyPhoneNumber: string,
-  ): Promise<any> {
-    const participant = await this.twilioClient.conversations
-      .conversations(sid)
-      .participants.create({
-        messagingBinding: {
-          address: phoneNumber,
-          proxyAddress: proxyPhoneNumber,
-        },
-      });
-
-    return Promise.resolve(participant);
-  }
-
-  public async addMessage(
-    sid: string,
-    message: {author: string, body: String}
-  ): Promise<any> {
-    const messages = await this.twilioClient.conversations.conversations(sid).messages.create(message);
-
-    return Promise.resolve(messages);
-  }
-
-  public async getMessages(
-    sid: string,
-    opts: { limit?: number; order?: 'asc' | 'desc' } = { order: 'asc' },
-  ): Promise<any> {
-    const messages = await this.twilioClient.conversations.conversations(sid).messages.list(opts);
-
-    return Promise.resolve(messages);
-  }
-
-  public async addChatParticipants(sid: string, participants:{identity: string}[] = []): Promise<any> {
-    const addedParticipants = [];
-    for (const { identity } of participants) {
-      const participantInstance = await this.twilioClient.conversations.conversations(sid).participants.create({identity});
-      addedParticipants.push(participantInstance);
-    }
-
-    return Promise.resolve(addedParticipants);
+  public async createUser(identity: string, friendlyName: string): Promise<any> {
+    const user = await this.twilioClient.conversations.services(TWILIO_CONVERSATIONS_SERVICE_SID).users.create({identity, friendlyName});
+    return Promise.resolve(user);
   }
 }

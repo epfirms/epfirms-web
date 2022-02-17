@@ -25,7 +25,7 @@
             </svg>
           </div>
           <input id="search-field" [(ngModel)]="matterFilterValues.searchTerm" (ngModelChange)="filter()"
-            name="search-field" class="block w-full h-full py-0 pl-5 pr-3 border-transparent  text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm" placeholder="Search..." type="search" autocomplete="off" />
+            name="search-field" class="block w-full h-full py-0 pl-5 pr-3 border-transparent text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm" placeholder="Search..." type="search" autocomplete="off" />
         </div>
       </form>
     </div>
@@ -41,9 +41,9 @@
                 clip-rule="evenodd" />
             </svg>
           </button>
-          <div *MenuItems @toggleAnimation class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg  ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div *MenuItems @toggleAnimation class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div class="p-1" *ngFor="let status of statusFilterOptions">
-              <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md  group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="filterStatus(status)">
+              <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="filterStatus(status)">
                 {{ status + ' leads' | titlecase }}
               </a>
             </div>
@@ -51,13 +51,8 @@
         </div>
       </div>
       <div>
-        <button ep-icon-button (click)="addLead()">
-          <svg ep-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-              clip-rule="evenodd" />
-          </svg>
-          Add Lead
+        <button ep-button (click)="addLead()">
+          Add lead
         </button>
       </div>
     </div>
@@ -74,7 +69,7 @@
             [trackBy]="trackByIndex" fixedLayout>
             <!-- Position Column -->
             <ng-container cdkColumnDef="client">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase border-r  text-slate-500 border-slate-200" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('first_name')">
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase border-r text-slate-500 border-slate-200" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('first_name')">
                 <div class="flex items-center group hover:cursor-pointer">
                   <div>Lead</div>
 
@@ -112,7 +107,7 @@
 
             <!-- Name Column -->
             <ng-container cdkColumnDef="task">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase  text-slate-500" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('task')">
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('task')">
                 <div class="flex items-center group hover:cursor-pointer">
                   <div>Next Task</div>
 
@@ -167,7 +162,7 @@
                   <div class="flex items-center font-normal text-slate-400" *ngIf="lead.matter_tasks[0].completed">
                     <div class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-green-400" aria-hidden="true"></div>
                     <div class="ml-2">
-                      <p class="text-sm font-normal  text-slate-500 group-hover:text-slate-600">
+                      <p class="text-sm font-normal text-slate-500 group-hover:text-slate-600">
                         Tasks completed
                       </p>
                     </div>
@@ -182,7 +177,7 @@
 
             <!-- Weight Column -->
             <ng-container cdkColumnDef="legal-area">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase  text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
                 Legal Area
               </th>
               <td cdk-cell *cdkCellDef="let lead" class="w-1/12 px-6 py-4 whitespace-nowrap">
@@ -199,9 +194,9 @@
                             clip-rule="evenodd" />
                         </svg>
                       </button>
-                      <div *MenuItems @toggleAnimation class="absolute right-0 z-10 mt-2 overflow-y-auto origin-top-right bg-white rounded-md shadow-lg  max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div *MenuItems @toggleAnimation class="absolute right-0 z-10 mt-2 overflow-y-auto origin-top-right bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div class="p-1" *ngFor="let legalArea of legalAreas">
-                          <a MenuItem class="flex items-center w-full px-2 py-2 text-xs font-medium rounded-md  group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="setLegalArea(lead, legalArea)">
+                          <a MenuItem class="flex items-center w-full px-2 py-2 text-xs font-medium rounded-md group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="setLegalArea(lead, legalArea)">
                             {{ legalArea.name | titlecase }} {{ legalArea.description ? '('+legalArea.description+")" :
                             ''}}
                           </a>
@@ -215,7 +210,7 @@
 
             <!-- Symbol Column -->
             <ng-container cdkColumnDef="attorney">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase  text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
 
                 <div Menu class="relative inline-block w-full text-left">
                   <div MenuButton class="flex items-center w-full group hover:cursor-pointer">
@@ -229,9 +224,9 @@
                         clip-rule="evenodd" />
                     </svg>
                   </div>
-                  <div *MenuItems @toggleAnimation class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg  ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div *MenuItems @toggleAnimation class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div class="p-1" *ngFor="let attorney of attorneys$ | async">
-                      <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium normal-case rounded-md  group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" [ngClass]="{
+                      <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium normal-case rounded-md group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" [ngClass]="{
                           'bg-blue-500 text-white': attorney.user.id === matterFilterValues.attorney_id
                         }" (click)="filterAttorney(attorney.user.id)">
                         <div class="w-full">
@@ -272,7 +267,7 @@
 
             <!-- Symbol Column -->
             <ng-container cdkColumnDef="status">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase  text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
                 Status
               </th>
               <td cdk-cell *cdkCellDef="let lead" class="w-1/12 px-6 py-4 whitespace-nowrap">
@@ -288,7 +283,7 @@
 
             <!-- Symbol Column -->
             <ng-container cdkColumnDef="intake">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase  text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
                 Intake
               </th>
               <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 text-sm whitespace-nowrap text-slate-500">
@@ -300,8 +295,8 @@
             <!-- Symbol Column -->
             <ng-container cdkColumnDef="edit">
               <th class="px-6 py-3" cdk-header-cell *cdkHeaderCellDef></th>
-              <td cdk-cell *cdkCellDef="let lead" class="w-1/12 px-6 py-4 text-sm font-medium text-right  whitespace-nowrap text-slate-400">
-                <button type="button" class="flex items-center p-2 -my-2 bg-white rounded-full  text-slate-400 hover:text-slate-600" id="menu-0-button" aria-expanded="false" aria-haspopup="true">
+              <td cdk-cell *cdkCellDef="let lead" class="w-1/12 px-6 py-4 text-sm font-medium text-right whitespace-nowrap text-slate-400">
+                <button type="button" class="flex items-center p-2 -my-2 bg-white rounded-full text-slate-400 hover:text-slate-600" id="menu-0-button" aria-expanded="false" aria-haspopup="true">
                   <span class="sr-only">Open options</span>
                   <!-- Heroicon name: solid/dots-vertical -->
                   <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -331,7 +326,7 @@
             Get started by creating a new lead.
           </p>
           <div class="mt-6">
-            <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm  hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" (click)="addLead()">
+            <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" (click)="addLead()">
               <!-- Heroicon name: solid/plus -->
               <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                 aria-hidden="true">
