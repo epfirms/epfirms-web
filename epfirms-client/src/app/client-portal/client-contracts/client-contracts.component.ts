@@ -17,6 +17,8 @@ export class ClientContractsComponent implements OnInit {
    // properties
    matterList;
    contractList = [];
+   currentContract;
+   isContractViewerVisible : boolean = false;
 
   constructor(
     private contractService : ContractService,
@@ -39,6 +41,11 @@ export class ClientContractsComponent implements OnInit {
 
   loadContracts(matterId): void {
     this.contractService.getWithMatterId(matterId).subscribe(res => this.contractList.push(res));
+  }
+
+  openContractViewer(contract): void {
+    this.currentContract = contract;
+    this.isContractViewerVisible = true;
   }
 
 }

@@ -22,6 +22,7 @@ import { ContractViewerComponent } from './contract-viewer/contract-viewer.compo
   ],
   exports: [
     ContractEditorComponent,
+    ContractViewerComponent
     
   ]
 })

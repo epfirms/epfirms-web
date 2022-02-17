@@ -19,6 +19,7 @@ import { StatementViewComponent } from './client-financials/statement-view/state
 import { CaseFinanceViewComponent } from './client-financials/case-finance-view/case-finance-view.component';
 import { MonthlyPaymentViewComponent } from './client-financials/monthly-payment-view/monthly-payment-view.component';
 import { ClientContractsComponent } from './client-contracts/client-contracts.component';
+import { ContractBuilderModule } from '@app/features/contract-builder/contract-builder.module';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { ClientContractsComponent } from './client-contracts/client-contracts.co
     IntakeModule,
     AvatarModule,
     NavbarModule,
-    MenuModule
+    MenuModule,
+    ContractBuilderModule
   ]
 })
 export class ClientPortalModule { }

@@ -22,7 +22,7 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{contract.description}}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{contract.client_signed ? 'Signed' : 'Unsigned'}}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Sign</a>
+                  <a (click)="openContractViewer(contract)" class="text-indigo-600 hover:text-indigo-900">Sign</a>
                 </td>
               </tr>
   
@@ -34,5 +34,8 @@
     </div>
   </div>
 </ng-container>
+
+
+<app-contract-viewer [isVisible]="isContractViewerVisible" [contract]="currentContract" (isVisibleChange)="isContractViewerVisible = $event"></app-contract-viewer>
 
   
