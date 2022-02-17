@@ -1,6 +1,9 @@
 <button
 (click)="emitOpen()"
 [class.hidden]="opened"
+[tippy]="recipientName"
+[lazy]="true"
+placement="left"
 class="relative w-12 h-12 mt-2 rounded-full shadow-lg drop-shadow-xl"
 >
 <span class="absolute inline-flex justify-center items-center px-0.5 py-0.5 text-xs font-semibold leading-none text-white bg-red-400 rounded-full shadow drop-shadow" style="min-width: 1rem;" *ngIf="unreadMessagesCount > 0"> {{unreadMessagesCount < 100 ? unreadMessagesCount : '99+'}} </span>
