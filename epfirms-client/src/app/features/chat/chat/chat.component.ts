@@ -19,8 +19,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   extraConversationItems: any[] = [];
 
-  conversation$: Observable<any[]>;
-
   currentUser$: Observable<any>;
 
   connectionState: ConnectionState;
@@ -28,15 +26,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   protected destroy$ = new Subject<void>();
 
   constructor(private _chatService: ChatService, private _currentUser: CurrentUserService) {
-    this.conversation$ = this._chatService.conversation$;
     this.currentUser$ = this._currentUser.user$;
   }
 
   ngOnInit(): void {
-    this._chatService.conversation$.pipe(takeUntil(this.destroy$)).subscribe((conversations) => {
-      this.conversationItems = conversations;
-    });
-
     this._chatService
       .initConversations()
       .pipe(
@@ -53,7 +46,8 @@ export class ChatComponent implements OnInit, OnDestroy {
       .subscribe((state) => {
         this.connectionState = state;
         if (state === 'connected') {
-          this._chatService.conversationAddedEvent().subscribe((conversation) => {
+          this._chatService.conversationJoinedEvent().subscribe((conversation) => {
+            console.log(this._chatService.conversationsClient);
             this.conversationItems.push(conversation);
           });
         }
@@ -66,6 +60,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   openChat(conversation): void {
+    const maxWindows = this.newChat ? 2 : 3;
+    if (this.openedConversationItems.size >= maxWindows) {
+      this.minimizeNextChat();
+    }
     this.openedConversationItems.add(conversation);
   }
 
@@ -74,7 +72,16 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   toggleNewChatWindow(): void {
+    const maxWindows = this.newChat ? 2 : 3;
+    if (this.openedConversationItems.size >= maxWindows) {
+      this.minimizeNextChat();
+    }
     this.newChat = !this.newChat;
+  }
+
+  minimizeNextChat() {
+    const iterator = this.openedConversationItems[Symbol.iterator]();
+    this.minimizeChat(iterator.next().value);
   }
 
   createConversation(value): void {
@@ -106,17 +113,15 @@ export class ChatComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe(() => {
           this.toggleNewChatWindow();
+          this.openChat(existingConversation);
         });
     }
   }
 
   findDirectConversation(currentIdentity: string, recipientIdentity: string) {
     return this.conversationItems.find((conversation) => {
-      console.log(conversation);
       const attributes = conversation.attributes;
       const participants = [...conversation.participants.values()];
-      console.log(participants);
-      console.log(conversation.participants.values());
       return (
         attributes.type === 'direct' &&
         participants.some((p) => p.identity === currentIdentity) &&
@@ -133,5 +138,12 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   conversationIsOpen(conversation) {
     return this.openedConversationItems.has(conversation);
+  }
+
+  getRecipientName(conversation) {
+    const userIdentity = this._chatService.conversationsClient.user.identity;
+    const participants = [...conversation.participants.values()];
+    const recipient = participants.find((p) => p.identity !== userIdentity);
+    return recipient ? recipient.attributes.friendlyName : 'N/A';
   }
 }
