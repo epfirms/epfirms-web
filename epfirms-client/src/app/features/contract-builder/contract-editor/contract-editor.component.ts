@@ -35,7 +35,9 @@ export class ContractEditorComponent implements OnInit {
    fee: new FormControl(0),
    covered_items : new FormControl('[COVERED ITEMS]'),
    retainer_amount: new FormControl(0),
-   attorney_signed: new FormControl(true)
+   attorney_signed: new FormControl(true),
+   contract_type: new FormControl(),
+   case_id: new FormControl()
   });
 
  constructor(
@@ -64,7 +66,9 @@ export class ContractEditorComponent implements OnInit {
      fee: this.billingConfig.flatRateAmount,
      pre_settlement_percent: this.billingConfig.beforeSettlementPercent,
      post_settlement_percent: this.billingConfig.afterSettlementPercent,
-     retainer_amount: this.billingConfig.retainerAmount
+     retainer_amount: this.billingConfig.retainerAmount,
+     contract_type: this.billingConfig.billingType,
+     case_id: this.matter.case_id
      
 
    });

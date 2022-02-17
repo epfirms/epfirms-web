@@ -84,6 +84,12 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE }) =>
       },
       retainer_amount: {
         type: FLOAT
+      },
+      contract_type : {
+        type: STRING
+      },
+      case_id : {
+        type: STRING
       }
     },
     {
