@@ -19,8 +19,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   extraConversationItems: any[] = [];
 
-  conversation$: Observable<any[]>;
-
   currentUser$: Observable<any>;
 
   connectionState: ConnectionState;
@@ -28,16 +26,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   protected destroy$ = new Subject<void>();
 
   constructor(private _chatService: ChatService, private _currentUser: CurrentUserService) {
-    this.conversation$ = this._chatService.conversation$;
     this.currentUser$ = this._currentUser.user$;
   }
 
   ngOnInit(): void {
-    this._chatService.conversation$.pipe(takeUntil(this.destroy$)).subscribe((conversations) => {
-      this.conversationItems = [...conversations];
-      this.conversationItems.forEach((c) => console.log(new Date(c.dateUpdated)))
-    });
-
     this._chatService
       .initConversations()
       .pipe(
@@ -49,10 +41,16 @@ export class ChatComponent implements OnInit, OnDestroy {
             });
           }
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((state) => {
         this.connectionState = state;
+        if (state === 'connected') {
+          this._chatService.conversationJoinedEvent().subscribe((conversation) => {
+            console.log(this._chatService.conversationsClient);
+            this.conversationItems.push(conversation);
+          });
+        }
       });
   }
 
@@ -62,6 +60,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   openChat(conversation): void {
+    const maxWindows = this.newChat ? 2 : 3;
+    if (this.openedConversationItems.size >= maxWindows) {
+      this.minimizeNextChat();
+    }
     this.openedConversationItems.add(conversation);
   }
 
@@ -69,51 +71,79 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.openedConversationItems.delete(conversation);
   }
 
-  //TODO: Catch error and delete created conversation.
-  startNewConversation(): void {
-    this._chatService
-      .createConversation()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe((response) => {
-        console.log(response);
-      });
-  }
-
   toggleNewChatWindow(): void {
+    const maxWindows = this.newChat ? 2 : 3;
+    if (this.openedConversationItems.size >= maxWindows) {
+      this.minimizeNextChat();
+    }
     this.newChat = !this.newChat;
   }
 
-  createConversation(value): void {
-    this._chatService.createConversation().pipe(takeUntil(this.destroy$)).subscribe(conversation => {
-      const existingConversation = this.findDirectConversation(conversation.createdBy, value.userId)
-      if (!existingConversation) {
-      this._chatService.addParticipant(conversation, value.userId.toString()).pipe(takeUntil(this.destroy$)).subscribe(() => {
-        this._chatService.sendMessage(conversation, value.body).pipe(takeUntil(this.destroy$)).subscribe(() => {
-          this.toggleNewChatWindow();
-          this.openChat(conversation);
-        });
-      });
-    } else {
-      this._chatService.sendMessage(existingConversation, value.body).pipe(takeUntil(this.destroy$)).subscribe(() => {
-        this.toggleNewChatWindow();
-        this.openChat(existingConversation);
-      });
-    }
-    });
+  minimizeNextChat() {
+    const iterator = this.openedConversationItems[Symbol.iterator]();
+    this.minimizeChat(iterator.next().value);
   }
 
-  findDirectConversation(current, recipient) {
-    return [...this.conversationItems, ...this.openedConversationItems].find(conversation => {
+  createConversation(value): void {
+    const userIdentity = this._chatService.conversationsClient.user.identity;
+    const recipientIdentity = value.userId;
+
+    const existingConversation = this.findDirectConversation(userIdentity, recipientIdentity);
+    if (!existingConversation) {
+      this._chatService
+        .createConversation()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((conversation) => {
+          this._chatService
+            .addParticipant(conversation, value.userId.toString())
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+              this._chatService
+                .sendMessage(conversation, value.body)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(() => {
+                  this.toggleNewChatWindow();
+                  this.openChat(conversation);
+                });
+            });
+        });
+    } else {
+      this._chatService
+        .sendMessage(existingConversation, value.body)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.toggleNewChatWindow();
+          this.openChat(existingConversation);
+        });
+    }
+  }
+
+  findDirectConversation(currentIdentity: string, recipientIdentity: string) {
+    return this.conversationItems.find((conversation) => {
       const attributes = conversation.attributes;
-      return attributes.type === 'direct' && attributes.participants.includes(current) && attributes.participants.includes(recipient);
-    })
+      const participants = [...conversation.participants.values()];
+      return (
+        attributes.type === 'direct' &&
+        participants.some((p) => p.identity === currentIdentity) &&
+        participants.some((p) => p.identity === recipientIdentity)
+      );
+    });
   }
 
   delete(conversation) {
-    conversation.delete().then(c => {
-      console.log(c)
+    conversation.delete().then((c) => {
+      console.log(c);
     });
+  }
+
+  conversationIsOpen(conversation) {
+    return this.openedConversationItems.has(conversation);
+  }
+
+  getRecipientName(conversation) {
+    const userIdentity = this._chatService.conversationsClient.user.identity;
+    const participants = [...conversation.participants.values()];
+    const recipient = participants.find((p) => p.identity !== userIdentity);
+    return recipient ? recipient.attributes.friendlyName : 'N/A';
   }
 }
