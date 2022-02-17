@@ -12,4 +12,8 @@ export class ContractService {
   upsert(data) : Observable<any> {
     return this.http.post('/api/contract', data);
   }
+
+  getWithMatterId(id) : Observable<any> {
+    return this.http.get(`/api/contract/${id}`);
+  }
 }
