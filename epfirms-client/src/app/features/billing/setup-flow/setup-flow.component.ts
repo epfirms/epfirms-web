@@ -17,7 +17,7 @@ export class SetupFlowComponent implements OnInit {
     billingType: "Flat Rate",
     paymentType: "Private Pay",
     flatRateAmount: 0,
-    due_date: new Date(),
+    due_date: '',
     splitFlatRate: "No",
     beforeSettlementAmount: 0,
     afterSettlementAmount: 0,

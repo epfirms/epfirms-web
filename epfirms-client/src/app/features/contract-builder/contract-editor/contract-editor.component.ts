@@ -34,7 +34,8 @@ export class ContractEditorComponent implements OnInit {
    post_settlement_percent : new FormControl(0),
    fee: new FormControl(0),
    covered_items : new FormControl('[COVERED ITEMS]'),
-   retainer_amount: new FormControl(0)
+   retainer_amount: new FormControl(0),
+   attorney_signed: new FormControl(true)
   });
 
  constructor(
@@ -49,7 +50,7 @@ export class ContractEditorComponent implements OnInit {
  // this form will init the values of the form group
   private initForm() : void {
    this.form.patchValue({
-     date: new Date().toDateString(),
+     date: new Date(),
      state: this.matter.client.state,
      client: this.matter.client.full_name,
      attorney: this.matter.attorney.full_name,
