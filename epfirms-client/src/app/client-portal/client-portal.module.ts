@@ -18,6 +18,7 @@ import { MenuModule } from '@app/shared/menu/menu.module';
 import { StatementViewComponent } from './client-financials/statement-view/statement-view.component';
 import { CaseFinanceViewComponent } from './client-financials/case-finance-view/case-finance-view.component';
 import { MonthlyPaymentViewComponent } from './client-financials/monthly-payment-view/monthly-payment-view.component';
+import { ClientContractsComponent } from './client-contracts/client-contracts.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { MonthlyPaymentViewComponent } from './client-financials/monthly-payment
     TransactionsComponent,
     StatementViewComponent,
     CaseFinanceViewComponent,
-    MonthlyPaymentViewComponent
+    MonthlyPaymentViewComponent,
+    ClientContractsComponent
   ],
   imports: [
     CommonModule,
