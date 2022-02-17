@@ -1,0 +1,482 @@
+<!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/divs'),
+    ],
+  }
+  ```
+-->
+<!--
+  This example requires updating your template:
+
+  ```
+  <html class="h-full bg-gray-50">
+  <body class="h-full">
+  ```
+-->
+<div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <img
+      class="mx-auto h-12 w-auto"
+      src="https://tailwindui.com/img/logos/workflow-mark-blue-600.svg"
+      alt="Workflow"
+    />
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900"> Contract and Billing Setup</h2>
+    <p class="mt-2 text-center text-sm text-gray-600">Automations to help billing be a breeze!</p>
+  </div>
+
+  <!-- STATE 0 -->
+  <div *ngIf="state === 0" class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div class="space-y-6" >
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Select the billing type for the case.</label
+          >
+          <select [(ngModel)]="configuration.billingType"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option>Flat Rate</option>
+            <option>Hourly</option>
+            <option>Contingency</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Select the payment type for the case.</label
+          >
+          <select [(ngModel)]="configuration.paymentType"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option>Private Pay</option>
+            <option>Insurance</option>
+          </select>
+        </div>
+
+        <div>
+          <button (click)="initStateSubmit()"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Continue
+          </button>
+          <button (click)="markAsDone()"
+            class="w-full flex justify-center mt-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Mark as Done
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ----------------------- -->
+
+  <!-- STATE 1 -->
+  <div *ngIf="state === 1" class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div class="space-y-6" action="#">
+        <!-- //inputs -->
+
+        <div>
+          <label for="price" class="block text-sm font-medium text-gray-700"
+            >Flat Rate Amount</label
+          >
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="text-gray-500 sm:text-sm"> $ </span>
+            </div>
+            <input
+              [(ngModel)]="configuration.flatRateAmount"
+              type="number"
+              step=".01"
+              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="price" class="block text-sm font-medium text-gray-700"
+            >Payment Due Date</label
+          >
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></div>
+            <input
+            type="date"
+            [(ngModel)]="configuration.due_date"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+          />          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Do you want to split amount into before and after settlement?</label
+          >
+          <select 
+          [(ngModel)]="configuration.splitFlatRate"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option [ngValue]="'Yes'">Yes</option>
+            <option [ngValue]="'No'">No</option>
+          </select>
+        </div>
+
+        <div *ngIf="configuration.splitFlatRate === 'Yes'">
+          <div>
+            <label for="price" class="block text-sm font-medium text-gray-700"
+              >Before Settlement</label
+            >
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-500 sm:text-sm"> $ </span>
+              </div>
+              <input
+              [(ngModel)]="configuration.beforeSettlementAmount"
+                type="number"
+                step=".01"
+                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+          <div>
+            <label for="price" class="block text-sm font-medium text-gray-700"
+              >After Settlement</label
+            >
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-500 sm:text-sm"> $ </span>
+              </div>
+              <input
+              [(ngModel)]="configuration.afterSettlementAmount"
+                type="number"
+                step=".01"
+                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+        </div>
+
+        
+
+        
+
+        <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+          <button (click)="setState(2)"
+            type="button"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm"
+          >
+            Continue
+          </button>
+          <button (click)="back()"
+            type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ----------------------- -->
+
+  <!-- STATE 2 -->
+  <div *ngIf="state === 2" class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div class="space-y-6" action="#">
+        <!-- //inputs -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Do you want to offer monthly payments?</label
+          >
+          <select
+          [(ngModel)]="configuration.offerMonthlyPayments"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+
+        <div *ngIf="configuration.offerMonthlyPayments === 'Yes'">
+          <div>
+            <label for="price" class="block text-sm font-medium text-gray-700"
+              >Minimum Payment Amount</label
+            >
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-500 sm:text-sm"> $ </span>
+              </div>
+              <input
+              [(ngModel)]="configuration.minimumPayment"
+                type="number"
+                step=".01"
+                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+  
+          <div>
+            <label for="price" class="block text-sm font-medium text-gray-700">Monthly Fee</label>
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-500 sm:text-sm"> $ </span>
+              </div>
+              <input
+              [(ngModel)]="configuration.lateFee"
+                type="number"
+                step=".01"
+                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+          <button
+          (click)="setState(5)"
+            type="button"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm"
+          >
+            Continue
+          </button>
+          <button
+          (click)="back()"
+            type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ----------------------- -->
+
+  <!-- STATE 3 -->
+  <div *ngIf="state === 3" class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div class="space-y-6" action="#">
+        <!-- //inputs -->
+        <div>
+          <label for="price" class="block text-sm font-medium text-gray-700">Retainer Amount</label>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="text-gray-500 sm:text-sm"> $ </span>
+            </div>
+            <input
+            [(ngModel)]="configuration.retainerAmount"
+              type="number"
+              step=".01"
+              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+
+        <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+          <button (click)="setState(2)"
+            type="button"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm"
+          >
+            Continue
+          </button>
+          <button (click)="back()"
+            type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ----------------------- -->
+
+  <!-- STATE 4 -->
+  <div *ngIf="state === 4" class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div class="space-y-6" action="#">
+        <!-- //inputs -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">
+            Contingency Before Settlement Percent
+          </label>
+          <div class="mt-1">
+            <input
+            [(ngModel)]="configuration.beforeSettlementPercent"
+              type="number"
+              min="0"
+              max="100"
+              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+        </div>
+        <div>
+        <label class="block text-sm font-medium text-gray-700">
+          Contingency After Settlement Percent
+        </label>
+        <div class="mt-1">
+          <input
+          [(ngModel)]="configuration.afterSettlementPercent"
+            type="number"
+            min="0"
+            max="100"
+            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
+      </div>
+
+        <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+          <button (click)="setState(2)"
+            type="button"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm"
+          >
+            Continue
+          </button>
+          <button (click)="back()"
+            type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ----------------------- -->
+
+  <!-- STATE 5 -->
+  <div *ngIf="state === 6" class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div class="space-y-6" action="#">
+        <h2>Automations</h2>
+        <!-- //inputs -->
+        <div *ngIf="configuration.billingType === 'Hourly'">
+          <label class="block text-sm font-medium text-gray-700"> Send Charge and Email for Retainer to Client Portal </label>
+          <div class="mt-1">
+            <button
+                  (click)="toggleHourlyAutomation()"
+                  type="button"
+                  [ngClass]="triggerHourlyAutomation ? 'bg-blue-600' : 'bg-gray-200'"
+                  class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  role="switch"
+                  aria-checked="false"
+                >
+                  <span class="sr-only">Use setting</span>
+                  <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+                  <span
+                    aria-hidden="true"
+                    [ngClass]="triggerHourlyAutomation ? 'translate-x-5' : 'translate-x-0'"
+                    class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+                  ></span>
+                </button>
+          </div>
+        </div>
+
+        <div *ngIf="configuration.billingType === 'Flat Rate'">
+          <label class="block text-sm font-medium text-gray-700"> Generate flat rate charge and send to client now. </label>
+          <div class="mt-1">
+            <button
+                  (click)="toggleFlatRateAutomation()"
+                  type="button"
+                  [ngClass]="triggerFlatRateAutomation ? 'bg-blue-600' : 'bg-gray-200'"
+                  class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  role="switch"
+                  aria-checked="false"
+                >
+                  <span class="sr-only">Use setting</span>
+                  <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+                  <span
+                    aria-hidden="true"
+                    [ngClass]="triggerFlatRateAutomation ? 'translate-x-5' : 'translate-x-0'"
+                    class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+                  ></span>
+                </button>
+          </div>
+        </div>
+
+        
+
+
+
+        <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+          <button
+            (click)="submit()"
+            type="button"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm"
+          >
+            Finish and Submit
+          </button>
+          <button
+          (click)="back()"
+            type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ----------------------- -->
+
+
+  <!-- STATE 5 -->
+  <div *ngIf="state === 5" class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div class="space-y-6" action="#">
+        <!-- //inputs -->
+        <!-- //inputs -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Do you want to generate a Contract?</label
+          >
+          <select
+          [(ngModel)]="configuration.generateContract"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+
+        <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+          <button
+          (click)="handleContractGeneration()" 
+            type="button"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm"
+          >
+            Continue
+          </button>
+          <button (click)="back()"
+            type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<app-contract-editor *ngIf="state === 7" [matter]="matter" [isComplete]="isContractComplete" [billingConfig]="configuration" (isCompleteChange)="contractCallback($event)"></app-contract-editor>
+  
+</div>

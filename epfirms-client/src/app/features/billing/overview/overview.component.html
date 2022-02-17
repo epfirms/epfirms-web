@@ -26,14 +26,14 @@
         </dd>
       </div>
   
-      <!-- <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <div *ngIf="contract != null" class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">
-          Status
+          Contract Status
         </dt>
         <dd class="mt-1 text-3xl font-semibold text-gray-900">
-          24.57%
+          {{contract.client_signed ? 'Signed' : "Unsigned"}}
         </dd>
-      </div> -->
+      </div>
     </dl>
   </div>
 

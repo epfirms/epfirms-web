@@ -1,4 +1,13 @@
 
+<div *ngIf="!matter.billing_setup">
+<app-setup-flow [matter]="matter"></app-setup-flow>
+</div>
+
+
+
+<div *ngIf="matter.billing_setup">
+
+
 
 
 
@@ -583,3 +592,5 @@
 <app-monthly-payment *ngIf="selectedTab == 'monthly payments'" [matter]="matter"></app-monthly-payment>
 
 <app-overview *ngIf="selectedTab == 'overview'" [matter]="matter"></app-overview>
+
+</div>
