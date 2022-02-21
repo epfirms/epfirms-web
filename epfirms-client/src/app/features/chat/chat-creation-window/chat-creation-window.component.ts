@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Staff } from '@app/core/interfaces/staff';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { Observable, take } from 'rxjs';
-import { ChatService } from '../chat.service';
 
 @Component({
   selector: 'app-chat-creation-window',
@@ -26,7 +25,7 @@ export class ChatCreationWindowComponent implements OnInit {
 
   messageBody: string;
 
-  constructor(private _staffService: StaffService, private _chatService: ChatService) { 
+  constructor(private _staffService: StaffService) { 
     this.staff$ = this._staffService.entities$;
   }
 

@@ -1,7 +1,18 @@
-<div class="flex items-end">
-  <app-chat-creation-window *ngIf="newChat" @chatWindowAnimation (closed)="toggleNewChatWindow()" (create)="createConversation($event)"></app-chat-creation-window>
-  <app-chat-window *ngFor="let conversation of openedConversationItems" @chatWindowAnimation [conversation]="conversation" (minimized)="minimizeChat(conversation)"></app-chat-window>
-  
+<div class="flex items-end" *ngIf="connectionState === 'connected'">
+  <app-chat-creation-window
+    *ngIf="newChat"
+    @chatWindowAnimation
+    (closed)="toggleNewChatWindow()"
+    (create)="createConversation($event)"
+  ></app-chat-creation-window>
+
+  <app-chat-window
+    *ngFor="let conversation of openedConversationItems"
+    @chatWindowAnimation
+    [conversation]="conversation"
+    (minimized)="minimizeChat(conversation)"
+  ></app-chat-window>
+
   <div class="flex flex-col items-center mb-4 group">
     <!-- Settings button -->
     <!-- <div Menu class="relative inline-block text-left">
@@ -30,8 +41,13 @@
       </div>
     </div> -->
     <!-- Message items -->
-    <app-chat-conversation-button *ngFor="let conversation of conversationItems" [conversation]="conversation" [opened]="openedConversationItems.has(conversation)" (openedChange)="openChat(conversation)"></app-chat-conversation-button>
-  
+    <app-chat-conversation-button
+      *ngFor="let conversation of conversationItems"
+      [conversation]="conversation"
+      [opened]="openedConversationItems.has(conversation)"
+      (openedChange)="openChat(conversation)"
+    ></app-chat-conversation-button>
+
     <!-- New message Button -->
     <button
       (click)="toggleNewChatWindow()"

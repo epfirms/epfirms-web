@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ChatButtonComponent } from './chat-button/chat-button.component';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { ChatComponent } from './chat/chat.component';
 import { CoreModule } from '@app/core/core.module';
@@ -13,7 +12,6 @@ import {TextFieldModule} from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [
-    ChatButtonComponent,
     ChatWindowComponent,
     ChatComponent,
     ChatCreationWindowComponent,
