@@ -2,7 +2,7 @@
 services:
   backend:
     container_name: epfirms-api
-    image: jaerq/epfirms-server/${COMMIT_ID}
+    image: jaerq/epfirms-server:${COMMIT_ID}
     expose:
       - "4000"
     ports:
