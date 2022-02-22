@@ -1,8 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
-import { Observable, pluck, Subject, takeUntil, tap } from 'rxjs';
+import {
+  concatMap,
+  map,
+  merge,
+  Observable,
+  pluck,
+  Subject,
+  switchMap,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { chatWindowAnimation } from '../chat-animations';
-import { ChatService, ConnectionState } from '../chat.service';
+import { ConversationsClientService } from '../conversations-client.service';
+import { ConnectionState } from '../types/conversations-client';
 
 @Component({
   selector: 'app-chat',
@@ -25,33 +36,31 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   protected destroy$ = new Subject<void>();
 
-  constructor(private _chatService: ChatService, private _currentUser: CurrentUserService) {
+  constructor(
+    private _conversationsClient: ConversationsClientService,
+    private _currentUser: CurrentUserService,
+  ) {
     this.currentUser$ = this._currentUser.user$;
   }
 
   ngOnInit(): void {
-    this._chatService
-      .initConversations()
-      .pipe(
-        tap((state: ConnectionState) => {
-          if (state === 'connected') {
-            this.currentUser$.pipe(takeUntil(this.destroy$), pluck('user')).subscribe((user) => {
-              this._chatService.updateFriendlyName(user.full_name);
-              this._chatService.updateUserAttributes(user.profile_image);
-            });
-          }
-        }),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((state) => {
-        this.connectionState = state;
-        if (state === 'connected') {
-          this._chatService.conversationJoinedEvent().subscribe((conversation) => {
-            console.log(this._chatService.conversationsClient);
-            this.conversationItems.push(conversation);
-          });
-        }
-      });
+    this.initClient();
+  }
+
+  handleConnectionStateChange(state: ConnectionState): void {
+    switch (state) {
+      case 'connected':
+        // Update the current twilio client user's friendly name and profile image to match profile info on epfirms.
+        this.currentUser$.pipe(take(1), pluck('user')).subscribe((user) => {
+          this._conversationsClient.updateUserFriendlyName(user.full_name).subscribe();
+          this._conversationsClient.updateUserAttributes(user.profile_image).subscribe();
+        });
+
+        this._subscribeToConversationJoined();
+        // this._subscribeToPushNotification();
+        this._subscribeToTokenExpiration();
+        break;
+    }
   }
 
   ngOnDestroy(): void {
@@ -85,20 +94,20 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   createConversation(value): void {
-    const userIdentity = this._chatService.conversationsClient.user.identity;
+    const userIdentity = this._conversationsClient.user.identity;
     const recipientIdentity = value.userId;
 
     const existingConversation = this.findDirectConversation(userIdentity, recipientIdentity);
     if (!existingConversation) {
-      this._chatService
+      this._conversationsClient
         .createConversation()
         .pipe(takeUntil(this.destroy$))
         .subscribe((conversation) => {
-          this._chatService
+          this._conversationsClient
             .addParticipant(conversation, value.userId.toString())
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
-              this._chatService
+              this._conversationsClient
                 .sendMessage(conversation, value.body)
                 .pipe(takeUntil(this.destroy$))
                 .subscribe(() => {
@@ -108,7 +117,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             });
         });
     } else {
-      this._chatService
+      this._conversationsClient
         .sendMessage(existingConversation, value.body)
         .pipe(takeUntil(this.destroy$))
         .subscribe(() => {
@@ -141,9 +150,51 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   getRecipientName(conversation) {
-    const userIdentity = this._chatService.conversationsClient.user.identity;
+    const userIdentity = this._conversationsClient.user.identity;
     const participants = [...conversation.participants.values()];
     const recipient = participants.find((p) => p.identity !== userIdentity);
     return recipient ? recipient.attributes.friendlyName : 'N/A';
+  }
+
+  initClient() {
+    this._conversationsClient
+    .getAccessToken()
+    .pipe(
+      pluck('data'),
+      // Initialize the conversations client using the generated access token.
+      switchMap((token) => this._conversationsClient.init(token)),
+      takeUntil(this.destroy$),
+    )
+    .subscribe((state: any) => {
+      this.connectionState = state;
+      this.handleConnectionStateChange(state);
+    });
+  }
+
+  private _subscribeToConversationJoined() {
+    this._conversationsClient.conversationJoined().subscribe((conversation) => {
+      this.conversationItems.push(conversation);
+    });
+  }
+
+  private _subscribeToPushNotification() {
+    this._conversationsClient.pushNotification().subscribe((test) => {
+      console.log(test);
+    });
+  }
+
+  /** Updates access token 3 minutes before expiration or after expiration. */
+  private _subscribeToTokenExpiration() {
+    merge(this._conversationsClient.tokenExpired(), this._conversationsClient.tokenAboutToExpire())
+      .pipe(
+        map(() =>
+          this._conversationsClient.getAccessToken().pipe(
+            pluck('data'),
+            concatMap((token) => this._conversationsClient.updateAccessToken(token)),
+          ),
+        ),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 }

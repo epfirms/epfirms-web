@@ -6,9 +6,8 @@ import { Router } from '@angular/router';
 import { EntityCacheDispatcher } from '@ngrx/data';
 import { MatterTabsService } from '@app/features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { CurrentUserService } from '../../shared/_services/current-user-service/current-user.service';
-import { SocketService } from '@app/core/services/socket.service';
 import { Socket } from 'ngx-socket-io';
-import { ChatService } from '@app/features/chat/chat.service';
+import { ConversationsClientService } from '@app/features/chat/conversations-client.service';
 
 interface LoginForm {
   email: string;
@@ -30,7 +29,7 @@ export class AuthService {
     private _matterTabsService: MatterTabsService,
     private _currentUserService: CurrentUserService,
     private _socket: Socket,
-    private _chatService: ChatService
+    private _conversationsClient: ConversationsClientService
   ) {
     this.accessTokenSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('accessToken'))
@@ -105,7 +104,7 @@ export class AuthService {
     if (this._socket && this._socket.ioSocket && this._socket.ioSocket.connected) {
       this._socket.disconnect();
     }
-    this._chatService.disconnect().subscribe();
+    this._conversationsClient.shutdown().subscribe();
     this._router.navigate(['login']);
   }
 }

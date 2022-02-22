@@ -1,11 +1,20 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { concatMap, from, fromEvent, Subject, takeUntil, tap } from 'rxjs';
-import { ChatService } from '../chat.service';
+import { ConversationsClientService } from '../conversations-client.service';
 
 @Component({
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: '0' }),
+        animate('100ms ease-out', style({ opacity: '1' })),
+      ]),
+    ]),
+  ],
 })
 export class ChatWindowComponent implements OnDestroy, OnInit {
   /** Sets conversation value and loads messages. */
@@ -41,8 +50,8 @@ export class ChatWindowComponent implements OnDestroy, OnInit {
   
   protected destroy$ = new Subject<void>();
 
-  constructor(private _chatService: ChatService) {
-    this.currentUser = this._chatService.conversationsClient.user;
+  constructor(private _conversationsClient: ConversationsClientService) {
+    this.currentUser = this._conversationsClient.user;
   }
 
   ngOnInit(): void {

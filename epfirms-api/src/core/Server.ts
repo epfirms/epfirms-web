@@ -53,7 +53,9 @@ export async function socketServer(httpServer) {
 
   // Middleware to authorize a user's credentials via auth token
   firmWorkspace.use((socket, next) => {
-    const isValid = getSocketRoom(socket.handshake.auth.token);
+    const requestedNamespace = socket.nsp.name;
+    const authorizedNamespace = getSocketRoom(socket.handshake.auth.token);
+    const isValid = requestedNamespace === authorizedNamespace;
 
     if (isValid) {
       next();
