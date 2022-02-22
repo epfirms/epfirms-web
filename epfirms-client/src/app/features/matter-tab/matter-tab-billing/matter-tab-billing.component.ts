@@ -190,20 +190,12 @@ export class MatterTabBillingComponent implements OnInit {
   }
 
   download(statement): void {
-    let csvContent = 'data:text/csv;charset=utf-8,';
-
-    csvContent += 'Employee ID, Date, Employee Name, Hourly Rate, Hours, Amount, Description\n';
-
-    this.bills
-      .filter((bill) => bill.statement_id == statement.id)
-      .forEach((bill) => {
-        csvContent += `${bill.track_time_for},${new Date(bill.date).toDateString()},${
-          bill.employee_name
-        },${bill.hourly_rate},${bill.hours}, ${bill.amount},${bill.description}\n`;
-      });
-
-    var encodedUri = encodeURI(csvContent);
-    window.open(encodedUri);
+    this.statementService.download(statement.id).subscribe(res => {
+      console.log(res);
+      const blob = new Blob([res], { type: 'text/csv' });
+  const url= window.URL.createObjectURL(blob);
+  window.open(url);
+    });
   }
 
   //create or apply default billing settings for the matter/case
