@@ -19,7 +19,7 @@ export class SocketService {
       }
     });
 
-    this.on('system:version-update', (currentVersion) => {
+    this.on('app:version', (currentVersion) => {
       const localVersion = localStorage.getItem('epfVersion');
       if (localVersion !== currentVersion) {
         localStorage.setItem('epfVersion', currentVersion);
