@@ -16,3 +16,6 @@ artifacts:
     - "docker-compose.override.yml"
     - "docker-compose.yml"
     - "Dockerrun.aws.json"
+env:
+  - exported-variables:
+    - COMMIT_ID
