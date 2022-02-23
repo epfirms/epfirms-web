@@ -10,7 +10,7 @@ import { RedisClient } from 'redis';
 import { Logger } from '@utils/logger/Logger';
 const jwt = require('jsonwebtoken');
 const axios = require('axios').default;
-const { SERVER_HOST, SERVER_PORT, REDIS_HOST, REDIS_PORT, JWT_SECRET } = require('@configs/vars');
+const { SERVER_HOST, SERVER_PORT, REDIS_HOST, REDIS_PORT, JWT_SECRET, COMMIT_ID } = require('@configs/vars');
 
 export async function server() {
   let app: Express = express();
@@ -77,7 +77,7 @@ export async function socketServer(httpServer) {
     let logger = Logger.getLogger();
     logger.info(`Socket connected to workspace: ${socket.nsp.name} (${socket.handshake.auth.token})`);
 
-
+    socket.emit(`app:version`, COMMIT_ID);
     // Firm namespace
     const namespace = socket.nsp;
 
