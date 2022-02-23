@@ -11,6 +11,9 @@ phases:
   post_build:
     commands:
       - docker-compose -f docker-compose.yml -f docker-compose.build.yml push
+      - export COMMIT_ID_VAL="${COMMIT_ID}"
+      - sed -i "s/${COMMIT_ID}/$COMMIT_ID_VAL/g" docker-compose.yml
+      - cat docker-compose.yml
 artifacts:
   files:
     - "docker-compose.override.yml"
