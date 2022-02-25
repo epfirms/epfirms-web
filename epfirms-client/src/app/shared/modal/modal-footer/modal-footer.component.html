@@ -1,21 +1,21 @@
 <ng-container>
   <button
+    ep-button
+    color="white"
     *ngIf="config.epCancelText !== null"
     [attr.cdkFocusInitial]="config.epAutofocus === 'cancel' || null"
-    type="button"
-    class="px-3 py-2 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none hover:bg-gray-50"
     (click)="onCancel()"
     [disabled]="config.epCancelDisabled"
   >
     {{ config.epCancelText }}
   </button>
   <button
+    ep-button
     *ngIf="config.epOkText !== null"
     [attr.cdkFocusInitial]="config.epAutofocus === 'ok' || null"
     (click)="onOk()"
     [disabled]="config.epOkDisabled"
-    type="button"
-    class="px-3 py-2 ml-3 text-sm font-semibold text-white bg-blue-500 rounded-md shadow-sm focus:outline-none hover:bg-blue-600"
+    class="ml-3"
   >
     {{ config.epOkText }}
   </button>

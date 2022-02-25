@@ -5,7 +5,8 @@ import { DocumentService } from '@app/features/documents/services/document.servi
 import { MatterActivityService } from '@app/shared/_services/matter-activity-service/matter-activity.service';
 import { Document } from '@app/core/interfaces/document';
 import { MatterActivity } from '@app/core/interfaces/matter-activity';
-import { DialogService } from '@ngneat/dialog';
+import { EpModalService } from '@app/shared/modal/modal.service';
+import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-document-actions',
@@ -14,14 +15,17 @@ import { DialogService } from '@ngneat/dialog';
 })
 export class DocumentActionsComponent {
   @Input() document: Document;
+
   isVisible: boolean = false;
+
   isEditVisible: boolean = false;
+
   constructor(
     private _docService: DocumentService,
     private _awsService: AwsService,
     private _matterActivityService: MatterActivityService,
     private _currentUserService: CurrentUserService,
-    private _dialog: DialogService
+    private _modalService: EpModalService
   ) {}
 
   toggleIsEditVisible(): void {
@@ -34,8 +38,16 @@ export class DocumentActionsComponent {
   }
 
   deleteDocument() {
-    this._dialog.confirm({title: 'Delete document?', body: 'This action cannot be undone'}).afterClosed$.subscribe(confirmed => {
-      if (confirmed) {
+    this._modalService.create({
+      epContent: ConfirmDialogComponent,
+      epOkText: 'Confirm',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epComponentParams: {
+        title: 'Delete document?',
+        body: 'This action cannot be undone'
+      },
+      epOnOk: () => {
         this._docService.delete(this.document.id).subscribe((res) => {
           this._awsService.deleteDocument(this.document).subscribe();
           this._currentUserService.getCurrentUser().subscribe((userRes) => {
@@ -52,7 +64,7 @@ export class DocumentActionsComponent {
           });
         });
       }
-    })
+    });
   }
 
   downloadDocument(): void {

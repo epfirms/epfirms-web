@@ -1,163 +1,144 @@
-<div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-    <div class="sm:flex sm:items-start">
-      <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-        <h3 class="text-lg leading-6 font-medium text-slate-900" id="modal-title">
-          Edit
-        </h3>
-        <div class="mt-6">
-          <form [formGroup]="clientForm">
-            <div>
-              <div class="grid grid-cols-6 gap-6">
-                <div class="col-span-6 sm:col-span-3">
-                  <label
-                    for="first-name"
-                    class="block text-sm font-medium text-slate-700"
-                    >First name</label
-                  >
-                  <input
-                    formControlName="first_name"
-                    ep-input
-                    type="text"
-                    name="first-name"
-                    id="first-name"
-                    autocomplete="given-name"
-                    class="mt-1"
-                  />
-                </div>
-  
-                <div class="col-span-6 sm:col-span-3">
-                  <label
-                    for="last-name"
-                    class="block text-sm font-medium text-slate-700"
-                    >Last name</label
-                  >
-                  <input
-                    formControlName="last_name"
-                    ep-input
-                    type="text"
-                    name="last-name"
-                    id="last-name"
-                    autocomplete="family-name"
-                    class="mt-1"
-                  />
-                </div>
-  
-                <div class="col-span-6 sm:col-span-2">
-                  <label
-                    for="phone"
-                    class="block text-sm font-medium text-slate-700"
-                    >Phone</label
-                  >
-                  <input
-                    formControlName="phone"
-                    ep-input
-                    type="text"
-                    name="phone"
-                    id="phone"
-                    class="mt-1"
-                  />
-                </div>
-                
-                <div class="col-span-6 sm:col-span-4">
-                  <label
-                    for="email-address"
-                    class="block text-sm font-medium text-slate-700"
-                    >Email address</label
-                  >
-                  <input
-                    formControlName="email"
-                    ep-input
-                    type="text"
-                    name="email-address"
-                    id="email-address"
-                    autocomplete="email"
-                    class="mt-1"
-                  />
-                </div>
-  
-                <div class="col-span-6">
-                  <label
-                    for="street-address"
-                    class="block text-sm font-medium text-slate-700"
-                    >Street address</label
-                  >
-                  <input
-                    formControlName="address"
-                    ep-input
-                    type="text"
-                    name="street-address"
-                    id="street-address"
-                    autocomplete="street-address"
-                    class="mt-1"
-                  />
-                </div>
-  
-                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                  <label
-                    for="city"
-                    class="block text-sm font-medium text-slate-700"
-                    >City</label
-                  >
-                  <input
-                    formControlName="city"
-                    ep-input
-                    type="text"
-                    name="city"
-                    id="city"
-                    class="mt-1"
-                  />
-                </div>
-  
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <label
-                    for="state"
-                    class="block text-sm font-medium text-slate-700"
-                    >State</label
-                  >
-                  <input
-                    formControlName="state"
-                    ep-input
-                    type="text"
-                    name="state"
-                    id="state"
-                    class="mt-1"
-                  />
-                </div>
-  
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <label
-                    for="postal-code"
-                    class="block text-sm font-medium text-slate-700"
-                    >ZIP</label
-                  >
-                  <input
-                    formControlName="zip"
-                    ep-input
-                    type="text"
-                    name="postal-code"
-                    id="postal-code"
-                    autocomplete="postal-code"
-                    class="mt-1"
-                  />
-                </div>
-              </div>
+<div>
+  <div class="px-4 py-5 sm:px-8">
+    <h3 class="text-lg font-medium leading-5 text-gray-900">Edit Client Information</h3>
+    <!-- <p class="max-w-2xl mt-1 text-sm text-gray-500">Personal details and application.</p> -->
+  </div>
+  <div class="px-4 py-5 border-t border-gray-200 sm:px-8">
+    <form [formGroup]="clientForm">
+      <div>
+        <div class="grid grid-cols-6 gap-6">
+          <div class="col-span-6 sm:col-span-3">
+            <label
+              for="first-name"
+              class="block text-sm font-medium text-slate-700"
+              >First name</label
+            >
+            <input
+              formControlName="first_name"
+              ep-input
+              type="text"
+              name="first-name"
+              id="first-name"
+              autocomplete="off"
+              class="mt-1"
+            />
+          </div>
+
+          <div class="col-span-6 sm:col-span-3">
+            <label
+              for="last-name"
+              class="block text-sm font-medium text-slate-700"
+              >Last name</label
+            >
+            <input
+              formControlName="last_name"
+              ep-input
+              type="text"
+              name="last-name"
+              id="last-name"
+              autocomplete="off"
+              class="mt-1"
+            />
+          </div>
+
+          <div class="col-span-6 sm:col-span-4">
+            <label
+              for="email-address"
+              class="block text-sm font-medium text-slate-700"
+              >Email address</label
+            >
+            <input
+              formControlName="email"
+              ep-input
+              type="text"
+              name="email-address"
+              id="email-address"
+              autocomplete="off"
+              class="mt-1"
+            />
+          </div>
+
+          <div class="col-span-6 sm:col-span-2">
+            <label
+              for="phone"
+              class="block text-sm font-medium text-slate-700"
+              >Phone</label
+            >
+            <input
+              formControlName="phone"
+              ep-input
+              type="text"
+              name="phone"
+              id="phone"
+              class="mt-1"
+              autocomplete="off"
+              [inputMask]="phoneInputMask"
+            />
+          </div>
+
+          <div class="col-span-6">
+            <label
+              for="street-address"
+              class="block text-sm font-medium text-slate-700"
+              >Street address</label
+            >
+            <input
+              formControlName="address"
+              ep-input
+              type="text"
+              id="street-address"
+              autocomplete="off"
+              class="mt-1"
+            />
+          </div>
+
+          <div class="col-span-6 sm:col-span-6">
+            <label
+              for="city"
+              class="block text-sm font-medium text-slate-700"
+              >City</label
+            >
+            <input
+              formControlName="city"
+              ep-input
+              type="text"
+              id="city"
+              class="mt-1"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="col-span-6 sm:col-span-3">
+            <label for="state" class="block text-sm font-medium text-slate-700">
+              State
+            </label>
+            <div class="mt-1">
+              <select formControlName="state"
+              id="state"
+                class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md shadow-sm border-slate-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{state.name}}</option>
+              </select>
             </div>
-          </form>
+          </div>
+
+          <div class="col-span-6 sm:col-span-3">
+            <label
+              for="postal-code"
+              class="block text-sm font-medium text-slate-700"
+              >ZIP</label
+            >
+            <input
+              formControlName="zip"
+              ep-input
+              type="text"
+              id="postal-code"
+              autocomplete="off"
+              class="mt-1"
+              pattern="[0-9]{5}"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
-  <div class="rounded-b-lg bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-    <button
-      (click)="submit()"
-      [disabled]="!clientForm.valid"
-      type="button"
-      class="button-primary"
-    >
-      Save
-    </button>
-    <button (click)="close()" type="button" class="button-white">
-      Cancel
-    </button>
-  </div>
-  
+</div>

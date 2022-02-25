@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { DialogConfig, DialogContentSymbol, DialogRef, DIALOG_CONFIG } from '@ngneat/dialog';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { EpModalRef } from '../modal/modal-ref';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -11,11 +11,9 @@ import { DialogConfig, DialogContentSymbol, DialogRef, DIALOG_CONFIG } from '@ng
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfirmDialogComponent {
-  title = this._dialogRef.data[DialogContentSymbol].title;
-  body = this._dialogRef.data[DialogContentSymbol].body;
-  context = {
-    $implicit: this._dialogRef,
-    data: this._dialogRef.data
-  }
-  constructor(public _dialogRef: DialogRef, @Inject(DIALOG_CONFIG) public config: DialogConfig) { }
+  title: string = '';
+
+  body: string = '';
+
+  constructor(public _modalRef: EpModalRef) { }
 }

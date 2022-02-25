@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 import { Staff } from '@app/core/interfaces/staff';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
-import { DialogService } from '@ngneat/dialog';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialog.component';
+import { EpModalService } from '@app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-matter-tab-notes',
@@ -20,6 +21,7 @@ export class MatterTabNotesComponent {
   get matter() {
     return this._matter;
   }
+
   set matter(value: Matter) {
     this._matter = value;
     this.loadNotes(this.matter.id);
@@ -39,7 +41,7 @@ export class MatterTabNotesComponent {
     private _matterService: MatterService,
     private _staffService: StaffService,
     private _currentUserService: CurrentUserService,
-    private _dialog: DialogService
+    private _modalService: EpModalService
   ) {
     this.staff$ = _staffService.entities$;
     this.currentUser$ = _currentUserService.user$;
@@ -59,12 +61,16 @@ export class MatterTabNotesComponent {
   }
 
   deleteNote(noteId: number) {
-    const deleteNoteDialog = this._dialog.confirm({
-      title: 'Delete note?',
-      body: 'This action cannot be undone'
-    });
-    deleteNoteDialog.afterClosed$.subscribe((confirmed) => {
-      if (confirmed) {
+    this._modalService.create({
+      epContent: ConfirmDialogComponent,
+      epOkText: 'Confirm',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epComponentParams: {
+        title: 'Delete note',
+        body: 'Are you sure you want to delete this note? This action cannot be undone.'
+      },
+      epOnOk: () => {
         this._matterService.deleteNote(noteId).subscribe(() => {
           this.loadNotes(this.matter.id);
         });

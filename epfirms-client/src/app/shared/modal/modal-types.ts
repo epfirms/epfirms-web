@@ -1,14 +1,11 @@
 import { Direction } from '@angular/cdk/bidi';
 import { EventEmitter, TemplateRef, Type, ViewContainerRef } from '@angular/core';
 
-// import { EpButtonShape, EpButtonSize, EpButtonType } from 'ng-zorro-antd/button';
-// import { any } from 'ng-zorro-antd/core/types';
-
 export type OnClickCallback<T> = (instance: T) => (false | void | {}) | Promise<false | void | {}>;
 
-export type ModalTypes = 'default' | 'slideOver'; // Different modal styles we have supported
+export type ModalTypes = 'default' | 'slideOver';
 
-export type ConfirmType = 'confirm' | 'info' | 'success' | 'error' | 'warning'; // Subtypes of Confirm Modal
+export type ConfirmType = 'confirm' | 'info' | 'success' | 'error' | 'warning';
 
 export interface StyleObjectLike {
   [key: string]: string;
@@ -41,7 +38,9 @@ export class ModalOptions<T = any, R = any> {
 
   epZIndex?: number = 1000;
 
-  epWidth?: number | string = 520;
+  epWidth?: number | string;
+
+  epMaxWidth?: number | string;
 
   epCloseIcon?: string | TemplateRef<void> = 'close';
 

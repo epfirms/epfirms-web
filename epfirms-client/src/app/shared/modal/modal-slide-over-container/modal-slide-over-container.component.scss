@@ -13,3 +13,49 @@
 .ep-zoom-leave-active {
   @apply translate-x-full;
 }
+
+.ep-backdrop {
+  &.ep-entering {
+    @apply ease-out duration-300;
+    &.ep-from {
+      @apply opacity-0;
+    }
+  
+    &.ep-to {
+      @apply opacity-100;
+    }
+  }
+  &.ep-leaving {
+    @apply ease-in duration-200;
+    &.ep-from {
+      @apply opacity-100;
+    }
+  
+    &.ep-to {
+      @apply opacity-0;
+    }
+  }
+}
+
+.ep-modal {
+  &.ep-entering {
+    @apply transform transition ease-in-out duration-500 sm:duration-700;
+    &.ep-from {
+      @apply translate-x-full;
+    }
+  
+    &.ep-to {
+      @apply translate-x-0;
+    }
+  }
+  &.ep-leaving {
+    @apply transform transition ease-in-out duration-500 sm:duration-700;
+    &.ep-from {
+      @apply translate-x-0;
+    }
+  
+    &.ep-to {
+      @apply translate-x-full;
+    }
+  }
+}

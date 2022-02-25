@@ -19,6 +19,7 @@ import { InputModule } from '@app/shared/input/input.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { ModalModule } from '@app/shared/modal/modal.module';
 import { ChatModule } from '@app/features/chat/chat.module';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { ChatModule } from '@app/features/chat/chat.module';
     InputModule,
     MenuModule,
     ModalModule,
-    ChatModule
+    ChatModule,
+    InputMaskModule
   ]
 })
 export class FirmPortalModule {}

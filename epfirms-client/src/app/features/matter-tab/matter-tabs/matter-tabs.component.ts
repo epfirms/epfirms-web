@@ -3,8 +3,7 @@ import { LegalArea } from '@app/core/interfaces/legal-area';
 import { Matter } from '@app/core/interfaces/matter';
 import { Staff } from '@app/core/interfaces/staff';
 import { Tabs } from '@app/core/interfaces/tabs';
-import { catchError, Observable, of } from 'rxjs';
-import { DialogService } from '@ngneat/dialog';
+import { catchError, Observable, of, take } from 'rxjs';
 import { MatterTabsService } from '@app/features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
@@ -12,6 +11,8 @@ import { LegalAreaService } from '@app/firm-portal/_services/legal-area-service/
 import { EditClientComponent } from '@app/firm-portal/overlays/edit-client/edit-client.component';
 import { ReviewService } from '@app/features/review/services/review.service';
 import { HotToastService } from '@ngneat/hot-toast';
+import { EpModalService } from '@app/shared/modal/modal.service';
+import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 
 @Component({
   selector: 'app-matter-tabs',
@@ -67,9 +68,10 @@ export class MatterTabsComponent implements OnInit {
     private _staffService: StaffService,
     private _matterService: MatterService,
     private _legalAreaService: LegalAreaService,
-    private _dialogService: DialogService,
     private _reviewService: ReviewService,
-    private _toastService: HotToastService
+    private _toastService: HotToastService,
+    private _modalService: EpModalService,
+    private _clientService: ClientService
   ) {
     this.tabs$ = this._matterTabsService.tabs$;
 
@@ -120,10 +122,20 @@ export class MatterTabsComponent implements OnInit {
 
   handleUserInfoOption(matter, optionData) {
     if (optionData.option === 'edit') {
-      const editModal = this._dialogService.open(EditClientComponent, {data: {user: optionData.user}});
-      editModal.afterClosed$.subscribe(data => {
-        if (data) {
-          this._matterService.update({id: matter.id}).subscribe();
+      this._modalService.create({
+        epContent: EditClientComponent,
+        epOkText: 'Save changes',
+        epCancelText: 'Cancel',
+        epAutofocus: null,
+        epComponentParams: {
+          user: optionData.user
+        },
+        epOnOk: (componentInstance) => {
+          this._clientService.updateClient(componentInstance.clientForm.value).subscribe(response => {
+            response.pipe(take(1)).subscribe(() => {
+              this._matterService.update({id: matter.id}).subscribe();
+            });
+          })
         }
       });
     } else if (optionData.option === 'remove') {

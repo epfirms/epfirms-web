@@ -6,6 +6,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { ModalSlideOverContainerComponent } from './modal-slide-over-container/modal-slide-over-container.component';
 import { ModalFooterComponent } from './modal-footer/modal-footer.component';
+import { ButtonModule } from '../button/button.module';
 
 
 
@@ -18,7 +19,8 @@ import { ModalFooterComponent } from './modal-footer/modal-footer.component';
   imports: [
     CoreModule,
     OverlayModule,
-    PortalModule
+    PortalModule,
+    ButtonModule
   ],
   providers: [
     EpModalService

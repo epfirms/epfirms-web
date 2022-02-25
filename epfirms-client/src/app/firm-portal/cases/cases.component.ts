@@ -1,8 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LegalArea } from '@app/core/interfaces/legal-area';
 import { Matter } from '@app/core/interfaces/matter';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AddCaseComponent } from '../overlays/add-case/add-case.component';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
@@ -10,9 +10,7 @@ import { MatterTabsService } from '../../features/matter-tab/services/matter-tab
 import { map, take } from 'rxjs/operators';
 import { Staff } from '@app/core/interfaces/staff';
 import { StaffService } from '../_services/staff-service/staff.service';
-import { DialogService } from '@ngneat/dialog';
 import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete.component';
-import { MatterTaskService } from '../_services/matter-task-service/matter-task.service';
 import { EpModalService } from '@app/shared/modal/modal.service';
 
 @Component({
@@ -36,6 +34,7 @@ export class CasesComponent implements OnInit {
   displayedColumns = ['client', 'task', 'legal-area', 'attorney', 'billing', 'status'];
 
   attorneys$: Observable<Staff[]>;
+  
   cases$: Observable<Matter[]>;
 
   legalAreas$: Observable<LegalArea[]>;
@@ -94,7 +93,6 @@ export class CasesComponent implements OnInit {
     private _matterService: MatterService,
     private _matterTabsService: MatterTabsService,
     private _legalAreaService: LegalAreaService,
-    private _dialogService: DialogService,
     private _staffService: StaffService,
     private _modalService: EpModalService,
   ) {
