@@ -1,45 +1,55 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
-import { Client } from '@app/core/interfaces/client';
-import { take } from 'rxjs/operators';
-import { DialogRef } from '@ngneat/dialog';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { EpModalRef } from '@app/shared/modal/modal-ref';
+import { usaStatesFull } from '@app/shared/utils/us-states/states';
+import { USAState } from '@app/shared/utils/us-states/typings';
+import { createMask } from '@ngneat/input-mask';
 
 @Component({
   selector: 'app-edit-client',
   templateUrl: './edit-client.component.html',
-  styleUrls: ['./edit-client.component.scss']
+  styleUrls: ['./edit-client.component.scss'],
 })
-export class EditClientComponent {
-  @ViewChild('overlay') overlay;
+export class EditClientComponent implements OnInit {
+  phoneInputMask = createMask('(999) 999-9999');
 
-  @ViewChild('modal') modal;
+  clientForm: FormGroup = new FormGroup({
+    id: new FormControl('', Validators.required),
+    first_name: new FormControl('', Validators.required),
+    last_name: new FormControl('', Validators.required),
+    phone: new FormControl(''),
+    email: new FormControl('', Validators.email),
+    address: new FormControl(''),
+    city: new FormControl(''),
+    state: new FormControl(''),
+    zip: new FormControl(''),
+  });
 
-  clientForm: FormGroup;
+  user;
 
-  constructor(private _fb: FormBuilder, private _clientService: ClientService, private _dialogRef: DialogRef) {
-    this.clientForm = this._fb.group({
-      id: [_dialogRef.data.user.id, [Validators.required]],
-      first_name: [_dialogRef.data.user.first_name, [Validators.required]],
-      last_name: [_dialogRef.data.user.last_name, [Validators.required]],
-      phone: [_dialogRef.data.user.phone],
-      email: [_dialogRef.data.user.email, [Validators.email]],
-      address: [_dialogRef.data.user.address],
-      city: [_dialogRef.data.user.city],
-      state: [_dialogRef.data.user.state],
-      zip: [_dialogRef.data.user.zip]
+  public usaStates: USAState[] = usaStatesFull;
+
+  constructor(private _modalRef: EpModalRef) {}
+
+  ngOnInit(): void {
+    this.clientForm.patchValue({
+      id: this.user.id,
+      first_name: this.user.first_name,
+      last_name: this.user.last_name,
+      phone: this.user.phone,
+      email: this.user.email,
+      address: this.user.address,
+      city: this.user.city,
+      state: this.user.state,
+      zip: this.user.zip,
     });
-  }
-
-  submit() {
-    this._clientService.updateClient(this.clientForm.value).subscribe(response => {
-      response.pipe(take(1)).subscribe(client => {
-        this.close(client);
+    this.clientForm.updateValueAndValidity();
+    this.clientForm.statusChanges.subscribe(() => {
+      const config =this._modalRef.getConfig();
+      this._modalRef.updateConfig({
+        ...config,
+        epOkDisabled: (this.clientForm.invalid || !this.clientForm.dirty)
       });
-    })
-  }
-
-  close(newClient?: Client) {
-    this._dialogRef.close(newClient);
+    });
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CaseTemplateService } from '@app/features/case-template/services/case-template.service';
 import { AwsService } from '@app/shared/_services/aws.service';
-import { DialogService } from '@ngneat/dialog';
 import { FirmTemplateTaskFile } from '../interfaces/firm-template-task-file';
 import { CaseTemplateDetailsComponent } from '../case-template-details/case-template-details.component';
 import { map } from 'rxjs';
@@ -9,6 +8,8 @@ import {
   caseTemplateLawCategories,
   CaseTemplateLawCategory,
 } from '../enums/case-template-law-category';
+import { EpModalService } from '@app/shared/modal/modal.service';
+import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-case-template-list',
@@ -20,8 +21,8 @@ export class CaseTemplateListComponent implements OnInit {
 
   constructor(
     private _caseTemplateService: CaseTemplateService,
-    private _dialogService: DialogService,
     private _awsService: AwsService,
+    private _modalService: EpModalService
   ) {}
 
   ngOnInit(): void {
@@ -29,15 +30,15 @@ export class CaseTemplateListComponent implements OnInit {
   }
 
   openAddTemplateDialog(): void {
-    const ref = this._dialogService.open(CaseTemplateDetailsComponent, {
-      size: 'lg',
-      enableClose: false,
-    });
-
-    ref.afterClosed$.subscribe((data) => {
-      if (data) {
-        this._caseTemplateService.create(data.template).subscribe((newTemplate) => {
-          data.tasks.forEach((task) => {
+    this._modalService.create({
+      epContent: CaseTemplateDetailsComponent,
+      epOkText: 'Add template',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epMaxWidth: '56rem',
+      epOnOk: (componentInstance) => {
+        this._caseTemplateService.create(componentInstance.template).subscribe((newTemplate) => {
+          componentInstance.template.firm_template_tasks.forEach((task) => {
             this._caseTemplateService.createTask(newTemplate.id, task).subscribe((newTask) => {
               task.firm_template_task_files.forEach((file) => {
                 this.saveTaskFile(newTask.id, file);
@@ -50,32 +51,38 @@ export class CaseTemplateListComponent implements OnInit {
   }
 
   editTemplateDialog(template): void {
-    const ref = this._dialogService.open(CaseTemplateDetailsComponent, {
-      size: 'lg',
-      enableClose: false,
-      data: {
-        template: template,
-      },
-    });
+    const templateCopy =  Object.assign({}, template);
+    templateCopy.firm_template_tasks = [...template.firm_template_tasks];
 
-    ref.afterClosed$.subscribe((data) => {
-      if (data) {
-        this.saveTemplateChanges(template.id, data.template);
-        this.saveTaskChanges(template.id, data.tasks);
-        this.saveTaskDeletions(template.firm_template_tasks, data.tasks);
+    this._modalService.create({
+      epContent: CaseTemplateDetailsComponent,
+      epOkText: 'Save changes',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epMaxWidth: '56rem',
+      epComponentParams: {
+        template: templateCopy,
+      },
+      epOnOk: (componentInstance) => {
+        this.saveTemplateChanges(template.id, componentInstance.template);
+        this.saveTaskChanges(template.id, componentInstance.template.firm_template_tasks);
+        this.saveTaskDeletions(template.firm_template_tasks, componentInstance.template.firm_template_tasks);
         this.loadCaseTemplates();
       }
     });
   }
 
   deleteTemplate(template) {
-    const deleteDialogRef = this._dialogService.confirm({
-      title: `Delete case template`,
-      body: `Are you sure you want to delete ${template.template_name}? This action cannot be undone.`,
-    });
-
-    deleteDialogRef.afterClosed$.subscribe((confirmed) => {
-      if (confirmed) {
+    this._modalService.create({
+      epContent: ConfirmDialogComponent,
+      epOkText: 'Confirm',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epComponentParams: {
+        title: 'Delete case template',
+        body: `Are you sure you want to delete ${template.template_name}? This action cannot be undone.`
+      },
+      epOnOk: () => {
         this._caseTemplateService.delete(template.id).subscribe(() => {
           this.loadCaseTemplates();
         });
@@ -88,6 +95,7 @@ export class CaseTemplateListComponent implements OnInit {
   }
 
   private saveTaskChanges(templateId: number, changes) {
+    console.log(changes);
     changes.forEach((change) => {
       if (change.id) {
         this._caseTemplateService.updateTask(change.id, change).subscribe(() => {

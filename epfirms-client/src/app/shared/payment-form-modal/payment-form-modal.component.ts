@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DialogRef } from '@ngneat/dialog';
 import { createMask } from '@ngneat/input-mask';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
+import { EpModalRef } from '../modal/modal-ref';
 
 @Component({
   selector: 'app-payment-form-modal',
@@ -26,7 +27,7 @@ export class PaymentFormModalComponent implements OnInit {
     placeholder: '0',
   });
 
-  constructor(private _formBuilder: FormBuilder, private _dialogRef: DialogRef) { }
+  constructor(private _formBuilder: FormBuilder, private _modalRef: EpModalRef) { }
 
   ngOnInit(): void {
     this.paymentForm = this._formBuilder.group({
@@ -38,22 +39,8 @@ export class PaymentFormModalComponent implements OnInit {
   }
 
   setDate(event) {
-    let model: IMyDateModel = {isRange: false, singleDate: {jsDate: event.singleDate.jsDate}, dateRange: null};
-    this.paymentForm.patchValue({date: model});
+    const date = new Date(event.target.value + 'T00:00:00');
+    this.paymentForm.patchValue({date});
     this.paymentForm.updateValueAndValidity();
-  }
-
-  submit() {
-    const payment = this.paymentForm.value;
-    payment.amount = payment.amount.replace(',', '');
-    if (payment.date) {
-      payment.date = payment.date.singleDate.jsDate;
-    }
-
-    this.close(payment);
-  }
-
-  close(data?: any) {
-    this._dialogRef.close(data);
   }
 }

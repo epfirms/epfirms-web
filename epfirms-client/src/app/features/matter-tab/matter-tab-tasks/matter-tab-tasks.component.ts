@@ -5,9 +5,9 @@ import { StaffService } from '@app/firm-portal/_services/staff-service/staff.ser
 import { Matter } from '@app/core/interfaces/matter';
 import { MatterTask } from '@app/core/interfaces/matter-task';
 import { Staff } from '@app/core/interfaces/staff';
-import { DialogService } from '@ngneat/dialog';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { EpModalService } from '@app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-matter-tab-tasks',
@@ -37,7 +37,7 @@ export class MatterTabTasksComponent implements OnInit {
   constructor(
     private _matterService: MatterService,
     private _staffService: StaffService,
-    private _dialog: DialogService
+    private _modalService: EpModalService
   ) {
     this.staff$ = _staffService.entities$;
   }
@@ -116,15 +116,17 @@ export class MatterTabTasksComponent implements OnInit {
   }
 
   openCaseTemplateDialog(): void {
-    const caseTemplateDialog = this._dialog.open(CaseTemplateSelectionComponent, {
-      size: 'lg',
-      data: {
+    this._modalService.create({
+      epContent: CaseTemplateSelectionComponent,
+      epOkText: 'Apply template',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epMaxWidth: '48rem',
+      epComponentParams: {
         attorney_id: this.matter.attorney_id
-      }
-    });
-
-    caseTemplateDialog.afterClosed$.subscribe((templateTasks) => {
-      if (templateTasks && templateTasks.length) {
+      },
+      epOnOk: (componentInstance) => {
+        const templateTasks = componentInstance.formatTasks();
         this.applyTemplateTasks(templateTasks, this.matter.id);
       }
     });

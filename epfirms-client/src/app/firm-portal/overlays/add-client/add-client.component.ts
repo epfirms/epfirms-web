@@ -1,27 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EpModalRef } from '@app/shared/modal/modal-ref';
+import { usaStatesFull } from '@app/shared/utils/us-states/states';
+import { USAState } from '@app/shared/utils/us-states/typings';
+import { createMask } from '@ngneat/input-mask';
 
 @Component({
   selector: 'app-add-client',
   templateUrl: './add-client.component.html',
-  styleUrls: ['./add-client.component.scss']
+  styleUrls: ['./add-client.component.scss'],
 })
 export class AddClientComponent implements OnInit {
-  clientForm: FormGroup;
+  clientForm: FormGroup = new FormGroup({
+    first_name: new FormControl('', Validators.required),
+    last_name: new FormControl('', Validators.required),
+    phone: new FormControl(''),
+    email: new FormControl('', Validators.email),
+    address: new FormControl(''),
+    city: new FormControl(''),
+    state: new FormControl(''),
+    zip: new FormControl(''),
+  });
 
-  constructor(private _fb: FormBuilder, private _modalRef: EpModalRef) { }
+  phoneInputMask = createMask('(999) 999-9999');
+  
+  public usaStates: USAState[] = usaStatesFull;
+
+  constructor(private _modalRef: EpModalRef) {}
 
   ngOnInit(): void {
-    this.clientForm = this._fb.group({
-      first_name: ['', [Validators.required]],
-      last_name: ['', [Validators.required]],
-      phone: [''],
-      email: [null, [Validators.email]],
-      address: [null],
-      city: [null],
-      state: [null],
-      zip: [null]
+    this.clientForm.statusChanges.subscribe(() => {
+      const config = this._modalRef.getConfig();
+      this._modalRef.updateConfig({
+        ...config,
+        epOkDisabled: this.clientForm.invalid || !this.clientForm.dirty,
+      });
     });
   }
 }

@@ -29,3 +29,49 @@
 .ep-fade-leave-active {
   @apply opacity-0;
 }
+
+.ep-backdrop {
+  &.ep-entering {
+    @apply ease-out duration-300;
+    &.ep-from {
+      @apply opacity-0;
+    }
+  
+    &.ep-to {
+      @apply opacity-100;
+    }
+  }
+  &.ep-leaving {
+    @apply ease-in duration-200;
+    &.ep-from {
+      @apply opacity-100;
+    }
+  
+    &.ep-to {
+      @apply opacity-0;
+    }
+  }
+}
+
+.ep-modal {
+  &.ep-entering {
+    @apply ease-out duration-300;
+    &.ep-from {
+      @apply opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95;
+    }
+  
+    &.ep-to {
+      @apply opacity-100 translate-y-0 sm:scale-100;
+    }
+  }
+  &.ep-leaving {
+    @apply ease-in duration-200;
+    &.ep-from {
+      @apply opacity-100 translate-y-0 sm:scale-100;
+    }
+  
+    &.ep-to {
+      @apply opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95;
+    }
+  }
+}

@@ -139,34 +139,37 @@ export class BaseModalContainerComponent extends BasePortalOutlet implements OnD
   private setEnterAnimationClass(): void {
     const backdropElement = this.backdropElementRef?.nativeElement;
     if (backdropElement) {
-      backdropElement.classList.add(FADE_CLASS_NAME_MAP.enterActive);
-      backdropElement.classList.remove(FADE_CLASS_NAME_MAP.enter);
+      backdropElement.classList.add('ep-to');
+      backdropElement.classList.remove('ep-from');
     }
 
     const modalElement = this.modalElementRef.nativeElement;
-    modalElement.classList.add(ZOOM_CLASS_NAME_MAP.enterActive);
-    modalElement.classList.remove(ZOOM_CLASS_NAME_MAP.enter);
+    modalElement.classList.add('ep-to');
+    modalElement.classList.remove('ep-from');
   }
 
   private setExitAnimationClass(): void {    
     const backdropElement = this.backdropElementRef?.nativeElement;
     if (backdropElement) {
-      backdropElement.classList.add(FADE_CLASS_NAME_MAP.leaveActive);
-      backdropElement.classList.remove(FADE_CLASS_NAME_MAP.leave);
+      backdropElement.classList.remove('ep-entering', 'ep-to');
+      backdropElement.classList.add('ep-leaving', 'ep-from');
+      backdropElement.classList.add('ep-to');
+      backdropElement.classList.remove('ep-from');
     }
 
     const modalElement = this.modalElementRef.nativeElement;
-
-    modalElement.classList.add(ZOOM_CLASS_NAME_MAP.leave);
-    modalElement.classList.add(ZOOM_CLASS_NAME_MAP.leaveActive);
+    modalElement.classList.remove('ep-entering', 'ep-to');
+    modalElement.classList.add('ep-leaving', 'ep-from');
+    modalElement.classList.add('ep-to');
+    modalElement.classList.remove('ep-from');
   }
 
   private cleanAnimationClass(): void {
     const modalElement = this.modalElementRef.nativeElement;
-    modalElement.classList.remove(ZOOM_CLASS_NAME_MAP.enter);
-    modalElement.classList.remove(ZOOM_CLASS_NAME_MAP.enterActive);
-    modalElement.classList.remove(ZOOM_CLASS_NAME_MAP.leave);
-    modalElement.classList.remove(ZOOM_CLASS_NAME_MAP.leaveActive);
+    modalElement.classList.remove('ep-modal');
+    modalElement.classList.remove('ep-entering');
+    modalElement.classList.remove('ep-leaving');
+    modalElement.classList.remove('ep-from', 'ep-to');
   }
 
   private setModalTransformOrigin(): void {
@@ -181,7 +184,7 @@ export class BaseModalContainerComponent extends BasePortalOutlet implements OnD
     } else if (event.toState === 'exit') {
       this.restoreFocus();
     }
-    this.cleanAnimationClass();
+    // this.cleanAnimationClass();
     this.animationStateChanged.emit(event);
   }
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { Staff } from '@app/core/interfaces/staff';
 import { forkJoin, Observable } from 'rxjs';
-import { DialogRef, DialogService } from '@ngneat/dialog';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { FirmCaseTemplate } from '../interfaces/firm-case-template';
 import {
@@ -19,6 +18,8 @@ import { AssigneeGroup, TemplateTaskAssignee } from '../interfaces/template-task
 import { FirmRoleService } from '@app/features/firm-staff/services/firm-role.service';
 import { CaseTemplateCommunityService } from '../services/case-template-community.service';
 import {HotToastService} from '@ngneat/hot-toast';
+import { EpModalService } from '@app/shared/modal/modal.service';
+import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-case-template-details',
@@ -68,21 +69,13 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
   constructor(
     private staffService: StaffService,
-    private dialogRef: DialogRef,
     private _caseTemplateService: CaseTemplateService,
-    private _dialogService: DialogService,
     private _firmRoleService: FirmRoleService,
     private _caseTemplateCommunityService: CaseTemplateCommunityService,
-    private _toastService: HotToastService
+    private _toastService: HotToastService,
+    private _modalService: EpModalService
   ) {
     this.staff$ = staffService.entities$;
-
-    if (dialogRef.data) {
-      const { template } = dialogRef.data;
-      this.template = Object.assign({}, template);
-      // Deep clone tasks -- needed for change comparison in case-template-list
-      this.template.firm_template_tasks = [...template.firm_template_tasks];
-    }
   }
 
   ngOnInit(): void {
@@ -121,17 +114,6 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
   removeTemplateTask(taskIndex: number): void {
     this.template.firm_template_tasks.splice(taskIndex, 1);
-  }
-
-  save() {
-    this.close({
-      template: this.template,
-      tasks: this.template.firm_template_tasks
-    });
-  }
-
-  close(data?: any) {
-    this.dialogRef.close(data);
   }
 
   setAssignee(event, index) {
@@ -183,13 +165,16 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
   deleteTaskFile(fileId: number, taskIndex: number) {
     if (this.template.firm_template_tasks[taskIndex].id) {
-      const deleteDialogRef = this._dialogService.confirm({
-        title: `Remove task file`,
-        body: `Are you sure you want to remove this file? This action cannot be undone.`
-      });
-
-      deleteDialogRef.afterClosed$.subscribe((confirmed) => {
-        if (confirmed) {
+      this._modalService.create({
+        epContent: ConfirmDialogComponent,
+        epOkText: 'Confirm',
+        epCancelText: 'Cancel',
+        epAutofocus: null,
+        epComponentParams: {
+          title: 'Remove task file',
+          body: 'Are you sure you want to remove this file? This action cannot be undone.'
+        },
+        epOnOk: () => {
           if (fileId) {
             this._caseTemplateService.deleteTaskFile(fileId).subscribe();
           }
@@ -239,15 +224,20 @@ export class CaseTemplateDetailsComponent implements OnInit {
   }
 
   share(): void {
-    this._dialogService.confirm({
-      title: `Create community template`,
-      body: `A copy of this template will be created and shared with other users in the case template community.`
-    }).afterClosed$.subscribe((confirm) => {
-      if (confirm) {
+    this._modalService.create({
+      epContent: ConfirmDialogComponent,
+      epOkText: 'Confirm',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epComponentParams: {
+        title: 'Create community template',
+        body: 'A copy of this template will be created and shared with other users in the case template community.'
+      },
+      epOnOk: () => {
         this._caseTemplateCommunityService.create(this.template).subscribe(() => {
           this._toastService.success('Successfully created community template');
         });
       }
-    })
+    });
   }
 }

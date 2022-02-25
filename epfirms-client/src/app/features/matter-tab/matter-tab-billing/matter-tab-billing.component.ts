@@ -1,12 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
-import { BillFormModalComponent } from '@app/shared/bill-form-modal/bill-form-modal.component';
 import { PaymentFormModalComponent } from '@app/shared/payment-form-modal/payment-form-modal.component';
 import { StatementService } from '@app/shared/_services/statement-service/statement.service';
 import { Matter } from '@app/core/interfaces/matter';
-import { DialogService } from '@ngneat/dialog';
 import { MatterBillingSettingsService } from '@app/shared/_services/matter-billing-settings-service/matter-billing-settings.service';
-import { state } from '@angular/animations';
+import { EpModalService } from '@app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-matter-tab-billing',
@@ -20,6 +18,7 @@ export class MatterTabBillingComponent implements OnInit {
   get matter() {
     return this._matter;
   }
+
   set matter(value: Matter) {
     this._matter = value;
   }
@@ -27,10 +26,13 @@ export class MatterTabBillingComponent implements OnInit {
   private _matter: Matter;
 
   bills: any[] = [];
+
   payments: any[] = [];
 
   totalBilled: number = 0;
+
   totalPayments: number = 0;
+
   balance: number;
 
   //bindings for IOLTA
@@ -38,19 +40,24 @@ export class MatterTabBillingComponent implements OnInit {
 
   //CONFIG FOR BILL MANAGER SLIDE OVER
   isBillManagerVisible: boolean = false;
+
   isBillManagerEditMode: boolean = false;
+
   currentBill;
 
   //CONFIG FOR STATEMENT MANAGER
   isStatementManagerVisible: boolean = false;
+
   currentStatement;
 
   // bindings for default billing settings
   // these should load into the matter from MatterBillingSettings
   defaultBillingStyle : string = "hourly";
+
   defaultPaymentType : string = "private pay";
 
   billingSettingOptions : string[] = ["hourly", "flat rate", "contingency"];
+
   billingPaymentOptions : string[] = ["private pay", "legal insurance"];
 
   //filters for the bills
@@ -65,17 +72,19 @@ export class MatterTabBillingComponent implements OnInit {
     'insurance',
     'billing settings',
   ];
+
   selectedTab: any = 'overview';
 
   //manage the state of the statement generation workflow
   generateStatementState : boolean = false;
 
   constructor(
-    private _dialogService: DialogService,
+    private _modalService: EpModalService,
     private _matterService: MatterService,
     private statementService: StatementService,
     private _matterBillingSettingsService: MatterBillingSettingsService,
   ) {}
+
   ngOnInit(): void {
     this.totalBilled = 0;
     this.totalPayments = 0;
@@ -115,25 +124,20 @@ export class MatterTabBillingComponent implements OnInit {
   }
 
   addBill(): void {
-    // addBill(): void {
-    //   const billModal = this._dialogService.open(BillFormModalComponent, {});
-    //   billModal.afterClosed$.subscribe((data) => {
-    //     if (data) {
-    //       const bill = {
-    //         ...data,
-    //         matter_id: this.matter.id
-    //       };
-
     this.toggleBillManager();
   }
 
   addPayment(): void {
-    const paymentModal = this._dialogService.open(PaymentFormModalComponent, {});
-    paymentModal.afterClosed$.subscribe((data) => {
-      console.log('MODal data', data);
-      if (data != undefined) {
+    this._modalService.create({
+      epContent: PaymentFormModalComponent,
+      epOkText: 'Add payment',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epOnOk: (componentInstance) => {
+        const payment = componentInstance.paymentForm.value;
+        payment.amount = payment.amount.replace(',', '');
         const bill = {
-          ...data,
+          ...payment,
           matter_id: this.matter.id,
         };
         this._matterService.createBillOrPayment(bill).subscribe(() => {

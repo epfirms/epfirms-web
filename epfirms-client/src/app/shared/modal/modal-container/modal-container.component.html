@@ -1,5 +1,5 @@
 <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-  <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 ep-fade-enter" aria-hidden="true" #backdropElement></div>
+  <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 ep-backdrop ep-entering ep-from" aria-hidden="true" #backdropElement></div>
 
   <!-- This element is to trick the browser into centering the modal contents. -->
   <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
@@ -8,14 +8,16 @@
     [ngClass]="config.epClassName!"
     [ngStyle]="config.epStyle!"
     [style.width]="config?.epWidth!"
-    class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl ep-zoom-enter sm:my-8 sm:align-middle sm:max-w-xl sm:w-full"
+    [style.max-width]="config?.epMaxWidth!"
+    [class.sm:max-w-lg]="!config?.epMaxWidth!"
+    class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white shadow-xl rounded-xl ep-modal ep-entering ep-from sm:my-8 sm:align-middle sm:w-full"
   >
     <div class="bg-white">
       <ng-template cdkPortalOutlet></ng-template>
     </div>
     <div
       ep-modal-footer
-      class="justify-end px-4 py-3 bg-gray-50 sm:px-6 sm:flex"
+      class="justify-end p-5 sm:flex"
       [modalRef]="modalRef"
       (cancelTriggered)="onCloseClick()"
       (okTriggered)="onOkClick()"
