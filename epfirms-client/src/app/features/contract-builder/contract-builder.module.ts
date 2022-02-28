@@ -7,6 +7,8 @@ import { ContractViewerComponent } from './contract-viewer/contract-viewer.compo
 import { ContractBuilderComponent } from './contract-builder/contract-builder.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
+import { ContractEditorV2Component } from './contract-editor-v2/contract-editor-v2.component';
+import { QuillModule } from 'ngx-quill';
 
 const ContractBuilderRoute: Routes = [
   {
@@ -20,6 +22,7 @@ const ContractBuilderRoute: Routes = [
     ContractEditorComponent,
     ContractViewerComponent,
     ContractBuilderComponent,
+    ContractEditorV2Component,
     
   ],
   imports: [
@@ -27,7 +30,8 @@ const ContractBuilderRoute: Routes = [
     EditableModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(ContractBuilderRoute)
+    RouterModule.forChild(ContractBuilderRoute),
+    QuillModule
   ],
   exports: [
     ContractEditorComponent,
