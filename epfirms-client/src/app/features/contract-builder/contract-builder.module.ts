@@ -5,8 +5,14 @@ import { EditableModule } from '@app/shared/editable/editable.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContractViewerComponent } from './contract-viewer/contract-viewer.component';
 import { ContractBuilderComponent } from './contract-builder/contract-builder.component';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@app/core/guards/auth.guard';
 
-
+const ContractBuilderRoute: Routes = [
+  {
+    path: '', component: ContractBuilderComponent, canActivate: [AuthGuard], 
+  },
+]
 
 
 @NgModule({
@@ -20,7 +26,8 @@ import { ContractBuilderComponent } from './contract-builder/contract-builder.co
     CommonModule,
     EditableModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forChild(ContractBuilderRoute)
   ],
   exports: [
     ContractEditorComponent,
