@@ -4,6 +4,7 @@ import { ContractEditorComponent } from './contract-editor/contract-editor.compo
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContractViewerComponent } from './contract-viewer/contract-viewer.component';
+import { ContractBuilderComponent } from './contract-builder/contract-builder.component';
 
 
 
@@ -12,6 +13,7 @@ import { ContractViewerComponent } from './contract-viewer/contract-viewer.compo
   declarations: [
     ContractEditorComponent,
     ContractViewerComponent,
+    ContractBuilderComponent,
     
   ],
   imports: [
