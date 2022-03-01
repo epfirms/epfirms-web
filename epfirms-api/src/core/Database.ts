@@ -66,6 +66,7 @@ export class Database {
       legal_insurance: require('../models/LegalInsurance')(this.sequelize, Sequelize),
       customer_account: require('../models/CustomerAccount')(this.sequelize, Sequelize),
       contract: require('../models/Contract')(this.sequelize, Sequelize),
+      contract_template: require('../models/ContractTemplate')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -393,6 +394,9 @@ export class Database {
 
     this.models.matter.hasOne(this.models.legal_insurance, {foreignKey: 'matter_id'});
     this.models.legal_insurance.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+
+    this.models.contract_template.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+    this.models.matter.hasOne(this.models.contract_template, {foreignKey: 'matter_id'});
   }
 
   public static async start() {
