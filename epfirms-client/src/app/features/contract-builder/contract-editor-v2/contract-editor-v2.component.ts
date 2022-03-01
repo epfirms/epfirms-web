@@ -29,9 +29,17 @@ export class ContractEditorV2Component implements OnInit {
       ['link', 'image', 'video']                         // link and image, video
     ]
   };
+
+  // content binding for the editor
+  content;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  displayContent(content): void {
+    console.log(content);
   }
 
 }
