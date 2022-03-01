@@ -32,6 +32,7 @@ export class ContractEditorV2Component implements OnInit {
 
   // content binding for the editor
   content;
+  title : string = "Template Title Goes Here";
 
   constructor() { }
 
