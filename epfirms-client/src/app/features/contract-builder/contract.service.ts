@@ -16,4 +16,8 @@ export class ContractService {
   getWithMatterId(id) : Observable<any> {
     return this.http.get(`/api/contract/${id}`);
   }
+
+  createTemplate(data) : Observable<any> {
+    return this.http.post(`/api/contract-template`, data);
+  }
 }
