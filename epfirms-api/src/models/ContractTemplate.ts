@@ -16,6 +16,7 @@ module.exports = (sequelize, {
           type: INTEGER,
           primaryKey: true,
           autoIncrement: true,
+          unique: true
         },
         firm_id: {
           type: INTEGER,
@@ -116,11 +117,11 @@ module.exports = (sequelize, {
             type: BOOLEAN,
             defaultValue : false
         },
-        pre_settlement_contingecy: {
+        pre_settlement_contingency: {
             type: BOOLEAN,
             defaultValue : false
         },
-        post_settlement_contingecy: {
+        post_settlement_contingency: {
             type: BOOLEAN,
             defaultValue : false
         },

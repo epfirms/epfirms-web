@@ -18,6 +18,7 @@ export class ContractService {
   }
 
   createTemplate(data) : Observable<any> {
+    console.log("THE SERVICE ON THE FRONT",data);
     return this.http.post(`/api/contract-template`, data);
   }
 }

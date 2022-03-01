@@ -8,8 +8,10 @@ import { Service } from 'typedi';
 export class ContractTemplateController {
   constructor() {}
 
-  public async upsert(req : Request, res : Response) : Promise<any> {
+  public async upsert(req, res : Response) : Promise<any> {
     try {
+      console.log("THE REQ BODY");
+      console.log(req.body);
       const created = await ContractTemplateService.upsert(req.body);
       res.status(StatusConstants.CREATED).send(created);
     } catch (error) {
