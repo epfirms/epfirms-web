@@ -109,7 +109,7 @@ export class ContractEditorV2Component implements OnInit {
   ngOnInit(): void {
     if (this.inputContent !== undefined){
       this.content = this.inputContent.content;
-      console.log("EDIT MODE", this.content);
+      
 
     }
     this.currentUser$.subscribe((res) => {
@@ -118,7 +118,7 @@ export class ContractEditorV2Component implements OnInit {
   }
 
   updateContent(content): void {
-    console.log("quill object", content);
+    
     this.quill = content;
   }
 

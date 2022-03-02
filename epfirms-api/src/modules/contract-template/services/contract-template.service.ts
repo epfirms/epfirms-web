@@ -31,7 +31,7 @@ export class ContractTemplateService {
             const templates = await Database.models.contract_template.destroy({where: {
                 id: id
             }});
-            console.log("TEMPLATES SERVICE" , Promise.resolve(templates));
+            
             return Promise.resolve(templates);
         } catch (error) {
             console.error(error);

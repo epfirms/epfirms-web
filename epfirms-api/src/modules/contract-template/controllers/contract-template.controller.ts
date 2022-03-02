@@ -34,7 +34,7 @@ export class ContractTemplateController {
     try {
       
       const deleted = await ContractTemplateService.delete(req.params.id);
-      console.log("STATUS", StatusConstants.OK);
+      
       res.status(StatusConstants.OK).send({deleted: true});
     } catch (error) {
       console.error(error);
