@@ -60,6 +60,35 @@ export class ContractEditorV2Component implements OnInit {
     '@POST_SETTLEMENT_CONTINGENCY@',
   ];
 
+  templateVars = {
+                "@TODAY@":"Inserts todays date.",
+                "@CLIENT@":"Inserts list of clients on the case.",
+                "@CLIENT_ADDRESS@":"Inserts client street address.",
+                "@CLIENT_STATE@":"Inserts client state.",
+                "@CLIENT_COUNTY@":"Inserts client county.",
+                "@CLIENT_CITY@":"Inserts client city.",
+                "@CLIENT_ZIPCODE@":"Inserts client zipcode.",
+
+                "@ATTORNEY@":"Inserts list of clients on the case.",
+                "@ATTORNEY_ADDRESS@":"Inserts attorney street addres",
+                "@ATTORNEY_STATE@":"Inserts attorney state.",
+                "@ATTORNEY_COUNTY@":"Inserts attorney county.",
+                "@ATTORNEY_CITY@":"Inserts attorney city.",
+                "@ATTORNEY_ZIPCODE@":"Inserts attorney zipcode.",
+                
+                "@LAW_FIRM@":"Inserts name of law firm.",
+                "@DESCRIPTION@":"Inserts description of case.",
+
+                "@FLAT_RATE_FEE@ ":"Inserts flat rate fee.",
+                "@COVERED_ITEMS@":"Inserts numerical list of covered items.",
+                
+
+                "@RETAINER_AMOUNT@":"Inserts retainer amount.",
+                "@PRE_SETTLEMENT_CONTINGENCY@":"Inserts pre-settlement contingecy rate.",
+                "@POST_SETTLEMENT_CONTINGENCY@":"Inserts post-settlement contingecy rate.",
+    
+  }
+
   // content binding for the editor
   content;
   title: string = 'Template Title Goes Here';

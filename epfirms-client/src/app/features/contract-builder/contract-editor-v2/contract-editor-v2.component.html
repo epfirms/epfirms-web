@@ -68,36 +68,24 @@
             <div >
 
               <h2 class="text-lg">Template Variables</h2>
-              <ul class="list-disc">
-                <li><code>@TODAY@</code> Inserts todays date.</li>
-                <li><code>@CLIENT@</code> Inserts list of clients on the case.</li>
-                <li><code>@CLIENT_ADDRESS@</code> Inserts client street address.</li>
-                <li><code>@CLIENT_STATE@</code> Inserts client state.</li>
-                <li><code>@CLIENT_COUNTY@</code> Inserts client county.</li>
-                <li><code>@CLIENT_CITY@</code> Inserts client city.</li>
-                <li><code>@CLIENT_ZIPCODE@</code> Inserts client zipcode.</li>
+              <!-- This example requires Tailwind CSS v2.0+ -->
+              <ng-scrollbar  style="height:800px">
 
-                <li><code>@ATTORNEY@</code> Inserts list of clients on the case.</li>
-                <li><code>@ATTORNEY_ADDRESS@</code> Inserts attorney street address.</li>
-                <li><code>@ATTORNEY_STATE@</code> Inserts attorney state.</li>
-                <li><code>@ATTORNEY_COUNTY@</code> Inserts attorney county.</li>
-                <li><code>@ATTORNEY_CITY@</code> Inserts attorney city.</li>
-                <li><code>@ATTORNEY_ZIPCODE@</code> Inserts attorney zipcode.</li>
+                <ul role="list" class="divide-y divide-gray-200">
+                  <li *ngFor="let templateVar of templateVars | keyvalue" class="py-4 flex">
+                    <div class="ml-3">
+                      <p class="text-sm font-medium text-gray-900">{{templateVar.key}}</p>
+                      <p class="text-sm text-gray-500">{{templateVar.value}}</p>
+                    </div>
+                  </li>
                 
-                <li><code>@LAW_FIRM@</code> Inserts name of law firm.</li>
-                <li><code>@DESCRIPTION@</code> Inserts description of case.</li>
+                  
+                </ul>
 
-                <!-- FLAT RATE SPECIFICS -->
-                <li><code>@FLAT_RATE_FEE@</code> Inserts flat rate fee.</li>
-                <li><code>@COVERED_ITEMS@</code> Inserts numerical list of covered items.</li>
-                
+              </ng-scrollbar>
 
-                <!-- HOURLY SPECIFIC FIELDS -->
-                <li><code>@RETAINER_AMOUNT@</code> Inserts retainer amount.</li>
-                <li><code>@PRE_SETTLEMENT_CONTINGENCY@</code> Inserts pre-settlement contingecy rate.</li>
-                <li><code>@POST_SETTLEMENT_CONTINGENCY@</code> Inserts post-settlement contingecy rate.</li>
 
-              </ul>
+              
             </div>
           </div>
           <!-- End left column area -->

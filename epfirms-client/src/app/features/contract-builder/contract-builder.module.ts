@@ -9,6 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
 import { ContractEditorV2Component } from './contract-editor-v2/contract-editor-v2.component';
 import { QuillModule } from 'ngx-quill';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 const ContractBuilderRoute: Routes = [
   {
@@ -31,7 +32,8 @@ const ContractBuilderRoute: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(ContractBuilderRoute),
-    QuillModule
+    QuillModule, 
+    NgScrollbarModule
   ],
   exports: [
     ContractEditorComponent,
