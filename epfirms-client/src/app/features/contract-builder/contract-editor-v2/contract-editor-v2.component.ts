@@ -105,6 +105,7 @@ export class ContractEditorV2Component implements OnInit {
       if (this.quill.text.includes(label)) {
         Object.defineProperty(contractTemplate, `${label.replace(/@/g, '').toLowerCase()}`, {
           value: true,
+          enumerable: true
         });
       }
     });
