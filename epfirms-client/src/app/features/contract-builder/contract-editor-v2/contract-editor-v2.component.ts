@@ -26,9 +26,7 @@ export class ContractEditorV2Component implements OnInit {
       [{ font: [] }],
       [{ align: [] }],
 
-      ['clean'], // remove formatting button
-
-      ['link', 'image', 'video'], // link and image, video
+      
     ],
   };
 
