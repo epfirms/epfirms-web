@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/no-inputs-metadata-property */
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { OPTGROUP, _OptgroupBase } from '../directives/option-group.directive';
 
 @Component({
@@ -10,7 +10,7 @@ import { OPTGROUP, _OptgroupBase } from '../directives/option-group.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   inputs: ['disabled'],
   host: {
-    'class': 'mat-optgroup',
+    'class': 'block pb-2',
     '[attr.role]': '_inert ? null : "group"',
     '[attr.aria-disabled]': '_inert ? null : disabled.toString()',
     '[attr.aria-labelledby]': '_inert ? null : _labelId',

@@ -116,20 +116,22 @@ export class MatterTabTasksComponent implements OnInit {
   }
 
   openCaseTemplateDialog(): void {
-    this._modalService.create({
+    const caseTemplateModal = this._modalService.create({
       epContent: CaseTemplateSelectionComponent,
-      epOkText: 'Apply template',
-      epCancelText: 'Cancel',
-      epAutofocus: null,
+      epOkText: null,
+      epCancelText: null,
+      epAutofocus: 'auto',
       epMaxWidth: '48rem',
       epComponentParams: {
         attorney_id: this.matter.attorney_id
-      },
-      epOnOk: (componentInstance) => {
-        const templateTasks = componentInstance.formatTasks();
-        this.applyTemplateTasks(templateTasks, this.matter.id);
       }
     });
+
+    caseTemplateModal.afterClose.subscribe((templateTasks) => {
+      if (templateTasks) {
+        this.applyTemplateTasks(templateTasks, this.matter.id);
+      }
+    })
   }
 
   private applyTemplateTasks(templateTasks, matterId: number): void {

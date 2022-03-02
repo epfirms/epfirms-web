@@ -50,4 +50,8 @@ export class ModalContainerComponent extends BaseModalContainerComponent impleme
   ngOnInit(): void {
     this.setupMouseListeners(this.modalElementRef);
   }
+
+  close(): void {
+    this.onCloseClick();
+  }
 }
