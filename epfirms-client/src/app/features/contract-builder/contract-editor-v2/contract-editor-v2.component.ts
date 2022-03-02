@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ContractService } from '../contract.service';
 
@@ -8,7 +8,7 @@ import { ContractService } from '../contract.service';
   styleUrls: ['./contract-editor-v2.component.scss'],
 })
 export class ContractEditorV2Component implements OnInit {
-  
+  @Input() inputContent;
   @Output() isVisibleChange = new EventEmitter<boolean>();
 
   config = {
@@ -107,12 +107,18 @@ export class ContractEditorV2Component implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.inputContent !== undefined){
+      this.content = this.inputContent.content;
+      console.log("EDIT MODE", this.content);
+
+    }
     this.currentUser$.subscribe((res) => {
       this.currentUser = res;
     });
   }
 
   updateContent(content): void {
+    console.log("quill object", content);
     this.quill = content;
   }
 
@@ -123,10 +129,15 @@ export class ContractEditorV2Component implements OnInit {
 
   createContractTemplate(quillObject): object {
     let contractTemplate = {
-      content: this.quill.content,
+      id: undefined,
+      content: this.content,
       title: this.title,
       firm_id: this.currentUser.scope.firm_access.firm_id
     };
+
+    if (this.inputContent !== undefined) {
+      contractTemplate.id = this.inputContent.id;
+    }
 
     this.fieldLabels.forEach((label) => {
       if (this.quill.text.includes(label)) {

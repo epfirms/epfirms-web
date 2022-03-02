@@ -18,6 +18,8 @@ export class ContractBuilderComponent implements OnInit {
   // contract templates
   contractTemplates;
 
+  templateToEdit;
+
   constructor(
     private contractService : ContractService,
     
@@ -42,6 +44,11 @@ export class ContractBuilderComponent implements OnInit {
 
   delete(id) : void {
     this.contractService.deleteTemplate(id).subscribe(res => this.loadContractTemplates());
+  }
+
+  edit(template) : void {
+    this.templateToEdit = template;
+    this.toggleCreateMode();
   }
 
 }
