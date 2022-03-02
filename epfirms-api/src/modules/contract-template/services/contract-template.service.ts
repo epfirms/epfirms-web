@@ -13,6 +13,17 @@ export class ContractTemplateService {
             console.error(error);
         }
     }
+
+    public static async getAllWithFirmId(id) : Promise<any> {
+        try {
+            const templates = await Database.models.contract_template.findAll({where: {
+                firm_id: id
+            }});
+            return Promise.resolve(templates);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
 
 

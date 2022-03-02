@@ -21,4 +21,8 @@ export class ContractService {
     console.log("THE SERVICE ON THE FRONT",data);
     return this.http.post(`/api/contract-template`, data);
   }
+
+  getTemplatesByFirmId() : Observable<any> {
+    return this.http.get(`/api/contract-template/firm`);
+  }
 }

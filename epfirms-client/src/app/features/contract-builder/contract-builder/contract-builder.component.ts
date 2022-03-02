@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ContractService } from '../contract.service';
 
 @Component({
   selector: 'app-contract-builder',
@@ -9,14 +11,33 @@ export class ContractBuilderComponent implements OnInit {
 
   //state for the actual contract editor
   isCreateMode : boolean = false;
+  //observable of current user
+  currentUser$;
+  currentUser;
 
-  constructor() { }
+  // contract templates
+  contractTemplates;
+
+  constructor(
+    private contractService : ContractService,
+    
+  ) { 
+    
+
+  }
 
   ngOnInit(): void {
+    
+      this.loadContractTemplates();
+    
   }
 
   toggleCreateMode() : void {
     this.isCreateMode = true;
+  }
+
+  loadContractTemplates() : void {
+    this.contractService.getTemplatesByFirmId().subscribe(res => this.contractTemplates = res);
   }
 
 }
