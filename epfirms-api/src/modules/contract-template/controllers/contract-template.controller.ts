@@ -29,6 +29,19 @@ export class ContractTemplateController {
 
     }
   }
+
+  public async delete(req, res : Response) : Promise<any> {
+    try {
+      
+      const deleted = await ContractTemplateService.delete(req.params.id);
+      console.log("STATUS", StatusConstants.OK);
+      res.status(StatusConstants.OK).send({deleted: true});
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+
+    }
+  }
   
 }
 

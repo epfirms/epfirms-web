@@ -40,4 +40,8 @@ export class ContractBuilderComponent implements OnInit {
     this.contractService.getTemplatesByFirmId().subscribe(res => this.contractTemplates = res);
   }
 
+  delete(id) : void {
+    this.contractService.deleteTemplate(id).subscribe(res => this.loadContractTemplates());
+  }
+
 }

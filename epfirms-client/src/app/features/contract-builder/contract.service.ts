@@ -25,4 +25,8 @@ export class ContractService {
   getTemplatesByFirmId() : Observable<any> {
     return this.http.get(`/api/contract-template/firm`);
   }
+
+  deleteTemplate(id) : Observable<any> {
+    return this.http.delete(`/api/contract-template/${id}`);
+  }
 }
