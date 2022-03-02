@@ -75,5 +75,5 @@
 
 
 
-  <app-contract-editor-v2 *ngIf="isCreateMode"></app-contract-editor-v2>
+  <app-contract-editor-v2 *ngIf="isCreateMode" (isVisibleChange)="isCreateMode = $event"></app-contract-editor-v2>
   

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ContractService } from '../contract.service';
 
@@ -8,6 +8,9 @@ import { ContractService } from '../contract.service';
   styleUrls: ['./contract-editor-v2.component.scss'],
 })
 export class ContractEditorV2Component implements OnInit {
+  
+  @Output() isVisibleChange = new EventEmitter<boolean>();
+
   config = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'], // toggled buttons
@@ -77,7 +80,6 @@ export class ContractEditorV2Component implements OnInit {
   ngOnInit(): void {
     this.currentUser$.subscribe((res) => {
       this.currentUser = res;
-      console.log('CURRENT USER', this.currentUser);
     });
   }
 
@@ -86,10 +88,8 @@ export class ContractEditorV2Component implements OnInit {
   }
 
   submit(): void {
-    console.log(this.quill);
     let contractTemplate = this.createContractTemplate(this.quill);
-    console.log(contractTemplate);
-    this.contractService.createTemplate(contractTemplate).subscribe(res => console.log(res));
+    this.contractService.createTemplate(contractTemplate).subscribe(res => this.close());
   }
 
   createContractTemplate(quillObject): object {
@@ -107,8 +107,10 @@ export class ContractEditorV2Component implements OnInit {
         });
       }
     });
-    console.log('CONTRACT TEMPLATE');
-    console.log(contractTemplate);
     return contractTemplate;
+  }
+
+  close():void {
+    this.isVisibleChange.emit(false);
   }
 }
