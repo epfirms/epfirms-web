@@ -83,5 +83,5 @@
 
 
 
-  <app-contract-editor-v2 *ngIf="isCreateMode" (isVisibleChange)="isCreateMode = $event" [inputContent]="templateToEdit"></app-contract-editor-v2>
+  <app-contract-editor-v2 *ngIf="isCreateMode" (isVisibleChange)="isCreateMode = $event; loadContractTemplates()" [inputContent]="templateToEdit"></app-contract-editor-v2>
   
