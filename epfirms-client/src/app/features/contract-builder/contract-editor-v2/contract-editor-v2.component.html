@@ -65,7 +65,7 @@
         <div class="h-full pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
           <!-- Start left column area -->
           <div class="h-full relative" style="min-height: 12rem">
-            <app-template-selector></app-template-selector>
+            <app-template-selector (selectedTemplate)="content = $event"></app-template-selector>
           </div>
           <!-- End left column area -->
         </div>
