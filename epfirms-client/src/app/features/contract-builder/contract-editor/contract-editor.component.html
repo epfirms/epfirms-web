@@ -31,7 +31,7 @@
       <div *ngFor="let key of keys">
         <label class="block text-sm font-medium text-gray-700">{{key}}</label>
         <div class="mt-1">
-          <input type="text" [(ngModel)]="form[key]" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="you@example.com">
+          <input (blur)="reloadContract()" type="text" [(ngModel)]="form[key]" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="you@example.com">
         </div>
       </div>
 

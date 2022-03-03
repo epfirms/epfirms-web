@@ -24,6 +24,11 @@ export class ContractEditorComponent implements OnInit {
   // content of the template in the quilljs object
   content;
 
+  // object thats holds the data for prefilling the bindings
+  templateVars;
+
+
+
  constructor(
    private contractService : ContractService
  ) {
@@ -37,18 +42,64 @@ export class ContractEditorComponent implements OnInit {
    console.log("BILLING CONFIG", this.billingConfig);
 
    this.content = this.template.content;
+   this.initTemplateVars();
    this.populateForm();
+   this.reloadContract();
  }
 
  private populateForm() : void {
    this.template.template_vars.split(',').forEach(label => {
     let formattedLabel = label.replace(/@/g, '').replace('_', ' ');
-    this.form[formattedLabel] = "";
+    this.form[formattedLabel] = this.templateVars[label];
     this.keys.push(formattedLabel);
    });
 
    console.log(this.form);
 
+ }
+
+ reloadContract() : void {
+   let unformattedCopy = this.template.content;
+   this.keys.forEach(field => {
+     
+     let formatted = `@${field}@`.replace(' ', '_');
+     console.log("Content before", unformattedCopy);
+     unformattedCopy = unformattedCopy.replaceAll(formatted, this.form[field]);
+     console.log("content after", unformattedCopy);
+   });
+
+   this.content = unformattedCopy;
+ }
+
+ private initTemplateVars() : void {
+    this.templateVars = {
+      "@TODAY@": new Date(),
+      "@CLIENT@": this.matter.client.full_name,
+      "@CLIENT_ADDRESS@": this.matter.client.address,
+      "@CLIENT_STATE@": this.matter.client.state,
+      "@CLIENT_COUNTY@": this.matter.client.county,
+      "@CLIENT_CITY@": this.matter.client.city,
+      "@CLIENT_ZIPCODE@": this.matter.client.zip,
+  
+      "@ATTORNEY@": this.matter.attorney.full_name,
+      "@ATTORNEY_ADDRESS@": this.matter.attorney.address,
+      "@ATTORNEY_STATE@": this.matter.attorney.state,
+      "@ATTORNEY_COUNTY@": this.matter.attorney.county,
+      "@ATTORNEY_CITY@": this.matter.attorney.city,
+      "@ATTORNEY_ZIPCODE@": this.matter.attorney.zip,
+      
+      "@LAW_FIRM@":"@LAW_FIRM@",
+      "@DESCRIPTION@": this.matter.description,
+  
+      "@FLAT_RATE_FEE@ ": this.billingConfig.flatRateAmount,
+      "@COVERED_ITEMS@": "Enter Comma Separated List",
+      
+  
+      "@RETAINER_AMOUNT@": this.billingConfig.retainerAmount,
+      "@PRE_SETTLEMENT_CONTINGENCY@": this.billingConfig.beforeSettlementPercent,
+      "@POST_SETTLEMENT_CONTINGENCY@": this.billingConfig.afterSettlementPercent,
+  
+    }
  }
  
 
