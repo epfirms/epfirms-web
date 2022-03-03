@@ -473,6 +473,6 @@
     </div>
   </div>
   
-<app-contract-editor *ngIf="state === 8" [matter]="matter" [isComplete]="isContractComplete" [billingConfig]="configuration" (isCompleteChange)="contractCallback($event)"></app-contract-editor>
+<app-contract-editor *ngIf="state === 8" [matter]="matter" [isComplete]="isContractComplete" [billingConfig]="configuration" (isCompleteChange)="contractCallback($event)" [template]="selectedTemplate"></app-contract-editor>
   <app-contract-builder *ngIf="state === 7" [isSelectionMode]="true" (isContractComplete)="$event ? setState(8) : back()" (selectedTemplate)="selectedTemplate = $event"></app-contract-builder>
 </div>

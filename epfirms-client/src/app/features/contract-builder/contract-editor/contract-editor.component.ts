@@ -13,6 +13,7 @@ export class ContractEditorComponent implements OnInit {
   @Input() matter;
   @Input() billingConfig;
   @Input() isComplete;
+  @Input() template;
   @Output() isCompleteChange = new EventEmitter<boolean>();
 
   form = new FormGroup({
@@ -47,6 +48,7 @@ export class ContractEditorComponent implements OnInit {
  ngOnInit(): void {
    console.log(this.matter);
    this.initForm();
+   console.log("TEMPLATE OBJ", this.template);
  }
 
  // this form will init the values of the form group
