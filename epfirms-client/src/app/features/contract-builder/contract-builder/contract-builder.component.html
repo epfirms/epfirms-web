@@ -16,7 +16,7 @@
         </div>
         
         <div class="ml-10 space-x-4">
-          <a (click)="back()" class="inline-block bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Back</a>
+          <a *ngIf="isSelectionMode" (click)="back()" class="inline-block bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Back</a>
 
           <a (click)="toggleCreateMode()" class="inline-block bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Create Contract</a>
         </div>
