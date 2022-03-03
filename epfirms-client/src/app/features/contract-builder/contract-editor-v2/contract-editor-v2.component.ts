@@ -117,9 +117,11 @@ export class ContractEditorV2Component implements OnInit {
     });
   }
 
-  updateContent(content): void {
+  updateContent(quill): void {
     
-    this.quill = content;
+    this.quill = quill;
+    console.log(quill.html);
+
   }
 
   submit(): void {
