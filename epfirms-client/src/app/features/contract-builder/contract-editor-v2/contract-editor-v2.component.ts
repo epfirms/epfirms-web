@@ -128,11 +128,13 @@ export class ContractEditorV2Component implements OnInit {
   }
 
   createContractTemplate(quillObject): object {
+    let templateVars = [];
     let contractTemplate = {
       id: undefined,
       content: this.content,
       title: this.title,
-      firm_id: this.currentUser.scope.firm_access.firm_id
+      firm_id: this.currentUser.scope.firm_access.firm_id,
+      template_vars: undefined
     };
 
     if (this.inputContent !== undefined) {
@@ -141,12 +143,13 @@ export class ContractEditorV2Component implements OnInit {
 
     this.fieldLabels.forEach((label) => {
       if (this.quill.text.includes(label)) {
-        Object.defineProperty(contractTemplate, `${label.replace(/@/g, '').toLowerCase()}`, {
-          value: true,
-          enumerable: true
-        });
+        if (!templateVars.includes(label)){
+          templateVars.push(label);
+        }
       }
     });
+    contractTemplate.template_vars = templateVars.toString();
+    
     return contractTemplate;
   }
 

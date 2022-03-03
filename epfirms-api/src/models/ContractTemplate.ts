@@ -43,88 +43,9 @@ module.exports = (sequelize, {
             type: INTEGER,
             defaultValue: 0
         },
-        // boolean properties that determine what kind fields
-        // exist on the template
-        today: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        client: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        client_address: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        client_state: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        client_county: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        client_city: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        client_zipcode: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        attorney: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        attorney_address: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        attorney_state: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        attorney_county: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        attorney_city: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        attorney_zipcode: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        law_firm: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        description: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        flat_rate_fee: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        covered_items: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        retainer_amount: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        pre_settlement_contingency: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
-        post_settlement_contingency: {
-            type: BOOLEAN,
-            defaultValue : false
-        },
+        template_vars: {
+            type: STRING
+        }
 
         
       }, {
