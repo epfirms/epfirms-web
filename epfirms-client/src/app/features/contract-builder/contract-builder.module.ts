@@ -39,7 +39,8 @@ const ContractBuilderRoute: Routes = [
   ],
   exports: [
     ContractEditorComponent,
-    ContractViewerComponent
+    ContractViewerComponent,
+    ContractBuilderComponent,
     
   ]
 })

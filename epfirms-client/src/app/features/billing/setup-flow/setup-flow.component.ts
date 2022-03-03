@@ -39,6 +39,9 @@ export class SetupFlowComponent implements OnInit {
 
   isContractComplete : boolean = false;
 
+  // holds the contract template if selected
+  selectedTemplate;
+
   constructor(
     private matterBillingSettingService : MatterBillingSettingsService,
     private customerAccountService : CustomerAccountService,
