@@ -47,37 +47,13 @@ export class ContractEditorComponent implements OnInit {
 
  ngOnInit(): void {
    console.log(this.matter);
-   this.initForm();
    console.log("TEMPLATE OBJ", this.template);
  }
 
- // this form will init the values of the form group
-  private initForm() : void {
-   this.form.patchValue({
-     date: new Date(),
-     state: this.matter.client.state,
-     client: this.matter.client.full_name,
-     attorney: this.matter.attorney.full_name,
-     attorneyCity: this.matter.attorney.city,
-     attoneyState: this.matter.attorney.state,
-     description: this.matter.case_id,
-     firm_id: this.matter.firm_id,
-     user_id: this.matter.client.id,
-     matter_id: this.matter.id,
-     attorney_id: this.matter.attorney.id,
-     fee: this.billingConfig.flatRateAmount,
-     pre_settlement_percent: this.billingConfig.beforeSettlementPercent,
-     post_settlement_percent: this.billingConfig.afterSettlementPercent,
-     retainer_amount: this.billingConfig.retainerAmount,
-     contract_type: this.billingConfig.billingType,
-     case_id: this.matter.case_id
-     
-
-   });
- }
+ 
 
  submit() : void {
-   this.contractService.upsert(this.form.value).subscribe(res => console.log(res));
+   
    this.isComplete = true;
   this.isCompleteChange.emit(true);
  }
