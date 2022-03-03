@@ -44,7 +44,7 @@ module.exports = (sequelize, {
             defaultValue: 0
         },
         template_vars: {
-            type: STRING
+            type: TEXT
         }
 
         
