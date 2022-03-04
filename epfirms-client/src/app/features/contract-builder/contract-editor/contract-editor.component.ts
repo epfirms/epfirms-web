@@ -106,6 +106,13 @@ export class ContractEditorComponent implements OnInit {
  
 
  submit() : void {
+   this.contractService.upsert({
+     matter_id: this.matter.id,
+     firm_id: this.matter.firm_id,
+     user_id: this.matter.client.id,
+     attorney_id: this.matter.attorney.id,
+     content: this.content
+   }).subscribe(res => console.log(res));
    
    this.isComplete = true;
   this.isCompleteChange.emit(true);
