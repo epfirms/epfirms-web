@@ -1,4 +1,4 @@
-module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE }) => {
+module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE, JSON }) => {
   const tableName = 'contract';
 
   const Contract = sequelize.define(
@@ -25,31 +25,31 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE }) =>
       },
       county: {
         type: STRING,
-        allowNull: false,
+        
       },
       state: {
         type: STRING,
-        allowNull: false,
+        
       },
       client: {
         type: STRING,
-        allowNull: false,
+        
       },
       law_firm: {
         type: STRING,
-        allowNull: false,
+        
       },
       attorney_city: {
         type: STRING,
-        allowNull: false,
+        
       },
       attorney_state: {
         type: STRING,
-        allowNull: false,
+        
       },
       description: {
         type: STRING,
-        allowNull: false,
+        
       },
       fee: {
         type: FLOAT,
@@ -61,7 +61,7 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE }) =>
       },
       date: {
         type: DATE,
-        allowNull: false,
+        
       },
       attorney_signed: {
         type: BOOLEAN,
