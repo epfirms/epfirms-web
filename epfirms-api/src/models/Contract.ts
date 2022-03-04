@@ -90,6 +90,10 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, FLOAT, DATE }) =>
       },
       case_id : {
         type: STRING
+      },
+      content : {
+        type: JSON,
+        allowNull: false
       }
     },
     {
