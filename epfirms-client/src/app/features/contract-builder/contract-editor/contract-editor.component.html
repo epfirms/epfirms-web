@@ -26,7 +26,7 @@
         <div class="h-full pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
           <!-- Start left column area -->
           <div class="h-full relative" style="min-height: 12rem">
-            <div class="absolute inset-0 border-2 border-gray-200 border-dashed rounded-lg">
+            <div class="">
 
       <div *ngFor="let key of keys">
         <label class="block text-sm font-medium text-gray-700">{{key}}</label>
@@ -45,7 +45,7 @@
         <div class="h-full py-6 px-4 sm:px-6 lg:px-8">
           <!-- Start main area-->
           <div class="relative h-full" style="min-height: 36rem">
-            <div class="absolute inset-0 border-2 border-gray-200 border-dashed rounded-lg">
+            <div class="">
 
                 <quill-editor [styles]="{height: '700px'}" [modules]="{toolbar: false}" [readOnly]="true" [(ngModel)]="content"  ></quill-editor>
 
