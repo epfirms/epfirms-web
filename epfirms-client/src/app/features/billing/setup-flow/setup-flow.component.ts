@@ -25,8 +25,8 @@ export class SetupFlowComponent implements OnInit {
     minimumPayment: 0,
     lateFee: 0,
     retainerAmount: 0,
-    beforeSettlementPercent : 0,
-    afterSettlementPercent: 0,
+    beforeSettlementPercent : 33,
+    afterSettlementPercent: 40,
     generateContract: "Yes",
   }
 
