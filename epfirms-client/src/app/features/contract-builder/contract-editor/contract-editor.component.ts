@@ -88,7 +88,7 @@ export class ContractEditorComponent implements OnInit {
       "@ATTORNEY_CITY@": this.matter.attorney.city,
       "@ATTORNEY_ZIPCODE@": this.matter.attorney.zip,
       
-      "@LAW_FIRM@":"@LAW_FIRM@",
+      "@LAW_FIRM@": this.billingConfig.firmName,
       "@DESCRIPTION@": this.matter.description,
   
       "@FLAT_RATE_FEE@ ": this.billingConfig.flatRateAmount,
