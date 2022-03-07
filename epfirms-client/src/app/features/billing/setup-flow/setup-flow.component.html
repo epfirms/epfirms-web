@@ -23,7 +23,7 @@
   ```
 -->
 <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+  <div *ngIf="state === 0" class="sm:mx-auto sm:w-full sm:max-w-md">
     
     <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900"> Contract and Billing Setup</h2>
     <p class="mt-2 text-center text-sm text-gray-600">Automations to help billing be a breeze!</p>
@@ -473,6 +473,6 @@
     </div>
   </div>
   
-<app-contract-editor *ngIf="state === 7" [matter]="matter" [isComplete]="isContractComplete" [billingConfig]="configuration" (isCompleteChange)="contractCallback($event)"></app-contract-editor>
-  
+<app-contract-editor *ngIf="state === 8" [matter]="matter" [isComplete]="isContractComplete" [billingConfig]="configuration" (isCompleteChange)="contractCallback($event)" [template]="selectedTemplate"></app-contract-editor>
+  <app-contract-builder *ngIf="state === 7" [isSelectionMode]="true" (isContractComplete)="$event ? setState(8) : back()" (selectedTemplate)="selectedTemplate = $event"></app-contract-builder>
 </div>

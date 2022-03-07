@@ -80,6 +80,14 @@ const routes: Routes = [
               import('../pages/messages-page/messages-page.module').then((m) => m.MessagesPageModule),
             data: { title: 'Messages' },
           },
+
+          {
+            path: 'contracts',
+            canActivate: [AuthGuard],
+            loadChildren: () =>
+              import('../features/contract-builder/contract-builder.module').then((m) => m.ContractBuilderModule),
+            data: { title: 'Contracts' },
+          },
         ],
       },
     ],

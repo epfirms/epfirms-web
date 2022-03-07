@@ -13,69 +13,107 @@ export class ContractEditorComponent implements OnInit {
   @Input() matter;
   @Input() billingConfig;
   @Input() isComplete;
+  @Input() template;
   @Output() isCompleteChange = new EventEmitter<boolean>();
 
-  form = new FormGroup({
-   date : new FormControl(),
-   county: new FormControl('[COUNTY]'),
-   state: new FormControl('[STATE]'),
-   client: new FormControl('[CLIENT]'),
-   attorney: new FormControl('[ATTORNEY]'),
-   law_firm: new FormControl('[LAW FIRM]'),
-   attorney_city: new FormControl('[ATTORNEY CITY]'),
-   attorney_county: new FormControl('[ATTORNEY COUNTY]'),
-   attorney_state: new FormControl('[ATTORNEY STATE]'),
-   description: new FormControl('[DESCRIPTION]'),
-   user_id : new FormControl(),
-   matter_id : new FormControl(),
-   firm_id : new FormControl(),
-   attorney_id : new FormControl(),
-   pre_settlement_percent : new FormControl(0),
-   post_settlement_percent : new FormControl(0),
-   fee: new FormControl(0),
-   covered_items : new FormControl('[COVERED ITEMS]'),
-   retainer_amount: new FormControl(0),
-   attorney_signed: new FormControl(true),
-   contract_type: new FormControl(),
-   case_id: new FormControl()
-  });
+  // this form will be generated and populated based on the template vars that are used
+  // each property will be used as a binding and a value
+  form = {};
+  keys = [];
+
+  // content of the template in the quilljs object
+  content;
+
+  // object thats holds the data for prefilling the bindings
+  templateVars;
+
+
 
  constructor(
    private contractService : ContractService
- ) { }
+ ) {
+
+ 
+  }
 
  ngOnInit(): void {
    console.log(this.matter);
-   this.initForm();
+   console.log("TEMPLATE OBJ", this.template);
+   console.log("BILLING CONFIG", this.billingConfig);
+
+   this.content = this.template.content;
+   this.initTemplateVars();
+   this.populateForm();
+   this.reloadContract();
  }
 
- // this form will init the values of the form group
-  private initForm() : void {
-   this.form.patchValue({
-     date: new Date(),
-     state: this.matter.client.state,
-     client: this.matter.client.full_name,
-     attorney: this.matter.attorney.full_name,
-     attorneyCity: this.matter.attorney.city,
-     attoneyState: this.matter.attorney.state,
-     description: this.matter.case_id,
-     firm_id: this.matter.firm_id,
-     user_id: this.matter.client.id,
-     matter_id: this.matter.id,
-     attorney_id: this.matter.attorney.id,
-     fee: this.billingConfig.flatRateAmount,
-     pre_settlement_percent: this.billingConfig.beforeSettlementPercent,
-     post_settlement_percent: this.billingConfig.afterSettlementPercent,
-     retainer_amount: this.billingConfig.retainerAmount,
-     contract_type: this.billingConfig.billingType,
-     case_id: this.matter.case_id
-     
-
+ private populateForm() : void {
+   this.template.template_vars.split(',').forEach(label => {
+    let formattedLabel = label.replace(/@/g, '').replace('_', ' ');
+    this.form[formattedLabel] = this.templateVars[label];
+    this.keys.push(formattedLabel);
    });
+
+   console.log(this.form);
+
  }
+
+ reloadContract() : void {
+   let unformattedCopy = this.template.content;
+   this.keys.forEach(field => {
+     
+     let formatted = `@${field}@`.replace(' ', '_');
+     console.log("Content before", unformattedCopy);
+     unformattedCopy = unformattedCopy.replaceAll(formatted, this.form[field]);
+     console.log("content after", unformattedCopy);
+   });
+
+   this.content = unformattedCopy;
+ }
+
+ private initTemplateVars() : void {
+    this.templateVars = {
+      "@TODAY@": new Date(),
+      "@CLIENT@": this.matter.client.full_name,
+      "@CLIENT_ADDRESS@": this.matter.client.address,
+      "@CLIENT_STATE@": this.matter.client.state,
+      "@CLIENT_COUNTY@": this.matter.client.county,
+      "@CLIENT_CITY@": this.matter.client.city,
+      "@CLIENT_ZIPCODE@": this.matter.client.zip,
+  
+      "@ATTORNEY@": this.matter.attorney.full_name,
+      "@ATTORNEY_ADDRESS@": this.matter.attorney.address,
+      "@ATTORNEY_STATE@": this.matter.attorney.state,
+      "@ATTORNEY_COUNTY@": this.matter.attorney.county,
+      "@ATTORNEY_CITY@": this.matter.attorney.city,
+      "@ATTORNEY_ZIPCODE@": this.matter.attorney.zip,
+      
+      "@LAW_FIRM@":"@LAW_FIRM@",
+      "@DESCRIPTION@": this.matter.description,
+  
+      "@FLAT_RATE_FEE@ ": this.billingConfig.flatRateAmount,
+      "@COVERED_ITEMS@": "Enter Comma Separated List",
+      
+  
+      "@RETAINER_AMOUNT@": this.billingConfig.retainerAmount,
+      "@PRE_SETTLEMENT_CONTINGENCY@": this.billingConfig.beforeSettlementPercent,
+      "@POST_SETTLEMENT_CONTINGENCY@": this.billingConfig.afterSettlementPercent,
+  
+    }
+ }
+ 
+
+ 
 
  submit() : void {
-   this.contractService.upsert(this.form.value).subscribe(res => console.log(res));
+   this.contractService.upsert({
+     matter_id: this.matter.id,
+     firm_id: this.matter.firm_id,
+     user_id: this.matter.client.id,
+     attorney_id: this.matter.attorney.id,
+     content: this.content
+   }).subscribe(res => console.log(res));
+   
    this.isComplete = true;
   this.isCompleteChange.emit(true);
  }
