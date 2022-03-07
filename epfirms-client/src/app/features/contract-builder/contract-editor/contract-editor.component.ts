@@ -73,7 +73,7 @@ export class ContractEditorComponent implements OnInit {
 
  private initTemplateVars() : void {
     this.templateVars = {
-      "@TODAY@": new Date(),
+      "@TODAY@": new Date().toDateString(),
       "@CLIENT@": this.matter.client.full_name,
       "@CLIENT_ADDRESS@": this.matter.client.address,
       "@CLIENT_STATE@": this.matter.client.state,
