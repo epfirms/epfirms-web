@@ -49,12 +49,14 @@ export class ContractEditorComponent implements OnInit {
 
  private populateForm() : void {
    this.template.template_vars.split(',').forEach(label => {
-    let formattedLabel = label.replace(/@/g, '').replace('_', ' ');
+    let formattedLabel = label.replace(/@/g, '').replace(/\_/g, ' ');
+    console.log("FORMATTED LABEL", formattedLabel);
     this.form[formattedLabel] = this.templateVars[label];
     this.keys.push(formattedLabel);
    });
 
    console.log(this.form);
+   console.log("KEYS", this.keys);
 
  }
 
@@ -62,7 +64,7 @@ export class ContractEditorComponent implements OnInit {
    let unformattedCopy = this.template.content;
    this.keys.forEach(field => {
      
-     let formatted = `@${field}@`.replace(' ', '_');
+     let formatted = `@${field}@`.replace(/\s/g, '_');
      console.log("Content before", unformattedCopy);
      unformattedCopy = unformattedCopy.replaceAll(formatted, this.form[field]);
      console.log("content after", unformattedCopy);
@@ -91,7 +93,7 @@ export class ContractEditorComponent implements OnInit {
       "@LAW_FIRM@": this.billingConfig.firmName,
       "@DESCRIPTION@": this.matter.description,
   
-      "@FLAT_RATE_FEE@ ": this.billingConfig.flatRateAmount,
+      "@FLAT_RATE_FEE@": this.billingConfig.flatRateAmount,
       "@COVERED_ITEMS@": "Enter Comma Separated List",
       
   

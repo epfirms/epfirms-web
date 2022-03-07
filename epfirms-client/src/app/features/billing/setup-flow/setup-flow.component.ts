@@ -61,6 +61,10 @@ export class SetupFlowComponent implements OnInit {
     this.initFirm();
   }
 
+  logFlatRate(): void {
+    console.log("LOGGIN FLAT RATE", this.configuration.flatRateAmount);
+  }
+
   setState(next): void {
    this.stateHistory.push(this.state);
    this.state = next;
