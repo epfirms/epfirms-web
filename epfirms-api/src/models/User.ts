@@ -52,6 +52,9 @@ module.exports = (sequelize, {
       zip: {
         type: STRING,
       },
+      county: {
+        type: STRING,
+      },
       password: {
         type: STRING,
       },
