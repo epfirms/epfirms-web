@@ -14,6 +14,10 @@ export class _OptgroupBase extends _OptgroupMixinBase implements CanDisable {
   /** Label for the option group. */
   @Input() label: string;
 
+  @Input() collapsable: boolean;
+
+  _isCollapsed: boolean = false;
+
   /** Unique id for the underlying label. */
   _labelId: string = `optgroup-label-${_uniqueOptgroupIdCounter++}`;
 
@@ -23,6 +27,12 @@ export class _OptgroupBase extends _OptgroupMixinBase implements CanDisable {
   constructor(@Inject(OPTION_PARENT_COMPONENT) @Optional() parent?: OptionParentComponent) {
     super();
     this._inert = false;
+  }
+
+  toggleCollapseState() {
+    if (this.collapsable) {
+      this._isCollapsed = !this._isCollapsed;
+    }
   }
 
   static ngAcceptInputType_disabled: BooleanInput;
