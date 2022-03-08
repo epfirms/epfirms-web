@@ -47,7 +47,7 @@
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let template of contractTemplates">
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">{{template.title}}</div>
+                  <button (click)="edit(template)" class="text-sm text-gray-900 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{{template.title}}</button>
 
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">

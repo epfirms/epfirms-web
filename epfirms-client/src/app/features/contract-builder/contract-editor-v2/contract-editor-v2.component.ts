@@ -99,6 +99,9 @@ export class ContractEditorV2Component implements OnInit {
   currentUser$;
   currentUser;
 
+  //slide over state
+  showAdvanced : boolean = false;
+
   constructor(
     private store: Store<{ currentUser: any }>,
     private contractService : ContractService) {
@@ -127,6 +130,10 @@ export class ContractEditorV2Component implements OnInit {
   submit(): void {
     let contractTemplate = this.createContractTemplate(this.quill);
     this.contractService.createTemplate(contractTemplate).subscribe(res => this.close());
+  }
+
+  toggleShowAdvanced() : void {
+    this.showAdvanced = !this.showAdvanced;
   }
 
   createContractTemplate(quillObject): object {

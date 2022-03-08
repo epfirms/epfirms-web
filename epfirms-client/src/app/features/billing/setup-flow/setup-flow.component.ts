@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Firm } from '@app/core/interfaces/firm';
+import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { CustomerAccountService } from '@app/shared/_services/customer-account.service';
 import { MatterBillingSettingsService } from '@app/shared/_services/matter-billing-settings-service/matter-billing-settings.service';
@@ -28,6 +30,7 @@ export class SetupFlowComponent implements OnInit {
     beforeSettlementPercent : 33,
     afterSettlementPercent: 40,
     generateContract: "Yes",
+    firmName: ""
   }
 
   triggerHourlyAutomation : boolean = true;
@@ -42,20 +45,36 @@ export class SetupFlowComponent implements OnInit {
   // holds the contract template if selected
   selectedTemplate;
 
+  // current firm
+  firm : Firm;
+
   constructor(
     private matterBillingSettingService : MatterBillingSettingsService,
     private customerAccountService : CustomerAccountService,
     private statementService : StatementService,
-    private matterService : MatterService
+    private matterService : MatterService,
+    private firmService : FirmService
   ) { }
 
   ngOnInit(): void {
     console.log("SETUP FLOW",this.matter);
+    this.initFirm();
+  }
+
+  logFlatRate(): void {
+    console.log("LOGGIN FLAT RATE", this.configuration.flatRateAmount);
   }
 
   setState(next): void {
    this.stateHistory.push(this.state);
    this.state = next;
+  }
+
+  private initFirm() : void {
+    this.firmService.entities$.subscribe(res => {
+      this.firm = res[0];
+      this.configuration.firmName = this.firm.name;
+    })
   }
 
   initStateSubmit() : void {
