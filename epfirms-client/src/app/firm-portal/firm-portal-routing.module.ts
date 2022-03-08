@@ -81,13 +81,7 @@ const routes: Routes = [
             data: { title: 'Messages' },
           },
 
-          {
-            path: 'contracts',
-            canActivate: [AuthGuard],
-            loadChildren: () =>
-              import('../features/contract-builder/contract-builder.module').then((m) => m.ContractBuilderModule),
-            data: { title: 'Contracts' },
-          },
+          
         ],
       },
     ],
