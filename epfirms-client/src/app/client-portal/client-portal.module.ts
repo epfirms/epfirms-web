@@ -20,6 +20,7 @@ import { CaseFinanceViewComponent } from './client-financials/case-finance-view/
 import { MonthlyPaymentViewComponent } from './client-financials/monthly-payment-view/monthly-payment-view.component';
 import { ClientContractsComponent } from './client-contracts/client-contracts.component';
 import { ContractBuilderModule } from '@app/features/contract-builder/contract-builder.module';
+import { IntakeV2Module } from '@app/features/intake-v2/intake-v2.module';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { ContractBuilderModule } from '@app/features/contract-builder/contract-b
     AvatarModule,
     NavbarModule,
     MenuModule,
-    ContractBuilderModule
+    ContractBuilderModule,
+    IntakeV2Module
   ]
 })
 export class ClientPortalModule { }
