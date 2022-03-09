@@ -10,6 +10,11 @@ export class ClientIntakeComponent implements OnInit {
   state: number = 0;
   // stack that manages the views and enables the back() functionality
   history = [];
+  // state for spouse div
+  hasSpouse : boolean = false;
+  //state for displaying children fields
+  hasChildren : boolean = false;
+  numOfChildren : number = 0;
   //personal information
   personalInformation = {
     first_name: '',
@@ -22,7 +27,6 @@ export class ClientIntakeComponent implements OnInit {
     dob: '',
     phone: '',
     state: '',
-    isMarried: false,
   };
   //spouse information
   spouseInformation = {
@@ -54,7 +58,8 @@ export class ClientIntakeComponent implements OnInit {
   }
 
   addChild(): void {
-    this.children.push({
+    for (let i = 0; i < this.numOfChildren; i++) {
+     this.children.push({
       first_name: '',
       last_name: '',
       full_name: '',
@@ -65,6 +70,8 @@ export class ClientIntakeComponent implements OnInit {
       dob: '',
       phone: '',
       state: '',
-    });
+    }); 
+    }
+    
   }
 }
