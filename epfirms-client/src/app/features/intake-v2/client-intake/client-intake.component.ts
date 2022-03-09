@@ -12,7 +12,12 @@ export class ClientIntakeComponent implements OnInit {
   history = []; 
   //personal information
   personalInformation = {
-    isMarried: false
+    isMarried: false,
+    dob: "",
+  }
+  //spouse information
+  spouseInformation = {
+    dob: "",
   }
   constructor() { }
 
