@@ -1,5 +1,6 @@
 import { W } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
+import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 
@@ -43,6 +44,7 @@ export class ClientIntakeComponent implements OnInit {
     city: '',
     zip: '',
     dob: undefined,
+    relationship_type : "spouse",
     phone: '',
     state: '',
   };
@@ -53,8 +55,8 @@ export class ClientIntakeComponent implements OnInit {
 
   constructor(
     private currentUserService: CurrentUserService,
-    private clientService : ClientService
-    
+    private clientService : ClientService,
+    private familyMemberService : FamilyMemberService,
     ) {}
 
   ngOnInit(): void {
@@ -112,7 +114,15 @@ export class ClientIntakeComponent implements OnInit {
     this.clientService.updateClient(this.personalInformation).subscribe();
   }
 
+  submitSpouse() : void {
+    this.spouseInformation.relationship_type = "spouse";
+    this.familyMemberService.addFamilyMemberForUser(this.user.id, this.spouseInformation).subscribe(res => console.log(res));   
+  }
+
   submit(): void {
     this.submitClient();
+    if (this.hasSpouse) {
+      this.submitSpouse();
+    }
   }
 }
