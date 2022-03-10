@@ -42,7 +42,7 @@ export class ClientIntakeComponent implements OnInit {
     address: '',
     city: '',
     zip: '',
-    dob: '',
+    dob: undefined,
     phone: '',
     state: '',
   };
@@ -74,6 +74,7 @@ export class ClientIntakeComponent implements OnInit {
   // used to fill in the current user information
   initPersonalInformation() : void {
    this.personalInformation = {
+    id: this.user.id,
     first_name: this.user.first_name,
     last_name: this.user.last_name,
     email: this.user.email,
@@ -100,7 +101,7 @@ export class ClientIntakeComponent implements OnInit {
         address: '',
         city: '',
         zip: '',
-        dob: '',
+        dob: new Date().toString(),
         phone: '',
         state: '',
       });
@@ -108,6 +109,10 @@ export class ClientIntakeComponent implements OnInit {
   }
 
   submitClient() : void {
+    this.clientService.updateClient(this.personalInformation).subscribe();
+  }
 
+  submit(): void {
+    this.submitClient();
   }
 }
