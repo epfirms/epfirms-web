@@ -101,6 +101,7 @@ export class ClientIntakeComponent implements OnInit {
         full_name: '',
         email: '',
         address: '',
+        relationship_type: "child",
         city: '',
         zip: '',
         dob: new Date().toString(),
@@ -119,10 +120,19 @@ export class ClientIntakeComponent implements OnInit {
     this.familyMemberService.addFamilyMemberForUser(this.user.id, this.spouseInformation).subscribe(res => console.log(res));   
   }
 
+  submitChildren() : void {
+    this.children.forEach(child => {
+      this.familyMemberService.addFamilyMemberForUser(this.user.id, child).subscribe();
+    });
+  }
+
   submit(): void {
     this.submitClient();
     if (this.hasSpouse) {
       this.submitSpouse();
+    }
+    if (this.hasChildren) {
+      this.submitChildren();
     }
   }
 }
