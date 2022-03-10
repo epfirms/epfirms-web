@@ -1,5 +1,6 @@
 import { W } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
+import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 
 @Component({
@@ -50,7 +51,11 @@ export class ClientIntakeComponent implements OnInit {
   // current user
   user;
 
-  constructor(private currentUserService: CurrentUserService) {}
+  constructor(
+    private currentUserService: CurrentUserService,
+    private clientService : ClientService
+    
+    ) {}
 
   ngOnInit(): void {
     this.loadCurrentUser();
@@ -85,6 +90,7 @@ export class ClientIntakeComponent implements OnInit {
   }
 
   addChild(): void {
+    this.children = [];
     for (let i = 0; i < this.numOfChildren; i++) {
       this.children.push({
         first_name: '',
@@ -99,5 +105,9 @@ export class ClientIntakeComponent implements OnInit {
         state: '',
       });
     }
+  }
+
+  submitClient() : void {
+
   }
 }
