@@ -571,7 +571,42 @@
                 Back
               </button>
               <button
-                (click)="submit()"
+                (click)="submitPersonalInformation()"
+                class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div *ngIf="state === 2">
+          <div class="space-y-6">
+            <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+              <div class="md:grid md:grid-cols-3 md:gap-6">
+                <div class="md:col-span-1">
+                  <h3 class="text-lg font-medium leading-6 text-gray-900">Appointees </h3>
+                  <p class="mt-1 text-sm text-gray-500">
+                    Use a permanent address where you can receive mail.
+                  </p>
+                </div>
+                
+              </div>
+            
+              
+            </div>
+
+            <div class="flex justify-end">
+              <button
+                (click)="back()"
+                type="button"
+                class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Back
+              </button>
+              <button
                 class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Continue

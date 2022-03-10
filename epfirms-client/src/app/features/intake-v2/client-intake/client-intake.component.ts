@@ -126,7 +126,8 @@ export class ClientIntakeComponent implements OnInit {
     });
   }
 
-  submit(): void {
+  submitPersonalInformation(): void {
+    this.setState(2);
     this.submitClient();
     if (this.hasSpouse) {
       this.submitSpouse();
