@@ -47,6 +47,7 @@ export class ClientIntakeComponent implements OnInit {
     relationship_type : "spouse",
     phone: '',
     state: '',
+    county: ''
   };
   //children
   children = [];
