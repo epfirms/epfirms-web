@@ -65,6 +65,9 @@ export class ClientIntakeComponent implements OnInit {
   // properties for the unprotected asset section
   unprotectedAssets : Asset[] = [];
   
+  // list of owners on potential assets
+  owners = [];
+  
 
   constructor(
     private currentUserService: CurrentUserService,
@@ -125,12 +128,17 @@ export class ClientIntakeComponent implements OnInit {
   }
 
   submitClient() : void {
+    this.owners.push(this.user);
     this.clientService.updateClient(this.personalInformation).subscribe();
   }
 
   submitSpouse() : void {
     this.spouseInformation.relationship_type = "spouse";
-    this.familyMemberService.addFamilyMemberForUser(this.user.id, this.spouseInformation).subscribe(res => console.log(res));   
+    this.familyMemberService.addFamilyMemberForUser(this.user.id, this.spouseInformation).subscribe((res) => {
+      if (res) {
+        this.owners.push(res);
+      }
+    });   
   }
 
   submitChildren() : void {
@@ -141,8 +149,10 @@ export class ClientIntakeComponent implements OnInit {
 
   submitPersonalInformation(): void {
     this.setState(2);
+    this.owners = [];
     this.submitClient();
     if (this.hasSpouse) {
+    
       this.submitSpouse();
     }
     if (this.hasChildren) {
@@ -167,13 +177,24 @@ export class ClientIntakeComponent implements OnInit {
     this.setState(4);
   }
 
-  addAsset(owner : string, isProtected : boolean) : void {
+  addAsset(isProtected : boolean) : void {
     this.unprotectedAssets.push({
       name: "Enter Name",
     amount : 0,
     type : "Checking",
     is_protected : isProtected,
-    owner : owner
+    owners : {}
     });
+  }
+
+  handleOwnerSelection(event, asset, owner) : void {
+     if (event.target.checked) {
+      asset.owners[owner.id] = owner.first_name;
+    }
+    else if (!event.target.checked){
+      asset.owners[owner.id] = null;
+    }
+       console.log(asset);
+
   }
 }

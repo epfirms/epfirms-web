@@ -3,5 +3,5 @@ export interface Asset {
     amount : number,
     type : string,
     is_protected : boolean,
-    owner : string
+    owners : {}
 }
