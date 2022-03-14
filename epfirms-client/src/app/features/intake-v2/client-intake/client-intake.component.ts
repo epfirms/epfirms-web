@@ -1,6 +1,7 @@
 import { W } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
+import { Income } from '@app/core/interfaces/income';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 
@@ -56,6 +57,10 @@ export class ClientIntakeComponent implements OnInit {
 
   // states for the financials section
   includeSpouseIncome : boolean = false;
+
+  // properties for the  monthly income section
+  monthlyIncome : Income[] = [];
+  
 
   constructor(
     private currentUserService: CurrentUserService,
@@ -139,5 +144,18 @@ export class ClientIntakeComponent implements OnInit {
     if (this.hasChildren) {
       this.submitChildren();
     }
+  }
+
+  addIncome(isSpouseIncome : boolean) : void {
+    console.log("ADDING INCOME FOR SPOUSE", isSpouseIncome);
+    this.monthlyIncome.push({
+      type : "Payroll",
+      is_spouse_income : isSpouseIncome,
+      amount : 0,
+    });
+  }
+
+  onIncomeChange(income : string, incomeBinding) : void {
+    incomeBinding.amount = parseFloat(income);
   }
 }
