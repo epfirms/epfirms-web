@@ -9,6 +9,7 @@ import { LegalAreaResolver } from '@app/core/resolvers/firm-portal/legal-area.re
 import { MatterResolver } from '@app/core/resolvers/firm-portal/matter.resolver';
 import { StaffResolver } from '@app/core/resolvers/firm-portal/staff.resolver';
 import { FirmPortalComponent } from './firm-portal.component';
+import { ConversationResolver } from '@app/core/resolvers/firm-portal/chat.resolver';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
       legalAreas: LegalAreaResolver,
       matters: MatterResolver,
       staff: StaffResolver,
+      conversation: ConversationResolver
     },
     component: FirmPortalComponent,
     children: [

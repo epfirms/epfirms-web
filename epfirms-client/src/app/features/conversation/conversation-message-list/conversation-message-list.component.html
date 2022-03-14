@@ -1,0 +1,69 @@
+<ng-scrollbar [viewClass]="'scroll-view'" #scrollbar (reachedTop)="test()">
+  <div
+    scrollViewport
+
+  >
+    <ul class="px-4 pt-2">
+      <ng-container
+        *ngFor="
+          let messageItem of messageItems;
+          let isFirst = first;
+          let i = index;
+          let isLast = last
+        "
+      >
+        <div
+          class="sticky top-0 py-4 bg-gradient-to-b from-white via-white"
+          *ngIf="
+            isFirst ||
+            (messageItem.dateCreated | date: 'shortDate') !==
+              (messageItems[i-1].dateCreated | date: 'shortDate')
+          "
+        >
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              <div class="w-full border-t border-gray-100"></div>
+            </div>
+            <div class="relative flex justify-center">
+              <time class="px-3 text-sm font-medium text-gray-700 bg-white">{{messageItem.dateCreated | date: 'EEEE, MMMM d'}}</time>
+            </div>
+          </div>
+        </div>
+
+        <li class="py-1" [class.snap-end]="isLast" (click)="print(messageItem.index, lastReadMessageIndex)">
+          <div class="relative py-2" *ngIf="(isFirst && messageItem.index === lastReadMessageIndex) || (!isFirst && messageItems[i - 1].index === lastReadMessageIndex)" #newMessageIndicator>
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              <div class="w-full border-t border-sky-300"></div>
+            </div>
+            <div class="relative flex justify-center">
+              <span class="px-2 text-xs font-semibold bg-white text-sky-500">New</span>
+            </div>
+          </div>
+          <div
+            class="flex flex-col flex-shrink-0 group"
+            [class.items-end]="messageItem.author === currentUser.identity"
+          >
+            <div
+              class="flex items-start"
+              [ngClass]="{
+                'items-start': messageItem.author !== currentUser.identity,
+                'items-end justify-end': messageItem.author === currentUser.identity
+              }"
+            >
+              <div
+                class="px-3 py-2.5 rounded-xl"
+                style="max-width: 36rem"
+                [ngClass]="{
+                  'bg-gray-200/75 rounded-bl': messageItem.author !== currentUser.identity,
+                  'bg-blue-100 rounded-br': messageItem.author === currentUser.identity
+                }"
+              >
+                <p class="text-sm font-normal whitespace-pre text-gray-900/90">{{ messageItem.body }}</p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</ng-scrollbar>
