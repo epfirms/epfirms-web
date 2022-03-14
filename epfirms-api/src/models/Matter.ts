@@ -48,6 +48,10 @@ module.exports = (sequelize, { INTEGER, STRING, BOOLEAN, FLOAT }) => {
       },
       iolta_balance: {
         type: FLOAT
+      },
+      billing_setup : {
+        type: BOOLEAN,
+        defaultValue: false
       }
     },
     {

@@ -1,0 +1,16 @@
+
+<h2 class="text-lg">
+Template Selector
+</h2>
+<!-- This example requires Tailwind CSS v2.0+ -->
+<nav class="space-y-1" aria-label="Sidebar">
+    <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+    
+  
+    <a (click)="selectTemplate(template.content)" *ngFor="let template of contractTemplates"  class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 flex items-center px-3 py-2 text-sm font-medium rounded-md">
+      <span class="truncate"> {{template.title}} </span>
+    </a>
+  
+
+  </nav>
+  

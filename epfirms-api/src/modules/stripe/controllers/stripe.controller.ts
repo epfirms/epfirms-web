@@ -258,14 +258,17 @@ export class StripeController {
         console.log("INVOICE PAYMENT SUCCESS SESSION");
         console.log(session);
         if (session.subscription) {
-          //send an email template for successful payment
+          const updatedCustomerAccount = await StripeService.fufillInvoicePaymentSuccess(session);
+          // if the updated customer account has an associated subscription and its active, it will send the email
+          if (updatedCustomerAccount.sendEmail){
+            //send an email template for successful payment
           const email = await this._emailService.sendFromTemplate(
             session.customer_email,
             "Auto Payment Success",
             "successful-auto-payment",
             {"v:amount": session.amount_paid / 100}
           );
-          const updatedCustomerAccount = await StripeService.fufillInvoicePaymentSuccess(session);
+          }
           res.status(200).send();
         }
       }

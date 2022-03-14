@@ -32,4 +32,5 @@ export class Matter {
     statement?: any;
     matter_billing_setting?: any;
     iolta_balance?: number;
+    billing_setup : boolean;
   }

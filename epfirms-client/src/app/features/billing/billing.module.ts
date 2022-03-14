@@ -7,6 +7,8 @@ import { LegalInsuranceComponent } from './legal-insurance/legal-insurance.compo
 import { MonthlyPaymentComponent } from './monthly-payment/monthly-payment.component';
 import { GenerateStatementComponent } from './generate-statement/generate-statement.component';
 import { OverviewComponent } from './overview/overview.component';
+import { SetupFlowComponent } from './setup-flow/setup-flow.component';
+import { ContractBuilderModule } from '../contract-builder/contract-builder.module';
 
 @NgModule({
   declarations: [
@@ -16,8 +18,9 @@ import { OverviewComponent } from './overview/overview.component';
     MonthlyPaymentComponent,
     GenerateStatementComponent,
     OverviewComponent,
+    SetupFlowComponent,
   ],
-  imports: [CoreModule, EditableModule],
+  imports: [CoreModule, EditableModule, ContractBuilderModule],
   exports: [
     ManageBillComponent,
     ManageStatementComponent,
@@ -25,6 +28,7 @@ import { OverviewComponent } from './overview/overview.component';
     MonthlyPaymentComponent,
     GenerateStatementComponent,
     OverviewComponent,
+    SetupFlowComponent
   ],
 })
 export class BillingModule {}

@@ -1,0 +1,72 @@
+<!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<div class="relative min-h-screen flex flex-col">
+  <!-- Navbar -->
+ 
+
+  <!-- 3 column wrapper -->
+  <div class="flex-grow w-full max-w-7xl mx-auto xl:px-8 lg:flex">
+    <!-- Left sidebar & main wrapper -->
+    <div class="flex-1 min-w-0 bg-white xl:flex">
+      <div class="border-b border-gray-200 xl:border-b-0 xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-white">
+        <div class="h-full pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
+          <!-- Start left column area -->
+          <div class="h-full relative" style="min-height: 12rem">
+            <div class="">
+
+      <div *ngFor="let key of keys">
+        <label class="block text-sm font-medium text-gray-700">{{key}}</label>
+        <div class="mt-1">
+          <input (blur)="reloadContract()" type="text" [(ngModel)]="form[key]" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
+        </div>
+      </div>
+
+            </div>
+          </div>
+          <!-- End left column area -->
+        </div>
+      </div>
+
+      <div class="bg-white lg:min-w-0 lg:flex-1">
+        <div class="h-full py-6 px-4 sm:px-6 lg:px-8">
+          <!-- Start main area-->
+          <div class="relative h-full" style="min-height: 36rem">
+            <div class="">
+
+                <quill-editor [styles]="{height: '700px'}" [modules]="{toolbar: false}" [readOnly]="true" [(ngModel)]="content"  ></quill-editor>
+
+            </div>
+            <!-- This example requires Tailwind CSS v2.0+ -->
+<div class="md:flex md:items-center md:justify-between">
+  <div class="flex-1 min-w-0">
+    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Sign and Submit</h2>
+  </div>
+  <div class="mt-4 flex md:mt-0 md:ml-4">
+    <button (click)="back()" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Back</button>
+    <button (click)="submit()" type="button" class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Submit</button>
+  </div>
+</div>
+
+          </div>
+          <!-- End main area -->
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+</div>

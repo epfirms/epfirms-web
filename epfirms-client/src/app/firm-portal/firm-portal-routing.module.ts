@@ -82,6 +82,8 @@ const routes: Routes = [
               import('../pages/messages-page/messages-page.module').then((m) => m.MessagesPageModule),
             data: { title: 'Messages' },
           },
+
+          
         ],
       },
     ],

@@ -24,4 +24,8 @@ export class StatementService {
   update(data): Observable<any> {
     return this.http.put<any>("/api/statement/", data);
   }
+
+  download(statementId) : Observable<any> {
+    return this.http.get(`/api/statement/download/${statementId}`, {responseType: 'text'});
+  }
 }

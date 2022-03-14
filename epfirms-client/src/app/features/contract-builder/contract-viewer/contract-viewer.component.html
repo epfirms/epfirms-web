@@ -1,0 +1,387 @@
+
+
+
+
+  <!-- This example requires Tailwind CSS v2.0+ -->
+<div *ngIf="isVisible" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <!--
+        Background overlay, show/hide based on modal state.
+  
+        Entering: "ease-out duration-300"
+          From: "opacity-0"
+          To: "opacity-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+  
+      <!-- This element is to trick the browser into centering the modal contents. -->
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+  
+      <!--
+        Modal panel, show/hide based on modal state.
+  
+        Entering: "ease-out duration-300"
+          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          To: "opacity-100 translate-y-0 sm:scale-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100 translate-y-0 sm:scale-100"
+          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+      -->
+      <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+        <div>
+            <main class="lg:col-span-9 xl:col-span-6">
+                <!-- Your content -->
+                <!-- FLAT RATE CONTRACT -->
+                <div *ngIf="contract.contract_type == 'Flat Rate'">
+                    <p>
+                        ATTORNEY FLAT FEE AGREEMENT<br /><br />THIS AGREEMENT (&quot;Agreement&quot;) is made on
+                        {{contract.date | date}}, in {{contract.county}} County, {{contract.state}}, between {{contract.client}} (&quot;Client&quot;), {{contract.attorney}}
+                        and {{contract.law_firm}}, of {{contract.attorney_city}}, {{contract.attorney_county}} County, {{contract.attorney_state}}
+                        (hereinafter known as &quot;Attorney&quot;):<br /><br />In consideration of the mutual
+                        promises herein contained, the parties hereto agree as follows:<br /><br />I.
+                        &nbsp;PURPOSE OF REPRESENTATION<br /><br />The Client hereby retains and employs the
+                        Attorney to represent client for the following:<br /><br />{{contract.description}}<br /><br />This
+                        is a legal contract, and the terms and conditions of our agreement with you are
+                        described in some detail. &nbsp;This contract not only establishes the terms of our
+                        agreement between Attorney and Client, but it will also help to prevent any
+                        misunderstandings. &nbsp;When you sign and return a copy of this agreement, you are
+                        agreeing to the terms and conditions of representation which are described in this
+                        contract.<br /><br />II. &nbsp;AGREEMENT<br /><br />It is the Attorney&rsquo;s strict
+                        policy to obtain the written approval of every client to the terms and conditions of
+                        representation; therefore, we will not begin drafting your documents on your behalf
+                        until you have signed and returned a copy of this contract and have paid the fee.
+                        &nbsp;Therefore, until you sign and return a copy of this contract, and pay the fee
+                        described in this contract, there is no agreement or obligation between us concerning
+                        your legal representation. We cannot guarantee any expected outcome or conclusion of the
+                        legal matter due to numerous and complicated factors which are beyond our control.<br /><br />Client
+                        and Attorney agree that either party, at any time and for any reason, may terminate this
+                        Agreement. If Client or Attorney terminates this Agreement and a lawsuit has been filed,
+                        Client agrees to pay attorney whole bill until Attorney has been released by the Judge.
+                        Attorney and Client agree that an Attorney my without his work product from Client until
+                        the bill is paid in full.<br /><br />III. &nbsp;FEE FOR ITEMS CONTAINED IN EXHIBIT A<br /><br />This
+                        agreement will require payment of a flat fee. &nbsp;A flat fee of $ {{contract.fee}} has been
+                        agreed to by Attorney and Client for the items contained in Exhibit A.<br /><br />Any
+                        work done outside of the description contained in Exhibit A will be billed according to
+                        section IV. Once flat fee is paid and contract is signed, the flat fee is earned, and
+                        flat fee is non-refundable.<br /><br /><br />IV. &nbsp;HOURLY RATE FOR ATTORNEY AND
+                        STAFF<br /><br />Attorney uses an online software, EPFirms, to track Attorney and
+                        Staffs&rsquo; hours. Client agrees to the hourly rates for all Attorneys and Staff
+                        listed in client&rsquo;s client portal with EPFirms. Client agrees to any changes to
+                        Attorney or Staffs&rsquo; hourly rate listed on EPFirms client portal throughout the
+                        representation.<br /><br />V. &nbsp;EPFIRMS BILLING &amp; PAYMENT SYSTEM<br /><br />Client
+                        agrees to be charged the same rate as all other clients which the Attorney enters into
+                        EPFirms automated billing system. Client agrees to the minimum billing time for each
+                        task of .25 of an hour increment and the hourly charge is the time that the attorney
+                        allocates for the matters performed on your behalf. Attorney uses EPFirms chat-to-text
+                        function to communicate with client. Client agrees that each text will be an expense of
+                        $1 per text and a minimum of 5 minutes of Attorney or Staff&rsquo;s hourly rate per
+                        message. &nbsp;<br /><br />EPFirms incorporates Stripes as a secure payment system to
+                        guarantee all transaction are secure. Client and Attorney agrees that all terms and
+                        conditions for payment will be part of this Agreement. Client and Attorney agree to all
+                        EPFirms terms and conditions.<br /><br />VI. ADDITIONAL CHARGES<br /><br />The
+                        attorney&apos;s fees do not include court costs, depositions, appraisal fees, mileage
+                        charges, parking expense, long distance telephone charges, postage, copy and certified
+                        copy expenses, delivery charges, and any other out-of-pocket costs. &nbsp; These costs
+                        will be treated as additional expenses and will be included in our bill.<br /><br />Depending
+                        on the expenses anticipated in handling the matter, we may also require you to advance
+                        costs and place a retainer to cover the same. &nbsp;You agree to pay those reasonable
+                        expenses. &nbsp;If payments are not made promptly to us as requested, we reserve the
+                        right to immediately withdraw from representing you in any and all matters that the law
+                        firm is handling. &nbsp;You agree to the withdrawal.<br /><br />VII. OTHER ISSUES<br /><br />This
+                        Agreement is performable in {{contract.attorney_county}}. &nbsp;All monies owed hereunder are to be
+                        paid through EPFirms online portal system or paid directly to our office.
+                        &nbsp;Jurisdiction and venue of any dispute arising hereunder are also performable in
+                        {{contract.attorney_county}}.<br /><br />You authorize us with your power of attorney to sign court
+                        or other legal documents which may be required in the course of the case. &nbsp;Also,
+                        you also will designate our law firm as your attorney-at-law and in-fact to act in your
+                        name, sign legal pleadings on your behalf and to perform the acts necessary and
+                        appropriate to affect the above-described legal representation.<br /><br />If the
+                        attorney were to pass away or no longer practicing law, this contract is enforceable by
+                        {{contract.law_firm}} or any subsequent law firm which may purchase it. If both the law firm no
+                        longer exists and the attorney no longer is practicing law, then client understands that
+                        the attorney nor law firm can revise the plan. &nbsp;<br /><br />TAX DISCLOSURE AND
+                        ACKNOWLEDGMENT:<br /><br />THE CLIENT IS ADVISED TO OBTAIN INDEPENDENT AND COMPETENT TAX
+                        ADVICE REGARDING LEGAL AND BUSINESS MATTERS SINCE LEGAL AND BUSINESS TRANSACTIONS CAN
+                        GIVE RISE TO TAX CONSEQUENCES. IF YOU NEED HELP, WE CAN GET YOU TO A TAX
+                        PROFESSIONAL.<br /><br />THE UNDERSIGNED LAW FIRM AND ATTORNEY HAVE NOT AGREED TO RENDER
+                        ANY TAX ADVICE AND ARE NOT RESPONSIBLE FOR ANY ADVICE REGARDING TAX MATTERS OR
+                        PREPARATION OF TAX RETURNS, OR OTHER FILINGS, INCLUDING, BUT NOT LIMITED TO, STATE AND
+                        FEDERAL INCOME AND INHERITANCE TAX RETURNS.<br /><br />FURTHERMORE, THE CLIENT SHOULD
+                        OBTAIN PROFESSIONAL HELP REGARDING THE VALUATION AND LOCATION OF ALL ASSETS WHICH MAY BE
+                        THE SUBJECT OF A LEGAL MATTER INCLUDING BUT NOT LIMITED TO: &nbsp;PROPERTY OF ANY
+                        ESTATE, PENSIONS, EMPLOYMENT BENEFIT AND PROFIT-SHARING RIGHTS THAT MAY BE CONTROLLED BY
+                        ANY OTHER PARTY TO THE LEGAL MATTER.<br /><br /><br />Please sign in the space provided
+                        below so that we may begin working on your behalf.<br /><br /><br />SIGNED on this
+                        {{contract.date}}.<br /><br /><br />&nbsp; &nbsp;<br />{{contract.client}}<br /><br />SIGNED on this
+                        {{contract.date}}.<br /><br />{{contract.attorney}}<br /><br /><br />BY: &nbsp; &nbsp; &nbsp;<br />Attorney<br />ATTORNEY-CLIENT
+                        COMMUNICATION: &nbsp;THIS DOCUMENT AND ITS<br />CONTENTS CONSTITUTE LEGALLY PRIVILEGED
+                        INFORMATION<br /><br />EXHIBIT &quot;A&quot; Flat Fee Covered<br /><br /><br />
+                        <ol class="list-decimal" >
+                            <li *ngFor="let item of contract.covered_items.split(',')">{{item}}</li>
+                        </ol>
+                        
+                        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            
+            
+                </div>
+            
+                <!-- HOURLY CONTRACT -->
+                <div *ngIf="contract.contract_type == 'Hourly'">
+                    <p>
+                        <br />&nbsp;<br />ATTORNEY HOURLY RATE AGREEMENT<br /><br />THIS AGREEMENT
+                        (&quot;Agreement&quot;) is made on {{contract.date}}, in {{contract.county}} county, {{contract.state}}, between {{contract.client}}
+                        (&quot;Client&quot;), {{contract.attorney}} and {{contract.law_firm}}, of {{contract.attorney_city}}, {{contract.attorney_county}},
+                        {{contract.attorney_state}} (hereinafter both parties are known as &quot;Attorney&quot;):<br /><br />In
+                        consideration of the mutual promises herein contained, the parties hereto agree as
+                        follows:<br /><br />I. &nbsp;PURPOSE OF REPRESENTATION<br /><br />The Client hereby
+                        retains and employs the Attorney to represent client for the following:<br /><br />[MATTER
+                        DESCRIPTION]<br /><br />This is a legal contract, and the terms and conditions of our
+                        agreement with you are described in some detail. &nbsp;This contract not only
+                        establishes the terms of our agreement between Attorney and Client, but it will also
+                        help to prevent any misunderstandings. &nbsp;When you sign and return a copy of this
+                        agreement, you are agreeing to the terms and conditions of representation which are
+                        described in this contract. However, representation will not begin until you have
+                        returned this contract and paid the non-refundable retainer.<br /><br />II.
+                        &nbsp;AGREEMENT<br /><br />It is the Attorney&apos;s strict policy to obtain the written
+                        approval of every client to the terms and conditions of representation; therefore, we
+                        will not begin drafting your documents or working on your case on your behalf until you
+                        have signed and returned a copy of this contract and have paid the non-refundable
+                        retainer. &nbsp;Therefore, until you sign and return a copy of this contract, and pay
+                        the retainer described in this contract, there is no agreement or obligation between us
+                        concerning your legal representation. We cannot guarantee any expected outcome or
+                        conclusion of the legal matter due to numerous and complicated factors which are beyond
+                        our control.<br /><br />Client and Attorney agree that either party, at any time and for
+                        any reason, may terminate this Agreement. If Client or Attorney terminates this
+                        Agreement and a lawsuit has been filed, Client agrees to pay attorney whole bill until
+                        Attorney has been released by the Judge. Attorney and Client agree that an Attorney my
+                        without his work product from Client until the bill is paid in full.<br /><br />III.
+                        &nbsp;RETAINER AMOUNT<br /><br />This agreement will require payment of a non-refundable
+                        retainer of {{contract.retainer_amount}} which has been agreed to by all parties. &nbsp;Client
+                        understands that this is a non-refundable retainer.<br /><br />&nbsp;IV. &nbsp;HOURLY
+                        RATE FOR ATTORNEY AND STAFF<br /><br />Attorney uses an online software, EPFirms, to
+                        track Attorney and Staffs&rsquo; hours. Client agrees to the hourly rates for all
+                        Attorneys and Staff listed in client&rsquo;s client portal with EPFirms. Client agrees
+                        to any changes to Attorney or Staffs&rsquo; hourly rate listed on EPFirms client portal
+                        throughout the representation.<br /><br />V. &nbsp;EPFIRMS BILLING &amp; PAYMENT
+                        SYSTEM<br /><br />Client agrees to be charged the same rate as all other clients which
+                        the Attorney enters into EPFirms automated billing system. Client agrees to the minimum
+                        billing time for each task of .25 of an hour increment and the hourly charge is the time
+                        that the attorney allocates for the matters performed on your behalf. Attorney uses
+                        EPFirms chat-to-text function to communicate with client. Client agrees that each text
+                        will be an expense of $1 per text and a minimum of 5 minutes of Attorney or
+                        Staff&rsquo;s hourly rate per message. &nbsp;<br /><br />EPFirms incorporates Stripes as
+                        a secure payment system to guarantee all transaction are secure. Client and Attorney
+                        agrees that all terms and conditions for payment will be part of this Agreement. Client
+                        and Attorney agree to all EPFirms terms and conditions.<br /><br />VI. ADDITIONAL
+                        CHARGES<br /><br />The attorney&apos;s fees do not include court costs, depositions,
+                        appraisal fees, mileage charges, parking expense, long distance telephone charges,
+                        postage, copy and certified copy expenses, delivery charges, and any other out-of-pocket
+                        costs. &nbsp; These costs will be treated as additional expenses and will be included in
+                        our bill.<br /><br />Depending on the expenses anticipated in handling the matter, we
+                        may also require you to advance costs and place a retainer to cover the same. &nbsp;You
+                        agree to pay those reasonable expenses. &nbsp;If payments are not made promptly to us as
+                        requested, we reserve the right to immediately withdraw from representing you in all
+                        matters that the law firm is handling. &nbsp;You agree to the withdrawal.<br /><br />VII.
+                        OTHER ISSUES<br /><br />This Agreement is performable in {{contract.attorney_county}}. &nbsp;All
+                        monies owed hereunder are to be paid through EPFirms online portal system or paid
+                        directly to our office. &nbsp;Jurisdiction and venue of any dispute arising hereunder
+                        are also performable in {{contract.attorney_county}}.<br /><br />You authorize us with your power
+                        of attorney to sign court or other legal documents which may be required in the course
+                        of the case. &nbsp;Also, you also will designate our law firm as your attorney-at-law
+                        and in-fact to act in your name, sign legal pleadings on your behalf and to perform the
+                        acts necessary and appropriate to affect the above-described legal representation.<br /><br />If
+                        the attorney were to pass away or no longer practicing law, this contract is enforceable
+                        by {{contract.law_firm}} or any subsequent law firm which may purchase it. If both the law firm no
+                        longer exists and the attorney no longer is practicing law, then client understands that
+                        the attorney nor law firm can revise the plan. &nbsp;<br /><br /><br /><br /><br />TAX
+                        DISCLOSURE AND ACKNOWLEDGMENT:<br /><br />THE CLIENT IS ADVISED TO OBTAIN INDEPENDENT
+                        AND COMPETENT TAX ADVICE REGARDING LEGAL AND BUSINESS MATTERS SINCE LEGAL AND BUSINESS
+                        TRANSACTIONS CAN GIVE RISE TO TAX CONSEQUENCES. IF YOU NEED HELP, WE CAN GET YOU TO A
+                        TAX PROFESSIONAL.<br /><br />THE UNDERSIGNED LAW FIRM AND ATTORNEY HAVE NOT AGREED TO
+                        RENDER ANY TAX ADVICE AND ARE NOT RESPONSIBLE FOR ANY ADVICE REGARDING TAX MATTERS OR
+                        PREPARATION OF TAX RETURNS, OR OTHER FILINGS, INCLUDING, BUT NOT LIMITED TO, STATE AND
+                        FEDERAL INCOME AND INHERITANCE TAX RETURNS.<br /><br />FURTHERMORE, THE CLIENT SHOULD
+                        OBTAIN PROFESSIONAL HELP REGARDING THE VALUATION AND LOCATION OF ALL ASSETS WHICH MAY BE
+                        THE SUBJECT OF A LEGAL MATTER INCLUDING BUT NOT LIMITED TO: &nbsp;PROPERTY OF ANY
+                        ESTATE, PENSIONS, EMPLOYMENT BENEFIT AND PROFIT SHARING RIGHTS THAT MAY BE CONTROLLED BY
+                        ANY OTHER PARTY TO THE LEGAL MATTER.<br /><br />Please sign in the space provided below
+                        so that we may begin working on your behalf.<br /><br /><br />SIGNED on this {{contract.date}}.<br /><br /><br />&nbsp;
+                        &nbsp;<br />{{contract.client}}<br /><br />SIGNED on this {{contract.date}}.<br /><br />{{contract.attorney}}<br /><br /><br />BY:
+                        &nbsp; &nbsp; &nbsp;<br />Attorney<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                      </p>
+            
+            
+                </div>
+            
+                <div *ngIf="contract.contract_type == 'Contingency'">
+                    <p>
+                        ATTORNEY CONTINGENCY FEE AGREEMENT<br /><br />THIS AGREEMENT (&quot;Agreement&quot;) is
+                        made on {{contract.date | date | date}}, in {{contract.county}} county, {{contract.state}}, between {{contract.client}} (&quot;Client&quot;),
+                        {{contract.attorney}} and {{contract.law_firm}}, of {{contract.attorney_city}}, {{contract.attorney_county}}, {{contract.attorney_state}}
+                        (hereinafter known as &quot;Attorney&quot;):<br /><br />In consideration of the mutual
+                        promises herein contained, the parties hereto agree as follows:<br /><br />I.
+                        &nbsp;PURPOSE OF REPRESENTATION<br /><br />The Client hereby retains and employs the
+                        Attorney to represent client for the following:<br /><br />{{contract.description}}<br /><br />This
+                        is a legal contract, and the terms and conditions of our agreement with you are
+                        described in some detail. &nbsp;This contract not only establishes the terms of our
+                        agreement between Attorney and Client, but it will also help to prevent any
+                        misunderstandings. &nbsp;When you sign and return a copy of this agreement, you are
+                        agreeing to the terms and conditions of representation which are described in this
+                        contract.<br /><br />II. &nbsp;AGREEMENT<br /><br />It is the Attorney&rsquo;s strict
+                        policy to obtain the written approval of every client to the terms and conditions of
+                        representation; therefore, we will not begin drafting your documents on your behalf
+                        until you have signed and returned a copy of this contract and have paid the fee.
+                        &nbsp;Therefore, until you sign and return a copy of this contract, and pay the fee
+                        described in this contract, there is no agreement or obligation between us concerning
+                        your legal representation. We cannot guarantee any expected outcome or conclusion of the
+                        legal matter due to numerous and complicated factors which are beyond our control.<br /><br />III.
+                        &nbsp;ATTORNEY&apos;S FEES AND EXPENSES<br /><br />In consideration of services rendered
+                        and to be rendered by Attorney, Client hereby agrees to pay to Attorney the following
+                        amounts on any settlements, monies, judgments or other consideration which have or may
+                        be paid on this legal matter:<br /><br />{{contract.pre_settlement_percent}} percent prior to the filing of
+                        a lawsuit,<br /><br />{{contract.post_settlement_percent}} percent if collected after said filing of a
+                        lawsuit, and<br /><br />an additional 15 percent if an appeal is required to a higher
+                        court.<br /><br />It is agreed and understood that if the amount of attorney&apos;s fees
+                        on this claim or cause of action, are regulated or governed by law, and that law
+                        precludes any other fee arrangement other than the amount set by the law or regulation,
+                        then the amount payable hereunder to said Attorney shall be limited to the maximum so
+                        allowed by law.<br /><br />The contingent fee provided for above will be calculated
+                        BEFORE any expenses have been deducted from settlements, monies, judgments or other
+                        consideration recovered in this legal matter.<br /><br />Notwithstanding any provision
+                        to the contrary, if it is determined by a court of law that a contingency fee cannot be
+                        charged in this matter. Client agrees to an hourly rate. Attorney uses an online
+                        software, EPFirms, to track Attorney and Staffs&rsquo; hours. Client agrees to the
+                        hourly rates for all Attorneys and Staff listed in client&rsquo;s client portal with
+                        EPFirms. Client agrees to any changes to Attorney or Staffs&rsquo; hourly rate listed on
+                        EPFirms client portal throughout the representation.<br /><br />Client agrees to be
+                        charged the same rate as all other clients which the Attorney enters into EPFirms
+                        automated billing system. Client agrees to the minimum billing time for each task of .25
+                        of an hour increment and the hourly charge is the time that the attorney allocates for
+                        the matters performed on your behalf. Attorney uses EPFirms chat-to-text function to
+                        communicate with client. Client agrees that each text will be an expense of $1 per text
+                        and a minimum of 5 minutes of Attorney or Staff&rsquo;s hourly rate per message.
+                        &nbsp;<br /><br />EPFirms incorporates Stripes as a secure payment system to guarantee
+                        all transaction are secure. Client and Attorney agrees that all terms and conditions for
+                        payment will be part of this Agreement. Client and Attorney agree to all EPFirms terms
+                        and conditions.<br /><br />IV. &nbsp;LOCATION OF PAYMENT<br /><br />All sums that may
+                        come due and payable under this contingency fee agreement are due at Attorney&apos;s
+                        office in {{contract.attorney_county}} County, {{contract.attorney_state}}. The sale of the real estate
+                        property of the estate shall close with the title company selected by the Attorney.<br /><br /><br />V.
+                        &nbsp;APPROVAL NECESSARY FOR SETTLEMENT<br /><br />Attorney is hereby authorized to
+                        enter into any and all settlement negotiations on behalf of those whom Attorney
+                        represents as Attorney deems appropriate. This includes, but is not limited to,
+                        Attorney&apos;s prerogative to pursue cash or structured payment settlement
+                        negotiations.<br /><br />In the event Attorney enters into cash or structured settlement
+                        negotiations, Attorney is authorized to negotiate on Client&apos;s behalf a settlement
+                        based upon the present value benefit of said settlement to Client.<br /><br />The
+                        present value benefit shall be determined by applying the appropriate discount rates
+                        that consider the after-tax benefits of the negotiated structured settlement to
+                        Client.<br /><br />In the event that the case is settled by way of structured
+                        settlement, Client hereby approves and authorizes Attorney&apos;s fees based upon the
+                        present value benefit of the settlement to Client.<br /><br />Client further authorizes
+                        Attorney to take Attorney&apos;s fee either in cash or in structured payments as
+                        Attorney deems appropriate.<br /><br />Client further hereby authorizes Attorney to
+                        retain structured settlement specialists to assist in evaluating the efficiency and
+                        benefits of such a settlement.<br /><br />Attorney is not required to retain such
+                        specialists but is authorized to employ the same. &nbsp;The fees for such specialists
+                        and their services will be deducted from the monies received, if any, in the settlement
+                        as an expense of litigation.<br /><br />Client hereby grants unto Attorney a power of
+                        attorney to handle negotiations and settlement discussions regarding the obtaining of
+                        possession of any and all monies or other things of value subject of the matter due to
+                        Client under this claim as fully as Client could do so in person.<br /><br />This
+                        expressly includes the right to sign Client&apos;s name on and to any insurance company
+                        drafts, money orders, cashier&apos;s checks, checks or other negotiable instruments made
+                        payable to Attorney and Client, Attorney, or to Client without the joinder of Attorney,
+                        submitted to Attorney on behalf of Client in full or partial settlement of this case.<br /><br />This
+                        limited power of attorney further authorizes Attorney to place these monies, referred to
+                        above, in Attorney&apos;s trust account and from that trust account, make distributions
+                        and payments to Attorney for the agreed to fee stated above, reimbursement to Attorney
+                        for any and all expenses incurred by Attorney in handling this case, payments to Client
+                        of Client&apos;s interest in the monies recovered as stated above, and payments to
+                        parties other than Client and Attorney for their services performed, fees charged or
+                        bills rendered in connection with representing Client, including but not limited to
+                        medical bills, court reporter fees, deposition fees, investigative services, costs of
+                        exhibits or other special expenses incurred by Attorney on behalf of Client.<br /><br />No
+                        settlement of any nature shall be made for any of the aforesaid claims or profits of
+                        Client without the complete approval of Client, nor shall Client obtain any settlement
+                        on the aforesaid claims without the complete approval of Attorney.<br /><br />Attorney
+                        is hereby granted a limited power of attorney so that Attorney may have full authority
+                        to prepare, sign and file all legal instruments, pleadings, drafts, authorizations and
+                        papers as shall be reasonably necessary to conclude this representation including
+                        settlement and/or reduce to possession any and all monies or other things of value due
+                        to Client under this claim as fully as Client could do so in person.<br /><br />VI.
+                        &nbsp;REPRESENTATIONS<br /><br />It is expressly agreed and understood that no promises
+                        or guarantees as to the outcome of the case have been made to Client by Attorney.
+                        &nbsp;Attorney has not represented to Client that Client will recover all or any of the
+                        funds so desired. &nbsp;Client also acknowledges that obtaining a judgment does not
+                        guarantee that the opposing party will be able to satisfy the judgment. &nbsp;It is
+                        further expressly understood and agreed that no other representations have been made to
+                        Client, except for those set out in this Agreement.<br /><br />VII. &nbsp;DEDUCTION OF
+                        EXPENSES<br /><br />All reasonable expenses incurred by Attorney in the handling of this
+                        project shall be deducted from the gross settlement proceeds at the time the case is
+                        settled or resolved, after the contingent fee is calculated.<br /><br />The expenses
+                        contemplated above, include but are not limited to any and all out of pocket expenses
+                        incurred in connection with this case, including but not limited to the following
+                        expenses: &nbsp;filing fees, court costs, certified copies of documents, pleadings,
+                        orders etc., transcripts, depositions, duplication costs, postage, office supplies,
+                        photographs, trial exhibits, long distance phone &amp; fax calls, appraisal fees,
+                        consultants, expert witnesses and other fees associated with preparation and trial
+                        testimony, investigation fees, delivery charges, overnight mail/parcel services,
+                        parking, toll road &amp; mileage expenses, out of town expenses including travel
+                        expense, air fare, hotels, meals, and any other expense incurred in connection with the
+                        matter.<br /><br />VIII. &nbsp;COOPERATION OF CLIENT<br /><br />Client shall keep
+                        Attorney advised of Client&apos;s whereabouts at all times, and provide Attorney with
+                        any changes of address, phone number or business affiliation during the time period
+                        which Attorney&apos;s services are required, and shall comply with all reasonable
+                        requests of Attorney in connection with the preparation and presentation of the
+                        aforesaid representation.<br /><br />Attorney may, at his option, withdraw from the case
+                        and cease to represent Client for any reason, including without limitation Client&apos;s
+                        failure to timely pay fees and expenses or deposits for same in accordance with this
+                        Agreement, subject to the professional responsibility requirements to which attorneys
+                        are subject.<br /><br />It is further understood and agreed between the parties that
+                        upon such termination of any services of Attorney, any of Client&apos;s deposits
+                        remaining in Attorney&apos;s Trust Account shall be applied to any balance remaining
+                        owing to Attorney for fees and/or expenses and any surplus then remaining shall be
+                        refunded to Client.<br /><br />V. OTHER ISSUES<br /><br />This Agreement is performable
+                        in {{contract.attorney_county}}. &nbsp;All monies owed hereunder are to be paid through EPFirms
+                        online portal system or paid directly to our office. &nbsp;Jurisdiction and venue of any
+                        dispute arising hereunder are also performable in {{contract.attorney_county}}.<br /><br />You
+                        authorize us with your power of attorney to sign court or other legal documents which
+                        may be required in the course of the case. &nbsp;Also, you also will designate our law
+                        firm as your attorney-at-law and in-fact to act in your name, sign legal pleadings on
+                        your behalf and to perform the acts necessary and appropriate to affect the
+                        above-described legal representation.<br /><br />If the attorney were to pass away or no
+                        longer practicing law, this contract is enforceable by {{contract.law_firm}} or any subsequent law
+                        firm which may purchase it. If both the law firm no longer exists and the attorney no
+                        longer is practicing law, then client understands that the attorney nor law firm can
+                        revise the plan. &nbsp;<br /><br />TAX DISCLOSURE AND ACKNOWLEDGMENT:<br /><br />THE
+                        CLIENT IS ADVISED TO OBTAIN INDEPENDENT AND COMPETENT TAX ADVICE REGARDING LEGAL AND
+                        BUSINESS MATTERS SINCE LEGAL AND BUSINESS TRANSACTIONS CAN GIVE RISE TO TAX
+                        CONSEQUENCES. IF YOU NEED HELP, WE CAN GET YOU TO A TAX PROFESSIONAL.<br /><br />THE
+                        UNDERSIGNED LAW FIRM AND ATTORNEY HAVE NOT AGREED TO RENDER ANY TAX ADVICE AND ARE NOT
+                        RESPONSIBLE FOR ANY ADVICE REGARDING TAX MATTERS OR PREPARATION OF TAX RETURNS, OR OTHER
+                        FILINGS, INCLUDING, BUT NOT LIMITED TO, STATE AND FEDERAL INCOME AND INHERITANCE TAX
+                        RETURNS.<br /><br />FURTHERMORE, THE CLIENT SHOULD OBTAIN PROFESSIONAL HELP REGARDING
+                        THE VALUATION AND LOCATION OF ALL ASSETS WHICH MAY BE THE SUBJECT OF A LEGAL MATTER
+                        INCLUDING BUT NOT LIMITED TO: &nbsp;PROPERTY OF ANY ESTATE, PENSIONS, EMPLOYMENT BENEFIT
+                        AND PROFIT-SHARING RIGHTS THAT MAY BE CONTROLLED BY ANY OTHER PARTY TO THE LEGAL
+                        MATTER.<br /><br /><br />Please sign in the space provided below so that we may begin
+                        working on your behalf.<br /><br /><br />SIGNED on this {{contract.date | date | date}}.<br /><br /><br />&nbsp;
+                        &nbsp;<br />{{contract.client}}<br /><br />SIGNED on this {{contract.date | date | date}}.<br /><br />{{contract.attorney}}<br /><br /><br />BY:
+                        &nbsp; &nbsp; &nbsp;<br />Attorney<br /><br /><br />
+                      </p>
+            
+            
+                </div>
+              </main>
+        <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+          <button *ngIf="requireClientSignature" (click)="submit()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">Sign and Submit</button>
+          <button (click)="close()" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
