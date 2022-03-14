@@ -45,8 +45,10 @@ export class MatterTabsService {
 
   clear(): void {
     this.store.dispatch(clear());
-    this.tabsOverlay.detach();
-    this.tabsOverlay.dispose();
+    if (this.tabsOverlay  && this.tabsOverlay.hasAttached()) {
+      this.tabsOverlay.detach();
+      this.tabsOverlay.dispose();
+    }
   }
 
   toggleExpand(): void {

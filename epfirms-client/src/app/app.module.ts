@@ -26,6 +26,8 @@ import { AutocompleteModule } from './shared/autocomplete/autocomplete.module';
 import { HotToastModule } from '@ngneat/hot-toast';
 import ImageCompress from 'quill-image-compress';
 import { ModalModule } from './shared/modal/modal.module';
+import { MatterTabsEffects } from './store/matter-tabs/matter-tabs.effects';
+import { CurrentUserEffects } from './store/current-user/current-user.effects';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -74,7 +76,7 @@ const quillConfig = [
     ReactiveFormsModule,
     NgxStripeModule.forRoot('pk_test_NaQ0K78jrNRGyacbblmpM2RW00mvwDjEh6'),
     StoreModule.forRoot({matterTabs: matterTabsReducer, currentUser: currentUserReducer}, {}),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([MatterTabsEffects, CurrentUserEffects]),
     EntityDataModule.forRoot(entityConfig),
     QuillModule.forRoot({
       modules: {

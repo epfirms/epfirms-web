@@ -4,10 +4,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { EntityCacheDispatcher } from '@ngrx/data';
-import { MatterTabsService } from '@app/features/matter-tab/services/matter-tabs-service/matter-tabs.service';
-import { CurrentUserService } from '../../shared/_services/current-user-service/current-user.service';
 import { Socket } from 'ngx-socket-io';
-import { ConversationsClientService } from '@app/features/chat/conversations-client.service';
+import { Store } from '@ngrx/store';
+import { changePortal, logout } from '@app/store/current-user/current-user.actions';
 
 interface LoginForm {
   email: string;
@@ -15,7 +14,7 @@ interface LoginForm {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private accessTokenSubject: BehaviorSubject<any>;
@@ -26,13 +25,11 @@ export class AuthService {
     private _http: HttpClient,
     private _router: Router,
     private entityCacheDispatcher: EntityCacheDispatcher,
-    private _matterTabsService: MatterTabsService,
-    private _currentUserService: CurrentUserService,
     private _socket: Socket,
-    private _conversationsClient: ConversationsClientService
+    private _store: Store,
   ) {
     this.accessTokenSubject = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem('accessToken'))
+      JSON.parse(localStorage.getItem('accessToken')),
     );
     this.accessToken = this.accessTokenSubject.asObservable();
   }
@@ -44,7 +41,7 @@ export class AuthService {
   createFirm(firmDetails, userDetails): Observable<any> {
     return this._http.post<any>('/api/firm', {
       firm: firmDetails,
-      user: userDetails
+      user: userDetails,
     });
   }
 
@@ -52,7 +49,7 @@ export class AuthService {
     return this._http
       .post<any>('/api/auth', {
         email,
-        password
+        password,
       })
       .pipe(
         map(({ success, access_token, msg }) => {
@@ -64,13 +61,13 @@ export class AuthService {
           }
 
           return { success, msg };
-        })
+        }),
       );
   }
 
   verifyPasswordToken(userId: number, token: string): Observable<any> {
     return this._http.get<any>(`/api/auth/password/${userId}`, {
-      params: { token: encodeURIComponent(token) }
+      params: { token: encodeURIComponent(token) },
     });
   }
 
@@ -84,13 +81,13 @@ export class AuthService {
 
   selectPortal() {
     this._router.navigate(['login', 'select']);
-    this._matterTabsService.clear();
+    this._store.dispatch(changePortal());
     this.entityCacheDispatcher.clearCollections();
   }
 
   verifyEmail(token) {
     return this._http.post<any>('/api/auth/VerifyEmail', {
-      token: token
+      token: token,
     });
   }
 
@@ -98,13 +95,11 @@ export class AuthService {
   logout() {
     localStorage.removeItem('accessToken');
     this.entityCacheDispatcher.clearCollections();
-    this._matterTabsService.clear();
-    this._currentUserService.clear();
+    this._store.dispatch(logout());
     this.accessTokenSubject.next(null);
     if (this._socket && this._socket.ioSocket && this._socket.ioSocket.connected) {
       this._socket.disconnect();
     }
-    this._conversationsClient.shutdown().subscribe();
     this._router.navigate(['login']);
   }
 }
