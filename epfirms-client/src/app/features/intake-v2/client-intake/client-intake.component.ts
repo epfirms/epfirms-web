@@ -54,6 +54,9 @@ export class ClientIntakeComponent implements OnInit {
   // current user
   user;
 
+  // states for the financials section
+  includeSpouseIncome : boolean = false;
+
   constructor(
     private currentUserService: CurrentUserService,
     private clientService : ClientService,
