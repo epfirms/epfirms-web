@@ -1,0 +1,11 @@
+<ng-template #contentTemplate>
+  <ng-content></ng-content>
+  <div class="relative py-4" *ngIf="isLastReadMessage">
+    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+      <div class="w-full border-t border-sky-300"></div>
+    </div>
+    <div class="relative flex justify-end">
+      <span class="px-2 text-xs font-semibold bg-white text-sky-500">New</span>
+    </div>
+  </div>
+</ng-template>

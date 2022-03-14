@@ -1,10 +1,11 @@
 import { W } from '@angular/cdk/keycodes';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { Asset } from '@app/core/interfaces/asset';
 import { Income } from '@app/core/interfaces/income';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
+import { time } from 'console';
 
 @Component({
   selector: 'app-client-intake',
@@ -12,6 +13,12 @@ import { CurrentUserService } from '@app/shared/_services/current-user-service/c
   styleUrls: ['./client-intake.component.scss'],
 })
 export class ClientIntakeComponent implements OnInit {
+  // input bindings
+  @Input() intake;  
+  @Output() onIntakeSubmit  = new EventEmitter<boolean>();
+
+
+
   //state that manages the views
   state: number = 0;
   // stack that manages the views and enables the back() functionality
@@ -77,6 +84,7 @@ export class ClientIntakeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCurrentUser();
+    console.log(this.intake)
   }
 
   loadCurrentUser(): void {
@@ -158,6 +166,7 @@ export class ClientIntakeComponent implements OnInit {
     if (this.hasChildren) {
       this.submitChildren();
     }
+   
   }
 
   addIncome(isSpouseIncome : boolean) : void {

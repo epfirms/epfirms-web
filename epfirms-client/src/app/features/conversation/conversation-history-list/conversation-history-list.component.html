@@ -1,0 +1,10 @@
+<ng-scrollbar [visibility]="'hover'">
+  <ul role="list" class="p-3 space-y-0.5">
+    <app-conversation-history-item
+      *ngFor="let conversation of conversations"
+      [conversation]="conversation"
+      (click)="selectConversation(conversation)"
+      [selected]="isSelected(conversation)"
+    ></app-conversation-history-item>
+  </ul>
+</ng-scrollbar>

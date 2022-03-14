@@ -18,8 +18,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InputModule } from '@app/shared/input/input.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { ModalModule } from '@app/shared/modal/modal.module';
-import { ChatModule } from '@app/features/chat/chat.module';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { ConversationModule } from '@app/features/conversation/conversation.module';
 
 
 @NgModule({
@@ -44,8 +44,8 @@ import { InputMaskModule } from '@ngneat/input-mask';
     InputModule,
     MenuModule,
     ModalModule,
-    ChatModule,
-    InputMaskModule
+    InputMaskModule,
+    ConversationModule
   ]
 })
 export class FirmPortalModule {}

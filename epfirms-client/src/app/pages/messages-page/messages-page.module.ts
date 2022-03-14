@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MessagesPageComponent } from './messages-page/messages-page.component';
 import { MessagesPageRoutingModule } from './messages-page-routing.module';
-import { NgScrollbarModule } from 'ngx-scrollbar';
-
+import { ConversationModule } from '@app/features/conversation/conversation.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +11,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
   imports: [
     CommonModule,
     MessagesPageRoutingModule,
-    NgScrollbarModule
+    ConversationModule
   ]
 })
 export class MessagesPageModule { }
