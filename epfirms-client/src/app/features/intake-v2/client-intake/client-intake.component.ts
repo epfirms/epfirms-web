@@ -1,8 +1,9 @@
 import { W } from '@angular/cdk/keycodes';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
+import { time } from 'console';
 
 @Component({
   selector: 'app-client-intake',
@@ -12,6 +13,7 @@ import { CurrentUserService } from '@app/shared/_services/current-user-service/c
 export class ClientIntakeComponent implements OnInit {
   // input bindings
   @Input() intake;  
+  @Output() onIntakeSubmit  = new EventEmitter<boolean>();
 
 
 
@@ -142,5 +144,12 @@ export class ClientIntakeComponent implements OnInit {
     if (this.hasChildren) {
       this.submitChildren();
     }
+   
   }
+
+  finish() : void {
+    this.onIntakeSubmit.emit(true);
+  }
+
+  
 }
