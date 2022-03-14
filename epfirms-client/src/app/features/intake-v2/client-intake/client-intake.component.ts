@@ -1,6 +1,7 @@
 import { W } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
+import { Asset } from '@app/core/interfaces/asset';
 import { Income } from '@app/core/interfaces/income';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
@@ -60,6 +61,9 @@ export class ClientIntakeComponent implements OnInit {
 
   // properties for the  monthly income section
   monthlyIncome : Income[] = [];
+
+  // properties for the unprotected asset section
+  unprotectedAssets : Asset[] = [];
   
 
   constructor(
@@ -157,5 +161,19 @@ export class ClientIntakeComponent implements OnInit {
 
   onIncomeChange(income : string, incomeBinding) : void {
     incomeBinding.amount = parseFloat(income);
+  }
+
+  submitMonthlyIncome() : void {
+    this.setState(4);
+  }
+
+  addAsset(isJoint : boolean, isProtected : boolean) : void {
+    this.unprotectedAssets.push({
+      name: "Enter Name",
+    amount : 0,
+    type : "Checking",
+    is_joint : isJoint,
+    is_protected : isProtected
+    });
   }
 }
