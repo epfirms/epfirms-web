@@ -167,13 +167,13 @@ export class ClientIntakeComponent implements OnInit {
     this.setState(4);
   }
 
-  addAsset(isJoint : boolean, isProtected : boolean) : void {
+  addAsset(owner : string, isProtected : boolean) : void {
     this.unprotectedAssets.push({
       name: "Enter Name",
     amount : 0,
     type : "Checking",
-    is_joint : isJoint,
-    is_protected : isProtected
+    is_protected : isProtected,
+    owner : owner
     });
   }
 }
