@@ -2,10 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as ConversationActions from '../store/conversation.actions';
 import { Store } from '@ngrx/store';
-import {
-  Client as ConversationsClient,
-  Conversation,
-} from '@twilio/conversations';
+import { Client as ConversationsClient, Conversation, ConversationUpdateReason } from '@twilio/conversations';
 import {
   BehaviorSubject,
   catchError,
@@ -18,12 +15,12 @@ import {
   take,
   tap,
 } from 'rxjs';
+import { ConversationState } from '../store/conversation.store';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConversationService {
-
   /** Twilio conversations client. */
   conversationsClient: ConversationsClient;
 
@@ -37,7 +34,10 @@ export class ConversationService {
 
   protected destroy$ = new Subject<void>();
 
-  constructor(private _http: HttpClient, private _store: Store<{ currentUser: any }>) {}
+  constructor(
+    private _http: HttpClient,
+    private _store: Store<{ conversation: ConversationState; currentUser: any }>,
+  ) {}
 
   /** Retrieves an access token for the client. */
   getAccessToken(): Observable<any> {
@@ -122,19 +122,40 @@ export class ConversationService {
   conversationJoined() {
     this.conversationsClient.on('conversationJoined', (conversation) => {
       this.conversations$.next([...this.conversations$.value, conversation]);
+      this.updateUnreadMessageCount();
     });
   }
 
+  messageAdded() {
+    this.conversationsClient.on('messageAdded', (message) => {
+      if (this.conversationsClient.user.identity !== message.author) {
+        this.updateUnreadMessageCount();
+      }
+    })
+  }
+
   conversationUpdate() {
-    return fromEvent(this.conversationsClient, 'conversationUpdated');
+    this.conversationsClient.on('conversationUpdated', ({conversation, updateReasons}) => {
+      if (updateReasons.includes('lastReadMessageIndex')) {
+        console.log('conversationUpdate', conversation);
+        this.updateUnreadMessageCount();
+      }
+    })
+  }
+
+  async updateUnreadMessageCount() {
+    let count = 0;
+    for(const conversation of this.conversations$.value) {
+      const value = await conversation.getUnreadMessagesCount();
+      count = count + value;
+    }
+    this._store.dispatch(
+      ConversationActions.updateUnreadMessageCount({ unreadMessageCount: count }),
+    );
   }
 
   connectionError() {
     return fromEvent(this.conversationsClient, 'connectionError');
-  }
-
-  pushNotification() {
-    return fromEvent(this.conversationsClient, 'pushNotification');
   }
 
   /** Dispatch action when token is about to expire (<3 min until expiration). */
@@ -158,4 +179,5 @@ export class ConversationService {
       this.updateUserFriendlyName(user.full_name).subscribe();
       this.updateUserAttributes(user.profile_image).subscribe();
     });
-  }}
+  }
+}

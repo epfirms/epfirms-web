@@ -1,47 +1,27 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@app/core/services/auth.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { take } from 'rxjs/operators';
 import { MatterTabsService } from '../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { SocketService } from '../core/services/socket.service';
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { ConversationState, selectUnreadMessageCount } from '@app/features/conversation/store/conversation.store';
 
 @Component({
   selector: 'app-firm-portal',
   templateUrl: './firm-portal.component.html',
   styleUrls: ['./firm-portal.component.scss'],
 })
-export class FirmPortalComponent implements OnInit, OnDestroy {
-  navItems = [
-    {
-      name: 'Home',
-      link: '/firm',
-    },
-    {
-      name: 'Cases',
-      link: 'cases',
-    },
-    {
-      name: 'Leads',
-      link: 'leads',
-    },
-    {
-      name: 'Client Directory',
-      link: 'clients',
-    },
-    {
-      name: 'Firm Settings',
-      link: 'settings',
-    },
-  ];
-
-  protected destroy$ = new Subject<void>();
+export class FirmPortalComponent implements OnInit {
+  unreadMessageCount$: Observable<number> = this._store.select(selectUnreadMessageCount);
 
   constructor(
     private _socketService: SocketService,
     private _currentUserService: CurrentUserService,
     private _authService: AuthService,
-    private _matterTabsService: MatterTabsService
+    private _matterTabsService: MatterTabsService,
+    private _store: Store<{conversation: ConversationState}>
   ) {
     this._currentUserService
       .getCurrentUser()
@@ -54,11 +34,6 @@ export class FirmPortalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._matterTabsService.init();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   minimizeMatterTabs(): void {

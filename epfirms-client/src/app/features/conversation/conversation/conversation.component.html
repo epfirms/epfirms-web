@@ -60,14 +60,14 @@
 <div class="p-4 pt-0">
   <div class="flex items-start space-x-4">
     <div class="flex-1 min-w-0">
-      <form action="#" class="relative">
+      <form (ngSubmit)="sendMessage()" class="relative">
         <div
           class="overflow-hidden border border-gray-300 rounded-lg shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500"
         >
           <label for="comment" class="sr-only">Add your comment</label>
           <textarea
             [(ngModel)]="newMessage"
-            (keyup.enter)="sendMessage()"
+            (keyup.enter)="$event.preventDefault(); sendMessage()"
             rows="3"
             name="comment"
             id="comment"

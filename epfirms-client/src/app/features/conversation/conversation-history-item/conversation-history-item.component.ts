@@ -55,9 +55,7 @@ export class ConversationHistoryItemComponent implements OnDestroy {
     from(this.conversation.getParticipants()).subscribe((participants: any[]) => {
       if (participants && participants.length === 2) {
         const userIdentity = this._conversationService.user.identity;
-        console.log(userIdentity);
         this.otherParticipant = participants.find((p) => p.identity !== userIdentity);
-        console.log(this.otherParticipant)
       }
     });
   }
@@ -74,7 +72,7 @@ export class ConversationHistoryItemComponent implements OnDestroy {
     this.conversation.on('updated', ({ conversation, updateReasons }) => {
       const lastMessageUpdated = updateReasons.includes('lastMessage');
       if (lastMessageUpdated) {
-        this.conversation = conversation;
+        this.loadLastMessage();
       }
     });
   }
