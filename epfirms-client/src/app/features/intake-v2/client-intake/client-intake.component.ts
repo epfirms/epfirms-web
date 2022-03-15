@@ -27,11 +27,7 @@ export class ClientIntakeComponent implements OnInit {
   // current user
   user;
 
-  // states for the financials section
-  includeSpouseIncome : boolean = false;
 
-  // properties for the  monthly income section
-  monthlyIncome : Income[] = [];
 
   // properties for the unprotected asset section
   unprotectedAssets : Asset[] = [];
@@ -67,22 +63,6 @@ export class ClientIntakeComponent implements OnInit {
   }
 
 
-  addIncome(isSpouseIncome : boolean) : void {
-    console.log("ADDING INCOME FOR SPOUSE", isSpouseIncome);
-    this.monthlyIncome.push({
-      type : "Payroll",
-      is_spouse_income : isSpouseIncome,
-      amount : 0,
-    });
-  }
-
-  onIncomeChange(income : string, incomeBinding) : void {
-    incomeBinding.amount = parseFloat(income);
-  }
-
-  submitMonthlyIncome() : void {
-    this.setState(4);
-  }
 
   addAsset(isProtected : boolean) : void {
     this.unprotectedAssets.push({

@@ -4,13 +4,15 @@ import { ClientIntakeComponent } from './client-intake/client-intake.component';
 import { FormsModule } from '@angular/forms';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { PersonalInformationComponent } from './personal-information/personal-information.component';
+import { IncomeComponent } from './income/income.component';
 
 
 
 @NgModule({
   declarations: [
     ClientIntakeComponent,
-    PersonalInformationComponent
+    PersonalInformationComponent,
+    IncomeComponent
   ],
   imports: [
     CommonModule,
