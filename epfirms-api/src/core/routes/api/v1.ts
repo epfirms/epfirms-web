@@ -20,7 +20,9 @@ import { matterBillingSettingsRouter } from '@src/modules/matter-billing-setting
 import { stripeRouter } from '@src/modules/stripe/routes';
 import { legalInsuranceRouter } from '@src/modules/legal-insurance/routes';
 import { customerAccountRouter } from '@src/modules/customer-account/routes';
+import { contractRouter } from '@src/modules/contract/routes';
 import { chatRouter } from '@src/modules/chat/chat.routes';
+import { contractTemplateRouter } from '@src/modules/contract-template/routes';
 
 const v1Router = express.Router();
 
@@ -44,6 +46,8 @@ v1Router.use('/matter-billing-settings', matterBillingSettingsRouter)
 v1Router.use('/stripe', stripeRouter);
 v1Router.use('/case-templates', caseTemplateCommunityRouter);
 v1Router.use('/legal-insurance', legalInsuranceRouter);
-v1Router.use('/customer-account', customerAccountRouter)
+v1Router.use('/customer-account', customerAccountRouter);
+v1Router.use('/contract', contractRouter);
 v1Router.use('/chat', chatRouter);
+v1Router.use('/contract-template', contractTemplateRouter);
 export { v1Router }

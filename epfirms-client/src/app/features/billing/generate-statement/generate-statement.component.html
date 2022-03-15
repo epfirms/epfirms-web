@@ -42,7 +42,7 @@
               <!-- Odd row -->
               <tr *ngFor="let bill of bills" class="bg-white">
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {{bill.description}}
+                  {{bill.description | slice:0:50}}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {{bill.date | date}}

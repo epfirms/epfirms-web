@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ContractService } from '@app/features/contract-builder/contract.service';
 import { MatterBillingSettingsService } from '@app/shared/_services/matter-billing-settings-service/matter-billing-settings.service';
 
 @Component({
@@ -12,8 +13,12 @@ export class OverviewComponent implements OnInit {
   afterSettlement : number = 0;
   beforeSettlement : number = 0;
 
+  //contract for the case if it exists
+  contract;
+
   constructor(
-    private matterBillingSettingService : MatterBillingSettingsService
+    private matterBillingSettingService : MatterBillingSettingsService,
+    private contractService : ContractService
   ) { }
 
   ngOnInit(): void {
@@ -21,6 +26,7 @@ export class OverviewComponent implements OnInit {
     this.matterBillingSetting = this.matter.matter_billing_setting;
     this.afterSettlement = this.matterBillingSetting.after_settlement;
     this.beforeSettlement = this.matterBillingSetting.before_settlement;
+    this.loadContract();
   }
 
   submit() : void {
@@ -31,6 +37,14 @@ export class OverviewComponent implements OnInit {
     }
     
     this.matterBillingSettingService.create(setting).subscribe(res => console.log(res));
+  }
+
+  private loadContract() : void {
+    this.contractService.getWithMatterId(this.matter.id).subscribe(res => {
+      if (res != null){
+        this.contract = res;
+      }
+    })
   }
 
 }

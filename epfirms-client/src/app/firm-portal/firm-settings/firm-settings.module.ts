@@ -21,6 +21,7 @@ import { CaseTemplateCommunityModule } from '@app/features/case-template-communi
 import { CaseTemplateCommunityComponent } from './case-template-community/case-template-community.component';
 import { CaseTemplateCommunityTableComponent } from '@app/features/case-template-community/case-template-community-table/case-template-community-table.component';
 import { CaseTemplateCommunityTemplatePageComponent } from '@app/features/case-template-community/case-template-community-template-page/case-template-community-template-page.component';
+import { ContractBuilderComponent } from '@app/features/contract-builder/contract-builder/contract-builder.component';
 
 const FirmSettingsRoute: Routes = [
   {
@@ -37,7 +38,8 @@ const FirmSettingsRoute: Routes = [
       ]},
       { path: 'delete-firm', component: DeleteFirmComponent },
       { path: 'profile', component: FirmDetailsComponent },
-      { path: '', pathMatch: 'full', redirectTo: 'profile'}
+      { path: '', pathMatch: 'full', redirectTo: 'profile'},
+      {path: 'contracts', component: ContractBuilderComponent}
     ]
   },
 ]

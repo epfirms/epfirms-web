@@ -37,4 +37,21 @@ export class StatementService {
       console.error(err);
     }
   }
+
+  public static async createCsv(statementId) : Promise<any> {
+    try {
+      const statement = await Database.models.statement.findOne({where: {id: statementId}});
+      const bills = await Database.models.matter_billing.findAll({where: {statement_id: statementId, type: 0, reconciled: true}});
+      let csv = "Employee ID, Date, Employee Name, Hourly Rate, Hours, Amount, Waived, Description\n";
+      bills.forEach(item => {
+        let bill = item.dataValues;
+        csv += `${bill.track_time_for},${new Date(bill.date).toDateString()},${
+          bill.employee_name
+        },${bill.hourly_rate},${bill.hours}, ${bill.amount},${bill.waive},${bill.description}\n`;
+      });
+      return Promise.resolve({statement: statement.dataValues, csv: csv});
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

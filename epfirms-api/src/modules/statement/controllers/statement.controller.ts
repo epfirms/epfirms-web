@@ -43,5 +43,16 @@ export class StatementController {
     }
   }
 
+  public async download(req : Request, res : Response) : Promise<any> {
+    try {
+      const csvFile = await StatementService.createCsv(req.params.statement_id);
+      res.status(StatusConstants.OK).send(csvFile.csv)
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+
+    }
+  }
+
 
 }
