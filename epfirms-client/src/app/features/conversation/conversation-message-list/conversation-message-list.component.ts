@@ -42,7 +42,6 @@ export class ConversationMessageListComponent implements OnChanges {
     // eslint-disable-next-line @typescript-eslint/dot-notation
     if (changes['messageItems']) {
       if (this.scrollbar) {
-        console.log(this.newMessageIndicator);
         this.setScrollbarReached();
         this.scrollbar.scrollTo({ top: 9999 });
       }

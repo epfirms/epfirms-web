@@ -36,6 +36,7 @@ export class ConversationEffects {
 
             // Event listeners
             this.conversationService.conversationJoined();
+            this.conversationService.messageAdded();
             this.conversationService.tokenAboutToExpire();
             this.conversationService.tokenExpired();
             break;

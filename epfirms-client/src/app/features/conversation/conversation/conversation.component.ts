@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Conversation, Message, User, Participant, Paginator } from '@twilio/conversations';
 import { Subject, from, tap, takeUntil, switchMap } from 'rxjs';
@@ -10,7 +10,7 @@ import { ConversationService } from '../services/conversation.service';
   styleUrls: ['./conversation.component.scss'],
   providers: []
 })
-export class ConversationComponent implements OnInit {
+export class ConversationComponent implements OnInit, OnDestroy {
   @Input()
   set conversation(value: Conversation) {
     if (this._conversation) {
@@ -64,15 +64,23 @@ export class ConversationComponent implements OnInit {
       switchMap((params: ParamMap) => from(this._conversationService.conversationsClient.getConversationBySid(params.get('id'))))
     ).subscribe((conversation: Conversation) => {
         if (this._conversation) {
-          this._conversation.setAllMessagesRead().then();
-          this._conversation.removeAllListeners();
-          this.destroy$.next();
-          this.destroy$.complete();
+          this.destroy();
         }
         this._conversation = conversation;
         this.loadMessages();
         this.loadOtherParticipant();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy();
+  }
+
+  destroy() {
+    this._conversation.setAllMessagesRead().then();
+    this._conversation.removeAllListeners();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   /** Full message content is not included in conversations from the client SDK so it has to be manually loaded. */
@@ -104,7 +112,6 @@ export class ConversationComponent implements OnInit {
   subscribeToAddedMessage() {
     this.conversation.on('messageAdded', (message) => {
       this.messages.push(message);
-      console.log('from loadMessages', this.conversation.lastReadMessageIndex)
     });
   }
 

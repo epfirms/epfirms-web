@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Conversation } from '@twilio/conversations';
 import { MessagesPageStore } from '../messages-page.store';
 
@@ -14,7 +13,7 @@ export class MessagesPageComponent implements OnInit {
 
   conversationItems$ = this.messagesPageStore.conversationItems$;
 
-  constructor(private readonly messagesPageStore: MessagesPageStore, private router: Router) {}
+  constructor(private readonly messagesPageStore: MessagesPageStore) {}
 
   ngOnInit(): void {
     this.messagesPageStore.loadConversationItems();
