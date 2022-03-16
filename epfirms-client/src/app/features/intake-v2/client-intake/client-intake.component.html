@@ -47,6 +47,8 @@
     </header>
     <main>
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+        <!-- INITIAL STATE 0 -->
         <app-intake-dialog
           *ngIf="state === 0"
           [settings]="{
@@ -57,6 +59,13 @@
           }"
           (continue)="setState(1)"
         ></app-intake-dialog>
+
+
+
+        <!-- STATE 1 : PERSONAL INFORMATION -->
+          <app-personal-information *ngIf="state === 1" [matter]="matter" (back)="back()" (continue)="setState(2)"></app-personal-information>
+
+
 
         <!-- /End replace -->
       </div>

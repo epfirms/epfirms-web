@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 
 @Component({
@@ -12,6 +13,10 @@ export class PersonalInformationComponent implements OnInit {
 @Input() isVisible : boolean;
 @Input() matter;
 
+//OUTPUT BINDINGS
+@Output() back = new EventEmitter<boolean>();
+@Output() continue = new EventEmitter<boolean>();
+
 // state for spouse div
   hasSpouse: boolean = false;
   //state for displaying children fields
@@ -19,6 +24,7 @@ export class PersonalInformationComponent implements OnInit {
   numOfChildren: number = 0;
   
   personalInformation = {
+    id: undefined,
     first_name: '',
     last_name: '',
     full_name: '',
@@ -51,27 +57,29 @@ export class PersonalInformationComponent implements OnInit {
   //children
   children = [];
   constructor(
-    private clientService : ClientService
+    private clientService : ClientService,
+    private familyMemberService : FamilyMemberService,
   ) { }
 
   ngOnInit(): void {
+    this.loadClientData();
   }
 
-  // loadClientData() : void {
-  //   let client = this.matter.client;
-  //  this.personalInformation = {
-  //    first_name: client.first_name,
-  //    last_name: client.last_name,
-  //    full_name: client.full_name,
-  //    email: client.email,
-  //    phone: client.phone,
-  //    address: client.address,
-  //    city: client.city,
-  //    state: client.state,
-  //    zip: client.zip,
-  //    county: client.county
-  //  } 
-  // }
+  loadClientData() : void {
+    let client = this.matter.client;
+     this.personalInformation.id = client.id;
+     this.personalInformation.first_name = client.first_name;
+     this.personalInformation.last_name = client.last_name;
+     this.personalInformation.full_name = client.full_name;
+     this.personalInformation.email = client.email;
+     this.personalInformation.phone = client.phone;
+     this.personalInformation.address = client.address;
+     this.personalInformation.city = client.city;
+     this.personalInformation.state = client.state;
+     this.personalInformation.zip = client.zip;
+     this.personalInformation.county = client.county;
+    
+  }
 
 
   addChild(): void {
@@ -97,34 +105,37 @@ export class PersonalInformationComponent implements OnInit {
     this.clientService.updateClient(this.personalInformation).subscribe();
   }
 
-  // submitSpouse() : void {
-  //   this.spouseInformation.relationship_type = "spouse";
-  //   this.familyMemberService.addFamilyMemberForUser(this.user.id, this.spouseInformation).subscribe((res) => {
-  //     if (res) {
-  //       this.owners.push(res);
-  //     }
-  //   });   
-  // }
+  submitSpouse() : void {
+    this.spouseInformation.relationship_type = "spouse";
+    this.familyMemberService.addFamilyMemberForUser(this.personalInformation.id, this.spouseInformation).subscribe((res) => {
+     
+    });   
+  }
 
-  // submitChildren() : void {
-  //   this.children.forEach(child => {
-  //     this.familyMemberService.addFamilyMemberForUser(this.user.id, child).subscribe();
-  //   });
-  // }
+  submitChildren() : void {
+    this.children.forEach(child => {
+      this.familyMemberService.addFamilyMemberForUser(this.personalInformation.id, child).subscribe();
+    });
+  }
 
-  // submitPersonalInformation(): void {
-  //   this.setState(2);
-  //   this.owners = [];
-  //   this.submitClient();
-  //   if (this.hasSpouse) {
+  submitPersonalInformation(): void {
+    this.submitClient();
+    if (this.hasSpouse) {
+      this.submitSpouse();
+    }
+    if (this.hasChildren) {
+      this.submitChildren();
+    }
     
-  //     this.submitSpouse();
-  //   }
-  //   if (this.hasChildren) {
-  //     this.submitChildren();
-  //   }
+    this.continueButton();
    
-  // }
+  }
 
+  backButton() : void {
+    this.back.emit(true);
+  }
 
+  continueButton() : void {
+    this.continue.emit(true);
+  }
 }
