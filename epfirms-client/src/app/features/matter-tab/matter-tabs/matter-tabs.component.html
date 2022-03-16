@@ -131,7 +131,7 @@
                     </ng-container>
                   </section>
                 </div>
-                <aside class="hidden p-6 overflow-y-auto w-96 lg:block">
+                <aside *ngIf="selectedSubtab !== 'intake'" class="hidden p-6 overflow-y-auto w-96 lg:block">
                   <div class="pb-16 space-y-4">
                     <div>
                     <app-matter-tab-user-card [user]="matter.client" [label]="'client'" (optionClicked)="handleUserInfoOption(matter, $event)"></app-matter-tab-user-card>
