@@ -6,6 +6,7 @@ import { EditableModule } from '@app/shared/editable/editable.module';
 import { PersonalInformationComponent } from './personal-information/personal-information.component';
 import { IncomeComponent } from './income/income.component';
 import { AssetsComponent } from './assets/assets.component';
+import { IntakeDialogComponent } from './intake-dialog/intake-dialog.component';
 
 
 
@@ -14,7 +15,8 @@ import { AssetsComponent } from './assets/assets.component';
     ClientIntakeComponent,
     PersonalInformationComponent,
     IncomeComponent,
-    AssetsComponent
+    AssetsComponent,
+    IntakeDialogComponent
   ],
   imports: [
     CommonModule,
