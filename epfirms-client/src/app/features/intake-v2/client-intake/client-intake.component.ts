@@ -29,11 +29,7 @@ export class ClientIntakeComponent implements OnInit {
 
 
 
-  // properties for the unprotected asset section
-  unprotectedAssets : Asset[] = [];
   
-  // list of owners on potential assets
-  owners = [];
   
 
   constructor(
@@ -64,24 +60,5 @@ export class ClientIntakeComponent implements OnInit {
 
 
 
-  addAsset(isProtected : boolean) : void {
-    this.unprotectedAssets.push({
-      name: "Enter Name",
-    amount : 0,
-    type : "Checking",
-    is_protected : isProtected,
-    owners : {}
-    });
-  }
-
-  handleOwnerSelection(event, asset, owner) : void {
-     if (event.target.checked) {
-      asset.owners[owner.id] = owner.first_name;
-    }
-    else if (!event.target.checked){
-      asset.owners[owner.id] = null;
-    }
-       console.log(asset);
-
-  }
+  
 }

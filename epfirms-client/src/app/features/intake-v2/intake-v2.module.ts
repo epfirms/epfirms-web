@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { PersonalInformationComponent } from './personal-information/personal-information.component';
 import { IncomeComponent } from './income/income.component';
+import { AssetsComponent } from './assets/assets.component';
 
 
 
@@ -12,7 +13,8 @@ import { IncomeComponent } from './income/income.component';
   declarations: [
     ClientIntakeComponent,
     PersonalInformationComponent,
-    IncomeComponent
+    IncomeComponent,
+    AssetsComponent
   ],
   imports: [
     CommonModule,
