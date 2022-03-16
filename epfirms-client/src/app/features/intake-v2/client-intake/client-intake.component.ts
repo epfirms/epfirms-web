@@ -6,7 +6,7 @@ import { Income } from '@app/core/interfaces/income';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { time } from 'console';
-
+import {ClientMatterService} from '@app/client-portal/_services/matter-service/client-matter.service';
 @Component({
   selector: 'app-client-intake',
   templateUrl: './client-intake.component.html',
@@ -23,7 +23,11 @@ export class ClientIntakeComponent implements OnInit {
   // stack that manages the views and enables the back() functionality
   history = [];
 
-  constructor(private currentUserService: CurrentUserService) {}
+  constructor(
+    private currentUserService: CurrentUserService,
+    private clientMatterService : ClientMatterService,
+    
+    ) {}
 
   ngOnInit(): void {
     console.log(this.intake);
@@ -36,5 +40,9 @@ export class ClientIntakeComponent implements OnInit {
 
   back(): void {
     this.state = this.history.pop();
+  }
+
+  submit() : void {
+    this.clientMatterService.updateMatterIntake({id: this.intake.id, status: "complete"}).subscribe();
   }
 }
