@@ -7,6 +7,7 @@ import { PersonalInformationComponent } from './personal-information/personal-in
 import { IncomeComponent } from './income/income.component';
 import { AssetsComponent } from './assets/assets.component';
 import { IntakeDialogComponent } from './intake-dialog/intake-dialog.component';
+import { FirmIntakeViewerComponent } from './firm-intake-viewer/firm-intake-viewer.component';
 
 
 
@@ -16,7 +17,8 @@ import { IntakeDialogComponent } from './intake-dialog/intake-dialog.component';
     PersonalInformationComponent,
     IncomeComponent,
     AssetsComponent,
-    IntakeDialogComponent
+    IntakeDialogComponent,
+    FirmIntakeViewerComponent
   ],
   imports: [
     CommonModule,
