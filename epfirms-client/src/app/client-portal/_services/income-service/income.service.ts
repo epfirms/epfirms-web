@@ -15,4 +15,8 @@ export class IncomeService {
   upsert(data) : Observable<any> {
     return this.http.post('/api/income', data);
   }
+
+  getAllWithUserId(userId) : Observable<any> {
+    return this.http.get(`/api/income/${userId}`);
+  }
 }

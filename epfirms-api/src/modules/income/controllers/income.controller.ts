@@ -17,6 +17,17 @@ export class IncomeController {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
     }
   } 
+
+  public async getWithUserId(req, res : Response) : Promise<any> {
+    try {
+      const incomes = await IncomeService.getWithUserId(req.params.user_id);
+      console.log("CONTROLLER BACKEND", incomes);
+      res.status(StatusConstants.OK).send(incomes);
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  } 
 }
 
 
