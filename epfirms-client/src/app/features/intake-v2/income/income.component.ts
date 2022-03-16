@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
+import { IncomeService } from '@app/client-portal/_services/income-service/income.service';
 import { Income } from '@app/core/interfaces/income';
 
 @Component({
@@ -16,7 +17,7 @@ export class IncomeComponent implements OnInit {
   includeSpouseIncome : boolean = false;
 
   // properties for the  monthly income section
-  monthlyIncome : Income[] = [];
+  monthlyIncome = [];j
 
   // spouse property if available
   spouse;
@@ -24,10 +25,12 @@ export class IncomeComponent implements OnInit {
 
   constructor(
     private familyMemberService : FamilyMemberService,
+    private incomeService : IncomeService,
   ) { }
 
   ngOnInit(): void {
   this.loadSpouse();
+  console.log("MATTER", this.matter);
   }
 
  loadSpouse() : void {
@@ -40,11 +43,13 @@ export class IncomeComponent implements OnInit {
   
   addIncome(isSpouseIncome : boolean) : void {
     console.log("ADDING INCOME FOR SPOUSE", isSpouseIncome);
-    this.monthlyIncome.push({
-      type : "Payroll",
-      is_spouse_income : isSpouseIncome,
-      amount : 0,
-    });
+    let income = {
+      type: "Payroll",
+      amount: 0,
+      user_id: isSpouseIncome ? this.spouse.id : this.matter.client.id,
+    }
+    this.monthlyIncome.push(income);
+    console.log("MONTHLY INCOME LIST", this.monthlyIncome);
   }
 
   onIncomeChange(income : string, incomeBinding) : void {
@@ -59,4 +64,11 @@ export class IncomeComponent implements OnInit {
     this.continue.emit(true);
   }
 
+
+  submit() : void {
+    this.monthlyIncome.forEach(income => {
+      this.incomeService.upsert(income).subscribe();
+    });
+  this.continueButton();
+  }
 }
