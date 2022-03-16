@@ -15,7 +15,9 @@ import { time } from 'console';
 export class ClientIntakeComponent implements OnInit {
   // input bindings
   @Input() intake;  
+  @Input() matter;
   @Output() onIntakeSubmit  = new EventEmitter<boolean>();
+
 
 
 
