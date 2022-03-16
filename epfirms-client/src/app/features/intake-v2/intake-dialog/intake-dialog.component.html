@@ -1,31 +1,32 @@
 <div class="bg-white">
-            <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
-              <div class="text-center">
-                <p
-                  class="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl"
-                >
-                {{settings.title}}
-                </p>
-                <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500">
-                {{settings.content}}
-                </p>
-              </div>
-            </div>
-            
-          </div>
+  <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <p
+        class="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl"
+      >
+        {{ settings.title }}
+      </p>
+      <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500">
+        {{ settings.content }}
+      </p>
+    </div>
+  </div>
+</div>
 <div class="flex justify-end mt-5">
-              <button
-              *ngIf="settings.backButton"
-                type="button"
-                class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Back
-              </button>
-              <button
-                *ngIf="settings.continueButton"
-                type="submit"
-                class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Continue
-              </button>
-            </div>
+  <button
+  (click)="backButton()"
+    *ngIf="settings.backButton"
+    type="button"
+    class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+  >
+    Back
+  </button>
+  <button
+  (click)="continueButton()"
+    *ngIf="settings.continueButton"
+    type="submit"
+    class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+  >
+    Continue
+  </button>
+</div>
