@@ -40,22 +40,11 @@ export class PersonalInformationComponent implements OnInit {
   };
  
   //spouse information
-  spouseInformation = {
-    first_name: '',
-    last_name: '',
-    full_name: '',
-    email: '',
-    address: '',
-    city: '',
-    zip: '',
-    dob: undefined,
-    relationship_type : "spouse",
-    phone: '',
-    state: '',
-    county: ''
-  };
+  spouseInformation;
+ 
   //children
-  children = [];
+  children;
+
   constructor(
     private clientService : ClientService,
     private familyMemberService : FamilyMemberService,
@@ -63,6 +52,22 @@ export class PersonalInformationComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadClientData();
+    this.loadExistingFamilyData();
+  }
+
+
+  loadExistingFamilyData() : void {
+    this.familyMemberService.getByUserId(this.matter.client.id).subscribe(res => {
+      this.spouseInformation = res.filter((member) => member.family_member.relationship_type === "spouse")[0];
+      this.children = res.filter((member) => member.family_member.relationship_type === 'child');
+      if (this.spouseInformation) {
+        this.hasSpouse = true;
+      }
+      if (this.children.length !== 0) {
+        this.hasChildren = true;
+        this.numOfChildren = this.children.length;
+      }
+    });
   }
 
   loadClientData() : void {
