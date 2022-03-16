@@ -27,7 +27,8 @@ import { FirmIntakeViewerComponent } from './firm-intake-viewer/firm-intake-view
   ],
   exports: [
     ClientIntakeComponent,
-    PersonalInformationComponent
+    PersonalInformationComponent,
+    FirmIntakeViewerComponent,
   ]
 })
 export class IntakeV2Module { }

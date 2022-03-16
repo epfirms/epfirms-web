@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-firm-intake-viewer',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FirmIntakeViewerComponent implements OnInit {
 
+  @Input() matter;
   constructor() { }
 
   ngOnInit(): void {
