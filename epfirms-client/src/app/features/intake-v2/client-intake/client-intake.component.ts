@@ -14,53 +14,27 @@ import { time } from 'console';
 })
 export class ClientIntakeComponent implements OnInit {
   // input bindings
-  @Input() intake;  
+  @Input() intake;
   @Input() matter;
-  @Output() onIntakeSubmit  = new EventEmitter<boolean>();
-
-
-
+  @Output() onIntakeSubmit = new EventEmitter<boolean>();
 
   //state that manages the views
   state: number = 0;
   // stack that manages the views and enables the back() functionality
   history = [];
-  
-  // current user
-  user;
 
-
-
-  
-  
-
-  constructor(
-    private currentUserService: CurrentUserService,
-    private clientService : ClientService,
-    private familyMemberService : FamilyMemberService,
-    ) {}
+  constructor(private currentUserService: CurrentUserService) {}
 
   ngOnInit(): void {
-    this.loadCurrentUser();
-    console.log(this.intake)
+    console.log(this.intake);
   }
 
-  loadCurrentUser(): void {
-    this.currentUserService.getCurrentUser().subscribe((res) => {
-      this.user = res.user;
-    });
-  }
   setState(state: number): void {
     this.history.push(this.state);
     this.state = state;
   }
- 
 
   back(): void {
     this.state = this.history.pop();
   }
-
-
-
-  
 }
