@@ -48,27 +48,21 @@
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">
-              City
-            </label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700"> City </label>
             <div class="mt-1">
               <editable-input></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">
-              State
-            </label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700"> State </label>
             <div class="mt-1">
               <editable-input></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">
-              County
-            </label>
+            <label for="first-name" class="block text-sm font-medium text-gray-700"> County </label>
             <div class="mt-1">
               <editable-input></editable-input>
             </div>
@@ -77,6 +71,43 @@
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700">
               Zipcode
+            </label>
+            <div class="mt-1">
+              <editable-input></editable-input>
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">
+              Spouse?
+            </label>
+            <select
+              id="location"
+              name="location"
+              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            >
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">
+              Children?
+            </label>
+            <select
+              id="location"
+              name="location"
+              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            >
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">
+              # of Children
             </label>
             <div class="mt-1">
               <editable-input></editable-input>
