@@ -1,7 +1,7 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
   <li class="col-span-1 m-2 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
-    <div class="w-full flex items-center justify-between p-6 space-x-6">
+    <div class="w-full flex items-center justify-between p-6 space-x-6 bg-blue-300 rounded-sm">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
           <h3 class="text-gray-900 text-sm font-medium truncate">Client Information</h3>
@@ -32,7 +32,7 @@
             </div>
           </div>
 
-          <div class="sm:col-span-2">
+          <div class="sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> Email </label>
             <div class="mt-1">
               <editable-input  [value]="client.email" (onChange)="client.email = $event"></editable-input>
@@ -131,7 +131,7 @@
 
   <!-- IF SPOUSE -->
   <li *ngIf="hasSpouse" class="col-span-1 m-2 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
-    <div class="w-full flex items-center justify-between p-6 space-x-6">
+    <div class="w-full flex items-center justify-between p-6 space-x-6 bg-blue-300 rounded-sm">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
           <h3 class="text-gray-900 text-sm font-medium truncate">Spouse Information</h3>
@@ -161,7 +161,7 @@
             </div>
           </div>
 
-          <div class="sm:col-span-2">
+          <div class="sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> Email </label>
             <div class="mt-1">
               <editable-input  [value]="spouse.email" (onChange)="spouse.email = $event"></editable-input>
@@ -222,7 +222,7 @@
 
   <!-- CHILD INFORMATION -->
 <li *ngFor="let child of children" class="col-span-1 m-2 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
-    <div class="w-full flex items-center justify-between p-6 space-x-6">
+    <div class="w-full flex items-center justify-between p-6 space-x-6 bg-blue-300 rounded-sm">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
           <h3 class="text-gray-900 text-sm font-medium truncate">Child Information</h3>
@@ -253,7 +253,7 @@
             </div>
           </div>
 
-          <div class="sm:col-span-2">
+          <div class="sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> Email </label>
             <div class="mt-1">
               <editable-input  [value]="child.email" (onChange)="child.email = $event"></editable-input>
