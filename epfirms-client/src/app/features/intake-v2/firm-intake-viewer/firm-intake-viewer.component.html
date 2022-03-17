@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-  <li class="col-span-1 m-10 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
+  <li class="col-span-1 m-2 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
     <div class="w-full flex items-center justify-between p-6 space-x-6">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
@@ -45,7 +45,7 @@
             </div>
           </div>
 
-          <div class="sm:col-span-2">
+          <div class="sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700">
               Address
             </label>
@@ -130,7 +130,7 @@
   </li>
 
   <!-- IF SPOUSE -->
-  <li *ngIf="hasSpouse" class="col-span-1 m-10 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
+  <li *ngIf="hasSpouse" class="col-span-1 m-2 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
     <div class="w-full flex items-center justify-between p-6 space-x-6">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
@@ -175,7 +175,7 @@
           </div>
 
 
-          <div class="sm:col-span-2">
+          <div class="sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700">
               Address
             </label>
@@ -221,7 +221,7 @@
   </li>
 
   <!-- CHILD INFORMATION -->
-<li *ngFor="let child of children" class="col-span-1 m-10 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
+<li *ngFor="let child of children" class="col-span-1 m-2 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
     <div class="w-full flex items-center justify-between p-6 space-x-6">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
@@ -267,7 +267,7 @@
           </div>
 
 
-          <div class="sm:col-span-2">
+          <div class="sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700">
               Address
             </label>
