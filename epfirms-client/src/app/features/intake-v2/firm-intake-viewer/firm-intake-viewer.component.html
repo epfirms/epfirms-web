@@ -17,38 +17,31 @@
               First Name
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="client.first_name" (onChange)="client.first_name = $event"></editable-input>
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">
-              Middle Name
-            </label>
-            <div class="mt-1">
-              <editable-input></editable-input>
-            </div>
-          </div>
+         
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700">
               Last Name
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="client.last_name" (onChange)="client.last_name = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> Email </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="client.email" (onChange)="client.email = $event"></editable-input>
             </div>
           </div>
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> Phone </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="client.phone" (onChange)="client.phone = $event"></editable-input>
             </div>
           </div>
 
@@ -57,28 +50,28 @@
               Address
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="client.address" (onChange)="client.address = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> City </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="client.city" (onChange)="client.city = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> State </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="client.state" (onChange)="client.state = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> County </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="client.county" (onChange)="client.county = $event"></editable-input>
             </div>
           </div>
 
@@ -87,7 +80,7 @@
               Zipcode
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="client.zip" (onChange)="client.zip = $event"></editable-input>
             </div>
           </div>
 
@@ -96,6 +89,7 @@
               Spouse?
             </label>
             <select
+              [(ngModel)]="hasSpouse"
               id="location"
               name="location"
               class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
@@ -110,6 +104,7 @@
               Children?
             </label>
             <select
+              [(ngModel)]="hasChildren"
               id="location"
               name="location"
               class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
@@ -119,12 +114,12 @@
             </select>
           </div>
 
-          <div class="sm:col-span-2">
+          <div *ngIf="hasChildren" class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700">
               # of Children
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="numOfChildren.toString()" (onChange)="addChildren($event)"></editable-input>
             </div>
           </div>
         </div>
@@ -135,7 +130,7 @@
   </li>
 
   <!-- IF SPOUSE -->
-  <li class="col-span-1 m-10 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
+  <li *ngIf="hasSpouse" class="col-span-1 m-10 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
     <div class="w-full flex items-center justify-between p-6 space-x-6">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
@@ -152,38 +147,30 @@
               First Name
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="spouse.first_name" (onChange)="spouse.first_name = $event"></editable-input>
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">
-              Middle Name
-            </label>
-            <div class="mt-1">
-              <editable-input></editable-input>
-            </div>
-          </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700">
               Last Name
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="spouse.last_name" (onChange)="spouse.last_name = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> Email </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="spouse.email" (onChange)="spouse.email = $event"></editable-input>
             </div>
           </div>
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> Phone </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="spouse.phone" (onChange)="spouse.phone = $event"></editable-input>
             </div>
           </div>
 
@@ -193,28 +180,28 @@
               Address
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="spouse.address" (onChange)="spouse.address = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> City </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="spouse.city" (onChange)="spouse.city = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> State </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="spouse.state" (onChange)="spouse.state = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> County </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="spouse.county" (onChange)="spouse.county = $event"></editable-input>
             </div>
           </div>
 
@@ -223,7 +210,7 @@
               Zipcode
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="spouse.zip" (onChange)="spouse.zip = $event"></editable-input>
             </div>
           </div>
         </div>
@@ -234,7 +221,7 @@
   </li>
 
   <!-- CHILD INFORMATION -->
-<li class="col-span-1 m-10 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
+<li *ngFor="let child of children" class="col-span-1 m-10 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
     <div class="w-full flex items-center justify-between p-6 space-x-6">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
@@ -251,38 +238,31 @@
               First Name
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="child.first_name" (onChange)="child.first_name = $event"></editable-input>
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">
-              Middle Name
-            </label>
-            <div class="mt-1">
-              <editable-input></editable-input>
-            </div>
-          </div>
+
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700">
               Last Name
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="child.last_name" (onChange)="child.last_name = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> Email </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="child.email" (onChange)="child.email = $event"></editable-input>
             </div>
           </div>
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> Phone </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="child.phone" (onChange)="child.phone = $event"></editable-input>
             </div>
           </div>
 
@@ -292,28 +272,28 @@
               Address
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="child.address" (onChange)="child.address = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> City </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="child.city" (onChange)="child.city = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> State </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="child.state" (onChange)="child.state = $event"></editable-input>
             </div>
           </div>
 
           <div class="sm:col-span-2">
             <label for="first-name" class="block text-sm font-medium text-gray-700"> County </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="child.county" (onChange)="child.county = $event"></editable-input>
             </div>
           </div>
 
@@ -322,7 +302,7 @@
               Zipcode
             </label>
             <div class="mt-1">
-              <editable-input></editable-input>
+              <editable-input  [value]="child.zip" (onChange)="child.zip = $event"></editable-input>
             </div>
           </div>
         </div>
@@ -333,3 +313,14 @@
   </li>
   <!-- More people... -->
 </ul>
+
+
+ <div class="flex justify-end">
+              
+              <button
+                (click)="submitPersonalInformation()"
+                class="m-10 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Save
+              </button>
+            </div>
