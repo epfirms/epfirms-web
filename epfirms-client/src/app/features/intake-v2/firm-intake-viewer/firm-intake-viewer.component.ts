@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
+import { ClientMatterService } from '@app/client-portal/_services/matter-service/client-matter.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 
 @Component({
@@ -41,12 +42,16 @@ export class FirmIntakeViewerComponent implements OnInit {
   constructor(
     private clientService : ClientService,
     private familyMemberService : FamilyMemberService,
+    private clientMatterService : ClientMatterService,
   ) { }
 
   ngOnInit(): void {
     this.loadClientData();
     this.loadExistingFamilyData();
+    console.log("MATTER", this.matter);
   }
+
+  
 
 
   loadExistingFamilyData() : void {
