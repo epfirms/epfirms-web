@@ -4,19 +4,21 @@ import { catchError, filter, take } from 'rxjs/operators';
 import { EMPTY, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectConnectionState } from '@app/features/conversation/store/conversation.store';
-import { connect } from '@app/features/conversation/store/conversation.actions';
+import { init } from '@app/features/conversation/store/conversation.actions';
+import { AuthService } from '@app/core/services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ConversationResolver implements Resolve<any> {
-  constructor(private store: Store) {}
+  constructor(private store: Store, private _authService: AuthService) {}
 
   resolve(): Observable<any> | Observable<never> {
-    this.store.dispatch(connect());
+    this.store.dispatch(init());
     const connectionState = this.store.select(selectConnectionState);
     return connectionState.pipe(
       filter((state) => state === 'connected'),
       take(1),
       catchError((err) => {
+        this._authService.logout();
         console.error('Error connecting to chat client ', err);
         return EMPTY;
       }),

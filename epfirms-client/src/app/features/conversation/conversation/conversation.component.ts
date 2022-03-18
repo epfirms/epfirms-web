@@ -1,25 +1,17 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Conversation, Message, User, Participant, Paginator } from '@twilio/conversations';
-import { Subject, from, tap, takeUntil, switchMap } from 'rxjs';
+import { Subject, from, tap, takeUntil, switchMap, fromEventPattern, Subscription } from 'rxjs';
 import { ConversationService } from '../services/conversation.service';
 
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
   styleUrls: ['./conversation.component.scss'],
-  providers: []
 })
 export class ConversationComponent implements OnInit, OnDestroy {
-  @Input()
   set conversation(value: Conversation) {
-    if (this._conversation) {
-      this._conversation.setAllMessagesRead().then();
-    }
-
     this._conversation = value;
-    this.loadMessages();
-    this.loadOtherParticipant();
   }
 
   get conversation() {
@@ -34,7 +26,9 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   newMessage: string;
 
-  paginator: Paginator<Message>;
+  messagePaginator: Paginator<Message>;
+
+  messageAddedSubscription: Subscription;
 
   private _conversation: Conversation;
 
@@ -54,36 +48,52 @@ export class ConversationComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private _conversationService: ConversationService,     private _route: ActivatedRoute
-    ) {}
+  constructor(private _conversationService: ConversationService, private _route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.currentUser = this._conversationService.user;
 
-    this._route.paramMap.pipe(
-      switchMap((params: ParamMap) => from(this._conversationService.conversationsClient.getConversationBySid(params.get('id'))))
-    ).subscribe((conversation: Conversation) => {
+    // Fetch conversation by route param.
+    this._route.paramMap
+      .pipe(
+        switchMap((params: ParamMap) =>
+          from(
+            this._conversationService.conversationsClient.getConversationBySid(params.get('id')),
+          ),
+        ),
+      )
+      .subscribe((conversation: Conversation) => {
+        // We need to trigger cleanup actions manually because
+        // angular reuses the component instance on dynamic route changes
+        // which prevents ngOnDestroy from being run.
         if (this._conversation) {
           this.destroy();
         }
+
+        // Sets all messages as 'read', fetches the conversation's messages,
+        // and sets the other participant when a conversation is selected.
         this._conversation = conversation;
         this.loadMessages();
         this.loadOtherParticipant();
-    });
+      });
   }
 
+  /**
+   * Run cleanup operations when navigating away from messages page.
+   *  */
   ngOnDestroy(): void {
     this.destroy();
   }
 
+  /** Unsubscribes from 'messageAdded' event. */
   destroy() {
-    this._conversation.setAllMessagesRead().then();
-    this._conversation.removeAllListeners();
+    this._conversationService.setAllMessagesRead(this._conversation);
+    this.messageAddedSubscription.unsubscribe();
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  /** Full message content is not included in conversations from the client SDK so it has to be manually loaded. */
+  /** Fetches message paginator for a conversation. */
   loadMessages(): void {
     from(this.conversation.getMessages())
       .pipe(
@@ -95,13 +105,24 @@ export class ConversationComponent implements OnInit, OnDestroy {
       )
       .subscribe((paginator: Paginator<Message>) => {
         this.messages = paginator.items;
-        console.log('from loadMessages', this.conversation.lastReadMessageIndex);
-        // if (this.messages.length && this.conversation.lastReadMessageIndex === null) {
-        //   this.conversation.updateLastReadMessageIndex(this.messages[0].index).then();
-        // }
+        this.messagePaginator = paginator;
       });
   }
 
+  /** Fetch additional pages from message paginator. */
+  loadMoreMessages(): void {
+    if (this.messagePaginator.hasNextPage) {
+      this.messagePaginator.nextPage().then((paginator) => {
+        this.messages.unshift(...paginator.items);
+        this.messagePaginator = paginator;
+      });
+    }
+  }
+
+  /**
+   * Loads the other participant in a conversation by checking the currently
+   * logged-in user.
+   *  */
   loadOtherParticipant() {
     from(this.conversation.getParticipants()).subscribe((participants: any[]) => {
       const userIdentity = this.currentUser.identity;
@@ -109,12 +130,20 @@ export class ConversationComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Listener for messages added after loading a conversation.
+   */
   subscribeToAddedMessage() {
-    this.conversation.on('messageAdded', (message) => {
-      this.messages.push(message);
-    });
+    const addHandler = (handler) => this.conversation.on('messageAdded', handler);
+    const removeHandler = (handler) => this.conversation.removeListener('messageAdded', handler);
+    this.messageAddedSubscription = fromEventPattern(addHandler, removeHandler).subscribe(
+      (message: Message) => {
+        this.messages.push(message);
+      },
+    );
   }
 
+  /** Send a new message to a conversation and set it as the last read message index. */
   sendMessage() {
     from(this.conversation.sendMessage(this.newMessage))
       .pipe(takeUntil(this.destroy$))

@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     this._authService.login(this.loginForm.value).subscribe(
-      (loginStatus) => {
+     { next: (loginStatus) => {
         this.error = false;
 
         if (loginStatus.success) {
@@ -63,12 +63,12 @@ export class LoginComponent implements OnInit {
           this.errorMessage = 'The password associated with your account needs to be updated. You have been emailed a link with instructions to reset your password.';
         }
       },
-      (error) => {
+      error: (error) => {
         this.error = true;
         this.errorMessage = 'Incorrect email or password';
         this.loading = false;
       }
-    );
+     })
   }
 
   redirectByScope() {

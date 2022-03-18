@@ -11,10 +11,6 @@ import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgScrollbarReachedModule } from 'ngx-scrollbar/reached-event';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { conversationFeature } from './store/conversation.store';
-import { ConversationEffects } from './store/conversation.effects';
 import { ConversationDraftComponent } from './conversation-draft/conversation-draft.component';
 import { ConversationRoutingModule } from './conversation-routing.module';
 
@@ -29,8 +25,6 @@ import { ConversationRoutingModule } from './conversation-routing.module';
   ],
   imports: [
     CoreModule,
-    StoreModule.forFeature(conversationFeature),
-    EffectsModule.forFeature([ConversationEffects]),
     NgScrollbarModule,
     PipesModule,
     AutocompleteModule,

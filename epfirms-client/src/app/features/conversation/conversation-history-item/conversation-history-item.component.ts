@@ -1,12 +1,17 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Conversation, Participant, Message, Paginator } from '@twilio/conversations';
-import { from } from 'rxjs';
+import {
+  Conversation,
+  Participant,
+  Message,
+  Paginator,
+} from '@twilio/conversations';
+import { from, fromEventPattern, Subscription } from 'rxjs';
 import { ConversationService } from '../services/conversation.service';
 
 @Component({
   selector: 'app-conversation-history-item',
   templateUrl: './conversation-history-item.component.html',
-  styleUrls: ['./conversation-history-item.component.scss']
+  styleUrls: ['./conversation-history-item.component.scss'],
 })
 export class ConversationHistoryItemComponent implements OnDestroy {
   @Input() selected: boolean = false;
@@ -29,6 +34,10 @@ export class ConversationHistoryItemComponent implements OnDestroy {
 
   lastMessage: Message;
 
+  hasUnreadMessages: boolean = false;
+
+  conversationUpdateSubscription: Subscription;
+
   private _conversation: Conversation;
 
   get friendlyName() {
@@ -48,7 +57,7 @@ export class ConversationHistoryItemComponent implements OnDestroy {
   constructor(private _conversationService: ConversationService) {}
 
   ngOnDestroy(): void {
-    this.conversation.removeAllListeners();
+    this.conversationUpdateSubscription.unsubscribe();
   }
 
   loadOtherParticipant() {
@@ -65,15 +74,27 @@ export class ConversationHistoryItemComponent implements OnDestroy {
       this.lastMessage = paginator.items.find(
         (message) => message.index === this.conversation.lastMessage.index,
       );
+
+      if (this.lastMessage.author === this.otherParticipant.identity) {
+        this.checkUnreadMessages(this.conversation.lastMessage.index);
+      }
     });
   }
 
+  checkUnreadMessages(lastMessageIndex: number) {
+    this.hasUnreadMessages = !this.selected && (this.conversation.lastReadMessageIndex !== lastMessageIndex);
+  }
+
   listenForUpdates() {
-    this.conversation.on('updated', ({ conversation, updateReasons }) => {
-      const lastMessageUpdated = updateReasons.includes('lastMessage');
-      if (lastMessageUpdated) {
-        this.loadLastMessage();
-      }
-    });
+    const addHandler = (handler) => this.conversation.on('updated', handler);
+    const removeHandler = (handler) => this.conversation.removeListener('updated', handler);
+    this.conversationUpdateSubscription = fromEventPattern(addHandler, removeHandler).subscribe(
+      ({ updateReasons }) => {
+        const lastMessageUpdated = updateReasons.includes('lastMessage');
+        if (lastMessageUpdated) {
+          this.loadLastMessage();
+        }
+      },
+    );
   }
 }
