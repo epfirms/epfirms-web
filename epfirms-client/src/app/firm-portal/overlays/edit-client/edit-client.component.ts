@@ -18,7 +18,7 @@ export class EditClientComponent implements OnInit {
     first_name: new FormControl('', Validators.required),
     last_name: new FormControl('', Validators.required),
     phone: new FormControl(''),
-    email: new FormControl('', Validators.email),
+    email: new FormControl('', [Validators.required, Validators.email]),
     address: new FormControl(''),
     city: new FormControl(''),
     state: new FormControl(''),
