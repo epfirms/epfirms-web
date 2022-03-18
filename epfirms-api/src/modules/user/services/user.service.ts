@@ -96,14 +96,18 @@ export class UserService {
     
 
     let existingUser;
-    if (familyMember.email && familyMember.email.length) {
+    if (familyMember.id) {
       existingUser = await user.findOne({
         where: {
-          email: familyMember.email
+          id: familyMember.id
         }
       });
     }
 
+    // if existing user update the user's info that is coming in with request
+    if (existingUser) {
+      const updated = await user.update(familyMember, {where: {id: existingUser.id}});
+    }
     let member;
     if (existingUser && existingUser.id) {
       member = await currentUser.addMember(existingUser, { through: { relationship_type: familyMember.relationship_type } });
@@ -111,7 +115,7 @@ export class UserService {
       member = await currentUser.createMember(familyMember, { through: { relationship_type: familyMember.relationship_type } });
     }
 
-    return Promise.resolve({...member.dataValues, relationship_type: familyMember.relationship_type});
+    return Promise.resolve();
   }
 
   public async updateFamilyMember(familyMember): Promise<any> {
