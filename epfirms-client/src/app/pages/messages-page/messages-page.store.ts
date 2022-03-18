@@ -57,7 +57,9 @@ export class MessagesPageStore extends ComponentStore<MessagesPageState> {
     origin$.pipe(
       tap(this.updateSelectedConversation),
       tap((conversation: Conversation) => {
-        this._router.navigate([`${conversation.sid}`], {relativeTo: this._route});
+        if (conversation && conversation.sid) {
+          this._router.navigate([`${conversation.sid}`], {relativeTo: this._route});
+        }
       }),
     ),
   );
