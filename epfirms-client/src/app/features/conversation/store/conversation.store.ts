@@ -1,13 +1,21 @@
-import {  createFeature, createReducer, on } from '@ngrx/store';
-import { ConnectionState } from '@twilio/conversations';
-import { updateConnectionState, updateUnreadMessageCount } from './conversation.actions';
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { ConnectionState, State } from '@twilio/conversations';
+import {
+  decreaseUnreadMessageCount,
+  increaseUnreadMessageCount,
+  updateClientState,
+  updateConnectionState,
+  updateUnreadMessageCount,
+} from './conversation.actions';
 
 export interface ConversationState {
-  unreadMessageCount: number;
+  clientState: State | null;
+  unreadMessageCount: number | null;
   connectionState: ConnectionState;
 }
 
 export const initialState: ConversationState = {
+  clientState: null,
   unreadMessageCount: 0,
   connectionState: 'unknown',
 };
@@ -27,7 +35,25 @@ export const conversationFeature = createFeature({
         ...state,
         connectionState,
       };
-    })
+    }),
+    on(updateClientState, (state, { clientState }) => {
+      return {
+        ...state,
+        clientState,
+      };
+    }),
+    on(increaseUnreadMessageCount, (state, { payload }) => {
+      return {
+        ...state,
+        unreadMessageCount: state.unreadMessageCount + payload,
+      };
+    }),
+    on(decreaseUnreadMessageCount, (state, { payload }) => {
+      return {
+        ...state,
+        unreadMessageCount: state.unreadMessageCount - payload,
+      };
+    }),
   ),
 });
 
@@ -37,4 +63,5 @@ export const {
   selectConversationState,
   selectConnectionState,
   selectUnreadMessageCount,
+  selectClientState,
 } = conversationFeature;

@@ -19,7 +19,10 @@ import { InputModule } from '@app/shared/input/input.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { ModalModule } from '@app/shared/modal/modal.module';
 import { InputMaskModule } from '@ngneat/input-mask';
-import { ConversationModule } from '@app/features/conversation/conversation.module';
+import { ConversationEffects } from '@app/features/conversation/store/conversation.effects';
+import { conversationFeature } from '@app/features/conversation/store/conversation.store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 
 @NgModule({
@@ -45,7 +48,8 @@ import { ConversationModule } from '@app/features/conversation/conversation.modu
     MenuModule,
     ModalModule,
     InputMaskModule,
-    ConversationModule
+    StoreModule.forFeature(conversationFeature),
+    EffectsModule.forFeature([ConversationEffects]),
   ]
 })
 export class FirmPortalModule {}

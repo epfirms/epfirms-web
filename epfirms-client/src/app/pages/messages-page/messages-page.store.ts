@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConversationService } from '@app/features/conversation/services/conversation.service';
 import { ComponentStore } from '@ngrx/component-store';
 import { Conversation } from '@twilio/conversations';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, pluck, tap } from 'rxjs';
 
 export interface MessagesPageState {
   selectedConversation: Conversation | null;
