@@ -1,31 +1,24 @@
-
-
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div class="m-5">
   <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
     <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">Intake Sent Date</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900">{{matter.matter_intake.created_at | date}}</dd>
+      <dt class="text-xs font-medium text-gray-500 truncate">Intake Sent Date</dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        {{ matter.matter_intake.created_at | date }}
+      </dd>
     </div>
 
     <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">Intake Status</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900">{{matter.matter_intake.status}}</dd>
+      <dt class="text-xs font-medium text-gray-500 truncate">Intake Status</dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">{{ matter.matter_intake.status }}</dd>
     </div>
 
     <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">Intake Type</dt>
+      <dt class="text-xs font-medium text-gray-500 truncate">Intake Type</dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">Personal Information</dd>
     </div>
   </dl>
 </div>
-
-
-
-
-
-
-
 
 <!-- This example requires Tailwind CSS v2.0+ -->
 <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -33,122 +26,205 @@
     <div class="w-full flex items-center justify-between p-6 space-x-6 bg-gray-200 rounded-sm">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
-          <h3 class="text-gray-900 text-sm font-medium truncate">Client Information</h3>
+          <h3 class="text-gray-900 text-xs font-medium truncate">Client Information</h3>
         </div>
       </div>
     </div>
     <div>
       <!-- FORM SECTION -->
       <div class="pt-2">
-        <div class="mt-2 grid grid-cols-1 gap-x-2 sm:grid-cols-6">
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+        <div class="mt-2 grid grid-cols-3 gap-x-2 sm:grid-cols-6">
+          <div class="sm:col-span-3 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               FIRST NAME
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="client.first_name" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="client.first_name"
+              />
             </div>
           </div>
 
-         
-
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+          <div class="sm:col-span-3 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               LAST NAME
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="client.last_name" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="client.last_name"
+              />
             </div>
           </div>
 
-          <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> EMAIL </label>
+          <div class="sm:col-span-4 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> EMAIL </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="client.email" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="client.email"
+              />
             </div>
           </div>
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> PHONE </label>
+          <div class="sm:col-span-2 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> PHONE </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="client.phone" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="client.phone"
+              />
             </div>
           </div>
 
-          <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+          <div class="sm:col-span-4 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               ADDRESS
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="client.address" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="client.address"
+              />
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> CITY </label>
+          <div class="sm:col-span-2 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> CITY </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="client.city" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="client.city"
+              />
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> STATE </label>
+          <div class="sm:col-span-2 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> STATE </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="client.state" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="client.state"
+              />
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> COUNTY </label>
+          <div class="sm:col-span-2 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> COUNTY </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="client.county" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="client.county"
+              />
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+          <div class="sm:col-span-2 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               ZIPCODE
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="client.zip" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="client.zip"
+              />
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+          <div class="sm:col-span-3 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               SPOUSE?
             </label>
             <select
               [(ngModel)]="hasSpouse"
               id="location"
               name="location"
-              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-xs rounded-md"
             >
               <option [ngValue]="true">Yes</option>
               <option [ngValue]="false">No</option>
             </select>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+          <div class="sm:col-span-3 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               CHILDREN?
             </label>
             <select
               [(ngModel)]="hasChildren"
               id="location"
               name="location"
-              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-xs rounded-md"
             >
               <option [ngValue]="true">Yes</option>
               <option [ngValue]="false">No</option>
             </select>
           </div>
+          
 
-          <div *ngIf="hasChildren" class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
-              # OF CHILDREN
+          <div *ngIf="hasChildren" class="sm:col-span-2 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
+              # OF MINOR CHILDREN
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="numOfChildren" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="numOfChildren"
+              />
+            </div>
+          </div>
+
+          <div *ngIf="hasChildren" class="sm:col-span-2 mt-2">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
+              # OF ADULT CHILDREN
+            </label>
+            <div class="mt-1">
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-7 mt-2">
+            <!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+            <div>
+              <label for="comment" class="block text-xs font-medium text-gray-700"
+                >Add your comment</label
+              >
+              <div class="mt-1">
+                <textarea
+                  rows="4"
+                  name="comment"
+                  id="comment"
+                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                ></textarea>
+              </div>
             </div>
           </div>
         </div>
@@ -159,11 +235,14 @@
   </li>
 
   <!-- IF SPOUSE -->
-  <li *ngIf="hasSpouse" class="col-span-1 m-2 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
+  <li
+    *ngIf="hasSpouse"
+    class="col-span-1 m-2 p-2 bg-white rounded-lg shadow divide-y divide-gray-200"
+  >
     <div class="w-full flex items-center justify-between p-6 space-x-6 bg-gray-200 rounded-sm">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
-          <h3 class="text-gray-900 text-sm font-medium truncate">Spouse Information</h3>
+          <h3 class="text-gray-900 text-xs font-medium truncate">Spouse Information</h3>
         </div>
       </div>
     </div>
@@ -172,74 +251,108 @@
       <div class="pt-2">
         <div class="mt-2 grid grid-cols-1 gap-x-2 sm:grid-cols-6">
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               FIRST NAME
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="spouse.first_name" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="spouse.first_name"
+              />
             </div>
           </div>
 
-
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               LAST NAME
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="spouse.last_name" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="spouse.last_name"
+              />
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> EMAIL </label>
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> EMAIL </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="spouse.email" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="spouse.email"
+              />
             </div>
           </div>
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> PHONE </label>
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> PHONE </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="spouse.phone" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="spouse.phone"
+              />
             </div>
           </div>
 
-
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               ADDRESS
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="spouse.address" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="spouse.address"
+              />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> CITY </label>
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> CITY </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="spouse.city" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="spouse.city"
+              />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> STATE </label>
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> STATE </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="spouse.state" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="spouse.state"
+              />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> COUNTY </label>
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> COUNTY </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="spouse.county" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="spouse.county"
+              />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               ZIPCODE
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="spouse.zip" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="spouse.zip"
+              />
             </div>
           </div>
         </div>
@@ -250,11 +363,14 @@
   </li>
 
   <!-- CHILD INFORMATION -->
-<li *ngFor="let child of children" class="col-span-1 m-2 p-2 bg-white rounded-lg shadow divide-y divide-gray-200">
+  <li
+    *ngFor="let child of children"
+    class="col-span-1 m-2 p-2 bg-white rounded-lg shadow divide-y divide-gray-200"
+  >
     <div class="w-full flex items-center justify-between p-6 space-x-6 bg-gray-200 rounded-sm">
       <div class="flex-1 truncate">
         <div class="flex items-center space-x-3">
-          <h3 class="text-gray-900 text-sm font-medium truncate">Child Information</h3>
+          <h3 class="text-gray-900 text-xs font-medium truncate">Child Information</h3>
         </div>
       </div>
     </div>
@@ -263,75 +379,108 @@
       <div class="pt-2">
         <div class="mt-2 grid grid-cols-1 gap-x-2 sm:grid-cols-6">
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               FIRST NAME
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="child.first_name" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="child.first_name"
+              />
             </div>
           </div>
 
-
-
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               LAST NAME
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="child.last_name" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="child.last_name"
+              />
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> EMAIL </label>
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> EMAIL </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="child.email" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="child.email"
+              />
             </div>
           </div>
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> PHONE </label>
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> PHONE </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="child.phone" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="child.phone"
+              />
             </div>
           </div>
 
-
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               ADDRESS
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="child.address" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="child.address"
+              />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> CITY </label>
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> CITY </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="child.city" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="child.city"
+              />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> STATE </label>
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> STATE </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="child.state" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="child.state"
+              />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500"> COUNTY </label>
+            <label for="first-name" class="block text-xs font-medium text-gray-500"> COUNTY </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="child.county" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="child.county"
+              />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-500">
+            <label for="first-name" class="block text-xs font-medium text-gray-500">
               ZIPCODE
             </label>
             <div class="mt-1">
-              <input type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   [(ngModel)]="child.zip" >
+              <input
+                type="text"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
+                [(ngModel)]="child.zip"
+              />
             </div>
           </div>
         </div>
@@ -343,13 +492,11 @@
   <!-- More people... -->
 </ul>
 
-
- <div class="flex justify-end">
-              
-              <button
-                (click)="submitPersonalInformation()"
-                class="m-10 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Save
-              </button>
-            </div>
+<div class="flex justify-end">
+  <button
+    (click)="submitPersonalInformation()"
+    class="m-10 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+  >
+    Save
+  </button>
+</div>
