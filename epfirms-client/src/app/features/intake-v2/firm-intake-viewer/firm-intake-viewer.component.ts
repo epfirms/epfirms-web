@@ -30,7 +30,9 @@ export class FirmIntakeViewerComponent implements OnInit {
     relationship_type : "spouse",
     phone: '',
     state: '',
-    county: ''
+    county: '',
+    ssn: '',
+    drivers_id: ''
   };
  
   //spouse information
