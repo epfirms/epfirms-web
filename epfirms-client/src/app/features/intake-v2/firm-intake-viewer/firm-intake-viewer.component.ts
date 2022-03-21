@@ -83,7 +83,8 @@ export class FirmIntakeViewerComponent implements OnInit {
      this.client.state = client.state;
      this.client.zip = client.zip;
      this.client.county = client.county;
-    
+     this.client.ssn = client.ssn;
+     this.client.drivers_id = client.drivers_id; 
   }
 
 
