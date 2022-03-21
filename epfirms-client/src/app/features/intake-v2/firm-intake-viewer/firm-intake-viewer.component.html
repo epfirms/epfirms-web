@@ -41,6 +41,7 @@
             <div class="mt-1">
               <input
                 type="text"
+                [ngClass]="{ 'bg-red-200': client.first_name == '' || null }"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
                 [(ngModel)]="client.first_name"
               />
@@ -53,6 +54,7 @@
             </label>
             <div class="mt-1">
               <input
+                [ngClass]="{ 'bg-red-200': client.last_name == '' || null }"
                 type="text"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
                 [(ngModel)]="client.last_name"
@@ -64,6 +66,7 @@
             <label for="first-name" class="block text-xs font-medium text-gray-500"> EMAIL </label>
             <div class="mt-1">
               <input
+                [ngClass]="{ 'bg-red-200': client.email == '' || null }"
                 type="text"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
                 [(ngModel)]="client.email"
@@ -74,6 +77,7 @@
             <label for="first-name" class="block text-xs font-medium text-gray-500"> PHONE </label>
             <div class="mt-1">
               <input
+                [ngClass]="{ 'bg-red-200': client.phone == '' || null }"
                 type="text"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
                 [(ngModel)]="client.phone"
@@ -87,6 +91,7 @@
             </label>
             <div class="mt-1">
               <input
+                [ngClass]="{ 'bg-red-200': client.address == '' || null }"
                 type="text"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
                 [(ngModel)]="client.address"
@@ -98,6 +103,7 @@
             <label for="first-name" class="block text-xs font-medium text-gray-500"> CITY </label>
             <div class="mt-1">
               <input
+                [ngClass]="{ 'bg-red-200': client.city == '' || null }"
                 type="text"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
                 [(ngModel)]="client.city"
@@ -109,6 +115,7 @@
             <label for="first-name" class="block text-xs font-medium text-gray-500"> STATE </label>
             <div class="mt-1">
               <input
+                [ngClass]="{ 'bg-red-200': client.state == '' || null }"
                 type="text"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
                 [(ngModel)]="client.state"
@@ -120,6 +127,7 @@
             <label for="first-name" class="block text-xs font-medium text-gray-500"> COUNTY </label>
             <div class="mt-1">
               <input
+               [ngClass]="{'bg-red-200': client.county == ''}"              
                 type="text"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
                 [(ngModel)]="client.county"
@@ -133,6 +141,7 @@
             </label>
             <div class="mt-1">
               <input
+                [ngClass]="{ 'bg-red-200': client.zip == '' || null }"
                 type="text"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
                 [(ngModel)]="client.zip"
@@ -169,7 +178,6 @@
               <option [ngValue]="false">No</option>
             </select>
           </div>
-          
 
           <div *ngIf="hasChildren" class="sm:col-span-2 mt-2">
             <label for="first-name" class="block text-xs font-medium text-gray-500">
@@ -178,6 +186,7 @@
             <div class="mt-1">
               <input
                 type="text"
+                [ngClass]="{ 'bg-red-200': numOfChildren == 0 }"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xs border-gray-300 rounded-md"
                 [(ngModel)]="numOfChildren"
               />
