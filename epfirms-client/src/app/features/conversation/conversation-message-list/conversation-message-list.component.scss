@@ -1,3 +1,7 @@
 :host {
   display: contents;
 }
+
+.scroll-view {
+  scroll-snap-type: y proximity;
+}

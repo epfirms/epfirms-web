@@ -8,13 +8,9 @@ import { ConversationService } from '../services/conversation.service';
 @Component({
   selector: 'app-conversation-draft',
   templateUrl: './conversation-draft.component.html',
-  styleUrls: ['./conversation-draft.component.scss']
+  styleUrls: ['./conversation-draft.component.scss'],
 })
 export class ConversationDraftComponent implements OnInit {
-  @Output() closed: EventEmitter<void> = new EventEmitter<void>();
-
-  @Output() create: EventEmitter<{body: string, userId: string}> = new EventEmitter<{body: string, userId: string}>();
-
   @Output() conversationFound: EventEmitter<Conversation> = new EventEmitter<Conversation>();
 
   searchInput: string;
@@ -29,19 +25,22 @@ export class ConversationDraftComponent implements OnInit {
 
   messageBody: string;
 
-  constructor(private _staffService: StaffService, private _conversationService: ConversationService) { 
+  constructor(
+    private _staffService: StaffService,
+    private _conversationService: ConversationService,
+  ) {
     this.staff$ = this._staffService.entities$;
   }
 
   ngOnInit(): void {
     this.staff$.pipe(take(1)).subscribe((a) => {
-      this.staffMembers = [...a.filter(member => member.user.id.toString() !== this._conversationService.user.identity)];
+      this.staffMembers = [
+        ...a.filter(
+          (member) => member.user.id.toString() !== this._conversationService.user.identity,
+        ),
+      ];
       this.filteredStaffMembers = [...this.staffMembers];
     });
-  }
-
-  closeWindow() {
-    this.closed.emit();
   }
 
   filterStaffMembers(event) {
@@ -67,42 +66,43 @@ export class ConversationDraftComponent implements OnInit {
   }
 
   createConversation(): void {
+    this._conversationService.createConversation().subscribe((conversation) => {
       this._conversationService
-        .createConversation()
-        .subscribe((conversation) => {
-          this._conversationService
-            .addParticipant(conversation, this.userId.toString())
-            .subscribe(() => {
-              this._conversationService
-                .sendMessage(conversation, this.messageBody)
-                .subscribe(() => {
-                  this.conversationFound.emit(conversation);
-                });
-            });
+        .addParticipant(conversation, this.userId.toString())
+        .subscribe(() => {
+          this._conversationService.sendMessage(conversation, this.messageBody).subscribe(() => {
+            this.conversationFound.emit(conversation);
+          });
         });
+    });
   }
 
   async findDirectConversation() {
     const currentUserIdentity = this._conversationService.user.identity;
 
-    const result = await this.asyncFind(this._conversationService.conversations$.value, async conversation => {
-      const attributes = conversation.attributes;
+    const result = await this.asyncFind(
+      this._conversationService.conversations$.value,
+      async (conversation) => {
+        const attributes = conversation.attributes;
 
-      const participants = await conversation.getParticipants();
-      return (
-        currentUserIdentity !== this.userId.toString() &&
-        attributes.type === 'direct' &&
-        participants.length > 1 &&
-        participants.some((p) => p.identity === currentUserIdentity) &&
-        participants.some((p) => p.identity === this.userId.toString())
-      )
-    });
+        const participants = await conversation.getParticipants();
+        return (
+          currentUserIdentity !== this.userId.toString() &&
+          attributes.type === 'direct' &&
+          participants.length > 1 &&
+          participants.some((p) => p.identity === currentUserIdentity) &&
+          participants.some((p) => p.identity === this.userId.toString())
+        );
+      },
+    );
 
     return result;
   }
 
   async asyncFind(arr, callback) {
-    const fail = Symbol()
-    return (await Promise.all(arr.map(async item => (await callback(item)) ? item : fail))).find(i=>i!==fail)
+    const fail = Symbol();
+    return (
+      await Promise.all(arr.map(async (item) => ((await callback(item)) ? item : fail)))
+    ).find((i) => i !== fail);
   }
 }

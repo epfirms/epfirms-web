@@ -4,7 +4,9 @@ import * as ConversationActions from '../store/conversation.actions';
 import { Store } from '@ngrx/store';
 import {
   Client as ConversationsClient,
+  ConnectionState,
   Conversation,
+  Message,
 } from '@twilio/conversations';
 import {
   BehaviorSubject,
@@ -12,18 +14,17 @@ import {
   concatMap,
   from,
   fromEvent,
+  fromEventPattern,
   Observable,
   pluck,
-  Subject,
-  take,
   tap,
 } from 'rxjs';
+import { ConversationState } from '../store/conversation.store';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConversationService {
-
   /** Twilio conversations client. */
   conversationsClient: ConversationsClient;
 
@@ -35,9 +36,10 @@ export class ConversationService {
     return this.conversationsClient.user;
   }
 
-  protected destroy$ = new Subject<void>();
-
-  constructor(private _http: HttpClient, private _store: Store<{ currentUser: any }>) {}
+  constructor(
+    private _http: HttpClient,
+    private _store: Store<{ conversation: ConversationState; currentUser: any }>,
+  ) {}
 
   /** Retrieves an access token for the client. */
   getAccessToken(): Observable<any> {
@@ -51,7 +53,7 @@ export class ConversationService {
   /** Initializes client and emits the connection state. */
   init(token: string): Observable<any> {
     this.conversationsClient = new ConversationsClient(token, { logLevel: 'error' });
-    return fromEvent(this.conversationsClient, 'connectionStateChanged');
+    return this.connectionStateChanged();
   }
 
   /** Creates a conversation and adds the creator as participant. Direct messages are between 2 users. */
@@ -111,51 +113,58 @@ export class ConversationService {
   shutdown() {
     if (this.conversationsClient) {
       this.conversationsClient.removeAllListeners();
-      return from(this.conversationsClient.shutdown());
+      return from(this.conversationsClient.shutdown().then());
     }
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.conversations$.next([]);
+    this.conversations$.complete();
     return true;
   }
 
-  /** Emits data from 'conversationJoined' event. */
-  conversationJoined() {
-    this.conversationsClient.on('conversationJoined', (conversation) => {
-      this.conversations$.next([...this.conversations$.value, conversation]);
+  connectionStateChanged() {
+    const addHandler = (handler) =>
+      this.conversationsClient.onWithReplay('connectionStateChanged', handler);
+    const removeHandler = (handler) =>
+      this.conversationsClient.removeListener('connectionStateChanged', handler);
+    return fromEventPattern(addHandler, removeHandler) as Observable<ConnectionState>;
+  }
+
+  setAllMessagesRead(conversation: Conversation) {
+    conversation.getUnreadMessagesCount().then((count) => {
+      conversation.setAllMessagesRead().then(() => {
+        this._store.dispatch(ConversationActions.decreaseUnreadMessageCount({ payload: count }));
+      });
     });
   }
 
-  conversationUpdate() {
-    return fromEvent(this.conversationsClient, 'conversationUpdated');
+  messageAdded() {
+    return fromEvent(this.conversationsClient, 'messageAdded') as Observable<Message>;
+  }
+
+  conversationJoinedEvent() {
+    const addHandler = (handler) => this.conversationsClient.on('conversationJoined', handler);
+    return fromEventPattern(addHandler) as Observable<Conversation>;
   }
 
   connectionError() {
     return fromEvent(this.conversationsClient, 'connectionError');
   }
 
-  pushNotification() {
-    return fromEvent(this.conversationsClient, 'pushNotification');
-  }
-
   /** Dispatch action when token is about to expire (<3 min until expiration). */
   tokenAboutToExpire() {
-    this.conversationsClient.on('tokenAboutToExpire', () => {
-      this._store.dispatch(ConversationActions.updateAccessToken());
-    });
+    return fromEvent(this.conversationsClient, 'tokenAboutToExpire');
   }
 
   /** Dispatch action when token is expired. */
   tokenExpired() {
-    this.conversationsClient.on('tokenExpired', () => {
-      this._store.dispatch(ConversationActions.updateAccessToken());
-    });
+    return fromEvent(this.conversationsClient, 'tokenExpired');
   }
 
   /** Updates friendlyName and profileImage for logged-in user. */
   syncUserProfile() {
     const currentUser$ = this._store.select('currentUser');
-    currentUser$.pipe(take(1), pluck('user')).subscribe((user) => {
+    currentUser$.pipe(pluck('user')).subscribe((user) => {
       this.updateUserFriendlyName(user.full_name).subscribe();
       this.updateUserAttributes(user.profile_image).subscribe();
     });
-  }}
+  }
+}
