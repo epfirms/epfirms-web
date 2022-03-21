@@ -72,6 +72,9 @@ module.exports = (sequelize, {
       },
       drivers_id: {
         type: STRING
+      },
+      note: {
+        type: TEXT
       }
     }, {
       tableName,

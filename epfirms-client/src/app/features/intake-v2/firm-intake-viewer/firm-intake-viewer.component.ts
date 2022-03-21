@@ -32,7 +32,8 @@ export class FirmIntakeViewerComponent implements OnInit {
     state: '',
     county: '',
     ssn: '',
-    drivers_id: ''
+    drivers_id: '',
+    note: ''
   };
  
   //spouse information
@@ -84,7 +85,8 @@ export class FirmIntakeViewerComponent implements OnInit {
      this.client.zip = client.zip;
      this.client.county = client.county;
      this.client.ssn = client.ssn;
-     this.client.drivers_id = client.drivers_id; 
+     this.client.drivers_id = client.drivers_id;
+     this.client.note = client.note; 
   }
 
 
