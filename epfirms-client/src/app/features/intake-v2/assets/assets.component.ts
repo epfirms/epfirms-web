@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { Asset } from '@app/core/interfaces/asset';
 
@@ -18,37 +19,51 @@ export class AssetsComponent implements OnInit {
 
   // spouse of client
   spouse;
-  constructor(private familyMemberService: FamilyMemberService) {}
+  constructor(
+    private familyMemberService: FamilyMemberService,
+    private assetService : AssetService
+     
+    
+    ) {}
 
   ngOnInit(): void {
     this.owners.push(this.matter.client);
     this.loadSpouse();
+    this.loadAssets();
 
 
   }
   addAsset(isProtected: boolean): void {
     this.assets.push({
-      name: 'Enter Name',
-      amount: 0,
+      institution: '',
+      balance: 0,
       type: 'Checking',
-      is_protected: isProtected,
-      owners: {},
+      is_joint: false,
+      user_id : this.matter.client.id
+    });
+
+  }
+
+  loadAssets() : void {
+    this.assetService.getAssetsByUserId(this.matter.client.id).subscribe(res => {
+       this.assets = res.money_account;
     });
   }
 
-  handleOwnerSelection(event, asset, owner): void {
-    if (event.target.checked) {
-      asset.owners[owner.id] = true;
-    } else if (!event.target.checked) {
-      asset.owners[owner.id] = false;
-    }
-    console.log(asset);
-  }
+ 
+
+ 
   loadSpouse(): void {
     this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
       console.log(res);
       this.spouse = res.filter((member) => member.family_member.relationship_type === 'spouse')[0];
       this.owners.push(this.spouse);
+    });
+  }
+
+  submit() : void {
+    this.assets.forEach(asset => {
+      this.assetService.addMoneyAccount(this.matter.client.id, asset).subscribe(res => console.log(res));
     });
   }
 }
