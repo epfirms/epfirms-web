@@ -14,11 +14,10 @@ export class FirmIntakeViewerComponent implements OnInit {
   hasSpouse: boolean = false;
   //state for displaying children fields
   hasChildren: boolean = false;
-  hasGrandChildren : boolean = false;
+  hasGrandChildren: boolean = false;
   numOfMinorChildren: number = 0;
   numOfAdultChildren: number = 0;
   numOfGrandChildren: number = 0;
-  
 
   client = {
     id: undefined,
@@ -64,17 +63,17 @@ export class FirmIntakeViewerComponent implements OnInit {
       this.spouse = res.filter((member) => member.family_member.relationship_type === 'spouse')[0];
       // get all minor children
       this.minorChildren = res.filter(
-        (member) => member.family_member.relationship_type === 'child' && member.is_minor
+        (member) => member.family_member.relationship_type === 'child' && member.is_minor,
       );
       // get all adult children
       this.adultChildren = res.filter(
-        (member) => member.family_member.relationship_type === 'child' && !member.is_minor
+        (member) => member.family_member.relationship_type === 'child' && !member.is_minor,
       );
       // get all grandchildren
-       this.grandChildren = res.filter(
-        (member) => member.family_member.relationship_type === 'grandchild' 
+      this.grandChildren = res.filter(
+        (member) => member.family_member.relationship_type === 'grandchild',
       );
- 
+
       if (this.spouse) {
         this.hasSpouse = true;
       }
@@ -108,15 +107,42 @@ export class FirmIntakeViewerComponent implements OnInit {
     this.client.note = client.note;
   }
 
-  // addChild(isMinor : boolean, isGrandChild : boolean): void {
-  //   // implement add child for the different types
-  //   console.log(isMinor);
-  // }
+  private addChild(isMinor: boolean, isGrandChild: boolean): void {
+    // implement add child for the different types
+    let child = {
+      id: undefined,
+      first_name: '',
+      last_name: '',
+      full_name: '',
+      email: '',
+      address: '',
+      city: '',
+      zip: '',
+      dob: undefined,
+      relationship_type: isGrandChild ? 'grandchild' : 'child',
+      phone: '',
+      state: '',
+      county: '',
+      ssn: '',
+      drivers_id: '',
+      note: '',
+      is_minor: isMinor,
+    };
 
-  // addChildren(num): void {
-  //   this.numOfChildren = parseInt(num);
-  //   this.addChild();
-  // }
+    if (isMinor) {
+      this.minorChildren.push(child);
+    } else if (isGrandChild) {
+      this.grandChildren.push(child);
+    } else {
+      this.adultChildren.push(child);
+    }
+  }
+
+  addChildren(num, isMinor: boolean, isGrandChild: boolean): void {
+    for (let i = 0; i < num; i++) {
+      this.addChild(isMinor, isGrandChild);
+    }
+  }
 
   submitClient(): void {
     this.clientService.updateClient(this.client).subscribe();
@@ -129,11 +155,17 @@ export class FirmIntakeViewerComponent implements OnInit {
       .subscribe((res) => {});
   }
 
-  // submitChildren(): void {
-  //   this.children.forEach((child) => {
-  //     this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
-  //   });
-  // }
+  submitChildren(): void {
+    this.minorChildren.forEach((child) => {
+      this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
+    });
+    this.adultChildren.forEach((child) => {
+      this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
+    });
+    this.grandChildren.forEach((child) => {
+      this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
+    });
+  }
 
   submitPersonalInformation(): void {
     this.submitClient();
@@ -141,7 +173,7 @@ export class FirmIntakeViewerComponent implements OnInit {
       this.submitSpouse();
     }
     if (this.hasChildren) {
-      // this.submitChildren();
+      this.submitChildren();
     }
   }
 }
