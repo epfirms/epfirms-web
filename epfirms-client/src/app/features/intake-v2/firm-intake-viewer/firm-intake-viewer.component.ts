@@ -139,9 +139,31 @@ export class FirmIntakeViewerComponent implements OnInit {
   }
 
   addChildren(num, isMinor: boolean, isGrandChild: boolean): void {
+    this.clearEmptyChildLists();
+    console.log("add children call", num);
+    console.log(this.adultChildren);
     for (let i = 0; i < num; i++) {
       this.addChild(isMinor, isGrandChild);
     }
+  }
+
+  private clearEmptyChildLists(): void {
+    this.minorChildren.forEach((l, n) => {
+      if (l.first_name === '') {
+        this.minorChildren.splice(n, 1);
+      }
+    });
+    this.adultChildren.forEach((l, n) => {
+      if (l.first_name === '') {
+        this.adultChildren.splice(n, 1);
+      }
+    });
+    this.adultChildren.forEach((l, n) => {
+      if (l.first_name === '') {
+        this.grandChildren.splice(n, 1);
+      }
+    });
+
   }
 
   submitClient(): void {
