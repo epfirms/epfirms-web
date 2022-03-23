@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { Asset } from '@app/core/interfaces/asset';
@@ -10,6 +10,8 @@ import { Asset } from '@app/core/interfaces/asset';
 })
 export class AssetsComponent implements OnInit {
   // Input Bindings
+@Output() back = new EventEmitter<boolean>();
+  @Output() continue = new EventEmitter<boolean>();
   @Input() matter;
   // properties for the unprotected asset section
   assets: Asset[] = [];
@@ -65,5 +67,13 @@ export class AssetsComponent implements OnInit {
     this.assets.forEach(asset => {
       this.assetService.addMoneyAccount(this.matter.client.id, asset).subscribe(res => console.log(res));
     });
+    this.continueButton();
+  }
+backButton(): void {
+    this.back.emit(true);
+  }
+
+  continueButton(): void {
+    this.continue.emit(true);
   }
 }

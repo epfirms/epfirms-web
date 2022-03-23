@@ -87,8 +87,21 @@
 
 
         <!--PERSONAL INFO-->
-        <app-personal-information *ngIf="state === 1" [matter]="matter" (back)="back()"></app-personal-information>
+        <app-personal-information *ngIf="state === 1" [matter]="matter" (back)="back()" (continue)="setState(2)"></app-personal-information>
         <!-------------------->
+
+
+        <!-- INCOME INFORMATION -->
+
+<app-income *ngIf="state === 2" [matter]="matter" (back)="back()" (continue)="setState(3)"></app-income>
+        <!-- -------------------------- -->
+
+
+
+ <!-- ASSET INFORMATION -->
+
+        <app-assets *ngIf="state === 3" [matter]="matter" (back)="back()"></app-assets>
+        <!-- -------------------------- -->
       </div>
     </main>
   </div>

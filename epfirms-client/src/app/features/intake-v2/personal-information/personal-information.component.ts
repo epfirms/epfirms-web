@@ -33,14 +33,26 @@ export class PersonalInformationComponent implements OnInit {
     city: '',
     zip: '',
     dob: undefined,
-    relationship_type : "spouse",
     phone: '',
     state: '',
     county: ''
   };
  
-  //spouse information
-  spouseInformation;
+  spouseInformation = {
+    id: undefined,
+    first_name: '',
+    last_name: '',
+    full_name: '',
+    email: '',
+    address: '',
+    city: '',
+    zip: '',
+    dob: undefined,
+    relationship_type : "spouse",
+    phone: '',
+    state: '',
+    county: ''
+  };
  
   //children
   children;
@@ -58,9 +70,10 @@ export class PersonalInformationComponent implements OnInit {
 
   loadExistingFamilyData() : void {
     this.familyMemberService.getByUserId(this.matter.client.id).subscribe(res => {
-      this.spouseInformation = res.filter((member) => member.family_member.relationship_type === "spouse")[0];
+      let spouse = res.filter((member) => member.family_member.relationship_type === "spouse")[0];
       this.children = res.filter((member) => member.family_member.relationship_type === 'child');
-      if (this.spouseInformation) {
+      if (spouse) {
+        this.spouseInformation = spouse;
         this.hasSpouse = true;
       }
       if (this.children.length !== 0) {
