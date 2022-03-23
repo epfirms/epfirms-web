@@ -8,6 +8,7 @@ import { IncomeComponent } from './income/income.component';
 import { AssetsComponent } from './assets/assets.component';
 import { IntakeDialogComponent } from './intake-dialog/intake-dialog.component';
 import { FirmIntakeViewerComponent } from './firm-intake-viewer/firm-intake-viewer.component';
+import { EstateLawIntakeComponent } from './estate-law-intake/estate-law-intake.component';
 
 
 
@@ -18,7 +19,8 @@ import { FirmIntakeViewerComponent } from './firm-intake-viewer/firm-intake-view
     IncomeComponent,
     AssetsComponent,
     IntakeDialogComponent,
-    FirmIntakeViewerComponent
+    FirmIntakeViewerComponent,
+    EstateLawIntakeComponent
   ],
   imports: [
     CommonModule,
