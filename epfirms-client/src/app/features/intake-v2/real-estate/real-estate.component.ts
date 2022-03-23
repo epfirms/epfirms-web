@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -7,9 +8,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RealEstateComponent implements OnInit {
 
-  constructor() { }
+  // Input Bindings
+@Output() back = new EventEmitter<boolean>();
+  @Output() continue = new EventEmitter<boolean>();
+  @Input() matter;
+ 
+  
+  properties = [];
+
+  // list of owners on potential assets
+  owners = [];
+
+  // spouse of client
+  spouse;
+  constructor(
+    private assetService : AssetService
+     
+    
+    ) {}
 
   ngOnInit(): void {
+   
+
   }
+backButton(): void {
+    this.back.emit(true);
+  }
+
+  continueButton(): void {
+    this.continue.emit(true);
+  }
+
+handleAmount(amount, property) : void {
+  property = parseFloat(amount);
+}
 
 }

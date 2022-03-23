@@ -55,6 +55,16 @@
             >
               Asset Information
             </a>
+<a
+              [ngClass]="
+                state === 4
+                  ? 'border-indigo-500 text-gray-900'
+                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+              "
+              class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+            >
+              Read Estate Information
+            </a>
           </div>
         </div>
       </div>
@@ -100,9 +110,20 @@
 
  <!-- ASSET INFORMATION -->
 
-        <app-assets *ngIf="state === 3" [matter]="matter" (back)="back()"></app-assets>
+        <app-assets *ngIf="state === 3" [matter]="matter" (back)="back()" (continue)="setState(4)"></app-assets>
         <!-- -------------------------- -->
+
+
+ <!-- REAL ESTATE INFORMATION -->
+<app-real-estate *ngIf="state === 4" [matter]="matter" (back)="back()"></app-real-estate>
+      <!-- -------------------------- -->
+
+
+
       </div>
+    
+
+
     </main>
   </div>
 </div>
