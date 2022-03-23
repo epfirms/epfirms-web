@@ -46,7 +46,7 @@ export class AssetService {
   public static async addRealEstate(realEstate: any): Promise<boolean> {
     const { real_estate } = Database.models;
 
-    const createdRealEstate = await real_estate.create(realEstate);
+    const createdRealEstate = await real_estate.upsert(realEstate);
 
     return Promise.resolve(createdRealEstate);
   }

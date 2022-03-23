@@ -27,21 +27,31 @@ export class RealEstateComponent implements OnInit {
     this.continue.emit(true);
   }
 
-  handleAmount(amount, property): void {
-    property = parseFloat(amount);
+  handleLoanBalance(amount, property): void {
+    property.loan_amount = parseFloat(amount);
   }
-
-  addProperty() : void {
+  handleTotalValue(amount, property): void {
+    property.total_value = parseFloat(amount);
+  }
+  addProperty(): void {
     this.properties.push({
-      full_address : '',
+      full_address: '',
       loan_amount: 0,
-      total_value: 0
+      total_value: 0,
     });
   }
 
-  loadProperties() : void {
-    this.assetService.getAssetsByUserId(this.matter.client.id).subscribe(res => {
+  loadProperties(): void {
+    this.assetService.getAssetsByUserId(this.matter.client.id).subscribe((res) => {
       this.properties = res.real_estate;
     });
+  }
+
+  submit(): void {
+    console.log(this.properties);
+    this.properties.forEach((property) => {
+      this.assetService.addRealEstate(this.matter.client.id, property).subscribe();
+    });
+    this.continueButton();
   }
 }
