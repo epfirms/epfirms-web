@@ -88,6 +88,7 @@ export class PersonalInformationComponent implements OnInit {
 
 
   addChild(): void {
+    let client = this.matter.client;
     this.children = [];
     for (let i = 0; i < this.numOfChildren; i++) {
       this.children.push({
@@ -95,13 +96,14 @@ export class PersonalInformationComponent implements OnInit {
         last_name: '',
         full_name: '',
         email: '',
-        address: '',
+        address: client.address,
         relationship_type: "child",
-        city: '',
-        zip: '',
+        city: client.city,
+        zip: client.zip,
         dob: new Date().toString(),
         phone: '',
-        state: '',
+        state: client.state,
+        client: client.county,
       });
     }
   }
