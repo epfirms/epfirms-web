@@ -31,6 +31,7 @@ import { EstateLawIntakeComponent } from './estate-law-intake/estate-law-intake.
     ClientIntakeComponent,
     PersonalInformationComponent,
     FirmIntakeViewerComponent,
+    EstateLawIntakeComponent,
   ]
 })
 export class IntakeV2Module { }
