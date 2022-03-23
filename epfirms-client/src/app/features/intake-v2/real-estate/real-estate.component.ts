@@ -38,6 +38,8 @@ export class RealEstateComponent implements OnInit {
       full_address: '',
       loan_amount: 0,
       total_value: 0,
+      is_business: false,
+      has_mineral_rights: false
     });
   }
 
