@@ -4,34 +4,22 @@ import { AssetService } from '@app/client-portal/_services/asset-service/asset.s
 @Component({
   selector: 'app-real-estate',
   templateUrl: './real-estate.component.html',
-  styleUrls: ['./real-estate.component.scss']
+  styleUrls: ['./real-estate.component.scss'],
 })
 export class RealEstateComponent implements OnInit {
-
   // Input Bindings
-@Output() back = new EventEmitter<boolean>();
+  @Output() back = new EventEmitter<boolean>();
   @Output() continue = new EventEmitter<boolean>();
   @Input() matter;
- 
-  
+
   properties = [];
 
-  // list of owners on potential assets
-  owners = [];
-
-  // spouse of client
-  spouse;
-  constructor(
-    private assetService : AssetService
-     
-    
-    ) {}
+  constructor(private assetService: AssetService) {}
 
   ngOnInit(): void {
-   
-
+    this.loadProperties();
   }
-backButton(): void {
+  backButton(): void {
     this.back.emit(true);
   }
 
@@ -39,8 +27,21 @@ backButton(): void {
     this.continue.emit(true);
   }
 
-handleAmount(amount, property) : void {
-  property = parseFloat(amount);
-}
+  handleAmount(amount, property): void {
+    property = parseFloat(amount);
+  }
 
+  addProperty() : void {
+    this.properties.push({
+      full_address : '',
+      loan_amount: 0,
+      total_value: 0
+    });
+  }
+
+  loadProperties() : void {
+    this.assetService.getAssetsByUserId(this.matter.client.id).subscribe(res => {
+      this.properties = res.real_estate;
+    });
+  }
 }
