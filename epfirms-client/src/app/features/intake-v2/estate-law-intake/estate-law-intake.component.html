@@ -82,6 +82,13 @@
         ></app-intake-dialog>
 
         <!---------------------------------->
+      
+
+
+
+        <!--PERSONAL INFO-->
+        <app-personal-information *ngIf="state === 1" [matter]="matter" (back)="back()"></app-personal-information>
+        <!-------------------->
       </div>
     </main>
   </div>
