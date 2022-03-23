@@ -140,6 +140,7 @@
                                   <td class="whitespace-nowrap p-4 text-sm text-gray-500">
                                     <editable-input
                                       [value]="asset.balance.toString()"
+                                      (onChange)="handleBalance($event, asset)"
                                     ></editable-input>
                                   </td>
                                   <td

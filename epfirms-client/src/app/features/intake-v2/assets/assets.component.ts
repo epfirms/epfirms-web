@@ -76,4 +76,8 @@ backButton(): void {
   continueButton(): void {
     this.continue.emit(true);
   }
+
+handleBalance(amount, asset) : void {
+  asset.balance = parseFloat(amount);
+}
 }

@@ -16,11 +16,15 @@ export class AssetService {
   }
 
   public static async addMoneyAccount(account: any): Promise<any> {
-    const { money_account } = Database.models;
+   try {
+     const { money_account } = Database.models;
 
-    const createdAccount = await money_account.create(account);
+    const createdAccount = await money_account.upsert(account);
 
     return Promise.resolve(createdAccount);
+   } catch (error) {
+     console.error(error);
+   } 
   }
 
   public static async updateMoneyAccount(id: number, data: any): Promise<boolean> {
