@@ -140,7 +140,7 @@ export class FirmIntakeViewerComponent implements OnInit {
 
   addChildren(num, isMinor: boolean, isGrandChild: boolean): void {
     this.clearEmptyChildLists();
-    console.log("add children call", num);
+    console.log('add children call', num);
     console.log(this.adultChildren);
     for (let i = 0; i < num; i++) {
       this.addChild(isMinor, isGrandChild);
@@ -163,7 +163,6 @@ export class FirmIntakeViewerComponent implements OnInit {
         this.grandChildren.splice(n, 1);
       }
     });
-
   }
 
   submitClient(): void {
@@ -179,12 +178,21 @@ export class FirmIntakeViewerComponent implements OnInit {
 
   submitChildren(): void {
     this.minorChildren.forEach((child) => {
+      if (child.email === '') {
+        child.email = null;
+      }
       this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
     });
     this.adultChildren.forEach((child) => {
+      if (child.email === '') {
+        child.email = null;
+      }
       this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
     });
     this.grandChildren.forEach((child) => {
+      if (child.email === '') {
+        child.email = null;
+      }
       this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
     });
   }
