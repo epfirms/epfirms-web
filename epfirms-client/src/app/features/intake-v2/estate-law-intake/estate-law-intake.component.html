@@ -115,15 +115,13 @@
 
 
  <!-- REAL ESTATE INFORMATION -->
-<app-real-estate *ngIf="state === 4" [matter]="matter" (back)="back()" (continue)="setState(5)"></app-real-estate>
+<app-real-estate *ngIf="state === 4" [matter]="matter" (back)="back()" (continue)="setState(5); submit()"></app-real-estate>
       <!-- -------------------------- -->
 
 
 
       </div>
-    
-<!-- WILL REQUESTS -->
-<app-will-requests *ngIf="state === 5" [matter]="matter" (back)="back()"></app-will-requests>
+   <app-intake-dialog *ngIf="state === 5" [settings]="{title: 'What Happens Next?', content: 'Thank you for your submission. Your attorney will contact you shortly'}"></app-intake-dialog> 
     </main>
   </div>
 </div>
