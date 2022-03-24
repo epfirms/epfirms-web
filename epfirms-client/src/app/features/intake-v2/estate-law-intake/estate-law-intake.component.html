@@ -119,9 +119,13 @@
       <!-- -------------------------- -->
 
 
+<!-- APPOINTEES SECTION -->
+<app-appointees *ngIf="state === 5" [matter]="matter" (back)="back()" (continue)="setState(6); submit()"></app-appointees>
+
+   <!-- <app-intake-dialog *ngIf="state === 6" [settings]="{title: 'What Happens Next?', content: 'Thank you for your submission. Your attorney will contact you shortly'}"></app-intake-dialog>  -->
+
 
       </div>
-   <app-intake-dialog *ngIf="state === 5" [settings]="{title: 'What Happens Next?', content: 'Thank you for your submission. Your attorney will contact you shortly'}"></app-intake-dialog> 
     </main>
   </div>
 </div>

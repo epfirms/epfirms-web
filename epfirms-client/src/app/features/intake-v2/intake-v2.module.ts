@@ -12,6 +12,7 @@ import { EstateLawIntakeComponent } from './estate-law-intake/estate-law-intake.
 import { RealEstateComponent } from './real-estate/real-estate.component';
 import { WillRequestsComponent } from './will-requests/will-requests.component';
 import { FirmPersonalInformationComponent } from './firm-intake-components/firm-personal-information/firm-personal-information.component';
+import { AppointeesComponent } from './appointees/appointees.component';
 
 
 
@@ -26,7 +27,8 @@ import { FirmPersonalInformationComponent } from './firm-intake-components/firm-
     EstateLawIntakeComponent,
     RealEstateComponent,
     WillRequestsComponent,
-    FirmPersonalInformationComponent
+    FirmPersonalInformationComponent,
+    AppointeesComponent
   ],
   imports: [
     CommonModule,
