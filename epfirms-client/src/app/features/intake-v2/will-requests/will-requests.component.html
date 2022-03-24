@@ -9,7 +9,9 @@
     <div class="mt-5 md:mt-0 md:col-span-2">
       <div class="grid grid-cols-1 gap-6">
         <div class="col-span-6 sm:col-span-3">
-          <label class="block text-sm font-medium text-gray-700">Will you include afterborn children?</label>
+          <label class="block text-sm font-medium text-gray-700"
+            >Will you include afterborn children?</label
+          >
           <select
             class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
@@ -19,7 +21,9 @@
         </div>
 
         <div class="col-span-6 sm:col-span-3">
-          <label class="block text-sm font-medium text-gray-700">If applicable, are you planning on excluding any children as beneficiaries?</label>
+          <label class="block text-sm font-medium text-gray-700"
+            >If applicable, are you planning on excluding any children as beneficiaries?</label
+          >
           <select
             class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
@@ -27,9 +31,88 @@
             <option [ngValue]="false">No</option>
           </select>
         </div>
+        <div class="col-span-6 sm:col-span-3">
+          <label class="block text-sm font-medium text-gray-700">Excluded Children</label>
+          <!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+          <fieldset class="space-y-5">
+            <legend class="sr-only">Notifications</legend>
+            <div class="relative flex items-start">
+              <div class="flex items-center h-5">
+                <input
+                  id="comments"
+                  aria-describedby="comments-description"
+                  name="comments"
+                  type="checkbox"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="comments" class="font-medium text-gray-700">New comments</label>
+                <span id="comments-description" class="text-gray-500"
+                  ><span class="sr-only">New comments </span>so you always know what's
+                  happening.</span
+                >
+              </div>
+            </div>
+            <div class="relative flex items-start">
+              <div class="flex items-center h-5">
+                <input
+                  id="candidates"
+                  aria-describedby="candidates-description"
+                  name="candidates"
+                  type="checkbox"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="candidates" class="font-medium text-gray-700">New candidates</label>
+                <span id="candidates-description" class="text-gray-500"
+                  ><span class="sr-only">New candidates </span>who apply for any open
+                  postings.</span
+                >
+              </div>
+            </div>
+            <div class="relative flex items-start">
+              <div class="flex items-center h-5">
+                <input
+                  id="offers"
+                  aria-describedby="offers-description"
+                  name="offers"
+                  type="checkbox"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="offers" class="font-medium text-gray-700">Offers</label>
+                <span id="offers-description" class="text-gray-500"
+                  ><span class="sr-only">Offers </span>when they are accepted or rejected by
+                  candidates.</span
+                >
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
 
         <div class="col-span-6 sm:col-span-3">
-          <label class="block text-sm font-medium text-gray-700">Would you like to include a Memorandum?</label>
+          <label class="block text-sm font-medium text-gray-700"
+            >Would you like to include a Memorandum?</label
+          >
           <select
             class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
@@ -49,7 +132,9 @@
         </div>
 
         <div class="col-span-6 sm:col-span-3">
-          <label class="block text-sm font-medium text-gray-700">Would you like to include a Common Disaster Clause?</label>
+          <label class="block text-sm font-medium text-gray-700"
+            >Would you like to include a Common Disaster Clause?</label
+          >
           <select
             class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
