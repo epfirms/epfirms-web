@@ -10,6 +10,7 @@ import { IntakeDialogComponent } from './intake-dialog/intake-dialog.component';
 import { FirmIntakeViewerComponent } from './firm-intake-viewer/firm-intake-viewer.component';
 import { EstateLawIntakeComponent } from './estate-law-intake/estate-law-intake.component';
 import { RealEstateComponent } from './real-estate/real-estate.component';
+import { WillRequestsComponent } from './will-requests/will-requests.component';
 
 
 
@@ -22,7 +23,8 @@ import { RealEstateComponent } from './real-estate/real-estate.component';
     IntakeDialogComponent,
     FirmIntakeViewerComponent,
     EstateLawIntakeComponent,
-    RealEstateComponent
+    RealEstateComponent,
+    WillRequestsComponent
   ],
   imports: [
     CommonModule,

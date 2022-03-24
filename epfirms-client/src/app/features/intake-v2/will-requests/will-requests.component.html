@@ -1,0 +1,63 @@
+<div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+  <div class="md:grid md:grid-cols-3 md:gap-6">
+    <div class="md:col-span-1">
+      <h3 class="text-lg font-medium leading-6 text-gray-900">Will Requests</h3>
+      <p class="mt-1 text-sm text-gray-500">
+        These questions will help us put together your estate planning documents.
+      </p>
+    </div>
+    <div class="mt-5 md:mt-0 md:col-span-2">
+      <div class="grid grid-cols-1 gap-6">
+        <div class="col-span-6 sm:col-span-3">
+          <label class="block text-sm font-medium text-gray-700">Will you include afterborn children?</label>
+          <select
+            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          >
+            <option [ngValue]="true">Yes</option>
+            <option [ngValue]="false">No</option>
+          </select>
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label class="block text-sm font-medium text-gray-700">If applicable, are you planning on excluding any children as beneficiaries?</label>
+          <select
+            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          >
+            <option [ngValue]="true">Yes</option>
+            <option [ngValue]="false">No</option>
+          </select>
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label class="block text-sm font-medium text-gray-700">Would you like to include a Memorandum?</label>
+          <select
+            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          >
+            <option [ngValue]="true">Yes</option>
+            <option [ngValue]="false">No</option>
+          </select>
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label class="block text-sm font-medium text-gray-700">Burial or Cremation?</label>
+          <select
+            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          >
+            <option [ngValue]="'burial'">Burial</option>
+            <option [ngValue]="'cremation'">Cremation</option>
+          </select>
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <label class="block text-sm font-medium text-gray-700">Would you like to include a Common Disaster Clause?</label>
+          <select
+            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          >
+            <option [ngValue]="true">Yes</option>
+            <option [ngValue]="false">No</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -115,15 +115,15 @@
 
 
  <!-- REAL ESTATE INFORMATION -->
-<app-real-estate *ngIf="state === 4" [matter]="matter" (back)="back()"></app-real-estate>
+<app-real-estate *ngIf="state === 4" [matter]="matter" (back)="back()" (continue)="setState(5)"></app-real-estate>
       <!-- -------------------------- -->
 
 
 
       </div>
     
-
-
+<!-- WILL REQUESTS -->
+<app-will-requests *ngIf="state === 5" [matter]="matter" (back)="back()"></app-will-requests>
     </main>
   </div>
 </div>
