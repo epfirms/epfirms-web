@@ -103,6 +103,7 @@ export class ClientDirectoryComponent implements OnInit {
       epContent: AddClientComponent,
       epOkText: 'Add client',
       epCancelText: 'Cancel',
+      epMaxWidth: '36rem',
       epAutofocus: null,
       epOnOk: (componentInstance) => {
         this._clientService.createClient(componentInstance.clientForm.value).subscribe();
