@@ -203,7 +203,12 @@
                         >
                           Type
                         </th>
-
+<th
+                          scope="col"
+                          class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                        >
+                          Select from Family
+                        </th>
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
@@ -265,7 +270,23 @@
                               </select>
                             </div>
                           </td>
-
+<td
+                            class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
+                          >
+                            <div>
+                              <select
+                                id="location"
+                                name="location"
+                                class="text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                              >
+                                <option [ngValue]="'VALUE'">Executor</option>
+                                <option [ngValue]="'VALUE'">Trustee</option>
+                                <option [ngValue]="'VALUE'">Guardian of Children</option>
+                                <option [ngValue]="'VALUE'">Medical Power of Attorney</option>
+                                <option [ngValue]="'VALUE'">Durable Power of Attorney</option>
+                              </select>
+                            </div>
+                          </td>
                           <td class="whitespace-nowrap p-4 text-sm text-gray-500">
                             <editable-input
                             ></editable-input>
