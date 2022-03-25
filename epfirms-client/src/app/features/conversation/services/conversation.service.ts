@@ -57,36 +57,17 @@ export class ConversationService {
   }
 
   /** Creates a conversation and adds the creator as participant. Direct messages are between 2 users. */
-  createConversation(conversationType: 'direct' | 'group' = 'direct'): Observable<any> {
+  createConversation(conversationType: 'direct' | 'group' = 'direct'): Observable<Conversation> {
     return from(
       this.conversationsClient.createConversation({ attributes: { type: conversationType } }),
-    ).pipe(
-      tap((conversation) => {
-        this.addParticipant(conversation, conversation.createdBy).subscribe();
-      }),
     );
   }
 
   /** Adds a participant to a conversation.
    * TODO: Limit to 2 users when conversation 'type' attribute is 'direct'.
    */
-  addParticipant(conversation, identity: string): Observable<any> {
-    return from(this.conversationsClient.getUser(identity)).pipe(
-      concatMap((user) => {
-        console.log(user);
-        return from(conversation.add(identity, { friendlyName: user.friendlyName }));
-      }),
-      catchError((err) => {
-        if (err.message === 'Not Found') {
-          return this.createUser(identity).pipe(
-            concatMap((response) => {
-              return from(conversation.add(identity, { friendlyName: response.data.friendlyName }));
-            }),
-          );
-        }
-        throw err;
-      }),
-    );
+  addParticipant(conversation: Conversation, opts): Observable<any> {
+    return this._http.post(`/api/chat/${conversation.sid}/participants`, opts);
   }
 
   /** Create a twilio user. Identity should be epfirm's user id. */
@@ -113,10 +94,8 @@ export class ConversationService {
   shutdown() {
     if (this.conversationsClient) {
       this.conversationsClient.removeAllListeners();
-      return from(this.conversationsClient.shutdown().then());
     }
     this.conversations$.next([]);
-    this.conversations$.complete();
     return true;
   }
 

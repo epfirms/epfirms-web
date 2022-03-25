@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <li class="py-0.5" [class.snap-end]="isLast" [class.pb-4]="isLast">
+        <li class="py-0.5"  [class.pb-4]="isLast">
           <div
             class="relative py-2"
             *ngIf="
@@ -106,6 +106,7 @@
           ></div>
         </li>
       </ng-container>
+      <div #anchor class="snap-end"></div>
     </ul>
   </div>
 </ng-scrollbar>
