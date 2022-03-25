@@ -13,6 +13,7 @@ import { RealEstateComponent } from './real-estate/real-estate.component';
 import { WillRequestsComponent } from './will-requests/will-requests.component';
 import { FirmPersonalInformationComponent } from './firm-intake-components/firm-personal-information/firm-personal-information.component';
 import { AppointeesComponent } from './appointees/appointees.component';
+import { IntakeMainComponent } from './intake-main/intake-main.component';
 
 
 
@@ -28,7 +29,8 @@ import { AppointeesComponent } from './appointees/appointees.component';
     RealEstateComponent,
     WillRequestsComponent,
     FirmPersonalInformationComponent,
-    AppointeesComponent
+    AppointeesComponent,
+    IntakeMainComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +42,7 @@ import { AppointeesComponent } from './appointees/appointees.component';
     PersonalInformationComponent,
     FirmIntakeViewerComponent,
     EstateLawIntakeComponent,
+    IntakeMainComponent,
   ]
 })
 export class IntakeV2Module { }
