@@ -145,7 +145,8 @@ export class UserService {
   }
 
   public async addAppointee(userId:number, appointee): Promise<any> {
-    const { user } = Database.models;
+    try {
+     const { user } = Database.models;
 
     const currentUser = await user.findByPk(userId);
     
@@ -168,7 +169,11 @@ export class UserService {
     }
 
     return Promise.resolve({...newAppointee.dataValues, appointee: {rank, executor, trustee, dpoa, mpoa, gop, goe, gomc}});
-  }
+ 
+    } catch (error) {
+      console.error(error);
+    }
+      }
 
   public async updateAppointee(appointeeId: number, data): Promise<any> {
     const appointee = await Database.models.appointee.findOne({ where: { id: appointeeId }});

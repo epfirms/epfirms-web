@@ -249,7 +249,7 @@ export class Database {
     this.models.user.belongsToMany(this.models.user, {
       through: this.models.appointee,
       as: 'owner',
-      foreignKey: 'appointee_id'
+      foreignKey: 'appointor_id'
     });
 
     this.models.user.hasOne(this.models.password_reset_token, {

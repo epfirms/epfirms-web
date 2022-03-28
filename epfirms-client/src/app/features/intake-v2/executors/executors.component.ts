@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AppointeeService } from '@app/client-portal/_services/appointee-service/appointee.service';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 
 @Component({
@@ -16,10 +17,14 @@ export class ExecutorsComponent implements OnInit {
   executors = [];
   spouseExecutors = [];
 
-  // does the client have a spouse? 
-  hasSpouse : boolean = false;
+  // does the client have a spouse?
+  hasSpouse: boolean = false;
+  spouse: any;
 
-  constructor(private familyMemberService: FamilyMemberService) {}
+  constructor(
+    private familyMemberService: FamilyMemberService,
+    private appointeeService: AppointeeService,
+  ) {}
 
   ngOnInit(): void {
     this.loadFamilyMembers();
@@ -29,14 +34,18 @@ export class ExecutorsComponent implements OnInit {
     this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
       if (res.length != 0) {
         this.familyMembers = res;
-        this.checkForSpouse(res); 
+        this.checkForSpouse(res);
       }
     });
   }
-  private checkForSpouse(familyMembers) : void {
+  private checkForSpouse(familyMembers): void {
     console.log(familyMembers);
-    if (familyMembers.filter(member => member.family_member.relationship_type === "spouse").length !== 0) {
+    let spouse = familyMembers.filter(
+      (member) => member.family_member.relationship_type === 'spouse',
+    )[0];
+    if (spouse) {
       this.hasSpouse = true;
+      this.spouse = spouse;
     }
   }
   backButton(): void {
@@ -83,5 +92,21 @@ export class ExecutorsComponent implements OnInit {
     executor.phone = client.phone;
     executor.email = client.email;
     executor.relationship_type = 'spouse';
+  }
+
+  submit(): void {
+    this.executors.forEach((executor) => {
+      executor.executor = true;
+      this.appointeeService.addAppointee(this.matter.client.id, executor).subscribe((res) => {
+        console.log(res);
+      });
+    });
+    this.spouseExecutors.forEach((executor) => {
+      executor.executor = true;
+
+      this.appointeeService.addAppointee(this.spouse.id, executor).subscribe((res) => {
+        console.log(res);
+      });
+    });
   }
 }
