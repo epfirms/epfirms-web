@@ -1,5 +1,5 @@
 <!-- MAIN SELECTION CONTAINER -->
-<div >
+<div *ngIf="displaySelectionTable" >
 
 
 <!-- This example requires Tailwind CSS v2.0+ -->
@@ -32,11 +32,13 @@
                 <ng-container *ngIf="matters$ | async as matters">
               <tr *ngFor="let matter of matters">
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">{{matter.case_id}}</td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Type</td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{matter.matter_intake.status}}</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{matter.matter_intake.type | uppercase}}</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{matter.matter_intake.status | uppercase}}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-                    <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Begin</button>
+                    <button 
+                    (click)="selectMatter(matter)"
+                    type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Begin</button>
                 </td>
               </tr>
               </ng-container>
@@ -58,9 +60,13 @@
 
 
 <!-- ESTATE PLANNING INTAKE FORM CONTAINER -->
-<div>
+<ng-container *ngIf="selectedMatter">
+<div *ngIf="selectedMatter.matter_intake.type === 'estate planning'">
 
-
+<app-estate-law-intake [matter]="selectedMatter" [intake]="selectedMatter.matter_intake"></app-estate-law-intake>
 
 
 </div>
+
+
+</ng-container>

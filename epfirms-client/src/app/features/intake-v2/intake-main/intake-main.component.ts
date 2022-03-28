@@ -12,6 +12,14 @@ export class IntakeMainComponent implements OnInit, OnDestroy {
 
   matters$ : Observable<Matter[]>
 
+ // these properties will manage the state of this component
+ // the main table only displays when an intake is not in progress
+ // we can call the the overview table or the main selection container
+ displaySelectionTable : boolean = true;
+
+
+ // this is the selected matter that will be fed to the child intake components
+ selectedMatter : Matter;
 
   constructor(
     private clientMatterService : ClientMatterService
@@ -29,5 +37,11 @@ export class IntakeMainComponent implements OnInit, OnDestroy {
     
   }
 
+  selectMatter(matter : Matter) : void {
+    //toggle the visiblity of the selection table
+    this.displaySelectionTable = false;
+
+    this.selectedMatter = matter;
+  }
   
 }
