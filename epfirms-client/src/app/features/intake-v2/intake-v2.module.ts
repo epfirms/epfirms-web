@@ -14,6 +14,7 @@ import { WillRequestsComponent } from './will-requests/will-requests.component';
 import { FirmPersonalInformationComponent } from './firm-intake-components/firm-personal-information/firm-personal-information.component';
 import { AppointeesComponent } from './appointees/appointees.component';
 import { IntakeMainComponent } from './intake-main/intake-main.component';
+import { ExecutorsComponent } from './executors/executors.component';
 
 
 
@@ -30,7 +31,8 @@ import { IntakeMainComponent } from './intake-main/intake-main.component';
     WillRequestsComponent,
     FirmPersonalInformationComponent,
     AppointeesComponent,
-    IntakeMainComponent
+    IntakeMainComponent,
+    ExecutorsComponent
   ],
   imports: [
     CommonModule,
