@@ -15,6 +15,7 @@
             <div class="sm:flex-auto"></div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               <button
+                (click)="addExecutor(false)"
                 type="button"
                 class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
               >
@@ -22,8 +23,6 @@
               </button>
             </div>
           </div>
-
-
 
           <!-- APPOINTEE TABLE -->
           <div class="mt-8 flex flex-col">
@@ -37,7 +36,7 @@
                           scope="col"
                           class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                         >
-                         Select Executor 
+                          Select Executor
                         </th>
 
                         <th
@@ -82,7 +81,7 @@
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
-                      <ng-container 
+                      <ng-container *ngFor="let executor of executors"
                         ><tr class="divide-x divide-gray-200">
                           <td
                             class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
@@ -93,53 +92,64 @@
                                 name="location"
                                 class="text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                               >
-                                <option [ngValue]="'VALUE'">Executor</option>
-                                <option [ngValue]="'VALUE'">Trustee</option>
-                                <option [ngValue]="'VALUE'">Guardian of Children</option>
-                                <option [ngValue]="'VALUE'">Medical Power of Attorney</option>
-                                <option [ngValue]="'VALUE'">Durable Power of Attorney</option>
+                                <option></option>
+                                <option
+                                  *ngFor="let member of familyMembers"
+                                  (click)="setFamilyMemberData(member, executor)"
+                                >
+                                  {{ member.first_name }} {{ member.last_name }}
+                                </option>
+                                <option (click)="setOther(executor)">Other</option>
                               </select>
                             </div>
                           </td>
 
                           <td class="whitespace-nowrap p-4 text-sm text-gray-500">
                             <editable-input
+                              [value]="executor.first_name"
+                              (onChange)="executor.first_name = $event"
                             ></editable-input>
                           </td>
 
                           <td class="whitespace-nowrap p-4 text-sm text-gray-500">
                             <editable-input
+                              [value]="executor.last_name"
+                              (onChange)="executor.last_name = $event"
                             ></editable-input>
                           </td>
 
                           <td class="whitespace-nowrap p-4 text-sm text-gray-500">
                             <editable-input
+                              [value]="executor.phone"
+                              (onChange)="executor.phone = $event"
                             ></editable-input>
                           </td>
 
                           <td class="whitespace-nowrap p-4 text-sm text-gray-500">
                             <editable-input
+                              [value]="executor.email"
+                              (onChange)="executor.email = $event"
                             ></editable-input>
                           </td>
 
-                           <td
+                          <td
                             class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
                           >
                             <div>
                               <select
+                                [(ngModel)]="executor.relationship_type"
                                 id="location"
                                 name="location"
                                 class="text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                               >
-                                <option [ngValue]="'VALUE'">Spouse</option>
-                                <option [ngValue]="'VALUE'">Child</option>
-                                <option [ngValue]="'VALUE'">Parent</option>
-                                <option [ngValue]="'VALUE'">Sibling</option>
-                                <option [ngValue]="'VALUE'">Other</option>
+                                <option [ngValue]="'spouse'">Spouse</option>
+                                <option [ngValue]="'child'">Child</option>
+                                <option [ngValue]="'parent'">Parent</option>
+                                <option [ngValue]="'sibling'">Sibling</option>
+                                <option [ngValue]="'other'">Other</option>
                               </select>
                             </div>
                           </td>
-
 
                           <td
                             class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6"
@@ -172,21 +182,20 @@
           </div>
 
           <!-- ---------------------------- -->
- 
 
-
- <!-- SPOUSE APPOINTEE TABLE -->
-<div class="md:col-span-1 mt-8">
-          <h3 class="text-lg font-medium leading-6 text-gray-900">Spouse Appointee Details</h3>
-        </div>
-<div class="sm:flex sm:items-center">
+          <!-- SPOUSE APPOINTEE TABLE -->
+          <div class="md:col-span-1 mt-8">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Spouse Executor Details</h3>
+          </div>
+          <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto"></div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               <button
+              (click)="addExecutor(true)"
                 type="button"
                 class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
               >
-                Add Spouse Appointee
+                Add Spouse Executor
               </button>
             </div>
           </div>
@@ -201,14 +210,9 @@
                           scope="col"
                           class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                         >
-                          Type
+                          Select Executor
                         </th>
-<th
-                          scope="col"
-                          class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                        >
-                          Select from Family
-                        </th>
+
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
@@ -251,7 +255,7 @@
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
-                      <ng-container 
+                      <ng-container *ngFor="let executor of spouseExecutors"
                         ><tr class="divide-x divide-gray-200">
                           <td
                             class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
@@ -262,69 +266,66 @@
                                 name="location"
                                 class="text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                               >
-                                <option [ngValue]="'VALUE'">Executor</option>
-                                <option [ngValue]="'VALUE'">Trustee</option>
-                                <option [ngValue]="'VALUE'">Guardian of Children</option>
-                                <option [ngValue]="'VALUE'">Medical Power of Attorney</option>
-                                <option [ngValue]="'VALUE'">Durable Power of Attorney</option>
+                                <option></option>
+<option (click)="setSpouse(executor)">{{matter.client.first_name}} {{matter.client.last_name}}</option>
+
+                                <option
+                                  *ngFor="let member of familyMembers"
+                                  (click)="setFamilyMemberData(member, executor)"
+                                >
+                                  {{ member.first_name }} {{ member.last_name }}
+                                </option>
+                                <option (click)="setOther(executor)">Other</option>
                               </select>
                             </div>
                           </td>
-<td
+
+                          <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                            <editable-input
+                              [value]="executor.first_name"
+                              (onChange)="executor.first_name = $event"
+                            ></editable-input>
+                          </td>
+
+                          <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                            <editable-input
+                              [value]="executor.last_name"
+                              (onChange)="executor.last_name = $event"
+                            ></editable-input>
+                          </td>
+
+                          <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                            <editable-input
+                              [value]="executor.phone"
+                              (onChange)="executor.phone = $event"
+                            ></editable-input>
+                          </td>
+
+                          <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                            <editable-input
+                              [value]="executor.email"
+                              (onChange)="executor.email = $event"
+                            ></editable-input>
+                          </td>
+
+                          <td
                             class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
                           >
                             <div>
                               <select
+                                [(ngModel)]="executor.relationship_type"
                                 id="location"
                                 name="location"
                                 class="text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                               >
-                                <option [ngValue]="'VALUE'">Executor</option>
-                                <option [ngValue]="'VALUE'">Trustee</option>
-                                <option [ngValue]="'VALUE'">Guardian of Children</option>
-                                <option [ngValue]="'VALUE'">Medical Power of Attorney</option>
-                                <option [ngValue]="'VALUE'">Durable Power of Attorney</option>
+                                <option [ngValue]="'spouse'">Spouse</option>
+                                <option [ngValue]="'child'">Child</option>
+                                <option [ngValue]="'parent'">Parent</option>
+                                <option [ngValue]="'sibling'">Sibling</option>
+                                <option [ngValue]="'other'">Other</option>
                               </select>
                             </div>
                           </td>
-                          <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                            <editable-input
-                            ></editable-input>
-                          </td>
-
-                          <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                            <editable-input
-                            ></editable-input>
-                          </td>
-
-                          <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                            <editable-input
-                            ></editable-input>
-                          </td>
-
-                          <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                            <editable-input
-                            ></editable-input>
-                          </td>
-
-                           <td
-                            class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
-                          >
-                            <div>
-                              <select
-                                id="location"
-                                name="location"
-                                class="text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                              >
-                                <option [ngValue]="'VALUE'">Spouse</option>
-                                <option [ngValue]="'VALUE'">Child</option>
-                                <option [ngValue]="'VALUE'">Parent</option>
-                                <option [ngValue]="'VALUE'">Sibling</option>
-                                <option [ngValue]="'VALUE'">Other</option>
-                              </select>
-                            </div>
-                          </td>
-
 
                           <td
                             class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6"
