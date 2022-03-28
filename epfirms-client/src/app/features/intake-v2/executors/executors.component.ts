@@ -16,6 +16,9 @@ export class ExecutorsComponent implements OnInit {
   executors = [];
   spouseExecutors = [];
 
+  // does the client have a spouse? 
+  hasSpouse : boolean = false;
+
   constructor(private familyMemberService: FamilyMemberService) {}
 
   ngOnInit(): void {
@@ -26,8 +29,15 @@ export class ExecutorsComponent implements OnInit {
     this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
       if (res.length != 0) {
         this.familyMembers = res;
+        this.checkForSpouse(res); 
       }
     });
+  }
+  private checkForSpouse(familyMembers) : void {
+    console.log(familyMembers);
+    if (familyMembers.filter(member => member.family_member.relationship_type === "spouse").length !== 0) {
+      this.hasSpouse = true;
+    }
   }
   backButton(): void {
     this.back.emit(true);
