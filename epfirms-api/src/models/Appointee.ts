@@ -14,34 +14,42 @@ module.exports = (sequelize, {
           primaryKey: true,
           autoIncrement: true,
         },
+        // this is a reference to the User object that holds the appointee information
         user_id: {
           type: INTEGER,
           allowNull: false,
         },
-        appointee_id: {
+        //this is the id of the user that appointed the appointee
+        // for example: Joe appoints John to be his Executor. 
+        // this would make Joe the Appointor and John the Appointee
+        // legal stuff fun fun :) 
+        appointor_id: {
           type: INTEGER,
           allowNull: false
         },
         executor: {
-          type: INTEGER
+          type: BOOLEAN
         },
         trustee: {
-          type: INTEGER
+          type: BOOLEAN
         },
+        // durable power of attorney
         dpoa: {
-          type: INTEGER
+          type: BOOLEAN
         },
+        // medical power of attorney
         mpoa: {
-          type: INTEGER
+          type: BOOLEAN
         },
         gop: {
-          type: INTEGER
+          type: BOOLEAN
         },
         goe: {
-          type: INTEGER
+          type: BOOLEAN
         },
+        //guardian of minor children
         gomc: {
-          type: INTEGER
+          type: BOOLEAN
         }
       }, {
         tableName,
