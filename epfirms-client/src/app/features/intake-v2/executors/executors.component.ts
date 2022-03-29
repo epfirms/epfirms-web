@@ -28,9 +28,10 @@ export class ExecutorsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadFamilyMembers();
+    this.loadExecutors();
   }
 
-  loadFamilyMembers(): void {
+  private loadFamilyMembers(): void {
     this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
       if (res.length != 0) {
         this.familyMembers = res;
@@ -46,8 +47,28 @@ export class ExecutorsComponent implements OnInit {
     if (spouse) {
       this.hasSpouse = true;
       this.spouse = spouse;
+      this.loadSpouseExecutors();
     }
   }
+
+  private loadExecutors() : void {
+    this.appointeeService.getByUserId(this.matter.client.id).subscribe(res => {
+        console.log(res);
+        if (res) {
+          this.executors = res.filter(executor => executor.appointee.executor);
+        }
+    });
+  }
+
+  private loadSpouseExecutors() : void {
+    this.appointeeService.getByUserId(this.spouse.id).subscribe(res => {
+      console.log(res);
+      if (res) {
+        this.spouseExecutors = res.filter(executor => executor.appointee.executor);
+      }
+    });
+  }
+
   backButton(): void {
     this.back.emit(true);
   }
