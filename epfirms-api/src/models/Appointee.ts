@@ -14,16 +14,13 @@ module.exports = (sequelize, {
           primaryKey: true,
           autoIncrement: true,
         },
-        // this is a reference to the User object that holds the appointee information
+        // this is a reference to the User object that holds the appointor information
         user_id: {
           type: INTEGER,
           allowNull: false,
         },
-        //this is the id of the user that appointed the appointee
-        // for example: Joe appoints John to be his Executor. 
-        // this would make Joe the Appointor and John the Appointee
-        // legal stuff fun fun :) 
-        appointor_id: {
+        // this is a reference to the appointee's user table info
+        appointee_id: {
           type: INTEGER,
           allowNull: false
         },
