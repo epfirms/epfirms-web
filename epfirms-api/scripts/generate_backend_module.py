@@ -92,7 +92,7 @@ import {{ Service }} from 'typedi';
 
 @Service()
 export class {pascal_case}Service {{
-     public static async upsert(req : Request, res : Response) : Promise<any> {{
+     public static async upsert(data) : Promise<any> {{
         try {{
 
         }}
@@ -101,7 +101,7 @@ export class {pascal_case}Service {{
         }}
     }}
   
-    public static async delete(req : Request, res : Response) : Promise<any> {{
+    public static async delete(id) : Promise<any> {{
         try {{
 
         }}
@@ -110,7 +110,7 @@ export class {pascal_case}Service {{
         }}
     }}
 
-public static async getAllWithId(req : Request, res : Response) : Promise<any> {{
+public static async getAllWithId(id) : Promise<any> {{
         try {{
 
         }}
