@@ -1,9 +1,12 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <ul role="list" class="space-y-3">
-  <li (click)="toggleDropdown()" class="bg-white shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md">
+  <li
+    (click)="toggleDropdown()"
+    class="bg-white shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md"
+  >
     <!-- Your content -->
-    <h1 class="text-lg">Title</h1>
-    <p class="text-md">Name</p>
+    <h1 class="text-lg">{{ title }}</h1>
+    <p class="text-md">{{ subtitle }}</p>
   </li>
   <!--
     Dropdown menu, show/hide based on menu state.
@@ -16,7 +19,7 @@
       To: "transform opacity-0 scale-95"
   -->
   <div
-  *ngIf="dropdownVisible"
+    *ngIf="dropdownVisible"
     class="right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
     role="menu"
     aria-orientation="vertical"
@@ -52,7 +55,7 @@
             />
           </div>
         </div>
-<div class="sm:col-span-3">
+        <div *ngIf="formMode === 'CHILD'" class="sm:col-span-3">
           <label for="has-step-children" class="block text-sm font-medium text-gray-700">
             Is Legal Minor?
           </label>
@@ -68,8 +71,6 @@
             </select>
           </div>
         </div>
-
-
 
         <div class="sm:col-span-4">
           <label for="email" class="block text-sm font-medium text-gray-700"> Email address </label>
@@ -193,82 +194,85 @@
             />
           </div>
         </div>
-        <div class="sm:col-span-2">
-          <label for="has-spouse" class="block text-sm font-medium text-gray-700">
-            Do you have a spouse?
-          </label>
-          <div class="mt-1">
-            <select
-              id="has-spouse"
-              name="has-spouse"
-              autocomplete="address-level1"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+
+       
+          <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
+            <label for="has-spouse" class="block text-sm font-medium text-gray-700">
+              Do you have a spouse?
+            </label>
+            <div class="mt-1">
+              <select
+                id="has-spouse"
+                name="has-spouse"
+                autocomplete="address-level1"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              >
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+          </div>
+          <div  *ngIf="formMode === 'CLIENT'"class="sm:col-span-2">
+            <label for="has-children" class="block text-sm font-medium text-gray-700">
+              Do you have children?
+            </label>
+            <div class="mt-1">
+              <select
+                id="has-children"
+                name="has-children"
+                autocomplete="address-level1"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              >
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+          </div>
+          <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
+            <label for="has-step-children" class="block text-sm font-medium text-gray-700">
+              Do you have step children?
+            </label>
+            <div class="mt-1">
+              <select
+                id="has-step-children"
+                name="has-step-children"
+                autocomplete="address-level1"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              >
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+          </div>
+          <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
+            <label for="num-of-children" class="block text-sm font-medium text-gray-700">
+              # of Children</label
             >
-              <option>Yes</option>
-              <option>No</option>
-            </select>
+            <div class="mt-1">
+              <input
+                type="number"
+                name="num-of-children"
+                id="num-of-children"
+                autocomplete="num-of-children"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
           </div>
-        </div>
-        <div class="sm:col-span-2">
-          <label for="has-children" class="block text-sm font-medium text-gray-700">
-            Do you have children?
-          </label>
-          <div class="mt-1">
-            <select
-              id="has-children"
-              name="has-children"
-              autocomplete="address-level1"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+          <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
+            <label for="num-of-children" class="block text-sm font-medium text-gray-700">
+              # of Step Children</label
             >
-              <option>Yes</option>
-              <option>No</option>
-            </select>
+            <div class="mt-1">
+              <input
+                type="number"
+                name="num-of-children"
+                id="num-of-children"
+                autocomplete="num-of-children"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
           </div>
-        </div>
-        <div class="sm:col-span-2">
-          <label for="has-step-children" class="block text-sm font-medium text-gray-700">
-            Do you have step children?
-          </label>
-          <div class="mt-1">
-            <select
-              id="has-step-children"
-              name="has-step-children"
-              autocomplete="address-level1"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            >
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-          </div>
-        </div>
-
-
-
-
-        <div class="sm:col-span-2">
-          <label for="num-of-children" class="block text-sm font-medium text-gray-700"> # of Children</label>
-          <div class="mt-1">
-            <input
-              type="number"
-              name="num-of-children"
-              id="num-of-children"
-              autocomplete="num-of-children"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
-        </div>
-<div class="sm:col-span-2">
-          <label for="num-of-children" class="block text-sm font-medium text-gray-700"> # of Step Children</label>
-          <div class="mt-1">
-            <input
-              type="number"
-              name="num-of-children"
-              id="num-of-children"
-              autocomplete="num-of-children"
-              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
-        </div>
+        
       </div>
     </div>
 

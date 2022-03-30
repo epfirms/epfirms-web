@@ -110,7 +110,7 @@
 <div *ngIf="state === 1">
 
 
-  <app-user-profile-form></app-user-profile-form>
+  <app-user-profile-form [formSettings]="clientFormSetting" [userProfile]="this.matter.client"></app-user-profile-form>
 </div>
 
 
