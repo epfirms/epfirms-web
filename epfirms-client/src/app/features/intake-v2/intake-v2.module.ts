@@ -15,6 +15,7 @@ import { FirmPersonalInformationComponent } from './firm-intake-components/firm-
 import { AppointeesComponent } from './appointees/appointees.component';
 import { IntakeMainComponent } from './intake-main/intake-main.component';
 import { ExecutorsComponent } from './executors/executors.component';
+import { UserProfileFormModule } from '@app/shared/user-profile-form/user-profile-form.module';
 
 
 
@@ -37,7 +38,8 @@ import { ExecutorsComponent } from './executors/executors.component';
   imports: [
     CommonModule,
     FormsModule,
-    EditableModule
+    EditableModule,
+    UserProfileFormModule
   ],
   exports: [
     ClientIntakeComponent,

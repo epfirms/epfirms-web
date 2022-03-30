@@ -1,0 +1,285 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<ul role="list" class="space-y-3">
+  <li class="bg-white shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md">
+    <!-- Your content -->
+    <h1 class="text-lg">Title</h1>
+    <p class="text-lg">Name</p>
+  </li>
+  <!--
+    Dropdown menu, show/hide based on menu state.
+
+    Entering: "transition ease-out duration-100"
+      From: "transform opacity-0 scale-95"
+      To: "transform opacity-100 scale-100"
+    Leaving: "transition ease-in duration-75"
+      From: "transform opacity-100 scale-100"
+      To: "transform opacity-0 scale-95"
+  -->
+  <div
+    class="right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="menu-button"
+    tabindex="-1"
+  >
+    <div class="p-2">
+      <div class="grid grid-cols-1 gap-x-4 sm:grid-cols-6">
+        <div class="sm:col-span-3">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">
+            First name
+          </label>
+          <div class="mt-1">
+            <input
+              type="text"
+              name="first-name"
+              id="first-name"
+              autocomplete="given-name"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <label for="last-name" class="block text-sm font-medium text-gray-700"> Last name </label>
+          <div class="mt-1">
+            <input
+              type="text"
+              name="last-name"
+              id="last-name"
+              autocomplete="family-name"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+<div class="sm:col-span-3">
+          <label for="has-step-children" class="block text-sm font-medium text-gray-700">
+            Is Legal Minor?
+          </label>
+          <div class="mt-1">
+            <select
+              id="has-step-children"
+              name="has-step-children"
+              autocomplete="address-level1"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="sm:col-span-4">
+          <label for="email" class="block text-sm font-medium text-gray-700"> Email address </label>
+          <div class="mt-1">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <label for="phone" class="block text-sm font-medium text-gray-700"> Phone</label>
+          <div class="mt-1">
+            <input
+              id="phone"
+              name="phone"
+              type="text"
+              autocomplete="phone"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-6">
+          <label for="street-address" class="block text-sm font-medium text-gray-700">
+            Street address
+          </label>
+          <div class="mt-1">
+            <input
+              type="text"
+              name="street-address"
+              id="street-address"
+              autocomplete="street-address"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="city" class="block text-sm font-medium text-gray-700"> City </label>
+          <div class="mt-1">
+            <input
+              type="text"
+              name="city"
+              id="city"
+              autocomplete="address-level2"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="region" class="block text-sm font-medium text-gray-700"> State </label>
+          <div class="mt-1">
+            <select
+              id="region"
+              name="region"
+              autocomplete="address-level1"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option>United States</option>
+              <option>Canada</option>
+              <option>Mexico</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="postal-code" class="block text-sm font-medium text-gray-700">
+            ZIP / Postal code
+          </label>
+          <div class="mt-1">
+            <input
+              type="text"
+              name="postal-code"
+              id="postal-code"
+              autocomplete="postal-code"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="dob" class="block text-sm font-medium text-gray-700"> DOB </label>
+          <div class="mt-1">
+            <input
+              type="text"
+              name="dob"
+              id="dob"
+              autocomplete="address-level2"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="ssn" class="block text-sm font-medium text-gray-700"> SSN </label>
+          <div class="mt-1">
+            <input
+              type="text"
+              name="ssn"
+              id="ssn"
+              autocomplete="address-level2"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="DL-number" class="block text-sm font-medium text-gray-700"> DL Number </label>
+          <div class="mt-1">
+            <input
+              type="text"
+              name="DL-number"
+              id="DL-number"
+              autocomplete="DL-number"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="has-spouse" class="block text-sm font-medium text-gray-700">
+            Do you have a spouse?
+          </label>
+          <div class="mt-1">
+            <select
+              id="has-spouse"
+              name="has-spouse"
+              autocomplete="address-level1"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="has-children" class="block text-sm font-medium text-gray-700">
+            Do you have children?
+          </label>
+          <div class="mt-1">
+            <select
+              id="has-children"
+              name="has-children"
+              autocomplete="address-level1"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="has-step-children" class="block text-sm font-medium text-gray-700">
+            Do you have step children?
+          </label>
+          <div class="mt-1">
+            <select
+              id="has-step-children"
+              name="has-step-children"
+              autocomplete="address-level1"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+
+
+
+
+        <div class="sm:col-span-2">
+          <label for="num-of-children" class="block text-sm font-medium text-gray-700"> # of Children</label>
+          <div class="mt-1">
+            <input
+              type="number"
+              name="num-of-children"
+              id="num-of-children"
+              autocomplete="num-of-children"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+<div class="sm:col-span-2">
+          <label for="num-of-children" class="block text-sm font-medium text-gray-700"> # of Step Children</label>
+          <div class="mt-1">
+            <input
+              type="number"
+              name="num-of-children"
+              id="num-of-children"
+              autocomplete="num-of-children"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAVE BUTTON GOES HERE -->
+    <div class="text-right">
+      <button
+        type="button"
+        class="m-2 px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+  <!-- More items... -->
+</ul>
