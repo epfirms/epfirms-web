@@ -34,6 +34,7 @@
           </label>
           <div class="mt-1">
             <input
+              [(ngModel)]="userProfile.first_name"
               type="text"
               name="first-name"
               id="first-name"
@@ -47,6 +48,7 @@
           <label for="last-name" class="block text-sm font-medium text-gray-700"> Last name </label>
           <div class="mt-1">
             <input
+              [(ngModel)]="userProfile.last_name"
               type="text"
               name="last-name"
               id="last-name"
@@ -61,6 +63,7 @@
           </label>
           <div class="mt-1">
             <select
+              [(ngModel)]="userProfile.is_minor"
               id="has-step-children"
               name="has-step-children"
               autocomplete="address-level1"
@@ -76,6 +79,7 @@
           <label for="email" class="block text-sm font-medium text-gray-700"> Email address </label>
           <div class="mt-1">
             <input
+              [(ngModel)]="userProfile.email"
               id="email"
               name="email"
               type="email"
@@ -89,6 +93,7 @@
           <label for="phone" class="block text-sm font-medium text-gray-700"> Phone</label>
           <div class="mt-1">
             <input
+              [(ngModel)]="userProfile.phone"
               id="phone"
               name="phone"
               type="text"
@@ -104,6 +109,7 @@
           </label>
           <div class="mt-1">
             <input
+              [(ngModel)]="userProfile.address"
               type="text"
               name="street-address"
               id="street-address"
@@ -117,6 +123,7 @@
           <label for="city" class="block text-sm font-medium text-gray-700"> City </label>
           <div class="mt-1">
             <input
+              [(ngModel)]="userProfile.city"
               type="text"
               name="city"
               id="city"
@@ -130,6 +137,7 @@
           <label for="region" class="block text-sm font-medium text-gray-700"> State </label>
           <div class="mt-1">
             <select
+              [(ngModel)]="userProfile.state"
               id="region"
               name="region"
               autocomplete="address-level1"
@@ -148,6 +156,7 @@
           </label>
           <div class="mt-1">
             <input
+              [(ngModel)]="userProfile.zip"
               type="text"
               name="postal-code"
               id="postal-code"
@@ -160,6 +169,7 @@
           <label for="dob" class="block text-sm font-medium text-gray-700"> DOB </label>
           <div class="mt-1">
             <input
+              [(ngModel)]="userProfile.dob"
               type="text"
               name="dob"
               id="dob"
@@ -173,6 +183,7 @@
           <label for="ssn" class="block text-sm font-medium text-gray-700"> SSN </label>
           <div class="mt-1">
             <input
+              [(ngModel)]="userProfile.ssn"
               type="text"
               name="ssn"
               id="ssn"
@@ -186,6 +197,7 @@
           <label for="DL-number" class="block text-sm font-medium text-gray-700"> DL Number </label>
           <div class="mt-1">
             <input
+              [(ngModel)]="userProfile.dl_number"
               type="text"
               name="DL-number"
               id="DL-number"
@@ -195,84 +207,87 @@
           </div>
         </div>
 
-       
-          <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
-            <label for="has-spouse" class="block text-sm font-medium text-gray-700">
-              Do you have a spouse?
-            </label>
-            <div class="mt-1">
-              <select
-                id="has-spouse"
-                name="has-spouse"
-                autocomplete="address-level1"
-                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              >
-                <option>Yes</option>
-                <option>No</option>
-              </select>
-            </div>
-          </div>
-          <div  *ngIf="formMode === 'CLIENT'"class="sm:col-span-2">
-            <label for="has-children" class="block text-sm font-medium text-gray-700">
-              Do you have children?
-            </label>
-            <div class="mt-1">
-              <select
-                id="has-children"
-                name="has-children"
-                autocomplete="address-level1"
-                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              >
-                <option>Yes</option>
-                <option>No</option>
-              </select>
-            </div>
-          </div>
-          <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
-            <label for="has-step-children" class="block text-sm font-medium text-gray-700">
-              Do you have step children?
-            </label>
-            <div class="mt-1">
-              <select
-                id="has-step-children"
-                name="has-step-children"
-                autocomplete="address-level1"
-                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              >
-                <option>Yes</option>
-                <option>No</option>
-              </select>
-            </div>
-          </div>
-          <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
-            <label for="num-of-children" class="block text-sm font-medium text-gray-700">
-              # of Children</label
+        <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
+          <label for="has-spouse" class="block text-sm font-medium text-gray-700">
+            Do you have a spouse?
+          </label>
+          <div class="mt-1">
+            <select
+              [(ngModel)]="userProfile.has_spouse"
+              id="has-spouse"
+              name="has-spouse"
+              autocomplete="address-level1"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
             >
-            <div class="mt-1">
-              <input
-                type="number"
-                name="num-of-children"
-                id="num-of-children"
-                autocomplete="num-of-children"
-                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
           </div>
-          <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
-            <label for="num-of-children" class="block text-sm font-medium text-gray-700">
-              # of Step Children</label
+        </div>
+        <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
+          <label for="has-children" class="block text-sm font-medium text-gray-700">
+            Do you have children?
+          </label>
+          <div class="mt-1">
+            <select
+              [(ngModel)]="userProfile.has_children"
+              id="has-children"
+              name="has-children"
+              autocomplete="address-level1"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
             >
-            <div class="mt-1">
-              <input
-                type="number"
-                name="num-of-children"
-                id="num-of-children"
-                autocomplete="num-of-children"
-                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
           </div>
-        
+        </div>
+        <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
+          <label for="has-step-children" class="block text-sm font-medium text-gray-700">
+            Do you have step children?
+          </label>
+          <div class="mt-1">
+            <select
+              [(ngModel)]="userProfile.has_stepchildren"
+              id="has-step-children"
+              name="has-step-children"
+              autocomplete="address-level1"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+        <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
+          <label for="num-of-children" class="block text-sm font-medium text-gray-700">
+            # of Children</label
+          >
+          <div class="mt-1">
+            <input
+              [(ngModel)]="userProfile.num_of_children"
+              type="number"
+              name="num-of-children"
+              id="num-of-children"
+              autocomplete="num-of-children"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+        <div *ngIf="formMode === 'CLIENT'" class="sm:col-span-2">
+          <label for="num-of-children" class="block text-sm font-medium text-gray-700">
+            # of Step Children</label
+          >
+          <div class="mt-1">
+            <input
+              [(ngModel)]="userProfile.num_of_stepchildren"
+              type="number"
+              name="num-of-children"
+              id="num-of-children"
+              autocomplete="num-of-children"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
       </div>
     </div>
 
