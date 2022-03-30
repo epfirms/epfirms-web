@@ -1,9 +1,9 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <ul role="list" class="space-y-3">
-  <li class="bg-white shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md">
+  <li (click)="toggleDropdown()" class="bg-white shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md">
     <!-- Your content -->
     <h1 class="text-lg">Title</h1>
-    <p class="text-lg">Name</p>
+    <p class="text-md">Name</p>
   </li>
   <!--
     Dropdown menu, show/hide based on menu state.
@@ -16,6 +16,7 @@
       To: "transform opacity-0 scale-95"
   -->
   <div
+  *ngIf="dropdownVisible"
     class="right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
     role="menu"
     aria-orientation="vertical"

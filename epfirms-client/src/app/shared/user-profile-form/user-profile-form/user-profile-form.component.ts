@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user-profile-form',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileFormComponent implements OnInit {
 
+  // bindings that control state of dropdown
+  dropdownVisible : boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  // method that toggles the visiblity of the dropdown
+  toggleDropdown() : void {
+    this.dropdownVisible = !this.dropdownVisible;
+  }
 }
