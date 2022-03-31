@@ -16,6 +16,7 @@ export interface UserProfile {
   preferred_name?: string;
   profile_image?: string;
   state?: string;
+  county?: string;
   verified?: boolean;
   ssn?: string;
   is_minor?: boolean;

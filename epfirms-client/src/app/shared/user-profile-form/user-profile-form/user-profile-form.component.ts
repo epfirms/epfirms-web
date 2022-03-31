@@ -44,4 +44,10 @@ export class UserProfileFormComponent implements OnInit {
   toggleDropdown() : void {
     this.dropdownVisible = !this.dropdownVisible;
   }
+
+
+  submit() : void {
+    this.userProfileChanges.emit(this.userProfile);
+    this.toggleDropdown();
+  }
 }
