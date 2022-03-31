@@ -15,7 +15,7 @@
           <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
             <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
             <a
-            (click)="setState(0)"
+              (click)="setState(0)"
               [ngClass]="
                 state === 0
                   ? 'border-indigo-500 text-gray-900'
@@ -27,7 +27,7 @@
             </a>
 
             <a
-(click)="setState(1)"
+              (click)="setState(1)"
               [ngClass]="
                 state === 1
                   ? 'border-indigo-500 text-gray-900'
@@ -49,7 +49,7 @@
               Income Information
             </a>
             <a
-(click)="setState(3)"
+              (click)="setState(3)"
               [ngClass]="
                 state === 3
                   ? 'border-indigo-500 text-gray-900'
@@ -59,8 +59,8 @@
             >
               Asset Information
             </a>
-<a
-(click)="setState(4)"
+            <a
+              (click)="setState(4)"
               [ngClass]="
                 state === 4
                   ? 'border-indigo-500 text-gray-900'
@@ -85,76 +85,56 @@
         <!-- GETTING Started -->
 
         <app-intake-dialog
-         *ngIf="state === 0"
+          *ngIf="state === 0"
           [settings]="{
             title: 'Getting Started',
             content:
               'This intake process is designed to help streamline our legal services to you. Your information will be kept secure and confidential.',
-              continueButton: true
+            continueButton: true
           }"
-          
           (continue)="setState(1)"
         ></app-intake-dialog>
 
         <!---------------------------------->
-      
 
-
-
-
-
-
-
-
-
-<div *ngIf="state === 1">
-
-
-  <app-user-profile-form [formSettings]="clientFormSetting" [userProfile]="this.matter.client"></app-user-profile-form>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <div *ngIf="state === 1">
+          <app-user-profile-form
+            [formSettings]="clientFormSetting"
+            [userProfile]="client"
+          ></app-user-profile-form>
+          <app-user-profile-form
+            *ngIf="client.has_spouse"
+            [formSettings]="{
+              title: 'Spouse Information',
+              subtitle: spouse.full_name,
+              mode: 'SPOUSE'
+            }"
+            [userProfile]="spouse"
+          ></app-user-profile-form>
+        </div>
 
         <!--PERSONAL INFO-->
         <!-- <app-personal-information *ngIf="state === 1" [matter]="matter" (back)="back()" (continue)="setState(2)"></app-personal-information> -->
         <!-------------------->
 
-
         <!-- INCOME INFORMATION -->
 
-<!-- <app-income *ngIf="state === 2" [matter]="matter" (back)="back()" (continue)="setState(3)"></app-income> -->
+        <!-- <app-income *ngIf="state === 2" [matter]="matter" (back)="back()" (continue)="setState(3)"></app-income> -->
         <!-- -------------------------- -->
 
-
-
- <!-- ASSET INFORMATION -->
+        <!-- ASSET INFORMATION -->
 
         <!-- <app-assets *ngIf="state === 3" [matter]="matter" (back)="back()" (continue)="setState(4)"></app-assets> -->
         <!-- -------------------------- -->
 
+        <!-- REAL ESTATE INFORMATION -->
+        <!-- <app-real-estate *ngIf="state === 4" [matter]="matter" (back)="back()" (continue)="setState(5); submit()"></app-real-estate> -->
+        <!-- -------------------------- -->
 
- <!-- REAL ESTATE INFORMATION -->
-<!-- <app-real-estate *ngIf="state === 4" [matter]="matter" (back)="back()" (continue)="setState(5); submit()"></app-real-estate> -->
-      <!-- -------------------------- -->
+        <!-- APPOINTEES SECTION -->
+        <!-- <app-executors *ngIf="state === 5" [matter]="matter" (back)="back()" (continue)="setState(6); submit()"></app-executors> -->
 
-
-<!-- APPOINTEES SECTION -->
-<!-- <app-executors *ngIf="state === 5" [matter]="matter" (back)="back()" (continue)="setState(6); submit()"></app-executors> -->
-
-   <!-- <app-intake-dialog *ngIf="state === 6" [settings]="{title: 'What Happens Next?', content: 'Thank you for your submission. Your attorney will contact you shortly'}"></app-intake-dialog>  -->
-
-
+        <!-- <app-intake-dialog *ngIf="state === 6" [settings]="{title: 'What Happens Next?', content: 'Thank you for your submission. Your attorney will contact you shortly'}"></app-intake-dialog>  -->
       </div>
     </main>
   </div>

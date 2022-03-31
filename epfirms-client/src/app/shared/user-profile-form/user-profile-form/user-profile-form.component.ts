@@ -29,6 +29,7 @@ export class UserProfileFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log("User Profile Form Component", this.userProfile);
     this.loadFormSettings();
   }
 
