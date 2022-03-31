@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormSettings } from '@app/core/interfaces/FormSettings';
 import { UserProfile } from '@app/core/interfaces/user-profile';
+import { USAState } from '@app/shared/utils/us-states/typings';
+import { usaStatesFull } from '@app/shared/utils/us-states/states';
 
 @Component({
   selector: 'app-user-profile-form',
@@ -25,6 +27,8 @@ export class UserProfileFormComponent implements OnInit {
   // form mode: at the moment the mode can be 'CLIENT' 'SPOUSE' OR 'CHILD'
   // this determines the fields that are shown
   formMode : string = "CLIENT";
+  // states list
+    public usaStates: USAState[] = usaStatesFull;
 
   constructor() { }
 
