@@ -26,4 +26,6 @@ export interface UserProfile {
   has_spouse?: boolean;
   has_children?: boolean;
   has_stepchildren?: boolean;
+  relationship_type?: string;
+
 }

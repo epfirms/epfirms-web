@@ -97,24 +97,9 @@
 
         <!---------------------------------->
 
-        <div *ngIf="state === 1">
-          <app-user-profile-form
-            [formSettings]="clientFormSetting"
-            [userProfile]="client"
-          ></app-user-profile-form>
-          <app-user-profile-form
-            *ngIf="client.has_spouse"
-            [formSettings]="{
-              title: 'Spouse Information',
-              subtitle: spouse.full_name,
-              mode: 'SPOUSE'
-            }"
-            [userProfile]="spouse"
-          ></app-user-profile-form>
-        </div>
 
         <!--PERSONAL INFO-->
-        <!-- <app-personal-information *ngIf="state === 1" [matter]="matter" (back)="back()" (continue)="setState(2)"></app-personal-information> -->
+        <app-personal-information *ngIf="state === 1" [matter]="matter" (back)="back()" (continue)="setState(2)"></app-personal-information>
         <!-------------------->
 
         <!-- INCOME INFORMATION -->

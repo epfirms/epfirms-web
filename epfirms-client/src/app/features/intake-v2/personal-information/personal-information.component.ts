@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
+import { UserProfile } from '@app/core/interfaces/user-profile';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 
 @Component({
@@ -23,39 +24,15 @@ export class PersonalInformationComponent implements OnInit {
   hasChildren: boolean = false;
   numOfChildren: number = 0;
   
-  personalInformation = {
-    id: undefined,
-    first_name: '',
-    last_name: '',
-    full_name: '',
-    email: '',
-    address: '',
-    city: '',
-    zip: '',
-    dob: undefined,
-    phone: '',
-    state: '',
-    county: ''
-  };
+ client : UserProfile;
  
-  spouseInformation = {
-    id: undefined,
-    first_name: '',
-    last_name: '',
-    full_name: '',
-    email: '',
-    address: '',
-    city: '',
-    zip: '',
-    dob: undefined,
-    relationship_type : "spouse",
-    phone: '',
-    state: '',
-    county: ''
-  };
+ spouse: UserProfile;
  
+
   //children
-  children;
+  children: UserProfile[] = [];
+  stepChildren : UserProfile[] = [];
+
 
   constructor(
     private clientService : ClientService,
@@ -63,6 +40,7 @@ export class PersonalInformationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log("matter", this.matter);
     this.loadClientData();
     this.loadExistingFamilyData();
   }
@@ -73,7 +51,7 @@ export class PersonalInformationComponent implements OnInit {
       let spouse = res.filter((member) => member.family_member.relationship_type === "spouse")[0];
       this.children = res.filter((member) => member.family_member.relationship_type === 'child');
       if (spouse) {
-        this.spouseInformation = spouse;
+        this.spouse = spouse;
         this.hasSpouse = true;
       }
       if (this.children.length !== 0) {
@@ -84,19 +62,7 @@ export class PersonalInformationComponent implements OnInit {
   }
 
   loadClientData() : void {
-    let client = this.matter.client;
-     this.personalInformation.id = client.id;
-     this.personalInformation.first_name = client.first_name;
-     this.personalInformation.last_name = client.last_name;
-     this.personalInformation.full_name = client.full_name;
-     this.personalInformation.email = client.email;
-     this.personalInformation.phone = client.phone;
-     this.personalInformation.address = client.address;
-     this.personalInformation.city = client.city;
-     this.personalInformation.state = client.state;
-     this.personalInformation.zip = client.zip;
-     this.personalInformation.county = client.county;
-    
+    this.client = this.matter.client;
   }
 
 
@@ -116,25 +82,25 @@ export class PersonalInformationComponent implements OnInit {
         dob: new Date().toString(),
         phone: '',
         state: client.state,
-        client: client.county,
+        county: client.county,
       });
     }
   }
 
   submitClient() : void {
-    this.clientService.updateClient(this.personalInformation).subscribe();
+    this.clientService.updateClient(this.client).subscribe();
   }
 
   submitSpouse() : void {
-    this.spouseInformation.relationship_type = "spouse";
-    this.familyMemberService.addFamilyMemberForUser(this.personalInformation.id, this.spouseInformation).subscribe((res) => {
+    this.spouse.relationship_type = "spouse";
+    this.familyMemberService.addFamilyMemberForUser(this.client.id, this.spouse).subscribe((res) => {
      
     });   
   }
 
   submitChildren() : void {
     this.children.forEach(child => {
-      this.familyMemberService.addFamilyMemberForUser(this.personalInformation.id, child).subscribe();
+      this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
     });
   }
 
