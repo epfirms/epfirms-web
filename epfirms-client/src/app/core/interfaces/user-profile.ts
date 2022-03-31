@@ -19,13 +19,6 @@ export interface UserProfile {
   county?: string;
   verified?: boolean;
   ssn?: string;
-  is_minor?: boolean;
-  dl_number?: string;
-  num_of_children?: number;
-  num_of_stepchildren?: number;
-  has_spouse?: boolean;
-  has_children?: boolean;
-  has_stepchildren?: boolean;
-  relationship_type?: string;
+  
 
 }
