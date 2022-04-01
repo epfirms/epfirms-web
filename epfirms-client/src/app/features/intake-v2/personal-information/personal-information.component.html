@@ -25,11 +25,13 @@
 <app-user-profile-form
   [formSettings]="{ title: 'Client Information', subtitle: client.first_name, isClient: true }"
   [userProfile]="client"
+  [matter]="matter"
 ></app-user-profile-form>
 
 <app-user-profile-form
   *ngFor="let member of familyMembers"
   [userProfile]="member"
+  [matter]="matter"
   [formSettings]="{
     title: 'Family Member Information',
     subtitle: member.first_name,

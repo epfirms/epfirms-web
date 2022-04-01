@@ -62,7 +62,7 @@ export class PersonalInformationComponent implements OnInit {
       ssn: '',
       dob: '',
       template : true,
-      dl_number: '',
+      drivers_id: '',
 
     }
     this.familyMembers.push(member);
