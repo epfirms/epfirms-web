@@ -24,6 +24,7 @@ import { contractRouter } from '@src/modules/contract/routes';
 import { chatRouter } from '@src/modules/chat/chat.routes';
 import { contractTemplateRouter } from '@src/modules/contract-template/routes';
 import { teamRouter } from '@src/modules/team/team.routes';
+import { incomeRouter } from '@src/modules/income/routes';
 
 const v1Router = express.Router();
 
@@ -52,5 +53,5 @@ v1Router.use('/contract', contractRouter);
 v1Router.use('/chat', chatRouter);
 v1Router.use('/contract-template', contractTemplateRouter);
 v1Router.use('/teams', teamRouter);
-
+v1Router.use('/income', incomeRouter);
 export { v1Router }
