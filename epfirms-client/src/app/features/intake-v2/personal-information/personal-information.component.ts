@@ -51,7 +51,7 @@ export class PersonalInformationComponent implements OnInit {
     let member = {
       first_name: '',
       last_name: '',
-      relationship: '',
+      family_member: {relationship_type: ''},
       email: '',
       phone: '',
       address: '',
@@ -62,6 +62,7 @@ export class PersonalInformationComponent implements OnInit {
       ssn: '',
       dob: '',
       template : true,
+      dl_number: '',
 
     }
     this.familyMembers.push(member);

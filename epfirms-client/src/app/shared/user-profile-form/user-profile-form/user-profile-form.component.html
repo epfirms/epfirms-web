@@ -20,7 +20,10 @@
       From: "transform opacity-100 scale-100"
       To: "transform opacity-0 scale-95"
   -->
-    <div
+   <form [formGroup]="userProfileForm" >
+
+
+<div
       *ngIf="dropdownVisible"
       class="right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
       role="menu"
@@ -36,12 +39,14 @@
             </label>
             <div class="mt-1">
               <select
+              formControlName="relationship"
                 id="region"
                 name="region"
                 autocomplete="address-level1"
                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
               >
-                <option></option>
+                <option *ngFor="let type of relationshipTypes" [ngValue]="type">{{type | titlecase}}</option>
+
               </select>
             </div>
           </div>
@@ -51,7 +56,7 @@
             </label>
             <div class="mt-1">
               <input
-                [(ngModel)]="userProfile.first_name"
+                formControlName="first_name"
                 type="text"
                 name="first-name"
                 id="first-name"
@@ -67,7 +72,7 @@
             </label>
             <div class="mt-1">
               <input
-                [(ngModel)]="userProfile.last_name"
+                formControlName="last_name"
                 type="text"
                 name="last-name"
                 id="last-name"
@@ -83,7 +88,7 @@
             </label>
             <div class="mt-1">
               <input
-                [(ngModel)]="userProfile.email"
+                formControlName="email"
                 id="email"
                 name="email"
                 type="email"
@@ -97,7 +102,7 @@
             <label for="phone" class="block text-sm font-medium text-gray-700"> Phone</label>
             <div class="mt-1">
               <input
-                [(ngModel)]="userProfile.phone"
+                formControlName="phone"
                 id="phone"
                 name="phone"
                 type="text"
@@ -113,7 +118,7 @@
             </label>
             <div class="mt-1">
               <input
-                [(ngModel)]="userProfile.address"
+                formControlName="address"
                 type="text"
                 name="street-address"
                 id="street-address"
@@ -127,7 +132,7 @@
             <label for="city" class="block text-sm font-medium text-gray-700"> City </label>
             <div class="mt-1">
               <input
-                [(ngModel)]="userProfile.city"
+                formControlName="city"
                 type="text"
                 name="city"
                 id="city"
@@ -141,7 +146,7 @@
             <label for="region" class="block text-sm font-medium text-gray-700"> State </label>
             <div class="mt-1">
               <select
-                [(ngModel)]="userProfile.state"
+                formControlName="state"
                 id="region"
                 name="region"
                 autocomplete="address-level1"
@@ -160,7 +165,7 @@
             </label>
             <div class="mt-1">
               <input
-                [(ngModel)]="userProfile.zip"
+                formControlName="zip"
                 type="text"
                 name="postal-code"
                 id="postal-code"
@@ -173,7 +178,7 @@
             <label for="dob" class="block text-sm font-medium text-gray-700"> DOB </label>
             <div class="mt-1">
               <input
-                [(ngModel)]="userProfile.dob"
+                formControlName="dob"
                 type="text"
                 name="dob"
                 id="dob"
@@ -187,7 +192,7 @@
             <label for="ssn" class="block text-sm font-medium text-gray-700"> SSN </label>
             <div class="mt-1">
               <input
-                [(ngModel)]="userProfile.ssn"
+                formControlName="ssn"
                 type="text"
                 name="ssn"
                 id="ssn"
@@ -203,6 +208,7 @@
             </label>
             <div class="mt-1">
               <input
+                formControlName="dl_number"
                 type="text"
                 name="DL-number"
                 id="DL-number"
@@ -225,6 +231,7 @@
         </button>
       </div>
     </div>
+   </form> 
     <!-- More items... -->
   </ul>
 </div>
