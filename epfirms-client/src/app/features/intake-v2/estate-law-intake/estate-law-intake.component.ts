@@ -21,14 +21,6 @@ export class EstateLawIntakeComponent implements OnInit {
   // stack that manages the views and enables the back() functionality
   history = [];
 
-  // client form setting
-  clientFormSetting: FormSettings;
-
-  // client and family data
-  client: UserProfile;
-  spouse: UserProfile;
-  children: UserProfile[] = [];
-  stepChildren: UserProfile[] = [];
 
   constructor(
     private clientMatterService: ClientMatterService,

@@ -1,15 +1,6 @@
 
           <app-user-profile-form
-            [formSettings]="{title: 'Client Information', subtitle: client.first_name, mode: 'CLIENT'}"
+            [formSettings]="{title: 'Client Information', subtitle: client.first_name, isClient: true }"
             [userProfile]="client"
-          ></app-user-profile-form>
-          <app-user-profile-form
-            *ngIf="hasSpouse"
-            [formSettings]="{
-              title: 'Spouse Information',
-              subtitle: spouse.first_name,
-              mode: 'SPOUSE'
-            }"
-            [userProfile]="spouse"
           ></app-user-profile-form>
 

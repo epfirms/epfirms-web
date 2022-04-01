@@ -12,10 +12,8 @@ import { usaStatesFull } from '@app/shared/utils/us-states/states';
 export class UserProfileFormComponent implements OnInit {
 
   // Input bindings
-  @Input() userProfile : UserProfile;
+  @Input() userProfile; 
   @Input() formSettings : FormSettings;
-  // Output bindings
-  @Output() userProfileChanges : EventEmitter<UserProfile> = new EventEmitter<UserProfile>();
 
   // bindings that control state of dropdown
   dropdownVisible : boolean = false;
@@ -24,9 +22,6 @@ export class UserProfileFormComponent implements OnInit {
   title : string = "TITLE GOES HERE";
   //binding for the subtitle below the title
   subtitle : string = "SUBTITLE GOES HERE";
-  // form mode: at the moment the mode can be 'CLIENT' 'SPOUSE' OR 'CHILD'
-  // this determines the fields that are shown
-  formMode : string = "CLIENT";
   // states list
     public usaStates: USAState[] = usaStatesFull;
 
@@ -41,7 +36,6 @@ export class UserProfileFormComponent implements OnInit {
   private loadFormSettings() : void {
     this.title = this.formSettings.title;
     this.subtitle = this.formSettings.subtitle;
-    this.formMode = this.formSettings.mode;
   }
 
 
@@ -52,7 +46,6 @@ export class UserProfileFormComponent implements OnInit {
 
 
   submit() : void {
-    this.userProfileChanges.emit(this.userProfile);
     this.toggleDropdown();
   }
 }
