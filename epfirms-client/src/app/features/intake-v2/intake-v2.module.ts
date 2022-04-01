@@ -17,6 +17,7 @@ import { IntakeMainComponent } from './intake-main/intake-main.component';
 import { ExecutorsComponent } from './executors/executors.component';
 import { UserProfileFormModule } from '@app/shared/user-profile-form/user-profile-form.module';
 import { IncomeFormModule } from '@app/shared/income-form/income-form.module';
+import { AssetFormModule } from '@app/shared/asset-form/asset-form.module';
 
 
 
@@ -41,7 +42,8 @@ import { IncomeFormModule } from '@app/shared/income-form/income-form.module';
     FormsModule,
     EditableModule,
     UserProfileFormModule,
-    IncomeFormModule
+    IncomeFormModule,
+    AssetFormModule
   ],
   exports: [
     ClientIntakeComponent,
