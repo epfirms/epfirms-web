@@ -43,10 +43,29 @@ export class PersonalInformationComponent implements OnInit {
       });
   }
 
-  loadClientData(): void {
+  private loadClientData(): void {
     this.client = this.matter.client;
   }
 
+  addFamilyMember(): void {
+    let member = {
+      first_name: '',
+      last_name: '',
+      relationship: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      county: '',
+      ssn: '',
+      dob: '',
+      template : true,
+
+    }
+    this.familyMembers.push(member);
+  }
   backButton(): void {
     this.back.emit(true);
   }
