@@ -78,7 +78,7 @@ export class UserProfileFormComponent implements OnInit {
       id: this.userProfile.id,
       first_name: this.userProfile.first_name,
       last_name: this.userProfile.last_name,
-      email: this.userProfile.email,
+      email: this.userProfile.email === "" ? null : this.userProfile.email,
       phone: this.userProfile.phone,
       address: this.userProfile.address,
       city: this.userProfile.city,

@@ -1,6 +1,23 @@
-<div >
+<div class="text-right m-4">
+  <button
+    (click)="addIncome(false)"
+    type="button"
+    class="m-2 inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+  >
+    Add Income
+  </button>
+<button
+*ngIf="spouse"
+    (click)="addIncome(true)"
+    type="button"
+    class=" m-2 inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+  >
+    <!-- Heroicon name: outline/plus-sm -->
+  Add Spouse Income
+  </button>
+</div>
           <div class="space-y-6">
-           <app-income-form [formSettings]="{title: 'Income Information', subtitle: 'Income Type'}"></app-income-form> 
+           <app-income-form *ngFor="let income of monthlyIncome" [income]="income" [formSettings]="{title: income.user_id === client.id ? 'Income Information': 'Spouse Income Information', subtitle: 'Income Type'}"></app-income-form> 
 
             <div class="flex justify-end">
               <button
@@ -18,4 +35,4 @@
               </button>
             </div>
           </div>
-        </div>
+        

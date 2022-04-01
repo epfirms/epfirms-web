@@ -22,6 +22,7 @@ export class IncomeComponent implements OnInit {
 
   // spouse property if available
   spouse;
+  client;
 
   constructor(
     private familyMemberService: FamilyMemberService,
@@ -31,6 +32,7 @@ export class IncomeComponent implements OnInit {
   ngOnInit(): void {
     this.loadSpouse();
     console.log('MATTER', this.matter);
+    this.client = this.matter.client;
   }
 
   loadIncomes(): void {
@@ -83,9 +85,7 @@ export class IncomeComponent implements OnInit {
   }
 
   submit(): void {
-    this.monthlyIncome.forEach((income) => {
-      this.incomeService.upsert(income).subscribe();
-    });
+    
     this.continueButton();
   }
 }
