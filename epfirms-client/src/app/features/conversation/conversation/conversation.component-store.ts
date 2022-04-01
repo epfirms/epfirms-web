@@ -1,41 +1,48 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { concatLatestFrom } from '@ngrx/effects';
-import { Conversation, Message, Paginator, Participant } from '@twilio/conversations';
-import { of, from, switchMap, filter, map, fromEventPattern, Observable } from 'rxjs';
+import { Conversation, Message, Paginator, Participant, User } from '@twilio/conversations';
+import { of, from, switchMap, filter, map, fromEventPattern, Observable, pluck } from 'rxjs';
 import { ConversationService } from '../services/conversation.service';
 
 export interface ConversationComponentState {
+  currentUser: User;
+  conversationTitle: string;
   conversation: Conversation | null;
   messages: Message[];
-  otherParticipant: Participant | null;
   paginator: Paginator<Message> | null;
+  otherParticipants: Participant[];
 }
 
 @Injectable()
 export class ConversationComponentStore extends ComponentStore<ConversationComponentState> {
-  constructor(private _conversationService: ConversationService, private _route: ActivatedRoute) {
-    super({ conversation: null, messages: [], otherParticipant: null, paginator: null });
+  constructor(private _conversationService: ConversationService, private _route: ActivatedRoute, private _matterService: MatterService) {
+    super({ currentUser: _conversationService.conversationsClient.user, conversationTitle: '', conversation: null, messages: [], paginator: null, otherParticipants: [] });
   }
+
+  readonly currentUser$ = this.select((state) => state.currentUser);
 
   readonly messages$ = this.select((state) => state.messages);
 
   readonly conversation$ = this.select((state) => state.conversation);
 
-  readonly otherParticipant$ = this.select((state) => state.otherParticipant);
-  
+  readonly otherParticipants$ = this.select((state) => state.otherParticipants);
+
   readonly paginator$ = this.select((state) => state.paginator);
 
-  readonly otherParticipantFriendlyName$ = this.select(
-    this.otherParticipant$,
-    (participant) => participant.attributes['friendlyName'],
-  );
+  readonly conversationTitle$ = this.select((state) => state.conversationTitle);
 
   readonly setConversation = this.updater((state, conversation: Conversation) => ({
     ...state,
     conversation,
+  }));
+
+  readonly setConversationTitle = this.updater((state, conversationTitle: string) => ({
+    ...state,
+    conversationTitle,
   }));
 
   readonly setMessages = this.updater((state, paginator: Paginator<Message>) => ({
@@ -61,9 +68,9 @@ export class ConversationComponentStore extends ComponentStore<ConversationCompo
     paginator: null,
   }));
 
-  readonly setOtherParticipant = this.updater((state, otherParticipant: Participant) => ({
+  readonly setOtherParticipants = this.updater((state, otherParticipants: Participant[]) => ({
     ...state,
-    otherParticipant,
+    otherParticipants,
   }));
 
   readonly getConversation = this.effect(() => {
@@ -121,11 +128,7 @@ export class ConversationComponentStore extends ComponentStore<ConversationCompo
     );
   });
 
-  /**
-   * Loads the other participant in a conversation by checking the currently
-   * logged-in user.
-   */
-  readonly getOtherParticipant = this.effect(() => {
+  readonly getOtherParticipants = this.effect(() => {
     return this.conversation$.pipe(
       filter((conversation) => conversation !== null),
       switchMap((conversation) =>
@@ -133,14 +136,41 @@ export class ConversationComponentStore extends ComponentStore<ConversationCompo
           tapResponse(
             (participants: Participant[]) => {
               const userIdentity = this._conversationService.user.identity;
-              const otherParticipant = participants.find((p) => p.identity !== userIdentity);
-              return this.setOtherParticipant(otherParticipant);
+              const otherParticipants = participants.filter((p) => p.identity !== userIdentity);
+              return this.setOtherParticipants(otherParticipants);
             },
-            () => of(null),
+            () => of([]),
           ),
         ),
       ),
     );
+  });
+
+  readonly getConversationTitle = this.effect(() => {
+    return this.otherParticipants$.pipe(
+      concatLatestFrom(() => this.conversation$.pipe(filter((conversation) => conversation !== null))),
+      switchMap(([otherParticipants, conversation]) => {
+        if (conversation.attributes['matterId']) {
+          return this._matterService.getById(conversation.attributes['matterId']).pipe(
+            pluck('title'),
+            map((title) => {
+              if (title && title.length) {
+                return title;
+              }
+
+              return of(otherParticipants).pipe(map(participants => participants[0].attributes['friendlyName']),
+              tapResponse(this.setConversationTitle, () => of(''))
+            )
+            }),
+            tapResponse(this.setConversationTitle, () => of('')),
+          )
+      }
+
+      return of(otherParticipants).pipe(map(participants => participants[0].attributes['friendlyName']),
+        tapResponse(this.setConversationTitle, () => of(''))
+      )
+    }),
+  );
   });
 
     /**

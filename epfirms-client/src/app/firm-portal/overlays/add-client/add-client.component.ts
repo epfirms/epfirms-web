@@ -13,6 +13,8 @@ import { createMask } from '@ngneat/input-mask';
 export class AddClientComponent implements OnInit {
   user;
 
+  title: 'Add' | 'Edit' = 'Add';
+
   clientForm: FormGroup = new FormGroup({
     first_name: new FormControl('', Validators.required),
     last_name: new FormControl('', Validators.required),
@@ -46,12 +48,13 @@ export class AddClientComponent implements OnInit {
       });
     });
     if (this.user) {
+      this.title = 'Edit';
       this.clientForm.addControl('id', new FormControl('', Validators.required));
       this.clientForm.patchValue({
         id: this.user.id,
         first_name: this.user.first_name,
         last_name: this.user.last_name,
-        phone: this.user.phone,
+        phone: this.user.phone ? this.user.phone.slice(2) : null,
         email: this.user.email,
         address: this.user.address,
         city: this.user.city,

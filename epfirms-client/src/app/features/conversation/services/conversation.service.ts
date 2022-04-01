@@ -10,14 +10,11 @@ import {
 } from '@twilio/conversations';
 import {
   BehaviorSubject,
-  catchError,
-  concatMap,
   from,
   fromEvent,
   fromEventPattern,
   Observable,
   pluck,
-  tap,
 } from 'rxjs';
 import { ConversationState } from '../store/conversation.store';
 
@@ -57,10 +54,14 @@ export class ConversationService {
   }
 
   /** Creates a conversation and adds the creator as participant. Direct messages are between 2 users. */
-  createConversation(conversationType: 'direct' | 'group' = 'direct'): Observable<Conversation> {
+  createConversation(conversationType: 'direct' | 'group' = 'direct', attributes?: any): Observable<Conversation> {
     return from(
-      this.conversationsClient.createConversation({ attributes: { type: conversationType } }),
+      this.conversationsClient.createConversation({ attributes: { ...attributes, type: conversationType } }),
     );
+  }
+
+  sendMessage(conversationSid: string, options: {body: string, author?: string}) {
+    return this._http.post(`/api/chat/${conversationSid}/messages`, options);
   }
 
   /** Adds a participant to a conversation.
@@ -73,11 +74,6 @@ export class ConversationService {
   /** Create a twilio user. Identity should be epfirm's user id. */
   createUser(identity): Observable<any> {
     return this._http.post('/api/chat', { identity });
-  }
-
-  /** Send message to conversation. */
-  sendMessage(conversation, message: string): Observable<any> {
-    return from(conversation.sendMessage(message));
   }
 
   /** Update logged-in user's friendly name. */

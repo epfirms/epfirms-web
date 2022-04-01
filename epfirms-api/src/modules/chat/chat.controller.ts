@@ -39,6 +39,18 @@ export class ChatController {
     }
   }
 
+  public async sendMessage(req, res) {
+    try {
+      const conversationSid = req.params.conversationSid;
+      const messageOptions = req.body;
+      const message = await this._conversationService.createMessage(conversationSid, messageOptions);
+
+      res.status(StatusConstants.CREATED).send({ data: message });
+    } catch (error) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
+    }
+  }
+
   public async addParticipant(req, res) {
     try {
       const requestBody: JSON = req.body;

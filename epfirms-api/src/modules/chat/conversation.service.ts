@@ -6,6 +6,7 @@ import { LocalInstance } from 'twilio/lib/rest/api/v2010/account/availablePhoneN
 import { AccountInstance } from 'twilio/lib/rest/api/v2010/account';
 import { AddChatParticipantDto } from './dto';
 import { UserInstance } from 'twilio/lib/rest/conversations/v1/service/user';
+import { MessageInstance, MessageListInstanceCreateOptions } from 'twilio/lib/rest/conversations/v1/service/conversation/message';
 const {
   TWILIO_ACCOUNT_SID,
   TWILIO_AUTH_TOKEN,
@@ -51,6 +52,15 @@ export class ConversationService {
 
     token.addGrant(grants.chat);
     return Promise.resolve(token);
+  }
+
+  public async createMessage(
+    conversationSid: string,
+    opts: MessageListInstanceCreateOptions
+  ): Promise<MessageInstance> {
+    const message = await this.twilioClient.conversations.services(TWILIO_CONVERSATIONS_SERVICE_SID).conversations(conversationSid).messages.create(opts);
+
+    return Promise.resolve(message);
   }
 
   public async createUser(identity: string, friendlyName: string): Promise<any> {

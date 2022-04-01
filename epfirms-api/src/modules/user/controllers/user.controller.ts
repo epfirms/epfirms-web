@@ -2,17 +2,23 @@ import { Response, Request } from 'express';
 import { UserService } from '@modules/user/services/user.service';
 import { StatusConstants } from '@src/constants/StatusConstants';
 import { Service } from 'typedi';
+import { TeamService } from '@src/modules/team/team.service';
 
 @Service()
 export class UserController {
-  constructor(private _userService: UserService) {}
+  constructor(private _userService: UserService, private _teamService: TeamService) {}
 
   public async getUser(req: any, resp: Response): Promise<any> {
     try {
-      const { id } = req.user;
-      const user = await this._userService.get('id', id);
+      const id = req.params && req.params.id ? req.params.id : 'me';
 
-      resp.status(StatusConstants.OK).send(user);
+      let userId = id === 'me' ? req.user.id : id;
+
+      const column = id.startsWith('+1') ? 'phone' : 'id';
+
+      let response = await this._userService.get(column, userId);
+
+      resp.status(StatusConstants.OK).send(response);
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }
@@ -33,6 +39,17 @@ export class UserController {
       const { body } = req;
       let response = await this._userService.update(body);
       resp.status(StatusConstants.CREATED).send(response);
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
+
+  public async getTeamsForUser(req: any, resp: Response): Promise<any> {
+    try {
+      const id = req.params.id === 'me' ? req.user.id : req.params.id;
+      const firmId = req.user.firm_access.firm_id;
+      const response = await this._teamService.findAllByUserId(firmId, id);
+      resp.status(StatusConstants.OK).send(response);
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
     }

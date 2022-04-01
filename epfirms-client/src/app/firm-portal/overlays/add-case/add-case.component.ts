@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { LegalAreaService } from '@app/firm-portal/_services/legal-area-service/legal-area.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
@@ -16,6 +16,8 @@ import { Observable, Subscription } from 'rxjs';
 import { AddClientComponent } from '../add-client/add-client.component';
 import { EpModalRef } from '@app/shared/modal/modal-ref';
 import { EpModalService } from '@app/shared/modal/modal.service';
+import { ConversationService } from '@app/features/conversation/services/conversation.service';
+import { createMask } from '@ngneat/input-mask';
 
 @Component({
   selector: 'app-add-case',
@@ -70,6 +72,19 @@ export class AddCaseComponent implements OnInit, OnDestroy {
 
   attorneyFilterHandler: Subscription;
 
+  enableChatToText: boolean = false;
+
+  chatToTextNumber = new FormControl('');
+
+  phoneInputMask = createMask({
+    mask: '(999) 999-9999',
+    placeholder: ' ',
+    parser: (value: string) => {
+      const val = '+1' + value.replaceAll(/\(|\)|\-|\s/g, '');
+      return val;
+    },
+  });
+  
   constructor(
     private _fb: FormBuilder,
     private _staffService: StaffService,
@@ -77,7 +92,8 @@ export class AddCaseComponent implements OnInit, OnDestroy {
     private _matterService: MatterService,
     private _legalAreaService: LegalAreaService,
     private _modalRef: EpModalRef,
-    private _modalService: EpModalService
+    private _modalService: EpModalService,
+    private _conversationService: ConversationService
   ) {
     this.attorneys$ = _staffService.filteredEntities$;
     this.clients$ = _clientService.entities$;
@@ -86,6 +102,7 @@ export class AddCaseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.caseForm = this._fb.group({
+      title: ['', Validators.required],
       status: ['active', [Validators.required]],
       legal_area_id: [null, [Validators.required]],
       matter_type: [this.matterType],
@@ -117,7 +134,7 @@ export class AddCaseComponent implements OnInit, OnDestroy {
 
   displayClient(value, options): string {
     const selectedStaffMember = options.find((option) => option.value === value);
-    return selectedStaffMember ? selectedStaffMember.viewValue : 'Search clients';
+    return selectedStaffMember ? selectedStaffMember.viewValue : 'Search client directory';
   }
 
   displayAttorney(value, options): string {
@@ -172,7 +189,31 @@ export class AddCaseComponent implements OnInit, OnDestroy {
     });
   }
 
+  setPhoneNumber(id: number) {
+    const client = this.clients.find((c) => c.id === id);
+
+    if (client.phone && client.phone.length) {
+      this.chatToTextNumber.setValue(client.phone.replace('+1', ''));
+    } else {
+      this.chatToTextNumber.setValue('');
+    }
+    this.enableChatToText = true;
+    this.chatToTextNumber.addValidators([Validators.required]);
+    this.chatToTextNumber.updateValueAndValidity();
+  }
+
+  toggleChatToText() {
+    this.enableChatToText = !this.enableChatToText;
+
+    if (this.enableChatToText) {
+      this.chatToTextNumber.addValidators([Validators.required]);
+    } else {
+      this.chatToTextNumber.removeValidators([Validators.required]);
+    }
+    this.chatToTextNumber.updateValueAndValidity();
+  }
+
   onSubmit() {
-    this.close({matter: this.caseForm.value, note: this.note});
+    this.close({matter: this.caseForm.value, note: this.note, chatToTextNumber: this.chatToTextNumber.valid && this.chatToTextNumber});
   }
 }

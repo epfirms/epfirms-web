@@ -83,4 +83,15 @@ export class MatterController {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }
   }
+
+  public async getMatterById(req: any, resp: Response): Promise<any> {
+    try {
+      const id = req.params.id;
+      const foundMatter = await this._matterService.getById(id);
+
+      resp.status(StatusConstants.OK).send(foundMatter);
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
 }

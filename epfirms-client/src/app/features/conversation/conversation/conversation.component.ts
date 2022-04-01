@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Conversation, Message, Participant } from '@twilio/conversations';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { ConversationComponentStore } from './conversation.component-store';
 
 @Component({
@@ -12,7 +12,9 @@ import { ConversationComponentStore } from './conversation.component-store';
 export class ConversationComponent implements OnInit {
   conversation$: Observable<Conversation> = this.conversationComponentStore.conversation$;
 
-  otherParticipant$: Observable<Participant> = this.conversationComponentStore.otherParticipant$;
+  otherParticipants$: Observable<Participant[]> = this.conversationComponentStore.otherParticipants$;
+
+  conversationTitle$: Observable<string> = this.conversationComponentStore.conversationTitle$;
 
   messages$: Observable<Message[]> = this.conversationComponentStore.messages$;
 
@@ -24,7 +26,7 @@ export class ConversationComponent implements OnInit {
 
   ngOnInit(): void {
     this.conversationComponentStore.getConversation();
-    this.conversation$.subscribe(c => console.log(c)); 
+    this.conversationTitle$.subscribe(console.log)
   }
 
   /** Fetch additional pages from message paginator. */
@@ -34,7 +36,10 @@ export class ConversationComponent implements OnInit {
   }
 
   sendMessage() {
-    this.conversationComponentStore.sendMessage(this.newMessage);
-    this.newMessage = null;
+    this.conversationComponentStore.currentUser$.pipe(take(1)).subscribe((user) => {
+      const message = `${user.friendlyName}:\n` + this.newMessage;
+      this.newMessage = null;
+      this.conversationComponentStore.sendMessage(message);
+    });
   }
 }

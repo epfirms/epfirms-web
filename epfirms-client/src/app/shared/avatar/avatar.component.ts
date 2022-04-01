@@ -50,7 +50,7 @@ export class AvatarComponent {
 
   private _shape: 'round' | 'square';
 
-  private _size: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+  private _size: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'mediumSmall';
 
   private _src: string | null;
 

@@ -12,4 +12,8 @@ export class FirmRoleService {
   get(): Observable<any> {
     return this.http.get('/api/firm/roles');
   }
+
+  getOne(id: number): Observable<any> {
+    return this.http.get(`/api/firm/roles/${id}`);
+  }
 }

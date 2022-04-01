@@ -16,7 +16,7 @@
       }
     }
   
-    &.sm {
+    &.sm, &.mdSm {
       & > span {
         @apply text-sm;
       }
@@ -48,7 +48,7 @@
   }
   
   .square {
-    @apply rounded-md;
+    @apply rounded-lg;
   }
   
   .xs {
@@ -59,6 +59,10 @@
   .sm {
     min-width: 2rem;
     @apply h-8 w-8;
+  }
+
+  .mdSm {
+    @apply h-9 w-9;
   }
   
   .md {

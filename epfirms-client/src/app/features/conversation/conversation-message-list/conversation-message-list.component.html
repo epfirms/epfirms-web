@@ -1,111 +1,20 @@
 <ng-scrollbar [viewClass]="'scroll-view'" #scrollbar (reachedTop)="emitReachedTop($event)">
   <div scrollViewport>
     <ul class="px-4 pt-2">
-      <ng-container
+      <app-conversation-message-item
         *ngFor="
           let messageItem of messageItems;
           let isFirst = first;
           let i = index;
           let isLast = last
         "
-      >
-        <div
-          class="sticky top-0 py-4 bg-gradient-to-b from-white via-white"
-          *ngIf="
-            isFirst ||
-            (messageItem.dateCreated | date: 'shortDate') !==
-              (messageItems[i - 1].dateCreated | date: 'shortDate')
-          "
-        >
-          <div class="relative">
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-              <div class="w-full border-t border-gray-100"></div>
-            </div>
-            <div class="relative flex justify-center">
-              <time class="px-3 text-sm font-medium text-gray-700 bg-white">{{ messageItem.dateCreated | date: 'EEEE, MMMM d' }}</time>
-            </div>
-          </div>
-        </div>
-
-        <li class="py-0.5"  [class.pb-4]="isLast">
-          <div
-            class="relative py-2"
-            *ngIf="
-              messageItem.author !== currentUser.identity &&
-              ((isFirst && messageItem.index === lastReadMessageIndex) ||
-                (!isFirst && messageItems[i - 1].index === lastReadMessageIndex))
-            "
-            #newMessageIndicator
-          >
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-              <div class="w-full border-t border-red-400"></div>
-            </div>
-            <div class="relative flex justify-center">
-              <span class="px-2 text-xs font-semibold text-red-500 bg-white">New</span>
-            </div>
-          </div>
-          <div
-            class="flex flex-col flex-shrink-0"
-            *ngIf="messageItem.author !== currentUser.identity"
-          >
-            <div class="flex items-start group">
-              <div
-                class="px-3.5 py-3 rounded-2xl bg-gray-200/75"
-                style="max-width: 36rem"
-                [ngClass]="{
-                  'rounded-bl':
-                    !isLast &&
-                    (messageItem.dateCreated | date: 'EEEE, MMMM d') ===
-                      (messageItems[i + 1].dateCreated | date: 'EEEE, MMMM d') &&
-                    messageItems[i + 1].author === messageItem.author,
-                  'rounded-tl':
-                    !isFirst &&
-                    (messageItem.dateCreated | date: 'EEEE, MMMM d') ===
-                      (messageItems[i - 1].dateCreated | date: 'EEEE, MMMM d') &&
-                    messageItems[i - 1].author === messageItem.author
-                }"
-              >
-                <p class="text-sm font-normal leading-4 whitespace-pre-wrap text-gray-900/90">{{ messageItem.body }}</p>
-              </div>
-              <div class="self-center hidden px-3 text-xs text-gray-400 group-hover:block">
-                <time>{{ messageItem.dateCreated | date: 'h:mm a' }}</time>
-              </div>
-            </div>
-          </div>
-          <div
-            class="flex flex-col flex-shrink-0 class.items-end"
-            *ngIf="messageItem.author === currentUser.identity"
-          >
-            <div class="flex items-end justify-end group">
-              <div class="self-center hidden px-3 text-xs text-gray-400 group-hover:block">
-                <time>{{ messageItem.dateCreated | date: 'h:mm a' }}</time>
-              </div>
-              <div
-                class="px-3.5 py-3 rounded-2xl bg-blue-100"
-                style="max-width: 36rem"
-                [ngClass]="{
-                  'rounded-br':
-                    !isLast &&
-                    (messageItem.dateCreated | date: 'EEEE, MMMM d') ===
-                      (messageItems[i + 1].dateCreated | date: 'EEEE, MMMM d') &&
-                    messageItems[i + 1].author === messageItem.author,
-                  'rounded-tr':
-                    !isFirst &&
-                    (messageItem.dateCreated | date: 'EEEE, MMMM d') ===
-                      (messageItems[i - 1].dateCreated | date: 'EEEE, MMMM d') &&
-                    messageItems[i - 1].author === messageItem.author
-                }"
-              >
-                <p class="text-sm font-normal leading-4 whitespace-pre-wrap text-gray-900/90">{{ messageItem.body }}</p>
-              </div>
-            </div>
-          </div>
-          <div
-            class="flex flex-col flex-shrink-0"
-            [class.items-end]="messageItem.author === currentUser.identity"
-          ></div>
-        </li>
-      </ng-container>
+        [message]="messageItem"
+        [prevMessage]="!isFirst && messageItems[i - 1]"
+        [nextMessage]="!isLast && messageItems[i + 1]"
+        [isFirst]="isFirst"
+        [isLast]="isLast"
+        [authorIsCurrentUser]="messageItem.author === currentUser.identity"
+      ></app-conversation-message-item>
       <div #anchor class="snap-end"></div>
     </ul>
   </div>

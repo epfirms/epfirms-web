@@ -1,11 +1,135 @@
-<ng-template #contentTemplate>
-  <ng-content></ng-content>
-  <div class="relative py-4" *ngIf="isLastReadMessage">
+<div
+  class="sticky top-0 py-4 bg-gradient-to-b from-white via-white"
+  *ngIf="
+    isFirst ||
+    (message.dateCreated | date: 'shortDate') !== (prevMessage.dateCreated | date: 'shortDate')
+  "
+>
+  <div class="relative">
     <div class="absolute inset-0 flex items-center" aria-hidden="true">
-      <div class="w-full border-t border-sky-300"></div>
+      <div class="w-full border-t border-gray-100"></div>
     </div>
-    <div class="relative flex justify-end">
-      <span class="px-2 text-xs font-semibold bg-white text-sky-500">New</span>
+    <div class="relative flex justify-center">
+      <time class="px-3 text-sm font-medium text-gray-700 bg-white">{{
+        message.dateCreated | date: 'EEEE, MMMM d'
+      }}</time>
     </div>
   </div>
-</ng-template>
+</div>
+
+<li
+  class="py-0.5"
+  [class.pb-4]="isLast"
+  [ngClass]="{
+    'pt-2':
+      !isFirst &&
+      ((message.dateCreated | date: 'EEEE, MMMM d') !==
+        (prevMessage.dateCreated | date: 'EEEE, MMMM d') ||
+        prevMessage.author !== message.author),
+    'pb-2':
+      !isLast &&
+      ((message.dateCreated | date: 'EEEE, MMMM d') !==
+        (nextMessage.dateCreated | date: 'EEEE, MMMM d') ||
+        nextMessage.author !== message.author)
+  }"
+>
+  <!-- New message indicator -->
+  <div
+    class="relative py-2"
+    *ngIf="
+      !authorIsCurrentUser &&
+      ((isFirst && message.index === lastReadMessageIndex) ||
+        (!isFirst && prevMessage.index === lastReadMessageIndex))
+    "
+    #newMessageIndicator
+  >
+    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+      <div class="w-full border-t border-red-400"></div>
+    </div>
+    <div class="relative flex justify-center">
+      <span class="px-2 text-xs font-semibold text-red-500 bg-white">New</span>
+    </div>
+  </div>
+
+  <!-- Other participant message -->
+  <div class="flex flex-col flex-shrink-0" *ngIf="!authorIsCurrentUser">
+    <div class="flex items-end space-x-2 group">
+
+      <ng-container *ngIf="isLast || message.author !== nextMessage.author">
+        <ng-container *ngIf="user">
+          <div class="flex-shrink-0" *ngIf="!user.profile_image">
+            <span class="inline-flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full">
+              <span class="text-sm font-medium leading-none text-white">{{
+                user.full_name | initials
+              }}</span>
+            </span>
+          </div>
+          <div *ngIf="user.profile_image">
+            <img class="inline-block w-8 h-8 rounded-full" [src]="user.profile_image" alt="" />
+          </div>
+        </ng-container>
+    
+          <ng-container *ngIf="!user">
+            <div class="flex space-x-4 animate-pulse" *ngIf="user">
+              <div class="w-8 h-8 rounded-full bg-slate-200"></div>
+            </div>
+          </ng-container>
+      </ng-container>
+
+      <div
+        class="px-3 py-2.5 rounded-xl bg-gray-200/75"
+        [class.ml-10]="!(isLast || message.author !== nextMessage.author)"
+        style="max-width: 36rem"
+        [ngClass]="{
+          'rounded-bl':
+            !isLast &&
+            (message.dateCreated | date: 'EEEE, MMMM d') ===
+              (nextMessage.dateCreated | date: 'EEEE, MMMM d') &&
+            nextMessage.author === message.author,
+          'rounded-tl':
+            !isFirst &&
+            (message.dateCreated | date: 'EEEE, MMMM d') ===
+              (prevMessage.dateCreated | date: 'EEEE, MMMM d') &&
+            prevMessage.author === message.author
+        }"
+      >
+        <p class="text-sm font-normal leading-4 whitespace-pre-wrap text-gray-900/90">
+          {{ message.body }}
+        </p>
+      </div>
+      <div class="self-center hidden px-3 text-xs text-gray-400 group-hover:block">
+        <time>{{ message.dateCreated | date: 'h:mm a' }}</time>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sent message -->
+  <div class="flex flex-col flex-shrink-0 class.items-end" *ngIf="authorIsCurrentUser">
+    <div class="flex items-end justify-end group">
+      <div class="self-center hidden px-3 text-xs text-gray-400 group-hover:block">
+        <time>{{ message.dateCreated | date: 'h:mm a' }}</time>
+      </div>
+      <div
+        class="px-3 py-2.5 bg-blue-100 rounded-xl"
+        style="max-width: 36rem"
+        [ngClass]="{
+          'rounded-br':
+            !isLast &&
+            (message.dateCreated | date: 'EEEE, MMMM d') ===
+              (nextMessage.dateCreated | date: 'EEEE, MMMM d') &&
+            nextMessage.author === message.author,
+          'rounded-tr':
+            !isFirst &&
+            (message.dateCreated | date: 'EEEE, MMMM d') ===
+              (prevMessage.dateCreated | date: 'EEEE, MMMM d') &&
+            prevMessage.author === message.author
+        }"
+      >
+        <p class="text-sm font-normal leading-4 whitespace-pre-wrap text-gray-900/90">
+          {{ message.body }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col flex-shrink-0" [class.items-end]="authorIsCurrentUser"></div>
+</li>

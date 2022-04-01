@@ -23,6 +23,7 @@ import { customerAccountRouter } from '@src/modules/customer-account/routes';
 import { contractRouter } from '@src/modules/contract/routes';
 import { chatRouter } from '@src/modules/chat/chat.routes';
 import { contractTemplateRouter } from '@src/modules/contract-template/routes';
+import { teamRouter } from '@src/modules/team/team.routes';
 
 const v1Router = express.Router();
 
@@ -50,4 +51,6 @@ v1Router.use('/customer-account', customerAccountRouter);
 v1Router.use('/contract', contractRouter);
 v1Router.use('/chat', chatRouter);
 v1Router.use('/contract-template', contractTemplateRouter);
+v1Router.use('/teams', teamRouter);
+
 export { v1Router }

@@ -67,6 +67,32 @@ export class ConversationEffects {
     ),
   );
 
+  tokenAboutToExpire$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType(ConversationActions.updateConnectionState),
+      filter((action) => action.connectionState === 'connected'),
+      switchMap(() => {
+        return this.conversationService.tokenAboutToExpire().pipe(
+          tap(() => {
+            this.store.dispatch(ConversationActions.updateAccessToken());
+          }),
+        );
+      })   
+    ), {dispatch: false});
+
+    tokenExpiredEvent$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType(ConversationActions.updateConnectionState),
+      filter((action) => action.connectionState === 'connected'),
+      switchMap(() => {
+        return this.conversationService.tokenExpired().pipe(
+          tap(() => {
+            this.store.dispatch(ConversationActions.updateAccessToken());
+          }),
+        );
+      })   
+    ), {dispatch: false});
+
   addEventHandlers$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -75,14 +101,12 @@ export class ConversationEffects {
           switch (state.connectionState) {
             case 'connected':
               this.conversationService.syncUserProfile();
-              this.conversationService.tokenAboutToExpire();
-              this.conversationService.tokenExpired();
               break;
             case 'disconnecting':
             case 'disconnected':
+            case 'error':
               this.store.dispatch(ConversationActions.updateAccessToken());
               break;
-            case 'error':
             case 'denied':
               this._authService.logout();
               break;

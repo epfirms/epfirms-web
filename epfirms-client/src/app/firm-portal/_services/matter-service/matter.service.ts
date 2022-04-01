@@ -44,6 +44,10 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
     return this._http.get<any>('/api/matters');
   }
 
+  getById(id: number):Observable<any> {
+    return this._http.get<any>(`/api/matters/${id}`);
+  }
+
   create(matter): Observable<any> {
     return this._http.post<any>('/api/matters', { matter }).pipe(
       this._toastService.observe({

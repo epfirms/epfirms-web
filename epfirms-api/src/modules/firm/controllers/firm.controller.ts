@@ -137,6 +137,18 @@ export class FirmController {
     }
   }
 
+  public async getRoleById(req: any, resp: Response): Promise<any> {
+    try {
+      const id = req.params.id;
+      const { firm_id } = req.user.firm_access;
+      const response = await this._firmRoleService.getById(id, firm_id);
+
+      resp.status(StatusConstants.OK).send({ data: response });
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+  }
+
   public async getRoles(req: any, resp: Response): Promise<any> {
     try {
       const { firm_id } = req.user.firm_access;

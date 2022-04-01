@@ -9,6 +9,10 @@ userRouter.get('/',
   (req, res) => userController.getUser(req, res)
 )
 
+userRouter.get('/:id', passport.authenticate('bearer', {session: false}), (req, res) => userController.getUser(req, res));
+
+userRouter.get('/:id/teams', passport.authenticate('bearer', {session: false}), (req, res) => userController.getTeamsForUser(req, res));
+
 userRouter.post('/',
   (req, res) => userController.createUser(req, res)
 )
