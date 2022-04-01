@@ -5,6 +5,6 @@ export interface FormSettings {
     subtitle : string;
     
     // determines if the relationship field should show
-    isClient : boolean;
+    isClient? : boolean;
     
 }
