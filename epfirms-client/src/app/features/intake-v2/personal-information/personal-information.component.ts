@@ -17,7 +17,12 @@ export class PersonalInformationComponent implements OnInit {
   @Output() back = new EventEmitter<boolean>();
   @Output() continue = new EventEmitter<boolean>();
 
+  // holds the properties of the client
   client;
+
+  //array that holds family members
+  familyMembers = [];
+
 
   constructor(
     private clientService: ClientService,
@@ -27,6 +32,15 @@ export class PersonalInformationComponent implements OnInit {
   ngOnInit(): void {
     console.log('matter', this.matter);
     this.loadClientData();
+    this.loadFamilyMembers();
+  }
+
+  private loadFamilyMembers(): void {
+    this.familyMemberService
+      .getByUserId(this.client.id)
+      .subscribe((familyMembers) => {
+        this.familyMembers = familyMembers;
+      });
   }
 
   loadClientData(): void {
