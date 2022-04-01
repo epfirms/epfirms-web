@@ -1,0 +1,84 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<!--
+  This example requires updating your template:
+
+  ```
+  <html class="h-full">
+  <body class="h-full">
+  ```
+-->
+<div class="min-h-full">
+  <nav class="bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex">
+          <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
+            <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+            <a
+              [ngClass]="
+                state === 0
+                  ? 'border-indigo-500 text-gray-900'
+                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+              "
+              class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+            >
+              Getting Started
+            </a>
+
+            <a
+              [ngClass]="
+                state === 1
+                  ? 'border-indigo-500 text-gray-900'
+                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+              "
+              class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+            >
+              Personal Information
+            </a>
+<!-- <a
+              [ngClass]="
+                state === 2
+                  ? 'border-indigo-500 text-gray-900'
+                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+              "
+              class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+            >
+              Income Information
+            </a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="py-10">
+    <header>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"></div>
+    </header>
+    <main>
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+        <!-- INITIAL STATE 0 -->
+        <app-intake-dialog
+          *ngIf="state === 0"
+          [settings]="{
+            title: 'Getting Started',
+            content:
+              'This intake process is designed to help streamline our legal services to you. Your information will be kept secure and confidential. ',
+            continueButton: true
+          }"
+          (continue)="setState(1)"
+        ></app-intake-dialog>
+
+
+
+        <!-- STATE 1 : PERSONAL INFORMATION -->
+          <app-personal-information *ngIf="state === 1" [matter]="matter" (back)="back()" (continue)="setState(2); submit()"></app-personal-information>
+          <app-intake-dialog *ngIf="state === 2" [settings]="{title: 'What Happens Next?', content: 'Thank you for your submission. Your attorney will be in contact shortly.'}"></app-intake-dialog>
+      <!-- STATE 2 : INCOME INFORMATION -->
+          <!-- <app-income *ngIf="state === 2" [matter]="matter" (continue)="setState(3)" (back)="back()"></app-income> -->
+        <!-- /End replace -->
+      </div>
+    </main>
+  </div>
+</div>
