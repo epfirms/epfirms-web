@@ -23,7 +23,7 @@ services:
     volumes:
       - './epfirms-client:/home/node/client'
       - '/home/node/client/node_modules'
-    command: node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --disable-host-check
+    command: node --max_old_space_size=4000 node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --disable-host-check
   database:
     image: mysql:5.7
     restart: always

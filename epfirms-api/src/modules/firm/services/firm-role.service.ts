@@ -3,8 +3,16 @@ import { Service } from 'typedi';
 
 @Service()
 export class FirmRoleService {
-  private defaultRoles = ['attorney', 'associate attorney', 'paralegal', 'legal assistant', 'receptionist', 'office manager', 'other'];
-  
+  private defaultRoles = [
+    'attorney',
+    'associate attorney',
+    'paralegal',
+    'legal assistant',
+    'receptionist',
+    'office manager',
+    'other',
+  ];
+
   constructor() {}
 
   /**
@@ -29,7 +37,7 @@ export class FirmRoleService {
             await currentFirm.createFirm_role({ name: role });
           }
 
-          const addedRoles = await currentFirm.getFirm_role({attributes: ['id', 'name']});
+          const addedRoles = await currentFirm.getFirm_role({ attributes: ['id', 'name'] });
           return Promise.resolve(addedRoles);
         }
 
@@ -42,26 +50,33 @@ export class FirmRoleService {
     }
   }
 
-    /**
+  /**
    * Gets a list of roles for a specified firm.
    *
    * @param firmId
    * @returns Roles belonging to a firm
    *
    */
-     public async get(firmId: number): Promise<any> {
-      try {
-        const { firm } = Database.models;
-        const currentFirm = await firm.findByPk(firmId);
-  
-        if (currentFirm) {
-            const roles = await currentFirm.getFirm_role({attributes: ['id', 'name']});
-            return Promise.resolve(roles);
-        } else {
-          return Promise.reject(new Error('Firm not found'));
-        }
-      } catch (err) {
-        console.error(err);
+  public async get(firmId: number): Promise<any> {
+    try {
+      const { firm } = Database.models;
+      const currentFirm = await firm.findByPk(firmId);
+
+      if (currentFirm) {
+        const roles = await currentFirm.getFirm_role({ attributes: ['id', 'name'] });
+        return Promise.resolve(roles);
+      } else {
+        return Promise.reject(new Error('Firm not found'));
       }
+    } catch (err) {
+      console.error(err);
     }
+  }
+
+  public async getById(id: number, firmId: number): Promise<any> {
+    const { firm_role } = Database.models;
+    const role = await firm_role.findOne({ attributes: ['id', 'name'], where: { id, firm_id: firmId } });
+
+    return Promise.resolve(role);
+  }
 }

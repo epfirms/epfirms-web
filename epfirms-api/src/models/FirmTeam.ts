@@ -17,7 +17,11 @@ module.exports = (sequelize, { INTEGER, STRING }) => {
       },
       name: {
         type: STRING
-      }
+      },
+      twilio_phone_number: {
+        type: STRING,
+        unique: true,
+      },
     },
     {
       tableName,

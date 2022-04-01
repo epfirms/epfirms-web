@@ -1,0 +1,52 @@
+<div class="divide-y divide-gray-100">
+  <div class="px-4 py-5 sm:px-6 sm:py-4">
+    <h3 class="font-medium leading-6 text-gray-900">Select a lead or case</h3>
+    <p class="max-w-2xl mt-1 text-sm text-gray-500">
+      A group chat will be started with the assigned legal team and client.
+    </p>
+  </div>
+  <ul class="p-3 overflow-y-auto max-h-96 scroll-py-3" id="options" role="listbox">
+    <li
+      *ngFor="let matter of matters"
+      [class.bg-gray-100]="selectedMatter?.id === matter.id"
+      class="flex p-3 cursor-default select-none group rounded-xl hover:bg-gray-100 hover:cursor-pointer"
+      id="option-1"
+      role="option"
+      tabindex="-1"
+      (click)="selectMatter(matter)"
+    >
+      <ep-avatar
+        epSize="medium"
+        epShape="square"
+        [epSrc]="matter.client.profile_image"
+        [epText]="matter.client.full_name"
+      >
+      </ep-avatar>
+      <div class="flex-auto ml-4">
+        <p
+          class="text-sm font-medium"
+          [ngClass]="{
+            'text-gray-900': selectedMatter?.id === matter.id,
+            'text-gray-700': selectedMatter?.id !== matter.id
+          }"
+        >
+          {{ matter.client.full_name | titlecase }}
+        </p>
+        <p
+          class="text-sm text-gray-500"
+          [ngClass]="{
+            'text-gray-700': selectedMatter?.id === matter.id,
+            'text-gray-500': selectedMatter?.id !== matter.id
+          }"
+        >
+          #{{ matter.case_id }} <span class="font-bold">&#183;</span>
+          {{
+            matter.title ||
+              matter.legal_area.name + ' ' + matter.matter_type + ' for ' + matter.client.full_name
+              | titlecase
+          }}
+        </p>
+      </div>
+    </li>
+  </ul>
+</div>

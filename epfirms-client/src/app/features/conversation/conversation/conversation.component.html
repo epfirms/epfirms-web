@@ -1,30 +1,32 @@
 <div class="flex-shrink-0 bg-white border-b border-gray-200">
   <div class="flex flex-col justify-center h-16">
-    <div class="px-4 sm:px-6 lg:px-8">
+    <div class="px-4">
       <div class="flex items-center justify-between py-3">
-        <a class="flex-shrink-0 block group">
-          <div class="flex items-center">
-            <div class="flex-shrink-0" *ngIf="!profileImage">
-              <span
-                class="inline-flex items-center justify-center bg-gray-500 rounded-full w-9 h-9"
-              >
-                <span class="text-sm font-medium leading-none text-white">{{
-                  friendlyName | initials
-                }}</span>
-              </span>
+        <a class="flex-1 flex-shrink-0 block group">
+            <ng-container *ngIf="otherParticipants$ | async as otherParticipants">
+              <div class="flex items-center justify-end flex-shrink-0 row-span-2 space-x-2" [class.flex-row-reverse]="otherParticipants.length > 1">
+                <ep-avatar-group class="mr-3">
+                  <ep-avatar *ngFor="let participant of otherParticipants;" [epSize]="otherParticipants.length > 1 ? 'xsmall' : 'mediumSmall'" [epSrc]="participant.attributes['profileImage']" [epText]="participant.attributes['friendlyName']"></ep-avatar>
+                </ep-avatar-group>
+
+                <div class="flex-1">
+                  <h2 class="mr-3 font-medium text-gray-700 group-hover:text-gray-900">
+                    {{ (conversationTitle$ | async) | titlecase }}
+                  </h2>
+                </div>
+
+                <div class="self-center flex-shrink-0" *ngIf="otherParticipants.length > 1">
+                  <span class="inline-flex items-center justify-center rounded-full h-9 w-9 bg-slate-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                    </svg>
+                  </span>
+                </div>
             </div>
-            <div *ngIf="profileImage">
-              <img class="inline-block rounded-full h-9 w-9" [src]="profileImage" alt="" />
-            </div>
-            <div class="ml-3">
-              <h2 class="font-medium text-gray-700 group-hover:text-gray-900">
-                {{ friendlyName | titlecase }}
-              </h2>
-            </div>
-          </div>
+            </ng-container>
         </a>
 
-        <div>
+        <div *ngIf="conversation$ | async as conversation">
           <button
             type="button"
             class="inline-flex items-center justify-center w-8 h-8 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -50,11 +52,13 @@
   </div>
 </div>
 
+<ng-container *ngIf="messages$ | async as messages">
 <app-conversation-message-list
   [messageItems]="messages"
-  [lastReadMessageIndex]="conversation?.lastReadMessageIndex"
+  [lastReadMessageIndex]="(conversation$ | async)?.lastReadMessageIndex"
   (scrolledTop)="loadMoreMessages()"
 ></app-conversation-message-list>
+</ng-container>
 
 <div class="p-4 pt-0">
   <div class="flex items-start space-x-4">

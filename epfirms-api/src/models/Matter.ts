@@ -9,6 +9,9 @@ module.exports = (sequelize, { INTEGER, STRING, BOOLEAN, FLOAT }) => {
         primaryKey: true,
         autoIncrement: true
       },
+      title: {
+        type: STRING,
+      },
       case_id: {
         type: STRING
       },

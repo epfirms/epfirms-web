@@ -2,16 +2,20 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { LegalArea } from '@app/core/interfaces/legal-area';
 import { Matter } from '@app/core/interfaces/matter';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { AddCaseComponent } from '../overlays/add-case/add-case.component';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
 import { MatterTabsService } from '../../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
-import { map, take } from 'rxjs/operators';
+import { map, mergeMap, switchMap, take } from 'rxjs/operators';
 import { Staff } from '@app/core/interfaces/staff';
 import { StaffService } from '../_services/staff-service/staff.service';
 import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete.component';
 import { EpModalService } from '@app/shared/modal/modal.service';
+import { ConversationService } from '@app/features/conversation/services/conversation.service';
+import { Store } from '@ngrx/store';
+import { FirmService } from '../_services/firm-service/firm.service';
+import { TeamService } from '@app/features/team/services/team.service';
 
 @Component({
   selector: 'app-cases',
@@ -34,7 +38,7 @@ export class CasesComponent implements OnInit {
   displayedColumns = ['client', 'task', 'legal-area', 'attorney', 'billing', 'status'];
 
   attorneys$: Observable<Staff[]>;
-  
+
   cases$: Observable<Matter[]>;
 
   legalAreas$: Observable<LegalArea[]>;
@@ -95,6 +99,10 @@ export class CasesComponent implements OnInit {
     private _legalAreaService: LegalAreaService,
     private _staffService: StaffService,
     private _modalService: EpModalService,
+    private _conversationService: ConversationService,
+    private _firmService: FirmService,
+    private readonly store: Store,
+    private _teamService: TeamService,
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.cases$ = _matterService.filteredEntities$;
@@ -147,6 +155,10 @@ export class CasesComponent implements OnInit {
                 this.addNote(newMatter.id, data.note);
               }
             }
+
+            if (data.chatToTextNumber) {
+              this.createConversation(newMatter);
+            }
           });
         });
       }
@@ -155,6 +167,61 @@ export class CasesComponent implements OnInit {
 
   addNote(id: number, note) {
     this._matterService.addMatterNote(id, note).subscribe();
+  }
+
+  createConversation(matter) {
+    this._teamService
+      .getAllByUserId(matter.attorney_id)
+      .pipe(
+        switchMap((teams) =>
+          this._teamService
+            .getAllMembers(teams[0].id)
+            .pipe(map((response) => ({ teams, members: response.data }))),
+        ),
+      )
+      .subscribe(({ teams, members }) => {
+        this._conversationService
+          .createConversation('group', { matterId: matter.id })
+          .pipe(
+            mergeMap((conversation) =>
+              this._conversationService
+                .addParticipant(conversation, {
+                  messagingBinding: { address: matter.client.phone },
+                  attributes: {
+                    friendlyName: matter.client.full_name,
+                    phone: matter.client.phone,
+                  },
+                })
+                .pipe(map(() => conversation)),
+            ),
+            mergeMap((conversation) =>
+              from(members).pipe(
+                mergeMap((member: any) =>
+                  this._conversationService.addParticipant(conversation, {
+                    identity: member.firm_employee.user_id,
+                    messagingBinding: { projectedAddress: teams[0].twilio_phone_number },
+                    attributes: {
+                      friendlyName:
+                        member.firm_employee.user.first_name +
+                        ' ' +
+                        member.firm_employee.user.last_name,
+                    },
+                  }),
+                ),
+              ).pipe(map(() => conversation)),
+            ),
+            take(1)
+          )
+          // Add selected participant.
+          .subscribe((conversation) => {
+            this._firmService.getCurrentFirm().subscribe((firm) => {
+              const message = `Hello, this is your attorney, ${matter.attorney.full_name}, at ${firm.name}. I would like to communicate with you through text. If you do not want me to text you, please reply STOP.`;
+              this._conversationService
+                .sendMessage(conversation.sid, { body: message, author: matter.attorney_id })
+                .subscribe(() => {});
+            });
+          });
+      });
   }
 
   setLegalArea(matter: Matter, legalArea: LegalArea) {
@@ -198,7 +265,6 @@ export class CasesComponent implements OnInit {
       this.filter();
       this.cases$ = this._matterService.filteredEntities$;
     }
-    console.log(this.sortValues.direction);
   }
 
   sortByFirstName(direction: string) {
@@ -265,7 +331,7 @@ export class CasesComponent implements OnInit {
     ) {
       this._matterService
         .addMatterTask({ name: 'Make Insurance Claim', matter_id: matter.id })
-        .subscribe((res) => console.log(res));
+        .subscribe();
     }
     this._matterService.update({ id: matter.id, ...status }).subscribe();
   }

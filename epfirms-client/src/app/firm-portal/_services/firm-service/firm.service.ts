@@ -21,11 +21,11 @@ export class FirmService extends EntityCollectionServiceBase<Firm> {
     super('Firm', serviceElementsFactory);
   }
 
-  getCurrentFirm(){
+  getCurrentFirm() {
     return this._http.get('/api/firm').pipe(
       map((response: Firm) => {
         this.addOneToCache(response);
-        return of(response);
+        return response;
       })
     );
   }

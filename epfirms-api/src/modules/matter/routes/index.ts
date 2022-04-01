@@ -9,6 +9,8 @@ const matterRouter = express.Router();
 
 matterRouter.get('/', passport.authenticate('bearer', { session: false }), (req, res) => matterController.getMattersForFirm(req, res));
 
+matterRouter.get('/:id', passport.authenticate('bearer', { session: false }), (req, res) => matterController.getMatterById(req, res));
+
 matterRouter.post('/', passport.authenticate('bearer', { session: false }), (req, res) => matterController.createMatter(req, res));
 
 matterRouter.delete('/', passport.authenticate('bearer', { session: false }), (req, res) => matterController.deleteMatter(req, res));
