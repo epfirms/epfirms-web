@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
 import { FormSettings } from '@app/core/interfaces/FormSettings';
 
 @Component({
@@ -49,6 +50,8 @@ export class AssetFormComponent implements OnInit {
     institution: new FormControl(),
   });
   constructor(
+
+    private assetService : AssetService
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +87,7 @@ export class AssetFormComponent implements OnInit {
     // submit the income
     this.subtitle = this.assetForm.value.type;
     this.toggleDropdown();
+    this.assetService.addMoneyAccount(this.matter.client.id, this.assetForm.value).subscribe();
   }
 
 }

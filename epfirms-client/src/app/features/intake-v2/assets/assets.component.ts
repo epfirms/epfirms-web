@@ -35,7 +35,7 @@ export class AssetsComponent implements OnInit {
 
 
   }
-  addAsset(isProtected: boolean): void {
+  addAsset(): void {
     this.assets.push({
       institution: '',
       balance: 0,
