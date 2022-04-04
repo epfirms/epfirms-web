@@ -24,31 +24,13 @@ module.exports = (sequelize, {
           type: INTEGER,
           allowNull: false
         },
-        executor: {
-          type: BOOLEAN
+        type: {
+          type: STRING
         },
-        trustee: {
-          type: BOOLEAN
-        },
-        // durable power of attorney
-        dpoa: {
-          type: BOOLEAN
-        },
-        // medical power of attorney
-        mpoa: {
-          type: BOOLEAN
-        },
-        gop: {
-          type: BOOLEAN
-        },
-        goe: {
-          type: BOOLEAN
-        },
-        //guardian of minor children
-        gomc: {
-          type: BOOLEAN
+        rank : {
+          type: INTEGER
         }
-      }, {
+     }, {
         tableName,
         defaultScope: {
           attributes: { exclude: ['createdAt', 'updatedAt'] }

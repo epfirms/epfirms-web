@@ -99,7 +99,7 @@ export class AppointeeFormComponent implements OnInit {
       zip: this.userProfile.zip,
       relationship_type: this.userProfile.family_member.relationship_type,
       selectedMember: this.userProfile.first_name,
-      appointee_type: this.userProfile.appointee.appointee_type
+      appointee_type: this.userProfile.appointee.type
       // ssn: this.userProfile.ssn,
       // dob: this.userProfile.dob,
       // drivers_id: this.userProfile.drivers_id,
