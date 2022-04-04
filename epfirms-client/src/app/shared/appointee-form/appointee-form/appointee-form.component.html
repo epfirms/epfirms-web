@@ -40,13 +40,13 @@
             </label>
             <div class="mt-1">
               <select
+                formControlName="selectedMember"
                 id="region"
                 name="region"
                 autocomplete="address-level1"
                 class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
               >
-                <option></option>
-                <option *ngFor="let member of familyMembers" >{{member.first_name | titlecase}}</option>
+                <option *ngFor="let member of familyMembers" [ngValue]="member.first_name"> {{member.first_name | titlecase}}</option>
 
               </select>
             </div>

@@ -28,6 +28,7 @@ export class AppointeeFormComponent implements OnInit {
   // states list
   public usaStates: USAState[] = usaStatesFull;
 
+
   // relationship types
   relationshipTypes = [
     'spouse',
@@ -62,6 +63,7 @@ export class AppointeeFormComponent implements OnInit {
     zip: new FormControl(''),
     relationship_type: new FormControl(''),
     appointee_type: new FormControl(),
+    selectedMember: new FormControl(),
     // ssn: new FormControl(''),
     // dob: new FormControl(null),
     // drivers_id: new FormControl(''),
@@ -96,11 +98,15 @@ export class AppointeeFormComponent implements OnInit {
       state: this.userProfile.state,
       zip: this.userProfile.zip,
       relationship_type: this.userProfile.family_member.relationship_type,
+      selectedMember: this.userProfile.first_name,
+      appointee_type: this.userProfile.appointee.appointee_type
       // ssn: this.userProfile.ssn,
       // dob: this.userProfile.dob,
       // drivers_id: this.userProfile.drivers_id,
     });
+
   }
+
 
   // method that toggles the visiblity of the dropdown
   toggleDropdown(): void {
