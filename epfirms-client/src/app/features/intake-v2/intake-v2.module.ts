@@ -18,6 +18,7 @@ import { ExecutorsComponent } from './executors/executors.component';
 import { UserProfileFormModule } from '@app/shared/user-profile-form/user-profile-form.module';
 import { IncomeFormModule } from '@app/shared/income-form/income-form.module';
 import { AssetFormModule } from '@app/shared/asset-form/asset-form.module';
+import { RealEstateFormModule } from '@app/shared/real-estate-form/real-estate-form.module';
 
 
 
@@ -43,7 +44,8 @@ import { AssetFormModule } from '@app/shared/asset-form/asset-form.module';
     EditableModule,
     UserProfileFormModule,
     IncomeFormModule,
-    AssetFormModule
+    AssetFormModule,
+    RealEstateFormModule,
   ],
   exports: [
     ClientIntakeComponent,
