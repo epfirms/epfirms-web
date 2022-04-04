@@ -95,9 +95,7 @@ export class AppointeeFormComponent implements OnInit {
       city: this.userProfile.city,
       state: this.userProfile.state,
       zip: this.userProfile.zip,
-      relationship_type: this.formSettings.isClient
-        ? null
-        : this.userProfile.family_member.relationship_type,
+      relationship_type: this.userProfile.family_member.relationship_type,
       // ssn: this.userProfile.ssn,
       // dob: this.userProfile.dob,
       // drivers_id: this.userProfile.drivers_id,
