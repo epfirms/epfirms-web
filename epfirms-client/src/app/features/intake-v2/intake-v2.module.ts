@@ -19,6 +19,7 @@ import { UserProfileFormModule } from '@app/shared/user-profile-form/user-profil
 import { IncomeFormModule } from '@app/shared/income-form/income-form.module';
 import { AssetFormModule } from '@app/shared/asset-form/asset-form.module';
 import { RealEstateFormModule } from '@app/shared/real-estate-form/real-estate-form.module';
+import { AppointeeFormModule } from '@app/shared/appointee-form/appointee-form.module';
 
 
 
@@ -46,6 +47,7 @@ import { RealEstateFormModule } from '@app/shared/real-estate-form/real-estate-f
     IncomeFormModule,
     AssetFormModule,
     RealEstateFormModule,
+    AppointeeFormModule
   ],
   exports: [
     ClientIntakeComponent,

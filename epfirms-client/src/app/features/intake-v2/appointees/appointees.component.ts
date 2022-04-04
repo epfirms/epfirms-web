@@ -54,6 +54,7 @@ private  loadFamilyMembers() : void {
     familyMembers.forEach(member => {
       appointees.forEach(appointee => {
         if (member.id === appointee.id){
+          member.appointee = appointee.appointee;
           this.appointees.push(member);
         }
       });

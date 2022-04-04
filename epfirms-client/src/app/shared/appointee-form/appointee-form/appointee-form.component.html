@@ -1,0 +1,273 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<!-- MAIN -->
+<div class="m-4">
+  <ul role="list" class="space-y-3">
+    <li
+      (click)="toggleDropdown()"
+      class="bg-white shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md"
+    >
+      <!-- Your content -->
+      <h1 class="text-lg">{{ title }}</h1>
+      <p class="text-md">{{ subtitle }}</p>
+    </li>
+    <!--
+    Dropdown menu, show/hide based on menu state.
+
+    Entering: "transition ease-out duration-100"
+      From: "transform opacity-0 scale-95"
+      To: "transform opacity-100 scale-100"
+    Leaving: "transition ease-in duration-75"
+      From: "transform opacity-100 scale-100"
+      To: "transform opacity-0 scale-95"
+  -->
+   <form [formGroup]="userProfileForm" >
+
+
+<div
+      *ngIf="dropdownVisible"
+      class="right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+      role="menu"
+      aria-orientation="vertical"
+      aria-labelledby="menu-button"
+      tabindex="-1"
+    >
+      <div class="p-2">
+        <div class="grid grid-cols-1 gap-x-4 sm:grid-cols-6">
+          
+          <div  class="sm:col-span-4">
+            <label for="relationship" class="block text-sm font-medium text-gray-700">
+              Select Added Family Members
+            </label>
+            <div class="mt-1">
+              <select
+                id="region"
+                name="region"
+                autocomplete="address-level1"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              >
+                <option></option>
+                <option *ngFor="let member of familyMembers" >{{member.first_name | titlecase}}</option>
+
+              </select>
+            </div>
+          </div>
+          <div  class="sm:col-span-4">
+            <label for="relationship" class="block text-sm font-medium text-gray-700">
+              Relationship
+            </label>
+            <div class="mt-1">
+              <select
+              formControlName="relationship_type"
+                id="region"
+                name="region"
+                autocomplete="address-level1"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              >
+                <option *ngFor="let type of relationshipTypes" [ngValue]="type">{{type | titlecase}}</option>
+
+              </select>
+            </div>
+          </div>
+
+          <div  class="sm:col-span-4">
+            <label for="relationship" class="block text-sm font-medium text-gray-700">
+              Appointee Type
+            </label>
+            <div class="mt-1">
+              <select
+              formControlName="appointee_type"
+                id="region"
+                name="region"
+                autocomplete="address-level1"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              >
+                <option *ngFor="let type of appointeeTypes" [ngValue]="type">{{type | titlecase}}</option>
+
+              </select>
+            </div>
+          </div>
+          <div class="sm:col-span-3">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">
+              First name
+            </label>
+            <div class="mt-1">
+              <input
+                formControlName="first_name"
+                type="text"
+                name="first-name"
+                id="first-name"
+                autocomplete="given-name"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="last-name" class="block text-sm font-medium text-gray-700">
+              Last name
+            </label>
+            <div class="mt-1">
+              <input
+                formControlName="last_name"
+                type="text"
+                name="last-name"
+                id="last-name"
+                autocomplete="family-name"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-4">
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email address
+            </label>
+            <div class="mt-1">
+              <input
+                formControlName="email"
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-4">
+            <label for="phone" class="block text-sm font-medium text-gray-700"> Phone</label>
+            <div class="mt-1">
+              <input
+                formControlName="phone"
+                id="phone"
+                name="phone"
+                type="text"
+                autocomplete="phone"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-6">
+            <label for="street-address" class="block text-sm font-medium text-gray-700">
+              Street address
+            </label>
+            <div class="mt-1">
+              <input
+                formControlName="address"
+                type="text"
+                name="street-address"
+                id="street-address"
+                autocomplete="street-address"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="city" class="block text-sm font-medium text-gray-700"> City </label>
+            <div class="mt-1">
+              <input
+                formControlName="city"
+                type="text"
+                name="city"
+                id="city"
+                autocomplete="address-level2"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="region" class="block text-sm font-medium text-gray-700"> State </label>
+            <div class="mt-1">
+              <select
+                formControlName="state"
+                id="region"
+                name="region"
+                autocomplete="address-level1"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              >
+                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+                  {{ state.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="postal-code" class="block text-sm font-medium text-gray-700">
+              ZIP / Postal code
+            </label>
+            <div class="mt-1">
+              <input
+                formControlName="zip"
+                type="text"
+                name="postal-code"
+                id="postal-code"
+                autocomplete="postal-code"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+          <!-- <div class="sm:col-span-2">
+            <label for="dob" class="block text-sm font-medium text-gray-700"> DOB </label>
+            <div class="mt-1">
+              <input
+                formControlName="dob"
+                type="date"
+                name="dob"
+                id="dob"
+                autocomplete="address-level2"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="ssn" class="block text-sm font-medium text-gray-700"> SSN </label>
+            <div class="mt-1">
+              <input
+                formControlName="ssn"
+                type="text"
+                name="ssn"
+                id="ssn"
+                autocomplete="address-level2"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="DL-number" class="block text-sm font-medium text-gray-700">
+              DL Number
+            </label>
+            <div class="mt-1">
+              <input
+                formControlName="drivers_id"
+                type="text"
+                name="DL-number"
+                id="DL-number"
+                autocomplete="DL-number"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- SAVE BUTTON GOES HERE -->
+      <div class="text-right">
+        <button
+          (click)="submit()"
+          type="button"
+          class="m-2 px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+   </form> 
+    <!-- More items... -->
+  </ul>
+</div>
