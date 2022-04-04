@@ -33,7 +33,6 @@ export class AppointeesComponent implements OnInit {
       if (res.length != 0) {
         this.familyMembers = res;
         this.loadAppointees(this.familyMembers);
-        this.loadSpouseAppointees();
         this.checkForSpouse();
       }
     });
@@ -43,6 +42,7 @@ export class AppointeesComponent implements OnInit {
     this.familyMembers.forEach((member) => {
       if (member.relationship_type == 'spouse') {
         this.spouse = member;
+        this.loadSpouseAppointees();
       }
     });
   }
@@ -74,7 +74,7 @@ export class AppointeesComponent implements OnInit {
   private mergeIntoSpouseAppointees(familyMembers, appointees): void {
     familyMembers.forEach((member) => {
       appointees.forEach((appointee) => {
-        if (member.id === appointee.id) {
+        if (member.id === appointee.appointee_id) {
           member.appointee = appointee.appointee;
           this.spouseAppointees.push(member);
         }
@@ -85,13 +85,32 @@ export class AppointeesComponent implements OnInit {
   private mergeIntoAppointees(familyMembers, appointees): void {
     familyMembers.forEach((member) => {
       appointees.forEach((appointee) => {
-        if (member.id === appointee.id) {
+        if (member.id === appointee.appointee_id) {
           member.appointee = appointee.appointee;
           this.appointees.push(member);
         }
       });
     });
     console.log('merged appintees and fam', this.appointees);
+  }
+
+  addAppointee(): void {
+    this.appointees.push({
+      id: '',
+      first_name: '',
+      user_id: this.matter.client.id,
+      last_name: '',
+      relationship_type: '',
+      appointee: {
+        id: '',
+        type: ''
+      },
+      family_member: {
+        id: '',
+        relationship_type: ''
+      },
+
+    });
   }
 
   backButton(): void {

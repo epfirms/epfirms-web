@@ -1,5 +1,6 @@
 <div class="text-right m-4">
   <button
+    (click)="addAppointee()"
     type="button"
     class="m-2 inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
   >
@@ -8,7 +9,7 @@
 </div>
 <div class="space-y-6">
   <app-appointee-form *ngFor="let appointee of appointees" [familyMembers]="familyMembers" [matter]="matter" [formSettings]="{title: 'Appointee', subtitle: 'Appointee Name', isClient: false}" [userProfile]="appointee" ></app-appointee-form>
-  <app-appointee-form *ngFor="let appointee of spouseAppointees" [familyMembers]="familyMembers" [matter]="matter" [formSettings]="{title: 'Spouse Appointees', subtitle: 'Appointee Name', isClient: false}" [userProfile]="appointee" ></app-appointee-form>
+  <!-- <app-appointee-form *ngFor="let appointee of spouseAppointees" [familyMembers]="familyMembers" [matter]="matter" [formSettings]="{title: 'Spouse Appointees', subtitle: 'Appointee Name', isClient: false}" [userProfile]="appointee" ></app-appointee-form> -->
 
   <div class="flex justify-end">
     <button

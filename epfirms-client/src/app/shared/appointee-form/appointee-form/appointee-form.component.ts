@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AppointeeService } from '@app/client-portal/_services/appointee-service/appointee.service';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { FormSettings } from '@app/core/interfaces/FormSettings';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
@@ -57,12 +58,13 @@ export class AppointeeFormComponent implements OnInit {
     last_name: new FormControl(''),
     email: new FormControl(null),
     phone: new FormControl(''),
+    user_id: new FormControl(''),
     address: new FormControl(''),
     city: new FormControl(''),
     state: new FormControl(''),
     zip: new FormControl(''),
     relationship_type: new FormControl(''),
-    appointee_type: new FormControl(),
+    type: new FormControl(),
     selectedMember: new FormControl(),
     // ssn: new FormControl(''),
     // dob: new FormControl(null),
@@ -71,10 +73,10 @@ export class AppointeeFormComponent implements OnInit {
   constructor(
     private clientService: ClientService,
     private familyMemberService: FamilyMemberService,
+    private appointeeService : AppointeeService,
   ) {}
 
   ngOnInit(): void {
-    console.log('User Profile Form Component', this.userProfile);
     this.loadFormSettings();
     this.patchUserProfileForm();
   }
@@ -87,11 +89,14 @@ export class AppointeeFormComponent implements OnInit {
 
   // patch the user profile form with the user profile
   private patchUserProfileForm(): void {
+    if (this.userProfile) {
+
     this.userProfileForm.patchValue({
       id: this.userProfile.id,
       first_name: this.userProfile.first_name,
       last_name: this.userProfile.last_name,
       email: this.userProfile.email === "" ? null : this.userProfile.email,
+      user_id : this.userProfile.user_id,
       phone: this.userProfile.phone,
       address: this.userProfile.address,
       city: this.userProfile.city,
@@ -99,11 +104,12 @@ export class AppointeeFormComponent implements OnInit {
       zip: this.userProfile.zip,
       relationship_type: this.userProfile.family_member.relationship_type,
       selectedMember: this.userProfile.first_name,
-      appointee_type: this.userProfile.appointee.type
+      type: this.userProfile.appointee.type
       // ssn: this.userProfile.ssn,
       // dob: this.userProfile.dob,
       // drivers_id: this.userProfile.drivers_id,
     });
+    }
 
   }
 
@@ -114,12 +120,13 @@ export class AppointeeFormComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.formSettings.isClient) {
-      this.clientService.updateClient(this.userProfileForm.value);
-    } else {
-      console.log("submitted", this.userProfileForm.value);
-    this.familyMemberService.addFamilyMemberForUser(this.matter.client.id,this.userProfileForm.value).subscribe();
-    }
+    
+    this.familyMemberService.addFamilyMemberForUser(this.userProfile.user_id, this.userProfileForm.value).subscribe(res => {
+      console.log("add fam member first", res);
+
+    this.appointeeService.addAppointee(this.userProfile.user_id, this.userProfileForm.value).subscribe();
+    });
+    
     this.subtitle = this.userProfileForm.value.first_name;
     this.toggleDropdown();
   }
