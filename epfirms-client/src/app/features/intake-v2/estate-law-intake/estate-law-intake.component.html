@@ -15,9 +15,9 @@
           <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
             <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
             <a
-              (click)="setState(0)"
+              (click)="setState('intro')"
               [ngClass]="
-                state === 0
+                state === 'intro'
                   ? 'border-indigo-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               "
@@ -27,9 +27,9 @@
             </a>
 
             <a
-              (click)="setState(1)"
+              (click)="setState('personal info')"
               [ngClass]="
-                state === 1
+                state === 'personal info'
                   ? 'border-indigo-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               "
@@ -38,9 +38,9 @@
               Personal Information
             </a>
             <a
-              (click)="setState(2)"
+              (click)="setState('income')"
               [ngClass]="
-                state === 2
+                state === 'income'
                   ? 'border-indigo-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               "
@@ -49,9 +49,9 @@
               Income Information
             </a>
             <a
-              (click)="setState(3)"
+              (click)="setState('asset')"
               [ngClass]="
-                state === 3
+                state === 'asset'
                   ? 'border-indigo-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               "
@@ -60,9 +60,9 @@
               Asset Information
             </a>
             <a
-              (click)="setState(4)"
+              (click)="setState('real estate')"
               [ngClass]="
-                state === 4
+                state === 'real estate'
                   ? 'border-indigo-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               "
@@ -71,17 +71,6 @@
               Real Estate Information
             </a>
 
-            <a
-              (click)="setState(5)"
-              [ngClass]="
-                state === 5
-                  ? 'border-indigo-500 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              "
-              class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-            >
-              Appointees
-            </a>
           </div>
         </div>
       </div>
@@ -97,41 +86,73 @@
         <!-- GETTING Started -->
 
         <app-intake-dialog
-          *ngIf="state === 0"
+          *ngIf="state === 'intro'"
           [settings]="{
             title: 'Getting Started',
             content:
               'This intake process is designed to help streamline our legal services to you. Your information will be kept secure and confidential.',
             continueButton: true
           }"
-          (continue)="setState(1)"
+          (continue)="setState('personal info intro')"
         ></app-intake-dialog>
 
         <!---------------------------------->
 
+        <app-intake-dialog
+          *ngIf="state === 'personal info intro'"
+          [settings]="{
+            title: 'Personal Information',
+            content:
+              'This section will ask you questions about yourself and your family. Please add any family members or close friends that you may want to use as an: Executor, Trustee, Guardian, Durable Power of Attorney, Medical Power of Attorney',
+              continueButton: true,
+              backButton: true
+          }"
+          (continue)="setState('personal info')"
+          (back)="back()"
+        ></app-intake-dialog>
 
         <!--PERSONAL INFO-->
-        <app-personal-information *ngIf="state === 1" [matter]="matter" (back)="back()" (continue)="setState(2)"></app-personal-information>
+        <app-personal-information
+          *ngIf="state === 'personal info'"
+          [matter]="matter"
+          (back)="back()"
+          (continue)="setState('income')"
+        ></app-personal-information>
         <!-------------------->
 
         <!-- INCOME INFORMATION -->
 
-        <app-income *ngIf="state === 2" [matter]="matter" (back)="back()" (continue)="setState(3)"></app-income>
+        <app-income
+          *ngIf="state === 'income'"
+          [matter]="matter"
+          (back)="back()"
+          (continue)="setState('asset')"
+        ></app-income>
         <!-- -------------------------- -->
 
         <!-- ASSET INFORMATION -->
 
-        <app-assets *ngIf="state === 3" [matter]="matter" (back)="back()" (continue)="setState(4)"></app-assets>
+        <app-assets
+          *ngIf="state === 'asset'"
+          [matter]="matter"
+          (back)="back()"
+          (continue)="setState('real estate')"
+        ></app-assets>
         <!-- -------------------------- -->
 
         <!-- REAL ESTATE INFORMATION -->
-        <app-real-estate *ngIf="state === 4" [matter]="matter" (back)="back()" (continue)="setState(5); submit()"></app-real-estate>
+        <app-real-estate
+          *ngIf="state === 'real estate'"
+          [matter]="matter"
+          (back)="back()"
+          (continue)="setState('conclusion'); submit()"
+        ></app-real-estate>
         <!-- -------------------------- -->
 
         <!-- APPOINTEES SECTION -->
         <!-- <app-appointees *ngIf="state === 5" [matter]="matter" (back)="back()" (continue)="setState(6); submit()"></app-appointees> -->
 
-        <!-- <app-intake-dialog *ngIf="state === 6" [settings]="{title: 'What Happens Next?', content: 'Thank you for your submission. Your attorney will contact you shortly'}"></app-intake-dialog>  -->
+        <app-intake-dialog *ngIf="state === 'conclusion'" [settings]="{title: 'What Happens Next?', content: 'Thank you for your submission. Your attorney will contact you shortly'}"></app-intake-dialog> 
       </div>
     </main>
   </div>

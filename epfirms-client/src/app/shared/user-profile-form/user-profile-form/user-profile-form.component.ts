@@ -36,6 +36,8 @@ export class UserProfileFormComponent implements OnInit {
     'parent',
     'grandchild',
     'partner',
+    'sibling',
+    'close friend',
     'other',
   ];
 

@@ -17,7 +17,7 @@ export class EstateLawIntakeComponent implements OnInit {
   @Output() onIntakeSubmit = new EventEmitter<boolean>();
 
   //state that manages the views
-  state: number = 0;
+  state: string = "intro";
   // stack that manages the views and enables the back() functionality
   history = [];
 
@@ -32,7 +32,7 @@ export class EstateLawIntakeComponent implements OnInit {
 
   
 
-  setState(state: number): void {
+  setState(state: string): void {
     this.history.push(this.state);
     this.state = state;
   }
