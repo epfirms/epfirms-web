@@ -23,7 +23,8 @@ const routes: Routes = [
     component: ClientPortalComponent,
     children: [{ path: '', canActivate: [AuthGuard], children: [
       {path: '', component: ClientHomeComponent, canActivate: [AuthGuard], children: [
-        {path: '', component: CaseListComponent, canActivate: [AuthGuard]}
+        // removing the case list for now because we have a separate intake section now
+        // {path: '', component: CaseListComponent, canActivate: [AuthGuard]}
       ]},
       {path: 'documents', component: ClientDocumentsComponent, canActivate: [AuthGuard]},
       {path: 'financials', component: ClientFinancialsComponent, canActivate: [AuthGuard]},
