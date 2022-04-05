@@ -45,6 +45,7 @@ export class RealEstateComponent implements OnInit {
 
   loadProperties(): void {
     this.assetService.getAssetsByUserId(this.matter.client.id).subscribe((res) => {
+      console.log("real estate", res);
       this.properties = res.real_estate;
     });
   }
