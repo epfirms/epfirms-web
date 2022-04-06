@@ -65,7 +65,7 @@ export class AssetsComponent implements OnInit {
 
   submit() : void {
     this.assets.forEach(asset => {
-      this.assetService.addMoneyAccount(this.matter.client.id, asset).subscribe(res => console.log(res));
+      this.assetService.addMoneyAccount(this.matter.client.id, asset).subscribe();
     });
     this.continueButton();
   }

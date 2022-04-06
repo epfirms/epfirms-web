@@ -45,13 +45,13 @@ export class RealEstateComponent implements OnInit {
 
   loadProperties(): void {
     this.assetService.getAssetsByUserId(this.matter.client.id).subscribe((res) => {
-      console.log("real estate", res);
+      
       this.properties = res.real_estate;
     });
   }
 
   submit(): void {
-    console.log(this.properties);
+    
     this.properties.forEach((property) => {
       this.assetService.addRealEstate(this.matter.client.id, property).subscribe();
     });

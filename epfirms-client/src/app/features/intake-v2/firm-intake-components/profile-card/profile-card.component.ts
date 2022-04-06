@@ -63,7 +63,7 @@ export class ProfileCardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('User Profile Form Component', this.userProfile);
+    
     this.loadFormSettings();
     if (this.formSettings){
     this.patchUserProfileForm();
@@ -106,7 +106,7 @@ export class ProfileCardComponent implements OnInit {
     if (this.formSettings.isClient) {
       this.clientService.updateClient(this.userProfileForm.value).subscribe();
     } else {
-      console.log("submitted", this.userProfileForm.value);
+      
     this.familyMemberService.addFamilyMemberForUser(this.matter.client.id,this.userProfileForm.value).subscribe();
     }
     this.userProfile = this.userProfileForm.value;

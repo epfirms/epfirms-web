@@ -30,7 +30,7 @@ export class FirmPersonalInformationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('matter', this.matter);
+    
     this.loadClientData();
     this.loadFamilyMembers();
   }
