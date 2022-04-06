@@ -1,4 +1,4 @@
-<div class="bg-white border-t border-b border-gray-200 shadow-sm border sm:rounded-lg">
+<div class="bg-white border-t border-b border-gray-200 shadow-sm border sm:rounded-lg m-5">
   <!-- FRONT OF CARD -->
   <div *ngIf="!dropdownVisible">
     <!-- edit icon far right -->
@@ -34,7 +34,7 @@
           <h3 class="text-base font-medium text-gray-900">
             <p>{{userProfile.first_name}} {{userProfile.last_name}}</p>
           </h3>
-          <p class="mt-3 text-sm text-gray-500">CLIENT NOTE</p>
+          <p *ngIf="userProfile.family_member" class="mt-3 text-sm text-gray-500">Relation: {{userProfile.family_member.relationship_type | titlecase}}</p>
         </div>
       </div>
 

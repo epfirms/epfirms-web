@@ -9,213 +9,70 @@ import { ClientService } from '@app/firm-portal/_services/client-service/client.
   styleUrls: ['./firm-personal-information.component.scss']
 })
 export class FirmPersonalInformationComponent implements OnInit {
- @Input() matter;
+  // INPUT BINDINGS
+  @Input() isVisible: boolean;
+  @Input() matter;
+
+  //OUTPUT BINDINGS
   @Output() back = new EventEmitter<boolean>();
   @Output() continue = new EventEmitter<boolean>();
-  // state for spouse div
-  hasSpouse: boolean = false;
-  //state for displaying children fields
-  hasChildren: boolean = false;
-  hasGrandChildren: boolean = false;
-  numOfMinorChildren: number = 0;
-  numOfAdultChildren: number = 0;
-  numOfGrandChildren: number = 0;
 
-  client = {
-    id: undefined,
-    first_name: '',
-    last_name: '',
-    full_name: '',
-    email: '',
-    address: '',
-    city: '',
-    zip: '',
-    dob: undefined,
-    relationship_type: 'spouse',
-    phone: '',
-    state: '',
-    county: '',
-    ssn: '',
-    drivers_id: '',
-    note: '',
-  };
+  // holds the properties of the client
+  client;
 
-  //spouse information
-  spouse;
+  //array that holds family members
+  familyMembers = [];
 
-  //children
-  minorChildren;
-  adultChildren;
-  grandChildren;
 
   constructor(
     private clientService: ClientService,
     private familyMemberService: FamilyMemberService,
-    private clientMatterService: ClientMatterService,
   ) {}
 
   ngOnInit(): void {
+    console.log('matter', this.matter);
     this.loadClientData();
-    this.loadExistingFamilyData();
-    console.log('MATTER', this.matter);
+    this.loadFamilyMembers();
   }
 
-  loadExistingFamilyData(): void {
-    this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
-      this.spouse = res.filter((member) => member.family_member.relationship_type === 'spouse')[0];
-      // get all minor children
-      this.minorChildren = res.filter(
-        (member) => member.family_member.relationship_type === 'child' && member.is_minor,
-      );
-      // get all adult children
-      this.adultChildren = res.filter(
-        (member) => member.family_member.relationship_type === 'child' && !member.is_minor,
-      );
-      // get all grandchildren
-      this.grandChildren = res.filter(
-        (member) => member.family_member.relationship_type === 'grandchild',
-      );
-
-      if (this.spouse) {
-        this.hasSpouse = true;
-      }
-      if (this.minorChildren.length !== 0 || this.adultChildren.length !== 0) {
-        this.hasChildren = true;
-        this.numOfMinorChildren = this.minorChildren.length;
-        this.numOfAdultChildren = this.adultChildren.length;
-      }
-      if (this.grandChildren.length !== 0) {
-        this.hasGrandChildren = true;
-        this.numOfGrandChildren = this.grandChildren.length;
-      }
-    });
+  private loadFamilyMembers(): void {
+    this.familyMemberService
+      .getByUserId(this.client.id)
+      .subscribe((familyMembers) => {
+        this.familyMembers = familyMembers;
+      });
   }
 
-  loadClientData(): void {
-    let client = this.matter.client;
-    this.client.id = client.id;
-    this.client.first_name = client.first_name;
-    this.client.last_name = client.last_name;
-    this.client.full_name = client.full_name;
-    this.client.email = client.email;
-    this.client.phone = client.phone;
-    this.client.address = client.address;
-    this.client.city = client.city;
-    this.client.state = client.state;
-    this.client.zip = client.zip;
-    this.client.county = client.county;
-    this.client.ssn = client.ssn;
-    this.client.drivers_id = client.drivers_id;
-    this.client.note = client.note;
+  private loadClientData(): void {
+    this.client = this.matter.client;
   }
 
-  private addChild(isMinor: boolean, isGrandChild: boolean): void {
-    // implement add child for the different types
-    let child = {
-      id: undefined,
+  addFamilyMember(): void {
+    let member = {
       first_name: '',
       last_name: '',
-      full_name: '',
+      family_member: {relationship_type: ''},
       email: '',
+      phone: '',
       address: '',
       city: '',
-      zip: '',
-      dob: undefined,
-      relationship_type: isGrandChild ? 'grandchild' : 'child',
-      phone: '',
       state: '',
+      zip: '',
       county: '',
       ssn: '',
+      dob: '',
+      template : true,
       drivers_id: '',
-      note: '',
-      is_minor: isMinor,
-    };
 
-    if (isMinor) {
-      this.minorChildren.push(child);
-    } else if (isGrandChild) {
-      this.grandChildren.push(child);
-    } else {
-      this.adultChildren.push(child);
     }
+    this.familyMembers.push(member);
   }
-
-  addChildren(num, isMinor: boolean, isGrandChild: boolean): void {
-    this.clearEmptyChildLists();
-    console.log('add children call', num);
-    console.log(this.adultChildren);
-    for (let i = 0; i < num; i++) {
-      this.addChild(isMinor, isGrandChild);
-    }
-  }
-
-  private clearEmptyChildLists(): void {
-    this.minorChildren.forEach((l, n) => {
-      if (l.first_name === '') {
-        this.minorChildren.splice(n, 1);
-      }
-    });
-    this.adultChildren.forEach((l, n) => {
-      if (l.first_name === '') {
-        this.adultChildren.splice(n, 1);
-      }
-    });
-    this.adultChildren.forEach((l, n) => {
-      if (l.first_name === '') {
-        this.grandChildren.splice(n, 1);
-      }
-    });
-  }
-
-  submitClient(): void {
-    this.clientService.updateClient(this.client).subscribe();
-  }
-
-  submitSpouse(): void {
-    this.spouse.relationship_type = 'spouse';
-    this.familyMemberService
-      .addFamilyMemberForUser(this.client.id, this.spouse)
-      .subscribe((res) => {});
-  }
-
-  submitChildren(): void {
-    this.minorChildren.forEach((child) => {
-      if (child.email === '') {
-        child.email = null;
-      }
-      this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
-    });
-    this.adultChildren.forEach((child) => {
-      if (child.email === '') {
-        child.email = null;
-      }
-      this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
-    });
-    this.grandChildren.forEach((child) => {
-      if (child.email === '') {
-        child.email = null;
-      }
-      this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
-    });
-  }
-
-  submitPersonalInformation(): void {
-    this.submitClient();
-    if (this.hasSpouse) {
-      this.submitSpouse();
-    }
-    if (this.hasChildren) {
-      this.submitChildren();
-    }
-    this.continueButton();
-  }
-
-
-backButton(): void {
+  backButton(): void {
     this.back.emit(true);
   }
 
   continueButton(): void {
     this.continue.emit(true);
   }
+
 }
