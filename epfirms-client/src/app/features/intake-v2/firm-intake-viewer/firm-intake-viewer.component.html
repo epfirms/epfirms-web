@@ -25,32 +25,52 @@
               <div class="ml-10 flex items-baseline space-x-4">
                 <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
                 <a
-                  href="#"
-                  class="bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                 (click)="setState('personal info')" 
+                  class="text-white px-3 py-2 rounded-md text-sm font-medium"
+                  [ngClass]="
+                    state === 'personal info'
+                      ? 'bg-indigo-700 text-white'
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'"
                   aria-current="page"
                   >Personal Information</a
                 >
 
                 <a
-                  href="#"
+                 (click)="setState('income')"
+                 [ngClass]="
+                    state === 'income'
+                      ? 'bg-indigo-700 text-white'
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'" 
                   class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Income</a
                 >
 
                 <a
-                  href="#"
+                 (click)="setState('asset')"
+                 [ngClass]="
+                    state === 'asset'
+                      ? 'bg-indigo-700 text-white'
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'" 
                   class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Assets</a
                 >
 
                 <a
-                  href="#"
+                 (click)="setState('real estate')"
+                 [ngClass]="
+                    state === 'real estate'
+                      ? 'bg-indigo-700 text-white'
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'" 
                   class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Real Estate</a
                 >
 
                 <a
-                  href="#"
+                (click)="setState('appointees')"
+                 [ngClass]="
+                    state === 'appointees'
+                      ? 'bg-indigo-700 text-white'
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'" 
                   class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Appointees</a
                 >
@@ -70,7 +90,7 @@
             <li class="md:flex-1">
               <!-- Completed Step -->
               <a
-                href="#"
+                
                 class="group pl-4 py-2 flex flex-col border-l-4 border-indigo-600 hover:border-indigo-800 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
               >
                 <span
@@ -84,7 +104,7 @@
             <li class="md:flex-1">
               <!-- Current Step -->
               <a
-                href="#"
+                
                 class="pl-4 py-2 flex flex-col border-l-4 border-indigo-600 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
                 aria-current="step"
               >
@@ -98,7 +118,7 @@
             <li class="md:flex-1">
               <!-- Upcoming Step -->
               <a
-                href="#"
+                
                 class="group pl-4 py-2 flex flex-col border-l-4 border-gray-200 hover:border-gray-300 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
               >
                 <span
@@ -111,7 +131,7 @@
             <li class="md:flex-1">
               <!-- Upcoming Step -->
               <a
-                href="#"
+                
                 class="group pl-4 py-2 flex flex-col border-l-4 border-gray-200 hover:border-gray-300 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
               >
                 <span
@@ -124,7 +144,7 @@
             <li class="md:flex-1">
               <!-- Upcoming Step -->
               <a
-                href="#"
+                
                 class="group pl-4 py-2 flex flex-col border-l-4 border-gray-200 hover:border-gray-300 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
               >
                 <span
