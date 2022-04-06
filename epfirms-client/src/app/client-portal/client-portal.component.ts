@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@app/core/services/auth.service';
 import { StripeService } from '@app/shared/_services/stripe-service/stripe.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class ClientPortalComponent implements OnInit {
   showMenu : boolean = false;
 
   constructor(
-    private stripeService : StripeService
+    private stripeService : StripeService,
+    private authService : AuthService
   ) {}
 
   ngOnInit() : void {
@@ -30,4 +32,8 @@ export class ClientPortalComponent implements OnInit {
   toggleShowMenu() : void {
     this.showMenu = !this.showMenu;
   }
+
+  logout() : void {
+    this.authService.logout();
+  }   
 }
