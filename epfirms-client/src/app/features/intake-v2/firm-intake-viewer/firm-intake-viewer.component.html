@@ -1,29 +1,30 @@
 <!-- if the intake is empty provide options for sending -->
 <div *ngIf="matter.matter_intake === null">
-
-
-<!-- This example requires Tailwind CSS v2.0+ -->
-<div class="bg-gray-50">
-  <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
-    <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-      <span class="block">Ready to send Estate Planning Intake?</span>
-    </h2>
-    <p>The estate planning intake will ask your clients to provide personal information, family members, income, assets, real estate.</p>
-    <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-      <div class="inline-flex rounded-md shadow">
-        <a (click)="sendIntake()" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"> Send </a>
+  <!-- This example requires Tailwind CSS v2.0+ -->
+  <div class="bg-gray-50">
+    <div
+      class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between"
+    >
+      <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+        <span class="block">Ready to send Estate Planning Intake?</span>
+      </h2>
+      <p>
+        The estate planning intake will ask your clients to provide personal information, family
+        members, income, assets, real estate.
+      </p>
+      <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+        <div class="inline-flex rounded-md shadow">
+          <a
+            (click)="sendIntake()"
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+          >
+            Send
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
-</div>
-
-
-
-
-
 
 <!-- WORKFLOW DIV -->
 <div *ngIf="matter.matter_intake" class="m-5">
@@ -52,52 +53,57 @@
               <div class="ml-10 flex items-baseline space-x-4">
                 <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
                 <a
-                 (click)="setState('personal info')" 
+                  (click)="setState('personal info')"
                   class="text-white px-3 py-2 rounded-md text-sm font-medium"
                   [ngClass]="
                     state === 'personal info'
                       ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'"
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                  "
                   aria-current="page"
                   >Personal Information</a
                 >
 
                 <a
-                 (click)="setState('income')"
-                 [ngClass]="
+                  (click)="setState('income')"
+                  [ngClass]="
                     state === 'income'
                       ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'" 
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                  "
                   class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Income</a
                 >
 
                 <a
-                 (click)="setState('asset')"
-                 [ngClass]="
+                  (click)="setState('asset')"
+                  [ngClass]="
                     state === 'asset'
                       ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'" 
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                  "
                   class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Assets</a
                 >
 
                 <a
-                 (click)="setState('real estate')"
-                 [ngClass]="
+                  (click)="setState('real estate')"
+                  [ngClass]="
                     state === 'real estate'
                       ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'" 
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                  "
                   class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Real Estate</a
                 >
 
                 <a
-                (click)="setState('appointees')"
-                 [ngClass]="
+                  (click)="setState('appointees')"
+                  [ngClass]="
                     state === 'appointees'
                       ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'" 
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                  "
                   class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Appointees</a
                 >
@@ -114,71 +120,71 @@
         <!-- This example requires Tailwind CSS v2.0+ -->
         <nav aria-label="Progress">
           <ol role="list" class="space-y-4 md:flex md:space-y-0 md:space-x-8">
+            
+
             <li class="md:flex-1">
-              <!-- Completed Step -->
+              <!-- Current Step -->
               <a
-                
-                class="group pl-4 py-2 flex flex-col border-l-4 border-indigo-600 hover:border-indigo-800 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
+                [ngClass]="
+                  matter.matter_intake.status === 'sent'
+                    ? 'border-indigo-600'
+                    : 'border-gray-200'
+                "
+                class="pl-4 py-2 flex flex-col border-l-4 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
+                aria-current="step"
               >
-                <span
-                  class="text-xs text-indigo-600 font-semibold tracking-wide uppercase group-hover:text-indigo-800"
+                <span [ngClass]="
+                  matter.matter_intake.status === 'sent'
+                    ? 'text-indigo-600'
+                    : 'text-gray-200'
+                " class="text-xs font-semibold tracking-wide uppercase"
                   >Step 1</span
                 >
-                <span class="text-sm font-medium">Intake Sent</span>
+                <span class="text-sm font-medium">Sent</span>
               </a>
             </li>
 
             <li class="md:flex-1">
               <!-- Current Step -->
               <a
-                
-                class="pl-4 py-2 flex flex-col border-l-4 border-indigo-600 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
+                [ngClass]="
+                  matter.matter_intake.status === 'in progess'
+                    ? 'border-indigo-600'
+                    : 'border-gray-200'
+                "
+                class="pl-4 py-2 flex flex-col border-l-4 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
                 aria-current="step"
               >
-                <span class="text-xs text-indigo-600 font-semibold tracking-wide uppercase"
+                <span [ngClass]="
+                  matter.matter_intake.status === 'in progess'
+                    ? 'text-indigo-600'
+                    : 'text-gray-200'
+                " class="text-xs font-semibold tracking-wide uppercase"
                   >Step 2</span
                 >
                 <span class="text-sm font-medium">In Progress</span>
               </a>
             </li>
-
+            
             <li class="md:flex-1">
-              <!-- Upcoming Step -->
+              <!-- Current Step -->
               <a
-                
-                class="group pl-4 py-2 flex flex-col border-l-4 border-gray-200 hover:border-gray-300 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
+                [ngClass]="
+                  matter.matter_intake.status === 'review'
+                    ? 'border-indigo-600'
+                    : 'border-gray-200'
+                "
+                class="pl-4 py-2 flex flex-col border-l-4 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
+                aria-current="step"
               >
-                <span
-                  class="text-xs text-gray-500 font-semibold tracking-wide uppercase group-hover:text-gray-700"
+                <span [ngClass]="
+                  matter.matter_intake.status === 'review'
+                    ? 'text-indigo-600'
+                    : 'text-gray-200'
+                " class="text-xs font-semibold tracking-wide uppercase"
                   >Step 3</span
                 >
                 <span class="text-sm font-medium">Review</span>
-              </a>
-            </li>
-            <li class="md:flex-1">
-              <!-- Upcoming Step -->
-              <a
-                
-                class="group pl-4 py-2 flex flex-col border-l-4 border-gray-200 hover:border-gray-300 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
-              >
-                <span
-                  class="text-xs text-gray-500 font-semibold tracking-wide uppercase group-hover:text-gray-700"
-                  >Step 3</span
-                >
-                <span class="text-sm font-medium">Contract</span>
-              </a>
-            </li>
-            <li class="md:flex-1">
-              <!-- Upcoming Step -->
-              <a
-                
-                class="group pl-4 py-2 flex flex-col border-l-4 border-gray-200 hover:border-gray-300 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
-              >
-                <span
-                  class="text-xs text-gray-500 font-semibold tracking-wide uppercase group-hover:text-gray-700"
-                  >Step 3</span
-                >
-                <span class="text-sm font-medium">Billing</span>
               </a>
             </li>
           </ol>
