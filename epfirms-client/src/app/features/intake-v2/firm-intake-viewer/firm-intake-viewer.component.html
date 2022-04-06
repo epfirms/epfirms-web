@@ -1,36 +1,103 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
+<!-- WORKFLOW DIV -->
 <div class="m-5">
-  <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-xs font-medium text-gray-500 truncate">Intake Sent Date</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900">
-        {{ matter.matter_intake.created_at | date }}
-      </dd>
+<!-- This example requires Tailwind CSS v2.0+ -->
+<!--
+  This example requires updating your template:
+
+  ```
+  <html class="h-full bg-gray-100">
+  <body class="h-full">
+  ```
+-->
+<div class="min-h-full">
+  <nav class="bg-indigo-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-300.svg" alt="Workflow">
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
+              <a href="#" class="bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Personal Information</a>
+
+              <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Income</a>
+
+              <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Assets</a>
+
+              <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Real Estate</a>
+
+              <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Appointees</a>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block">
+          
+        </div>
+        
+      </div>
     </div>
 
-    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-xs font-medium text-gray-500 truncate">Intake Status</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900">{{ matter.matter_intake.status }}</dd>
-    </div>
+    
+  </nav>
 
-    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-xs font-medium text-gray-500 truncate">Intake Type</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900">Personal Information</dd>
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <!-- This example requires Tailwind CSS v2.0+ -->
+<nav aria-label="Progress">
+  <ol role="list" class="space-y-4 md:flex md:space-y-0 md:space-x-8">
+    <li class="md:flex-1">
+      <!-- Completed Step -->
+      <a href="#" class="group pl-4 py-2 flex flex-col border-l-4 border-indigo-600 hover:border-indigo-800 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4">
+        <span class="text-xs text-indigo-600 font-semibold tracking-wide uppercase group-hover:text-indigo-800">Step 1</span>
+        <span class="text-sm font-medium">Intake Sent</span>
+      </a>
+    </li>
+
+    <li class="md:flex-1">
+      <!-- Current Step -->
+      <a href="#" class="pl-4 py-2 flex flex-col border-l-4 border-indigo-600 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4" aria-current="step">
+        <span class="text-xs text-indigo-600 font-semibold tracking-wide uppercase">Step 2</span>
+        <span class="text-sm font-medium">In Progress</span>
+      </a>
+    </li>
+
+    <li class="md:flex-1">
+      <!-- Upcoming Step -->
+      <a href="#" class="group pl-4 py-2 flex flex-col border-l-4 border-gray-200 hover:border-gray-300 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4">
+        <span class="text-xs text-gray-500 font-semibold tracking-wide uppercase group-hover:text-gray-700">Step 3</span>
+        <span class="text-sm font-medium">Review</span>
+      </a>
+    </li>
+<li class="md:flex-1">
+      <!-- Upcoming Step -->
+      <a href="#" class="group pl-4 py-2 flex flex-col border-l-4 border-gray-200 hover:border-gray-300 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4">
+        <span class="text-xs text-gray-500 font-semibold tracking-wide uppercase group-hover:text-gray-700">Step 3</span>
+        <span class="text-sm font-medium">Contract</span>
+      </a>
+    </li>
+<li class="md:flex-1">
+      <!-- Upcoming Step -->
+      <a href="#" class="group pl-4 py-2 flex flex-col border-l-4 border-gray-200 hover:border-gray-300 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4">
+        <span class="text-xs text-gray-500 font-semibold tracking-wide uppercase group-hover:text-gray-700">Step 3</span>
+        <span class="text-sm font-medium">Billing</span>
+      </a>
+    </li>
+  </ol>
+</nav>
+
     </div>
-  </dl>
+  </header>
+  <main>
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <!-- Replace with your content -->
+      <div class="px-4 py-4 sm:px-0">
+        <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+      </div>
+      <!-- /End replace -->
+    </div>
+  </main>
 </div>
 
-<app-firm-personal-information *ngIf="state === 0" [matter]="matter" (continue)="setState(1)"></app-firm-personal-information>
-<app-income *ngIf="state === 1" [matter]="matter" (back)="back()" (continue)="setState(2)"></app-income>
- <!-- ASSET INFORMATION -->
-
-        <app-assets *ngIf="state === 2" [matter]="matter" (back)="back()" (continue)="setState(3)"></app-assets>
-        <!-- -------------------------- -->
-
-
- <!-- REAL ESTATE INFORMATION -->
-<app-real-estate *ngIf="state === 3" [matter]="matter" (back)="back()" (continue)="setState(4); submit()"></app-real-estate>
-      <!-- -------------------------- -->
-
-
-<app-will-requests *ngIf="state === 4" [matter]="matter"></app-will-requests>
+</div>
