@@ -22,14 +22,14 @@ const routes: Routes = [
     },
     component: ClientPortalComponent,
     children: [{ path: '', canActivate: [AuthGuard], children: [
-      {path: '', component: ClientHomeComponent, canActivate: [AuthGuard], children: [
+      {path: '', component: IntakeMainComponent, canActivate: [AuthGuard], children: [
         // removing the case list for now because we have a separate intake section now
         // {path: '', component: CaseListComponent, canActivate: [AuthGuard]}
       ]},
       {path: 'documents', component: ClientDocumentsComponent, canActivate: [AuthGuard]},
       {path: 'financials', component: ClientFinancialsComponent, canActivate: [AuthGuard]},
       {path: 'contracts', component: ClientContractsComponent, canActivate: [AuthGuard]},
-      {path: 'intake', component: IntakeMainComponent, canActivate: [AuthGuard]}
+      // {path: 'intake', component: IntakeMainComponent, canActivate: [AuthGuard]}
     ] }],
   },
 ];
