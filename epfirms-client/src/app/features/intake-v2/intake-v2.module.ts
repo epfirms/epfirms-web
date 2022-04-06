@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClientIntakeComponent } from './client-intake/client-intake.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { PersonalInformationComponent } from './personal-information/personal-information.component';
 import { IncomeComponent } from './income/income.component';
@@ -49,7 +49,8 @@ import { ProfileCardComponent } from './firm-intake-components/profile-card/prof
     IncomeFormModule,
     AssetFormModule,
     RealEstateFormModule,
-    AppointeeFormModule
+    AppointeeFormModule,
+    ReactiveFormsModule
   ],
   exports: [
     ClientIntakeComponent,
