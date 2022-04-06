@@ -16,7 +16,7 @@ export class FirmIntakeViewerComponent implements OnInit {
   @Output() onIntakeSubmit = new EventEmitter<boolean>();
 
   //state that manages the views
-  state: number = 0;
+  state: string = 'personal info';
   // stack that manages the views and enables the back() functionality
   history = [];
 
@@ -30,7 +30,7 @@ export class FirmIntakeViewerComponent implements OnInit {
     console.log(this.intake);
   }
 
-  setState(state: number): void {
+  setState(state: string): void {
     this.history.push(this.state);
     this.state = state;
   }
