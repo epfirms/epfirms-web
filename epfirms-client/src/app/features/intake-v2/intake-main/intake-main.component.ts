@@ -42,6 +42,7 @@ export class IntakeMainComponent implements OnInit, OnDestroy {
     this.displaySelectionTable = false;
 
     this.selectedMatter = matter;
+    this.clientMatterService.updateMatterIntake({id: matter.matter_intake.id, status: "in progress"}).subscribe();
   }
   
 }
