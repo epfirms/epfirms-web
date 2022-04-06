@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { ClientMatterService } from '@app/client-portal/_services/matter-service/client-matter.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
+import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 
 @Component({
@@ -23,16 +24,27 @@ export class FirmIntakeViewerComponent implements OnInit {
   constructor(
     private currentUserService: CurrentUserService,
     private clientMatterService : ClientMatterService,
+    private matterService : MatterService
     
     ) {}
 
   ngOnInit(): void {
     console.log(this.intake);
+    console.log("matter", this.matter);
   }
 
   setState(state: string): void {
     this.history.push(this.state);
     this.state = state;
+  }
+
+  sendIntake() : void {
+    this.matterService.createIntake(this.matter.id).subscribe(res => {
+      if (res) {
+        console.log(res);
+        this.matter.matter_intake = res;
+      }
+    });
   }
 
   back(): void {
