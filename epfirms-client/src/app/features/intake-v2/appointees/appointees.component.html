@@ -4,12 +4,85 @@
     type="button"
     class="m-2 inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
   >
-    Add Appointee
+    Add {{ appointeeType | titlecase }}
   </button>
 </div>
 <div class="space-y-6">
-  <app-appointee-form *ngFor="let appointee of appointees" [familyMembers]="familyMembers" [matter]="matter" [formSettings]="{title: 'Appointee', subtitle: 'Appointee Name', isClient: false}" [userProfile]="appointee" ></app-appointee-form>
-  <app-appointee-form *ngFor="let appointee of spouseAppointees" [familyMembers]="familyMembers" [matter]="matter" [formSettings]="{title: 'Spouse Appointees', subtitle: 'Appointee Name', isClient: false}" [userProfile]="appointee" ></app-appointee-form>
+  <!-- This example requires Tailwind CSS v2.0+ -->
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="sm:flex sm:items-center">
+      <div class="sm:flex-auto">
+        <h1 class="text-xl font-semibold text-gray-900">{{ appointeeType | titlecase }}</h1>
+        <p class="mt-2 text-sm text-gray-700">{{ appointeeDescription }}</p>
+      </div>
+      <!-- <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add user</button>
+    </div> -->
+    </div>
+    <div class="mt-8 flex flex-col">
+      <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                  >
+                    Rank
+                  </th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Appointee
+                  </th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <tr *ngFor="let appointee of appointees">
+                  <td
+                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                  >
+                   <input
+                [(ngModel)]="appointee.appointee.rank"
+                type="number"
+                name="DL-number"
+                id="DL-number"
+                autocomplete="DL-number"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <select
+                      [(ngModel)]="appointee.appointee.appointee_id"
+                      id="region"
+                      name="region"
+                      autocomplete="address-level1"
+                      class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                    >
+                      <option *ngFor="let member of familyMembers" [ngValue]="member.id">
+                        {{ member.first_name | titlecase }} {{ member.last_name | titlecase }}
+                      </option>
+                    </select>
+                  </td>
+
+                  <td
+                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                  >
+                  Delete
+                  </td>
+                </tr>
+
+                <!-- More people... -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="flex justify-end">
     <button
@@ -20,6 +93,7 @@
       Back
     </button>
     <button
+      (click)="submit()"
       class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     >
       Continue

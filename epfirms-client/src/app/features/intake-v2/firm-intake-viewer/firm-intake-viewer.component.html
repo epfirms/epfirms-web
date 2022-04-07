@@ -229,7 +229,7 @@
           (continue)="setState('conclusion'); submit()"
         ></app-real-estate>
 
-        <app-appointees *ngIf="state === 'appointees'" [matter]="matter"></app-appointees>
+        <app-appointees *ngIf="state === 'appointees'" [appointeeType]="'executor'" [matter]="matter"></app-appointees>
         <!-- /End replace -->
       </div>
     </main>

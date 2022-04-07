@@ -12,6 +12,9 @@ export class AppointeesComponent implements OnInit {
   @Output() back = new EventEmitter<boolean>();
   @Output() continue = new EventEmitter<boolean>();
 
+  @Input() appointeeType;
+
+  appointeeDescription : string = "";
   spouse;
   client;
   familyMembers = [];
@@ -24,6 +27,7 @@ export class AppointeesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.client = this.matter.client;
     this.loadFamilyMembers();
   }
 
@@ -32,7 +36,7 @@ export class AppointeesComponent implements OnInit {
       console.log('FAMILY', res);
       if (res.length != 0) {
         this.familyMembers = res;
-        this.loadAppointees(this.familyMembers);
+        this.loadAppointees();
         this.checkForSpouse();
       }
     });
@@ -47,15 +51,14 @@ export class AppointeesComponent implements OnInit {
     });
   }
 
-  private loadAppointees(familyMembers): void {
+  private loadAppointees(): void {
     this.appointeeService.getByUserId(this.matter.client.id).subscribe((res) => {
       // if there are appointees, we need to map them to family members and then add to list of
       // appointees
 
       if (res) {
-        console.log('family members', familyMembers);
+        this.appointees = res.filter((appointee) => appointee.type === this.appointeeType);
         console.log('appointees', res);
-        this.mergeIntoAppointees(familyMembers, res);
       }
     });
   }
@@ -64,53 +67,38 @@ export class AppointeesComponent implements OnInit {
     if (this.spouse) {
       this.appointeeService.getByUserId(this.spouse.id).subscribe((res) => {
         if (res) {
-          this.spouseAppointees = res;
-          this.mergeIntoSpouseAppointees(this.familyMembers, this.spouseAppointees);
+         this.spouseAppointees = res.filter((appointee) => appointee.type === this.appointeeType);
+ 
+          console.log('spouse appointees', this.spouseAppointees);
         }
       });
     }
   }
 
-  private mergeIntoSpouseAppointees(familyMembers, appointees): void {
-    familyMembers.forEach((member) => {
-      appointees.forEach((appointee) => {
-        if (member.id === appointee.appointee_id) {
-          member.appointee = appointee.appointee;
-          this.spouseAppointees.push(member);
-        }
-      });
-    });
-    console.log('merged spouse appintees and fam', this.spouseAppointees);
-  }
-  private mergeIntoAppointees(familyMembers, appointees): void {
-    familyMembers.forEach((member) => {
-      appointees.forEach((appointee) => {
-        if (member.id === appointee.appointee_id) {
-          member.appointee = appointee.appointee;
-          this.appointees.push(member);
-        }
-      });
-    });
-    console.log('merged appintees and fam', this.appointees);
-  }
+  
 
   addAppointee(): void {
     this.appointees.push({
-      id: '',
-      first_name: '',
       user_id: this.matter.client.id,
-      last_name: '',
-      relationship_type: '',
       appointee: {
         id: '',
-        type: ''
-      },
-      family_member: {
-        id: '',
-        relationship_type: ''
-      },
+        type: this.appointeeType,
+        rank: 0
+        
+      }
 
     });
+  }
+
+  submit(): void {
+    console.log(this.appointees);
+    console.log(this.spouseAppointees);
+    this.appointees.forEach((appointee) => {
+      this.appointeeService.addAppointee(this.client.id, appointee).subscribe((res) => {
+        console.log(res);
+      });
+    }
+    );
   }
 
   backButton(): void {
