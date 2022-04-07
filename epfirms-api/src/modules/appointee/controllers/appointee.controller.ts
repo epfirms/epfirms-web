@@ -21,7 +21,8 @@ export class AppointeeController {
   
     public async delete(req : Request, res : Response) : Promise<any> {
         try {
-
+            const deleted = await AppointeeService.delete(req.params.id);
+            res.status(StatusConstants.OK).send(deleted);
         }
         catch (error){
             console.error(error)

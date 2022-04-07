@@ -33,4 +33,7 @@ export class AppointeeService {
   upsert(appointee): Observable<any> {
     return this._http.post<any>('/api/appointee', appointee);
   }
+  delete(appointeeId): Observable<any> {
+    return this._http.delete<any>(`/api/appointee/${appointeeId}`);
+  }
 }

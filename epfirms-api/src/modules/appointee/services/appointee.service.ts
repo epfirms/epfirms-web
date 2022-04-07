@@ -17,7 +17,11 @@ export class AppointeeService {
   
     public static async delete(id) : Promise<any> {
         try {
-
+            const deleted = await Database.models.appointee.destroy({
+                where: {
+                    id: id
+                }})
+            return Promise.resolve(deleted);
         }
         catch (error){
             console.error(error)

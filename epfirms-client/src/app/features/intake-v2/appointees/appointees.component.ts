@@ -14,7 +14,7 @@ export class AppointeesComponent implements OnInit {
 
   @Input() appointeeType;
 
-  appointeeDescription : string = "";
+  appointeeDescription: string = '';
   spouse;
   client;
   familyMembers = [];
@@ -57,7 +57,9 @@ export class AppointeesComponent implements OnInit {
       // appointees
 
       if (res) {
-        this.appointees = res.filter((appointee) => appointee.appointee.type === this.appointeeType);
+        this.appointees = res.filter(
+          (appointee) => appointee.appointee.type === this.appointeeType,
+        );
         console.log('appointees', res);
       }
     });
@@ -67,15 +69,15 @@ export class AppointeesComponent implements OnInit {
     if (this.spouse) {
       this.appointeeService.getByUserId(this.spouse.id).subscribe((res) => {
         if (res) {
-         this.spouseAppointees = res.filter((appointee) => appointee.appointee.type === this.appointeeType);
- 
+          this.spouseAppointees = res.filter(
+            (appointee) => appointee.appointee.type === this.appointeeType,
+          );
+
           console.log('spouse appointees', this.spouseAppointees);
         }
       });
     }
   }
-
-  
 
   addAppointee(): void {
     this.appointees.push({
@@ -86,13 +88,11 @@ export class AppointeesComponent implements OnInit {
         rank: 0,
         user_id: this.matter.client.id,
         appointee_id: 0,
-        
-      }
-
+      },
     });
   }
 
-addSpouseAppointee(): void {
+  addSpouseAppointee(): void {
     this.spouseAppointees.push({
       appointee: {
         id: '',
@@ -100,9 +100,7 @@ addSpouseAppointee(): void {
         rank: 0,
         user_id: this.spouse.id,
         appointee_id: 0,
-        
-      }
-
+      },
     });
   }
 
@@ -113,16 +111,26 @@ addSpouseAppointee(): void {
       this.appointeeService.upsert(appointee.appointee).subscribe((res) => {
         console.log(res);
       });
-    }
-    );
-this.spouseAppointees.forEach((appointee) => {
+    });
+    this.spouseAppointees.forEach((appointee) => {
       this.appointeeService.upsert(appointee.appointee).subscribe((res) => {
         console.log(res);
       });
-    }
-    );
+    });
   }
 
+  delete(appointeeId, spouse) : void {
+    console.log("deleting", appointeeId);
+   this.appointeeService.delete(appointeeId).subscribe((res) => {
+      console.log(res);
+      
+    }); 
+    if (spouse) {
+      this.spouseAppointees = this.spouseAppointees.filter((appointee) => appointee.appointee.id != appointeeId);
+    } else {
+      this.appointees = this.appointees.filter((appointee) => appointee.appointee.id != appointeeId);
+    }
+  }
   backButton(): void {
     this.back.emit(true);
   }
