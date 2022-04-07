@@ -7,6 +7,8 @@ export class AppointeeService {
      public static async upsert(data) : Promise<any> {
         try {
 
+            const appointee = await Database.models.appointee.upsert(data);
+            return Promise.resolve(appointee);
         }
         catch (error){
             console.error(error)

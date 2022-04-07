@@ -44,7 +44,7 @@ export class AppointeesComponent implements OnInit {
 
   private checkForSpouse(): void {
     this.familyMembers.forEach((member) => {
-      if (member.relationship_type == 'spouse') {
+      if (member.family_member.relationship_type == 'spouse') {
         this.spouse = member;
         this.loadSpouseAppointees();
       }
@@ -57,7 +57,7 @@ export class AppointeesComponent implements OnInit {
       // appointees
 
       if (res) {
-        this.appointees = res.filter((appointee) => appointee.type === this.appointeeType);
+        this.appointees = res.filter((appointee) => appointee.appointee.type === this.appointeeType);
         console.log('appointees', res);
       }
     });
@@ -67,7 +67,7 @@ export class AppointeesComponent implements OnInit {
     if (this.spouse) {
       this.appointeeService.getByUserId(this.spouse.id).subscribe((res) => {
         if (res) {
-         this.spouseAppointees = res.filter((appointee) => appointee.type === this.appointeeType);
+         this.spouseAppointees = res.filter((appointee) => appointee.appointee.type === this.appointeeType);
  
           console.log('spouse appointees', this.spouseAppointees);
         }
@@ -83,7 +83,23 @@ export class AppointeesComponent implements OnInit {
       appointee: {
         id: '',
         type: this.appointeeType,
-        rank: 0
+        rank: 0,
+        user_id: this.matter.client.id,
+        appointee_id: 0,
+        
+      }
+
+    });
+  }
+
+addSpouseAppointee(): void {
+    this.spouseAppointees.push({
+      appointee: {
+        id: '',
+        type: this.appointeeType,
+        rank: 0,
+        user_id: this.spouse.id,
+        appointee_id: 0,
         
       }
 
@@ -94,7 +110,13 @@ export class AppointeesComponent implements OnInit {
     console.log(this.appointees);
     console.log(this.spouseAppointees);
     this.appointees.forEach((appointee) => {
-      this.appointeeService.addAppointee(this.client.id, appointee).subscribe((res) => {
+      this.appointeeService.upsert(appointee.appointee).subscribe((res) => {
+        console.log(res);
+      });
+    }
+    );
+this.spouseAppointees.forEach((appointee) => {
+      this.appointeeService.upsert(appointee.appointee).subscribe((res) => {
         console.log(res);
       });
     }

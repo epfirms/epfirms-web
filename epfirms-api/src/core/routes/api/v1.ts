@@ -24,6 +24,7 @@ import { contractRouter } from '@src/modules/contract/routes';
 import { chatRouter } from '@src/modules/chat/chat.routes';
 import { contractTemplateRouter } from '@src/modules/contract-template/routes';
 import { incomeRouter } from '@src/modules/income/routes';
+import { appointeeRouter } from '@src/modules/appointee/routes';
 
 const v1Router = express.Router();
 
@@ -52,4 +53,5 @@ v1Router.use('/contract', contractRouter);
 v1Router.use('/chat', chatRouter);
 v1Router.use('/contract-template', contractTemplateRouter);
 v1Router.use('/income', incomeRouter);
+v1Router.use('/appointee', appointeeRouter);
 export { v1Router }

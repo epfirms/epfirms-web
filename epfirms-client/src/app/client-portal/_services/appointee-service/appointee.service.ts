@@ -27,4 +27,10 @@ export class AppointeeService {
   deleteAppointee(userId: number, familyMemberId: number): Observable<any> {
     return this._http.delete<any>(`/api/user/${userId}/appointee/${familyMemberId}`);
   }
+
+  // appointee specific routes
+  // does not go through the associations
+  upsert(appointee): Observable<any> {
+    return this._http.post<any>('/api/appointee', appointee);
+  }
 }

@@ -11,6 +11,8 @@ export class AppointeeController {
     public async upsert(req : Request, res : Response) : Promise<any> {
         try {
 
+            const appointee = await AppointeeService.upsert(req.body);
+            res.status(StatusConstants.OK).send(appointee);
         }
         catch (error){
             console.error(error)
