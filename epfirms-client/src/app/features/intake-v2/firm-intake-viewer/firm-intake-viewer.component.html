@@ -228,6 +228,8 @@
           (back)="back()"
           (continue)="setState('conclusion'); submit()"
         ></app-real-estate>
+
+        <app-appointees *ngIf="state === 'appointees'" [matter]="matter"></app-appointees>
         <!-- /End replace -->
       </div>
     </main>

@@ -22,25 +22,9 @@ export class AppointeeFormComponent implements OnInit {
   // bindings that control state of dropdown
   dropdownVisible: boolean = false;
 
-  //binding for the title at top of card
-  title: string = 'TITLE GOES HERE';
-  //binding for the subtitle below the title
-  subtitle: string = 'SUBTITLE GOES HERE';
-  // states list
-  public usaStates: USAState[] = usaStatesFull;
+  
 
 
-  // relationship types
-  relationshipTypes = [
-    'spouse',
-    'minor child',
-    'adult child',
-    'stepchild',
-    'parent',
-    'grandchild',
-    'partner',
-    'other',
-  ];
 
   appointeeTypes = [
     'executor',
@@ -51,25 +35,13 @@ export class AppointeeFormComponent implements OnInit {
 
   ]
 
-  // form group for the user information and to create family member relationship
-  userProfileForm = new FormGroup({
-    id: new FormControl(),
-    first_name: new FormControl(''),
-    last_name: new FormControl(''),
-    email: new FormControl(null),
-    phone: new FormControl(''),
-    user_id: new FormControl(''),
-    address: new FormControl(''),
-    city: new FormControl(''),
-    state: new FormControl(''),
-    zip: new FormControl(''),
-    relationship_type: new FormControl(''),
-    type: new FormControl(),
-    selectedMember: new FormControl(),
-    // ssn: new FormControl(''),
-    // dob: new FormControl(null),
-    // drivers_id: new FormControl(''),
+  appointeeForm = new FormGroup({
+    type: new FormControl(''),
+    selectedFamilyMember: new FormControl(''),
+    rank : new FormControl(),
+
   });
+
   constructor(
     private clientService: ClientService,
     private familyMemberService: FamilyMemberService,
@@ -77,41 +49,9 @@ export class AppointeeFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadFormSettings();
-    this.patchUserProfileForm();
   }
 
-  // loads the form settings from the input
-  private loadFormSettings(): void {
-    this.title = this.formSettings.title;
-    this.subtitle = this.formSettings.subtitle;
-  }
 
-  // patch the user profile form with the user profile
-  private patchUserProfileForm(): void {
-    if (this.userProfile) {
-
-    this.userProfileForm.patchValue({
-      id: this.userProfile.id,
-      first_name: this.userProfile.first_name,
-      last_name: this.userProfile.last_name,
-      email: this.userProfile.email === "" ? null : this.userProfile.email,
-      user_id : this.userProfile.user_id,
-      phone: this.userProfile.phone,
-      address: this.userProfile.address,
-      city: this.userProfile.city,
-      state: this.userProfile.state,
-      zip: this.userProfile.zip,
-      relationship_type: this.userProfile.family_member.relationship_type,
-      selectedMember: this.userProfile.first_name,
-      type: this.userProfile.appointee.type
-      // ssn: this.userProfile.ssn,
-      // dob: this.userProfile.dob,
-      // drivers_id: this.userProfile.drivers_id,
-    });
-    }
-
-  }
 
 
   // method that toggles the visiblity of the dropdown
@@ -121,13 +61,9 @@ export class AppointeeFormComponent implements OnInit {
 
   submit(): void {
     
-    this.familyMemberService.addFamilyMemberForUser(this.userProfile.user_id, this.userProfileForm.value).subscribe(res => {
-      console.log("add fam member first", res);
 
-    this.appointeeService.addAppointee(this.userProfile.user_id, this.userProfileForm.value).subscribe();
-    });
+    this.appointeeService.addAppointee(this.userProfile.user_id, this.appointeeForm.value).subscribe();
     
-    this.subtitle = this.userProfileForm.value.first_name;
     this.toggleDropdown();
   }
 }

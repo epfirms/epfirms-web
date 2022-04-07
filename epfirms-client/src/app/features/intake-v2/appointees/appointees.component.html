@@ -9,7 +9,7 @@
 </div>
 <div class="space-y-6">
   <app-appointee-form *ngFor="let appointee of appointees" [familyMembers]="familyMembers" [matter]="matter" [formSettings]="{title: 'Appointee', subtitle: 'Appointee Name', isClient: false}" [userProfile]="appointee" ></app-appointee-form>
-  <!-- <app-appointee-form *ngFor="let appointee of spouseAppointees" [familyMembers]="familyMembers" [matter]="matter" [formSettings]="{title: 'Spouse Appointees', subtitle: 'Appointee Name', isClient: false}" [userProfile]="appointee" ></app-appointee-form> -->
+  <app-appointee-form *ngFor="let appointee of spouseAppointees" [familyMembers]="familyMembers" [matter]="matter" [formSettings]="{title: 'Spouse Appointees', subtitle: 'Appointee Name', isClient: false}" [userProfile]="appointee" ></app-appointee-form>
 
   <div class="flex justify-end">
     <button
