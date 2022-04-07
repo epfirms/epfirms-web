@@ -35,7 +35,7 @@ export class FirmPersonalInformationComponent implements OnInit {
     this.loadFamilyMembers();
   }
 
-  private loadFamilyMembers(): void {
+  loadFamilyMembers(): void {
     this.familyMemberService
       .getByUserId(this.client.id)
       .subscribe((familyMembers) => {

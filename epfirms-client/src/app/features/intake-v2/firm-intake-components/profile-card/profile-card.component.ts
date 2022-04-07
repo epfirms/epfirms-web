@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { FamilyMemberService } from "@app/client-portal/_services/family-member-service/family-member.service";
 import { FormSettings } from "@app/core/interfaces/FormSettings";
@@ -17,6 +17,7 @@ export class ProfileCardComponent implements OnInit {
   @Input() userProfile;
   @Input() formSettings: FormSettings;
   @Input() matter; 
+  @Output() deleteEvent = new EventEmitter<boolean>();
   // bindings that control state of dropdown
   dropdownVisible: boolean = false;
 
@@ -112,5 +113,12 @@ export class ProfileCardComponent implements OnInit {
     this.userProfile = this.userProfileForm.value;
     this.toggleDropdown();
   }
+
+  delete(): void {
+ this.familyMemberService.deleteFamilyMemberById(this.matter.client.id, this.userProfile.id).subscribe(res => {
+   this.deleteEvent.emit(true);
+   console.log("delete res", res);
+ });
+}
 
 }
