@@ -93,23 +93,23 @@
               'This intake process is designed to help streamline our legal services to you. Your information will be kept secure and confidential.',
             continueButton: true
           }"
-          (continue)="setState('personal info intro')"
+          (continue)="setState('personal info')"
         ></app-intake-dialog>
 
         <!---------------------------------->
 
-        <app-intake-dialog
+        <!-- <app-intake-dialog
           *ngIf="state === 'personal info intro'"
           [settings]="{
             title: 'Personal Information',
             content:
-              'This section will ask you questions about yourself and your family. Please add any family members or close friends that you may want to use as an: Executor, Trustee, Guardian, Durable Power of Attorney, Medical Power of Attorney',
+              'Please add any family members or close friends that you may want to use as an: Executor, Trustee, Guardian, Durable Power of Attorney, Medical Power of Attorney',
               continueButton: true,
               backButton: true
           }"
           (continue)="setState('personal info')"
           (back)="back()"
-        ></app-intake-dialog>
+        ></app-intake-dialog> -->
 
         <!--PERSONAL INFO-->
         <app-personal-information
