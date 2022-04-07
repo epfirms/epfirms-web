@@ -105,6 +105,7 @@ export class AppointeesComponent implements OnInit {
   }
 
   submit(): void {
+    this.continueButton();
     console.log(this.appointees);
     console.log(this.spouseAppointees);
     this.appointees.forEach((appointee) => {
