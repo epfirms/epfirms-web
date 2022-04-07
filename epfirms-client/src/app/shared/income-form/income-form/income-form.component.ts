@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { IncomeService } from '@app/client-portal/_services/income-service/income.service';
 import { FormSettings } from '@app/core/interfaces/FormSettings';
@@ -13,6 +13,7 @@ export class IncomeFormComponent implements OnInit {
   @Input() income;
   @Input() formSettings: FormSettings;
   @Input() matter;
+  @Output() deleteEvent = new EventEmitter<boolean>();
   // bindings that control state of dropdown
   dropdownVisible: boolean = false;
 
@@ -66,5 +67,12 @@ export class IncomeFormComponent implements OnInit {
     this.incomeService.upsert(this.incomeForm.value).subscribe();
     this.subtitle = this.incomeForm.value.type;
     this.toggleDropdown();
+  }
+
+  delete(): void {
+    // delete the income
+    this.incomeService.delete(this.incomeForm.value.id).subscribe(res => {
+      this.deleteEvent.emit(true);
+    });
   }
 }
