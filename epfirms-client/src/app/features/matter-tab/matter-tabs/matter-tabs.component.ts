@@ -8,23 +8,23 @@ import { MatterTabsService } from '@app/features/matter-tab/services/matter-tabs
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { LegalAreaService } from '@app/firm-portal/_services/legal-area-service/legal-area.service';
-import { EditClientComponent } from '@app/firm-portal/overlays/edit-client/edit-client.component';
 import { ReviewService } from '@app/features/review/services/review.service';
 import { HotToastService } from '@ngneat/hot-toast';
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
+import { AddClientComponent } from '@app/firm-portal/overlays/add-client/add-client.component';
 
 @Component({
   selector: 'app-matter-tabs',
   templateUrl: './matter-tabs.component.html',
   styleUrls: ['./matter-tabs.component.scss'],
   host: {
-    'class': 'z-10 w-full h-screen',
-  }
+    class: 'z-10 w-full h-screen',
+  },
 })
 export class MatterTabsComponent implements OnInit {
   tabs$: Observable<Tabs>;
-  
+
   staff$: Observable<Staff[]>;
 
   matters$: Observable<Matter[]>;
@@ -37,28 +37,28 @@ export class MatterTabsComponent implements OnInit {
     {
       name: 'active case',
       status: 'active',
-      matter_type: 'case'
+      matter_type: 'case',
     },
     {
       name: 'inactive case',
       status: 'inactive',
-      matter_type: 'case'
+      matter_type: 'case',
     },
     {
       name: 'active lead',
       status: 'active',
-      matter_type: 'lead'
+      matter_type: 'lead',
     },
     {
       name: 'inactive lead',
       status: 'inactive',
-      matter_type: 'lead'
+      matter_type: 'lead',
     },
     {
       name: 'completed case',
       status: 'complete',
-      matter_type: 'case'
-    }
+      matter_type: 'case',
+    },
   ];
 
   expanded: boolean = false;
@@ -71,23 +71,24 @@ export class MatterTabsComponent implements OnInit {
     private _reviewService: ReviewService,
     private _toastService: HotToastService,
     private _modalService: EpModalService,
-    private _clientService: ClientService
+    private _clientService: ClientService,
   ) {
     this.tabs$ = this._matterTabsService.tabs$;
 
     this.legalAreas$ = _legalAreaService.entities$;
 
-    this.matters$ = this._matterTabsService.getOpenTabs()
+    this.matters$ = this._matterTabsService.getOpenTabs();
 
     this.staff$ = _staffService.entities$;
   }
 
   ngOnInit(): void {
-    this._matterTabsService.tabs$.subscribe(tabs => {
+    this._matterTabsService.tabs$.subscribe((tabs) => {
       this.expanded = tabs.expanded;
-    })
+    });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   toggleExpanded(expandTabs: boolean): void {
     this._matterTabsService.toggleExpand();
   }
@@ -101,19 +102,21 @@ export class MatterTabsComponent implements OnInit {
   }
 
   setLegalArea(matter: Matter, legalArea: LegalArea) {
-    this._matterService.update({id: matter.id, legal_area_id: legalArea.id}).subscribe();
+    this._matterService.update({ id: matter.id, legal_area_id: legalArea.id }).subscribe();
   }
 
   setStatus(matter: Matter, status) {
-    this._matterService.update({id: matter.id, ...status}).subscribe();
+    this._matterService.update({ id: matter.id, ...status }).subscribe();
   }
 
   addSpouse(matter: Matter, spouseId: number) {
-    this._matterService.update({id: matter.id, spouse_id: spouseId}).subscribe();
+    this._matterService.update({ id: matter.id, spouse_id: spouseId }).subscribe();
   }
 
   addPointOfContact(matter: Matter, pointOfContactId: number) {
-    this._matterService.update({id: matter.id, point_of_contact_id: pointOfContactId}).subscribe();
+    this._matterService
+      .update({ id: matter.id, point_of_contact_id: pointOfContactId })
+      .subscribe();
   }
 
   sendIntake(matterId: number) {
@@ -123,26 +126,29 @@ export class MatterTabsComponent implements OnInit {
   handleUserInfoOption(matter, optionData) {
     if (optionData.option === 'edit') {
       this._modalService.create({
-        epContent: EditClientComponent,
+        epContent: AddClientComponent,
         epOkText: 'Save changes',
         epCancelText: 'Cancel',
         epAutofocus: null,
+        epMaxWidth: '36rem',
         epComponentParams: {
-          user: optionData.user
+          user: optionData.user,
         },
         epOnOk: (componentInstance) => {
-          this._clientService.updateClient(componentInstance.clientForm.value).subscribe(response => {
-            response.pipe(take(1)).subscribe(() => {
-              this._matterService.update({id: matter.id}).subscribe();
+          this._clientService
+            .updateClient(componentInstance.clientForm.value)
+            .subscribe((response) => {
+              response.pipe(take(1)).subscribe(() => {
+                this._matterService.update({ id: matter.id }).subscribe();
+              });
             });
-          })
-        }
+        },
       });
     } else if (optionData.option === 'remove') {
       if (optionData.label === 'spouse') {
-        this._matterService.update({id: matter.id, spouse_id: null}).subscribe();
+        this._matterService.update({ id: matter.id, spouse_id: null }).subscribe();
       } else if (optionData.label === 'point of contact') {
-        this._matterService.update({id: matter.id, point_of_contact_id: null}).subscribe();
+        this._matterService.update({ id: matter.id, point_of_contact_id: null }).subscribe();
       }
     }
   }
@@ -157,14 +163,17 @@ export class MatterTabsComponent implements OnInit {
 
   sendReview(matterId: number, clientEmail: string): void {
     if (clientEmail.length) {
-      this._reviewService.sendReview(clientEmail, matterId).pipe(
-        this._toastService.observe({
-          loading: 'Sending...',
-          success: () => 'Review email sent',
-          error: () => 'An error occurred. Review email was not sent'
-        }),
-        catchError((error) => of(error))
-      ).subscribe();
+      this._reviewService
+        .sendReview(clientEmail, matterId)
+        .pipe(
+          this._toastService.observe({
+            loading: 'Sending...',
+            success: () => 'Review email sent',
+            error: () => 'An error occurred. Review email was not sent',
+          }),
+          catchError((error) => of(error)),
+        )
+        .subscribe();
     }
   }
 }

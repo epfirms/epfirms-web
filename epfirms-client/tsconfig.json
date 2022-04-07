@@ -18,7 +18,8 @@
     "module": "es2020",
     "lib": [
       "es2018",
-      "dom"
+      "dom",
+      "ES2021.String"
     ],
     "paths": {
       "@app/*": ["src/app/*"],
@@ -29,6 +30,9 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
-    "strictDomEventTypes": false
-  }
+    "strictDomEventTypes": false,
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

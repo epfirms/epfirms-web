@@ -1,12 +1,12 @@
 <div>
-  <div class="px-4 py-5 sm:px-8">
-    <h3 class="text-lg font-medium leading-5 text-gray-900">Add Client</h3>
+  <div class="px-4 py-5 sm:px-6 sm:py-4">
+    <h3 class="font-medium leading-6 text-gray-900">{{title}} Client</h3>
     <!-- <p class="max-w-2xl mt-1 text-sm text-gray-500">Personal details and application.</p> -->
   </div>
-  <div class="px-4 py-5 border-t border-gray-200 sm:px-8">
+  <div class="px-4 py-5 border-t border-gray-200 sm:px-6">
     <form [formGroup]="clientForm">
       <div>
-        <div class="grid grid-cols-6 gap-6">
+        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6 text-slate-800">
           <div class="col-span-6 sm:col-span-3">
             <label
               for="first-name"
@@ -58,22 +58,26 @@
             />
           </div>
 
-          <div class="col-span-6 sm:col-span-2">
+          <div class="col-span-6 sm:col-span-3">
             <label
-              for="phone"
-              class="block text-sm font-medium text-slate-700"
-              >Phone</label
-            >
+            for="phone"
+            class="block text-sm font-medium text-slate-700"
+            >Phone</label
+          >
+            <div class="relative mt-1 rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <span class="text-gray-500 sm:text-sm"> +1 </span>
+              </div>
             <input
               formControlName="phone"
-              ep-input
-              type="text"
+              type="tel"
               name="phone"
               id="phone"
-              class="mt-1"
+              class="block w-full pl-8 pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               autocomplete="off"
               [inputMask]="phoneInputMask"
             />
+            </div>
           </div>
 
           <div class="col-span-6">
@@ -92,7 +96,7 @@
             />
           </div>
 
-          <div class="col-span-6 sm:col-span-6">
+          <div class="col-span-6 sm:col-span-6 lg:col-span-2">
             <label
               for="city"
               class="block text-sm font-medium text-slate-700"
@@ -108,7 +112,7 @@
             />
           </div>
 
-          <div class="col-span-6 sm:col-span-3">
+          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
             <label for="state" class="block text-sm font-medium text-slate-700">
               State
             </label>
@@ -121,11 +125,11 @@
             </div>
           </div>
 
-          <div class="col-span-6 sm:col-span-3">
+          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
             <label
               for="postal-code"
               class="block text-sm font-medium text-slate-700"
-              >ZIP</label
+              >ZIP / Postal code</label
             >
             <input
               formControlName="zip"

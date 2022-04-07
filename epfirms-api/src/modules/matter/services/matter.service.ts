@@ -299,4 +299,14 @@ export class MatterService {
     const updatedIntake = await matter_intake.findByPk(matterIntakeData.id);
     return Promise.resolve(updatedIntake);
   }
+
+  public async getById(matterId: number): Promise<any> {
+    const { matter } = Database.models;
+
+    const foundMatter = await matter.findOne({where: {
+      id: matterId,
+    }});
+
+    return Promise.resolve(foundMatter);
+  }
 }

@@ -1,11 +1,9 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnDestroy } from '@angular/core';
-import {
-  Conversation,
-  Participant,
-  Message,
-  Paginator,
-} from '@twilio/conversations';
-import { from, fromEventPattern, Subscription } from 'rxjs';
+import { UserService } from '@app/features/user/services/user.service';
+import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { Conversation, Participant, Message, Paginator, User } from '@twilio/conversations';
+import { from, fromEventPattern, map, pluck, Subscription } from 'rxjs';
 import { ConversationService } from '../services/conversation.service';
 
 @Component({
@@ -18,8 +16,9 @@ export class ConversationHistoryItemComponent implements OnDestroy {
 
   @Input()
   set conversation(value: Conversation) {
+    console.log(value);
     this._conversation = value;
-    this.loadOtherParticipant();
+    this.loadOtherParticipants();
     this.loadLastMessage();
     this.listenForUpdates();
   }
@@ -30,42 +29,39 @@ export class ConversationHistoryItemComponent implements OnDestroy {
 
   unreadMessagesCount: number = 0;
 
-  otherParticipant: Participant;
-
   lastMessage: Message;
 
   hasUnreadMessages: boolean = false;
 
   conversationUpdateSubscription: Subscription;
 
+  otherParticipants: Participant[] = [];
+
+  lastMessageAuthorName: string;
+
+  conversationTitle: string;
+
   private _conversation: Conversation;
 
-  get friendlyName() {
-    if (this.otherParticipant) {
-      // eslint-disable-next-line @typescript-eslint/dot-notation
-      return this.otherParticipant.attributes['friendlyName'];
-    }
-  }
+  currentUser: User;
 
-  get profileImage() {
-    if (this.otherParticipant) {
-      // eslint-disable-next-line @typescript-eslint/dot-notation
-      return this.otherParticipant.attributes['profileImage'];
-    }
+  constructor(
+    private _conversationService: ConversationService,
+    private _matterService: MatterService,
+    private _userService: UserService,
+  ) {
+    this.currentUser = this._conversationService.user;
   }
-
-  constructor(private _conversationService: ConversationService) {}
 
   ngOnDestroy(): void {
     this.conversationUpdateSubscription.unsubscribe();
   }
 
-  loadOtherParticipant() {
-    from(this.conversation.getParticipants()).subscribe((participants: any[]) => {
-      if (participants && participants.length === 2) {
-        const userIdentity = this._conversationService.user.identity;
-        this.otherParticipant = participants.find((p) => p.identity !== userIdentity);
-      }
+  loadOtherParticipants() {
+    from(this.conversation.getParticipants()).subscribe((participants: Participant[]) => {
+      const userIdentity = this._conversationService.user.identity;
+      this.otherParticipants = participants.filter((p) => p.identity !== userIdentity);
+      this.loadConversationTitle();
     });
   }
 
@@ -75,14 +71,41 @@ export class ConversationHistoryItemComponent implements OnDestroy {
         (message) => message.index === this.conversation.lastMessage.index,
       );
 
-      if (this.lastMessage.author === this.otherParticipant.identity) {
-        this.checkUnreadMessages(this.conversation.lastMessage.index);
-      }
+      this.getLastMessageAuthorName(this.lastMessage.author);
+    });
+  }
+
+  getLastMessageAuthorName(author: string) {
+    this._userService.get(author).subscribe((user) => {
+      this.lastMessageAuthorName = user.full_name;
     });
   }
 
   checkUnreadMessages(lastMessageIndex: number) {
-    this.hasUnreadMessages = !this.selected && (this.conversation.lastReadMessageIndex !== lastMessageIndex);
+    this.hasUnreadMessages =
+      !this.selected && this.conversation.lastReadMessageIndex !== lastMessageIndex;
+  }
+
+  loadConversationTitle() {
+    if (this.conversation.attributes['matterId']) {
+      this._matterService
+        .getById(this.conversation.attributes['matterId'])
+        .pipe(
+          pluck('title'),
+          map((title) => {
+            if (title && title.length) {
+              return title;
+            }
+
+            return this.otherParticipants[0].attributes['friendlyName'];
+          }),
+        )
+        .subscribe((title) => {
+          this.conversationTitle = title;
+        });
+    } else {
+      this.conversationTitle = this.otherParticipants[0].attributes['friendlyName'];
+    }
   }
 
   listenForUpdates() {

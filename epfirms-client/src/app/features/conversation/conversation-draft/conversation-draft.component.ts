@@ -1,8 +1,16 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Client } from '@app/core/interfaces/client';
 import { Staff } from '@app/core/interfaces/staff';
+import { TeamService } from '@app/features/team/services/team.service';
+import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
+import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
+import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete.component';
+import { EpModalService } from '@app/shared/modal/modal.service';
+import { Store } from '@ngrx/store';
 import { Conversation } from '@twilio/conversations';
-import { Observable, take } from 'rxjs';
+import { from, map, mergeMap, Observable, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
+import { ConversationMatterSelectModalComponent } from '../conversation-matter-select-modal/conversation-matter-select-modal.component';
 import { ConversationService } from '../services/conversation.service';
 
 @Component({
@@ -10,7 +18,7 @@ import { ConversationService } from '../services/conversation.service';
   templateUrl: './conversation-draft.component.html',
   styleUrls: ['./conversation-draft.component.scss'],
 })
-export class ConversationDraftComponent implements OnInit {
+export class ConversationDraftComponent implements OnInit, OnDestroy {
   @Output() conversationFound: EventEmitter<Conversation> = new EventEmitter<Conversation>();
 
   searchInput: string;
@@ -21,19 +29,35 @@ export class ConversationDraftComponent implements OnInit {
 
   staff$: Observable<Staff[]>;
 
-  userId: number;
+  clients$: Observable<Client[]>;
+
+  selectedParticipant: any;
+
+  participantType: 'sms' | 'chat';
 
   messageBody: string;
+
+  clients: Client[] = [];
+
+  filteredClients: Client[] = [];
+
+  destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private _staffService: StaffService,
     private _conversationService: ConversationService,
+    private _clientService: ClientService,
+    private readonly store: Store,
+    private _teamService: TeamService,
+    private _modalService: EpModalService,
+    private _firmService: FirmService,
   ) {
     this.staff$ = this._staffService.entities$;
+    this.clients$ = this._clientService.entities$;
   }
 
   ngOnInit(): void {
-    this.staff$.pipe(take(1)).subscribe((a) => {
+    this.staff$.pipe(takeUntil(this.destroy$)).subscribe((a) => {
       this.staffMembers = [
         ...a.filter(
           (member) => member.user.id.toString() !== this._conversationService.user.identity,
@@ -41,9 +65,26 @@ export class ConversationDraftComponent implements OnInit {
       ];
       this.filteredStaffMembers = [...this.staffMembers];
     });
+
+    this.clients$.pipe(takeUntil(this.destroy$)).subscribe((c) => {
+      this.clients = c;
+      this.filteredClients = c;
+    });
   }
 
-  filterStaffMembers(event) {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  filterOptions(event) {
+    this.filteredClients =
+      event && event.length
+        ? this.clients.filter((client) =>
+            client.full_name.toLowerCase().includes(event.toLowerCase()),
+          )
+        : [...this.clients];
+
     this.filteredStaffMembers =
       event && event.length
         ? this.staffMembers.filter((attorney) =>
@@ -52,32 +93,141 @@ export class ConversationDraftComponent implements OnInit {
         : [...this.staffMembers];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   displayFn(value, options): string {
-    const selectedAttorney = options.find((option) => option.value === value);
-    return selectedAttorney ? selectedAttorney.viewValue : 'Search...';
+    return value && value.full_name;
   }
 
-  async resetFilteredStaffMembers() {
-    this.filteredStaffMembers = [...this.staffMembers];
-    const existingConversation = await this.findDirectConversation();
-    if (existingConversation) {
-      this.conversationFound.emit(existingConversation);
+  async handleOptionSelected(event: AutocompleteSelectedEvent) {
+    const option = event.option;
+    const optionGroup = option.group.label;
+    this.selectedParticipant = option.value;
+
+    this.resetFilteredOptions();
+
+    if (optionGroup === 'Clients') {
+      this.participantType = 'sms';
+      this.openMatterSelectModal(this.selectedParticipant.id);
+    } else {
+      this.participantType = 'chat';
+      const existingConversation = await this.findDirectConversation(this.participantType);
+      if (existingConversation) {
+        this.conversationFound.emit(existingConversation);
+      }
     }
   }
 
-  createConversation(): void {
-    this._conversationService.createConversation().subscribe((conversation) => {
-      this._conversationService
-        .addParticipant(conversation, this.userId.toString())
-        .subscribe(() => {
-          this._conversationService.sendMessage(conversation, this.messageBody).subscribe(() => {
-            this.conversationFound.emit(conversation);
-          });
-        });
-    });
+  openMatterSelectModal(clientUserId: number) {
+    this._modalService.create({
+      epContent: ConversationMatterSelectModalComponent,
+      epOkText: 'Confirm',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epMaxWidth: '36rem',
+      epComponentParams: {
+        clientUserId
+      },
+      epOkDisabled: true,
+      epOnOk: (componentInstance) => {
+        this.createGroupConversation(componentInstance.selectedMatter);
+      }
+    });  }
+
+  resetFilteredOptions() {
+    this.filteredStaffMembers = [...this.staffMembers];
+    this.filteredClients = [...this.clients];
   }
 
-  async findDirectConversation() {
+  createGroupConversation(matter) {
+    this._teamService
+      .getAllByUserId(matter.attorney_id)
+      .pipe(
+        switchMap((teams) =>
+          this._teamService
+            .getAllMembers(teams[0].id)
+            .pipe(map((response) => ({ teams, members: response.data }))),
+        ),
+      )
+      .subscribe(({ teams, members }) => {
+        this._conversationService
+          .createConversation('group', { matterId: matter.id })
+          .pipe(
+            mergeMap((conversation) =>
+              this._conversationService
+                .addParticipant(conversation, {
+                  messagingBinding: { address: matter.client.phone },
+                  attributes: {
+                    friendlyName: matter.client.full_name,
+                    phone: matter.client.phone,
+                  },
+                })
+                .pipe(map(() => conversation)),
+            ),
+            mergeMap((conversation) =>
+              from(members).pipe(
+                mergeMap((member: any) =>
+                  this._conversationService.addParticipant(conversation, {
+                    identity: member.firm_employee.user_id,
+                    messagingBinding: { projectedAddress: teams[0].twilio_phone_number },
+                    attributes: {
+                      friendlyName:
+                        member.firm_employee.user.first_name +
+                        ' ' +
+                        member.firm_employee.user.last_name,
+                    },
+                  }),
+                ),
+              ).pipe(map(() => conversation)),
+            ),
+            take(1)
+          )
+          // Add selected participant.
+          .subscribe((conversation) => {
+            this._firmService.getCurrentFirm().subscribe((firm) => {
+              const message = `Hello, this is your attorney, ${matter.attorney.full_name}, at ${firm.name}. I would like to communicate with you through text. If you do not want me to text you, please reply STOP.`;
+              this._conversationService
+                .sendMessage(conversation.sid, { body: message, author: matter.attorney_id })
+                .subscribe(() => {});
+            });
+          });
+      });
+  }
+
+  createConversation(): void {
+    this._conversationService
+      .createConversation()
+      .pipe(
+        // Add logged in user as participant.
+        tap((conversation) => {
+          from(
+            this._conversationService.conversationsClient.getUser(conversation.createdBy),
+          ).subscribe((user) => {
+              this._conversationService
+                .addParticipant(conversation, {
+                  identity: conversation.createdBy,
+                  attributes: { friendlyName: user.friendlyName },
+                })
+                .subscribe();
+          });
+        }),
+        // Add selected participant.
+        switchMap((conversation) => {
+          return this._conversationService
+            .addParticipant(conversation, {
+              identity: this.selectedParticipant.id,
+              attributes: { friendlyName: this.selectedParticipant.full_name },
+            })
+            .pipe(map(() => conversation));
+        }),
+      )
+      .subscribe((conversation) => {
+        from(conversation.sendMessage(this.messageBody)).subscribe(() => {
+          this.conversationFound.emit(conversation);
+        });
+      });
+  }
+
+  async findDirectConversation(type: 'chat' | 'sms') {
     const currentUserIdentity = this._conversationService.user.identity;
 
     const result = await this.asyncFind(
@@ -86,12 +236,18 @@ export class ConversationDraftComponent implements OnInit {
         const attributes = conversation.attributes;
 
         const participants = await conversation.getParticipants();
+        if (type === 'sms') {
+          return (
+            participants.length > 1 &&
+            participants.some((p) => p.attributes.phone === this.selectedParticipant.phone)
+          )
+        }
         return (
-          currentUserIdentity !== this.userId.toString() &&
+          currentUserIdentity !== this.selectedParticipant.id.toString() &&
           attributes.type === 'direct' &&
           participants.length > 1 &&
           participants.some((p) => p.identity === currentUserIdentity) &&
-          participants.some((p) => p.identity === this.userId.toString())
+          participants.some((p) => p.identity === this.selectedParticipant.id.toString())
         );
       },
     );

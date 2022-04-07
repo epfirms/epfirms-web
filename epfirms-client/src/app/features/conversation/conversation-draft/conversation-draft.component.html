@@ -2,32 +2,43 @@
   <div class="flex flex-col justify-center h-16">
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between py-3">
-        <div class="relative h-full rounded-md">
-          <span
-            class="absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-gray-700 pointer-events-none"
-            >To:</span
-          >
+        <div class="relative w-80">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <span class="text-gray-500 sm:text-sm"> To:  </span>
+          </div>
           <input
-            class="block w-full h-full pl-10 border-transparent rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            placeholder="Search staff members"
-            [(ngModel)]="userId"
-            (ngModelChange)="filterStaffMembers($event)"
+            class="w-full py-2 pl-10 pr-12 bg-white border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+            placeholder="Search..."
+            [(ngModel)]="selectedParticipant"
+            (ngModelChange)="filterOptions($event)"
             [epAutocomplete]="auto"
           />
-
           <ep-autocomplete
-            #auto="epAutocomplete"
-            [displayWith]="displayFn"
-            (optionSelected)="resetFilteredStaffMembers()"
-            panelWidth="auto"
-          >
-            <ep-option *ngFor="let attorney of filteredStaffMembers" [value]="attorney.user.id">
-              <span class="block ml-3 font-normal truncate">
-                {{ attorney.user.full_name }}
-              </span>
+          #auto="epAutocomplete"
+          [displayWith]="displayFn"
+          (optionSelected)="handleOptionSelected($event)"
+        >
+        <ep-option-group label="Staff">
+          <ep-option *ngFor="let attorney of filteredStaffMembers" [value]="attorney.user">
+            <span class="block ml-3 font-normal truncate">
+              {{ attorney.user.full_name }}
+            </span>
+          </ep-option>
+        </ep-option-group>
+
+          <ep-option-group label="Clients">
+            <ep-option *ngFor="let client of filteredClients" [value]="client">
+              <div class="flex">
+                <!-- Selected: "font-semibold" -->
+                <span class="truncate">{{client.full_name }}</span>
+                <!-- Active: "text-blue-200", Not Active: "text-gray-500" -->
+                <span class="ml-2 text-gray-500 truncate">{{ client.phone }}</span>
+              </div>
             </ep-option>
-          </ep-autocomplete>
+          </ep-option-group>
+        </ep-autocomplete>
         </div>
+
 
         <div>
           <button
@@ -55,7 +66,7 @@
   </div>
 </div>
 
-<div class="flex flex-1 overflow-y-auto">
+<div class="flex items-center flex-1 overflow-y-auto">
   <div class="max-w-lg p-6 mx-auto">
     <div>
       <div class="text-center">
@@ -97,7 +108,7 @@
             [(ngModel)]="messageBody"
             (keydown.enter)="$event.preventDefault()"
             (keyup.enter)="createConversation()"
-            [disabled]="!userId"
+            [disabled]="!selectedParticipant"
           ></textarea>
         </div>
 
@@ -106,7 +117,7 @@
             <button
               type="submit"
               (click)="createConversation()"
-              [disabled]="!(userId && messageBody && messageBody.length)"
+              [disabled]="!(selectedParticipant && messageBody && messageBody.length)"
               class="items-center hidden px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm group-focus-within:inline-flex hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
             >
               <svg

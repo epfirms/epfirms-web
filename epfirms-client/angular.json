@@ -85,9 +85,9 @@
                   "with": "src/environments/environment.dev.ts"
                 }
               ],
-              "optimization": false,
-              "outputHashing": "all",
-              "sourceMap": true,
+              "optimization": true,
+              "outputHashing": "none",
+              "sourceMap": false,
               "namedChunks": true,
               "extractLicenses": true,
               "vendorChunk": true,

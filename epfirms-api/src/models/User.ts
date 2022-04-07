@@ -39,6 +39,7 @@ module.exports = (sequelize, {
       },
       phone: {
         type: STRING,
+        unique: true
       },
       address: {
         type: STRING,

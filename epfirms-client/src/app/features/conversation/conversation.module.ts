@@ -13,6 +13,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgScrollbarReachedModule } from 'ngx-scrollbar/reached-event';
 import { ConversationDraftComponent } from './conversation-draft/conversation-draft.component';
 import { ConversationRoutingModule } from './conversation-routing.module';
+import { AvatarModule } from '@app/shared/avatar/avatar.module';
+import { ConversationMatterSelectModalComponent } from './conversation-matter-select-modal/conversation-matter-select-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { ConversationRoutingModule } from './conversation-routing.module';
     ConversationMessageListComponent,
     ConversationMessageItemComponent,
     ConversationComponent,
-    ConversationDraftComponent
+    ConversationDraftComponent,
+    ConversationMatterSelectModalComponent
   ],
   imports: [
     CoreModule,
@@ -31,7 +34,8 @@ import { ConversationRoutingModule } from './conversation-routing.module';
     MenuModule,
     InfiniteScrollModule,
     NgScrollbarReachedModule,
-    ConversationRoutingModule
+    ConversationRoutingModule,
+    AvatarModule
   ],
   exports: [
     ConversationHistoryListComponent,
