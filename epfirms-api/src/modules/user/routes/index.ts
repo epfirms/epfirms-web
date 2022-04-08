@@ -76,6 +76,9 @@ passport.authenticate('bearer', {session: false}),
   (req, res) => appointeeController.remove(req, res)
 )
 
-
+userRouter.get('/email-address/:email',
+passport.authenticate('bearer', {session: false}),
+  (req, res) => userController.validateEmailAddress(req, res)
+)
 
 export { userRouter };

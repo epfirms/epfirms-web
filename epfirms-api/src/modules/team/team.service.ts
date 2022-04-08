@@ -74,4 +74,16 @@ export class TeamService {
 
     return Promise.resolve(members);
   }
+
+  public async updateMember(teamId: number, memberId: number, data): Promise<any> {
+    const { firm_team_member } = Database.models;
+    const members = await firm_team_member.update(data, {
+      where: {
+        id: memberId,
+        firm_team_id: teamId
+      }
+    });
+
+    return Promise.resolve(members);
+  }
 }

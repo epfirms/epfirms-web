@@ -18,7 +18,8 @@ import { PhonePipe } from './phone/phone.pipe';
   exports: [
     InitialsPipe,
     SearchPipe,
-    TimeAgoPipe
+    TimeAgoPipe,
+    PhonePipe
   ]
 })
 export class PipesModule { }

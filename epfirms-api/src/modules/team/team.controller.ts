@@ -65,4 +65,17 @@ export class TeamController {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
     }
   }
+
+  public async updateMember(req, res) {
+    try {
+      const teamId = parseInt(req.params.id);
+      const memberId = parseInt(req.params.member_id);
+      const data = req.body;
+
+      const members = await this.teamService.updateMember(teamId, memberId, data);
+      res.status(StatusConstants.OK).send({ data: {updated: "true"} });
+    } catch (error) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
+    }
+  }
 }

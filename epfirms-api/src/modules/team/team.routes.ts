@@ -26,5 +26,10 @@ teamRouter.get(
   passport.authenticate('bearer', { session: false }),
   (req, res) => teamController.removeUser(req, res),
 );
+teamRouter.put(
+  '/:id/members/:member_id',
+  passport.authenticate('bearer', { session: false }),
+  (req, res) => teamController.updateMember(req, res),
+);
 
 export { teamRouter };

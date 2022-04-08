@@ -197,4 +197,14 @@ export class UserService {
 
     return Promise.resolve(removed);
   }
+
+  public async validateEmail(email: string): Promise<boolean> {
+    const { user } = Database.models;
+
+    const users = await user.findAll({where: {email}});
+
+    console.log(users.length);
+
+    return Promise.resolve(!users.length);
+  }
 }

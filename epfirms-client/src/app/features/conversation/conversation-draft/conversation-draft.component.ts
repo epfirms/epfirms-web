@@ -155,10 +155,10 @@ export class ConversationDraftComponent implements OnInit, OnDestroy {
             mergeMap((conversation) =>
               this._conversationService
                 .addParticipant(conversation, {
-                  messagingBinding: { address: matter.client.phone },
+                  messagingBinding: { address: matter.client.cell_phone },
                   attributes: {
                     friendlyName: matter.client.full_name,
-                    phone: matter.client.phone,
+                    phone: matter.client.cell_phone,
                   },
                 })
                 .pipe(map(() => conversation)),
@@ -239,7 +239,7 @@ export class ConversationDraftComponent implements OnInit, OnDestroy {
         if (type === 'sms') {
           return (
             participants.length > 1 &&
-            participants.some((p) => p.attributes.phone === this.selectedParticipant.phone)
+            participants.some((p) => p.attributes.phone === this.selectedParticipant.cell_phone)
           )
         }
         return (

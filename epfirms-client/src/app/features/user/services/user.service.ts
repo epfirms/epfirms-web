@@ -16,4 +16,12 @@ export class UserService {
   get(id: number | string): Observable<User> {
     return this.http.get<User>(`/api/user/${id}`);
   }
+
+  checkPhoneNumber(number: string): Observable<any> {
+    return this.http.get(`/api/phone-numbers/${number}`);
+  }
+
+  validateEmail(email: string): Observable<any> {
+    return this.http.get(`/api/user/email-address/${email}`);
+  }
 }

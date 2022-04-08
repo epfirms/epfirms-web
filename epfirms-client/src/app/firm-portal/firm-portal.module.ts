@@ -23,6 +23,7 @@ import { ConversationEffects } from '@app/features/conversation/store/conversati
 import { conversationFeature } from '@app/features/conversation/store/conversation.store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { UserModule } from '@app/features/user/user.module';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { StoreModule } from '@ngrx/store';
     InputMaskModule,
     StoreModule.forFeature(conversationFeature),
     EffectsModule.forFeature([ConversationEffects]),
+    UserModule
   ]
 })
 export class FirmPortalModule {}

@@ -68,6 +68,7 @@ export class Database {
       contract: require('../models/Contract')(this.sequelize, Sequelize),
       contract_template: require('../models/ContractTemplate')(this.sequelize, Sequelize),
       income: require('../models/Income')(this.sequelize, Sequelize),
+      twilio_subaccount: require('../models/TwilioSubaccount')(this.sequelize, Sequelize)
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -402,6 +403,8 @@ export class Database {
     this.models.user.hasMany(this.models.income, {foreignKey: 'user_id'});
     this.models.income.belongsTo(this.models.user, {foreignKey: 'user_id'});
 
+    this.models.firm.hasOne(this.models.twilio_subaccount, {foreignKey: 'firm_id'});
+    this.models.twilio_subaccount.belongsTo(this.models.firm, {foreignKey: 'firm_id'});
   }
 
   public static async start() {

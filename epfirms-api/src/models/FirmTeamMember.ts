@@ -1,4 +1,4 @@
-module.exports = (sequelize, { INTEGER }) => {
+module.exports = (sequelize, { INTEGER, BOOLEAN }) => {
     const tableName = 'firm_team_member';
   
     const FirmTeamMember = sequelize.define(
@@ -17,6 +17,11 @@ module.exports = (sequelize, { INTEGER }) => {
         },
         firm_role_id: {
           type: INTEGER
+        },
+        include_in_group_chat: {
+          type: BOOLEAN,
+          defaultValue: false,
+          allowNull: false,
         }
       },
       {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Staff } from '@app/core/interfaces/staff';
+import { TeamService } from '@app/features/team/services/team.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { Observable, take } from 'rxjs';
 import { FirmRoleService } from '../services/firm-role.service';
@@ -31,6 +32,7 @@ export class TeamMembersDialogComponent implements OnInit {
     private _firmRoleService: FirmRoleService,
     private _staffService: StaffService,
     private _firmTeamService: FirmTeamService,
+    private _teamService: TeamService
   ) {
     this.staff$ = _staffService.filteredEntities$;
   }
@@ -62,6 +64,12 @@ export class TeamMembersDialogComponent implements OnInit {
     this._firmTeamService
       .addMember(this.team.id, event.option.value, roleId)
       .subscribe();
+  }
+
+  updateMember(member, event) {
+    member.include_in_group_chat = !member.include_in_group_chat
+    console.log(event);
+    this._teamService.updateMember(member.firm_team_id, member.id, {include_in_group_chat: member.include_in_group_chat}).subscribe();
   }
 
   displayFn(value, options): string {

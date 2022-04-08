@@ -11,6 +11,7 @@ import { CoreModule } from '@app/core/core.module';
 import { ButtonModule } from '@app/shared/button/button.module';
 import { StaffMemberDialogComponent } from './staff-member-dialog/staff-member-dialog.component';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { PipesModule } from '@app/core/pipes/pipes.module';
 
 
 
@@ -28,7 +29,8 @@ import { InputMaskModule } from '@ngneat/input-mask';
     AutocompleteModule,
     InputModule,
     ButtonModule,
-    InputMaskModule
+    InputMaskModule,
+    PipesModule
   ],
   exports: [
     FirmStaffListComponent,
