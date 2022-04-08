@@ -35,32 +35,7 @@ import {{ Service }} from 'typedi';
 export class {pascal_case}Controller {{
   constructor() {{}}
 
-    public async upsert(req : Request, res : Response) : Promise<any> {{
-        try {{
-
-        }}
-        catch (error){{
-            console.error(error)
-        }}
-    }}
   
-    public async delete(req : Request, res : Response) : Promise<any> {{
-        try {{
-
-        }}
-        catch (error){{
-            console.error(error)
-        }}
-    }}
-
-public async getAllWithId(req : Request, res : Response) : Promise<any> {{
-        try {{
-
-        }}
-        catch (error){{
-            console.error(error)
-        }}
-    }}
 }}
 
 
@@ -74,12 +49,6 @@ const passport = require('passport');
 
 const {camel_case_name}Router = express.Router();
 
-{camel_case_name}Router.post('/', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.upsert(req, res));
-{camel_case_name}Router.get('/:id', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.getAllWithId(req, res));
-{camel_case_name}Router.delete('/:id', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.delete(req, res));
-
-
-
 export {{ {camel_case_name}Router }};
 
 
@@ -92,32 +61,7 @@ import {{ Service }} from 'typedi';
 
 @Service()
 export class {pascal_case}Service {{
-     public static async upsert(data) : Promise<any> {{
-        try {{
-
-        }}
-        catch (error){{
-            console.error(error)
-        }}
-    }}
   
-    public static async delete(id) : Promise<any> {{
-        try {{
-
-        }}
-        catch (error){{
-            console.error(error)
-        }}
-    }}
-
-public static async getAllWithId(id) : Promise<any> {{
-        try {{
-
-        }}
-        catch (error){{
-            console.error(error)
-        }}
-    }}
 }}
 
 
@@ -140,5 +84,3 @@ with open(f"{base_path}services/{module_name}.service.ts", "w") as f:
     f.write(service_template)
 
 
-print(f"Generating Module: {module_name} complete.")
-print("Don't forget to register new Models in the database.ts!")

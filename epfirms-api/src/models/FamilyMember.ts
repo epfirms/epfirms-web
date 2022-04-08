@@ -17,9 +17,6 @@ module.exports = (sequelize, {
         relationship_type: {
             type: STRING,
             allowNull: false
-        },
-        is_minor: {
-          type: BOOLEAN,
         }
       }, {
         tableName,

@@ -22,7 +22,6 @@ export class IncomeComponent implements OnInit {
 
   // spouse property if available
   spouse;
-  client;
 
   constructor(
     private familyMemberService: FamilyMemberService,
@@ -31,8 +30,7 @@ export class IncomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSpouse();
-    
-    this.client = this.matter.client;
+    console.log('MATTER', this.matter);
   }
 
   loadIncomes(): void {
@@ -49,27 +47,27 @@ export class IncomeComponent implements OnInit {
         }
       });
     }
-    
+    console.log('after concat', this.monthlyIncome);
   }
 
   loadSpouse(): void {
     this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
-      
+      console.log(res);
       this.spouse = res.filter((member) => member.family_member.relationship_type === 'spouse')[0];
-      
+      console.log('spouse', this.spouse);
       this.loadIncomes();
     });
   }
 
   addIncome(isSpouseIncome: boolean): void {
-    
+    console.log('ADDING INCOME FOR SPOUSE', isSpouseIncome);
     let income = {
       type: 'Payroll',
       amount: 0,
       user_id: isSpouseIncome ? this.spouse.id : this.matter.client.id,
     };
     this.monthlyIncome.push(income);
-    
+    console.log('MONTHLY INCOME LIST', this.monthlyIncome);
   }
 
   onIncomeChange(income: string, incomeBinding): void {
@@ -85,7 +83,9 @@ export class IncomeComponent implements OnInit {
   }
 
   submit(): void {
-    
+    this.monthlyIncome.forEach((income) => {
+      this.incomeService.upsert(income).subscribe();
+    });
     this.continueButton();
   }
 }

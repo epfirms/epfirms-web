@@ -15,9 +15,6 @@ module.exports = (sequelize, { INTEGER, STRING, BOOLEAN }) => {
         status: {
           type: STRING
         },
-        type: {
-          type: STRING
-        },
         sent_by: {
           type: INTEGER
         }

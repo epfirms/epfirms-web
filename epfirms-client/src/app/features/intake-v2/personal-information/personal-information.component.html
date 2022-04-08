@@ -1,29 +1,597 @@
-<div class="text-right m-4">
-  <button
-    (click)="addFamilyMember()"
-    type="button"
-    class="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-  >
-  Add Family Member
-  </button>
-</div>
-<app-user-profile-form
-  [formSettings]="{ title: 'Client Information', subtitle: client.first_name, isClient: true }"
-  [userProfile]="client"
-  [matter]="matter"
-></app-user-profile-form>
+<div >
+          <div class="space-y-6">
+            <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+              <div class="md:grid md:grid-cols-3 md:gap-6">
+                <div class="md:col-span-1">
+                  <h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
+                  <p class="mt-1 text-sm text-gray-500">
+                    Use a permanent address where you can receive mail.
+                  </p>
+                </div>
+                <div class="mt-5 md:mt-0 md:col-span-2">
+                  <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-6 sm:col-span-3">
+                      <label for="first-name" class="block text-sm font-medium text-gray-700"
+                        >First name</label
+                      >
+                      <input
+                        [(ngModel)]="personalInformation.first_name"
+                        type="text"
+                        name="first-name"
+                        id="first-name"
+                        autocomplete="given-name"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
 
-<app-user-profile-form
-  *ngFor="let member of familyMembers"
-  [userProfile]="member"
-  [matter]="matter"
-  [formSettings]="{
-    title: 'Family Member Information',
-    subtitle: member.first_name,
-    isClient: false
-  }"
-></app-user-profile-form>
-<div class="flex justify-end">
+                    <div class="col-span-6 sm:col-span-3">
+                      <label for="last-name" class="block text-sm font-medium text-gray-700"
+                        >Last name</label
+                      >
+                      <input
+                        [(ngModel)]="personalInformation.last_name"
+                        type="text"
+                        name="last-name"
+                        id="last-name"
+                        autocomplete="family-name"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-4">
+                      <label for="email-address" class="block text-sm font-medium text-gray-700"
+                        >Email address</label
+                      >
+                      <input
+                        [(ngModel)]="personalInformation.email"
+                        type="text"
+                        name="email-address"
+                        id="email-address"
+                        autocomplete="email"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <div class="col-span-6 sm:col-span-4">
+                      <label for="phone-number" class="block text-sm font-medium text-gray-700"
+                        >Phone Number</label
+                      >
+                      <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 flex items-center">
+                          <label for="country" class="sr-only">Country</label>
+                          <select
+                            id="country"
+                            name="country"
+                            autocomplete="country"
+                            class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-3 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+                          >
+                            <option>US</option>
+                            <option>CA</option>
+                            <option>EU</option>
+                          </select>
+                        </div>
+                        <input
+                          type="text"
+                          [(ngModel)]="personalInformation.phone"
+                          class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-16 sm:text-sm border-gray-300 rounded-md"
+                          placeholder="+1 (555) 987-6543"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-4">
+                      <label class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                      <editable-datepicker
+                        [date]="personalInformation.dob"
+                        (dateChanged)="personalInformation.dob = $event"
+                      ></editable-datepicker>
+                    </div>
+
+                    <div class="col-span-6">
+                      <label for="street-address" class="block text-sm font-medium text-gray-700"
+                        >Street address</label
+                      >
+                      <input
+                        [(ngModel)]="personalInformation.address"
+                        type="text"
+                        name="street-address"
+                        id="street-address"
+                        autocomplete="street-address"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                      <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                      <input
+                        [(ngModel)]="personalInformation.city"
+                        type="text"
+                        name="city"
+                        id="city"
+                        autocomplete="address-level2"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                      <label for="region" class="block text-sm font-medium text-gray-700"
+                        >State / Province</label
+                      >
+                      <input
+                        [(ngModel)]="personalInformation.state"
+                        type="text"
+                        name="region"
+                        id="region"
+                        autocomplete="address-level1"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                      <label for="postal-code" class="block text-sm font-medium text-gray-700"
+                        >ZIP / Postal code</label
+                      >
+                      <input
+                        [(ngModel)]="personalInformation.zip"
+                        type="text"
+                        name="postal-code"
+                        id="postal-code"
+                        autocomplete="postal-code"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                      <label for="postal-code" class="block text-sm font-medium text-gray-700"
+                        >County</label
+                      >
+                      <input
+                        [(ngModel)]="personalInformation.county"
+                        type="text"
+                        name="postal-code"
+                        id="postal-code"
+                        autocomplete="postal-code"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
+                    <!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                      <label for="location" class="block text-sm font-medium text-gray-700"
+                        >Do you have a spouse?</label
+                      >
+                      <select
+                        id="location"
+                        [(ngModel)]="hasSpouse"
+                        name="location"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                      >
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                      </select>
+                    </div>
+                    <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                      <label for="location" class="block text-sm font-medium text-gray-700"
+                        >Do you have children?</label
+                      >
+                      <select
+                        id="location"
+                        [(ngModel)]="hasChildren"
+                        name="location"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                      >
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                      </select>
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3 lg:col-span-2" *ngIf="hasChildren">
+                      <label for="location" class="block text-sm font-medium text-gray-700"
+                        >How many children?</label
+                      >
+
+                      <input
+                        (blur)="addChild()"
+                        [(ngModel)]="numOfChildren"
+                        type="number"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- IF SPOUSE -->
+              <div *ngIf="hasSpouse">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                  <div class="md:col-span-1">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">Spouse Information</h3>
+                    <p class="mt-1 text-sm text-gray-500">
+                      Use a permanent address where you can receive mail.
+                    </p>
+                  </div>
+                  <div class="mt-5 md:mt-0 md:col-span-2">
+                    <div class="grid grid-cols-6 gap-6">
+                      <div class="col-span-6 sm:col-span-3">
+                        <label for="first-name" class="block text-sm font-medium text-gray-700"
+                          >First name</label
+                        >
+                        <input
+                          [(ngModel)]="spouseInformation.first_name"
+                          type="text"
+                          name="first-name"
+                          id="first-name"
+                          autocomplete="given-name"
+                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        />
+                      </div>
+
+                      <div class="col-span-6 sm:col-span-3">
+                        <label for="last-name" class="block text-sm font-medium text-gray-700"
+                          >Last name</label
+                        >
+                        <input
+                          [(ngModel)]="spouseInformation.last_name"
+                          type="text"
+                          name="last-name"
+                          id="last-name"
+                          autocomplete="family-name"
+                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        />
+                      </div>
+
+                      <div class="col-span-6 sm:col-span-4">
+                        <label for="email-address" class="block text-sm font-medium text-gray-700"
+                          >Email address</label
+                        >
+                        <input
+                          [(ngModel)]="spouseInformation.email"
+                          type="text"
+                          name="email-address"
+                          id="email-address"
+                          autocomplete="email"
+                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        />
+                      </div>
+                      <div class="col-span-6 sm:col-span-4">
+                        <label for="phone-number" class="block text-sm font-medium text-gray-700"
+                          >Phone Number</label
+                        >
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                          <div class="absolute inset-y-0 left-0 flex items-center">
+                            <label for="country" class="sr-only">Country</label>
+                            <select
+                              id="country"
+                              name="country"
+                              autocomplete="country"
+                              class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-3 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+                            >
+                              <option>US</option>
+                              <option>CA</option>
+                              <option>EU</option>
+                            </select>
+                          </div>
+                          <input
+                            type="text"
+                            [(ngModel)]="spouseInformation.phone"
+                            class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-16 sm:text-sm border-gray-300 rounded-md"
+                            placeholder="+1 (555) 987-6543"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-span-6 sm:col-span-4">
+                        <label class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                        <editable-datepicker
+                          [date]="spouseInformation.dob"
+                          (dateChanged)="spouseInformation.dob = $event"
+                        ></editable-datepicker>
+                      </div>
+
+                      <div class="col-span-6">
+                        <label for="street-address" class="block text-sm font-medium text-gray-700"
+                          >Street address</label
+                        >
+                        <input
+                          [(ngModel)]="spouseInformation.address"
+                          type="text"
+                          name="street-address"
+                          id="street-address"
+                          autocomplete="street-address"
+                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        />
+                      </div>
+
+                      <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                        <label for="city" class="block text-sm font-medium text-gray-700"
+                          >City</label
+                        >
+                        <input
+                          [(ngModel)]="spouseInformation.city"
+                          type="text"
+                          name="city"
+                          id="city"
+                          autocomplete="address-level2"
+                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        />
+                      </div>
+
+                      <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                        <label for="region" class="block text-sm font-medium text-gray-700"
+                          >State / Province</label
+                        >
+                        <input
+                          [(ngModel)]="spouseInformation.state"
+                          type="text"
+                          name="region"
+                          id="region"
+                          autocomplete="address-level1"
+                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        />
+                      </div>
+
+                      <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                        <label for="postal-code" class="block text-sm font-medium text-gray-700"
+                          >ZIP / Postal code</label
+                        >
+                        <input
+                          [(ngModel)]="spouseInformation.zip"
+                          type="text"
+                          name="postal-code"
+                          id="postal-code"
+                          autocomplete="postal-code"
+                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        />
+                      </div>
+
+                      <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                        <label for="postal-code" class="block text-sm font-medium text-gray-700"
+                          >County</label
+                        >
+                        <input
+                          [(ngModel)]="spouseInformation.county"
+                          type="text"
+                          name="postal-code"
+                          id="postal-code"
+                          autocomplete="postal-code"
+                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        />
+                      </div>
+                      <!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- IF CHILDEN -->
+              <div *ngIf="hasChildren">
+                <ng-container *ngFor="let child of children">
+                  <div class="md:grid md:grid-cols-3 md:gap-6">
+                    <div class="md:col-span-1">
+                      <h3 class="text-lg font-medium leading-6 text-gray-900">Child Information</h3>
+                      <p class="mt-1 text-sm text-gray-500">
+                        Use a permanent address where you can receive mail.
+                      </p>
+                    </div>
+                    <div class="mt-5 md:mt-0 md:col-span-2">
+                      <div class="grid grid-cols-6 gap-6">
+                        <div class="col-span-6 sm:col-span-3">
+                          <label for="first-name" class="block text-sm font-medium text-gray-700"
+                            >First name</label
+                          >
+                          <input
+                            [(ngModel)]="child.first_name"
+                            type="text"
+                            name="first-name"
+                            id="first-name"
+                            autocomplete="given-name"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-3">
+                          <label for="last-name" class="block text-sm font-medium text-gray-700"
+                            >Last name</label
+                          >
+                          <input
+                            [(ngModel)]="child.last_name"
+                            type="text"
+                            name="last-name"
+                            id="last-name"
+                            autocomplete="family-name"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-4">
+                          <label for="email-address" class="block text-sm font-medium text-gray-700"
+                            >Email address</label
+                          >
+                          <input
+                            [(ngModel)]="child.email"
+                            type="text"
+                            name="email-address"
+                            id="email-address"
+                            autocomplete="email"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+
+                        <!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+                        <div class="col-span-6 sm:col-span-4">
+                          <label for="phone-number" class="block text-sm font-medium text-gray-700"
+                            >Phone Number</label
+                          >
+                          <div class="mt-1 relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 flex items-center">
+                              <label for="country" class="sr-only">Country</label>
+                              <select
+                                id="country"
+                                name="country"
+                                autocomplete="country"
+                                class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-3 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+                              >
+                                <option>US</option>
+                                <option>CA</option>
+                                <option>EU</option>
+                              </select>
+                            </div>
+                            <input
+                              type="text"
+                              [(ngModel)]="child.phone"
+                              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-16 sm:text-sm border-gray-300 rounded-md"
+                              placeholder="+1 (555) 987-6543"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-4">
+                          <label class="block text-sm font-medium text-gray-700"
+                            >Date of Birth</label
+                          >
+                          <editable-datepicker
+                            [date]="child.dob"
+                            (dateChanged)="child.dob = $event"
+                          ></editable-datepicker>
+                        </div>
+
+                        <div class="col-span-6">
+                          <label
+                            for="street-address"
+                            class="block text-sm font-medium text-gray-700"
+                            >Street address</label
+                          >
+                          <input
+                            [(ngModel)]="child.address"
+                            type="text"
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                          <label for="city" class="block text-sm font-medium text-gray-700"
+                            >City</label
+                          >
+                          <input
+                            [(ngModel)]="child.city"
+                            type="text"
+                            name="city"
+                            id="city"
+                            autocomplete="address-level2"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                          <label for="region" class="block text-sm font-medium text-gray-700"
+                            >State / Province</label
+                          >
+                          <input
+                            [(ngModel)]="child.state"
+                            type="text"
+                            name="region"
+                            id="region"
+                            autocomplete="address-level1"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                          <label for="postal-code" class="block text-sm font-medium text-gray-700"
+                            >ZIP / Postal code</label
+                          >
+                          <input
+                            [(ngModel)]="child.zip"
+                            type="text"
+                            name="postal-code"
+                            id="postal-code"
+                            autocomplete="postal-code"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                          <label for="postal-code" class="block text-sm font-medium text-gray-700"
+                            >County</label
+                          >
+                          <input
+                            [(ngModel)]="child.county"
+                            type="text"
+                            name="postal-code"
+                            id="postal-code"
+                            autocomplete="postal-code"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
               <button
                 (click)="backButton()"
                 type="button"
@@ -32,9 +600,11 @@
                 Back
               </button>
               <button
-              (click)="continueButton()"
+                (click)="submitPersonalInformation()"
                 class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Continue
               </button>
             </div>
+          </div>
+        </div>

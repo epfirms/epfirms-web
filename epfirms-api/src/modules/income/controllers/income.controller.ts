@@ -28,15 +28,6 @@ export class IncomeController {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
     }
   } 
-  public async delete(req, res : Response) : Promise<any> {
-    try {
-      const income = await IncomeService.delete(req.params.id);
-      res.status(StatusConstants.OK).send({deleted: true})
-    } catch (error) {
-      console.error(error);
-      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
-    }
-  }
 }
 
 

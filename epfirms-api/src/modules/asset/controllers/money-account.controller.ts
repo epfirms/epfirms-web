@@ -8,7 +8,6 @@ export class MoneyAccountController {
   public async addMoneyAccount(req: any, resp: Response): Promise<any> {
     try {
       const { user_id } = req.params;
-      console.log("MONEY ACCOUNT BODY\n\n\n", req.body);
       const account = req.body;
 
       account.user_id = user_id;
@@ -17,7 +16,6 @@ export class MoneyAccountController {
       
       resp.status(StatusConstants.OK).send(createdAccount);
     } catch (error) {
-      console.error(error);
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send({success: false, access_token: null, m: error.message});
     }
   }

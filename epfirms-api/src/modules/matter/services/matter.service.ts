@@ -282,8 +282,7 @@ export class MatterService {
     const matterIntake = await matter_intake.create({
       matter_id: matterId,
       status: 'sent',
-      sent_by: senderId,
-      type: 'estate planning'
+      sent_by: senderId
     });
 
     return Promise.resolve(matterIntake);

@@ -16,15 +16,11 @@ export class AssetService {
   }
 
   public static async addMoneyAccount(account: any): Promise<any> {
-   try {
-     const { money_account } = Database.models;
+    const { money_account } = Database.models;
 
-    const createdAccount = await money_account.upsert(account);
+    const createdAccount = await money_account.create(account);
 
     return Promise.resolve(createdAccount);
-   } catch (error) {
-     console.error(error);
-   } 
   }
 
   public static async updateMoneyAccount(id: number, data: any): Promise<boolean> {
@@ -46,7 +42,7 @@ export class AssetService {
   public static async addRealEstate(realEstate: any): Promise<boolean> {
     const { real_estate } = Database.models;
 
-    const createdRealEstate = await real_estate.upsert(realEstate);
+    const createdRealEstate = await real_estate.create(realEstate);
 
     return Promise.resolve(createdRealEstate);
   }

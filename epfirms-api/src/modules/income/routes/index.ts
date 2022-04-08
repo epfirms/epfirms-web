@@ -8,7 +8,7 @@ const incomeRouter = express.Router();
 
 incomeRouter.post('/', passport.authenticate('bearer', { session: false }), (req, res) => incomeController.upsert(req, res));
 incomeRouter.get('/:user_id', passport.authenticate('bearer', { session: false }), (req, res) => incomeController.getWithUserId(req, res));
-incomeRouter.delete('/:id', passport.authenticate('bearer', { session: false }), (req, res) => incomeController.delete(req, res));
+
 
 export { incomeRouter };
 
