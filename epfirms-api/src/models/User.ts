@@ -67,6 +67,15 @@ module.exports = (sequelize, {
       },
       verified: {
         type: TINYINT
+      },
+      ssn: {
+        type: STRING,
+      },
+      drivers_id: {
+        type: STRING
+      },
+      note: {
+        type: TEXT
       }
     }, {
       tableName,

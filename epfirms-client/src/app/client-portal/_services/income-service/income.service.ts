@@ -19,4 +19,8 @@ export class IncomeService {
   getAllWithUserId(userId) : Observable<any> {
     return this.http.get(`/api/income/${userId}`);
   }
+
+  delete(id) : Observable<any> {
+    return this.http.delete(`/api/income/${id}`);
+  }
 }

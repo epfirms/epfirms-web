@@ -1,15 +1,312 @@
-<div class="flex h-full bg-slate-50">
+<!-- This example requires Tailwind CSS v2.0+ -->
+<!--
+  This example requires updating your template:
+
+  ```
+  <html class="h-full bg-gray-100">
+  <body class="h-full">
+  ```
+-->
+<div>
+  <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+  <div *ngIf="showMenu" class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true">
+    <!--
+      Off-canvas menu overlay, show/hide based on off-canvas menu state.
+
+      Entering: "transition-opacity ease-linear duration-300"
+        From: "opacity-0"
+        To: "opacity-100"
+      Leaving: "transition-opacity ease-linear duration-300"
+        From: "opacity-100"
+        To: "opacity-0"
+    -->
+    <div class="fixed inset-0 bg-slate-600 bg-opacity-75" aria-hidden="true"></div>
+
+    <!--
+      Off-canvas menu, show/hide based on off-canvas menu state.
+
+      Entering: "transition ease-in-out duration-300 transform"
+        From: "-translate-x-full"
+        To: "translate-x-0"
+      Leaving: "transition ease-in-out duration-300 transform"
+        From: "translate-x-0"
+        To: "-translate-x-full"
+    -->
+    <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+      <!--
+        Close button, show/hide based on off-canvas menu state.
+
+        Entering: "ease-in-out duration-300"
+          From: "opacity-0"
+          To: "opacity-100"
+        Leaving: "ease-in-out duration-300"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+      <div class="absolute top-0 right-0 -mr-12 pt-2">
+        <button
+          (click)="toggleShowMenu()"
+          type="button"
+          class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+        >
+          <span class="sr-only">Close sidebar</span>
+          <!-- Heroicon name: outline/x -->
+          <svg
+            class="h-6 w-6 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+        <div class="flex-shrink-0 flex items-center px-4">
+          <svg class="h-9" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="0 0 279.01 110.78">
+          <defs/>
+          <g id="Layer 2" vectornator:layerName="Layer 2">
+          <g opacity="1">
+          <g opacity="1">
+          <path d="M12.362+24.7238L86.536+24.7238L86.536+12.3618L12.362+12.3618L6.091+12.3618L0+12.3618L0+98.8978L12.362+98.8978L12.362+24.7238Z" opacity="1" fill="#3b82f6"/>
+          <path d="M86.5358+86.5351L49.4488+86.5351L49.4488+98.8971L86.5358+98.8971L86.5358+86.5351Z" opacity="1" fill="#3b82f6"/>
+          <path d="M37.0867+74.173L37.0867+86.535L37.0867+98.898L24.7247+98.898L24.7247+86.535L24.7247+74.173L24.7247+61.811L37.0867+61.811L67.9927+61.811C71.3677+61.811+74.1737+59.005+74.1737+55.63C74.1737+52.255+71.3677+49.449+67.9927+49.449L24.7247+49.449L24.7247+37.087L67.9927+37.087C76.0267+37.087+82.9097+42.264+85.4697+49.449C86.1597+51.384+86.5357+53.465+86.5357+55.63C86.5357+57.794+86.1597+59.875+85.4697+61.811C82.9097+68.994+76.0267+74.173+67.9927+74.173L37.0867+74.173Z" opacity="1" fill="#3b82f6"/>
+          <path d="M179.487+25.0647C179.487+26.6083+178.938+27.9016+177.842+28.9479C176.745+29.9931+175.202+30.5163+173.214+30.5163L166.938+30.5163L166.938+19.5106L173.059+19.5106C175.048+19.5106+176.616+19.9734+177.765+20.8989C178.914+21.8255+179.487+23.1781+179.487+24.9622L179.487+25.0647ZM187.511+24.9104L187.511+24.808C187.511+22.957+187.193+21.2678+186.559+19.7415C185.925+18.2162+185.017+16.9046+183.833+15.8076C182.651+14.7106+181.211+13.8617+179.513+13.2619C177.817+12.6611+175.888+12.3623+173.727+12.3623L159.019+12.3623L159.019+48.3617L166.938+48.3617L166.938+37.5621L172.956+37.5621C174.979+37.5621+176.874+37.2957+178.639+36.765C180.405+36.2332+181.947+35.4361+183.268+34.3736C184.588+33.3111+185.624+31.9908+186.379+30.4127C187.134+28.8368+187.511+27.002+187.511+24.9104M151.922+48.3617L151.922+41.3159L132.379+41.3159L132.379+33.7566L149.351+33.7566L149.351+26.7107L132.379+26.7107L132.379+19.4071L151.665+19.4071L151.665+12.3623L124.562+12.3623L124.562+48.3617L151.922+48.3617Z" opacity="1" fill="#94a3b8"/>
+          <path d="M279.011+88.7188L279.011+88.6192C279.011+87.0849+278.769+85.7688+278.285+84.6687C277.802+83.5687+277.077+82.6102+276.127+81.7932C275.177+80.9773+274.003+80.2768+272.618+79.6948C271.235+79.1107+269.653+78.5853+267.877+78.1186C266.378+77.718+265.136+77.3688+264.144+77.0689C263.161+76.769+262.385+76.4523+261.812+76.1188C261.245+75.7853+260.853+75.4109+260.636+74.9935C260.419+74.5772+260.311+74.0854+260.311+73.5191L260.311+73.4184C260.311+72.5522+260.685+71.8275+261.435+71.2434C262.186+70.6603+263.31+70.3688+264.811+70.3688C266.31+70.3688+267.81+70.6771+269.311+71.2937C270.811+71.9114+272.345+72.7514+273.911+73.819L277.91+68.0187C276.11+66.5862+274.136+65.4851+271.986+64.7185C269.836+63.9519+267.478+63.5691+264.91+63.5691C263.111+63.5691+261.461+63.8187+259.969+64.3179C258.478+64.8191+257.186+65.5364+256.111+66.4687C255.036+67.4031+254.203+68.5095+253.602+69.7931C253.011+71.0777+252.711+72.5197+252.711+74.1189L252.711+74.2185C252.711+75.952+252.986+77.4024+253.536+78.5685C254.085+79.7357+254.869+80.7099+255.87+81.4933C256.869+82.2767+258.095+82.9353+259.527+83.468C260.969+84.0018+262.569+84.4852+264.344+84.9183C265.81+85.2854+267.011+85.6356+267.927+85.9691C268.844+86.3015+269.56+86.635+270.085+86.9685C270.602+87.3009+270.952+87.6606+271.135+88.0434C271.319+88.4272+271.41+88.8687+271.41+89.369L271.41+89.4686C271.41+90.5015+270.969+91.3111+270.085+91.8932C269.202+92.4762+267.961+92.7678+266.361+92.7678C264.36+92.7678+262.519+92.385+260.835+91.6195C259.152+90.8518+257.511+89.8189+255.911+88.5185L251.361+93.9685C253.461+95.8677+255.794+97.2771+258.361+98.1937C260.927+99.1102+263.544+99.5685+266.211+99.5685C268.11+99.5685+269.844+99.3263+271.402+98.8428C272.96+98.3594+274.311+97.6599+275.436+96.7434C276.56+95.8268+277.436+94.6942+278.069+93.3435C278.693+91.9938+279.011+90.4512+279.011+88.7188M245.31+99.0683L245.31+64.0683L237.01+64.0683L227.811+78.8684L218.611+64.0683L210.31+64.0683L210.31+99.0683L217.91+99.0683L217.91+76.3684L227.661+91.1685L227.861+91.1685L237.711+76.2184L237.711+99.0683L245.31+99.0683ZM195.562+76.1188C195.562+77.6194+195.053+78.8191+194.036+79.7189C193.02+80.6187+191.561+81.0686+189.662+81.0686L181.862+81.0686L181.862+71.019L189.511+71.019C191.411+71.019+192.895+71.4353+193.96+72.268C195.028+73.1017+195.562+74.3517+195.562+76.0191L195.562+76.1188ZM204.411+99.0683L195.862+86.5679C198.094+85.7353+199.902+84.4265+201.286+82.6437C202.67+80.8609+203.362+78.5517+203.362+75.7192L203.362+75.6185C203.362+71.9859+202.203+69.1523+199.886+67.1179C197.57+65.0855+194.328+64.0683+190.161+64.0683L174.162+64.0683L174.162+99.0683L181.862+99.0683L181.862+87.8683L187.911+87.8683L195.412+99.0683L204.411+99.0683ZM165.412+64.0683L157.712+64.0683L157.712+99.0683L165.412+99.0683L165.412+64.0683ZM151.211+71.019L151.211+64.0683L124.561+64.0683L124.561+99.0683L132.262+99.0683L132.262+85.5182L148.962+85.5182L148.962+78.5685L132.262+78.5685L132.262+71.019L151.211+71.019Z" opacity="1" fill="#3b82f6"/>
+          </g>
+          <path d="M103.975+98.421L103.975+12.362L103.975+0L106.265+0L106.265+12.362L106.265+98.421L106.265+110.783L103.975+110.783L103.975+98.421Z" opacity="1" fill="#94a3b8"/>
+          </g>
+          </g>
+          </svg>
+        </div>
+        <nav class="mt-5 px-2 space-y-1">
+          <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+          
+          <a
+            routerLink="intake"
+            [routerLinkActive]="'bg-gray-900 text-white'"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="flex items-center px-2 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white group"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="flex-shrink-0 w-6 h-6 mr-3 text-gray-300"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Intake
+          </a>
+          <a
+            routerLink="documents"
+            [routerLinkActive]="'bg-slate-900 text-white'"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-slate-500 hover:bg-slate-700 hover:text-white group"
+          >
+            <svg
+              class="flex-shrink-0 w-6 h-6 mr-3 text-slate-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            Documents
+          </a>
+         
+
+          
+
+         
+
+        
+
+         
+        </nav>
+      </div>
+      <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
+        <a c class="flex-shrink-0 group block">
+          <div class="flex items-center">
+            <div class="ml-3">
+              <p (click)="logout()" class="text-base font-medium text-gray-700 group-hover:text-gray-900">Logout</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="flex-shrink-0 w-14">
+      <!-- Force sidebar to shrink to fit close icon -->
+    </div>
+  </div>
+
+  <!-- Static sidebar for desktop -->
+  <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
+    <!-- Sidebar component, swap this element with another sidebar if you like -->
+    <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
+      <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+        <div class="flex items-center flex-shrink-0 px-4">
+          <svg class="h-9" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="0 0 279.01 110.78">
+          <defs/>
+          <g id="Layer 2" vectornator:layerName="Layer 2">
+          <g opacity="1">
+          <g opacity="1">
+          <path d="M12.362+24.7238L86.536+24.7238L86.536+12.3618L12.362+12.3618L6.091+12.3618L0+12.3618L0+98.8978L12.362+98.8978L12.362+24.7238Z" opacity="1" fill="#3b82f6"/>
+          <path d="M86.5358+86.5351L49.4488+86.5351L49.4488+98.8971L86.5358+98.8971L86.5358+86.5351Z" opacity="1" fill="#3b82f6"/>
+          <path d="M37.0867+74.173L37.0867+86.535L37.0867+98.898L24.7247+98.898L24.7247+86.535L24.7247+74.173L24.7247+61.811L37.0867+61.811L67.9927+61.811C71.3677+61.811+74.1737+59.005+74.1737+55.63C74.1737+52.255+71.3677+49.449+67.9927+49.449L24.7247+49.449L24.7247+37.087L67.9927+37.087C76.0267+37.087+82.9097+42.264+85.4697+49.449C86.1597+51.384+86.5357+53.465+86.5357+55.63C86.5357+57.794+86.1597+59.875+85.4697+61.811C82.9097+68.994+76.0267+74.173+67.9927+74.173L37.0867+74.173Z" opacity="1" fill="#3b82f6"/>
+          <path d="M179.487+25.0647C179.487+26.6083+178.938+27.9016+177.842+28.9479C176.745+29.9931+175.202+30.5163+173.214+30.5163L166.938+30.5163L166.938+19.5106L173.059+19.5106C175.048+19.5106+176.616+19.9734+177.765+20.8989C178.914+21.8255+179.487+23.1781+179.487+24.9622L179.487+25.0647ZM187.511+24.9104L187.511+24.808C187.511+22.957+187.193+21.2678+186.559+19.7415C185.925+18.2162+185.017+16.9046+183.833+15.8076C182.651+14.7106+181.211+13.8617+179.513+13.2619C177.817+12.6611+175.888+12.3623+173.727+12.3623L159.019+12.3623L159.019+48.3617L166.938+48.3617L166.938+37.5621L172.956+37.5621C174.979+37.5621+176.874+37.2957+178.639+36.765C180.405+36.2332+181.947+35.4361+183.268+34.3736C184.588+33.3111+185.624+31.9908+186.379+30.4127C187.134+28.8368+187.511+27.002+187.511+24.9104M151.922+48.3617L151.922+41.3159L132.379+41.3159L132.379+33.7566L149.351+33.7566L149.351+26.7107L132.379+26.7107L132.379+19.4071L151.665+19.4071L151.665+12.3623L124.562+12.3623L124.562+48.3617L151.922+48.3617Z" opacity="1" fill="#94a3b8"/>
+          <path d="M279.011+88.7188L279.011+88.6192C279.011+87.0849+278.769+85.7688+278.285+84.6687C277.802+83.5687+277.077+82.6102+276.127+81.7932C275.177+80.9773+274.003+80.2768+272.618+79.6948C271.235+79.1107+269.653+78.5853+267.877+78.1186C266.378+77.718+265.136+77.3688+264.144+77.0689C263.161+76.769+262.385+76.4523+261.812+76.1188C261.245+75.7853+260.853+75.4109+260.636+74.9935C260.419+74.5772+260.311+74.0854+260.311+73.5191L260.311+73.4184C260.311+72.5522+260.685+71.8275+261.435+71.2434C262.186+70.6603+263.31+70.3688+264.811+70.3688C266.31+70.3688+267.81+70.6771+269.311+71.2937C270.811+71.9114+272.345+72.7514+273.911+73.819L277.91+68.0187C276.11+66.5862+274.136+65.4851+271.986+64.7185C269.836+63.9519+267.478+63.5691+264.91+63.5691C263.111+63.5691+261.461+63.8187+259.969+64.3179C258.478+64.8191+257.186+65.5364+256.111+66.4687C255.036+67.4031+254.203+68.5095+253.602+69.7931C253.011+71.0777+252.711+72.5197+252.711+74.1189L252.711+74.2185C252.711+75.952+252.986+77.4024+253.536+78.5685C254.085+79.7357+254.869+80.7099+255.87+81.4933C256.869+82.2767+258.095+82.9353+259.527+83.468C260.969+84.0018+262.569+84.4852+264.344+84.9183C265.81+85.2854+267.011+85.6356+267.927+85.9691C268.844+86.3015+269.56+86.635+270.085+86.9685C270.602+87.3009+270.952+87.6606+271.135+88.0434C271.319+88.4272+271.41+88.8687+271.41+89.369L271.41+89.4686C271.41+90.5015+270.969+91.3111+270.085+91.8932C269.202+92.4762+267.961+92.7678+266.361+92.7678C264.36+92.7678+262.519+92.385+260.835+91.6195C259.152+90.8518+257.511+89.8189+255.911+88.5185L251.361+93.9685C253.461+95.8677+255.794+97.2771+258.361+98.1937C260.927+99.1102+263.544+99.5685+266.211+99.5685C268.11+99.5685+269.844+99.3263+271.402+98.8428C272.96+98.3594+274.311+97.6599+275.436+96.7434C276.56+95.8268+277.436+94.6942+278.069+93.3435C278.693+91.9938+279.011+90.4512+279.011+88.7188M245.31+99.0683L245.31+64.0683L237.01+64.0683L227.811+78.8684L218.611+64.0683L210.31+64.0683L210.31+99.0683L217.91+99.0683L217.91+76.3684L227.661+91.1685L227.861+91.1685L237.711+76.2184L237.711+99.0683L245.31+99.0683ZM195.562+76.1188C195.562+77.6194+195.053+78.8191+194.036+79.7189C193.02+80.6187+191.561+81.0686+189.662+81.0686L181.862+81.0686L181.862+71.019L189.511+71.019C191.411+71.019+192.895+71.4353+193.96+72.268C195.028+73.1017+195.562+74.3517+195.562+76.0191L195.562+76.1188ZM204.411+99.0683L195.862+86.5679C198.094+85.7353+199.902+84.4265+201.286+82.6437C202.67+80.8609+203.362+78.5517+203.362+75.7192L203.362+75.6185C203.362+71.9859+202.203+69.1523+199.886+67.1179C197.57+65.0855+194.328+64.0683+190.161+64.0683L174.162+64.0683L174.162+99.0683L181.862+99.0683L181.862+87.8683L187.911+87.8683L195.412+99.0683L204.411+99.0683ZM165.412+64.0683L157.712+64.0683L157.712+99.0683L165.412+99.0683L165.412+64.0683ZM151.211+71.019L151.211+64.0683L124.561+64.0683L124.561+99.0683L132.262+99.0683L132.262+85.5182L148.962+85.5182L148.962+78.5685L132.262+78.5685L132.262+71.019L151.211+71.019Z" opacity="1" fill="#3b82f6"/>
+          </g>
+          <path d="M103.975+98.421L103.975+12.362L103.975+0L106.265+0L106.265+12.362L106.265+98.421L106.265+110.783L103.975+110.783L103.975+98.421Z" opacity="1" fill="#94a3b8"/>
+          </g>
+          </g>
+          </svg>
+        </div>
+        <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
+          <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+         
+          <a
+            routerLink="intake"
+            [routerLinkActive]="'bg-gray-900 text-white'"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="flex items-center px-2 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white group"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="flex-shrink-0 w-6 h-6 mr-3 text-gray-300"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Intake
+          </a>
+          <a
+            routerLink="documents"
+            [routerLinkActive]="'bg-slate-900 text-white'"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-slate-500 hover:bg-slate-700 hover:text-white group"
+          >
+            <svg
+              class="flex-shrink-0 w-6 h-6 mr-3 text-slate-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            Documents
+          </a>
+          
+
+          
+
+          
+
+          
+
+          
+        </nav>
+      </div>
+      <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
+        <a c class="flex-shrink-0 w-full group block">
+          <div class="flex items-center">
+            <div class="ml-3">
+              <p (click)="logout()" class="text-sm font-medium text-gray-700 group-hover:text-gray-900">Logout</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="md:pl-64 flex flex-col flex-1">
+    <div class="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
+      <button
+        (click)="toggleShowMenu()"
+        type="button"
+        class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+      >
+        <span class="sr-only">Open sidebar</span>
+        <!-- Heroicon name: outline/menu -->
+        <svg
+          class="h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </div>
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <!-- Replace with your content -->
+          <div class="py-4">
+    <router-outlet></router-outlet>
+
+          </div>
+          <!-- /End replace -->
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- <div class="flex h-full bg-slate-50">
   <nav tw-nav>
     <div class="space-y-1">
-      <a routerLink="/client" [routerLinkActive]="'bg-slate-900 text-white'" [routerLinkActiveOptions]="{exact: true}" class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-slate-300 hover:bg-slate-700 hover:text-white group">
-        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-slate-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <a routerLink="/client" [routerLinkActive]="'bg-slate-900 text-white'" [routerLinkActiveOptions]="{exact: true}" class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-slate-500 hover:bg-slate-700 hover:text-white group">
+        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
         </svg>
         Home
       </a>
 
-      <a routerLink="documents" [routerLinkActive]="'bg-slate-900 text-white'" [routerLinkActiveOptions]="{exact: true}" class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-slate-300 hover:bg-slate-700 hover:text-white group">
-        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-slate-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <a routerLink="documents" [routerLinkActive]="'bg-slate-900 text-white'" [routerLinkActiveOptions]="{exact: true}" class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-slate-500 hover:bg-slate-700 hover:text-white group">
+        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
         Documents
@@ -27,12 +324,12 @@
         Financials
       </a>
 
-      <!-- <a  routerLink="intake" [routerLinkActive]="'bg-gray-900 text-white'" [routerLinkActiveOptions]="{exact: true}" class="flex items-center px-2 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white group">
+      <a  routerLink="intake" [routerLinkActive]="'bg-gray-900 text-white'" [routerLinkActiveOptions]="{exact: true}" class="flex items-center px-2 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white group">
         <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         Intake
-      </a> -->
+      </a>
       
     </div>
   </nav>
@@ -40,4 +337,4 @@
   <div class="flex flex-col flex-1 min-h-0 pl-20 overflow-y-auto lg:pl-64">
     <router-outlet></router-outlet>
   </div>
-</div>
+</div> -->

@@ -27,6 +27,12 @@ module.exports = (sequelize, {
         full_address: {
             type: STRING,
         },
+        is_business : {
+          type: BOOLEAN
+        },
+        has_mineral_rights : {
+          type : BOOLEAN,
+        } 
       }, {
         tableName,
         defaultScope: {

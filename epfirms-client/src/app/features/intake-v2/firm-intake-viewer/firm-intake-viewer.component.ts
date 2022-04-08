@@ -1,141 +1,57 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { ClientMatterService } from '@app/client-portal/_services/matter-service/client-matter.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
+import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 
 @Component({
   selector: 'app-firm-intake-viewer',
   templateUrl: './firm-intake-viewer.component.html',
-  styleUrls: ['./firm-intake-viewer.component.scss']
+  styleUrls: ['./firm-intake-viewer.component.scss'],
 })
 export class FirmIntakeViewerComponent implements OnInit {
-
+ // input bindings
+  @Input() intake;
   @Input() matter;
-  // state for spouse div
-  hasSpouse: boolean = false;
-  //state for displaying children fields
-  hasChildren: boolean = false;
-  numOfChildren: number = 0;
-  
-  client = {
-    id: undefined,
-    first_name: '',
-    last_name: '',
-    full_name: '',
-    email: '',
-    address: '',
-    city: '',
-    zip: '',
-    dob: undefined,
-    relationship_type : "spouse",
-    phone: '',
-    state: '',
-    county: ''
-  };
- 
-  //spouse information
-  spouse;
- 
-  //children
-  children;
+  @Output() onIntakeSubmit = new EventEmitter<boolean>();
+
+  //state that manages the views
+  state: string = 'personal info';
+  // stack that manages the views and enables the back() functionality
+  history = [];
 
   constructor(
-    private clientService : ClientService,
-    private familyMemberService : FamilyMemberService,
+    private currentUserService: CurrentUserService,
     private clientMatterService : ClientMatterService,
-  ) { }
+    private matterService : MatterService
+    
+    ) {}
 
   ngOnInit(): void {
-    this.loadClientData();
-    this.loadExistingFamilyData();
-    console.log("MATTER", this.matter);
+    console.log(this.intake);
+    console.log("matter", this.matter);
   }
 
-  
+  setState(state: string): void {
+    this.history.push(this.state);
+    this.state = state;
+  }
 
-
-  loadExistingFamilyData() : void {
-    this.familyMemberService.getByUserId(this.matter.client.id).subscribe(res => {
-      this.spouse = res.filter((member) => member.family_member.relationship_type === "spouse")[0];
-      this.children = res.filter((member) => member.family_member.relationship_type === 'child');
-      if (this.spouse) {
-        this.hasSpouse = true;
-      }
-      if (this.children.length !== 0) {
-        this.hasChildren = true;
-        this.numOfChildren = this.children.length;
+  sendIntake() : void {
+    this.matterService.createIntake(this.matter.id).subscribe(res => {
+      if (res) {
+        console.log(res);
+        this.matter.matter_intake = res;
       }
     });
   }
 
-  loadClientData() : void {
-    let client = this.matter.client;
-     this.client.id = client.id;
-     this.client.first_name = client.first_name;
-     this.client.last_name = client.last_name;
-     this.client.full_name = client.full_name;
-     this.client.email = client.email;
-     this.client.phone = client.phone;
-     this.client.address = client.address;
-     this.client.city = client.city;
-     this.client.state = client.state;
-     this.client.zip = client.zip;
-     this.client.county = client.county;
-    
+  back(): void {
+    this.state = this.history.pop();
   }
 
-
-  addChild(): void {
-    this.children = [];
-    for (let i = 0; i < this.numOfChildren; i++) {
-      this.children.push({
-        first_name: '',
-        last_name: '',
-        full_name: '',
-        email: '',
-        address: '',
-        relationship_type: "child",
-        city: '',
-        zip: '',
-        dob: new Date().toString(),
-        phone: '',
-        state: '',
-      });
-    }
+  submit() : void {
+    this.clientMatterService.updateMatterIntake({id: this.intake.id, status: "complete"}).subscribe();
   }
-
-  addChildren(num) : void {
-    this.numOfChildren = parseInt(num);
-    this.addChild();
-  }
-
-  submitClient() : void {
-    this.clientService.updateClient(this.client).subscribe();
-  }
-
-  submitSpouse() : void {
-    this.spouse.relationship_type = "spouse";
-    this.familyMemberService.addFamilyMemberForUser(this.client.id, this.spouse).subscribe((res) => {
-     
-    });   
-  }
-
-  submitChildren() : void {
-    this.children.forEach(child => {
-      this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe();
-    });
-  }
-
-  submitPersonalInformation(): void {
-    this.submitClient();
-    if (this.hasSpouse) {
-      this.submitSpouse();
-    }
-    if (this.hasChildren) {
-      this.submitChildren();
-    }
-    
-   
-  }
-
 }
