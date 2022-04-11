@@ -22,6 +22,15 @@ export class IncomeService {
         console.error(error); 
      }
  } 
+
+    public static async delete(id) : Promise<any> {
+        try {
+            const income = await Database.models.income.destroy({where: {id: id}});
+            return Promise.resolve(income);
+        } catch (error) {
+           console.error(error); 
+        }
+    }
 }
 
 
