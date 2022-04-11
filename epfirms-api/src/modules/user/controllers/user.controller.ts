@@ -14,7 +14,7 @@ export class UserController {
 
       let userId = id === 'me' ? req.user.id : id;
 
-      const column = id.startsWith('+1') ? 'phone' : 'id';
+      const column = id.startsWith('+1') ? 'cell_phone' : 'id';
 
       let response = await this._userService.get(column, userId);
 
