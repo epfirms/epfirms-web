@@ -1,7 +1,7 @@
 export interface Asset {
-    name: string,
-    amount : number,
+    institution: string,
+    balance : number,
     type : string,
-    is_protected : boolean,
-    owners : {}
+    is_joint : boolean,
+    user_id : boolean, 
 }

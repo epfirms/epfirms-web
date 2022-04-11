@@ -14,36 +14,23 @@ module.exports = (sequelize, {
           primaryKey: true,
           autoIncrement: true,
         },
+        // this is a reference to the User object that holds the appointor information
         user_id: {
           type: INTEGER,
           allowNull: false,
         },
+        // this is a reference to the appointee's user table info
         appointee_id: {
           type: INTEGER,
           allowNull: false
         },
-        executor: {
-          type: INTEGER
+        type: {
+          type: STRING
         },
-        trustee: {
-          type: INTEGER
-        },
-        dpoa: {
-          type: INTEGER
-        },
-        mpoa: {
-          type: INTEGER
-        },
-        gop: {
-          type: INTEGER
-        },
-        goe: {
-          type: INTEGER
-        },
-        gomc: {
+        rank : {
           type: INTEGER
         }
-      }, {
+     }, {
         tableName,
         defaultScope: {
           attributes: { exclude: ['createdAt', 'updatedAt'] }
