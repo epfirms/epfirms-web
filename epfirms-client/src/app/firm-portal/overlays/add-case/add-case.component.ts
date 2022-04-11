@@ -176,6 +176,12 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   setLegalArea(legalArea: LegalArea) {
     this.selectedLegalArea = legalArea;
     this.selectEvent(legalArea.id, 'legal_area_id');
+    this.generateCaseDescription();
+  }
+
+  generateCaseDescription() {
+    this.caseForm.get('title').patchValue(`${this.selectedLegalArea.name} ${this.matterType}`);
+    this.caseForm.updateValueAndValidity();
   }
 
   trackById(index, item) {
@@ -256,6 +262,6 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.close({matter: this.caseForm.value, note: this.note, chatToTextNumber: this.chatToTextNumber.valid && this.chatToTextNumber});
+    this.close({matter: this.caseForm.value, note: this.note, chatToTextNumber: this.enableChatToText && this.chatToTextNumber.valid ? this.chatToTextNumber : null});
   }
 }
