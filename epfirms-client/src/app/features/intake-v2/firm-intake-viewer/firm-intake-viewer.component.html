@@ -145,6 +145,17 @@
                   class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Medical Power of Attorney</a
                 >
+
+ <a
+                  (click)="setState('estate planning')"
+                  [ngClass]="
+                    state === 'estate planning'
+                      ? 'bg-indigo-700 text-white'
+                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                  "
+                  class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
+                  >Estate Planning</a
+                >
               </div>
             </div>
           </div>
@@ -297,6 +308,15 @@
           [matter]="matter"
           (back)="back()"
         ></app-appointees>
+
+        <app-estate-planning-form
+          *ngIf="state === 'estate planning'"
+          [matter]="matter"
+          (back)="back()"
+        ></app-estate-planning-form>
+
+
+
 
         <!-- /End replace -->
       </div>
