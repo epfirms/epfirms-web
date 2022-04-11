@@ -50,4 +50,8 @@ export class TeamService {
   getAllMembers(id: number): Observable<any> {
     return this._http.get(`/api/teams/${id}/members`);
   }
+
+  updateMember(id: number, userId: number, data: any): Observable<any> {
+    return this._http.put(`/api/teams/${id}/members/${userId}`, data);
+  }
 }

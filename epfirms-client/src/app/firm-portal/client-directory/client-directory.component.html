@@ -78,10 +78,16 @@
                 Name
               </th>
               <th
+              scope="col"
+              class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500"
+            >
+              Cell Phone
+            </th>
+              <th
                 scope="col"
                 class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500"
               >
-                Phone
+              Home Phone
               </th>
               <th
                 scope="col"
@@ -124,6 +130,11 @@
                         {{ client.full_name | titlecase }}
                       </div>
                     </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-slate-900">
+                    {{ client.cell_phone }}
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -292,6 +303,15 @@
             </dt>
             <dd class="mt-1 text-sm text-slate-900">
               {{selectedClient.email}}
+            </dd>
+          </div>
+
+          <div>
+            <dt class="text-sm font-medium text-slate-500">
+              Cell Phone
+            </dt>
+            <dd class="mt-1 text-sm text-slate-900">
+              {{selectedClient.cell_phone}}
             </dd>
           </div>
 

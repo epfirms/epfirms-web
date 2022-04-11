@@ -12,25 +12,32 @@
 
     <!-- Divider container -->
     <div class="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-slate-200">
-      <!-- Project name -->
-      <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-        <div>
-          <label for="project-name" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
-            {{matterType | titlecase}} name
-          </label>
-        </div>
-        <div class="sm:col-span-2">
-              <input ep-input type="text" formControlName="title" placeholder="E.g. John Smith - Estate planning">
-        </div>
-      </div>
-
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
           <label for="project-name" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
             Client
           </label>
         </div>
-        <div class="sm:col-span-2">
+        <div class="sm:col-span-2" *ngIf="selectedClient">
+          <div class="relative flex items-center justify-between space-x-3 rounded-lg">
+            <div class="flex-shrink-0 block group">
+              <div class="flex items-center">
+                <div>
+                  <ep-avatar epSize="mediumSmall" [epSrc]="selectedClient.profile_image"
+                [epText]="selectedClient.full_name">
+              </ep-avatar>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{{selectedClient.full_name | titlecase}}</p>
+                  <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">{{selectedClient?.email}}</p>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" (click)="removeClient()" class="flex-shrink-0 ml-3 text-sm font-medium text-blue-500 bg-white rounded-md hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">Remove</button>
+          </div>
+        </div>
+        <div class="sm:col-span-2" *ngIf="!selectedClient">
           <div class="relative">
             <input ep-input type="text" [ngModel]="clientId" [ngModelOptions]="{standalone: true}"
             (ngModelChange)="filterClients($event)" [epAutocomplete]="auto" placeholder="Search client directory" [class.text-gray-500]="!caseForm.value.client_id">
@@ -42,7 +49,7 @@
             </button>
             </div>
           <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayClient"
-            (optionSelected)="selectEvent($event.option.value, 'client_id'); setPhoneNumber($event.option.value)">
+            (optionSelected)="selectClient($event.option.value);">
             <cdk-virtual-scroll-viewport itemSize="40" minBufferPx="240" maxBufferPx="480" class="w-full" style="height: 200px">
             <ep-option *cdkVirtualFor="let client of filteredClients; trackBy: trackById" [value]="client.id">
               <ep-avatar epSize="xsmall" [epSrc]="client.profile_image"
@@ -50,11 +57,12 @@
               </ep-avatar> <span class="block ml-3 font-normal truncate">
                 {{client.full_name}}
               </span>
+              <span class="ml-2 text-gray-500 truncate"> {{client.email || client.cell_phone || ''}} </span>
             </ep-option>
           </cdk-virtual-scroll-viewport>
           </ep-autocomplete>
 
-          <div class="flex justify-end mt-2">
+          <div class="flex mt-2">
           <p class="text-sm text-gray-500" id="email-description">or</p>
 
             <button tabindex="-1" (click)="openAddClient()" type="button" class="flex items-center ml-1 bg-white rounded-md group focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -84,7 +92,7 @@
           </div>
 
             <ep-autocomplete #autoAttorney="epAutocomplete" [displayWith]="displayAttorney"
-              (optionSelected)="selectEvent($event.option.value, 'attorney_id')" panelWidth="auto">
+              (optionSelected)="selectEvent($event.option.value, 'attorney_id'); selectAttorney($event.option.value)" panelWidth="auto">
               <ep-option *ngFor="let attorney of filteredAttorneys" [value]="attorney.user.id">
                 <ep-avatar epSize="xsmall" [epSrc]="attorney.user.profile_image"
                   [epText]="attorney.user.full_name">
@@ -95,6 +103,7 @@
             </ep-autocomplete>
         </div>
       </div>
+      
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
           <label for="project-name" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
@@ -125,6 +134,18 @@
           </ng-container>
         </div>
       </div>
+
+      <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+        <div>
+          <label for="project-name" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
+            {{matterType | titlecase}} description
+          </label>
+        </div>
+        <div class="sm:col-span-2">
+              <input ep-input type="text" formControlName="title">
+        </div>
+      </div>
+      
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
           <label for="project-description" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">

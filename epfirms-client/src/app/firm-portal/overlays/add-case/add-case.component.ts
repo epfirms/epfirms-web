@@ -80,10 +80,19 @@ export class AddCaseComponent implements OnInit, OnDestroy {
     mask: '(999) 999-9999',
     placeholder: ' ',
     parser: (value: string) => {
-      const val = '+1' + value.replaceAll(/\(|\)|\-|\s/g, '');
+      let val;
+      if (value && value.length) {
+        val = '+1' + value.replaceAll(/\(|\)|\-|\s/g, '');
+      } else {
+        val = '';
+      }
       return val;
     },
   });
+
+  selectedClient;
+
+  selectedAttorney;
   
   constructor(
     private _fb: FormBuilder,
@@ -172,6 +181,29 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   trackById(index, item) {
     return item.id;
   }
+
+  selectClient(userId: number) {
+    this.selectedClient = this.clients.find(c => c.id === userId);
+    this.selectEvent(userId, 'client_id');
+    this.setPhoneNumber(this.selectedClient);
+  }
+
+  removeClient() {
+    this.selectedClient = null;
+    this.caseForm.get('client_id').setValue(null);
+    this.caseForm.updateValueAndValidity();
+    this.resetPhoneNumber();
+  }
+
+  selectAttorney(userId: number) {
+    this.selectedAttorney = this.attorneys.find(c => c.user.id === userId);
+  }
+
+  removeAttorney() {
+    this.selectedAttorney = null;
+    this.caseForm.get('attorney_id').setValue(null);
+    this.caseForm.updateValueAndValidity();
+  }
   
   openAddClient() {
     this._modalService.create({
@@ -182,33 +214,43 @@ export class AddCaseComponent implements OnInit, OnDestroy {
       epAutofocus: null,
       epOnOk: (componentInstance) => {
         this._clientService.createClient(componentInstance.clientForm.value).subscribe(response => {
+          this.selectedClient = response;
           this.selectEvent(response.id, 'client_id');
           this.clientId = response.id;
+          this.setPhoneNumber(response);
         });
       }
     });
   }
 
-  setPhoneNumber(id: number) {
-    const client = this.clients.find((c) => c.id === id);
-
-    if (client.phone && client.phone.length) {
-      this.chatToTextNumber.setValue(client.phone.replace('+1', ''));
+  setPhoneNumber(client) {
+    if (client.cell_phone && client.cell_phone.length) {
+      this.chatToTextNumber.patchValue(client.cell_phone.replace('+1', ''));
     } else {
-      this.chatToTextNumber.setValue('');
+      // this.chatToTextNumber.setValue('');
+      this.chatToTextNumber.patchValue('');
     }
-    this.enableChatToText = true;
-    this.chatToTextNumber.addValidators([Validators.required]);
-    this.chatToTextNumber.updateValueAndValidity();
+    this.toggleChatToText();
+    // this.chatToTextNumber.addValidators([Validators.required]);
+    // this.chatToTextNumber.updateValueAndValidity();
+  }
+
+  resetPhoneNumber() {
+
+    this.toggleChatToText();
+    // this.chatToTextNumber.setValue(null);
+
+    // this.chatToTextNumber.removeValidators([Validators.required]);
+    // this.chatToTextNumber.updateValueAndValidity();
   }
 
   toggleChatToText() {
     this.enableChatToText = !this.enableChatToText;
 
     if (this.enableChatToText) {
-      this.chatToTextNumber.addValidators([Validators.required]);
+      this.chatToTextNumber.addValidators(Validators.required);
     } else {
-      this.chatToTextNumber.removeValidators([Validators.required]);
+      this.chatToTextNumber = new FormControl('');
     }
     this.chatToTextNumber.updateValueAndValidity();
   }

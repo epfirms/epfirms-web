@@ -1,13 +1,11 @@
 <main class="pt-8 pb-16">
-  <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+  <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <div class="px-4 sm:px-0">
-      <h2 class="text-lg font-medium text-slate-900">Manage Staff</h2>
-
       <!-- Tabs -->
       <div class="sm:hidden">
         <label for="tabs" class="sr-only">Select a tab</label>
         <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-        <select id="tabs" name="tabs" class="mt-4 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+        <select id="tabs" name="tabs" class="block w-full py-2 pl-3 pr-10 mt-4 text-base rounded-md border-slate-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
           <option>Applied</option>
 
           <option>Phone Screening</option>
@@ -21,13 +19,13 @@
       </div>
       <div class="hidden sm:block">
         <div>
-          <nav class="mt-2 -mb-px flex space-x-8" aria-label="Tabs">
+          <nav class="flex mt-2 -mb-px space-x-8" aria-label="Tabs">
             <!-- Current: "border-blue-500 text-blue-600", Default: "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-200" -->
-            <a (click)="changePage('staff')" class="hover:cursor-pointer whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"  [ngClass]="{'border-blue-500 text-blue-600': currentPage === 'staff', 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-200': currentPage !== 'staff'}">
+            <a (click)="changePage('staff')" class="px-1 py-4 text-sm font-medium border-b-2 hover:cursor-pointer whitespace-nowrap"  [ngClass]="{'border-blue-500 text-blue-600': currentPage === 'staff', 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-200': currentPage !== 'staff'}">
               Staff members
             </a>
             
-            <a (click)="changePage('teams')" class="hover:cursor-pointer whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" [ngClass]="{'border-blue-500 text-blue-600': currentPage === 'teams', 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-200': currentPage !== 'teams'}">
+            <a (click)="changePage('teams')" class="px-1 py-4 text-sm font-medium border-b-2 hover:cursor-pointer whitespace-nowrap" [ngClass]="{'border-blue-500 text-blue-600': currentPage === 'teams', 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-200': currentPage !== 'teams'}">
               Legal teams
             </a>
           </nav>

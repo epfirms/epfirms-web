@@ -1,77 +1,41 @@
 <ng-container *ngIf="user">
-    <div class="w-full flex items-center justify-between space-x-6">
-        <div class="flex flex-1 items-center">
+    <div class="flex items-center justify-between w-full space-x-6">
+        <div class="flex items-center flex-1">
             <ep-avatar [epSize]="'small'" [epSrc]="user.profile_image" [epText]="user.full_name"></ep-avatar>
 
-            <div class="ml-2 flex-1 truncate">
+            <div class="flex-1 ml-2 truncate">
                 <div class="flex items-center space-x-3">
-                    <h3 class="text-slate-900 text-sm font-medium truncate">
+                    <h3 class="text-sm font-medium truncate text-slate-900">
                         {{ user.full_name | titlecase }}
                     </h3>
                 </div>
-                <p class="text-slate-500 text-sm truncate">
+                <p class="text-sm truncate text-slate-500">
                     {{label | titlecase}}
                 </p>
             </div>
         </div>
 
-        <div class="flex-shrink-0 self-center flex">
+        <div class="flex self-center flex-shrink-0">
             <div class="relative inline-block text-left">
                 <div>
                     <div Menu class="relative inline-block text-left">
                         <button MenuButton type="button"
-                            class="-m-2 p-2 rounded-full flex items-center text-slate-400 hover:text-slate-600"
+                            class="flex items-center p-2 -m-2 rounded-full text-slate-400 hover:text-slate-600"
                             id="options-menu-0-button" aria-expanded="false" aria-haspopup="true">
                             <span class="sr-only">Open options</span>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                 fill="currentColor" aria-hidden="true">
                                 <path
                                     d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                             </svg>
                         </button>
-                        <div *MenuItems @toggleAnimation class="
-                 z-10
-                 absolute
-                 right-0
-                 w-56
-                 mt-2
-                 origin-top-right
-                 bg-white
-                 rounded-md
-                 shadow-lg
-                 ring-1 ring-black ring-opacity-5
-                 focus:outline-none
-               ">
+                        <div *MenuItems @toggleAnimation class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg  ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div class="p-1">
-                                <a MenuItem class="
-                     group
-                     flex
-                     rounded-md
-                     items-center
-                     w-full
-                     px-2
-                     py-2
-                     text-slate-700
-                     font-medium
-                     text-sm
-                     hover:bg-blue-500 hover:text-white hover:cursor-pointer
-                   " (click)="selectOption('edit')">
+                                <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md  group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="selectOption('edit')">
                                     Edit
                                 </a>
                                 <ng-container *ngIf="label !== 'client'">
-                                    <a MenuItem class="
-                   group
-                   flex
-                   rounded-md
-                   items-center
-                   w-full
-                   px-2
-                   py-2
-                   text-slate-700
-                   font-medium
-                   text-sm
-                   hover:bg-blue-500 hover:text-white hover:cursor-pointer
-                 " (click)="selectOption('remove')">
+                                    <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md  group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="selectOption('remove')">
                                         Remove
                                     </a>
                                 </ng-container>
@@ -83,31 +47,27 @@
             </div>
         </div>
     </div>
-    <dl class="
-         mt-2
-         border-b border-slate-200
-         pb-3
-       ">
-        <div class="py-2 flex justify-between text-sm">
+    <dl class="pb-3 mt-2 border-b  border-slate-200">
+        <div class="flex justify-between py-2 text-sm">
             <dt class="text-slate-500">Date of birth</dt>
             <dd class="text-slate-900">{{user.dob | date}}</dd>
         </div>
 
-        <div class="py-2 flex justify-between text-sm">
+        <div class="flex justify-between py-2 text-sm">
             <dt class="text-slate-500">Email</dt>
             <dd class="text-slate-900">
                 {{ user.email || "" }}
             </dd>
         </div>
 
-        <div class="py-2 flex justify-between text-sm">
+        <div class="flex justify-between py-2 text-sm">
             <dt class="text-slate-500">Phone</dt>
             <dd class="text-slate-900">
-                {{ user.phone || "" }}
+                {{ user.cell_phone || "" }}
             </dd>
         </div>
 
-        <div class="py-2 flex justify-between text-sm">
+        <div class="flex justify-between py-2 text-sm">
             <dt class="text-slate-500">Address</dt>
             <dd class="text-slate-900">
                 <ng-container *ngIf="user.address">
@@ -131,12 +91,12 @@
         <div class="mb-4">
             <div class="flex space-x-2">
                 <button type="button"
-                    class="group -ml-1 bg-white p-1 rounded-md flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="flex items-center p-1 -ml-1 bg-white rounded-md group focus:outline-none focus:ring-2 focus:ring-blue-500"
                     (click)="openAddClient()">
                     <span
-                        class="w-8 h-8 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400">
+                        class="flex items-center justify-center w-8 h-8 border-2 border-dashed rounded-full border-slate-300 text-slate-400">
                         <!-- Heroicon name: solid/plus -->
-                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                             aria-hidden="true">
                             <path fill-rule="evenodd"
                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"

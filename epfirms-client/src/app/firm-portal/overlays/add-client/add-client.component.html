@@ -1,6 +1,6 @@
 <div>
   <div class="px-4 py-5 sm:px-6 sm:py-4">
-    <h3 class="font-medium leading-6 text-gray-900">{{title}} Client</h3>
+    <h3 class="font-medium leading-6 text-gray-900">{{ title }} Client</h3>
     <!-- <p class="max-w-2xl mt-1 text-sm text-gray-500">Personal details and application.</p> -->
   </div>
   <div class="px-4 py-5 border-t border-gray-200 sm:px-6">
@@ -10,7 +10,7 @@
           <div class="col-span-6 sm:col-span-3">
             <label
               for="first-name"
-              class="block text-sm font-medium text-slate-700"
+              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
               >First name</label
             >
             <input
@@ -27,7 +27,7 @@
           <div class="col-span-6 sm:col-span-3">
             <label
               for="last-name"
-              class="block text-sm font-medium text-slate-700"
+              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
               >Last name</label
             >
             <input
@@ -42,48 +42,156 @@
           </div>
 
           <div class="col-span-6 sm:col-span-4">
-            <label
-              for="email-address"
-              class="block text-sm font-medium text-slate-700"
+            <label for="email" class="block text-sm font-medium text-slate-700"
               >Email address</label
             >
-            <input
-              formControlName="email"
-              ep-input
-              type="text"
-              name="email-address"
-              id="email-address"
-              autocomplete="off"
-              class="mt-1"
-            />
+            <div class="relative mt-1 rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <!-- Heroicon name: solid/mail -->
+                <svg
+                  class="w-5 h-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+                  />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+              </div>
+              <input
+                formControlName="email"
+                autocomplete="off"
+                type="email"
+                name="email"
+                id="email"
+                class="block w-full pl-10 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm disabled:bg-gray-50 disabled:text-gray-700"
+                [ngClass]="{'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500': clientForm.get('email').errors && clientForm.get('email').hasError('duplicate')} "
+              />
+
+              <div
+              class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none"
+              *ngIf="
+                clientForm.get('email').errors && clientForm.get('email').hasError('duplicate')
+              "
+            >
+              <!-- Heroicon name: solid/exclamation-circle -->
+              <svg
+                class="w-5 h-5 text-red-500"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            </div>
+            <p
+            class="absolute font-medium mt-0.5 text-xs text-red-600"
+            id="email-error"
+            *ngIf="
+              clientForm.get('email').errors && clientForm.get('email').hasError('duplicate')
+            "
+          >
+            This email is already in use.
+          </p>
           </div>
 
           <div class="col-span-6 sm:col-span-3">
-            <label
-            for="phone"
-            class="block text-sm font-medium text-slate-700"
-            >Phone</label
-          >
+            <label for="cell-phone" class="block text-sm font-medium text-slate-700"
+              >Cell Phone</label
+            >
             <div class="relative mt-1 rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <span class="text-gray-500 sm:text-sm"> +1 </span>
               </div>
-            <input
-              formControlName="phone"
-              type="tel"
-              name="phone"
-              id="phone"
-              class="block w-full pl-8 pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              autocomplete="off"
-              [inputMask]="phoneInputMask"
-            />
+              <input
+                formControlName="cell_phone"
+                type="tel"
+                name="cell-phone"
+                id="cell-phone"
+                class="block w-full pl-8 pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                [ngClass]="{
+                  'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500':
+                    clientForm.get('cell_phone').errors &&
+                    clientForm.get('cell_phone').hasError('type')
+                }"
+                autocomplete="off"
+                [inputMask]="phoneInputMask"
+              />
+              <div
+                class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none"
+                *ngIf="
+                  clientForm.get('cell_phone').errors &&
+                  clientForm.get('cell_phone').hasError('type')
+                "
+              >
+                <!-- Heroicon name: solid/exclamation-circle -->
+                <svg
+                  class="w-5 h-5 text-red-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
             </div>
+            <p
+              class="absolute font-medium mt-0.5 text-xs text-red-600"
+              id="email-error"
+              *ngIf="
+                clientForm.get('cell_phone').errors && clientForm.get('cell_phone').hasError('type')
+              "
+            >
+              Not a valid cell phone number.
+            </p>
+          </div>
+          <div class="col-span-6 sm:col-span-3">
+            <label for="phone" class="block text-sm font-medium text-slate-700">Home Phone</label>
+            <div class="relative mt-1 rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <span class="text-gray-500 sm:text-sm"> +1 </span>
+              </div>
+              <input
+                formControlName="phone"
+                type="tel"
+                name="phone"
+                id="phone"
+                class="block w-full pl-8 pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                [ngClass]="{
+                  'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500':
+                    clientForm.get('phone').errors && clientForm.get('phone').hasError('type')
+                }"
+                autocomplete="off"
+                [inputMask]="phoneInputMask"
+              />
+            </div>
+            <p
+              class="absolute font-medium mt-0.5 text-xs text-red-600"
+              id="email-error"
+              *ngIf="
+                clientForm.get('phone').errors && clientForm.get('phone').hasError('type')
+              "
+            >
+              Not a valid phone number.
+            </p>
           </div>
 
           <div class="col-span-6">
-            <label
-              for="street-address"
-              class="block text-sm font-medium text-slate-700"
+            <label for="street-address" class="block text-sm font-medium text-slate-700"
               >Street address</label
             >
             <input
@@ -97,11 +205,7 @@
           </div>
 
           <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-            <label
-              for="city"
-              class="block text-sm font-medium text-slate-700"
-              >City</label
-            >
+            <label for="city" class="block text-sm font-medium text-slate-700">City</label>
             <input
               formControlName="city"
               ep-input
@@ -113,22 +217,22 @@
           </div>
 
           <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-            <label for="state" class="block text-sm font-medium text-slate-700">
-              State
-            </label>
+            <label for="state" class="block text-sm font-medium text-slate-700"> State </label>
             <div class="mt-1">
-              <select formControlName="state"
-              id="state"
-                class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md shadow-sm border-slate-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{state.name}}</option>
+              <select
+                formControlName="state"
+                id="state"
+                class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md shadow-sm border-slate-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              >
+                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+                  {{ state.name }}
+                </option>
               </select>
             </div>
           </div>
 
           <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-            <label
-              for="postal-code"
-              class="block text-sm font-medium text-slate-700"
+            <label for="postal-code" class="block text-sm font-medium text-slate-700"
               >ZIP / Postal code</label
             >
             <input

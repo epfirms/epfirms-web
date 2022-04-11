@@ -176,7 +176,7 @@ export class CasesComponent implements OnInit {
         switchMap((teams) =>
           this._teamService
             .getAllMembers(teams[0].id)
-            .pipe(map((response) => ({ teams, members: response.data }))),
+            .pipe(map((response) => ({ teams, members: response.data.filter(m => m.include_in_group_chat)}))),
         ),
       )
       .subscribe(({ teams, members }) => {
@@ -186,10 +186,10 @@ export class CasesComponent implements OnInit {
             mergeMap((conversation) =>
               this._conversationService
                 .addParticipant(conversation, {
-                  messagingBinding: { address: matter.client.phone },
+                  messagingBinding: { address: matter.client.cell_phone },
                   attributes: {
                     friendlyName: matter.client.full_name,
-                    phone: matter.client.phone,
+                    phone: matter.client.cell_phone,
                   },
                 })
                 .pipe(map(() => conversation)),

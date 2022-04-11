@@ -54,4 +54,19 @@ export class UserController {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
     }
   }
+
+  public async validateEmailAddress(req: any, resp: Response): Promise<any> {
+    try {
+      const email = req.params.email;
+      const isValid = await this._userService.validateEmail(email);
+      const response: {valid: boolean; duplicate?: boolean} = {valid: isValid};
+
+      if (!isValid) {
+        response.duplicate = true;
+      }
+      resp.status(StatusConstants.OK).send({data: response});
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
 }
