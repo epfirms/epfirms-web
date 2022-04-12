@@ -30,6 +30,9 @@ module.exports = (sequelize, {
         is_joint: {
           type: BOOLEAN,
         },
+        beneficiary_id: {
+          type: INTEGER
+        }
       }, {
         tableName,
         defaultScope: {
