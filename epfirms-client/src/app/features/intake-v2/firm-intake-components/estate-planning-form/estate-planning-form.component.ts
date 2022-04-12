@@ -33,10 +33,12 @@ specificRequests : SpecificRequests[] = [];
   ngOnInit(): void {
     this.form = new EstatePlanningQuestions(this.matter.client.id, this.matter.id);
     this.loadEstateForm();
+    this.loadSpecificRequests();
   }
 
 submit(): void {
   this.submitEstateForm();
+  this.submitSpecificRequests();
 }
 
   submitEstateForm(): void {
@@ -45,6 +47,27 @@ submit(): void {
       console.log(res);
     });
   }
+
+  submitSpecificRequests(): void {
+    this.specificRequests.forEach(specificRequest => {
+      this.specificRequestsService.upsertSpecificRequest(specificRequest).subscribe(res => {
+        console.log(res);
+      });
+    });
+  }
+
+  loadSpecificRequests() : void {
+    this.specificRequestsService.getSpecificRequests(this.matter.id).subscribe(res => {
+      this.specificRequests = res;
+    });
+  }
+
+  deleteSpecificRequest(specificRequest : SpecificRequests) : void {
+    this.specificRequestsService.deleteSpecificRequest(specificRequest).subscribe(res => {
+      this.specificRequests = this.specificRequests.filter(request => request.id !== specificRequest.id);
+    });
+  }
+  
 
   loadEstateForm() : void {
     this.estatePlanningService.getEstatePlanningQuestions(this.matter.id).subscribe(res => {

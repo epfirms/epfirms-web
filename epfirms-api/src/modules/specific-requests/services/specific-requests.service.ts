@@ -29,7 +29,7 @@ export class SpecificRequestsService {
 public static async getAllWithId(id) : Promise<any> {
         try {
 
-            const all = await Database.models.specific_requests.findAll({where: {id: id}});
+            const all = await Database.models.specific_requests.findAll({where: {matter_id: id}});
             return Promise.resolve(all);
         }
         catch (error){

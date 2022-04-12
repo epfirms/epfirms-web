@@ -64,5 +64,5 @@ v1Router.use('/phone-numbers', phoneNumberRouter);
 v1Router.use('/appointee', appointeeRouter);
 v1Router.use('/estate-planning', estatePlanningRouter);
 v1Router.use('/excluded-children', excludedChildrenRouter);
-v1Router.use('/specific-reqeusts', specificRequestsRouter);
+v1Router.use('/specific-requests', specificRequestsRouter);
 export { v1Router }
