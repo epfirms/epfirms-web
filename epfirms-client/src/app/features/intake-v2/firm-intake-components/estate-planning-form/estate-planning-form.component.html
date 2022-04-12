@@ -1,649 +1,794 @@
-  <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-    <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
-      <div>
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Estate Planning Specifics</h3>
-        <p class="mt-1 max-w-2xl text-sm text-gray-500">
-          These questions will collect information for estate planning.
-        </p>
-      </div>
+<div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+  <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
+    <div>
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Estate Planning Specifics</h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">
+        These questions will collect information for estate planning.
+      </p>
+    </div>
 
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Will the client and spouse include afterborn children?</label
       >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Will the client and spouse include afterborn children?</label
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.include_afterborn_children"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.include_afterborn_children"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
       </div>
+    </div>
 
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Will the client or spouse exclude any children?</label
       >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Will the client or spouse exclude any children?</label
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.exclude_children"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.exclude_children"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
       </div>
-      <!-- 
+    </div>
+    <!-- 
 THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
 
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Include Memorandum?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.include_memorandum"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+    <div *ngIf="form.exclude_children" class="px-4 sm:px-6 lg:px-8">
+      <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+          <h1 class="text-xl font-semibold text-gray-900">Excluded Children</h1>
+          <p class="mt-2 text-sm text-gray-700">Select excluded children.</p>
+        </div>
+        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+          <button
+            (click)="addExcludedChild()"
+            type="button"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
           >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
+            Add Request
+          </button>
         </div>
       </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Client Burial Request</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.client_burial_request"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="'cremation'">Cremation</option>
-            <option [ngValue]="'burial'">Burial</option>
-          </select>
-        </div>
-      </div>
+      <div class="mt-8 flex flex-col">
+        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                    >
+                      Select Child
+                    </th>
+                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  <tr *ngFor="let excludedChild of excludedChildren">
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        <select
+                          [(ngModel)]="excludedChild.user_id"
+                          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                        >
+                          <option *ngFor="let child of children" [ngValue]="child.id">
+                            {{ child.first_name }} {{ child.last_name }}
+                          </option>
+                        </select>
+                      </div>
+                    </td>
+                    <td
+                      class="relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6"
+                    >
+                      <button (click)="deleteExcludedChild(excludedChild)">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
 
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Spouse Burial Request</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.spouse_burial_request"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="'cremation'">Cremation</option>
-            <option [ngValue]="'burial'">Burial</option>
-          </select>
+                  <!-- More people... -->
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Include Common Disaster Clause</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.include_common_disaster_clause"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Are there any specific requests?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.has_specific_requests"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- SPECIFIC REQUESTS TABLE SHOULD GO HERE -->
-
-<!-- This example requires Tailwind CSS v2.0+ -->
-<div class="px-4 sm:px-6 lg:px-8">
-  <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <h1 class="text-xl font-semibold text-gray-900">Specific Requests</h1>
-      <p class="mt-2 text-sm text-gray-700">Enter the specific requests.</p>
     </div>
-    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-      <button (click)="addSpecificRequest()" type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add Request</button>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Include Memorandum?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.include_memorandum"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
     </div>
-  </div>
-  <div class="mt-8 flex flex-col">
-    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-          <table class="min-w-full divide-y divide-gray-300">
-            <thead class="bg-gray-50">
-              <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name Item</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Beneficiary</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Contingent Beneficiary</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">After Spouse</th>
-                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                Action
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
-              <tr *ngFor="let request of specificRequests">
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><editable-input [value]="request.item_name" (onChange)="request.item_name = $event"></editable-input></td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><editable-input [value]="request.beneficiary_name" (onChange)="request.beneficiary_name = $event"></editable-input></td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><editable-input [value]="request.contingent_beneficiary_name" (onChange)="request.contingent_beneficiary_name = $event"></editable-input></td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Client Burial Request</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.client_burial_request"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="'cremation'">Cremation</option>
+          <option [ngValue]="'burial'">Burial</option>
+        </select>
+      </div>
+    </div>
 
+    <div
+      *ngIf="hasSpouse"
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Spouse Burial Request</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.spouse_burial_request"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="'cremation'">Cremation</option>
+          <option [ngValue]="'burial'">Burial</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Include Common Disaster Clause</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.include_common_disaster_clause"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Are there any specific requests?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.has_specific_requests"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
 
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-          [(ngModel)]="request.defer_until_spouse_deceased"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+    <!-- SPECIFIC REQUESTS TABLE SHOULD GO HERE -->
+
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div *ngIf="form.has_specific_requests" class="px-4 sm:px-6 lg:px-8">
+      <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+          <h1 class="text-xl font-semibold text-gray-900">Specific Requests</h1>
+          <p class="mt-2 text-sm text-gray-700">Enter the specific requests.</p>
+        </div>
+        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+          <button
+            (click)="addSpecificRequest()"
+            type="button"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
           >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
+            Add Request
+          </button>
         </div>
-                </td>
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-               <button (click)="deleteSpecificRequest(request)"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg></button> 
-                </td>
-              </tr>
+      </div>
+      <div class="mt-8 flex flex-col">
+        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                    >
+                      Name Item
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Beneficiary
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Contingent Beneficiary
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      After Spouse
+                    </th>
+                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  <tr *ngFor="let request of specificRequests">
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <editable-input
+                        [value]="request.item_name"
+                        (onChange)="request.item_name = $event"
+                      ></editable-input>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <editable-input
+                        [value]="request.beneficiary_name"
+                        (onChange)="request.beneficiary_name = $event"
+                      ></editable-input>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <editable-input
+                        [value]="request.contingent_beneficiary_name"
+                        (onChange)="request.contingent_beneficiary_name = $event"
+                      ></editable-input>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        <select
+                          [(ngModel)]="request.defer_until_spouse_deceased"
+                          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                        >
+                          <option [ngValue]="true">Yes</option>
+                          <option [ngValue]="false">No</option>
+                        </select>
+                      </div>
+                    </td>
+                    <td
+                      class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
+                    >
+                      <button (click)="deleteSpecificRequest(request)">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
 
-              <!-- More people... -->
-            </tbody>
-          </table>
+                  <!-- More people... -->
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- END OF SPECIFIC REQUESTS -->
+
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Include Arbitration Clause</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.include_arbitration_clause"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Include Content Clause</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.include_contest_clause"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Is the No Content Clause unenforceable under challenge?
+      </label>
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.no_contest_clause_unenforceable_under_challenge"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Include Supplemental Needs Trust?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.include_supplemental_needs_trust"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Include Contingent Trust?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.include_contingent_trust"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Contingent Trust Age of Distribution</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <input
+          type="number"
+          [(ngModel)]="form.contingent_trust_age_of_distribution"
+          class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        />
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Include Retirement Benefit Trust?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.include_retirement_benefit_trust"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Trust Age of Distribution</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <input
+          type="number"
+          [(ngModel)]="form.trust_age_of_distribution"
+          class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        />
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Distribution Request</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <textarea
+          [(ngModel)]="form.distribution_request"
+          rows="3"
+          class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+        ></textarea>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Does the client have a current will?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.client_has_current_will"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      *ngIf="hasSpouse"
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Does the spouse have a current will?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.spouse_has_current_will"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Client Has Current Estate Plan?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.client_has_current_estate_plan"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      *ngIf="hasSpouse"
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Spouse Has Current Estate Plan?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.spouse_has_current_estate_plan"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Client Has Established Trust?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.client_has_established_trust"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      *ngIf="hasSpouse"
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Spouse Has Established Trust?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.spouse_has_established_trust"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Owns Farm or Business?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.has_farm_or_business"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Do your children receive government assistance or benefits?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.children_receive_govt_benefits"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Do your children have special education needs?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.children_have_special_education_needs"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Do your children have special medical needs?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.children_have_special_medical_needs"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Have you ever filed a gift tax return?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.client_filed_gift_tax_return"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Has the client ever filed for divorce?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.client_prior_divorce"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      *ngIf="hasSpouse"
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Has the spouse ever filed for divorce?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.spouse_prior_divorce"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Is the client making payments pursuant to a divorce or property settlement?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.client_pays_settlement_expenses"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      *ngIf="hasSpouse"
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Is the spouse making payments pursuant to a divorce or property settlement?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.spouse_pays_settlement_expenses"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Has the client ever signed a pre-marital agreement?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.client_signed_pre_marital_agreement"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div
+      *ngIf="hasSpouse"
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Has the spouse ever signed a pre-marital agreement?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.spouse_signed_pre_marital_agreement"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Has the client ever signed a post-marital agreement?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.client_signed_post_marital_agreement"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div
+      *ngIf="hasSpouse"
+      class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+    >
+      <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+        Has the spouse ever signed a post-marital agreement?</label
+      >
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        <select
+          [(ngModel)]="form.spouse_signed_post_marital_agreement"
+          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
       </div>
     </div>
   </div>
 </div>
 
-
-
-      <!-- END OF SPECIFIC REQUESTS -->
-
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Include Arbitration Clause</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.include_arbitration_clause"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Include Content Clause</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.include_contest_clause"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Is the No Content Clause unenforceable under challenge?
-        </label>
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.no_contest_clause_unenforceable_under_challenge"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Include Supplemental Needs Trust?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.include_supplemental_needs_trust"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Include Contingent Trust?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.include_contingent_trust"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Contingent Trust Age of Distribution</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <input type="number" [(ngModel)]="form.contingent_trust_age_of_distribution"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Include Retirement Benefit Trust?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.include_retirement_benefit_trust"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Trust Age of Distribution</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-  <input type="number" [(ngModel)]="form.trust_age_of_distribution" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Distribution Request</label
-        >
-          <div class="mt-1 sm:mt-0 sm:col-span-2">
-            <textarea [(ngModel)]="form.distribution_request"  rows="3" class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Does the client have a current will?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.client_has_current_will"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Does the spouse have a current will?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.spouse_has_current_will"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Client Has Current Estate Plan?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.client_has_current_estate_plan"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Spouse Has Current Estate Plan?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.spouse_has_current_estate_plan"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Client Has Established Trust?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.client_has_established_trust"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Spouse Has Established Trust?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.spouse_has_established_trust"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Owns Farm or Business?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.has_farm_or_business"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Do your children receive government assistance or benefits?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.children_receive_govt_benefits"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Do your children have special education needs?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.children_have_special_education_needs"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Do your children have special medical needs?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.children_have_special_medical_needs"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Have you ever filed a gift tax return?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.client_filed_gift_tax_return"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Has the client ever filed for divorce?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.client_prior_divorce"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Has the spouse ever filed for divorce?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.spouse_prior_divorce"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Is the client making payments pursuant to a divorce or property settlement?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.client_pays_settlement_expenses"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Is the spouse making payments pursuant to a divorce or property settlement?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.spouse_pays_settlement_expenses"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Has the client ever signed a pre-marital agreement?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.client_signed_pre_marital_agreement"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Has the spouse ever signed a pre-marital agreement?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.spouse_signed_pre_marital_agreement"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Has the client ever signed a post-marital agreement?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.client_signed_post_marital_agreement"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-          Has the spouse ever signed a post-marital agreement?</label
-        >
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <select
-            [(ngModel)]="form.spouse_signed_post_marital_agreement"
-            class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          >
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="pt-5">
-    <div class="flex justify-end">
-      <button
+<div class="pt-5">
+  <div class="flex justify-end">
+    <button
       (click)="backButton()"
-        type="button"
-        class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Back
-      </button>
-      <button
+      type="button"
+      class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    >
+      Back
+    </button>
+    <button
       (click)="submit()"
-        type="submit"
-        class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Save
-      </button>
-    </div>
+      type="submit"
+      class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    >
+      Save
+    </button>
   </div>
+</div>
