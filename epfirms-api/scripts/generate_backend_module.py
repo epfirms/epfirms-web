@@ -15,7 +15,7 @@ base_path = f"../src/modules/{module_name}/"
 sub_directories = ["controllers", "routes", "services", "tests"]
 camel_case_name = camel_case(module_name)
 pascal_case = module_name.replace('-',' ').title().replace(' ','')
-
+snake_case = module_name.replace('-','_').lower().replace(' ','')
 
 index_template = f"""
 import {{ {pascal_case}Controller }} from './{module_name}.controller';
@@ -37,9 +37,12 @@ export class {pascal_case}Controller {{
 
     public async upsert(req : Request, res : Response) : Promise<any> {{
         try {{
-
+                const created = await {pascal_case}Service.upsert(req.body);
+                res.status(StatusConstants.CREATED).send(created);
         }}
         catch (error){{
+
+            res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
             console.error(error)
         }}
     }}
@@ -47,8 +50,11 @@ export class {pascal_case}Controller {{
     public async delete(req : Request, res : Response) : Promise<any> {{
         try {{
 
+            const deleted = await {pascal_case}Service.delete(req.params.id);
+            res.status(StatusConstants.OK).send(true);
         }}
         catch (error){{
+            res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
             console.error(error)
         }}
     }}
@@ -56,8 +62,11 @@ export class {pascal_case}Controller {{
 public async getAllWithId(req : Request, res : Response) : Promise<any> {{
         try {{
 
+            const all = await {pascal_case}Service.getAllWithId(req.params.id);
+            res.status(StatusConstants.OK).send(all);
         }}
         catch (error){{
+            res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
             console.error(error)
         }}
     }}
@@ -95,6 +104,8 @@ export class {pascal_case}Service {{
      public static async upsert(data) : Promise<any> {{
         try {{
 
+            const created = await Database.models.{snake_case}.upsert(data, {{where: {{id: data.id}}}});
+            return Promise.resolve(created);
         }}
         catch (error){{
             console.error(error)
@@ -104,6 +115,8 @@ export class {pascal_case}Service {{
     public static async delete(id) : Promise<any> {{
         try {{
 
+            const deleted = await Database.models.{snake_case}.destroy({{where: {{id: id}}}});
+            return Promise.resolve(deleted);
         }}
         catch (error){{
             console.error(error)
@@ -113,6 +126,8 @@ export class {pascal_case}Service {{
 public static async getAllWithId(id) : Promise<any> {{
         try {{
 
+            const all = await Database.models.{snake_case}.findAll({{where: {{id: id}}}});
+            return Promise.resolve(all);
         }}
         catch (error){{
             console.error(error)

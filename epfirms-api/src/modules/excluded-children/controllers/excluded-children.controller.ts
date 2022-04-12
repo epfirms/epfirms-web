@@ -10,9 +10,12 @@ export class ExcludedChildrenController {
 
     public async upsert(req : Request, res : Response) : Promise<any> {
         try {
-
+                const created = await ExcludedChildrenService.upsert(req.body);
+                res.status(StatusConstants.CREATED).send(created);
         }
         catch (error){
+
+            res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
             console.error(error)
         }
     }
@@ -20,8 +23,11 @@ export class ExcludedChildrenController {
     public async delete(req : Request, res : Response) : Promise<any> {
         try {
 
+            const deleted = await ExcludedChildrenService.delete(req.params.id);
+            res.status(StatusConstants.OK).send(true);
         }
         catch (error){
+            res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
             console.error(error)
         }
     }
@@ -29,8 +35,11 @@ export class ExcludedChildrenController {
 public async getAllWithId(req : Request, res : Response) : Promise<any> {
         try {
 
+            const all = await ExcludedChildrenService.getAllWithId(req.params.id);
+            res.status(StatusConstants.OK).send(all);
         }
         catch (error){
+            res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
             console.error(error)
         }
     }

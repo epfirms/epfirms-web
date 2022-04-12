@@ -72,4 +72,9 @@ export class EstatePlanningQuestions {
         client_signed_post_marital_agreement?: boolean;
         // spouse signed post marital agreement?
         spouse_signed_post_marital_agreement?: boolean;
+
+        constructor(user_id : number, matter_id : number) {
+                this.user_id = user_id;
+                this.matter_id = matter_id;
+        }
 }

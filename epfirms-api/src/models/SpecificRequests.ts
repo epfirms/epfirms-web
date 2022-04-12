@@ -14,17 +14,24 @@ module.exports = (sequelize, {
           primaryKey: true,
           autoIncrement: true,
         },
-       // the reference to the primary benficiary
-       // this will be a reference to the user table
-       beneficiary_id: {
-            type: INTEGER,
-            allowNull: false
+      //  // the reference to the primary benficiary
+      //  // this will be a reference to the user table
+      //  beneficiary_id: {
+      //       type: INTEGER,
+      //       allowNull: false
+      //   },
+      //   //this will be a reference to the user table
+      //   // reference to contingent beneficiary
+      //   contingent_beneficiary_id: {
+      //       type: INTEGER,
+      //       allowNull: false
+      //   },
+        beneficiary_name: {
+            type: STRING,
         },
-        //this will be a reference to the user table
-        // reference to contingent beneficiary
-        contingent_beneficiary_id: {
-            type: INTEGER,
-            allowNull: false
+        contingent_beneficiary_name: {
+
+            type: STRING,
         },
         // name of the item or request
         item_name: {
