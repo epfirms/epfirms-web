@@ -60,7 +60,7 @@
       </div>
       <div>
         <button ep-button (click)="addCase()">
-          Add case
+          Add Case
         </button>
       </div>
     </div>
@@ -80,7 +80,10 @@
               <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase border-r text-slate-500 border-slate-200" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('first_name')">
                 <div class="flex items-center group hover:cursor-pointer">
                 
-                  <div>Case</div>
+                  <div class="flex items-center flex-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-4 h-4 text-slate-400 group-hover:text-slate-300 lg:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>Case</div>
 
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-opacity group-hover:opacity-50"
                     [ngClass]="{'opacity-0 group-hover:opacity-50': sortValues.column !== 'first_name', 'opacity-100': sortValues.column === 'client'}"
@@ -118,7 +121,11 @@
             <ng-container cdkColumnDef="task">
               <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('task')">
                 <div class="flex items-center group hover:cursor-pointer">
-                  <div>Next Task</div>
+                  
+                  <div class="flex items-center flex-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-4 h-4 text-slate-400 group-hover:text-slate-300 lg:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg> Next Task</div>
 
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-opacity group-hover:opacity-50"
                     [ngClass]="{'opacity-0 group-hover:opacity-50': sortValues.column !== 'task', 'opacity-100': sortValues.column === 'task'}"
@@ -170,7 +177,12 @@
             <!-- Weight Column -->
             <ng-container cdkColumnDef="legal-area">
               <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+                <div class="flex items-center flex-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-4 h-4 text-slate-400 group-hover:text-slate-300 lg:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                </svg>
                 Legal Area
+              </div>
               </th>
               <td cdk-cell *cdkCellDef="let case" class="w-1/12 px-6 py-4 whitespace-nowrap">
                 <div>
@@ -206,9 +218,13 @@
 
                 <div Menu class="relative inline-block w-full text-left">
                   <div MenuButton class="flex items-center w-full group hover:cursor-pointer">
-                    <div class="flex-1">
-                      Attorney
-                    </div>
+                    <div class="flex items-center flex-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-4 h-4 text-slate-400 group-hover:text-slate-300 lg:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                    </svg> 
+                    Attorney
+                  </div>
+
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 group-hover:text-blue-500"
                       [class.text-blue-500]="matterFilterValues.attorney_id" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd"
@@ -224,13 +240,7 @@
                         <div class="w-full">
                           {{ attorney.user.first_name + ' ' + attorney.user.last_name | titlecase }}
                         </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white hover:text-blue-200"
-                          viewBox="0 0 20 20" fill="currentColor"
-                          *ngIf="attorney.user.id === matterFilterValues.attorney_id">
-                          <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                            clip-rule="evenodd" />
-                        </svg>
+    
                       </a>
                     </div>
                   </div>
@@ -251,7 +261,17 @@
                     <ep-avatar epSize="xsmall" [epSrc]="attorney.user.profile_image" [epText]="attorney.user.full_name">
                     </ep-avatar> <span class="block ml-3 font-normal truncate">
                       {{attorney.user.full_name}}
+
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white hover:text-blue-200"
+                      viewBox="0 0 20 20" fill="currentColor"
+                      *ngIf="attorney.user.id === matterFilterValues.attorney_id">
+                      <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd" />
+                    </svg>
+
                     </span>
+                 
                   </ep-option>
                 </ep-autocomplete>
               </td>
@@ -260,7 +280,12 @@
             <!-- Symbol Column -->
             <ng-container cdkColumnDef="status">
               <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+                <div class="flex items-center flex-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-4 h-4 text-slate-400 group-hover:text-slate-300 lg:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z" />
+                </svg>
                 Status
+              </div>
               </th>
               <td cdk-cell *cdkCellDef="let case" class="w-1/12 px-6 py-4 whitespace-nowrap">
                 <div class="flex flex-col justify-center">
@@ -302,7 +327,14 @@
 
             <!-- Symbol Column -->
             <ng-container cdkColumnDef="billing">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-right uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>Billing</th>
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-right uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+                <div class="flex items-center flex-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-4 h-4 text-slate-400 group-hover:text-slate-300 lg:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                Billing
+              </div>
+                </th>
               <td cdk-cell *cdkCellDef="let case" class="w-1/12 px-6 py-4 text-sm font-medium text-right whitespace-nowrap text-slate-400">
                 <a class="flex-shrink-0 block group" (click)="openTab(case)">
                   <div class="flex items-center justify-end">
