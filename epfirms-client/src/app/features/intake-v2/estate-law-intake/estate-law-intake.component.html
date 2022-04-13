@@ -10,18 +10,18 @@
 <div class="min-h-full">
   <nav class="bg-white border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
+      <div class="flex justify-center h-16">
         <!-- This example requires Tailwind CSS v2.0+ -->
-        <nav aria-label="Progress">
+        <nav class="sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden" aria-label="Progress">
           <ol role="list" class="flex items-center">
-            <li class="relative pr-8 sm:pr-20">
+            <li *ngIf="progressBar.info" class="relative pr-8 sm:pr-20">
               <!-- Completed Step -->
               <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="h-0.5 w-full bg-blue-600"></div>
+                <div class="h-0.5 w-full bg-indigo-600"></div>
               </div>
               <a
                 href="#"
-                class="relative w-8 h-8 flex items-center justify-center bg-blue-600 rounded-full hover:bg-indigo-900"
+                class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
               >
                 <!-- Heroicon name: solid/check -->
                 <svg
@@ -41,49 +41,8 @@
               </a>
             </li>
 
-            <li class="relative pr-8 sm:pr-20">
-              <!-- Completed Step -->
-              <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="h-0.5 w-full bg-blue-600"></div>
-              </div>
-              <a
-                href="#"
-                class="relative w-8 h-8 flex items-center justify-center bg-blue-600 rounded-full hover:bg-indigo-900"
-              >
-                <!-- Heroicon name: solid/check -->
-                <svg
-                  class="w-5 h-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="sr-only">Step 2</span>
-              </a>
-            </li>
 
-            <li class="relative pr-8 sm:pr-20">
-              <!-- Current Step -->
-              <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="h-0.5 w-full bg-gray-200"></div>
-              </div>
-              <a
-                href="#"
-                class="relative w-8 h-8 flex items-center justify-center bg-white border-2 border-blue-600 rounded-full"
-                aria-current="step"
-              >
-                <span class="h-2.5 w-2.5 bg-blue-600 rounded-full" aria-hidden="true"></span>
-                <span class="sr-only">Step 3</span>
-              </a>
-            </li>
-
-            <li class="relative pr-8 sm:pr-20">
+                        <li *ngIf="!progressBar.info" class="relative pr-8 sm:pr-20">
               <!-- Upcoming Step -->
               <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="h-0.5 w-full bg-gray-200"></div>
@@ -100,7 +59,36 @@
               </a>
             </li>
 
-            <li class="relative">
+
+  <li *ngIf="progressBar.income" class="relative pr-8 sm:pr-20">
+              <!-- Completed Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="h-0.5 w-full bg-indigo-600"></div>
+              </div>
+              <a
+                href="#"
+                class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
+              >
+                <!-- Heroicon name: solid/check -->
+                <svg
+                  class="w-5 h-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="sr-only">Step 1</span>
+              </a>
+            </li>
+
+
+                        <li *ngIf="!progressBar.income" class="relative pr-8 sm:pr-20">
               <!-- Upcoming Step -->
               <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="h-0.5 w-full bg-gray-200"></div>
@@ -113,9 +101,107 @@
                   class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"
                   aria-hidden="true"
                 ></span>
-                <span class="sr-only">Step 5</span>
+                <span class="sr-only">Step 4</span>
               </a>
             </li>
+
+
+  <li *ngIf="progressBar.assets" class="relative pr-8 sm:pr-20">
+              <!-- Completed Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="h-0.5 w-full bg-indigo-600"></div>
+              </div>
+              <a
+                href="#"
+                class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
+              >
+                <!-- Heroicon name: solid/check -->
+                <svg
+                  class="w-5 h-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="sr-only">Step 1</span>
+              </a>
+            </li>
+
+
+                        <li *ngIf="!progressBar.assets" class="relative pr-8 sm:pr-20">
+              <!-- Upcoming Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="h-0.5 w-full bg-gray-200"></div>
+              </div>
+              <a
+                href="#"
+                class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
+              >
+                <span
+                  class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Step 4</span>
+              </a>
+            </li>
+
+
+  <li *ngIf="progressBar.realEstate" class="relative pr-8 sm:pr-20">
+              <!-- Completed Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              </div>
+              <a
+                href="#"
+                class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
+              >
+                <!-- Heroicon name: solid/check -->
+                <svg
+                  class="w-5 h-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="sr-only">Step 1</span>
+              </a>
+            </li>
+
+
+                        <li *ngIf="!progressBar.realEstate" class="relative pr-8 sm:pr-20">
+              <!-- Upcoming Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              </div>
+              <a
+                href="#"
+                class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
+              >
+                <span
+                  class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Step 4</span>
+              </a>
+            </li>
+
+
+
+
+
+
+
+
           </ol>
         </nav>
 
@@ -223,7 +309,7 @@
           *ngIf="state === 'personal info'"
           [matter]="matter"
           (back)="back()"
-          (continue)="setState('income')"
+          (continue)="setState('income'); setProgressBar('info', true)"
         ></app-personal-information>
         <!-------------------->
 
@@ -233,7 +319,7 @@
           *ngIf="state === 'income'"
           [matter]="matter"
           (back)="back()"
-          (continue)="setState('asset')"
+          (continue)="setState('asset'); setProgressBar('income', true)"
         ></app-income>
         <!-- -------------------------- -->
 
@@ -243,7 +329,7 @@
           *ngIf="state === 'asset'"
           [matter]="matter"
           (back)="back()"
-          (continue)="setState('real estate')"
+          (continue)="setState('real estate'); setProgressBar('assets', true)"
         ></app-assets>
         <!-- -------------------------- -->
 
@@ -252,7 +338,7 @@
           *ngIf="state === 'real estate'"
           [matter]="matter"
           (back)="back()"
-          (continue)="setState('conclusion'); submit()"
+          (continue)="setState('conclusion'); submit(); setProgressBar('realEstate', true)"
         ></app-real-estate>
         <!-- -------------------------- -->
 

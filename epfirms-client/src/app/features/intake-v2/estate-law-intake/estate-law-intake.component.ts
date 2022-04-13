@@ -21,6 +21,12 @@ export class EstateLawIntakeComponent implements OnInit {
   // stack that manages the views and enables the back() functionality
   history = [];
 
+  progressBar = {
+    info : false,
+    income : false,
+    assets : false,
+    realEstate : false,
+  }
 
   constructor(
     private clientMatterService: ClientMatterService,
@@ -30,6 +36,10 @@ export class EstateLawIntakeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+setProgressBar(property : string, value : boolean): void {
+  this.progressBar[property] = value;
+}
   
 
   setState(state: string): void {
