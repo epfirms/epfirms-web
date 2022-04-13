@@ -21,6 +21,7 @@ import { AssetFormModule } from '@app/shared/asset-form/asset-form.module';
 import { RealEstateFormModule } from '@app/shared/real-estate-form/real-estate-form.module';
 import { AppointeeFormModule } from '@app/shared/appointee-form/appointee-form.module';
 import { ProfileCardComponent } from './firm-intake-components/profile-card/profile-card.component';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 
 
@@ -50,7 +51,8 @@ import { ProfileCardComponent } from './firm-intake-components/profile-card/prof
     AssetFormModule,
     RealEstateFormModule,
     AppointeeFormModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgScrollbarModule
   ],
   exports: [
     ClientIntakeComponent,
