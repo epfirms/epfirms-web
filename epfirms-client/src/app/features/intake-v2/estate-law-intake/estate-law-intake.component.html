@@ -20,7 +20,6 @@
                 <div class="h-0.5 w-full bg-indigo-600"></div>
               </div>
               <a
-                
                 class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
               >
                 <!-- Heroicon name: solid/check -->
@@ -41,14 +40,12 @@
               </a>
             </li>
 
-
-                        <li *ngIf="!progressBar.info" class="relative pr-8 sm:pr-20">
+            <li *ngIf="!progressBar.info" class="relative pr-8 sm:pr-20">
               <!-- Upcoming Step -->
               <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="h-0.5 w-full bg-gray-200"></div>
               </div>
               <a
-                
                 class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
               >
                 <span
@@ -59,14 +56,12 @@
               </a>
             </li>
 
-
-  <li *ngIf="progressBar.income" class="relative pr-8 sm:pr-20">
+            <li *ngIf="progressBar.income" class="relative pr-8 sm:pr-20">
               <!-- Completed Step -->
               <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="h-0.5 w-full bg-indigo-600"></div>
               </div>
               <a
-                
                 class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
               >
                 <!-- Heroicon name: solid/check -->
@@ -87,14 +82,12 @@
               </a>
             </li>
 
-
-                        <li *ngIf="!progressBar.income" class="relative pr-8 sm:pr-20">
+            <li *ngIf="!progressBar.income" class="relative pr-8 sm:pr-20">
               <!-- Upcoming Step -->
               <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="h-0.5 w-full bg-gray-200"></div>
               </div>
               <a
-                
                 class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
               >
                 <span
@@ -105,14 +98,12 @@
               </a>
             </li>
 
-
-  <li *ngIf="progressBar.assets" class="relative pr-8 sm:pr-20">
+            <li *ngIf="progressBar.assets" class="relative pr-8 sm:pr-20">
               <!-- Completed Step -->
               <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="h-0.5 w-full bg-indigo-600"></div>
               </div>
               <a
-                
                 class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
               >
                 <!-- Heroicon name: solid/check -->
@@ -133,14 +124,12 @@
               </a>
             </li>
 
-
-                        <li *ngIf="!progressBar.assets" class="relative pr-8 sm:pr-20">
+            <li *ngIf="!progressBar.assets" class="relative pr-8 sm:pr-20">
               <!-- Upcoming Step -->
               <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="h-0.5 w-full bg-gray-200"></div>
               </div>
               <a
-                
                 class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
               >
                 <span
@@ -151,13 +140,10 @@
               </a>
             </li>
 
-
-  <li *ngIf="progressBar.realEstate" class="relative pr-8 sm:pr-20">
+            <li *ngIf="progressBar.realEstate" class="relative pr-8 sm:pr-20">
               <!-- Completed Step -->
-              <div class="absolute inset-0 flex items-center" aria-hidden="true">
-              </div>
+              <div class="absolute inset-0 flex items-center" aria-hidden="true"></div>
               <a
-                
                 class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
               >
                 <!-- Heroicon name: solid/check -->
@@ -178,13 +164,10 @@
               </a>
             </li>
 
-
-                        <li *ngIf="!progressBar.realEstate" class="relative pr-8 sm:pr-20">
+            <li *ngIf="!progressBar.realEstate" class="relative pr-8 sm:pr-20">
               <!-- Upcoming Step -->
-              <div class="absolute inset-0 flex items-center" aria-hidden="true">
-              </div>
+              <div class="absolute inset-0 flex items-center" aria-hidden="true"></div>
               <a
-                
                 class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
               >
                 <span
@@ -194,14 +177,6 @@
                 <span class="sr-only">Step 4</span>
               </a>
             </li>
-
-
-
-
-
-
-
-
           </ol>
         </nav>
 
@@ -286,32 +261,47 @@
               'This intake process is designed to help streamline our legal services to you. Your information will be kept secure and confidential.',
             continueButton: true
           }"
-          (continue)="setState('personal info')"
+          (continue)="setState('personal info intro')"
         ></app-intake-dialog>
 
         <!---------------------------------->
 
-        <!-- <app-intake-dialog
+        <app-intake-dialog
           *ngIf="state === 'personal info intro'"
           [settings]="{
-            title: 'Personal Information',
+            title: 'Family Information',
             content:
-              'Please add any family members or close friends that you may want to use as an: Executor, Trustee, Guardian, Durable Power of Attorney, Medical Power of Attorney',
-              continueButton: true,
-              backButton: true
+              'This next section will ask you to provide information about your family. This will help us put together your estate planning documents.',
+            continueButton: true,
+            backButton: true
           }"
           (continue)="setState('personal info')"
           (back)="back()"
-        ></app-intake-dialog> -->
+        ></app-intake-dialog>
 
         <!--PERSONAL INFO-->
         <app-personal-information
           *ngIf="state === 'personal info'"
           [matter]="matter"
           (back)="back()"
-          (continue)="setState('income'); setProgressBar('info', true)"
+          (continue)="setState('spouse info intro'); setProgressBar('info', true)"
         ></app-personal-information>
         <!-------------------->
+
+        <app-intake-dialog
+          *ngIf="state === 'spouse info intro'"
+          [settings]="{
+            title: 'Spouse Information',
+            content:
+              '',
+            continueButton: true,
+            backButton: true
+          }"
+          (continue)="setState('spouse info')"
+          (back)="back()"
+          (dropdownFormValues)="hasSpouse = $event"
+          [dropdownForm]="{question: 'Do you have a spouse?', value: hasSpouse}"
+        ></app-intake-dialog>
 
         <!-- INCOME INFORMATION -->
 

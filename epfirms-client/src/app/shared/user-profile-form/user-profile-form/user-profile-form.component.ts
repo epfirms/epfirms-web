@@ -17,6 +17,7 @@ export class UserProfileFormComponent implements OnInit {
   @Input() userProfile;
   @Input() formSettings: FormSettings;
   @Input() matter; 
+  @Input() isVisible : boolean;
   // bindings that control state of dropdown
   dropdownVisible: boolean = false;
 
@@ -64,6 +65,9 @@ export class UserProfileFormComponent implements OnInit {
 
   ngOnInit(): void {
     
+    // drop down default from Input binding
+    this.dropdownVisible = this.isVisible;
+
     this.loadFormSettings();
     this.patchUserProfileForm();
   }

@@ -28,6 +28,10 @@ export class EstateLawIntakeComponent implements OnInit {
     realEstate : false,
   }
 
+  hasSpouse : boolean = false;
+  hasChildren : boolean = false;
+
+
   constructor(
     private clientMatterService: ClientMatterService,
     private familyMemberService: FamilyMemberService,
