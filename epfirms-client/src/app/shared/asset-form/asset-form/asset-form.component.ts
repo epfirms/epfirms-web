@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AssetService } from '@app/client-portal/_services/asset-service/asset.service';
+import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { FormSettings } from '@app/core/interfaces/FormSettings';
 
 @Component({
@@ -48,15 +49,23 @@ export class AssetFormComponent implements OnInit {
     balance: new FormControl(),
     is_joint: new FormControl(),
     institution: new FormControl(),
+    beneficiary_id: new FormControl(),
   });
+
+
+  familyMembers = [];
+
+
   constructor(
 
-    private assetService : AssetService
+    private assetService : AssetService,
+    private familyMemberService : FamilyMemberService
   ) {}
 
   ngOnInit(): void {
     this.loadFormSettings();
     this.patchForm();
+    this.loadFamilyMembers();
   }
 
   // loads the form settings from the input
@@ -65,6 +74,14 @@ export class AssetFormComponent implements OnInit {
     this.subtitle = this.formSettings.subtitle;
   }
 
+
+  loadFamilyMembers(): void {
+    this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
+      
+      this.familyMembers = res
+      
+    });
+  }
   // path the asset form with the asset
   private patchForm(): void {
     this.assetForm.patchValue({
@@ -74,6 +91,7 @@ export class AssetFormComponent implements OnInit {
       balance: this.asset.balance,
       is_joint: this.asset.is_joint,
       institution: this.asset.institution,
+      beneficiary_id: this.asset.beneficiary_id,
 
     });
   }

@@ -4,6 +4,7 @@ import { ClientMatterService } from '@app/client-portal/_services/matter-service
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
+import { emailService } from '@app/shared/_services/email-service/email.service';
 
 @Component({
   selector: 'app-firm-intake-viewer',
@@ -24,7 +25,8 @@ export class FirmIntakeViewerComponent implements OnInit {
   constructor(
     private currentUserService: CurrentUserService,
     private clientMatterService : ClientMatterService,
-    private matterService : MatterService
+    private matterService : MatterService,
+    private emailService : emailService
     
     ) {}
 
@@ -43,6 +45,9 @@ export class FirmIntakeViewerComponent implements OnInit {
       if (res) {
         console.log(res);
         this.matter.matter_intake = res;
+        if (this.matter.client.email) {
+          this.emailService.sendIntakeNotifcation(this.matter.client.email).subscribe();
+        }
       }
     });
   }

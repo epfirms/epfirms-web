@@ -21,6 +21,7 @@ import { AssetFormModule } from '@app/shared/asset-form/asset-form.module';
 import { RealEstateFormModule } from '@app/shared/real-estate-form/real-estate-form.module';
 import { AppointeeFormModule } from '@app/shared/appointee-form/appointee-form.module';
 import { ProfileCardComponent } from './firm-intake-components/profile-card/profile-card.component';
+import { EstatePlanningFormComponent } from './firm-intake-components/estate-planning-form/estate-planning-form.component';
 
 
 
@@ -39,7 +40,8 @@ import { ProfileCardComponent } from './firm-intake-components/profile-card/prof
     AppointeesComponent,
     IntakeMainComponent,
     ExecutorsComponent,
-    ProfileCardComponent
+    ProfileCardComponent,
+    EstatePlanningFormComponent
   ],
   imports: [
     CommonModule,
