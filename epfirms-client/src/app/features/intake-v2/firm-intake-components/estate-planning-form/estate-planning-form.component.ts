@@ -109,7 +109,10 @@ export class EstatePlanningFormComponent implements OnInit {
 
   loadSpecificRequests(): void {
     this.specificRequestsService.getSpecificRequests(this.matter.id).subscribe((res) => {
+      if (res.length !== 0) {
+
       this.specificRequests = res;
+      }
     });
   }
 
