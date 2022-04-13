@@ -22,6 +22,8 @@ import { RealEstateFormModule } from '@app/shared/real-estate-form/real-estate-f
 import { AppointeeFormModule } from '@app/shared/appointee-form/appointee-form.module';
 import { ProfileCardComponent } from './firm-intake-components/profile-card/profile-card.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { SpouseInformationComponent } from './spouse-information/spouse-information.component';
+import { ChildrenInformationComponent } from './children-information/children-information.component';
 
 
 
@@ -40,7 +42,9 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     AppointeesComponent,
     IntakeMainComponent,
     ExecutorsComponent,
-    ProfileCardComponent
+    ProfileCardComponent,
+    SpouseInformationComponent,
+    ChildrenInformationComponent
   ],
   imports: [
     CommonModule,

@@ -27,7 +27,10 @@ export class IntakeDialogComponent implements OnInit {
   }
 
   continueButton() : void {
+    if (this.dropdownForm) {
+      this.dropdownFormValues.emit(this.dropdownForm.value);
+    }
     this.continue.emit(true);
-    this.dropdownFormValues.emit(this.dropdownForm.value);
+
   }
 }

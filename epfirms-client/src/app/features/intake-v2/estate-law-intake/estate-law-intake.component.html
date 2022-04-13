@@ -303,6 +303,37 @@
           [dropdownForm]="{question: 'Do you have a spouse?', value: hasSpouse}"
         ></app-intake-dialog>
 
+        <app-spouse-information
+          *ngIf="state === 'spouse info'"
+          [matter]="matter"
+          (back)="back()"
+          (continue)="setState('child info intro')"
+        ></app-spouse-information>
+
+<app-intake-dialog
+          *ngIf="state === 'child info intro'"
+          [settings]="{
+            title: 'Child Information',
+            content:
+              '',
+            continueButton: true,
+            backButton: true
+          }"
+          (continue)="setState('child info')"
+          (back)="back()"
+          (dropdownFormValues)="hasChildren = $event"
+          [dropdownForm]="{question: 'Do you have children ?', value: hasChildren}"
+        ></app-intake-dialog>
+
+<app-children-information
+*ngIf="state === 'child info'"
+[matter]="matter"
+(back)="back()"
+(continue)="setState('income info intro')"
+
+></app-children-information>
+
+
         <!-- INCOME INFORMATION -->
 
         <app-income
