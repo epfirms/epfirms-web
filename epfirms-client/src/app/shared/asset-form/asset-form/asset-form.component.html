@@ -68,7 +68,9 @@
               </div>
             </div>
             <div class="sm:col-span-3">
-              <label for="phone" class="block text-sm font-medium text-gray-700"> Institution Name</label>
+              <label for="phone" class="block text-sm font-medium text-gray-700">
+                Institution Name</label
+              >
               <div class="mt-1">
                 <input
                   formControlName="institution"
@@ -91,6 +93,20 @@
                   autocomplete="phone"
                   class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                 />
+              </div>
+            </div>
+
+            <div class="sm:col-span-3">
+              <label for="phone" class="block text-sm font-medium text-gray-700"> Select Beneficiary</label>
+              <div class="mt-1">
+                <select
+                  formControlName="beneficiary_id"
+                  class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                >
+                  <option *ngFor="let member of familyMembers" [ngValue]="member.id">
+                    {{ member.first_name }} {{ member.last_name }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>

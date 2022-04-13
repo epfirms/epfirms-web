@@ -5,35 +5,26 @@ module.exports = (sequelize, {
     STRING,
     TEXT
   }) => {
-    const tableName = 'money_account';
+    const tableName = 'excluded_children';
 
-    const MoneyAccount = sequelize.define(
+    const ExcludedChildren = sequelize.define(
       tableName, {
         id: {
           type: INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
+        // this is reference to the user that holds excluded child information
         user_id: {
           type: INTEGER,
           allowNull: false,
         },
-        institution: {
-            type: STRING
+        //reference to the specific matter
+        matter_id: {
+            type: INTEGER,
+            allowNull: false
         },
-        balance: {
-          type: INTEGER
-        },
-        type: {
-            type: STRING
-        },
-        is_joint: {
-          type: BOOLEAN,
-        },
-        beneficiary_id: {
-          type: INTEGER
-        }
-      }, {
+      },{
         tableName,
         defaultScope: {
           attributes: { exclude: ['createdAt', 'updatedAt'] }
@@ -41,5 +32,5 @@ module.exports = (sequelize, {
       },
     );
 
-    return MoneyAccount;
+    return ExcludedChildren;
   };

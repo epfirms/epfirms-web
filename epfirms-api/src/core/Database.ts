@@ -68,7 +68,10 @@ export class Database {
       contract: require('../models/Contract')(this.sequelize, Sequelize),
       contract_template: require('../models/ContractTemplate')(this.sequelize, Sequelize),
       income: require('../models/Income')(this.sequelize, Sequelize),
-      twilio_subaccount: require('../models/TwilioSubaccount')(this.sequelize, Sequelize)
+      twilio_subaccount: require('../models/TwilioSubaccount')(this.sequelize, Sequelize),
+      estate_planning: require('../models/EstatePlanning')(this.sequelize, Sequelize),
+      excluded_children: require('../models/ExcludedChildren')(this.sequelize, Sequelize),
+      specific_requests: require('../models/SpecificRequests')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -405,6 +408,15 @@ export class Database {
 
     this.models.firm.hasOne(this.models.twilio_subaccount, {foreignKey: 'firm_id'});
     this.models.twilio_subaccount.belongsTo(this.models.firm, {foreignKey: 'firm_id'});
+
+    this.models.matter.hasOne(this.models.estate_planning, {foreignKey: 'matter_id'});
+    this.models.estate_planning.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+
+    this.models.matter.hasMany(this.models.excluded_children, {foreignKey: 'matter_id'});
+    this.models.excluded_children.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+
+    this.models.matter.hasMany(this.models.specific_requests, {foreignKey: 'matter_id'});
+    this.models.specific_requests.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
   }
 
   public static async start() {
