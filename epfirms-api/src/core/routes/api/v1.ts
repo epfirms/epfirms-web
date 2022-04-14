@@ -27,6 +27,9 @@ import { teamRouter } from '@src/modules/team/team.routes';
 import { incomeRouter } from '@src/modules/income/routes';
 import { phoneNumberRouter } from '@src/modules/phone-number/phone-number.routes';
 import { appointeeRouter } from '@src/modules/appointee/routes';
+import { specificRequestsRouter } from '@src/modules/specific-requests/routes';
+import { excludedChildrenRouter } from '@src/modules/excluded-children/routes';
+import { estatePlanningRouter } from '@src/modules/estate-planning/routes';
 
 const v1Router = express.Router();
 
@@ -59,4 +62,7 @@ v1Router.use('/income', incomeRouter);
 v1Router.use('/phone-numbers', phoneNumberRouter);
 
 v1Router.use('/appointee', appointeeRouter);
+v1Router.use('/estate-planning', estatePlanningRouter);
+v1Router.use('/excluded-children', excludedChildrenRouter);
+v1Router.use('/specific-requests', specificRequestsRouter);
 export { v1Router }

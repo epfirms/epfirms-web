@@ -10,4 +10,6 @@ emailsRouter.get('/verify', passport.authenticate('bearer', { session: false }),
 // emailsRouter.post('/sendReview', passport.authenticate('bearer', { session: false }), (req, res) => EmailsController.reviewFeedback(req, res));
 emailsRouter.post('/forgot-password', (req, res) => EmailsController.forgotPassword(req, res));
 emailsRouter.post('/statement', passport.authenticate('bearer', {session: false}), (req, res) => EmailsController.sendStatementNotification(req, res));
+emailsRouter.post('/intake', passport.authenticate('bearer', {session: false}), (req, res) => EmailsController.sendIntakeNotification(req, res));
+
 export { emailsRouter };

@@ -25,6 +25,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { SpouseInformationComponent } from './spouse-information/spouse-information.component';
 import { ChildrenInformationComponent } from './children-information/children-information.component';
 import { OtherFamilyInformationComponent } from './other-family-information/other-family-information.component';
+import { EstatePlanningFormComponent } from './firm-intake-components/estate-planning-form/estate-planning-form.component';
 
 
 
@@ -46,7 +47,8 @@ import { OtherFamilyInformationComponent } from './other-family-information/othe
     ProfileCardComponent,
     SpouseInformationComponent,
     ChildrenInformationComponent,
-    OtherFamilyInformationComponent
+    OtherFamilyInformationComponent,
+    EstatePlanningFormComponent
   ],
   imports: [
     CommonModule,
