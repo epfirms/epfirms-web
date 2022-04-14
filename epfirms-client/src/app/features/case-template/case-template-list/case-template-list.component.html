@@ -1,7 +1,7 @@
 
-  <div class="sticky top-0 z-10 flex items-center w-full h-16 border-b border-slate-200 sm:flex sm:items-center sm:justify-between">
+  <div class="sticky top-0 z-10 flex items-center w-full h-16 border-b border-gray-200 sm:flex sm:items-center sm:justify-between">
         <div class="flex-1 min-w-0">
-            <h1 class="text-lg font-medium leading-6 text-slate-900 sm:truncate">
+            <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
               Case Templates
             </h1>
           </div>
@@ -19,7 +19,7 @@
             </ep-accordion-item-header>
             
             <div class="overflow-hidden bg-white shadow sm:rounded-md">
-            <ul role="list" class="divide-y divide-slate-200">
+            <ul role="list" class="divide-y divide-gray-200">
                 <app-case-template-list-item *ngFor="let template of group.templates" [template]="template" (editTemplate)="editTemplateDialog(template)" (deleteTemplate)="deleteTemplate(template)"></app-case-template-list-item>
             </ul>
         </div>

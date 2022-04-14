@@ -2,7 +2,7 @@
 @import '~tippy.js/animations/shift-away-subtle.css';
 
 .tippy-box[data-theme~='tooltip-dark'] {
-  @apply bg-slate-800 rounded-lg ring-slate-900/10 ring-1 shadow-md text-slate-400 font-bold;
+  @apply bg-gray-800 rounded-lg ring-gray-900/10 ring-1 shadow-md text-gray-400 font-bold;
   & > .tippy-content {
     @apply text-xs leading-6;
   }
@@ -12,6 +12,6 @@
   @apply rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-60 overflow-auto focus:outline-none w-56;
 
   & > .tippy-content {
-    @apply text-slate-700 px-0 py-1;
+    @apply text-gray-700 px-0 py-1;
   }
 }

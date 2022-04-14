@@ -1,6 +1,6 @@
 <div class="
     bg-white
-    border-b border-slate-200
+    border-b border-gray-200
     px-4
     py-3.5
     sm:flex sm:items-center sm:justify-between sm:px-6
@@ -8,16 +8,16 @@
   ">
   <div class="flex justify-between flex-1">
     <div class="flex items-center flex-1">
-      <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 text-slate-400 group-hover:text-slate-300 lg:mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 text-gray-400 group-hover:text-gray-300 lg:mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
       </svg>
-      <h1 class="text-lg font-medium leading-6 text-slate-900 sm:truncate">
+      <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
         Leads
       </h1>
 
       <form class="flex flex-1 w-full ml-12" action="#" method="GET" autocomplete="off">
         <label for="search-field" class="sr-only">Search</label>
-        <div class="relative w-full text-slate-400 focus-within:text-slate-600">
+        <div class="relative w-full text-gray-400 focus-within:text-gray-600">
           <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none " aria-hidden="true">
             <!-- Heroicon name: solid/search -->
             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -28,7 +28,7 @@
             </svg>
           </div>
           <input id="search-field" [(ngModel)]="matterFilterValues.searchTerm" (ngModelChange)="filter()"
-            name="search-field" class="block w-full h-full py-0 pl-5 pr-3 border-transparent text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm" placeholder="Search..." type="search" autocomplete="off" />
+            name="search-field" class="block w-full h-full py-0 pl-5 pr-3 text-gray-900 placeholder-gray-500 border-transparent focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm" placeholder="Search..." type="search" autocomplete="off" />
         </div>
       </form>
     </div>
@@ -46,7 +46,7 @@
           </button>
           <div *MenuItems @toggleAnimation class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div class="p-1" *ngFor="let status of statusFilterOptions">
-              <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="filterStatus(status)">
+              <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium text-gray-700 rounded-md group hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="filterStatus(status)">
                 {{ status + ' leads' | titlecase }}
               </a>
             </div>
@@ -72,7 +72,7 @@
             [trackBy]="trackByIndex" fixedLayout>
             <!-- Position Column -->
             <ng-container cdkColumnDef="client">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase border-r text-slate-500 border-slate-200" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('first_name')">
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase border-r border-gray-200" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('first_name')">
                 <div class="flex items-center group hover:cursor-pointer">
                   <div>Lead</div>
 
@@ -88,29 +88,15 @@
                   </svg>
                 </div>
               </th>
-              <td cdk-cell *cdkCellDef="let lead" class="w-4/12 px-6 py-4 border-r whitespace-nowrap border-slate-200"
+              <td cdk-cell *cdkCellDef="let lead" class="w-4/12 px-6 py-4 border-r border-gray-200 whitespace-nowrap"
                 (click)="openTab(lead)">
-                <div class="flex items-center">
-                  <ep-avatar epSize="medium" epShape="square" [epSrc]="lead.client.profile_image"
-                    [epText]="lead.client.full_name">
-                  </ep-avatar>
-                  <div class="ml-2">
-                    <div class="text-sm font-medium text-slate-900">
-                      {{ lead.client.full_name | titlecase }} <span class="text-xs text-slate-500" *ngIf="lead.spouse">&
-                        {{ lead.spouse.full_name | titlecase }}</span>
-                    </div>
-                    <div class="text-xs text-slate-500">
-                      #{{lead.case_id}} <span class="font-bold">&#183;</span> {{lead.matter_intake?.status || "No
-                      intake" | titlecase}}
-                    </div>
-                  </div>
-                </div>
+                <app-matter-label [client]="lead.client" [spouse]="lead.spouse" [matter]="lead"></app-matter-label>
               </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container cdkColumnDef="task">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('task')">
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('task')">
                 <div class="flex items-center group hover:cursor-pointer">
                   <div>Next Task</div>
 
@@ -137,10 +123,10 @@
                       ></ep-avatar>
                     </div>
                     <div class="ml-2">
-                      <p class="max-w-xs text-sm truncate text-slate-900">
+                      <p class="max-w-xs text-sm text-gray-900 truncate">
                         {{ lead.matter_tasks[0].name || "No task name" }}
                       </p>
-                      <p class="text-sm text-slate-500">
+                      <p class="text-sm text-gray-500">
                         {{ lead.matter_tasks[0].due | date }}
                       </p>
                     </div>
@@ -152,42 +138,42 @@
                           [epText]="lead.matter_tasks[0].assignee?.full_name"></ep-avatar>
                       </div>
                       <div class="ml-3">
-                        <p class="text-sm font-medium truncate text-slate-700 group-hover:text-slate-900"
+                        <p class="text-sm font-medium text-gray-700 truncate group-hover:text-gray-900"
                           style="max-width: 12rem" [tippy]="lead.matter_tasks[0].name || null" tabindex="0">
                           {{ lead.matter_tasks[0].name || "No task name" }}
                         </p>
-                        <p class="text-xs font-medium text-slate-500 group-hover:text-slate-700">
+                        <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
                           {{ lead.matter_tasks[0].due | date }}
                         </p>
                       </div>
                     </div>
                   </a>
-                  <div class="flex items-center font-normal text-slate-400" *ngIf="lead.matter_tasks[0].completed">
+                  <div class="flex items-center font-normal text-gray-400" *ngIf="lead.matter_tasks[0].completed">
                     <div class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-green-400" aria-hidden="true"></div>
                     <div class="ml-2">
-                      <p class="text-sm font-normal text-slate-500 group-hover:text-slate-600">
+                      <p class="text-sm font-normal text-gray-500 group-hover:text-gray-600">
                         Tasks completed
                       </p>
                     </div>
                   </div>
                 </a>
-                <div class="flex items-center text-sm text-slate-400" *ngIf="!lead.matter_tasks.length">
-                  <div class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-slate-300" aria-hidden="true"></div>
-                  <span class="ml-2 text-slate-500"> No tasks </span>
+                <div class="flex items-center text-sm text-gray-400" *ngIf="!lead.matter_tasks.length">
+                  <div class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gray-300" aria-hidden="true"></div>
+                  <span class="ml-2 text-gray-500"> No tasks </span>
                 </div>
               </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container cdkColumnDef="legal-area">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase" cdk-header-cell *cdkHeaderCellDef>
                 Legal Area
               </th>
               <td cdk-cell *cdkCellDef="let lead" class="w-1/12 px-6 py-4 whitespace-nowrap">
                 <div>
                   <ng-container *ngIf="legalAreas$ | async as legalAreas">
-                    <div Menu class="relative inline-block text-left text-slate-700">
-                      <button MenuButton class="table-dropdown" [class.text-slate-500]="!lead.legal_area?.name">
+                    <div Menu class="relative inline-block text-left text-gray-700">
+                      <button MenuButton class="table-dropdown" [class.text-gray-500]="!lead.legal_area?.name">
                         {{ lead.legal_area?.name || "Select a legal area" | titlecase }}
 
                         <svg class="icon-end" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -199,7 +185,7 @@
                       </button>
                       <div *MenuItems @toggleAnimation class="absolute right-0 z-10 mt-2 overflow-y-auto origin-top-right bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div class="p-1" *ngFor="let legalArea of legalAreas">
-                          <a MenuItem class="flex items-center w-full px-2 py-2 text-xs font-medium rounded-md group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="setLegalArea(lead, legalArea)">
+                          <a MenuItem class="flex items-center w-full px-2 py-2 text-xs font-medium text-gray-700 rounded-md group hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="setLegalArea(lead, legalArea)">
                             {{ legalArea.name | titlecase }} {{ legalArea.description ? '('+legalArea.description+")" :
                             ''}}
                           </a>
@@ -213,7 +199,7 @@
 
             <!-- Symbol Column -->
             <ng-container cdkColumnDef="attorney">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase" cdk-header-cell *cdkHeaderCellDef>
 
                 <div Menu class="relative inline-block w-full text-left">
                   <div MenuButton class="flex items-center w-full group hover:cursor-pointer">
@@ -229,7 +215,7 @@
                   </div>
                   <div *MenuItems @toggleAnimation class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div class="p-1" *ngFor="let attorney of attorneys$ | async">
-                      <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium normal-case rounded-md group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" [ngClass]="{
+                      <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium text-gray-700 normal-case rounded-md group hover:bg-blue-500 hover:text-white hover:cursor-pointer" [ngClass]="{
                           'bg-blue-500 text-white': attorney.user.id === matterFilterValues.attorney_id
                         }" (click)="filterAttorney(attorney.user.id)">
                         <div class="w-full">
@@ -270,7 +256,7 @@
 
             <!-- Symbol Column -->
             <ng-container cdkColumnDef="status">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase" cdk-header-cell *cdkHeaderCellDef>
                 Status
               </th>
               <td cdk-cell *cdkCellDef="let lead" class="w-1/12 px-6 py-4 whitespace-nowrap">
@@ -286,10 +272,10 @@
 
             <!-- Symbol Column -->
             <ng-container cdkColumnDef="intake">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase" cdk-header-cell *cdkHeaderCellDef>
                 Intake
               </th>
-              <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 text-sm whitespace-nowrap text-slate-500">
+              <td cdk-cell *cdkCellDef="let lead" class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                 <ep-tag [dot]="false" [color]="'sky'" [epSize]="'small'" [rounded]="true">
                   {{lead.matter_intake?.status ? `Intake ${lead.matter_intake.status}|| "No intake"}}
                 </ep-tag>
@@ -298,8 +284,8 @@
             <!-- Symbol Column -->
             <ng-container cdkColumnDef="edit">
               <th class="px-6 py-3" cdk-header-cell *cdkHeaderCellDef></th>
-              <td cdk-cell *cdkCellDef="let lead" class="w-1/12 px-6 py-4 text-sm font-medium text-right whitespace-nowrap text-slate-400">
-                <button type="button" class="flex items-center p-2 -my-2 bg-white rounded-full text-slate-400 hover:text-slate-600" id="menu-0-button" aria-expanded="false" aria-haspopup="true">
+              <td cdk-cell *cdkCellDef="let lead" class="w-1/12 px-6 py-4 text-sm font-medium text-right text-gray-400 whitespace-nowrap">
+                <button type="button" class="flex items-center p-2 -my-2 text-gray-400 bg-white rounded-full hover:text-gray-600" id="menu-0-button" aria-expanded="false" aria-haspopup="true">
                   <span class="sr-only">Open options</span>
                   <!-- Heroicon name: solid/dots-vertical -->
                   <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -311,7 +297,7 @@
               </td>
             </ng-container>
 
-            <tr cdk-header-row *cdkHeaderRowDef="displayedColumns" class="bg-slate-50"></tr>
+            <tr cdk-header-row *cdkHeaderRowDef="displayedColumns" class="bg-gray-50"></tr>
             <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;" class="hover:cursor-pointer"></tr>
           </table>
         </ng-container>
@@ -319,13 +305,13 @@
 
       <ng-container *ngIf="leads$ | async as leads">
         <div *ngIf="!leads.length" class="mt-24 text-center">
-          <svg class="w-12 h-12 mx-auto text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
             aria-hidden="true">
             <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
           </svg>
-          <h3 class="mt-2 text-sm font-medium text-slate-900">No leads</h3>
-          <p class="mt-1 text-sm text-slate-500">
+          <h3 class="mt-2 text-sm font-medium text-gray-900">No leads</h3>
+          <p class="mt-1 text-sm text-gray-500">
             Get started by creating a new lead.
           </p>
           <div class="mt-6">

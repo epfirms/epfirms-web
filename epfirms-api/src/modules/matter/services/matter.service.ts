@@ -301,11 +301,31 @@ export class MatterService {
   }
 
   public async getById(matterId: number): Promise<any> {
-    const { matter } = Database.models;
+    const { matter, user, legal_area } = Database.models;
 
     const foundMatter = await matter.findOne({where: {
       id: matterId,
-    }});
+    },
+    include: [
+      {
+        model: user,
+        as: 'client',
+        required: true
+      },
+      {
+        model: user,
+        as: 'attorney',
+        required: true
+      },
+      {
+        model: user,
+        as: 'spouse'
+      },
+      {
+        model: legal_area,
+        as: 'legal_area'
+      },
+    ],});
 
     return Promise.resolve(foundMatter);
   }

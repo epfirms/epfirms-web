@@ -6,7 +6,7 @@
         <!-- Main content -->
         <div class="flex-1 max-h-screen xl:overflow-y-auto">
           <div class="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:py-12 lg:px-8">
-            <h1 class="text-2xl font-extrabold text-slate-900">Legal Areas</h1>
+            <h1 class="text-2xl font-extrabold text-gray-900">Legal Areas</h1>
 
             <section aria-labelledby="billing-history-heading" class="mt-6">
               <button class="button-primary-icon-sm" (click)="add()">
@@ -28,29 +28,29 @@
                   <div class="-my-2 sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                       <div>
-                        <table class="min-w-full divide-y divide-slate-200">
-                          <thead class="bg-slate-50">
+                        <table class="min-w-full divide-y divide-gray-200">
+                          <thead class="bg-gray-50">
                             <tr>
-                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Legal Area
                               </th>
-                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Description
                               </th>
                               <!--
                                 `relative` is added here due to a weird bug in Safari that causes `sr-only` headings to introduce overflow on the body on mobile.
                               -->
-                              <th scope="col" class="relative px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                              <th scope="col" class="relative px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <span class="sr-only">Remove</span>
                               </th>
                             </tr>
                           </thead>
-                          <tbody class="bg-white divide-y divide-slate-200">
+                          <tbody class="bg-white divide-y divide-gray-200">
                             <tr *ngIf="createLegalArea">
-                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 <editable-input placeholder="Name" (onChange)="updateNewLegalArea($event, 'name')"></editable-input>
                               </td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 <editable-input placeholder="Enter a description" (onChange)="updateNewLegalArea($event, 'description')"></editable-input>
                               </td>
                               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -60,7 +60,7 @@
                               </td>
                             </tr>
                             <tr *ngFor="let legalArea of legalAreas$ | async">
-                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 <ep-tag
                                 [dot]="true"
                                 [color]="legalArea.color"
@@ -70,7 +70,7 @@
                                 {{ legalArea.name | titlecase}}
                               </ep-tag>
                               </td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ legalArea.description || 'Add a description'}}
                               </td>
                               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

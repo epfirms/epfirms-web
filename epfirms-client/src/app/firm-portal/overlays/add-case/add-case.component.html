@@ -1,7 +1,7 @@
 <form [formGroup]="caseForm" class="flex flex-col h-screen overflow-y-auto">
   <div class="flex-1">
     <!-- Header -->
-    <div class="px-4 py-6 bg-slate-50 sm:px-6">
+    <div class="px-4 py-6 bg-gray-50 sm:px-6">
       <div class="flex items-start justify-between space-x-3">
         <div class="space-y-1">
           <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">New {{ matterType | titlecase }}</h2>
@@ -11,10 +11,10 @@
     </div>
 
     <!-- Divider container -->
-    <div class="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-slate-200">
+    <div class="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-gray-200">
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
-          <label for="project-name" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
+          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
             Client
           </label>
         </div>
@@ -75,7 +75,7 @@
 
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
-          <label for="project-name" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
+          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
             Attorney
           </label>
         </div>
@@ -106,7 +106,7 @@
       
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
-          <label for="project-name" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
+          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
             Legal area
           </label>
         </div>
@@ -125,7 +125,7 @@
               </button>
               <div *MenuItems class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div class="p-1" *ngFor="let legalArea of legalAreas">
-                  <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="setLegalArea(legalArea)">
+                  <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md group text-gray-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="setLegalArea(legalArea)">
                     {{ legalArea.name | titlecase }}
                   </a>
                 </div>
@@ -137,7 +137,7 @@
 
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
-          <label for="project-name" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
+          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
             {{matterType | titlecase}} description
           </label>
         </div>
@@ -148,7 +148,7 @@
       
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
-          <label for="project-description" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
+          <label for="project-description" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
             Notes
           </label>
         </div>
@@ -162,7 +162,7 @@
 
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
-          <label for="project-description" class="block text-sm font-medium text-slate-900 sm:mt-px sm:pt-2">
+          <label for="project-description" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
             Settings
           </label>
         </div>
@@ -199,7 +199,7 @@
   </div>
 
   <!-- Action buttons -->
-  <div class="flex-shrink-0 px-4 py-5 border-t border-slate-200 sm:px-6">
+  <div class="flex-shrink-0 px-4 py-5 border-t border-gray-200 sm:px-6">
     <div class="flex justify-end space-x-3">
       <button (click)="close()" type="button" class="button-white">
         Cancel

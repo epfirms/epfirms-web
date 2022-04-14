@@ -1,13 +1,6 @@
 <!-- Tab nav -->
 <div
-  class="
-    relative
-    bg-slate-50
-    border-t border-slate-200
-    overflow-hidden
-    flex
-    -mb-px
-  "
+  class="relative flex -mb-px overflow-hidden"
 >
   <div class="tab-bar-container">
     <div class="tab-container">
@@ -15,32 +8,17 @@
         <li
           *ngFor="let tab of tabs; let i = index"
           (click)="setSelectedIndex(i)"
-          class="tab"
-          [class.bg-white]="selectedIndex === i"
+          class="px-2 tab"
+          [class.selected]="selectedIndex === i && expanded"
           [class.z-20]="selectedIndex === i"
-          [class.bg-slate-100]="selectedIndex !== i"
+          [class.not-selected]="selectedIndex !== i || !expanded"
         >
-          <div class="flex items-center px-6 pr-2">
-            {{ tab.label }}
-            <button
-              type="button"
-              class="remove-tab-button"
-              (click)="onClose(i, $event)"
-            >
-              <!-- Heroicon name: solid/plus -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+          <div class="flex items-center max-w-[10rem]">
+            <span [ngTemplateOutlet]="tab.titleTemplate"></span>
+            <button (click)="onClose(i, $event)" type="button" class="inline-flex items-center justify-center flex-shrink-0 w-4 h-4 ml-6 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-500 focus:outline-none focus:bg-gray-500 focus:text-white">
+              <span class="sr-only">Remove large option</span>
+              <svg class="w-2 h-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
               </svg>
             </button>
           </div>
@@ -51,7 +29,7 @@
   <button class="mr-5 disabled:opacity-20" (click)="onExpand()" [disabled]="!tabs.length">
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class="h-5 w-5"
+      class="w-5 h-5"
       viewBox="0 0 20 20"
       fill="currentColor"
       *ngIf="!expanded"
@@ -65,7 +43,7 @@
 
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class="h-5 w-5"
+      class="w-5 h-5"
       viewBox="0 0 20 20"
       fill="currentColor"
       *ngIf="expanded"
@@ -81,15 +59,7 @@
 
 <!-- Tab content -->
 <div
-  class="
-    relative
-    z-10
-    inset-x-0
-    shadow-lg
-    border-t border-slate-200
-    h-full
-    min-h-0
-  "
+  class="relative inset-x-0 z-10 h-full min-h-0 border-t shadow-lg border-gray-200"
 >
     <div
       tab-body

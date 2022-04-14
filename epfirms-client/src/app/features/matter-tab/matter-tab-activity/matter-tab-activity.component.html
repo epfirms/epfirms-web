@@ -1,6 +1,6 @@
 <div class="max-w-2xl mx-auto px-6">
     <div>
-      <ul role="list" class="divide-y divide-slate-200">
+      <ul role="list" class="divide-y divide-gray-200">
         <li class="py-4" *ngFor="let activity of activities$ | async">
           <div class="flex space-x-3">
             <ep-avatar
@@ -10,11 +10,11 @@
             <div class="flex-1 space-y-1">
               <div class="flex items-center justify-between">
                 <h3 class="text-sm font-medium">{{activity.staff_name | titlecase}}</h3>
-                <p class="text-sm text-slate-500">{{activity.created_at | date:'MMM d, y \'at\' h:mm a'}}</p>
+                <p class="text-sm text-gray-500">{{activity.created_at | date:'MMM d, y \'at\' h:mm a'}}</p>
               </div>
-              <p class="text-sm text-slate-500" *ngIf="activity.action === 'add'">Added a {{activity.feature}} {{activity.value ? '(' + activity.value + ')' : ''}} to this case</p>
-              <p class="text-sm text-slate-500" *ngIf="activity.action === 'update'">Updated {{activity.feature}} "{{activity.value}}"</p>
-              <p class="text-sm text-slate-500" *ngIf="activity.action === 'delete'">Deleted {{activity.feature}} "{{activity.value}}"</p>
+              <p class="text-sm text-gray-500" *ngIf="activity.action === 'add'">Added a {{activity.feature}} {{activity.value ? '(' + activity.value + ')' : ''}} to this case</p>
+              <p class="text-sm text-gray-500" *ngIf="activity.action === 'update'">Updated {{activity.feature}} "{{activity.value}}"</p>
+              <p class="text-sm text-gray-500" *ngIf="activity.action === 'delete'">Deleted {{activity.feature}} "{{activity.value}}"</p>
   
             </div>
           </div>

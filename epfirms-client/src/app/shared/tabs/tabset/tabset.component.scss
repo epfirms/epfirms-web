@@ -12,22 +12,21 @@
 
 .tab {
   @apply py-2
-        rounded-t-md
+        rounded-t-lg
         text-sm
         border-l
-        text-slate-500
-        border-r border-t border-slate-200
+        border-r border-t border-gray-300/75
+        bg-white
         mr-1
-        shadow-sm
         font-medium;
 }
 
 .selected {
-  @apply bg-white;
+  @apply bg-opacity-100 shadow-sm;
 }
 
 .not-selected {
-  @apply bg-slate-100;
+  @apply bg-opacity-0 opacity-80 transition-all hover:opacity-100 hover:bg-opacity-50;
 }
 
 .remove-tab-button {
@@ -37,8 +36,8 @@
         items-center
         border border-transparent
         rounded-md
-        text-slate-400
-        hover:bg-slate-300
+        text-gray-400
+        hover:bg-gray-300
         focus:outline-none
         focus:ring-2
         focus:ring-offset-2

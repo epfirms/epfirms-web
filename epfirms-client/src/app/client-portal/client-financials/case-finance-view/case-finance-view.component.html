@@ -1,10 +1,10 @@
 
 
 <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <!-- Content goes here -->
-    <button (click)="closeCaseView()" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <button (click)="closeCaseView()" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
       </svg>
 
@@ -12,11 +12,11 @@
     
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div>
-    <h1 class="text-lg leading-6 font-medium text-gray-900">
+    <h1 class="text-lg font-medium leading-6 text-gray-900">
       Financial Overview for Case: {{matter.case_id}}
     </h1>
-    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-      <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+    <dl class="grid grid-cols-1 gap-5 mt-5 sm:grid-cols-3">
+      <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">
           Current Balance
         </dt>
@@ -25,7 +25,7 @@
         </dd>
       </div>
   
-      <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">
           Last Payment
         </dt>
@@ -34,7 +34,7 @@
         </dd>
       </div>
   
-      <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">
           Status
         </dt>
@@ -66,20 +66,20 @@
     }
     ```
   -->
-  <div class="py-8 px-24">
+  <div class="px-24 py-8">
     
     <div class="hidden sm:block">
       <div class="border-b border-gray-200">
-        <nav class="-mb-px flex space-x-8">
-          <!-- Current: "border-blue-500 text-blue-600", Default: "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300" -->
+        <nav class="flex -mb-px space-x-8">
+          <!-- Current: "border-blue-500 text-blue-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
           <a                 
           *ngFor="let subtab of subTabs"
           (click)="selectTab(subtab)"
           [ngClass]="{
             'border-blue-500 text-blue-600': subtab === selectedTab,
-            'text-slate-500 hover:text-slate-700 hover:border-slate-300 border-transparent':
+            'text-gray-500 hover:text-gray-700 hover:border-gray-300 border-transparent':
               subtab !== selectedTab
-          }" class=" whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm hover:cursor-pointer" aria-current="page">
+          }" class="px-1 pb-4 text-sm font-medium border-b-2  whitespace-nowrap hover:cursor-pointer" aria-current="page">
           {{ subtab | titlecase }}
   
           </a>
@@ -88,9 +88,9 @@
           (click)="selectTab('monthly payments')"
           [ngClass]="{
             'border-blue-500 text-blue-600': 'monthly payments' === selectedTab,
-            'text-slate-500 hover:text-slate-700 hover:border-slate-300 border-transparent':
+            'text-gray-500 hover:text-gray-700 hover:border-gray-300 border-transparent':
               'monthly payments' !== selectedTab
-          }" class=" whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm hover:cursor-pointer" aria-current="page">
+          }" class="px-1 pb-4 text-sm font-medium border-b-2  whitespace-nowrap hover:cursor-pointer" aria-current="page">
           Monthly Payments
   
           </a>

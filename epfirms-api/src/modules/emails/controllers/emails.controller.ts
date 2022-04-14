@@ -163,7 +163,7 @@ theURL: String = "http://localhost:4200"
     }
 }
 /*
-                      <a href="` + this.theURL + `/feedback?id=` + await review.id + `" class="mt-2 text-base text-slate-500">1-4 Stars!</a>
-                      <a href="` + await (reviewURL) + `" class="mt-2 text-base text-slate-500">5 Stars!</a>
+                      <a href="` + this.theURL + `/feedback?id=` + await review.id + `" class="mt-2 text-base text-gray-500">1-4 Stars!</a>
+                      <a href="` + await (reviewURL) + `" class="mt-2 text-base text-gray-500">5 Stars!</a>
 
 */

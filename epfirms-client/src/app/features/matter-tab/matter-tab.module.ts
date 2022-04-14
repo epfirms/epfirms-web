@@ -26,6 +26,8 @@ import { MenuModule } from '@app/shared/menu/menu.module';
 import { ContractBuilderModule } from '../contract-builder/contract-builder.module';
 import { ModalModule } from '@app/shared/modal/modal.module';
 import { IntakeV2Module } from '../intake-v2/intake-v2.module';
+import { MatterModule } from '../matter/matter.module';
+import { TippyModule } from '@ngneat/helipopper';
 
 
 
@@ -59,7 +61,9 @@ import { IntakeV2Module } from '../intake-v2/intake-v2.module';
     MenuModule,
     ContractBuilderModule,
     ModalModule,
-    IntakeV2Module
+    IntakeV2Module,
+    MatterModule,
+    TippyModule
   ],
   exports: [
     MatterTabsComponent

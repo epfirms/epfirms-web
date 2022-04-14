@@ -1,5 +1,4 @@
 .matter-tab-overlay {
-  @apply right-0 left-20 lg:left-64 bottom-0 duration-500 ease-in-out;
   transition-property: max-height, background-color, border-color, color, fill, stroke, opacity,
   box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
 }

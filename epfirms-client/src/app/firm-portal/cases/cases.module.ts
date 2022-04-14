@@ -1,6 +1,7 @@
 import { CdkTableModule } from '@angular/cdk/table'
 import { NgModule } from '@angular/core'
 import { CoreModule } from '@app/core/core.module'
+import { MatterModule } from '@app/features/matter/matter.module'
 import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module'
 import { AvatarModule } from '@app/shared/avatar/avatar.module'
 import { ButtonModule } from '@app/shared/button/button.module'
@@ -29,7 +30,8 @@ import { CasesComponent } from './cases.component'
         AutocompleteModule,
         EditableModule,
         InputModule,
-        MenuModule
+        MenuModule,
+        MatterModule
     ],
 })
 export class CasesPageModule {}

@@ -11,7 +11,7 @@
   }
 
   &.ep-white {
-    @apply border border-slate-300 text-slate-700 font-medium shadow-sm bg-white hover:bg-slate-50;
+    @apply border border-gray-300 text-gray-700 font-medium shadow-sm bg-white hover:bg-gray-50;
     
     &.ep-sm {
       padding-top: calc(0.5rem - 1px);

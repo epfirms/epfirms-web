@@ -35,7 +35,7 @@ const _AccordionItemHeaderMixinBase = mixinTabIndex(AccordionItemHeaderBase);
   inputs: ['tabIndex'],
   animations: [expansionAnimations.indicatorRotate],
   host: {
-    class: 'ep-accordion-item-header ep-focus-indicator flex select-none justify-between w-full px-4 py-2 text-sm font-medium text-left text-slate-900 rounded-lg focus:outline-none focus-visible:ring focus-visible:ring-slate-500 focus-visible:ring-opacity-75',
+    class: 'ep-accordion-item-header ep-focus-indicator flex select-none justify-between w-full px-4 py-2 text-sm font-medium text-left text-gray-900 rounded-lg focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75',
     role: 'button',
     '[attr.tabindex]': 'tabIndex',
     '[attr.aria-controls]': '_getPanelId()',

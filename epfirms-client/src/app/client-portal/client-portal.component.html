@@ -9,7 +9,7 @@
 -->
 <div>
   <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-  <div *ngIf="showMenu" class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true">
+  <div *ngIf="showMenu" class="fixed inset-0 z-40 flex md:hidden" role="dialog" aria-modal="true">
     <!--
       Off-canvas menu overlay, show/hide based on off-canvas menu state.
 
@@ -20,7 +20,7 @@
         From: "opacity-100"
         To: "opacity-0"
     -->
-    <div class="fixed inset-0 bg-slate-600 bg-opacity-75" aria-hidden="true"></div>
+    <div class="fixed inset-0 bg-opacity-75 bg-gray-600" aria-hidden="true"></div>
 
     <!--
       Off-canvas menu, show/hide based on off-canvas menu state.
@@ -32,7 +32,7 @@
         From: "translate-x-0"
         To: "-translate-x-full"
     -->
-    <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+    <div class="relative flex flex-col flex-1 w-full max-w-xs bg-white">
       <!--
         Close button, show/hide based on off-canvas menu state.
 
@@ -43,16 +43,16 @@
           From: "opacity-100"
           To: "opacity-0"
       -->
-      <div class="absolute top-0 right-0 -mr-12 pt-2">
+      <div class="absolute top-0 right-0 pt-2 -mr-12">
         <button
           (click)="toggleShowMenu()"
           type="button"
-          class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          class="flex items-center justify-center w-10 h-10 ml-1 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
         >
           <span class="sr-only">Close sidebar</span>
           <!-- Heroicon name: outline/x -->
           <svg
-            class="h-6 w-6 text-white"
+            class="w-6 h-6 text-white"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -70,7 +70,7 @@
       </div>
 
       <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-        <div class="flex-shrink-0 flex items-center px-4">
+        <div class="flex items-center flex-shrink-0 px-4">
           <svg class="h-9" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="0 0 279.01 110.78">
           <defs/>
           <g id="Layer 2" vectornator:layerName="Layer 2">
@@ -87,7 +87,7 @@
           </g>
           </svg>
         </div>
-        <nav class="mt-5 px-2 space-y-1">
+        <nav class="px-2 mt-5 space-y-1">
           <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
           
           <a
@@ -114,12 +114,12 @@
           </a>
           <a
             routerLink="documents"
-            [routerLinkActive]="'bg-slate-900 text-white'"
+            [routerLinkActive]="'bg-gray-900 text-white'"
             [routerLinkActiveOptions]="{ exact: true }"
-            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-slate-500 hover:bg-slate-700 hover:text-white group"
+            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-500 hover:bg-gray-700 hover:text-white group"
           >
             <svg
-              class="flex-shrink-0 w-6 h-6 mr-3 text-slate-500"
+              class="flex-shrink-0 w-6 h-6 mr-3 text-gray-500"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -145,8 +145,8 @@
          
         </nav>
       </div>
-      <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
-        <a c class="flex-shrink-0 group block">
+      <div class="flex flex-shrink-0 p-4 border-t border-gray-200">
+        <a c class="flex-shrink-0 block group">
           <div class="flex items-center">
             <div class="ml-3">
               <p (click)="logout()" class="text-base font-medium text-gray-700 group-hover:text-gray-900">Logout</p>
@@ -164,8 +164,8 @@
   <!-- Static sidebar for desktop -->
   <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
     <!-- Sidebar component, swap this element with another sidebar if you like -->
-    <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
-      <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+    <div class="flex flex-col flex-1 min-h-0 bg-white border-r border-gray-200">
+      <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
         <div class="flex items-center flex-shrink-0 px-4">
           <svg class="h-9" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="0 0 279.01 110.78">
           <defs/>
@@ -183,7 +183,7 @@
           </g>
           </svg>
         </div>
-        <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
+        <nav class="flex-1 px-2 mt-5 space-y-1 bg-white">
           <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
          
           <a
@@ -210,12 +210,12 @@
           </a>
           <a
             routerLink="documents"
-            [routerLinkActive]="'bg-slate-900 text-white'"
+            [routerLinkActive]="'bg-gray-900 text-white'"
             [routerLinkActiveOptions]="{ exact: true }"
-            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-slate-500 hover:bg-slate-700 hover:text-white group"
+            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-500 hover:bg-gray-700 hover:text-white group"
           >
             <svg
-              class="flex-shrink-0 w-6 h-6 mr-3 text-slate-500"
+              class="flex-shrink-0 w-6 h-6 mr-3 text-gray-500"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -241,8 +241,8 @@
           
         </nav>
       </div>
-      <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
-        <a c class="flex-shrink-0 w-full group block">
+      <div class="flex flex-shrink-0 p-4 border-t border-gray-200">
+        <a c class="flex-shrink-0 block w-full group">
           <div class="flex items-center">
             <div class="ml-3">
               <p (click)="logout()" class="text-sm font-medium text-gray-700 group-hover:text-gray-900">Logout</p>
@@ -252,8 +252,8 @@
       </div>
     </div>
   </div>
-  <div class="md:pl-64 flex flex-col flex-1">
-    <div class="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
+  <div class="flex flex-col flex-1 md:pl-64">
+    <div class="sticky top-0 z-10 pt-1 pl-1 bg-gray-100 md:hidden sm:pl-3 sm:pt-3">
       <button
         (click)="toggleShowMenu()"
         type="button"
@@ -262,7 +262,7 @@
         <span class="sr-only">Open sidebar</span>
         <!-- Heroicon name: outline/menu -->
         <svg
-          class="h-6 w-6"
+          class="w-6 h-6"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -280,9 +280,9 @@
     </div>
     <main class="flex-1">
       <div class="py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
         </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
           <!-- Replace with your content -->
           <div class="py-4">
     <router-outlet></router-outlet>
@@ -295,18 +295,18 @@
   </div>
 </div>
 
-<!-- <div class="flex h-full bg-slate-50">
+<!-- <div class="flex h-full bg-gray-50">
   <nav tw-nav>
     <div class="space-y-1">
-      <a routerLink="/client" [routerLinkActive]="'bg-slate-900 text-white'" [routerLinkActiveOptions]="{exact: true}" class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-slate-500 hover:bg-slate-700 hover:text-white group">
-        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <a routerLink="/client" [routerLinkActive]="'bg-gray-900 text-white'" [routerLinkActiveOptions]="{exact: true}" class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-500 hover:bg-gray-700 hover:text-white group">
+        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
         </svg>
         Home
       </a>
 
-      <a routerLink="documents" [routerLinkActive]="'bg-slate-900 text-white'" [routerLinkActiveOptions]="{exact: true}" class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-slate-500 hover:bg-slate-700 hover:text-white group">
-        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <a routerLink="documents" [routerLinkActive]="'bg-gray-900 text-white'" [routerLinkActiveOptions]="{exact: true}" class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-500 hover:bg-gray-700 hover:text-white group">
+        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
         Documents

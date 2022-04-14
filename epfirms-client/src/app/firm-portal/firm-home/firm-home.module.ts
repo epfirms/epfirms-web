@@ -1,6 +1,7 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgModule } from '@angular/core';
 import { CoreModule } from '@app/core/core.module';
+import { MatterModule } from '@app/features/matter/matter.module';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { PaginatorModule } from '@app/shared/paginator/paginator.module';
@@ -24,6 +25,7 @@ import { FirmHomeComponent } from './firm-home.component';
     AvatarModule,
     PaginatorModule,
     EditableModule,
+    MatterModule
   ]
 })
 export class FirmHomeModule { }

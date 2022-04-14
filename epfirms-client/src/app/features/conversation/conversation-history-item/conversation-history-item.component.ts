@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnDestroy } from '@angular/core';
+import { Matter } from '@app/core/interfaces/matter';
 import { UserService } from '@app/features/user/services/user.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { Conversation, Participant, Message, Paginator, User } from '@twilio/conversations';
-import { from, fromEventPattern, map, pluck, Subscription } from 'rxjs';
+import { from, fromEventPattern, map, pluck, Subscription, tap } from 'rxjs';
 import { ConversationService } from '../services/conversation.service';
 
 @Component({
@@ -44,6 +45,8 @@ export class ConversationHistoryItemComponent implements OnDestroy {
   private _conversation: Conversation;
 
   currentUser: User;
+
+  matter: Matter;
 
   constructor(
     private _conversationService: ConversationService,
@@ -91,6 +94,9 @@ export class ConversationHistoryItemComponent implements OnDestroy {
       this._matterService
         .getById(this.conversation.attributes['matterId'])
         .pipe(
+          tap(matter => {
+            this.matter = matter;
+          }),
           pluck('title'),
           map((title) => {
             if (title && title.length) {
