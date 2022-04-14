@@ -15,7 +15,7 @@
                     >Billing style</label
                   >
                   <div Menu class="relative inline-block text-left">
-                    <button MenuButton class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <button MenuButton class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                       <span class="block truncate">
                         {{billForm.get('billing_type').value || 'Select billing type'}}
                       </span>
@@ -49,7 +49,7 @@
                     >Payment Type</label
                   >
                   <div Menu class="relative inline-block text-left">
-                    <button MenuButton class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <button MenuButton class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                         <span class="block truncate">
                           {{billForm.get('payment_type').value || 'Select payment type'}}
                         </span>
@@ -90,7 +90,7 @@
                     </div>
                     <input formControlName="amount"
                     [inputMask]="currencyInputMask"
-                    placeholder="0.00" type="text" name="amount" id="amount" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-slate-300" placeholder="0.00" aria-describedby="price-currency">
+                    placeholder="0.00" type="text" name="amount" id="amount" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-gray-300" placeholder="0.00" aria-describedby="price-currency">
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                       <span class="text-gray-500 sm:text-sm" id="price-currency">
                         USD
@@ -107,7 +107,7 @@
                   >
                   <div class="relative mt-1">
 
-                    <input (dateChanged)="setDate($event)" (click)="dpBillDate.toggleCalendar()" class="block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-slate-300" placeholder="Select a date" angular-mydatepicker id="bill-date" name="bill-date" 
+                    <input (dateChanged)="setDate($event)" (click)="dpBillDate.toggleCalendar()" class="block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" placeholder="Select a date" angular-mydatepicker id="bill-date" name="bill-date" 
                       formControlName="date" [options]="myOptions" #dpBillDate="angular-mydatepicker"/>
                     </div>
                     <!-- date -->
@@ -123,7 +123,7 @@
                     >Track time for</label
                   >
                   <div Menu class="relative inline-block text-left">
-                    <button MenuButton class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <button MenuButton class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                       <span class="block truncate">
                         {{billForm.get('payment_type').value || 'Select'}}
                       </span>
@@ -166,7 +166,7 @@
                   </div>
                   <input formControlName="hourly_rate"
                   [inputMask]="currencyInputMask"
-                  placeholder="0.00" type="text" name="hourly-rate" id="hourly-rate" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-slate-300" placeholder="0.00" aria-describedby="price-currency">
+                  placeholder="0.00" type="text" name="hourly-rate" id="hourly-rate" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-gray-300" placeholder="0.00" aria-describedby="price-currency">
                   <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                     <span class="text-gray-500 sm:text-sm" id="price-currency">
                       USD
@@ -184,7 +184,7 @@
                   >
                   <div class="relative mt-1">
 
-                    <input id="date-range" name="date-range" (click)="dpRange.toggleCalendar()" class="block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-slate-300" placeholder="Select a date" angular-mydatepicker
+                    <input id="date-range" name="date-range" (click)="dpRange.toggleCalendar()" class="block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" placeholder="Select a date" angular-mydatepicker
                     (dateChanged)="setDateRange($event)"
                     [options]="rangeOptions" #dpRange="angular-mydatepicker"/>
                     </div>
@@ -200,10 +200,10 @@
                   <div class="relative">
 
                   <div class="relative mt-1 rounded-md shadow-sm">
-                    <input formControlName="start_time" [inputMask]="timeInputMask" type="text" name="start-time" id="start-time" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-slate-300">
+                    <input formControlName="start_time" [inputMask]="timeInputMask" type="text" name="start-time" id="start-time" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-gray-300">
                     <div class="absolute inset-y-0 right-0 flex items-center">
                       <label for="am-pm" class="sr-only">AM/PM</label>
-                      <select id="am-pm" name="am-pm" class="h-full py-0 pl-2 bg-transparent border-transparent rounded-md focus:ring-blue-500 focus:border-blue-500 pr-7 text-slate-500 sm:text-sm">
+                      <select id="am-pm" name="am-pm" class="h-full py-0 pl-2 bg-transparent border-transparent rounded-md focus:ring-blue-500 focus:border-blue-500 pr-7 text-gray-500 sm:text-sm">
                         <option value="AM">AM</option>
                         <option value="PM">PM</option>
                       </select>
@@ -253,7 +253,7 @@
                       </div>
                       <input formControlName="settlement_amount"
                       [inputMask]="currencyInputMask"
-                      placeholder="0.00" type="text" name="estimated-settlement" id="estimated-settlement" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-slate-300" placeholder="0.00" aria-describedby="price-currency">
+                      placeholder="0.00" type="text" name="estimated-settlement" id="estimated-settlement" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-gray-300" placeholder="0.00" aria-describedby="price-currency">
                       <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <span class="text-gray-500 sm:text-sm" id="price-currency">
                           USD
@@ -291,7 +291,7 @@
 
                     <div class="relative mt-1">
 
-                      <input (click)="dpSettlement.toggleCalendar()" (dateChanged)="setSettlementDate($event)" class="block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-slate-300" placeholder="Select a date" angular-mydatepicker id="bill-date" name="bill-date" 
+                      <input (click)="dpSettlement.toggleCalendar()" (dateChanged)="setSettlementDate($event)" class="block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300" placeholder="Select a date" angular-mydatepicker id="bill-date" name="bill-date" 
                         formControlName="settlement_date" [options]="myOptions" #dpSettlement="angular-mydatepicker"/>
                       </div>
                       <!-- settlement_date -->
@@ -307,7 +307,7 @@
                     >
                       <!-- description -->
                       <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        <textarea id="description" name="description" formControlName="description" rows="3" class="block w-full max-w-lg border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-slate-300"></textarea>
+                        <textarea id="description" name="description" formControlName="description" rows="3" class="block w-full max-w-lg border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"></textarea>
                       </div>
                   </div>
               </div>

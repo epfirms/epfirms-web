@@ -41,7 +41,7 @@
           <div class="mt-2">
             <div class="relative mt-1 rounded-md shadow-sm">
 
-              <input type="text" value="{{updatedDocument.doc_name}}" (blur)="setDocName(updatedDocument, $event)" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-slate-300">
+              <input type="text" value="{{updatedDocument.doc_name}}" (blur)="setDocName(updatedDocument, $event)" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-gray-300">
             </div>
             <!-- This example requires Tailwind CSS v2.0+ -->
             <!--
@@ -58,7 +58,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
               </label>
               <div class="relative mt-1">
                 <button (click)="toggleDisplayDocTypeSelection()" type="button"
-                  class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-haspopup="listbox"
+                  class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-haspopup="listbox"
                   aria-expanded="true" aria-labelledby="listbox-label">
                   <span class="flex items-center">
                     <span class="block ml-3 truncate">
@@ -91,7 +91,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
                   <!--
       Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-      Highlighted: "text-white bg-blue-600", Not Highlighted: "text-slate-900"
+      Highlighted: "text-white bg-blue-600", Not Highlighted: "text-gray-900"
     -->
                   <li *ngFor="let doc_type of legalDocumentTypes" (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9" id="listbox-option-0"
                     role="option">
@@ -126,7 +126,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
               </label>
               <div class="relative mt-1">
                 <button (click)="toggleDisplaySharing()" type="button"
-                  class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-haspopup="listbox"
+                  class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-haspopup="listbox"
                   aria-expanded="true" aria-labelledby="listbox-label">
                   <span class="flex items-center">
                     <span class="block ml-3 truncate">
@@ -159,7 +159,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
                   <!--
       Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-      Highlighted: "text-white bg-blue-600", Not Highlighted: "text-slate-900"
+      Highlighted: "text-white bg-blue-600", Not Highlighted: "text-gray-900"
     -->
                   <li (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9" id="listbox-option-0" role="option">
                     <div (click)="setSharing('Firm Only'); toggleDisplaySharing()" class="flex items-center">
@@ -215,7 +215,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
         <button  (click)="submit()" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm">
           Update
         </button>
-        <button (click)="toggleIsEditVisible()" type="button" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium bg-white border rounded-md shadow-sm border-slate-300 text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm">
+        <button (click)="toggleIsEditVisible()" type="button" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium bg-white border rounded-md shadow-sm border-gray-300 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm">
           Cancel
         </button>
       </div>

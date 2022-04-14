@@ -9,7 +9,7 @@
                     <label for="case-select" class="block text-sm font-medium text-gray-700">Choose a case</label>
                     <div Menu class="relative inline-block text-left">
                         <button MenuButton
-                            class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             <span class="block truncate" *ngIf="selectedMatter">
                                 {{ selectedMatter?.legal_area?.name || 'Case' | titlecase}} created on
                                 {{selectedMatter?.created_at | date}}
@@ -41,7 +41,7 @@
                     <label for="case-select" class="block text-sm font-medium text-gray-700">Document type</label>
                     <div Menu class="relative inline-block text-left">
                         <button MenuButton
-                            [disabled]="!selectedMatter" class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm disabled:opacity-50">
+                            [disabled]="!selectedMatter" class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm disabled:opacity-50">
                             <span class="block truncate" *ngIf="selectedDocumentType">
                                 {{ selectedDocumentType.viewValue }}
                             </span>

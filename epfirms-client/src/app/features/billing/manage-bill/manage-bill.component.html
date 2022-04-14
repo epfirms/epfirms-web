@@ -22,7 +22,7 @@
                   Manage Bill
                 </h2>
                 <div class="flex items-center ml-3 h-7">
-                  <button type="button" (click)="closeBillManager()" class="bg-white rounded-md text-slate-400 hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <button type="button" (click)="closeBillManager()" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <span class="sr-only">Close panel</span>
                     <!-- Heroicon name: outline/x -->
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -76,8 +76,8 @@
               ```
             -->
             <div>
-              <label for="billingStyle" class="block text-sm font-medium text-slate-700">Billing Style</label>
-              <select id="billingStyle" formControlName="billing_type"  class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md border-slate-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+              <label for="billingStyle" class="block text-sm font-medium text-gray-700">Billing Style</label>
+              <select id="billingStyle" formControlName="billing_type"  class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 <option>Flat Rate</option>
                 <option >Hourly</option>
                 <option>Contingency</option>
@@ -106,8 +106,8 @@
               ```
             -->
             <div>
-              <label for="paymentType" class="block text-sm font-medium text-slate-700">Payment Type</label>
-              <select id="paymentType" formControlName="payment_type"  class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md border-slate-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+              <label for="paymentType" class="block text-sm font-medium text-gray-700">Payment Type</label>
+              <select id="paymentType" formControlName="payment_type"  class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 <option>Private Pay</option>
                 <option >Legal Insurance</option>
 
@@ -219,8 +219,8 @@
           <div class="mt-1">
 
             <div>
-              <label for="hours" class="block text-sm font-medium text-slate-700">Hours</label>
-              <input type="number" (blur)="calculateAmount()" id="hours" formControlName="hours"  class="block w-full max-w-lg rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs sm:text-sm border-slate-300">
+              <label for="hours" class="block text-sm font-medium text-gray-700">Hours</label>
+              <input type="number" (blur)="calculateAmount()" id="hours" formControlName="hours"  class="block w-full max-w-lg rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs sm:text-sm border-gray-300">
             </div>
           </div>
         </div>
@@ -281,7 +281,7 @@
             Description
           </label>
           <div class="mt-1">
-            <textarea id="about" name="about" formControlName="description" rows="3" class="block w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-slate-300"></textarea>
+            <textarea id="about" name="about" formControlName="description" rows="3" class="block w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"></textarea>
           </div>
         </div>
 
@@ -298,7 +298,7 @@
 
   <div class="pt-5">
     <div class="flex justify-end">
-      <button type="button" (click)="closeBillManager()" class="px-4 py-2 text-sm font-medium bg-white border rounded-md shadow-sm border-slate-300 text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+      <button type="button" (click)="closeBillManager()" class="px-4 py-2 text-sm font-medium bg-white border rounded-md shadow-sm border-gray-300 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
         Cancel
       </button>
       <button (click)="submit()" class="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
