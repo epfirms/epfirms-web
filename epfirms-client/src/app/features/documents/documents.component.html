@@ -139,7 +139,7 @@
                 <label for="price" class="block text-sm font-medium text-slate-700">Document Name</label>
                 <div class="relative mt-1 rounded-md shadow-sm">
 
-                  <input type="text" value="{{document.doc_name}}" (blur)="setDocName(document, $event)" class="block w-full pr-12 rounded-md focus:ring-indigo-500 focus:border-indigo-500 pl-7 sm:text-sm border-slate-300">
+                  <input type="text" value="{{document.doc_name}}" (blur)="setDocName(document, $event)" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-slate-300">
                 </div>
                 <!-- This example requires Tailwind CSS v2.0+ -->
                 <!--
@@ -156,7 +156,7 @@
                   </label>
                   <div class="relative mt-1">
                     <button (click)="toggleDisplayDocTypeSelection(document)" type="button"
-                      class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox"
+                      class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-haspopup="listbox"
                       aria-expanded="true" aria-labelledby="listbox-label">
                       <span class="flex items-center">
                         <span class="block ml-3 truncate">
@@ -189,7 +189,7 @@
                       <!--
           Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-          Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-slate-900"
+          Highlighted: "text-white bg-blue-600", Not Highlighted: "text-slate-900"
         -->
                       <li *ngFor="let doc_type of legalDocumentTypes" (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="relative py-2 pl-3 cursor-default select-none text-slate-900 pr-9" id="listbox-option-0"
                         role="option">
@@ -203,9 +203,9 @@
                         <!--
             Checkmark, only display for selected option.
 
-            Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+            Highlighted: "text-white", Not Highlighted: "text-blue-600"
           -->
-                        <span *ngIf="document.doc_type === doc_type.value" class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600">
+                        <span *ngIf="document.doc_type === doc_type.value" class="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
                           <!-- Heroicon name: solid/check -->
                           <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -225,7 +225,7 @@
                   </label>
                   <div class="relative mt-1">
                     <button (click)="toggleDisplaySharing(document)" type="button"
-                      class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox"
+                      class="relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-md shadow-sm cursor-default border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-haspopup="listbox"
                       aria-expanded="true" aria-labelledby="listbox-label">
                       <span class="flex items-center">
                         <span class="block ml-3 truncate">
@@ -258,7 +258,7 @@
                       <!--
           Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-          Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-slate-900"
+          Highlighted: "text-white bg-blue-600", Not Highlighted: "text-slate-900"
         -->
                       <li (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="relative py-2 pl-3 cursor-default select-none text-slate-900 pr-9" id="listbox-option-0" role="option">
                         <div (click)="setSharing('Firm Only'); toggleDisplaySharing(document)" class="flex items-center">
@@ -271,9 +271,9 @@
                         <!--
             Checkmark, only display for selected option.
 
-            Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+            Highlighted: "text-white", Not Highlighted: "text-blue-600"
           -->
-                        <span *ngIf="document.share_with === 'Firm Only'" class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600">
+                        <span *ngIf="document.share_with === 'Firm Only'" class="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
                           <!-- Heroicon name: solid/check -->
                           <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -292,9 +292,9 @@
                         <!--
             Checkmark, only display for selected option.
 
-            Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+            Highlighted: "text-white", Not Highlighted: "text-blue-600"
           -->
-                        <span *ngIf="document.share_with === 'Firm And Clients'" class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600">
+                        <span *ngIf="document.share_with === 'Firm And Clients'" class="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
                           <!-- Heroicon name: solid/check -->
                           <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />

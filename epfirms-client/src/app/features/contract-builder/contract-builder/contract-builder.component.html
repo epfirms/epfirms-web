@@ -2,23 +2,23 @@
 <div *ngIf="!isCreateMode">
 
 <!-- This example requires Tailwind CSS v2.0+ -->
-<header class="bg-indigo-600">
+<header class="bg-blue-600">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Top">
-      <div class="w-full py-6 flex items-center justify-between border-b border-indigo-500 lg:border-none">
+      <div class="w-full py-6 flex items-center justify-between border-b border-blue-500 lg:border-none">
         <div class="flex items-center">
           <a >
             <span class="sr-only">Workflow</span>
           </a>
           <div class="hidden ml-10 space-x-8 lg:block">
-            <a  class="text-base font-medium text-white hover:text-indigo-50"> Contract Builder </a>
+            <a  class="text-base font-medium text-white hover:text-blue-50"> Contract Builder </a>
   
           </div>
         </div>
         
         <div class="ml-10 space-x-4">
-          <a *ngIf="isSelectionMode" (click)="back()" class="inline-block bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Back</a>
+          <a *ngIf="isSelectionMode" (click)="back()" class="inline-block bg-blue-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Back</a>
 
-          <a (click)="toggleCreateMode()" class="inline-block bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Create Contract</a>
+          <a (click)="toggleCreateMode()" class="inline-block bg-blue-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Create Contract</a>
         </div>
       </div>
       <div class="py-4 flex flex-wrap justify-center space-x-6 lg:hidden">
@@ -47,7 +47,7 @@
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let template of contractTemplates">
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <button (click)="edit(template)" class="text-sm text-gray-900 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{{template.title}}</button>
+                  <button (click)="edit(template)" class="text-sm text-gray-900 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">{{template.title}}</button>
 
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -59,7 +59,7 @@
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <!-- IF IN SELECTION MODE IN SETUP FLOW DISPLAY SELECT BUTTON -->
                   <span *ngIf="isSelectionMode">
-                    <button (click)="selectTemplate(template)" type="button" class="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500">
+                    <button (click)="selectTemplate(template)" type="button" class="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-blue-500">
                       <!-- Heroicon name: solid/plus-sm -->
                       <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />

@@ -38,7 +38,7 @@
             >Select the billing type for the case.</label
           >
           <select [(ngModel)]="configuration.billingType"
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
           >
             <option>Flat Rate</option>
             <option>Hourly</option>
@@ -51,7 +51,7 @@
             >Select the payment type for the case.</label
           >
           <select [(ngModel)]="configuration.paymentType"
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
           >
             <option>Private Pay</option>
             <option>Insurance</option>
@@ -95,7 +95,7 @@
               (blur)="logFlatRate()"
               type="number"
               step=".01"
-              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
               placeholder="0.00"
             />
           </div>
@@ -110,7 +110,7 @@
             <input
             type="date"
             [(ngModel)]="configuration.due_date"
-            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
           />          </div>
         </div>
 
@@ -120,7 +120,7 @@
           >
           <select 
           [(ngModel)]="configuration.splitFlatRate"
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
           >
             <option [ngValue]="'Yes'">Yes</option>
             <option [ngValue]="'No'">No</option>
@@ -140,7 +140,7 @@
               [(ngModel)]="configuration.beforeSettlementAmount"
                 type="number"
                 step=".01"
-                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
                 placeholder="0.00"
               />
             </div>
@@ -157,7 +157,7 @@
               [(ngModel)]="configuration.afterSettlementAmount"
                 type="number"
                 step=".01"
-                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
                 placeholder="0.00"
               />
             </div>
@@ -199,7 +199,7 @@
           >
           <select
           [(ngModel)]="configuration.offerMonthlyPayments"
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
           >
             <option>Yes</option>
             <option>No</option>
@@ -219,7 +219,7 @@
               [(ngModel)]="configuration.minimumPayment"
                 type="number"
                 step=".01"
-                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
                 placeholder="0.00"
               />
             </div>
@@ -235,7 +235,7 @@
               [(ngModel)]="configuration.lateFee"
                 type="number"
                 step=".01"
-                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
                 placeholder="0.00"
               />
             </div>
@@ -280,7 +280,7 @@
             [(ngModel)]="configuration.retainerAmount"
               type="number"
               step=".01"
-              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
               placeholder="0.00"
             />
           </div>
@@ -373,7 +373,7 @@
                   (click)="toggleHourlyAutomation()"
                   type="button"
                   [ngClass]="triggerHourlyAutomation ? 'bg-blue-600' : 'bg-gray-200'"
-                  class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   role="switch"
                   aria-checked="false"
                 >
@@ -395,7 +395,7 @@
                   (click)="toggleFlatRateAutomation()"
                   type="button"
                   [ngClass]="triggerFlatRateAutomation ? 'bg-blue-600' : 'bg-gray-200'"
-                  class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   role="switch"
                   aria-checked="false"
                 >
@@ -448,7 +448,7 @@
           >
           <select
           [(ngModel)]="configuration.generateContract"
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
           >
             <option>Yes</option>
             <option>No</option>
