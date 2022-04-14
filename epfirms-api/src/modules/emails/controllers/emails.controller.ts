@@ -141,6 +141,26 @@ theURL: String = "http://localhost:4200"
             res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
         }
     }
+
+
+    public async sendIntakeNotification(req, res : Response) : Promise<any> {
+        try{
+            let notificationData = {
+                email: req.body.email,
+                origin: req.headers.origin
+            }
+
+            console.log(notificationData);
+            console.log("SEND INTAKE NOTIFICATION");
+            const email = await this._emailService.sendFromTemplate(notificationData.email, "EPFirms Intake Alert: New Intake Available",
+             "intake-notification", {'v:url': notificationData.origin});
+            res.status(200).send();
+        }
+        catch(err) {
+            console.error(err);
+            res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+        }
+    }
 }
 /*
                       <a href="` + this.theURL + `/feedback?id=` + await review.id + `" class="mt-2 text-base text-gray-500">1-4 Stars!</a>

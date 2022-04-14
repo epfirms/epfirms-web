@@ -9,7 +9,6 @@ const matterRouter = express.Router();
 
 matterRouter.get('/', passport.authenticate('bearer', { session: false }), (req, res) => matterController.getMattersForFirm(req, res));
 
-matterRouter.get('/:id', passport.authenticate('bearer', { session: false }), (req, res) => matterController.getMatterById(req, res));
 
 matterRouter.post('/', passport.authenticate('bearer', { session: false }), (req, res) => matterController.createMatter(req, res));
 
@@ -30,6 +29,9 @@ matterRouter.patch('/task', passport.authenticate('bearer', { session: false }),
 matterRouter.delete('/task', passport.authenticate('bearer', { session: false }), (req, res) => matterTaskController.deleteTask(req, res));
 
 matterRouter.get('/user', passport.authenticate('bearer', { session: false }), (req, res) => matterController.getMattersForCurrentUser(req, res));
+
+
+matterRouter.get('/:id', passport.authenticate('bearer', { session: false }), (req, res) => matterController.getMatterById(req, res));
 
 matterRouter.post('/intake', passport.authenticate('bearer', { session: false }), (req, res) => matterIntakeController.create(req, res));
 

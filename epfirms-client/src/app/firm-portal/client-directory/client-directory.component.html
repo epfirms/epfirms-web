@@ -10,7 +10,10 @@
 >
   <div class="flex justify-between flex-1">
     <div class="flex items-center flex-1">
-      <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+      <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 text-slate-400 group-hover:text-slate-300 lg:mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <h1 class="text-lg font-medium leading-6 text-slate-900 sm:truncate">
         Client Directory
       </h1>
 
@@ -41,7 +44,7 @@
             [(ngModel)]="clientFilterValues.searchTerm"
             (ngModelChange)="filter()"
             name="search-field"
-            class="block w-full h-full py-0 pl-5 pr-3 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
+            class="block w-full h-full py-0 pl-5 pr-3 text-gray-900 placeholder-gray-500 border-transparent focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm"
             placeholder="Search..."
             type="search"
           />
@@ -73,32 +76,32 @@
             <tr>
               <th
                 scope="col"
-                class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-gray-500"
+                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
               >
                 Name
               </th>
               <th
               scope="col"
-              class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-gray-500"
+              class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
             >
               Cell Phone
             </th>
               <th
                 scope="col"
-                class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-gray-500"
+                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
               >
               Home Phone
               </th>
               <th
                 scope="col"
-                class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-gray-500"
+                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
               >
                 Email
               </th>
 
               <th
                 scope="col"
-                class="px-6 py-3 text-xs font-medium tracking-wider text-center uppercase text-gray-500"
+                class="px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase"
               >
                 Leads/Cases
               </th>
@@ -155,11 +158,11 @@
                 </td>
 
                 <td
-                  class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap text-gray-400"
+                  class="px-6 py-4 text-sm font-medium text-right text-gray-400 whitespace-nowrap"
                 >
                 <button
                 type="button"
-                class="flex items-center p-2 -my-2 rounded-full text-gray-400 hover:text-gray-600"
+                class="flex items-center p-2 -my-2 text-gray-400 rounded-full hover:text-gray-600"
                 id="menu-0-button"
                 aria-expanded="false"
                 aria-haspopup="true"
@@ -235,7 +238,7 @@
     <!-- End main area -->
   </main>
   
-  <aside class="relative z-0 flex-shrink-0 overflow-y-auto duration-500 ease-in-out border-l focus:outline-none xl:order-last border-gray-200" style="transition: all 500ms;" [class.opacity-0]="!selectedClient" [class.flex-0]="!selectedClient" [class.flex-1]="selectedClient" [class.opacity-100]="selectedClient" [class.min-width-aside]="selectedClient">
+  <aside class="relative z-0 flex-shrink-0 overflow-y-auto duration-500 ease-in-out border-l border-gray-200 focus:outline-none xl:order-last" style="transition: all 500ms;" [class.opacity-0]="!selectedClient" [class.flex-0]="!selectedClient" [class.flex-1]="selectedClient" [class.opacity-100]="selectedClient" [class.min-width-aside]="selectedClient">
     <article *ngIf="selectedClient">
       <!-- Profile header -->
       <div class="p-4 pb-0 md:flex md:items-center md:justify-between md:space-x-5 sm:p-6 lg:p-8">
@@ -266,26 +269,26 @@
         <div class="border-b border-gray-200">
           <div class="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
             <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-              <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
+              <!-- Current: "border-blue-500 text-slate-900", Default: "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300" -->
               <a (click)="asideTab = 'profile'" class="px-1 py-4 text-sm font-medium border-b-2 whitespace-nowrap hover:cursor-pointer" aria-current="page" [ngClass]="{
-                'border-indigo-500 text-gray-900': asideTab === 'profile',
-                'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': asideTab !== 'profile'
+                'border-blue-500 text-slate-900': asideTab === 'profile',
+                'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300': asideTab !== 'profile'
               }">
                 Profile
               </a>
 
               <a (click)="asideTab = 'cases'" class="px-1 py-4 text-sm font-medium border-b-2 whitespace-nowrap hover:cursor-pointer" 
               [ngClass]="{
-                'border-indigo-500 text-gray-900': asideTab === 'cases',
-                'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': asideTab !== 'cases'
+                'border-blue-500 text-slate-900': asideTab === 'cases',
+                'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300': asideTab !== 'cases'
               }">
                 Leads/Cases
               </a>
 
               <a (click)="asideTab = 'documents'" class="px-1 py-4 text-sm font-medium border-b-2 whitespace-nowrap hover:cursor-pointer"
               [ngClass]="{
-                'border-indigo-500 text-gray-900': asideTab === 'documents',
-                'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': asideTab !== 'documents'
+                'border-blue-500 text-slate-900': asideTab === 'documents',
+                'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300': asideTab !== 'documents'
               }">
                 Documents
               </a>

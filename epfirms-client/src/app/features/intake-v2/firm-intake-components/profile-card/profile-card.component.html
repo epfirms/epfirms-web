@@ -1,0 +1,270 @@
+<div class="bg-white border-t border-b border-gray-200 shadow-sm border sm:rounded-lg m-5">
+  <!-- FRONT OF CARD -->
+  <div *ngIf="!dropdownVisible">
+    <!-- edit icon far right -->
+    <div class="float-right">
+      <button (click)="toggleDropdown()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+          />
+        </svg>
+      </button>
+<button *ngIf="userProfile.id !== matter.client.id" (click)="delete()">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+  </svg> 
+      </button>
+    </div>
+    <div class="py-6 px-4 px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
+      <div class="flex lg:col-span-7">
+        <div
+          class="flex-shrink-0 w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden aspect-none sm:w-40 sm:h-40"
+        >
+<svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+        </div>
+
+        <div class="mt-6 mt-0 sm:ml-6">
+          <h3 class="text-base font-medium text-gray-900">
+            <p>{{userProfile.first_name}} {{userProfile.last_name}}</p>
+          </h3>
+          <p *ngIf="userProfile.family_member" class="mt-3 text-sm text-gray-500">Relation: {{userProfile.family_member.relationship_type | titlecase}}</p>
+        </div>
+      </div>
+
+      <div class="mt-6 lg:mt-0 lg:col-span-5">
+        <dl class="grid grid-cols-2 gap-x-6 text-sm">
+          <div>
+            <dt class="font-medium text-gray-900">Address</dt>
+            <dd class="mt-3 text-gray-500">
+              <span class="block">{{userProfile.address}}</span>
+              <span class="block">{{userProfile.city}}, {{userProfile.state}}, {{userProfile.zip}} </span>
+            </dd>
+          </div>
+          <div>
+            <dt class="font-medium text-gray-900">Contact</dt>
+            <dd class="mt-3 text-gray-500 space-y-3">
+              <p>{{userProfile.email}}</p>
+              <p>{{userProfile.phone}}</p>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- <div class="border-t border-gray-200 py-6 px-4 px-6 lg:p-8">
+                <h4 class="sr-only">Status</h4>
+                <p class="text-sm font-medium text-gray-900">Preparing to ship on <time datetime="2021-03-24">March 24, 2021</time></p>
+                <div class="mt-6" aria-hidden="true">
+                  <div class="bg-gray-200 rounded-full overflow-hidden">
+                    <div class="h-2 bg-blue-600 rounded-full" style="width: calc((1 * 2 + 1) / 8 * 100%);"></div>
+                  </div>
+                  <div class="hidden grid grid-cols-4 text-sm font-medium text-gray-600 mt-6">
+                    <div class="text-blue-600">Order placed</div>
+                    <div class="text-center text-blue-600">Processing</div>
+                    <div class="text-center ">Shipped</div>
+                    <div class="text-right ">Delivered</div>
+                  </div>
+                </div>
+              </div> -->
+  </div>
+
+  <!-- END OF FRONT OF CARD -->
+
+  <!-- BACK OF CARD -->
+  <div *ngIf="dropdownVisible">
+    <!-- view icon far right -->
+    <div class="float-right">
+      <button (click)="toggleDropdown()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div class="pt-2 m-2">
+      <form [formGroup]="userProfileForm">
+        <div class="mt-2 grid grid-cols-1 gap-y-2 gap-x-4 sm:grid-cols-6">
+          <div *ngIf="formSettings.isClient === false" class="sm:col-span-4">
+            <label for="relationship" class="block text-sm font-medium text-gray-700">
+              Relationship
+            </label>
+            <div class="mt-1">
+              <select
+                formControlName="relationship_type"
+                id="region"
+                name="region"
+                autocomplete="address-level1"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              >
+                <option *ngFor="let type of relationshipTypes" [ngValue]="type">
+                  {{ type | titlecase }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="sm:col-span-3">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">
+              First name
+            </label>
+            <div class="mt-1">
+              <input
+                type="text"
+                name="first-name"
+                formControlName="first_name"
+                id="first-name"
+                autocomplete="given-name"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="last-name" class="block text-sm font-medium text-gray-700">
+              Last name
+            </label>
+            <div class="mt-1">
+              <input
+                type="text"
+                formControlName="last_name"
+                name="last-name"
+                id="last-name"
+                autocomplete="family-name"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email address
+            </label>
+            <div class="mt-1">
+              <input
+                id="email"
+                formControlName="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="email" class="block text-sm font-medium text-gray-700"> Phone </label>
+            <div class="mt-1">
+              <input
+                id="email"
+                name="email"
+                formControlName="phone"
+                type="text"
+                autocomplete="phone"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-6">
+            <label for="street-address" class="block text-sm font-medium text-gray-700">
+              Street address
+            </label>
+            <div class="mt-1">
+              <input
+                type="text"
+                formControlName="address"
+                name="street-address"
+                id="street-address"
+                autocomplete="street-address"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="city" class="block text-sm font-medium text-gray-700"> City </label>
+            <div class="mt-1">
+              <input
+                type="text"
+                formControlName="city"
+                name="city"
+                id="city"
+                autocomplete="address-level2"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="region" class="block text-sm font-medium text-gray-700"> State </label>
+            <div class="mt-1">
+              <select
+                formControlName="state"
+                id="region"
+                name="region"
+                autocomplete="address-level1"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              >
+                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+                  {{ state.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="postal-code" class="block text-sm font-medium text-gray-700">
+              ZIP / Postal code
+            </label>
+            <div class="mt-1">
+              <input
+                type="text"
+                formControlName="zip"
+                name="postal-code"
+                id="postal-code"
+                autocomplete="postal-code"
+                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- SAVE BUTTON GOES HERE -->
+    <div class="text-right">
+      <button
+        (click)="submit()"
+        type="button"
+        class="m-2 px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>

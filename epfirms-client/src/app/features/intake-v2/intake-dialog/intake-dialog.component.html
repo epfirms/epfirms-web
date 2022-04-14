@@ -9,23 +9,40 @@
       <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500">
         {{ settings.content }}
       </p>
+
+      <!-- OPTIONAL SELECT FORM -->
+      <div *ngIf="dropdownForm">
+        <div class="sm:col-span-3">
+          <label class="block text-sm font-medium text-gray-700">{{dropdownForm.question}} </label>
+          <div class="mt-1">
+            <select
+            [(ngModel)]="dropdownForm.value"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<div class="flex justify-end mt-5">
+<div class="flex justify-end mt-3">
   <button
-  (click)="backButton()"
+    (click)="backButton()"
     *ngIf="settings.backButton"
     type="button"
-    class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
   >
     Back
   </button>
   <button
-  (click)="continueButton()"
+    (click)="continueButton()"
     *ngIf="settings.continueButton"
     type="submit"
-    class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
   >
     Continue
   </button>

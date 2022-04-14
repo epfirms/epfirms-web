@@ -12,7 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^13.1.1",
-    "@angular/cdk": "^13.1.1",
+    "@angular/cdk": "^13.3.2",
     "@angular/common": "^13.1.1",
     "@angular/compiler": "^13.1.1",
     "@angular/core": "^13.1.1",
@@ -40,7 +40,7 @@
     "ngx-infinite-scroll": "^10.0.1",
     "ngx-pagination": "^5.1.1",
     "ngx-quill": "^16.1.1",
-    "ngx-scrollbar": "^9.0.1",
+    "ngx-scrollbar": "^9.0.2",
     "ngx-socket-io": "^4.1.0",
     "ngx-stripe": "^13.0.0",
     "quill-image-compress": "^1.2.21",
