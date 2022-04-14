@@ -292,15 +292,14 @@
           *ngIf="state === 'spouse info intro'"
           [settings]="{
             title: 'Spouse Information',
-            content:
-              '',
+            content: '',
             continueButton: true,
             backButton: true
           }"
           (continue)="setState('spouse info')"
           (back)="back()"
           (dropdownFormValues)="hasSpouse = $event"
-          [dropdownForm]="{question: 'Do you have a spouse?', value: hasSpouse}"
+          [dropdownForm]="{ question: 'Do you have a spouse?', value: hasSpouse }"
         ></app-intake-dialog>
 
         <app-spouse-information
@@ -310,29 +309,46 @@
           (continue)="setState('child info intro')"
         ></app-spouse-information>
 
-<app-intake-dialog
+        <app-intake-dialog
           *ngIf="state === 'child info intro'"
           [settings]="{
             title: 'Child Information',
-            content:
-              '',
+            content: '',
             continueButton: true,
             backButton: true
           }"
           (continue)="setState('child info')"
           (back)="back()"
           (dropdownFormValues)="hasChildren = $event"
-          [dropdownForm]="{question: 'Do you have children ?', value: hasChildren}"
+          [dropdownForm]="{ question: 'Do you have children ?', value: hasChildren }"
         ></app-intake-dialog>
 
-<app-children-information
-*ngIf="state === 'child info'"
-[matter]="matter"
-(back)="back()"
-(continue)="setState('income')"
+        <app-children-information
+          *ngIf="state === 'child info'"
+          [matter]="matter"
+          (back)="back()"
+          (continue)="setState('other family info intro')"
+        ></app-children-information>
 
-></app-children-information>
+        <app-intake-dialog
+          *ngIf="state === 'other family info intro'"
+          [settings]="{
+            title: 'Other Family Information',
+            content:
+              'In this section we recommend that you add other family members or even close friends that you plan on using as an appointee. An appointee would be a Executor, Trustee, or even guardian of your children.',
+            continueButton: true,
+            backButton: true
+          }"
+          (continue)="setState('other family info')"
+          (back)="back()"
+        ></app-intake-dialog>
 
+        <app-other-family-information
+          *ngIf="state === 'other family info'"
+          [matter]="matter"
+          (back)="back()"
+          (continue)="setState('income')"
+        ></app-other-family-information>
 
         <!-- INCOME INFORMATION -->
 

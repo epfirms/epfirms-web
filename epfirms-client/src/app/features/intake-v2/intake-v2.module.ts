@@ -24,6 +24,7 @@ import { ProfileCardComponent } from './firm-intake-components/profile-card/prof
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { SpouseInformationComponent } from './spouse-information/spouse-information.component';
 import { ChildrenInformationComponent } from './children-information/children-information.component';
+import { OtherFamilyInformationComponent } from './other-family-information/other-family-information.component';
 
 
 
@@ -44,7 +45,8 @@ import { ChildrenInformationComponent } from './children-information/children-in
     ExecutorsComponent,
     ProfileCardComponent,
     SpouseInformationComponent,
-    ChildrenInformationComponent
+    ChildrenInformationComponent,
+    OtherFamilyInformationComponent
   ],
   imports: [
     CommonModule,
