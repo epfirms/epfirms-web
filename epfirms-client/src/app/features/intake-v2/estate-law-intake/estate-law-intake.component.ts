@@ -47,6 +47,8 @@ setProgressBar(property : string, value : boolean): void {
   
 
   setState(state: string): void {
+
+    this.history.push(this.state);
     if (state === 'spouse info' && this.hasSpouse) {
       this.state = state;
     
@@ -67,7 +69,6 @@ setProgressBar(property : string, value : boolean): void {
     this.state = state;
     }
 
-    this.history.push(this.state);
   }
 
   back(): void {
