@@ -21,6 +21,16 @@ export class EstateLawIntakeComponent implements OnInit {
   // stack that manages the views and enables the back() functionality
   history = [];
 
+  progressBar = {
+    info : false,
+    income : false,
+    assets : false,
+    realEstate : false,
+  }
+
+  hasSpouse : boolean = false;
+  hasChildren : boolean = false;
+
 
   constructor(
     private clientMatterService: ClientMatterService,
@@ -30,11 +40,35 @@ export class EstateLawIntakeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+setProgressBar(property : string, value : boolean): void {
+  this.progressBar[property] = value;
+}
   
 
   setState(state: string): void {
+
     this.history.push(this.state);
+    if (state === 'spouse info' && this.hasSpouse) {
+      this.state = state;
+    
+    
+    }
+    else if (state === 'spouse info' && !this.hasSpouse) {
+      this.state = 'child info intro';
+    }
+    else if (state === 'child info' && this.hasChildren) {
+      this.state = state;
+    }
+    else if (state === 'child info' && !this.hasChildren) {
+      this.state = 'other family info intro';
+    }
+
+    else {
+
     this.state = state;
+    }
+
   }
 
   back(): void {

@@ -11,13 +11,20 @@
 
 <ng-scrollbar style="height: 400px">
   <!-- content -->
-<app-user-profile-form
-  [formSettings]="{ title: 'Client Information', subtitle: client.first_name, isClient: true }"
-  [userProfile]="client"
+<app-user-profile-form *ngIf="spouse"
+  [formSettings]="{ title: 'Spouse Information', subtitle: spouse.first_name, isClient: false }"
+  [userProfile]="spouse"
   [matter]="matter"
   [isVisible]="true"
+  [selectFamilyMemberVisible]="false"
 ></app-user-profile-form>
-
+<app-user-profile-form *ngIf="spouse === undefined"
+  [formSettings]="{ title: 'Spouse Information', subtitle: '', isClient: false }"
+  [userProfile]="{family_member: {relationship_type : 'spouse'}}"
+  [matter]="matter"
+  [isVisible]="true"
+  [selectFamilyMemberVisible]="false"
+></app-user-profile-form>
 
 </ng-scrollbar>
 

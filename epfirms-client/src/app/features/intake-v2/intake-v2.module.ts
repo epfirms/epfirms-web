@@ -21,6 +21,10 @@ import { AssetFormModule } from '@app/shared/asset-form/asset-form.module';
 import { RealEstateFormModule } from '@app/shared/real-estate-form/real-estate-form.module';
 import { AppointeeFormModule } from '@app/shared/appointee-form/appointee-form.module';
 import { ProfileCardComponent } from './firm-intake-components/profile-card/profile-card.component';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { SpouseInformationComponent } from './spouse-information/spouse-information.component';
+import { ChildrenInformationComponent } from './children-information/children-information.component';
+import { OtherFamilyInformationComponent } from './other-family-information/other-family-information.component';
 import { EstatePlanningFormComponent } from './firm-intake-components/estate-planning-form/estate-planning-form.component';
 
 
@@ -41,6 +45,9 @@ import { EstatePlanningFormComponent } from './firm-intake-components/estate-pla
     IntakeMainComponent,
     ExecutorsComponent,
     ProfileCardComponent,
+    SpouseInformationComponent,
+    ChildrenInformationComponent,
+    OtherFamilyInformationComponent,
     EstatePlanningFormComponent
   ],
   imports: [
@@ -52,7 +59,8 @@ import { EstatePlanningFormComponent } from './firm-intake-components/estate-pla
     AssetFormModule,
     RealEstateFormModule,
     AppointeeFormModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgScrollbarModule
   ],
   exports: [
     ClientIntakeComponent,

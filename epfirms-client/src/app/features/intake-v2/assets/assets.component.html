@@ -8,12 +8,17 @@
   </button>
 </div>
 <div class="space-y-6">
+  <ng-scrollbar style="height: 400px;">
+  
+  
   <app-asset-form
     *ngFor="let asset of assets"
     [matter]="matter"
     [formSettings]="{ title: 'Asset Information', subtitle: asset.institution }"
     [asset]="asset"
   ></app-asset-form>
+  
+  </ng-scrollbar>
   <div class="flex justify-end">
     <button
       (click)="backButton()"

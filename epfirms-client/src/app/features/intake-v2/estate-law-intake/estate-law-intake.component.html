@@ -10,15 +10,184 @@
 <div class="min-h-full">
   <nav class="bg-white border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
+      <div class="flex justify-center h-16">
+        <!-- This example requires Tailwind CSS v2.0+ -->
+        <nav class="sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden" aria-label="Progress">
+          <ol role="list" class="flex items-center">
+            <li *ngIf="progressBar.info" class="relative pr-8 sm:pr-20">
+              <!-- Completed Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="h-0.5 w-full bg-indigo-600"></div>
+              </div>
+              <a
+                class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
+              >
+                <!-- Heroicon name: solid/check -->
+                <svg
+                  class="w-5 h-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="sr-only">Step 1</span>
+              </a>
+            </li>
+
+            <li *ngIf="!progressBar.info" class="relative pr-8 sm:pr-20">
+              <!-- Upcoming Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="h-0.5 w-full bg-gray-200"></div>
+              </div>
+              <a
+                class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
+              >
+                <span
+                  class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Step 4</span>
+              </a>
+            </li>
+
+            <li *ngIf="progressBar.income" class="relative pr-8 sm:pr-20">
+              <!-- Completed Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="h-0.5 w-full bg-indigo-600"></div>
+              </div>
+              <a
+                class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
+              >
+                <!-- Heroicon name: solid/check -->
+                <svg
+                  class="w-5 h-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="sr-only">Step 1</span>
+              </a>
+            </li>
+
+            <li *ngIf="!progressBar.income" class="relative pr-8 sm:pr-20">
+              <!-- Upcoming Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="h-0.5 w-full bg-gray-200"></div>
+              </div>
+              <a
+                class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
+              >
+                <span
+                  class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Step 4</span>
+              </a>
+            </li>
+
+            <li *ngIf="progressBar.assets" class="relative pr-8 sm:pr-20">
+              <!-- Completed Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="h-0.5 w-full bg-indigo-600"></div>
+              </div>
+              <a
+                class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
+              >
+                <!-- Heroicon name: solid/check -->
+                <svg
+                  class="w-5 h-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="sr-only">Step 1</span>
+              </a>
+            </li>
+
+            <li *ngIf="!progressBar.assets" class="relative pr-8 sm:pr-20">
+              <!-- Upcoming Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="h-0.5 w-full bg-gray-200"></div>
+              </div>
+              <a
+                class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
+              >
+                <span
+                  class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Step 4</span>
+              </a>
+            </li>
+
+            <li *ngIf="progressBar.realEstate" class="relative pr-8 sm:pr-20">
+              <!-- Completed Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true"></div>
+              <a
+                class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
+              >
+                <!-- Heroicon name: solid/check -->
+                <svg
+                  class="w-5 h-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="sr-only">Step 1</span>
+              </a>
+            </li>
+
+            <li *ngIf="!progressBar.realEstate" class="relative pr-8 sm:pr-20">
+              <!-- Upcoming Step -->
+              <div class="absolute inset-0 flex items-center" aria-hidden="true"></div>
+              <a
+                class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
+              >
+                <span
+                  class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Step 4</span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+
         <div class="flex">
           <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-            <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+            <!-- Current: "border-blue-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
             <a
               (click)="setState('intro')"
               [ngClass]="
                 state === 'intro'
-                  ? 'border-indigo-500 text-gray-900'
+                  ? 'border-blue-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               "
               class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
@@ -30,7 +199,7 @@
               (click)="setState('personal info')"
               [ngClass]="
                 state === 'personal info'
-                  ? 'border-indigo-500 text-gray-900'
+                  ? 'border-blue-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               "
               class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
@@ -41,7 +210,7 @@
               (click)="setState('income')"
               [ngClass]="
                 state === 'income'
-                  ? 'border-indigo-500 text-gray-900'
+                  ? 'border-blue-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               "
               class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
@@ -52,7 +221,7 @@
               (click)="setState('asset')"
               [ngClass]="
                 state === 'asset'
-                  ? 'border-indigo-500 text-gray-900'
+                  ? 'border-blue-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               "
               class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
@@ -63,14 +232,13 @@
               (click)="setState('real estate')"
               [ngClass]="
                 state === 'real estate'
-                  ? 'border-indigo-500 text-gray-900'
+                  ? 'border-blue-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
               "
               class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
             >
               Real Estate Information
             </a>
-
           </div>
         </div>
       </div>
@@ -93,32 +261,94 @@
               'This intake process is designed to help streamline our legal services to you. Your information will be kept secure and confidential.',
             continueButton: true
           }"
-          (continue)="setState('personal info')"
+          (continue)="setState('personal info intro')"
         ></app-intake-dialog>
 
         <!---------------------------------->
 
-        <!-- <app-intake-dialog
+        <app-intake-dialog
           *ngIf="state === 'personal info intro'"
           [settings]="{
-            title: 'Personal Information',
+            title: 'Family Information',
             content:
-              'Please add any family members or close friends that you may want to use as an: Executor, Trustee, Guardian, Durable Power of Attorney, Medical Power of Attorney',
-              continueButton: true,
-              backButton: true
+              'This next section will ask you to provide information about your family. This will help us put together your estate planning documents.',
+            continueButton: true,
+            backButton: true
           }"
           (continue)="setState('personal info')"
           (back)="back()"
-        ></app-intake-dialog> -->
+        ></app-intake-dialog>
 
         <!--PERSONAL INFO-->
         <app-personal-information
           *ngIf="state === 'personal info'"
           [matter]="matter"
           (back)="back()"
-          (continue)="setState('income')"
+          (continue)="setState('spouse info intro'); setProgressBar('info', true)"
         ></app-personal-information>
         <!-------------------->
+
+        <app-intake-dialog
+          *ngIf="state === 'spouse info intro'"
+          [settings]="{
+            title: 'Spouse Information',
+            content: '',
+            continueButton: true,
+            backButton: true
+          }"
+          (continue)="setState('spouse info')"
+          (back)="back()"
+          (dropdownFormValues)="hasSpouse = $event"
+          [dropdownForm]="{ question: 'Do you have a spouse?', value: hasSpouse }"
+        ></app-intake-dialog>
+
+        <app-spouse-information
+          *ngIf="state === 'spouse info'"
+          [matter]="matter"
+          (back)="back()"
+          (continue)="setState('child info intro')"
+        ></app-spouse-information>
+
+        <app-intake-dialog
+          *ngIf="state === 'child info intro'"
+          [settings]="{
+            title: 'Child Information',
+            content: '',
+            continueButton: true,
+            backButton: true
+          }"
+          (continue)="setState('child info')"
+          (back)="back()"
+          (dropdownFormValues)="hasChildren = $event"
+          [dropdownForm]="{ question: 'Do you have children ?', value: hasChildren }"
+        ></app-intake-dialog>
+
+        <app-children-information
+          *ngIf="state === 'child info'"
+          [matter]="matter"
+          (back)="back()"
+          (continue)="setState('other family info intro')"
+        ></app-children-information>
+
+        <app-intake-dialog
+          *ngIf="state === 'other family info intro'"
+          [settings]="{
+            title: 'Other Family Information',
+            content:
+              'In this section we recommend that you add other family members or even close friends that you plan on using as an appointee. An appointee would be a Executor, Trustee, or even guardian of your children.',
+            continueButton: true,
+            backButton: true
+          }"
+          (continue)="setState('other family info')"
+          (back)="back()"
+        ></app-intake-dialog>
+
+        <app-other-family-information
+          *ngIf="state === 'other family info'"
+          [matter]="matter"
+          (back)="back()"
+          (continue)="setState('income')"
+        ></app-other-family-information>
 
         <!-- INCOME INFORMATION -->
 
@@ -126,7 +356,7 @@
           *ngIf="state === 'income'"
           [matter]="matter"
           (back)="back()"
-          (continue)="setState('asset')"
+          (continue)="setState('asset'); setProgressBar('income', true)"
         ></app-income>
         <!-- -------------------------- -->
 
@@ -136,7 +366,7 @@
           *ngIf="state === 'asset'"
           [matter]="matter"
           (back)="back()"
-          (continue)="setState('real estate')"
+          (continue)="setState('real estate'); setProgressBar('assets', true)"
         ></app-assets>
         <!-- -------------------------- -->
 
@@ -145,14 +375,20 @@
           *ngIf="state === 'real estate'"
           [matter]="matter"
           (back)="back()"
-          (continue)="setState('conclusion'); submit()"
+          (continue)="setState('conclusion'); submit(); setProgressBar('realEstate', true)"
         ></app-real-estate>
         <!-- -------------------------- -->
 
         <!-- APPOINTEES SECTION -->
         <!-- <app-appointees *ngIf="state === 5" [matter]="matter" (back)="back()" (continue)="setState(6); submit()"></app-appointees> -->
 
-        <app-intake-dialog *ngIf="state === 'conclusion'" [settings]="{title: 'What Happens Next?', content: 'Thank you for your submission. Your attorney will contact you shortly'}"></app-intake-dialog> 
+        <app-intake-dialog
+          *ngIf="state === 'conclusion'"
+          [settings]="{
+            title: 'What Happens Next?',
+            content: 'Thank you for your submission. Your attorney will contact you shortly'
+          }"
+        ></app-intake-dialog>
       </div>
     </main>
   </div>
