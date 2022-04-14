@@ -269,9 +269,9 @@
         <div class="border-b border-slate-200">
           <div class="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
             <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-              <!-- Current: "border-indigo-500 text-slate-900", Default: "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300" -->
+              <!-- Current: "border-blue-500 text-slate-900", Default: "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300" -->
               <a (click)="asideTab = 'profile'" class="px-1 py-4 text-sm font-medium border-b-2 whitespace-nowrap hover:cursor-pointer" aria-current="page" [ngClass]="{
-                'border-indigo-500 text-slate-900': asideTab === 'profile',
+                'border-blue-500 text-slate-900': asideTab === 'profile',
                 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300': asideTab !== 'profile'
               }">
                 Profile
@@ -279,7 +279,7 @@
 
               <a (click)="asideTab = 'cases'" class="px-1 py-4 text-sm font-medium border-b-2 whitespace-nowrap hover:cursor-pointer" 
               [ngClass]="{
-                'border-indigo-500 text-slate-900': asideTab === 'cases',
+                'border-blue-500 text-slate-900': asideTab === 'cases',
                 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300': asideTab !== 'cases'
               }">
                 Leads/Cases
@@ -287,7 +287,7 @@
 
               <a (click)="asideTab = 'documents'" class="px-1 py-4 text-sm font-medium border-b-2 whitespace-nowrap hover:cursor-pointer"
               [ngClass]="{
-                'border-indigo-500 text-slate-900': asideTab === 'documents',
+                'border-blue-500 text-slate-900': asideTab === 'documents',
                 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300': asideTab !== 'documents'
               }">
                 Documents

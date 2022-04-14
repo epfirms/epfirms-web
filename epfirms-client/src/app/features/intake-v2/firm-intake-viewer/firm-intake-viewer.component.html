@@ -16,7 +16,7 @@
         <div class="inline-flex rounded-md shadow">
           <!-- <a
             (click)="sendIntake()"
-            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
           >
             Send
           </a> -->
@@ -38,7 +38,7 @@
   ```
 -->
   <div class="min-h-full">
-    <nav class="bg-indigo-600">
+    <nav class="bg-blue-600">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center">
@@ -47,14 +47,14 @@
             </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
-                <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
+                <!-- Current: "bg-blue-700 text-white", Default: "text-white hover:bg-blue-500 hover:bg-opacity-75" -->
                 <a
                   (click)="setState('personal info')"
                   class="text-white px-3 py-2 rounded-md text-sm font-medium"
                   [ngClass]="
                     state === 'personal info'
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-white hover:bg-blue-500 hover:bg-opacity-75'
                   "
                   aria-current="page"
                   >Personal Information</a
@@ -64,10 +64,10 @@
                   (click)="setState('income')"
                   [ngClass]="
                     state === 'income'
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-white hover:bg-blue-500 hover:bg-opacity-75'
                   "
-                  class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-white hover:bg-blue-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Income</a
                 >
 
@@ -75,10 +75,10 @@
                   (click)="setState('asset')"
                   [ngClass]="
                     state === 'asset'
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-white hover:bg-blue-500 hover:bg-opacity-75'
                   "
-                  class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-white hover:bg-blue-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Assets</a
                 >
 
@@ -86,30 +86,30 @@
                   (click)="setState('real estate')"
                   [ngClass]="
                     state === 'real estate'
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-white hover:bg-blue-500 hover:bg-opacity-75'
                   "
-                  class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-white hover:bg-blue-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Real Estate</a
                 >
                 <a
                   (click)="setState('executors')"
                   [ngClass]="
                     state === 'executors'
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-white hover:bg-blue-500 hover:bg-opacity-75'
                   "
-                  class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-white hover:bg-blue-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Executors</a
                 >
                 <a
                   (click)="setState('trustees')"
                   [ngClass]="
                     state === 'trustees'
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-white hover:bg-blue-500 hover:bg-opacity-75'
                   "
-                  class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-white hover:bg-blue-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Trustees</a
                 >
 
@@ -117,10 +117,10 @@
                   (click)="setState('goc')"
                   [ngClass]="
                     state === 'goc'
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-white hover:bg-blue-500 hover:bg-opacity-75'
                   "
-                  class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-white hover:bg-blue-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Guardians of Children</a
                 >
 
@@ -128,10 +128,10 @@
                   (click)="setState('dpoa')"
                   [ngClass]="
                     state === 'dpoa'
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-white hover:bg-blue-500 hover:bg-opacity-75'
                   "
-                  class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-white hover:bg-blue-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Durable Power of Attorney</a
                 >
 
@@ -139,10 +139,10 @@
                   (click)="setState('mpoa')"
                   [ngClass]="
                     state === 'mpoa'
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-white hover:bg-blue-500 hover:bg-opacity-75'
                   "
-                  class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-white hover:bg-blue-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Medical Power of Attorney</a
                 >
 
@@ -150,10 +150,10 @@
                   (click)="setState('estate planning')"
                   [ngClass]="
                     state === 'estate planning'
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-white hover:bg-indigo-500 hover:bg-opacity-75'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-white hover:bg-blue-500 hover:bg-opacity-75'
                   "
-                  class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-white hover:bg-blue-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium"
                   >Estate Planning</a
                 >
               </div>
@@ -173,14 +173,14 @@
               <!-- Current Step -->
               <a
                 [ngClass]="
-                  matter.matter_intake.status === 'sent' ? 'border-indigo-600' : 'border-gray-200'
+                  matter.matter_intake.status === 'sent' ? 'border-blue-600' : 'border-gray-200'
                 "
                 class="pl-4 py-2 flex flex-col border-l-4 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
                 aria-current="step"
               >
                 <span
                   [ngClass]="
-                    matter.matter_intake.status === 'sent' ? 'text-indigo-600' : 'text-gray-200'
+                    matter.matter_intake.status === 'sent' ? 'text-blue-600' : 'text-gray-200'
                   "
                   class="text-xs font-semibold tracking-wide uppercase"
                   >Step 1</span
@@ -194,7 +194,7 @@
               <a
                 [ngClass]="
                   matter.matter_intake.status === 'in progress'
-                    ? 'border-indigo-600'
+                    ? 'border-blue-600'
                     : 'border-gray-200'
                 "
                 class="pl-4 py-2 flex flex-col border-l-4 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
@@ -203,7 +203,7 @@
                 <span
                   [ngClass]="
                     matter.matter_intake.status === 'in progress'
-                      ? 'text-indigo-600'
+                      ? 'text-blue-600'
                       : 'text-gray-200'
                   "
                   class="text-xs font-semibold tracking-wide uppercase"
@@ -217,14 +217,14 @@
               <!-- Current Step -->
               <a
                 [ngClass]="
-                  matter.matter_intake.status === 'review' ? 'border-indigo-600' : 'border-gray-200'
+                  matter.matter_intake.status === 'review' ? 'border-blue-600' : 'border-gray-200'
                 "
                 class="pl-4 py-2 flex flex-col border-l-4 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-4"
                 aria-current="step"
               >
                 <span
                   [ngClass]="
-                    matter.matter_intake.status === 'review' ? 'text-indigo-600' : 'text-gray-200'
+                    matter.matter_intake.status === 'review' ? 'text-blue-600' : 'text-gray-200'
                   "
                   class="text-xs font-semibold tracking-wide uppercase"
                   >Step 3</span

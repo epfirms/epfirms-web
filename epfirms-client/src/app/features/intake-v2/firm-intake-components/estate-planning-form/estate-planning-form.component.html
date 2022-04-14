@@ -16,7 +16,7 @@
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.include_afterborn_children"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -33,7 +33,7 @@
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.exclude_children"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -53,7 +53,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
           <button
             (click)="addExcludedChild()"
             type="button"
-            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
           >
             Add Request
           </button>
@@ -81,7 +81,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
                       <div class="mt-1 sm:mt-0 sm:col-span-2">
                         <select
                           [(ngModel)]="excludedChild.user_id"
-                          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                         >
                           <option *ngFor="let child of children" [ngValue]="child.id">
                             {{ child.first_name }} {{ child.last_name }}
@@ -128,7 +128,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.include_memorandum"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -144,7 +144,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.client_burial_request"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="'cremation'">Cremation</option>
           <option [ngValue]="'burial'">Burial</option>
@@ -162,7 +162,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.spouse_burial_request"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="'cremation'">Cremation</option>
           <option [ngValue]="'burial'">Burial</option>
@@ -178,7 +178,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.include_common_disaster_clause"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -194,7 +194,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.has_specific_requests"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -215,7 +215,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
           <button
             (click)="addSpecificRequest()"
             type="button"
-            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
           >
             Add Request
           </button>
@@ -279,7 +279,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
                       <div class="mt-1 sm:mt-0 sm:col-span-2">
                         <select
                           [(ngModel)]="request.defer_until_spouse_deceased"
-                          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                         >
                           <option [ngValue]="true">Yes</option>
                           <option [ngValue]="false">No</option>
@@ -328,7 +328,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.include_arbitration_clause"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -345,7 +345,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.include_contest_clause"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -361,7 +361,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.no_contest_clause_unenforceable_under_challenge"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -377,7 +377,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.include_supplemental_needs_trust"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -393,7 +393,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.include_contingent_trust"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -410,7 +410,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
         <input
           type="number"
           [(ngModel)]="form.contingent_trust_age_of_distribution"
-          class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         />
       </div>
     </div>
@@ -423,7 +423,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.include_retirement_benefit_trust"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -440,7 +440,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
         <input
           type="number"
           [(ngModel)]="form.trust_age_of_distribution"
-          class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         />
       </div>
     </div>
@@ -454,7 +454,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
         <textarea
           [(ngModel)]="form.distribution_request"
           rows="3"
-          class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+          class="max-w-lg shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 sm:text-sm border border-gray-300 rounded-md"
         ></textarea>
       </div>
     </div>
@@ -467,7 +467,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.client_has_current_will"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -484,7 +484,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.spouse_has_current_will"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -500,7 +500,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.client_has_current_estate_plan"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -517,7 +517,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.spouse_has_current_estate_plan"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -533,7 +533,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.client_has_established_trust"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -550,7 +550,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.spouse_has_established_trust"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -566,7 +566,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.has_farm_or_business"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -582,7 +582,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.children_receive_govt_benefits"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -598,7 +598,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.children_have_special_education_needs"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -614,7 +614,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.children_have_special_medical_needs"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -630,7 +630,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.client_filed_gift_tax_return"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -646,7 +646,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.client_prior_divorce"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -663,7 +663,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.spouse_prior_divorce"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -679,7 +679,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.client_pays_settlement_expenses"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -696,7 +696,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.spouse_pays_settlement_expenses"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -712,7 +712,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.client_signed_pre_marital_agreement"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -729,7 +729,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.spouse_signed_pre_marital_agreement"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -746,7 +746,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.client_signed_post_marital_agreement"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -764,7 +764,7 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         <select
           [(ngModel)]="form.spouse_signed_post_marital_agreement"
-          class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+          class="max-w-lg block focus:ring-blue-500 focus:border-blue-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
         >
           <option [ngValue]="true">Yes</option>
           <option [ngValue]="false">No</option>
@@ -779,14 +779,14 @@ THE FORM FOR SELECTING EXCLUDED CHILDREN SHOULD POP UP HERE POSSIBLY -->
     <button
       (click)="backButton()"
       type="button"
-      class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
     >
       Back
     </button>
     <button
       (click)="submit()"
       type="submit"
-      class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
     >
       Save
     </button>

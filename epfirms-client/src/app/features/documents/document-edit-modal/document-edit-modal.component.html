@@ -41,7 +41,7 @@
           <div class="mt-2">
             <div class="mt-1 relative rounded-md shadow-sm">
 
-              <input type="text" value="{{updatedDocument.doc_name}}" (blur)="setDocName(updatedDocument, $event)" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-slate-300 rounded-md">
+              <input type="text" value="{{updatedDocument.doc_name}}" (blur)="setDocName(updatedDocument, $event)" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-slate-300 rounded-md">
             </div>
             <!-- This example requires Tailwind CSS v2.0+ -->
             <!--
@@ -58,7 +58,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
               </label>
               <div class="mt-1 relative">
                 <button (click)="toggleDisplayDocTypeSelection()" type="button"
-                  class="relative w-full bg-white border border-slate-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox"
+                  class="relative w-full bg-white border border-slate-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-haspopup="listbox"
                   aria-expanded="true" aria-labelledby="listbox-label">
                   <span class="flex items-center">
                     <span class="ml-3 block truncate">
@@ -91,7 +91,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
                   <!--
       Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-      Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-slate-900"
+      Highlighted: "text-white bg-blue-600", Not Highlighted: "text-slate-900"
     -->
                   <li *ngFor="let doc_type of legalDocumentTypes" (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-slate-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0"
                     role="option">
@@ -105,9 +105,9 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
                     <!--
         Checkmark, only display for selected option.
 
-        Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+        Highlighted: "text-white", Not Highlighted: "text-blue-600"
       -->
-                    <span *ngIf="updatedDocument.doc_type === doc_type.value" class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
+                    <span *ngIf="updatedDocument.doc_type === doc_type.value" class="text-blue-600 absolute inset-y-0 right-0 flex items-center pr-4">
                       <!-- Heroicon name: solid/check -->
                       <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -126,7 +126,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
               </label>
               <div class="mt-1 relative">
                 <button (click)="toggleDisplaySharing()" type="button"
-                  class="relative w-full bg-white border border-slate-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox"
+                  class="relative w-full bg-white border border-slate-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-haspopup="listbox"
                   aria-expanded="true" aria-labelledby="listbox-label">
                   <span class="flex items-center">
                     <span class="ml-3 block truncate">
@@ -159,7 +159,7 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
                   <!--
       Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-      Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-slate-900"
+      Highlighted: "text-white bg-blue-600", Not Highlighted: "text-slate-900"
     -->
                   <li (mouseenter)="toggleMouseEnter($event)" (mouseleave)="toggleMouseLeave($event)" class="text-slate-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
                     <div (click)="setSharing('Firm Only'); toggleDisplaySharing()" class="flex items-center">
@@ -172,9 +172,9 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
                     <!--
         Checkmark, only display for selected option.
 
-        Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+        Highlighted: "text-white", Not Highlighted: "text-blue-600"
       -->
-                    <span *ngIf="updatedDocument.share_with == 'Firm Only'" class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
+                    <span *ngIf="updatedDocument.share_with == 'Firm Only'" class="text-blue-600 absolute inset-y-0 right-0 flex items-center pr-4">
                       <!-- Heroicon name: solid/check -->
                       <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -193,9 +193,9 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
                     <!--
         Checkmark, only display for selected option.
 
-        Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+        Highlighted: "text-white", Not Highlighted: "text-blue-600"
       -->
-                    <span *ngIf="updatedDocument.share_with == 'Firm And Clients'" class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
+                    <span *ngIf="updatedDocument.share_with == 'Firm And Clients'" class="text-blue-600 absolute inset-y-0 right-0 flex items-center pr-4">
                       <!-- Heroicon name: solid/check -->
                       <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -212,10 +212,10 @@ https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-collapsible.ht
         </div>
       </div>
       <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
-        <button  (click)="submit()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">
+        <button  (click)="submit()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm">
           Update
         </button>
-        <button (click)="toggleIsEditVisible()" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-slate-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm">
+        <button (click)="toggleIsEditVisible()" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-slate-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm">
           Cancel
         </button>
       </div>
