@@ -18,7 +18,13 @@
   [isVisible]="true"
   [selectFamilyMemberVisible]="false"
 ></app-user-profile-form>
-
+<app-user-profile-form *ngIf="spouse === undefined"
+  [formSettings]="{ title: 'Spouse Information', subtitle: '', isClient: false }"
+  [userProfile]="{family_member: {relationship_type : 'spouse'}}"
+  [matter]="matter"
+  [isVisible]="true"
+  [selectFamilyMemberVisible]="false"
+></app-user-profile-form>
 
 </ng-scrollbar>
 
