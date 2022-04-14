@@ -10,7 +10,7 @@
           <div class="col-span-6 sm:col-span-3">
             <label
               for="first-name"
-              class="block text-sm font-medium text-slate-700"
+              class="block text-sm font-medium text-gray-700"
               >First name</label
             >
             <input
@@ -27,7 +27,7 @@
           <div class="col-span-6 sm:col-span-3">
             <label
               for="last-name"
-              class="block text-sm font-medium text-slate-700"
+              class="block text-sm font-medium text-gray-700"
               >Last name</label
             >
             <input
@@ -44,7 +44,7 @@
           <div class="col-span-6 sm:col-span-4">
             <label
               for="email-address"
-              class="block text-sm font-medium text-slate-700"
+              class="block text-sm font-medium text-gray-700"
               >Email address</label
             >
             <input
@@ -61,7 +61,7 @@
           <div class="col-span-6 sm:col-span-2">
             <label
               for="phone"
-              class="block text-sm font-medium text-slate-700"
+              class="block text-sm font-medium text-gray-700"
               >Phone</label
             >
             <input
@@ -79,7 +79,7 @@
           <div class="col-span-6">
             <label
               for="street-address"
-              class="block text-sm font-medium text-slate-700"
+              class="block text-sm font-medium text-gray-700"
               >Street address</label
             >
             <input
@@ -95,7 +95,7 @@
           <div class="col-span-6 sm:col-span-6">
             <label
               for="city"
-              class="block text-sm font-medium text-slate-700"
+              class="block text-sm font-medium text-gray-700"
               >City</label
             >
             <input
@@ -109,13 +109,13 @@
           </div>
 
           <div class="col-span-6 sm:col-span-3">
-            <label for="state" class="block text-sm font-medium text-slate-700">
+            <label for="state" class="block text-sm font-medium text-gray-700">
               State
             </label>
             <div class="mt-1">
               <select formControlName="state"
               id="state"
-                class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md shadow-sm border-slate-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md shadow-sm border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{state.name}}</option>
               </select>
             </div>
@@ -124,7 +124,7 @@
           <div class="col-span-6 sm:col-span-3">
             <label
               for="postal-code"
-              class="block text-sm font-medium text-slate-700"
+              class="block text-sm font-medium text-gray-700"
               >ZIP</label
             >
             <input

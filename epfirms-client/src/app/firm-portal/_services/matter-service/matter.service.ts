@@ -154,6 +154,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
                       legal_area: matter.legal_area,
                       client: matter.client,
                       matterId: matter.id,
+                      matter: matter
                     });
                   }
                   return a;

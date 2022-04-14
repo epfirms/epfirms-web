@@ -1,112 +1,54 @@
+<div class="bg-gray-50 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 group border-b border-gray-300">
+    <div class="flex justify-between">
+        <span>{{ label | titlecase }}</span>
+        <button class="w-5 h-5 group-hover:text-blue-500" *ngIf="user" (click)="selectOption('edit')" [tippy]="'Edit ' + label">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+          </svg>
+        </button>
+        <button class="w-5 h-5 group-hover:text-blue-500" *ngIf="!user" (click)="openAddClient()" [tippy]="'Add ' + label">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+          </button>
+    </div>
+</div>
 <ng-container *ngIf="user">
-    <div class="flex items-center justify-between w-full space-x-6">
-        <div class="flex items-center flex-1">
-            <ep-avatar [epSize]="'small'" [epSrc]="user.profile_image" [epText]="user.full_name"></ep-avatar>
-
-            <div class="flex-1 ml-2 truncate">
-                <div class="flex items-center space-x-3">
-                    <h3 class="text-sm font-medium truncate text-slate-900">
-                        {{ user.full_name | titlecase }}
-                    </h3>
-                </div>
-                <p class="text-sm truncate text-slate-500">
-                    {{label | titlecase}}
-                </p>
-            </div>
+  <div class="flex-shrink-0 block px-6 pb-6 border-b border-gray-300 group">
+    <div class="flex flex-col flex-none overflow-y-auto">
+      <div class="flex items-center py-4">
+        <div>
+            <ep-avatar
+            [epSize]="'mediumSmall'"
+            [epSrc]="user.profile_image"
+            [epText]="user.full_name"
+          ></ep-avatar>
         </div>
-
-        <div class="flex self-center flex-shrink-0">
-            <div class="relative inline-block text-left">
-                <div>
-                    <div Menu class="relative inline-block text-left">
-                        <button MenuButton type="button"
-                            class="flex items-center p-2 -m-2 rounded-full text-slate-400 hover:text-slate-600"
-                            id="options-menu-0-button" aria-expanded="false" aria-haspopup="true">
-                            <span class="sr-only">Open options</span>
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                fill="currentColor" aria-hidden="true">
-                                <path
-                                    d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                            </svg>
-                        </button>
-                        <div *MenuItems @toggleAnimation class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg  ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            <div class="p-1">
-                                <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md  group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="selectOption('edit')">
-                                    Edit
-                                </a>
-                                <ng-container *ngIf="label !== 'client'">
-                                    <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md  group text-slate-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="selectOption('remove')">
-                                        Remove
-                                    </a>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <div class="ml-3">
+          <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{{ user.full_name | titlecase }}</p>
         </div>
+      </div>
+      <div class="flex flex-col justify-between flex-auto">
+        <dl class="grid grid-cols-1 text-sm text-gray-700 gap-x-6 gap-y-3">
+          <dt class="col-end-1 font-semibold text-gray-900">Date of birth</dt>
+          <dd>{{ user.dob }}</dd>
+          <dt class="col-end-1 font-semibold text-gray-900">Email</dt>
+          <dd class="truncate">
+            <a href="https://example.com" class="text-blue-600 underline">{{ user.email || '' }}</a>
+          </dd>
+          <dt class="col-end-1 font-semibold text-gray-900">Phone</dt>
+          <dd>
+            <p>H: {{ user.phone || '' }}</p>
+            <p>C: {{ user.cell_phone || '' }}</p>
+          </dd>
+
+          <dt class="col-end-1 font-semibold text-gray-900">Address</dt>
+          <dd>
+            <p>{{ user.address }}</p>
+            <p>{{ user.city && user.city.length ? user.city + ',' : ''}} {{ user.state }} {{user.zip}}</p>
+          </dd>
+        </dl>
+      </div>
     </div>
-    <dl class="pb-3 mt-2 border-b  border-slate-200">
-        <div class="flex justify-between py-2 text-sm">
-            <dt class="text-slate-500">Date of birth</dt>
-            <dd class="text-slate-900">{{user.dob | date}}</dd>
-        </div>
-
-        <div class="flex justify-between py-2 text-sm">
-            <dt class="text-slate-500">Email</dt>
-            <dd class="text-slate-900">
-                {{ user.email || "" }}
-            </dd>
-        </div>
-
-        <div class="flex justify-between py-2 text-sm">
-            <dt class="text-slate-500">Phone</dt>
-            <dd class="text-slate-900">
-                {{ user.cell_phone || "" }}
-            </dd>
-        </div>
-
-        <div class="flex justify-between py-2 text-sm">
-            <dt class="text-slate-500">Address</dt>
-            <dd class="text-slate-900">
-                <ng-container *ngIf="user.address">
-                    <div class="text-right">{{ user.address }}</div>
-                    <div class="text-right">
-                        {{ user.city }},
-                        {{ user.state }}
-                        {{ user.zip }}
-                    </div>
-                </ng-container>
-                <ng-container>
-                    <div></div>
-                </ng-container>
-            </dd>
-        </div>
-    </dl>
-</ng-container>
-
-<ng-container *ngIf="!user">
-    <div class="border-b border-slate-200">
-        <div class="mb-4">
-            <div class="flex space-x-2">
-                <button type="button"
-                    class="flex items-center p-1 -ml-1 bg-white rounded-md group focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    (click)="openAddClient()">
-                    <span
-                        class="flex items-center justify-center w-8 h-8 border-2 border-dashed rounded-full border-slate-300 text-slate-400">
-                        <!-- Heroicon name: solid/plus -->
-                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                            aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    <span class="ml-3 text-sm font-medium text-blue-600 group-hover:text-blue-500">Add {{label |
-                        titlecase}}</span>
-                </button>
-            </div>
-        </div>
-    </div>
+  </div>
 </ng-container>

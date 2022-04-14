@@ -3,10 +3,12 @@
     <div class="px-4">
       <div class="flex items-center justify-between py-3">
         <a class="flex-1 flex-shrink-0 block group">
+          <ng-container *ngIf="conversation$ | async as conversation"> 
+            <ng-container *ngIf="!conversation.attributes['matterId']">
             <ng-container *ngIf="otherParticipants$ | async as otherParticipants">
-              <div class="flex items-center justify-end flex-shrink-0 row-span-2 space-x-2" [class.flex-row-reverse]="otherParticipants.length > 1">
-                <ep-avatar-group class="mr-3">
-                  <ep-avatar *ngFor="let participant of otherParticipants;" [epSize]="otherParticipants.length > 1 ? 'xsmall' : 'mediumSmall'" [epSrc]="participant.attributes['profileImage']" [epText]="participant.attributes['friendlyName']"></ep-avatar>
+              <div class="flex items-center justify-end flex-shrink-0 row-span-2 space-x-3" [class.flex-row-reverse]="otherParticipants.length > 1">
+                <ep-avatar-group>
+                  <ep-avatar *ngFor="let participant of otherParticipants;" [epSize]="otherParticipants.length > 1 ? 'xsmall' : 'small'" [epSrc]="participant.attributes['profileImage']" [epText]="participant.attributes['friendlyName']"></ep-avatar>
                 </ep-avatar-group>
 
                 <div class="flex-1">
@@ -16,7 +18,7 @@
                 </div>
 
                 <div class="self-center flex-shrink-0" *ngIf="otherParticipants.length > 1">
-                  <span class="inline-flex items-center justify-center rounded-full h-9 w-9 bg-slate-500">
+                  <span class="inline-flex items-center justify-center bg-gray-500 rounded-full h-9 w-9">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                     </svg>
@@ -24,6 +26,14 @@
                 </div>
             </div>
             </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="conversation.attributes['matterId']">
+              <ng-container *ngIf="matter$ | async as matter">
+                <app-matter-label [client]="matter.client" [matter]="matter" epSize="sm"></app-matter-label>
+              </ng-container>
+            </ng-container>
+          </ng-container>
         </a>
 
         <div *ngIf="conversation$ | async as conversation">
@@ -111,7 +121,7 @@
               </button>
             </div>
             <div class="flex items-center">
-              <div>
+              <!-- <div>
                 <label id="listbox-label" class="sr-only"> Your mood </label>
                 <div class="relative">
                   <button
@@ -142,7 +152,7 @@
                     </span>
                   </button>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="flex-shrink-0">

@@ -1,4 +1,4 @@
-<div class="relative flex flex-col justify-center min-h-screen py-6 overflow-hidden bg-slate-100 sm:py-12">
+<div class="relative flex flex-col justify-center min-h-screen py-6 overflow-hidden bg-gray-100 sm:py-12">
   <div class="relative px-6 pt-10 pb-8 bg-white shadow-xl ring-1 ring-gray-900/5 sm:max-w-lg sm:mx-auto sm:rounded-lg sm:px-10">
     <div class="w-full max-w-md mx-auto" *ngIf="!status">
       <div class="flex space-x-4 animate-pulse">
@@ -51,11 +51,11 @@
             </div>
                 <div *ngIf="status === 'sent'">
                   <div class="flex justify-between">
-                    <label for="message" class="block text-sm font-medium text-slate-600">Message</label>
-                    <span id="message-max" class="text-sm text-slate-500">Max. 500 characters</span>
+                    <label for="message" class="block text-sm font-medium text-gray-600">Message</label>
+                    <span id="message-max" class="text-sm text-gray-500">Max. 500 characters</span>
                   </div>
                   <div class="mt-1">
-                    <textarea [(ngModel)]="comment" id="message" name="message" rows="4" class="block w-full px-4 py-3 border rounded-md shadow-sm text-slate-900 focus:ring-blue-500 focus:border-blue-500 border-slate-300" aria-describedby="message-max"></textarea>
+                    <textarea [(ngModel)]="comment" id="message" name="message" rows="4" class="block w-full px-4 py-3 border rounded-md shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300" aria-describedby="message-max"></textarea>
                   </div>
                 </div>
           </div>          

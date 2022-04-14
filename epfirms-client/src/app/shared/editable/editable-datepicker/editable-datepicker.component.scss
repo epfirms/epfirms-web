@@ -1,10 +1,10 @@
 .input-box {
-  @apply bg-transparent text-sm text-slate-700 w-full px-2 py-1 border border-transparent border-dashed hover:bg-white hover:border-slate-300 focus:bg-white focus:border-transparent focus:shadow-sm;
+  @apply bg-transparent text-sm text-gray-700 w-full px-2 py-1 border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm;
 
   min-width: 13ch;
 
   &::placeholder {
-    @apply text-slate-400 font-normal;
+    @apply text-gray-400 font-normal;
   }
   }
   

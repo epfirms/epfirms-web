@@ -15,6 +15,7 @@ import { ConversationDraftComponent } from './conversation-draft/conversation-dr
 import { ConversationRoutingModule } from './conversation-routing.module';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { ConversationMatterSelectModalComponent } from './conversation-matter-select-modal/conversation-matter-select-modal.component';
+import { MatterModule } from '../matter/matter.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ConversationMatterSelectModalComponent } from './conversation-matter-se
     InfiniteScrollModule,
     NgScrollbarReachedModule,
     ConversationRoutingModule,
-    AvatarModule
+    AvatarModule,
+    MatterModule
   ],
   exports: [
     ConversationHistoryListComponent,

@@ -41,7 +41,7 @@ const tooltipConfig: Partial<TippyProps> = {
   animation: 'shift-away-subtle',
   offset: [0, 0],
   duration: [75, 25],
-  delay: [150, 0]
+  delay: [350, 0]
 };
 
 const dropdownConfig: Partial<TippyProps> = {

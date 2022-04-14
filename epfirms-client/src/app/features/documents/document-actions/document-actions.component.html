@@ -1,13 +1,13 @@
 <app-document-edit-modal [(isEditVisible)]="isEditVisible" (isEditVisibleChange)="isEditVisible=$event" [document]="document"></app-document-edit-modal>
 <ng-template #contextMenu let-hide>
   <ul>
-    <li class="text-slate-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:text-slate-900 hover:cursor-pointer text-left" (click)="toggleIsEditVisible(); hide();">Edit</li>
-    <li class="text-slate-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:text-slate-900 hover:cursor-pointer text-left" (click)="deleteDocument(); hide()" >Delete</li>
-    <li class="text-slate-700 block px-4 py-2 text-sm hover:bg-slate-100 hover:text-slate-900 hover:cursor-pointer text-left" (click)="downloadDocument(); hide()">Download</li>
+    <li class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer text-left" (click)="toggleIsEditVisible(); hide();">Edit</li>
+    <li class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer text-left" (click)="deleteDocument(); hide()" >Delete</li>
+    <li class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer text-left" (click)="downloadDocument(); hide()">Download</li>
   </ul>
 </ng-template>
 
-<button type="button" [tippy]="contextMenu" trigger="manual" #tooltip="tippy" variation="dropdown" (click)="tooltip.show()" class="bg-white p-0.5 rounded-full flex items-center text-slate-400 hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
+<button type="button" [tippy]="contextMenu" trigger="manual" #tooltip="tippy" variation="dropdown" (click)="tooltip.show()" class="bg-white p-0.5 rounded-full flex items-center text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
   <span class="sr-only">Document actions</span>
 
   <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

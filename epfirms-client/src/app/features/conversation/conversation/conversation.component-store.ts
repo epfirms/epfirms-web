@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Matter } from '@app/core/interfaces/matter';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { concatLatestFrom } from '@ngrx/effects';
@@ -15,12 +16,13 @@ export interface ConversationComponentState {
   messages: Message[];
   paginator: Paginator<Message> | null;
   otherParticipants: Participant[];
+  matter: Matter | null;
 }
 
 @Injectable()
 export class ConversationComponentStore extends ComponentStore<ConversationComponentState> {
   constructor(private _conversationService: ConversationService, private _route: ActivatedRoute, private _matterService: MatterService) {
-    super({ currentUser: _conversationService.conversationsClient.user, conversationTitle: '', conversation: null, messages: [], paginator: null, otherParticipants: [] });
+    super({ currentUser: _conversationService.conversationsClient.user, conversationTitle: '', conversation: null, messages: [], paginator: null, otherParticipants: [], matter: null });
   }
 
   readonly currentUser$ = this.select((state) => state.currentUser);
@@ -33,6 +35,8 @@ export class ConversationComponentStore extends ComponentStore<ConversationCompo
 
   readonly paginator$ = this.select((state) => state.paginator);
 
+  readonly matter$ = this.select((state) => state.matter);
+
   readonly conversationTitle$ = this.select((state) => state.conversationTitle);
 
   readonly setConversation = this.updater((state, conversation: Conversation) => ({
@@ -43,6 +47,11 @@ export class ConversationComponentStore extends ComponentStore<ConversationCompo
   readonly setConversationTitle = this.updater((state, conversationTitle: string) => ({
     ...state,
     conversationTitle,
+  }));
+
+  readonly setMatter = this.updater((state, matter: Matter) => ({
+    ...state,
+    matter,
   }));
 
   readonly setMessages = this.updater((state, paginator: Paginator<Message>) => ({
@@ -171,6 +180,19 @@ export class ConversationComponentStore extends ComponentStore<ConversationCompo
       )
     }),
   );
+  });
+
+  readonly getMatter = this.effect(() => {
+    return this.conversation$.pipe(
+      filter((conversation) => conversation !== null),
+      switchMap((conversation) => {
+          return this._matterService.getById(conversation.attributes['matterId']).pipe(
+            tapResponse(
+              this.setMatter,
+              () => of(null),
+            ),
+          )
+    }))
   });
 
     /**

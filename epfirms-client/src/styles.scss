@@ -6,23 +6,6 @@
 @import '~quill/dist/quill.snow.css';
 @import 'assets/scss/app.scss';
 @import '@angular/cdk/overlay-prebuilt.css';
-@import url('https://rsms.me/inter/inter.css');
-
-body,
-html {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
-    font-feature-settings: "case", "calt", "cv11";
-}
-
-@supports (font-variation-settings: normal) {
-  body,
-  html {
-    font-family: 'Inter var', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-      Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
-      font-feature-settings: "case", "calt", "cv11";
-    }
-}
 
 .hot-toast-w{
   &>.hot-toast-icon {
