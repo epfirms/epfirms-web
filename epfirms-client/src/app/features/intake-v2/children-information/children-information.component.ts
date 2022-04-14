@@ -5,11 +5,10 @@ import { ClientService } from '@app/firm-portal/_services/client-service/client.
 @Component({
   selector: 'app-children-information',
   templateUrl: './children-information.component.html',
-  styleUrls: ['./children-information.component.scss']
+  styleUrls: ['./children-information.component.scss'],
 })
 export class ChildrenInformationComponent implements OnInit {
-
-   // INPUT BINDINGS
+  // INPUT BINDINGS
   @Input() isVisible: boolean;
   @Input() matter;
 
@@ -21,8 +20,7 @@ export class ChildrenInformationComponent implements OnInit {
   client;
 
   //array that holds children
-  children = [];
-
+children = [];
 
   constructor(
     private clientService: ClientService,
@@ -30,20 +28,14 @@ export class ChildrenInformationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
     this.loadClientData();
     this.loadChildren();
   }
 
   private loadChildren(): void {
-    this.familyMemberService
-      .getByUserId(this.client.id)
-      .subscribe((res) => {
-        this.children = res.filter((member) => {
-          member.family_member.relationship_type === 'child';
-        }
-        );
-      });
+    this.familyMemberService.getByUserId(this.client.id).subscribe((res) => {
+     this.children = res.filter((member) => member.family_member.relationship_type === 'minor child' || member.family_member.relationship_type === 'adult child');
+    });
   }
 
   private loadClientData(): void {
@@ -54,7 +46,7 @@ export class ChildrenInformationComponent implements OnInit {
     let member = {
       first_name: '',
       last_name: '',
-      family_member: {relationship_type: 'child'},
+      family_member: { relationship_type: 'child' },
       email: '',
       phone: '',
       address: '',
@@ -64,10 +56,9 @@ export class ChildrenInformationComponent implements OnInit {
       county: '',
       ssn: '',
       dob: '',
-      template : true,
+      template: true,
       drivers_id: '',
-
-    }
+    };
     this.children.push(member);
   }
   backButton(): void {

@@ -7,7 +7,7 @@
   Add Child
   </button>
 </div>
-
+<ng-scrollbar style="height: 400px;">
 <app-user-profile-form
   *ngFor="let member of children"
   [userProfile]="member"
@@ -17,7 +17,8 @@
     subtitle: member.first_name,
     isClient: false
   }"
-  [selectFamilyMemberVisible]="false"
+  [selectFamilyMemberVisible]="true"
+  [relationshipTypesOverrides]="['adult child', 'minor child']"
 ></app-user-profile-form>
 <div class="flex justify-end">
               <button
@@ -34,3 +35,6 @@
                 Continue
               </button>
             </div>
+
+
+</ng-scrollbar>

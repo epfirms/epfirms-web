@@ -61,7 +61,7 @@ setProgressBar(property : string, value : boolean): void {
       this.state = state;
     }
     else if (state === 'child info' && !this.hasChildren) {
-      this.state = 'income intro';
+      this.state = 'income';
     }
 
     else {
