@@ -7,14 +7,15 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class BugReporterModalComponent implements OnInit {
 
-  @Output() close : EventEmitter<boolean> = new EventEmitter<boolean>();
+  //properties that get passed to the service call
+  type: string = 'bug';
+  details: string = '';
+
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  closeModal() {
-    this.close.emit(true);
-  }
 
 }
