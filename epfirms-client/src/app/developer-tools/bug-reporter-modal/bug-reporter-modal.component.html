@@ -1,0 +1,18 @@
+<div class="m-5">
+
+    <label  class="block text-sm font-medium text-gray-700"> Bug or Feature Request? </label>
+    <div class="mt-1">
+      <select [(ngModel)]="type" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+        <option [ngValue]="'bug'">Bug</option>
+        <option [ngValue]="'feature'">Feature Request</option>
+      </select>
+    </div>
+    <label for="about" class="block text-sm font-medium text-gray-700"> Details </label>
+    <div class="mt-1">
+      <textarea [(ngModel)]="details" id="about" name="about" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
+    </div>
+    <p class="mt-2 text-sm text-gray-500">Write a few sentences about either how the bug happened or the feature you would like to request. Thank you!</p>
+  
+
+
+  </div>

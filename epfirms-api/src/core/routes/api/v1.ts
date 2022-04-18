@@ -30,6 +30,8 @@ import { appointeeRouter } from '@src/modules/appointee/routes';
 import { specificRequestsRouter } from '@src/modules/specific-requests/routes';
 import { excludedChildrenRouter } from '@src/modules/excluded-children/routes';
 import { estatePlanningRouter } from '@src/modules/estate-planning/routes';
+import { githubRouter } from '@src/modules/github/routes';
+import { toolAccessRouter } from '@src/modules/tool-access/routes';
 
 const v1Router = express.Router();
 
@@ -65,4 +67,6 @@ v1Router.use('/appointee', appointeeRouter);
 v1Router.use('/estate-planning', estatePlanningRouter);
 v1Router.use('/excluded-children', excludedChildrenRouter);
 v1Router.use('/specific-requests', specificRequestsRouter);
+v1Router.use('/github', githubRouter);
+v1Router.use('/tools', toolAccessRouter);
 export { v1Router }

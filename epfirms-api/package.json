@@ -16,6 +16,7 @@
   "author": "epfirms",
   "license": "ISC",
   "dependencies": {
+    "@octokit/core": "^3.6.0",
     "@socket.io/redis-adapter": "^7.0.0",
     "@types/chai-http": "^4.2.0",
     "@types/node": "^16.9.6",
