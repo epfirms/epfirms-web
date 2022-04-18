@@ -36,6 +36,11 @@ export class AddClientComponent implements OnInit {
   phoneInputMask = createMask({
     mask: '(999) 999-9999',
     placeholder: ' ',
+    prefix: '+1',
+    onBeforeMask: (value: string) => {
+      const val = value.slice(2);
+      return val;
+    },
     parser: (value: string) => {
       const val = '+1' + value.replaceAll(/\(|\)|\-|\s/g, '');
       return val;
@@ -79,8 +84,8 @@ export class AddClientComponent implements OnInit {
       id: this.user.id,
       first_name: this.user.first_name,
       last_name: this.user.last_name,
-      cell_phone: this.user.cell_phone ? this.user.cell_phone.slice(2) : null,
-      phone: this.user.phone ? this.user.phone.slice(2) : null,
+      cell_phone: this.user.cell_phone ? this.user.cell_phone : null,
+      phone: this.user.phone ? this.user.phone : null,
       email: this.user.email,
       address: this.user.address,
       city: this.user.city,
