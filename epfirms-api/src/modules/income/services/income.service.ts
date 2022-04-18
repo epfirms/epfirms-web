@@ -6,6 +6,12 @@ import { Service } from 'typedi';
 export class IncomeService {
  public static async upsert(data) : Promise<any> {
      try {
+         if (data.amount && data.amount.length) {
+             if (data.amount.startsWith('$')) {
+                data.amount = data.amount.slice(1);
+             }
+             data.amount = data.amount.replace(/,/g, '');
+         }
          const income = await Database.models.income.upsert(data, {where: {id: data.id}});
          return Promise.resolve(income);
      } catch (error) {

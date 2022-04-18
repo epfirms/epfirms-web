@@ -22,8 +22,7 @@ import { RealEstateFormModule } from '@app/shared/real-estate-form/real-estate-f
 import { AppointeeFormModule } from '@app/shared/appointee-form/appointee-form.module';
 import { ProfileCardComponent } from './firm-intake-components/profile-card/profile-card.component';
 import { EstatePlanningFormComponent } from './firm-intake-components/estate-planning-form/estate-planning-form.component';
-
-
+import { InputMaskModule } from '@ngneat/input-mask';
 
 @NgModule({
   declarations: [
@@ -52,7 +51,8 @@ import { EstatePlanningFormComponent } from './firm-intake-components/estate-pla
     AssetFormModule,
     RealEstateFormModule,
     AppointeeFormModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputMaskModule
   ],
   exports: [
     ClientIntakeComponent,
