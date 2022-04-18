@@ -56,7 +56,7 @@ export class FirmPortalComponent implements OnInit {
   openBugReportModal() {
     this._modalService.create({
       epContent: BugReporterModalComponent,
-      epOkText: 'Add client',
+      epOkText: 'Submit',
       epCancelText: 'Cancel',
       epMaxWidth: '36rem',
       epAutofocus: null,
