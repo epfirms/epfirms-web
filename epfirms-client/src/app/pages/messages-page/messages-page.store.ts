@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConversationService } from '@app/features/conversation/services/conversation.service';
 import { ComponentStore } from '@ngrx/component-store';
 import { Conversation } from '@twilio/conversations';
-import { catchError, Observable, of, pluck, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 export interface MessagesPageState {
   selectedConversation: Conversation | null;
@@ -29,13 +29,6 @@ export class MessagesPageStore extends ComponentStore<MessagesPageState> {
     conversationItems,
   }));
 
-  readonly setSelectedConversation = this.updater(
-    (state: MessagesPageState, conversation: Conversation) => ({
-      ...state,
-      selectedConversation: conversation,
-    }),
-  );
-
   readonly loadConversationItems = this.effect(() => {
     return this._conversationService.conversations$.pipe(
       catchError((err: Error) => {
@@ -58,6 +51,7 @@ export class MessagesPageStore extends ComponentStore<MessagesPageState> {
       tap(this.updateSelectedConversation),
       tap((conversation: Conversation) => {
         if (conversation && conversation.sid) {
+          this._conversationService.setAllMessagesRead(conversation);
           this._router.navigate([`${conversation.sid}`], {relativeTo: this._route});
         }
       }),
