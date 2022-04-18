@@ -60,6 +60,10 @@ export class ConversationHistoryItemComponent implements OnDestroy {
     this.conversationUpdateSubscription.unsubscribe();
   }
 
+  delete() {
+    this.conversation.delete().then();
+  }
+
   loadOtherParticipants() {
     from(this.conversation.getParticipants()).subscribe((participants: Participant[]) => {
       const userIdentity = this._conversationService.user.identity;

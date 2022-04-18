@@ -6,7 +6,7 @@
   <div class="px-4 py-5 border-t border-gray-200 sm:px-6">
     <form [formGroup]="clientForm">
       <div>
-        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6 text-gray-800">
+        <div class="grid grid-cols-1 text-gray-800 gap-y-6 gap-x-4 sm:grid-cols-6">
           <div class="col-span-6 sm:col-span-3">
             <label
               for="first-name"
@@ -105,6 +105,37 @@
           </div>
 
           <div class="col-span-6 sm:col-span-3">
+            <label for="phone" class="block text-sm font-medium text-gray-700">Home Phone</label>
+            <div class="relative mt-1 rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <span class="text-gray-500 sm:text-sm"> +1 </span>
+              </div>
+              <input
+                formControlName="phone"
+                type="tel"
+                name="phone"
+                id="phone"
+                class="block w-full pl-8 pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                [ngClass]="{
+                  'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500':
+                    clientForm.get('phone').errors && clientForm.get('phone').hasError('type')
+                }"
+                autocomplete="off"
+                [inputMask]="phoneInputMask"
+              />
+            </div>
+            <p
+              class="absolute font-medium mt-0.5 text-xs text-red-600"
+              id="email-error"
+              *ngIf="
+                clientForm.get('phone').errors && clientForm.get('phone').hasError('type')
+              "
+            >
+              Not a valid phone number.
+            </p>
+          </div>
+          
+          <div class="col-span-6 sm:col-span-3">
             <label for="cell-phone" class="block text-sm font-medium text-gray-700"
               >Cell Phone</label
             >
@@ -159,36 +190,6 @@
               Not a valid cell phone number.
             </p>
           </div>
-          <div class="col-span-6 sm:col-span-3">
-            <label for="phone" class="block text-sm font-medium text-gray-700">Home Phone</label>
-            <div class="relative mt-1 rounded-md shadow-sm">
-              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <span class="text-gray-500 sm:text-sm"> +1 </span>
-              </div>
-              <input
-                formControlName="phone"
-                type="tel"
-                name="phone"
-                id="phone"
-                class="block w-full pl-8 pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                [ngClass]="{
-                  'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500':
-                    clientForm.get('phone').errors && clientForm.get('phone').hasError('type')
-                }"
-                autocomplete="off"
-                [inputMask]="phoneInputMask"
-              />
-            </div>
-            <p
-              class="absolute font-medium mt-0.5 text-xs text-red-600"
-              id="email-error"
-              *ngIf="
-                clientForm.get('phone').errors && clientForm.get('phone').hasError('type')
-              "
-            >
-              Not a valid phone number.
-            </p>
-          </div>
 
           <div class="col-span-6">
             <label for="street-address" class="block text-sm font-medium text-gray-700"
@@ -222,7 +223,7 @@
               <select
                 formControlName="state"
                 id="state"
-                class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md shadow-sm border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
                 <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
                   {{ state.name }}

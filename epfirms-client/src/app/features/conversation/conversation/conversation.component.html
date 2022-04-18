@@ -70,12 +70,12 @@
 ></app-conversation-message-list>
 </ng-container>
 
-<div class="p-4 pt-0">
+<div class="p-3 pt-0">
   <div class="flex items-start space-x-4">
     <div class="flex-1 min-w-0">
       <form (ngSubmit)="sendMessage()" class="relative">
         <div
-          class="overflow-hidden border border-gray-300 rounded-lg shadow-sm focus-within:border-blue-300"
+          class="overflow-hidden border border-gray-300 rounded-md shadow-sm focus-within:border-blue-400"
         >
           <label for="comment" class="sr-only">Add your comment</label>
           <textarea
@@ -159,7 +159,7 @@
             <button
               type="submit"
               [disabled]="!(newMessage && newMessage.length)"
-              class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded shadow-sm hover:bg-blue-600 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

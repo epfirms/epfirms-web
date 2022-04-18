@@ -28,6 +28,7 @@ import { ModalModule } from '@app/shared/modal/modal.module';
 import { IntakeV2Module } from '../intake-v2/intake-v2.module';
 import { MatterModule } from '../matter/matter.module';
 import { TippyModule } from '@ngneat/helipopper';
+import { PipesModule } from '@app/core/pipes/pipes.module';
 
 
 
@@ -63,7 +64,8 @@ import { TippyModule } from '@ngneat/helipopper';
     ModalModule,
     IntakeV2Module,
     MatterModule,
-    TippyModule
+    TippyModule,
+    PipesModule
   ],
   exports: [
     MatterTabsComponent

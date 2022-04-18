@@ -79,13 +79,13 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   phoneInputMask = createMask({
     mask: '(999) 999-9999',
     placeholder: ' ',
+    prefix: '+1',
+    onBeforeMask: (value: string) => {
+      const val = value.slice(2);
+      return val;
+    },
     parser: (value: string) => {
-      let val;
-      if (value && value.length) {
-        val = '+1' + value.replaceAll(/\(|\)|\-|\s/g, '');
-      } else {
-        val = '';
-      }
+      const val = '+1' + value.replaceAll(/\(|\)|\-|\s/g, '');
       return val;
     },
   });
@@ -231,14 +231,11 @@ export class AddCaseComponent implements OnInit, OnDestroy {
 
   setPhoneNumber(client) {
     if (client.cell_phone && client.cell_phone.length) {
-      this.chatToTextNumber.patchValue(client.cell_phone.replace('+1', ''));
+      this.chatToTextNumber.patchValue(client.cell_phone);
     } else {
-      // this.chatToTextNumber.setValue('');
       this.chatToTextNumber.patchValue('');
     }
     this.toggleChatToText();
-    // this.chatToTextNumber.addValidators([Validators.required]);
-    // this.chatToTextNumber.updateValueAndValidity();
   }
 
   resetPhoneNumber() {
