@@ -15,6 +15,7 @@ import { EpModalService } from '@app/shared/modal/modal.service';
 import { BugReporterModalComponent } from '@app/developer-tools/bug-reporter-modal/bug-reporter-modal.component';
 import { AddClientComponent } from './overlays/add-client/add-client.component';
 import { BugReportService } from '@app/developer-tools/services/bug-report.service';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-firm-portal',
@@ -35,6 +36,7 @@ export class FirmPortalComponent implements OnInit {
     private _store: Store<{ conversation: ConversationState }>,
     private _modalService: EpModalService,
     private _bugReportService: BugReportService,
+    private _toastService : HotToastService
   ) {
     this._currentUserService
       .getCurrentUser()
@@ -67,6 +69,9 @@ export class FirmPortalComponent implements OnInit {
             .createGHIssue({ type: componentInstance.type, details: componentInstance.details })
             .subscribe((res) => {
               console.log('after github submission', res);
+              if (res.status === 201) {
+                this._toastService.success('Report Submitted Successfully!');
+              }
             });
         }
       },
