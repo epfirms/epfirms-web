@@ -78,6 +78,8 @@ export class ConversationHistoryItemComponent implements OnDestroy {
         (message) => message.index === this.conversation.lastMessage.index,
       );
 
+      this.checkUnreadMessages();
+
       this.getLastMessageAuthorName(this.lastMessage.author);
     });
   }
@@ -88,9 +90,8 @@ export class ConversationHistoryItemComponent implements OnDestroy {
     });
   }
 
-  checkUnreadMessages(lastMessageIndex: number) {
-    this.hasUnreadMessages =
-      !this.selected && this.conversation.lastReadMessageIndex !== lastMessageIndex;
+  checkUnreadMessages() {
+    this.hasUnreadMessages = this.conversation.lastMessage.index > this.conversation.lastReadMessageIndex;
   }
 
   loadConversationTitle() {
@@ -126,6 +127,11 @@ export class ConversationHistoryItemComponent implements OnDestroy {
         const lastMessageUpdated = updateReasons.includes('lastMessage');
         if (lastMessageUpdated) {
           this.loadLastMessage();
+        }
+
+        const lastReadMessageUpdated = updateReasons.includes('lastReadMessageIndex');
+        if (lastReadMessageUpdated) {
+          this.checkUnreadMessages();
         }
       },
     );
