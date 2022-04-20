@@ -23,6 +23,10 @@ module.exports = (sequelize, {
             type: INTEGER,
             allowNull: false
         },
+
+        date_of_birth: {
+          type: STRING,
+        },
         
         place_of_birth: {
             type: STRING,

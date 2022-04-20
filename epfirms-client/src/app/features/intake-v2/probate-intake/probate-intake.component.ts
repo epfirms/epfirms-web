@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ProbateQuestions } from '@app/core/interfaces/ProbateQuestions';
+import { ProbateService } from '../services/probate.service';
 
 @Component({
   selector: 'app-probate-intake',
@@ -10,10 +12,13 @@ export class ProbateIntakeComponent implements OnInit {
   @Output() back = new EventEmitter<boolean>();
   @Output() continue = new EventEmitter<boolean>();
 
+  // the form for the probate
+form : ProbateQuestions;
 
-  constructor() { }
+  constructor(private probateService : ProbateService) { }
 
   ngOnInit(): void {
+    this.form = new ProbateQuestions();
   }
 
   backButton(): void {
@@ -25,7 +30,9 @@ export class ProbateIntakeComponent implements OnInit {
   }
 
   submit(): void {
-    
+     
+    this.probateService.upsert(this.form).subscribe(res => console.log(res));
+    console.log("On submit", this.form);
     this.continueButton();
   }
 

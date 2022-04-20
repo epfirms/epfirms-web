@@ -12,6 +12,7 @@
         <label class="block text-sm font-medium text-gray-700"> Date of Birth</label>
         <div class="mt-1">
           <input
+            [(ngModel)]="form.date_of_birth"
             type="date"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
           />
@@ -22,6 +23,7 @@
         <label class="block text-sm font-medium text-gray-700"> Place of Birth </label>
         <div class="mt-1">
           <input
+          [(ngModel)]="form.place_of_birth"
             type="text"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
           />
@@ -31,6 +33,7 @@
         <label class="block text-sm font-medium text-gray-700"> Date of Death</label>
         <div class="mt-1">
           <input
+          [(ngModel)]="form.date_of_death"
             type="date"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
           />
@@ -41,6 +44,7 @@
         <label class="block text-sm font-medium text-gray-700"> Place of Death </label>
         <div class="mt-1">
           <input
+          [(ngModel)]="form.place_of_death"
             type="text"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
           />
@@ -50,6 +54,7 @@
           <label class="block text-sm font-medium text-gray-700"> US Citizen? </label>
           <div class="mt-1">
             <select
+            [(ngModel)]="form.us_citizen"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
             >
               <option [ngValue]="true">Yes</option>
@@ -62,6 +67,7 @@
           <label class="block text-sm font-medium text-gray-700"> Naturalized Citizen? </label>
           <div class="mt-1">
             <select
+            [(ngModel)]="form.naturalized_citizen"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
             >
               <option [ngValue]="true">Yes</option>
@@ -74,6 +80,7 @@
           <label class="block text-sm font-medium text-gray-700"> Date of Naturalization</label>
           <div class="mt-1">
             <input
+            [(ngModel)]="form.date_of_naturalization"
               type="date"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
             />
@@ -84,6 +91,7 @@
           <label class="block text-sm font-medium text-gray-700"> Place of Naturalization </label>
           <div class="mt-1">
             <input
+            [(ngModel)]="form.place_of_naturalization"
               type="text"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
             />
@@ -94,6 +102,7 @@
             <div class="mt-1">
               <input
                 type="date"
+                [(ngModel)]="form.date_of_will"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
               />
             </div>
@@ -103,6 +112,7 @@
             <label class="block text-sm font-medium text-gray-700"> Date of Codicils</label>
             <div class="mt-1">
               <input
+              [(ngModel)]="form.date_of_codicils"
                 type="date"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
               />
