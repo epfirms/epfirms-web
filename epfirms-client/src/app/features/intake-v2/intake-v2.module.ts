@@ -23,6 +23,7 @@ import { AppointeeFormModule } from '@app/shared/appointee-form/appointee-form.m
 import { ProfileCardComponent } from './firm-intake-components/profile-card/profile-card.component';
 import { EstatePlanningFormComponent } from './firm-intake-components/estate-planning-form/estate-planning-form.component';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { TippyModule } from '@ngneat/helipopper';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { InputMaskModule } from '@ngneat/input-mask';
     RealEstateFormModule,
     AppointeeFormModule,
     ReactiveFormsModule,
-    InputMaskModule
+    InputMaskModule,
+    TippyModule
   ],
   exports: [
     ClientIntakeComponent,
