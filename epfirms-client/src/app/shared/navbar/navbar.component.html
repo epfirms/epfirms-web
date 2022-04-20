@@ -25,11 +25,11 @@
           <div Menu class="relative inline-block text-left">
             <div *MenuItems @toggleAnimation class="absolute left-0 z-10 w-56 mt-2 origin-bottom-left bg-white rounded-md shadow-lg bottom-10 ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div class="p-1">
-                <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md group text-gray-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="goToPortalSelect()">
+                <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium text-gray-700 rounded-md group hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="goToPortalSelect()">
                   Switch to client portal
                 </a>
 
-                <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium rounded-md group text-gray-700 hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="logout()">
+                <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium text-gray-700 rounded-md group hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="logout()">
                   Logout
                 </a>
               </div>
@@ -37,7 +37,7 @@
             <button MenuButton class="flex-shrink-0 block w-full text-left group">
               <div class="flex items-center" *ngIf="currentUser$ | async as currentUser">
                 <div>
-                  <ep-avatar epSize="medium" [epSrc]="currentUser.user.profile_image"
+                  <ep-avatar epSize="mediumSmall" [epSrc]="currentUser.user.profile_image"
                     [epText]="currentUser.user.full_name"></ep-avatar>
                 </div>
                 <div class="hidden truncate lg:block lg:ml-3">

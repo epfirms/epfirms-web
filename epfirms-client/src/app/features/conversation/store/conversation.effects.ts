@@ -48,10 +48,22 @@ export class ConversationEffects {
       ofType(ConversationActions.loadConversations),
       switchMap(() => this.conversationService.conversationJoinedEvent()),
       tap((conversation) => {
-        this.conversationService.conversations$.next([
+        const sortedConversations = [
           ...this.conversationService.conversations$.value,
           conversation,
-        ]);
+        ].sort((a, b) => {
+          const aLastMessage = a.lastMessage;
+          const bLastMessage = b.lastMessage;
+          if (aLastMessage && bLastMessage) {
+            return bLastMessage.dateCreated.getTime() - aLastMessage.dateCreated.getTime();
+          }
+
+          if (aLastMessage) {
+            return 1;
+          }
+          return -1;
+        });
+        this.conversationService.conversations$.next(sortedConversations);
       }),
       concatMap((conversation) =>
         from(conversation.getUnreadMessagesCount()).pipe(
@@ -67,31 +79,37 @@ export class ConversationEffects {
     ),
   );
 
-  tokenAboutToExpire$ = createEffect(() => 
-    this.actions$.pipe(
-      ofType(ConversationActions.updateConnectionState),
-      filter((action) => action.connectionState === 'connected'),
-      switchMap(() => {
-        return this.conversationService.tokenAboutToExpire().pipe(
-          tap(() => {
-            this.store.dispatch(ConversationActions.updateAccessToken());
-          }),
-        );
-      })   
-    ), {dispatch: false});
+  tokenAboutToExpire$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ConversationActions.updateConnectionState),
+        filter((action) => action.connectionState === 'connected'),
+        switchMap(() => {
+          return this.conversationService.tokenAboutToExpire().pipe(
+            tap(() => {
+              this.store.dispatch(ConversationActions.updateAccessToken());
+            }),
+          );
+        }),
+      ),
+    { dispatch: false },
+  );
 
-    tokenExpiredEvent$ = createEffect(() => 
-    this.actions$.pipe(
-      ofType(ConversationActions.updateConnectionState),
-      filter((action) => action.connectionState === 'connected'),
-      switchMap(() => {
-        return this.conversationService.tokenExpired().pipe(
-          tap(() => {
-            this.store.dispatch(ConversationActions.updateAccessToken());
-          }),
-        );
-      })   
-    ), {dispatch: false});
+  tokenExpiredEvent$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ConversationActions.updateConnectionState),
+        filter((action) => action.connectionState === 'connected'),
+        switchMap(() => {
+          return this.conversationService.tokenExpired().pipe(
+            tap(() => {
+              this.store.dispatch(ConversationActions.updateAccessToken());
+            }),
+          );
+        }),
+      ),
+    { dispatch: false },
+  );
 
   addEventHandlers$ = createEffect(
     () =>
@@ -124,6 +142,15 @@ export class ConversationEffects {
         filter((action) => action.connectionState === 'connected'),
         mergeMap(() =>
           this.conversationService.messageAdded().pipe(
+            tap((message) => {
+              const filteredConversations = this.conversationService.conversations$.value.filter(
+                (c) => c.sid !== message.conversation.sid,
+              );
+              this.conversationService.conversations$.next([
+                message.conversation,
+                ...filteredConversations,
+              ]);
+            }),
             filter((message) => message.author !== this.conversationService.user.identity),
             tap(() => {
               this.store.dispatch(ConversationActions.increaseUnreadMessageCount({ payload: 1 }));

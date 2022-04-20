@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConversationService } from '@app/features/conversation/services/conversation.service';
 import { ComponentStore } from '@ngrx/component-store';
 import { Conversation } from '@twilio/conversations';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 
 export interface MessagesPageState {
   selectedConversation: Conversation | null;
@@ -35,7 +35,7 @@ export class MessagesPageStore extends ComponentStore<MessagesPageState> {
         console.error(err);
         return of([]);
       }),
-      tap(this.setConversationItems),
+      map(this.setConversationItems),
     );
   });
 
@@ -52,7 +52,7 @@ export class MessagesPageStore extends ComponentStore<MessagesPageState> {
       tap((conversation: Conversation) => {
         if (conversation && conversation.sid) {
           this._conversationService.setAllMessagesRead(conversation);
-          this._router.navigate([`${conversation.sid}`], {relativeTo: this._route});
+          this._router.navigate([`${conversation.sid}`], { relativeTo: this._route });
         }
       }),
     ),

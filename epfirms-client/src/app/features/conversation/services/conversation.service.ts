@@ -8,14 +8,7 @@ import {
   Conversation,
   Message,
 } from '@twilio/conversations';
-import {
-  BehaviorSubject,
-  from,
-  fromEvent,
-  fromEventPattern,
-  Observable,
-  pluck,
-} from 'rxjs';
+import { BehaviorSubject, from, fromEvent, fromEventPattern, Observable, pluck } from 'rxjs';
 import { ConversationState } from '../store/conversation.store';
 
 @Injectable({
@@ -54,13 +47,18 @@ export class ConversationService {
   }
 
   /** Creates a conversation and adds the creator as participant. Direct messages are between 2 users. */
-  createConversation(conversationType: 'direct' | 'group' = 'direct', attributes?: any): Observable<Conversation> {
+  createConversation(
+    conversationType: 'direct' | 'group' = 'direct',
+    attributes?: any,
+  ): Observable<Conversation> {
     return from(
-      this.conversationsClient.createConversation({ attributes: { ...attributes, type: conversationType } }),
+      this.conversationsClient.createConversation({
+        attributes: { ...attributes, type: conversationType },
+      }),
     );
   }
 
-  sendMessage(conversationSid: string, options: {body: string, author?: string}) {
+  sendMessage(conversationSid: string, options: { body: string; author?: string }) {
     return this._http.post(`/api/chat/${conversationSid}/messages`, options);
   }
 

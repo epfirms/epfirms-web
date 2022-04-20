@@ -52,16 +52,12 @@
 
       <ng-container *ngIf="isLast || message.author !== nextMessage.author">
         <ng-container *ngIf="user">
-          <div class="flex-shrink-0" *ngIf="!user.profile_image">
-            <span class="inline-flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full">
-              <span class="text-sm font-medium leading-none text-white">{{
-                user.full_name | initials
-              }}</span>
-            </span>
-          </div>
-          <div *ngIf="user.profile_image">
-            <img class="inline-block w-8 h-8 rounded-full" [src]="user.profile_image" alt="" />
-          </div>
+          <ep-avatar
+          [epSize]="'small'"
+          [epSrc]="user.profile_image"
+          [epText]="user.full_name"
+        >
+        </ep-avatar>
         </ng-container>
     
           <ng-container *ngIf="!user">
@@ -76,12 +72,12 @@
         [class.ml-10]="!(isLast || message.author !== nextMessage.author)"
         style="max-width: 36rem"
         [ngClass]="{
-          'rounded-bl':
+          'rounded-bl-sm':
             !isLast &&
             (message.dateCreated | date: 'EEEE, MMMM d') ===
               (nextMessage.dateCreated | date: 'EEEE, MMMM d') &&
             nextMessage.author === message.author,
-          'rounded-tl':
+          'rounded-tl-sm':
             !isFirst &&
             (message.dateCreated | date: 'EEEE, MMMM d') ===
               (prevMessage.dateCreated | date: 'EEEE, MMMM d') &&
@@ -108,12 +104,12 @@
         class="px-3 py-2.5 bg-blue-100 rounded-xl"
         style="max-width: 36rem"
         [ngClass]="{
-          'rounded-br':
+          'rounded-br-sm':
             !isLast &&
             (message.dateCreated | date: 'EEEE, MMMM d') ===
               (nextMessage.dateCreated | date: 'EEEE, MMMM d') &&
             nextMessage.author === message.author,
-          'rounded-tr':
+          'rounded-tr-sm':
             !isFirst &&
             (message.dateCreated | date: 'EEEE, MMMM d') ===
               (prevMessage.dateCreated | date: 'EEEE, MMMM d') &&
