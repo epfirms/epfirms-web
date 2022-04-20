@@ -18,6 +18,10 @@ import {
 import { ConversationService } from '../services/conversation.service';
 import { updateAccessToken } from './conversation.actions';
 import * as ConversationActions from '../store/conversation.actions';
+import { HotToastService } from '@ngneat/hot-toast';
+import { UserService } from '@app/features/user/services/user.service';
+import { ConversationNotification } from '../interfaces/conversation-notification';
+import { ConversationNotificationComponent } from '../conversation-notification/conversation-notification.component';
 
 @Injectable()
 export class ConversationEffects {
@@ -152,8 +156,36 @@ export class ConversationEffects {
               ]);
             }),
             filter((message) => message.author !== this.conversationService.user.identity),
-            tap(() => {
-              this.store.dispatch(ConversationActions.increaseUnreadMessageCount({ payload: 1 }));
+            tap((message) => {
+              this._userService.get(message.author).subscribe(user => {
+                const toastRef = this._toastService.show<ConversationNotification>(ConversationNotificationComponent, {
+                  duration: 8000,
+                  dismissible: false,
+                  data: {
+                    message,
+                    user
+                  },
+                  style: {
+                 
+        'color': 'rgb(15, 23, 42)',
+        'font-weight': '500',
+        'font-size': '0.875rem',
+        'background-color': 'rgb(255, 255, 255)',
+        'border-radius': '0.375rem',
+        'overflow': 'hidden',
+        'width': '28rem',
+        'max-width': '28rem',
+        'margin': '1.5rem',
+        'padding': '0',
+        'box-shadow': '0 0 0 0px #fff, 0 0 0 1px rgba(0, 0, 0, .05), 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05)'}
+                });
+
+                toastRef.afterClosed.subscribe((data) => {
+                  if (!data.dismissedByAction) {
+                    this.store.dispatch(ConversationActions.increaseUnreadMessageCount({ payload: 1 }));
+                  }
+                })
+              })
             }),
             catchError(() => EMPTY),
           ),
@@ -192,5 +224,7 @@ export class ConversationEffects {
     private conversationService: ConversationService,
     private store: Store<{ conversation: ConversationState }>,
     private _authService: AuthService,
+    private _toastService: HotToastService,
+    private _userService: UserService
   ) {}
 }

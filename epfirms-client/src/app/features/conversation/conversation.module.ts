@@ -16,6 +16,7 @@ import { ConversationRoutingModule } from './conversation-routing.module';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { ConversationMatterSelectModalComponent } from './conversation-matter-select-modal/conversation-matter-select-modal.component';
 import { MatterModule } from '../matter/matter.module';
+import { ConversationNotificationComponent } from './conversation-notification/conversation-notification.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MatterModule } from '../matter/matter.module';
     ConversationMessageItemComponent,
     ConversationComponent,
     ConversationDraftComponent,
-    ConversationMatterSelectModalComponent
+    ConversationMatterSelectModalComponent,
+    ConversationNotificationComponent
   ],
   imports: [
     CoreModule,
