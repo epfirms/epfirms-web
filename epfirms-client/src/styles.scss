@@ -15,6 +15,9 @@
   &>.hot-toast-message {
     justify-content: flex-start !important;
     margin: 0 !important;
+    &>div{
+      width: 100%;
+    }
   }
 
   &>.hot-toast-close-btn {
