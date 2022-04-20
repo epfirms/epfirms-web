@@ -1,5 +1,7 @@
 const { guessProductionMode } = require('@ngneat/tailwind');
 const colors = require('tailwindcss/colors');
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 process.env.TAILWIND_MODE = guessProductionMode() ? 'build' : 'watch';
 
 module.exports = {
@@ -8,13 +10,14 @@ module.exports = {
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/forms'),
-    require('@tailwindcss/typography')
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/line-clamp')
   ],
   theme: {
     extend: {
-      colors: {
-        gray: colors.slate
-      }
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans]
+      },
     }
   }
 };

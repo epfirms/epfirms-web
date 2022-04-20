@@ -1,4 +1,4 @@
-<div class="text-right m-4">
+<!-- <div class="text-right m-4">
   <button
     (click)="addFamilyMember()"
     type="button"
@@ -6,23 +6,23 @@
   >
   Add Family Member
   </button>
-</div>
+</div> -->
+
+
+<ng-scrollbar style="height: 400px">
+  <!-- content -->
 <app-user-profile-form
   [formSettings]="{ title: 'Client Information', subtitle: client.first_name, isClient: true }"
   [userProfile]="client"
   [matter]="matter"
+  [isVisible]="true"
 ></app-user-profile-form>
 
-<app-user-profile-form
-  *ngFor="let member of familyMembers"
-  [userProfile]="member"
-  [matter]="matter"
-  [formSettings]="{
-    title: 'Family Member Information',
-    subtitle: member.first_name,
-    isClient: false
-  }"
-></app-user-profile-form>
+
+</ng-scrollbar>
+
+
+
 <div class="flex justify-end">
               <button
                 (click)="backButton()"

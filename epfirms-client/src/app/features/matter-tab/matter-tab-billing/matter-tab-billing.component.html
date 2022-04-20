@@ -12,8 +12,8 @@
 
 
 <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="bg-white-50 pt-12 sm:pt-16" mb-2>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="pt-12 bg-white-50 sm:pt-16" mb-2>
+  <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
       <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
         Summary
@@ -21,19 +21,19 @@
 
     </div>
   </div>
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
 
-    <div class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="grid grid-cols-1 gap-5 mt-2 sm:grid-cols-2 lg:grid-cols-4">
       <!-- Card -->
 
-      <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="overflow-hidden bg-white rounded-lg shadow">
         <div class="p-4">
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <!-- Heroicon name: outline/scale -->
 
             </div>
-            <div class="ml-5 w-0 flex-1">
+            <div class="flex-1 w-0 ml-5">
               <dl>
                 <dt class="text-sm font-medium text-red-500 truncate">
                   Amount Billed
@@ -47,7 +47,7 @@
             </div>
           </div>
         </div>
-        <div class="bg-gray-50 px-5 py-3">
+        <div class="px-5 py-3 bg-gray-50">
           <div class="text-sm">
             <a (click)="addBill()" class="font-medium text-red-500 hover:text-red-900">
               Add Expense
@@ -55,16 +55,16 @@
           </div>
         </div>
       </div>
-      <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="overflow-hidden bg-white rounded-lg shadow">
         <div class="p-4">
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <!-- Heroicon name: outline/scale -->
-              <svg class="h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <svg class="w-6 h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3" />
               </svg>
             </div>
-            <div class="ml-5 w-0 flex-1">
+            <div class="flex-1 w-0 ml-5">
               <dl>
                 <dt class="text-sm font-medium text-green-700 truncate">
                   Client Payments
@@ -78,7 +78,7 @@
             </div>
           </div>
         </div>
-        <div class="bg-gray-50 px-5 py-3">
+        <div class="px-5 py-3 bg-gray-50">
           <div class="text-sm">
             <a (click)="addPayment()" class="font-medium text-green-700 hover:text-green-900">
               Add Payment
@@ -86,14 +86,14 @@
           </div>
         </div>
       </div>
-      <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="overflow-hidden bg-white rounded-lg shadow">
         <div class="p-4">
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <!-- Heroicon name: outline/scale -->
 
             </div>
-            <div class="ml-5 w-0 flex-1">
+            <div class="flex-1 w-0 ml-5">
               <dl>
                 <dt class="text-sm font-medium text-blue-500 truncate">
                   Total Balance
@@ -107,7 +107,7 @@
             </div>
           </div>
         </div>
-        <div class="bg-gray-50 px-5 py-3">
+        <div class="px-5 py-3 bg-gray-50">
           <div class="text-sm">
             <a href="#statements" class="font-medium text-blue-700 hover:text-blue-900">
               View Statements
@@ -116,14 +116,14 @@
         </div>
       </div>
 
-      <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="overflow-hidden bg-white rounded-lg shadow">
         <div class="p-4">
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <!-- Heroicon name: outline/scale -->
 
             </div>
-            <div class="ml-5 w-0 flex-1">
+            <div class="flex-1 w-0 ml-5">
               <dl>
                 <dt class="text-sm font-medium text-blue-500 truncate">
                   IOLTA Balance
@@ -146,14 +146,14 @@
   ```
 -->
 <div>
-  <div class="mt-1 relative rounded-md shadow-sm">
-    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+  <div class="relative mt-1 rounded-md shadow-sm">
+    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
       <span class="text-gray-500 sm:text-sm">
         $
       </span>
     </div>
-    <input type="text" (blur)="updateIOLTA()" [(ngModel)]="ioltaBalance" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0.00" aria-describedby="price-currency">
-    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+    <input type="text" (blur)="updateIOLTA()" [(ngModel)]="ioltaBalance" class="block w-full pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm" placeholder="0.00" aria-describedby="price-currency">
+    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
       <span class="text-gray-500 sm:text-sm" id="price-currency">
         USD
       </span>
@@ -166,7 +166,7 @@
             </div>
           </div>
         </div>
-        <div class="bg-gray-50 px-5 py-3">
+        <div class="px-5 py-3 bg-gray-50">
           <div class="text-sm">
             <a href="#ioltaSummary" class="font-medium text-blue-700 hover:text-blue-900">
               View IOLTA History
@@ -198,11 +198,11 @@
   }
   ```
 -->
-<div class="py-8 px-24">
+<div class="px-24 py-8">
   <div class="sm:hidden">
     <label for="tabs" class="sr-only">Select a tab</label>
     <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-    <select id="tabs" name="tabs" class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md">
+    <select id="tabs" name="tabs" class="block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
       <option>Activity</option>
 
       <option>Bills</option>
@@ -216,16 +216,16 @@
   </div>
   <div class="hidden sm:block">
     <div class="border-b border-gray-200">
-      <nav class="-mb-px flex space-x-8">
-        <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300" -->
+      <nav class="flex -mb-px space-x-8">
+        <!-- Current: "border-blue-500 text-blue-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
         <a                 
         *ngFor="let subtab of subTabs"
         (click)="selectTab(subtab)"
         [ngClass]="{
           'border-blue-500 text-blue-600': subtab === selectedTab,
-          'text-slate-500 hover:text-slate-700 hover:border-slate-300 border-transparent':
+          'text-gray-500 hover:text-gray-700 hover:border-gray-300 border-transparent':
             subtab !== selectedTab
-        }" class=" whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm hover:cursor-pointer" aria-current="page">
+        }" class="px-1 pb-4 text-sm font-medium border-b-2  whitespace-nowrap hover:cursor-pointer" aria-current="page">
         {{ subtab | titlecase }}
 
         </a>
@@ -235,11 +235,11 @@
 </div>
 
 
-<div *ngIf="selectedTab == 'billing settings'" class="py-8 px-24">
+<div *ngIf="selectedTab == 'billing settings'" class="px-24 py-8">
   <div class="mb-8">
     <div class="flex items-center mb-6">
       <div class="flex-1">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">
           Billing Settings
         </h3>
       </div>
@@ -247,15 +247,15 @@
     </div>
     <div class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Billing Style
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Payment Type
                   </th>
 
@@ -263,18 +263,18 @@
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
                 <tr>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                     <div>
                       <label for="billingStyle" class="block text-sm font-medium text-gray-700">Billing Style</label>
-                      <select (change)="upsertDefaultBillingSettings()" id="billingStyle" [(ngModel)]="defaultBillingStyle" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                      <select (change)="upsertDefaultBillingSettings()" id="billingStyle" [(ngModel)]="defaultBillingStyle" class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                         <option *ngFor="let setting of billingSettingOptions" >{{setting | titlecase}}</option>
                       </select>
                     </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td class="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">
                     <div>
                       <label for="paymentType" class="block text-sm font-medium text-gray-700">Payment Type</label>
-                      <select (change)="upsertDefaultBillingSettings()" id="paymentType" [(ngModel)]="defaultPaymentType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                      <select (change)="upsertDefaultBillingSettings()" id="paymentType" [(ngModel)]="defaultPaymentType" class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                         <option *ngFor="let setting of billingPaymentOptions" >{{setting | titlecase}}</option>
                         
                       </select>
@@ -294,11 +294,11 @@
 
 
 
-<div *ngIf="selectedTab == 'bills'" class="py-8 px-24">
+<div *ngIf="selectedTab == 'bills'" class="px-24 py-8">
   <div class="mb-8">
     <div class="flex items-center mb-6">
       <div class="flex-1">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">
           Billing
         </h3>
       </div>
@@ -309,12 +309,12 @@
     </label>
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="mt-1">
-      <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
+      <!-- Enabled: "bg-blue-600", Not Enabled: "bg-gray-200" -->
       <button
         (click)="toggleBillFilter()"
         type="button"
         [ngClass]="displayReconciled ? 'bg-blue-600' : 'bg-gray-200'"
-        class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         role="switch"
         aria-checked="false"
       >
@@ -323,75 +323,75 @@
         <span
           aria-hidden="true"
           [ngClass]="displayReconciled ? 'translate-x-5' : 'translate-x-0'"
-          class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+          class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0"
         ></span>
       </button>
     </div>
     <div class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div class="shadow overflow-hidden border-b border-slate-200 sm:rounded-lg" *ngIf="bills.length">
-            <table class="min-w-full divide-y divide-slate-200">
-              <thead class="bg-slate-50">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg" *ngIf="bills.length">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Date
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Employee
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Amount
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Description
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Action
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Waive
                   </th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-slate-200">
+              <tbody class="bg-white divide-y divide-gray-200">
                 <ng-container *ngFor="let bill of bills">
                   <tr *ngIf="bill.reconciled == displayReconciled">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                       {{bill.date | date}}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                       {{bill.employee_name}}
                     </td>
-                    <td [ngClass]="{'line-through' : bill.waive}" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td [ngClass]="{'line-through' : bill.waive}" class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                       ${{bill.amount}}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                       {{bill.description | slice:0:50}}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div class="ml-4 flex-shrink-0 flex space-x-4">
+                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                      <div class="flex flex-shrink-0 ml-4 space-x-4">
                         <!-- <button type="button"
-                            class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            class="font-medium text-blue-600 bg-white rounded-md hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             Edit
                           </button>
                           <span class="text-gray-300" aria-hidden="true">|</span> -->
-                        <button type="button" (click)="remove(bill.id)" class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <button type="button" (click)="remove(bill.id)" class="font-medium text-blue-600 bg-white rounded-md hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
                         </button>
-                        <button type="button" (click)="editBill(bill)" class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <button type="button" (click)="editBill(bill)" class="font-medium text-blue-600 bg-white rounded-md hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                           </svg>
                         </button>
   
                       </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                       <div class="flex items-center h-5">
-                        <input (click)="toggleWaive(bill)"  type="checkbox"  [checked]="bill.waive" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                        <input (click)="toggleWaive(bill)"  type="checkbox"  [checked]="bill.waive" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                       </div>
                     </td>
                   </tr>
@@ -402,13 +402,13 @@
 
           </div>
           <button (click)="addBill()" type="button"
-            class="inline-flex items-center px-4 py-2 my-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+            class="inline-flex items-center px-4 py-2 my-2 text-base font-medium text-red-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
             Add Bill
           </button>
 
           <div class="text-center" *ngIf="!bills.length">
 
-            <h3 class="mt-2 text-sm font-medium text-slate-900">No bills</h3>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">No bills</h3>
           </div>
         </div>
       </div>
@@ -416,10 +416,10 @@
   </div>
 </div>
 
-<div *ngIf="selectedTab == 'payments'" class="py-8 px-24">
+<div *ngIf="selectedTab == 'payments'" class="px-24 py-8">
   <div class="flex items-center mb-6">
     <div class="flex-1">
-      <h3 class="text-lg leading-6 font-medium text-slate-900">
+      <h3 class="text-lg font-medium leading-6 text-gray-900">
         Payment
       </h3>
     </div>
@@ -427,43 +427,43 @@
   </div>
   <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-        <div class="shadow overflow-hidden border-b border-slate-200 sm:rounded-lg" *ngIf="payments.length">
-          <table class="min-w-full divide-y divide-slate-200">
-            <thead class="bg-slate-50">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg" *ngIf="payments.length">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                   Description
                 </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                   Amount Paid
                 </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                   Date
                 </th>
                 <th scope="col" class="relative px-6 py-3">
                 </th>
               </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-slate-200">
+            <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let payment of payments">
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                   {{ payment.description }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                   {{ payment.amount | currency }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                   {{ payment.date | date}}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div class="ml-4 flex-shrink-0 flex space-x-4">
+                <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                  <div class="flex flex-shrink-0 ml-4 space-x-4">
                     <!-- <button type="button"
-                        class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        class="font-medium text-blue-600 bg-white rounded-md hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         Edit
                       </button>
                       <span class="text-gray-300" aria-hidden="true">|</span> -->
-                    <button type="button" (click)="remove(payment.id)" class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <button type="button" (click)="remove(payment.id)" class="font-medium text-blue-600 bg-white rounded-md hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                       Remove
                     </button>
                   </div>
@@ -473,16 +473,16 @@
           </table>
         </div>
         <button (click)="addPayment()" type="button"
-          class="inline-flex items-center px-4 py-2 my-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-green-700 bg-white hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+          class="inline-flex items-center px-4 py-2 my-2 text-base font-medium text-green-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
           Add Payment
         </button>
 
         <div class="text-center" *ngIf="!payments.length">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
 
-          <h3 class="mt-2 text-sm font-medium text-slate-900">No payments</h3>
+          <h3 class="mt-2 text-sm font-medium text-gray-900">No payments</h3>
         </div>
       </div>
     </div>
@@ -490,10 +490,10 @@
 
 </div>
   
-  <div *ngIf="selectedTab == 'statements'" class="py-8 px-24">
+  <div *ngIf="selectedTab == 'statements'" class="px-24 py-8">
     <div class="flex items-center mb-6">
       <div class="flex-1">
-        <h3 id="statements" class="text-lg leading-6 font-medium text-gray-900">
+        <h3 id="statements" class="text-lg font-medium leading-6 text-gray-900">
           Statements
         </h3>
       </div>
@@ -501,54 +501,54 @@
     </div>
     <div class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div class="shadow overflow-hidden border-b border-slate-200 sm:rounded-lg" *ngIf="statements.length">
-            <table class="min-w-full divide-y divide-slate-200">
-              <thead class="bg-slate-50">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg" *ngIf="statements.length">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Description
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Balance Due
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Due Date
                   </th>
                   <th scope="col" class="relative px-6 py-3">
                   </th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-slate-200">
+              <tbody class="bg-white divide-y divide-gray-200">
                 <tr *ngFor="let statement of statements">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                  <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                     {{statement.message}}
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                  <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                     {{statement.balance_due}}
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                  <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                     {{statement.due_date}}
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div class="ml-4 flex-shrink-0 flex space-x-4">
+                  <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                    <div class="flex flex-shrink-0 ml-4 space-x-4">
                       <!-- <button type="button"
-                          class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                          class="font-medium text-blue-600 bg-white rounded-md hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                           Edit
                         </button>
                         <span class="text-gray-300" aria-hidden="true">|</span> -->
-                      <button type="button" (click)="deleteStatement(statement.id)" class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <button type="button" (click)="deleteStatement(statement.id)" class="font-medium text-blue-600 bg-white rounded-md hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
                       </button>
-                      <button type="button" (click)="toggleStatementManager(statement)" class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <button type="button" (click)="toggleStatementManager(statement)" class="font-medium text-blue-600 bg-white rounded-md hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
                       </button>
-                      <button type="button" (click)="download(statement)" class="bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <button type="button" (click)="download(statement)" class="font-medium text-blue-600 bg-white rounded-md hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                         </svg>
                       </button>
@@ -559,16 +559,16 @@
             </table>
           </div>
           <button (click)="toggleGenerateStatement()" type="button"
-            class="inline-flex items-center px-4 py-2 my-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            class="inline-flex items-center px-4 py-2 my-2 text-base font-medium text-blue-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
             Generate Statement
           </button>
 
           <div class="text-center" *ngIf="!statements.length">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
 
-            <h3 class="mt-2 text-sm font-medium text-slate-900">No statements</h3>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">No statements</h3>
           </div>
         </div>
       </div>

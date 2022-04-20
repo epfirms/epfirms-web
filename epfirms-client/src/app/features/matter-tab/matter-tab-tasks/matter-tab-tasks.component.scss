@@ -2,15 +2,15 @@
   @apply hover:cursor-pointer focus-within:bg-blue-50;
 
   &:hover:not(:focus-within) {
-    @apply bg-slate-50;
+    @apply bg-gray-50;
   }
 }
 
 .task-input {
-  @apply bg-transparent text-sm text-slate-800 w-full px-2 py-1 border border-transparent border-dashed hover:bg-white hover:border-slate-300 focus:bg-white focus:border-transparent focus:shadow-sm;
+  @apply bg-transparent text-sm text-gray-800 w-full px-2 py-1 border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm;
   min-width: 150px;
   
   &::placeholder {
-    @apply text-slate-400 font-normal;
+    @apply text-gray-400 font-normal;
   }
 }

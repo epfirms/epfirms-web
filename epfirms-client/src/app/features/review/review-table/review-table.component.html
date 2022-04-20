@@ -2,7 +2,7 @@
   <thead>
     <tr class="border-t border-gray-200">
       <th class="w-4/12 px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-        Client
+        Matter
       </th>
       <th class="w-1/12 px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
         Rating
@@ -16,14 +16,8 @@
   </thead>
   <tbody class="bg-white divide-y divide-gray-100">
     <tr *ngFor="let review of reviews">
-      <td class="w-4/12 px-6 py-3 text-sm font-medium text-gray-900 max-w-0 whitespace-nowrap">
-        <div class="flex items-center space-x-3">
-          <a href="#" class="truncate hover:text-gray-600">
-            <span>
-              {{review.matter.client.full_name | titlecase}}
-            </span>
-          </a>
-        </div>
+      <td class="w-4/12 px-6 py-3 max-w-0 whitespace-nowrap">
+          <app-matter-label [client]="review.matter.client" [matter]="review.matter" epSize="sm"></app-matter-label>
       </td>
       <td class="w-1/12 px-6 py-3 text-sm font-medium text-gray-500">
         <div class="flex items-center space-x-2">

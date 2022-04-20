@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Client } from '@app/core/interfaces/client';
 import { LegalArea } from '@app/core/interfaces/legal-area';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { ClientService } from '../_services/client-service/client.service';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
@@ -58,7 +58,11 @@ export class FirmHomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.pageTitle = this._titleService.getTitle();
 
-    this.taskSubscription = this._matterService.getAssignedMatterTasks().subscribe(tasks => {
+    this.taskSubscription = this._matterService.getAssignedMatterTasks().pipe(map(tasks => tasks.sort((a,b) => {
+      const dateA = new Date(a.task.due);
+      const dateB = new Date(b.task.due);
+      return dateA.setHours(0,0,0,0) - dateB.setHours(0,0,0,0);
+    }))).subscribe(tasks => {
       const initialValue = {
         overdue: {
           expanded: false,
@@ -97,7 +101,6 @@ export class FirmHomeComponent implements OnInit, OnDestroy {
         }
         return acc;
       }, initialValue);
-
     })
   }
 

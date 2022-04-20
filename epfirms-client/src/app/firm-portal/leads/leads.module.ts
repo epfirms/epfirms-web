@@ -13,6 +13,7 @@ import { EditableModule } from '@app/shared/editable/editable.module';
 import { AutocompleteModule } from '@app/shared/autocomplete/autocomplete.module';
 import { InputModule } from '@app/shared/input/input.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
+import { MatterModule } from '@app/features/matter/matter.module';
 
 
 
@@ -31,7 +32,8 @@ import { MenuModule } from '@app/shared/menu/menu.module';
     EditableModule,
     AutocompleteModule,
     InputModule,
-    MenuModule
+    MenuModule,
+    MatterModule
   ]
 })
 export class LeadsPageModule { }

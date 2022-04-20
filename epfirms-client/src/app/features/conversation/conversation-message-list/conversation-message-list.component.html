@@ -13,6 +13,9 @@
         [nextMessage]="!isLast && messageItems[i + 1]"
         [isFirst]="isFirst"
         [isLast]="isLast"
+        [isLastReadMessage]="messageItem.author !== currentUser.identity &&
+        ((isFirst && messageItem.index === lastReadMessageIndex) ||
+          (!isFirst && messageItems[i - 1].index === lastReadMessageIndex))"
         [authorIsCurrentUser]="messageItem.author === currentUser.identity"
       ></app-conversation-message-item>
       <div #anchor class="snap-end"></div>

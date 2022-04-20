@@ -1,37 +1,80 @@
 <li
-  [class.bg-slate-100]="selected"
-  class="mb-0.5 relative px-4 py-4 transition-colors duration-75 ease-in-out bg-white rounded-lg hover:cursor-pointer hover:bg-slate-100 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600"
+  [class.bg-gray-100]="selected"
+  [class.hover:bg-gray-50]="!selected"
+  class="relative px-5 py-4 mb-0.5 rounded focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 hover:cursor-pointer"
 >
-  <div class="flex justify-between">
-    <span
-      class="inline-flex items-center p-1 -ml-1 text-xs font-medium rounded text-sky-800"
-      *ngIf="hasUnreadMessages"
-    >
-      <svg class="mr-1.5 h-3 w-3 text-red-500" fill="currentColor" viewBox="0 0 8 8">
-        <circle cx="4" cy="4" r="3" />
-      </svg>
-    </span>
+<div class="absolute inset-y-0 flex items-center h-full left-2" *ngIf="hasUnreadMessages">
+  <span class="w-2 h-2 bg-red-500 rounded-full" aria-hidden="true"></span>
 
-    <div class="self-center flex-shrink-0" *ngIf="otherParticipants.length > 1">
-      <span class="inline-flex items-center justify-center rounded-full h-9 w-9 bg-slate-500">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-        </svg>
-      </span>
-    </div>
-    <div class="self-center flex-shrink-0" *ngIf="otherParticipants.length === 1">
-      <ep-avatar-group>
-        <ep-avatar *ngFor="let participant of otherParticipants;" [epSize]="'mediumSmall'" [epSrc]="participant.attributes['profileImage']" [epText]="participant.attributes['friendlyName']"></ep-avatar>
-      </ep-avatar-group>
-    </div>
-    <div class="flex-1 min-w-0 ml-3">
-      <div class="block focus:outline-none space-y-0.5">
-        <div class="flex">
-          <p class="flex-1 text-sm font-medium text-gray-900 truncate">{{ conversationTitle | titlecase }}</p>
-          <time class="self-center flex-shrink-0 text-xs text-gray-500 whitespace-nowrap">{{ conversation?.lastMessage?.dateCreated | TimeAgo }}</time>
+</div>
+
+<ng-container *ngIf="otherParticipantProfiles && otherParticipantProfiles.length; else loadingTemplate">
+  <ng-container *ngIf="matter">
+    <div class="flex items-center justify-between space-x-3">
+      <ep-avatar
+      [epSize]="'mediumSmall'"
+      epShape="square"
+      [epSrc]="matter.client.profile_image"
+      [epText]="matter.client.full_name"
+    >
+    </ep-avatar>
+  
+      <div class="flex-1 min-w-0">
+        <div>
+          <span class="flex justify-between w-full">
+            <p class="text-sm font-medium text-gray-900 truncate">{{ matter.client.full_name | titlecase }}</p>
+            <time datetime="2021-01-27T16:35" class="flex-shrink-0 text-sm text-gray-500 whitespace-nowrap">{{ conversation?.lastMessage?.dateCreated | TimeAgo }}</time>
+          </span>
+          <p class="text-sm text-gray-500 truncate">#{{matter.case_id}} <span class="font-bold">&#183;</span> {{ matter.title || matter.legal_area.name + ' ' + matter.matter_type | titlecase }}</p>
         </div>
-        <p class="text-sm text-gray-500 truncate">{{ lastMessageAuthorName || ''}}: {{ lastMessage?.body || '' }}</p>
+      </div>
+    </div>
+    <div class="mt-1">
+      <p class="text-sm text-gray-600 line-clamp-2">{{ lastMessageAuthorName || ''}}: {{ lastMessage?.body || '' }}</p>
+    </div>
+  </ng-container>
+  
+  <ng-container *ngIf="!matter">
+    <div class="flex items-center justify-between space-x-3">
+      <ep-avatar
+      [epSize]="'mediumSmall'"
+      epShape="round"
+      [epSrc]="otherParticipantProfiles[0].profile_image"
+      [epText]="otherParticipantProfiles[0].full_name"
+    >
+    </ep-avatar>
+  
+      <div class="flex-1 min-w-0">
+        <div>
+          <span class="flex justify-between w-full">
+            <p class="text-sm font-medium text-gray-900 truncate">{{ otherParticipantProfiles[0].full_name | titlecase }}</p>
+            <time datetime="2021-01-27T16:35" class="flex-shrink-0 text-sm text-gray-500 whitespace-nowrap">{{ conversation?.lastMessage?.dateCreated | TimeAgo }}</time>
+          </span>
+          <p class="text-sm text-gray-500 truncate">{{ lastMessageAuthorName || ''}}: {{ lastMessage?.body || '' }}</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+
+<ng-template #loadingTemplate>
+  <div class="flex items-center justify-between space-x-3 animate-pulse">
+    <div class="inline-block bg-gray-200 rounded-md h-9 w-9"></div>
+
+    <div class="flex-1 min-w-0">
+      <div class="space-y-3">
+        <div class="grid grid-cols-3 gap-8">
+          <div class="h-2 col-span-2 bg-gray-200 rounded"></div>
+          <div class="h-2 col-span-1 bg-gray-200 rounded"></div>
+        </div>
+        <div class="h-2 bg-gray-200 rounded"></div>
       </div>
     </div>
   </div>
+  <div class="mt-1 space-y-3 animate-pulse">
+    <div class="h-2 bg-gray-200 rounded"></div>
+    <div class="h-2 bg-gray-200 rounded"></div>
+  </div>
+</ng-template>
 </li>

@@ -21,9 +21,16 @@ import { AssetFormModule } from '@app/shared/asset-form/asset-form.module';
 import { RealEstateFormModule } from '@app/shared/real-estate-form/real-estate-form.module';
 import { AppointeeFormModule } from '@app/shared/appointee-form/appointee-form.module';
 import { ProfileCardComponent } from './firm-intake-components/profile-card/profile-card.component';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { SpouseInformationComponent } from './spouse-information/spouse-information.component';
+import { ChildrenInformationComponent } from './children-information/children-information.component';
+import { OtherFamilyInformationComponent } from './other-family-information/other-family-information.component';
 import { EstatePlanningFormComponent } from './firm-intake-components/estate-planning-form/estate-planning-form.component';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { TippyModule } from '@ngneat/helipopper';
+import { ProbateIntakeComponent } from './probate-intake/probate-intake.component';
+
+
 
 @NgModule({
   declarations: [
@@ -41,7 +48,11 @@ import { TippyModule } from '@ngneat/helipopper';
     IntakeMainComponent,
     ExecutorsComponent,
     ProfileCardComponent,
-    EstatePlanningFormComponent
+    SpouseInformationComponent,
+    ChildrenInformationComponent,
+    OtherFamilyInformationComponent,
+    EstatePlanningFormComponent,
+    ProbateIntakeComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +65,8 @@ import { TippyModule } from '@ngneat/helipopper';
     AppointeeFormModule,
     ReactiveFormsModule,
     InputMaskModule,
-    TippyModule
+    TippyModule,
+    NgScrollbarModule
   ],
   exports: [
     ClientIntakeComponent,

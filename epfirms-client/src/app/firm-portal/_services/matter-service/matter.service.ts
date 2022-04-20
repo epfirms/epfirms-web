@@ -6,7 +6,7 @@ import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
-import { catchError, concatMap, filter, map, reduce, take } from 'rxjs/operators';
+import { concatMap, map, take } from 'rxjs/operators';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { SocketService } from '../../../core/services/socket.service';
 import { select } from '@ngrx/store';
@@ -154,6 +154,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
                       legal_area: matter.legal_area,
                       client: matter.client,
                       matterId: matter.id,
+                      matter: matter
                     });
                   }
                   return a;

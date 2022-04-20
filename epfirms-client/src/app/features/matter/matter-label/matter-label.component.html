@@ -1,0 +1,20 @@
+<div class="flex items-center min-w-0 text-sm" [ngClass]="{'text-sm': epSize === 'md' || epSize === 'sm', 'text-xs': epSize === 'xs'}">
+  <div class="flex-shrink-0" [ngClass]="{'w-6 h-6': epSize === 'xs', 'w-8 h-8': epSize === 'sm', 'w-10 h-10': epSize === 'md'}">
+    <ep-avatar
+      [epSize]="epSize === 'xs' ? 'xsmall' : epSize === 'sm' ? 'small' : 'medium'"
+      epShape="square"
+      [epSrc]="client.profile_image"
+      [epText]="client.full_name"
+    >
+    </ep-avatar>
+  </div>
+  <div class="min-w-0 ml-4" [ngClass]="{'ml-4': epSize === 'md', 'ml-3': epSize === 'sm', 'ml-2': epSize === 'xs'}">
+    <div class="font-medium text-gray-900 truncate" [ngClass]="{'leading-4': epSize === 'sm', 'leading-3': epSize === 'xs'}">{{ client.full_name | titlecase }}
+      <span class="text-xs text-gray-500" *ngIf="spouse">& {{ spouse.full_name | titlecase }}</span>
+    </div>
+    <div class="text-gray-500 truncate" [ngClass]="{'leading-4': epSize === 'sm', 'leading-3': epSize === 'xs'}">
+      <span *ngIf="epSize !== 'xs'">{{ matter.matter_type === 'case' ? '#' + matter.case_id : 'Lead'}} <span class="font-bold">&#183;</span></span>
+      {{ matter.title || matter.matter_type | titlecase }}
+    </div>
+  </div>
+</div>

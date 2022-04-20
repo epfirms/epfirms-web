@@ -3,7 +3,7 @@
   <div class="absolute inset-0 overflow-hidden">
     <!-- Background overlay, show/hide based on slide-over state. -->
     <div class="absolute inset-0" aria-hidden="true">
-      <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16">
+      <div class="fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
         <!--
           Slide-over panel, show/hide based on slide-over state.
 
@@ -15,24 +15,24 @@
             To: "translate-x-full"
         -->
         <div class="w-screen max-w-2xl">
-          <div class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
+          <div class="flex flex-col h-full py-6 overflow-y-scroll bg-white shadow-xl">
             <div class="px-4 sm:px-6">
               <div class="flex items-start justify-between">
-                <h2 class="text-lg font-medium text-slate-900" id="slide-over-title">
+                <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
                   Manage Bill
                 </h2>
-                <div class="ml-3 h-7 flex items-center">
-                  <button type="button" (click)="closeBillManager()" class="bg-white rounded-md text-slate-400 hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <div class="flex items-center ml-3 h-7">
+                  <button type="button" (click)="closeBillManager()" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <span class="sr-only">Close panel</span>
                     <!-- Heroicon name: outline/x -->
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
                 </div>
               </div>
             </div>
-            <div class="mt-6 relative flex-1 px-4 sm:px-6">
+            <div class="relative flex-1 px-4 mt-6 sm:px-6">
               <!-- Replace with your content -->
               <!--
   This example requires Tailwind CSS v2.0+
@@ -50,12 +50,12 @@
   }
   ```
 -->
-<form [formGroup]="billForm" class="space-y-8 divide-y divide-slate-200">
-  <div class="space-y-8 divide-y divide-slate-200">
+<form [formGroup]="billForm" class="space-y-8 divide-y divide-gray-200">
+  <div class="space-y-8 divide-y divide-gray-200">
     <div>
 
 
-      <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+      <div class="grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6">
         <div class="sm:col-span-3">
 
           <div class="mt-1">
@@ -76,8 +76,8 @@
               ```
             -->
             <div>
-              <label for="billingStyle" class="block text-sm font-medium text-slate-700">Billing Style</label>
-              <select id="billingStyle" formControlName="billing_type"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <label for="billingStyle" class="block text-sm font-medium text-gray-700">Billing Style</label>
+              <select id="billingStyle" formControlName="billing_type"  class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 <option>Flat Rate</option>
                 <option >Hourly</option>
                 <option>Contingency</option>
@@ -106,8 +106,8 @@
               ```
             -->
             <div>
-              <label for="paymentType" class="block text-sm font-medium text-slate-700">Payment Type</label>
-              <select id="paymentType" formControlName="payment_type"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <label for="paymentType" class="block text-sm font-medium text-gray-700">Payment Type</label>
+              <select id="paymentType" formControlName="payment_type"  class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 <option>Private Pay</option>
                 <option >Legal Insurance</option>
 
@@ -123,14 +123,14 @@
   <label id="listbox-label" class="block text-sm font-medium text-gray-700">
     Employee
   </label>
-  <div class="mt-1 relative">
-    <button (click)="toggleSelectEmployee()" type="button" class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
+  <div class="relative mt-1">
+    <button (click)="toggleSelectEmployee()" type="button" class="relative w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
       <span class="block truncate">
         {{billForm.value.employee_name}}
       </span>
       <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
         <!-- Heroicon name: solid/selector -->
-        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
         </svg>
       </span>
@@ -146,25 +146,25 @@
         From: "opacity-100"
         To: "opacity-0"
     -->
-    <ul *ngIf="!selectHidden" class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
+    <ul *ngIf="!selectHidden" class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
       <!--
         Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-        Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
+        Highlighted: "text-white bg-blue-600", Not Highlighted: "text-gray-900"
       -->
-      <li *ngFor="let staff of staffList" (click)="toggleSelectEmployee();setStaff(staff)" class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
+      <li *ngFor="let staff of staffList" (click)="toggleSelectEmployee();setStaff(staff)" class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9" id="listbox-option-0" role="option">
         <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
-        <span  class="font-normal block truncate">
+        <span  class="block font-normal truncate">
           {{staff.first_name}} {{staff.last_name}}
         </span>
 
         <!--
           Checkmark, only display for selected option.
 
-          Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+          Highlighted: "text-white", Not Highlighted: "text-blue-600"
         -->
-        <!-- <span class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <!-- <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
           </svg>
         </span> -->
@@ -197,14 +197,14 @@
 -->
 <div *ngIf="isHourly || billForm.value.billing_type == 'hourly'">
   <label for="hourly_rate" class="block text-sm font-medium text-gray-700">Hourly Rate</label>
-  <div class="mt-1 relative rounded-md shadow-sm">
-    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+  <div class="relative mt-1 rounded-md shadow-sm">
+    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
       <span class="text-gray-500 sm:text-sm">
         $
       </span>
     </div>
-    <input type="number" step="0.01" id="hourly_rate" formControlName="hourly_rate" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0.00" aria-describedby="price-currency">
-    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+    <input type="number" step="0.01" id="hourly_rate" formControlName="hourly_rate" class="block w-full pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm" placeholder="0.00" aria-describedby="price-currency">
+    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
       <span class="text-gray-500 sm:text-sm" id="price-currency">
         USD
       </span>
@@ -219,8 +219,8 @@
           <div class="mt-1">
 
             <div>
-              <label for="hours" class="block text-sm font-medium text-slate-700">Hours</label>
-              <input type="number" (blur)="calculateAmount()" id="hours" formControlName="hours"  class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-slate-300 rounded-md">
+              <label for="hours" class="block text-sm font-medium text-gray-700">Hours</label>
+              <input type="number" (blur)="calculateAmount()" id="hours" formControlName="hours"  class="block w-full max-w-lg rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs sm:text-sm border-gray-300">
             </div>
           </div>
         </div>
@@ -247,14 +247,14 @@
 -->
 <div>
   <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-  <div class="mt-1 relative rounded-md shadow-sm">
-    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+  <div class="relative mt-1 rounded-md shadow-sm">
+    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
       <span class="text-gray-500 sm:text-sm">
         $
       </span>
     </div>
-    <input type="number"  id="amount"step="0.01" formControlName="amount" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0.00" aria-describedby="price-currency">
-    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+    <input type="number"  id="amount"step="0.01" formControlName="amount" class="block w-full pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm" placeholder="0.00" aria-describedby="price-currency">
+    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
       <span class="text-gray-500 sm:text-sm" id="price-currency">
         USD
       </span>
@@ -269,7 +269,7 @@
           <div class="mt-1">
 
             <div>
-              <label for="hours" class="block text-sm font-medium text-slate-700">Due Date</label>
+              <label for="hours" class="block text-sm font-medium text-gray-700">Due Date</label>
               <editable-datepicker [date]="date" (dateChanged)="setDueDate($event)"></editable-datepicker>
             </div>
           </div>
@@ -277,11 +277,11 @@
 
 
         <div class="sm:col-span-6">
-          <label for="about" class="block text-sm font-medium text-slate-700">
+          <label for="about" class="block text-sm font-medium text-gray-700">
             Description
           </label>
           <div class="mt-1">
-            <textarea id="about" name="about" formControlName="description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-slate-300 rounded-md"></textarea>
+            <textarea id="about" name="about" formControlName="description" rows="3" class="block w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"></textarea>
           </div>
         </div>
 
@@ -298,10 +298,10 @@
 
   <div class="pt-5">
     <div class="flex justify-end">
-      <button type="button" (click)="closeBillManager()" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      <button type="button" (click)="closeBillManager()" class="px-4 py-2 text-sm font-medium bg-white border rounded-md shadow-sm border-gray-300 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
         Cancel
       </button>
-      <button (click)="submit()" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      <button (click)="submit()" class="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
         Save
       </button>
     </div>

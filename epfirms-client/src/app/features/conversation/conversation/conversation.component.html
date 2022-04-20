@@ -3,10 +3,12 @@
     <div class="px-4">
       <div class="flex items-center justify-between py-3">
         <a class="flex-1 flex-shrink-0 block group">
+          <ng-container *ngIf="conversation$ | async as conversation"> 
+            <ng-container *ngIf="!conversation.attributes['matterId']">
             <ng-container *ngIf="otherParticipants$ | async as otherParticipants">
-              <div class="flex items-center justify-end flex-shrink-0 row-span-2 space-x-2" [class.flex-row-reverse]="otherParticipants.length > 1">
-                <ep-avatar-group class="mr-3">
-                  <ep-avatar *ngFor="let participant of otherParticipants;" [epSize]="otherParticipants.length > 1 ? 'xsmall' : 'mediumSmall'" [epSrc]="participant.attributes['profileImage']" [epText]="participant.attributes['friendlyName']"></ep-avatar>
+              <div class="flex items-center justify-end flex-shrink-0 row-span-2 space-x-3" [class.flex-row-reverse]="otherParticipants.length > 1">
+                <ep-avatar-group>
+                  <ep-avatar *ngFor="let participant of otherParticipants;" [epSize]="otherParticipants.length > 1 ? 'xsmall' : 'small'" [epSrc]="participant.attributes['profileImage']" [epText]="participant.attributes['friendlyName']"></ep-avatar>
                 </ep-avatar-group>
 
                 <div class="flex-1">
@@ -16,7 +18,7 @@
                 </div>
 
                 <div class="self-center flex-shrink-0" *ngIf="otherParticipants.length > 1">
-                  <span class="inline-flex items-center justify-center rounded-full h-9 w-9 bg-slate-500">
+                  <span class="inline-flex items-center justify-center bg-gray-500 rounded-full h-9 w-9">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                     </svg>
@@ -24,6 +26,14 @@
                 </div>
             </div>
             </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="conversation.attributes['matterId']">
+              <ng-container *ngIf="matter$ | async as matter">
+                <app-matter-label [client]="matter.client" [matter]="matter" epSize="sm"></app-matter-label>
+              </ng-container>
+            </ng-container>
+          </ng-container>
         </a>
 
         <div *ngIf="conversation$ | async as conversation">
@@ -60,12 +70,12 @@
 ></app-conversation-message-list>
 </ng-container>
 
-<div class="p-4 pt-0">
+<div class="p-3 pt-0">
   <div class="flex items-start space-x-4">
     <div class="flex-1 min-w-0">
       <form (ngSubmit)="sendMessage()" class="relative">
         <div
-          class="overflow-hidden border border-gray-300 rounded-lg shadow-sm focus-within:border-blue-300"
+          class="overflow-hidden border border-gray-300 rounded-md shadow-sm focus-within:border-blue-400"
         >
           <label for="comment" class="sr-only">Add your comment</label>
           <textarea
@@ -111,7 +121,7 @@
               </button>
             </div>
             <div class="flex items-center">
-              <div>
+              <!-- <div>
                 <label id="listbox-label" class="sr-only"> Your mood </label>
                 <div class="relative">
                   <button
@@ -142,14 +152,14 @@
                     </span>
                   </button>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="flex-shrink-0">
             <button
               type="submit"
               [disabled]="!(newMessage && newMessage.length)"
-              class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded shadow-sm hover:bg-blue-600 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

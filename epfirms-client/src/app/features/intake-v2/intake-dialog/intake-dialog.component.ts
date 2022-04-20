@@ -9,6 +9,10 @@ export class IntakeDialogComponent implements OnInit {
   // settings {title: string, content: string, backButton: boolean, continueButton: boolean}
   @Input() settings;
 
+  // dropdown form {question: string, value: boolean}
+  @Input() dropdownForm;
+  @Output() dropdownFormValues = new EventEmitter<boolean>();
+
   //output bindings to facilitate progress in the flow
   @Output() back = new EventEmitter<boolean>();
   @Output() continue = new EventEmitter<boolean>();
@@ -23,6 +27,10 @@ export class IntakeDialogComponent implements OnInit {
   }
 
   continueButton() : void {
+    if (this.dropdownForm) {
+      this.dropdownFormValues.emit(this.dropdownForm.value);
+    }
     this.continue.emit(true);
+
   }
 }

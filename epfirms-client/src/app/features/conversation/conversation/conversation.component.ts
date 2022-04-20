@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Matter } from '@app/core/interfaces/matter';
 import { Conversation, Message, Participant } from '@twilio/conversations';
 import { Observable, take } from 'rxjs';
 import { ConversationComponentStore } from './conversation.component-store';
@@ -18,6 +19,8 @@ export class ConversationComponent implements OnInit {
 
   messages$: Observable<Message[]> = this.conversationComponentStore.messages$;
 
+  matter$: Observable<Matter> = this.conversationComponentStore.matter$;
+
   newMessage: string;
 
   constructor(
@@ -26,6 +29,7 @@ export class ConversationComponent implements OnInit {
 
   ngOnInit(): void {
     this.conversationComponentStore.getConversation();
+    this.matter$.subscribe(console.log);
     this.conversationTitle$.subscribe(console.log)
   }
 
@@ -36,10 +40,7 @@ export class ConversationComponent implements OnInit {
   }
 
   sendMessage() {
-    this.conversationComponentStore.currentUser$.pipe(take(1)).subscribe((user) => {
-      const message = `${user.friendlyName}:\n` + this.newMessage;
-      this.newMessage = null;
-      this.conversationComponentStore.sendMessage(message);
-    });
+    this.conversationComponentStore.sendMessage(this.newMessage);
+    this.newMessage = null;
   }
 }

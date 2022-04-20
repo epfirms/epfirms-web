@@ -11,25 +11,34 @@ export const TAB_SET = new InjectionToken<any>('TAB_SET');
   styleUrls: ['./tab.component.scss']
 })
 export class TabComponent implements OnChanges, OnDestroy {
+  @Input() titleTemplate: TemplateRef<any>;
 
   @Input() title: string = '';
+
   @Output() readonly select = new EventEmitter<void>();
+
   @Output() readonly deselect = new EventEmitter<void>();
+
   @Output() readonly click = new EventEmitter<void>();
 
   @ContentChild(TabDirective, { static: false, read: TemplateRef }) template: TemplateRef<void> | null = null;
+
   @ViewChild('contentTemplate', { static: true }) contentTemplate!: TemplateRef<any>;
 
   isActive: boolean = false;
+
   position: number | null = null;
+
   origin: number | null = null;
+
   readonly stateChanges = new Subject<void>();
+
   get content(): TemplateRef<any> {
     return this.template || this.contentTemplate;
   }
 
   get label(): string | TemplateRef<any> {
-    return this.title;
+    return this.titleTemplate;
   }
 
   constructor(@Inject(TAB_SET) public closestTabSet: any) {}
