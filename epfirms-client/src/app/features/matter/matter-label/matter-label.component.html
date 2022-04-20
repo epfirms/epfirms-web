@@ -14,7 +14,7 @@
     </div>
     <div class="text-gray-500 truncate" [ngClass]="{'leading-4': epSize === 'sm', 'leading-3': epSize === 'xs'}">
       <span *ngIf="epSize !== 'xs'">{{ matter.matter_type === 'case' ? '#' + matter.case_id : 'Lead'}} <span class="font-bold">&#183;</span></span>
-      {{ matter.title || matter.legal_area ? matter.legal_area.name + ' ' + matter.matter_type : matter.matter_type | titlecase }}
+      {{ matter.title || matter.matter_type | titlecase }}
     </div>
   </div>
 </div>
