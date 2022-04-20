@@ -16,12 +16,10 @@ module.exports = (sequelize, {
         },
         user_id: {
           type: INTEGER,
-          allowNull: false,
         },
        // this is a reference to the specific matter
         matter_id: {
             type: INTEGER,
-            allowNull: false
         },
 
         date_of_birth: {

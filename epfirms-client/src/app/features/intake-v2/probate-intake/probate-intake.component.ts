@@ -9,6 +9,7 @@ import { ProbateService } from '../services/probate.service';
 })
 export class ProbateIntakeComponent implements OnInit {
   @Input() matter;
+  @Input() decedent;
   @Output() back = new EventEmitter<boolean>();
   @Output() continue = new EventEmitter<boolean>();
 
@@ -19,6 +20,8 @@ form : ProbateQuestions;
 
   ngOnInit(): void {
     this.form = new ProbateQuestions();
+
+    console.log("On init", this.form);
   }
 
   backButton(): void {
@@ -30,7 +33,11 @@ form : ProbateQuestions;
   }
 
   submit(): void {
-     
+    if (this.matter && this.decedent) {
+
+    this.form.matter_id = this.matter.id;
+    this.form.user_id = this.decedent.id;
+    }
     this.probateService.upsert(this.form).subscribe(res => console.log(res));
     console.log("On submit", this.form);
     this.continueButton();
