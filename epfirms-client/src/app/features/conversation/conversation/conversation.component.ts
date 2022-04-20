@@ -40,10 +40,7 @@ export class ConversationComponent implements OnInit {
   }
 
   sendMessage() {
-    this.conversationComponentStore.currentUser$.pipe(take(1)).subscribe((user) => {
-      const message = `${user.friendlyName}:\n` + this.newMessage;
-      this.newMessage = null;
-      this.conversationComponentStore.sendMessage(message);
-    });
+    this.conversationComponentStore.sendMessage(this.newMessage);
+    this.newMessage = null;
   }
 }

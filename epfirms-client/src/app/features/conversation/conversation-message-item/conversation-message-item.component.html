@@ -6,9 +6,6 @@
   "
 >
   <div class="relative">
-    <div class="absolute inset-0 flex items-center" aria-hidden="true">
-      <div class="w-full border-t border-gray-100"></div>
-    </div>
     <div class="relative flex justify-center">
       <time class="px-3 text-sm font-medium text-gray-700 bg-white">{{
         message.dateCreated | date: 'EEEE, MMMM d'
@@ -37,9 +34,7 @@
   <div
     class="relative py-2"
     *ngIf="
-      !authorIsCurrentUser &&
-      ((isFirst && message.index === lastReadMessageIndex) ||
-        (!isFirst && prevMessage.index === lastReadMessageIndex))
+      isLastReadMessage
     "
     #newMessageIndicator
   >
@@ -57,21 +52,17 @@
 
       <ng-container *ngIf="isLast || message.author !== nextMessage.author">
         <ng-container *ngIf="user">
-          <div class="flex-shrink-0" *ngIf="!user.profile_image">
-            <span class="inline-flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full">
-              <span class="text-sm font-medium leading-none text-white">{{
-                user.full_name | initials
-              }}</span>
-            </span>
-          </div>
-          <div *ngIf="user.profile_image">
-            <img class="inline-block w-8 h-8 rounded-full" [src]="user.profile_image" alt="" />
-          </div>
+          <ep-avatar
+          [epSize]="'small'"
+          [epSrc]="user.profile_image"
+          [epText]="user.full_name"
+        >
+        </ep-avatar>
         </ng-container>
     
           <ng-container *ngIf="!user">
             <div class="flex space-x-4 animate-pulse" *ngIf="user">
-              <div class="w-8 h-8 rounded-full bg-gray-200"></div>
+              <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
             </div>
           </ng-container>
       </ng-container>
@@ -81,12 +72,12 @@
         [class.ml-10]="!(isLast || message.author !== nextMessage.author)"
         style="max-width: 36rem"
         [ngClass]="{
-          'rounded-bl':
+          'rounded-bl-sm':
             !isLast &&
             (message.dateCreated | date: 'EEEE, MMMM d') ===
               (nextMessage.dateCreated | date: 'EEEE, MMMM d') &&
             nextMessage.author === message.author,
-          'rounded-tl':
+          'rounded-tl-sm':
             !isFirst &&
             (message.dateCreated | date: 'EEEE, MMMM d') ===
               (prevMessage.dateCreated | date: 'EEEE, MMMM d') &&
@@ -113,12 +104,12 @@
         class="px-3 py-2.5 bg-blue-100 rounded-xl"
         style="max-width: 36rem"
         [ngClass]="{
-          'rounded-br':
+          'rounded-br-sm':
             !isLast &&
             (message.dateCreated | date: 'EEEE, MMMM d') ===
               (nextMessage.dateCreated | date: 'EEEE, MMMM d') &&
             nextMessage.author === message.author,
-          'rounded-tr':
+          'rounded-tr-sm':
             !isFirst &&
             (message.dateCreated | date: 'EEEE, MMMM d') ===
               (prevMessage.dateCreated | date: 'EEEE, MMMM d') &&

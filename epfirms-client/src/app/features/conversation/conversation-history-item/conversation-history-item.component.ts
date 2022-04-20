@@ -4,7 +4,7 @@ import { Matter } from '@app/core/interfaces/matter';
 import { UserService } from '@app/features/user/services/user.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { Conversation, Participant, Message, Paginator, User } from '@twilio/conversations';
-import { from, fromEventPattern, map, pluck, Subscription, tap } from 'rxjs';
+import { from, fromEventPattern, mergeMap, Subscription } from 'rxjs';
 import { ConversationService } from '../services/conversation.service';
 
 @Component({
@@ -38,9 +38,9 @@ export class ConversationHistoryItemComponent implements OnDestroy {
 
   otherParticipants: Participant[] = [];
 
-  lastMessageAuthorName: string;
+  otherParticipantProfiles: any[] = [];
 
-  conversationTitle: string;
+  lastMessageAuthorName: string;
 
   private _conversation: Conversation;
 
@@ -68,7 +68,19 @@ export class ConversationHistoryItemComponent implements OnDestroy {
     from(this.conversation.getParticipants()).subscribe((participants: Participant[]) => {
       const userIdentity = this._conversationService.user.identity;
       this.otherParticipants = participants.filter((p) => p.identity !== userIdentity);
-      this.loadConversationTitle();
+      this.loadOtherParticipantProfiles(this.otherParticipants);
+
+      if(this.conversation.attributes['matterId']) {
+        this.loadMatter();
+      }
+    });
+  }
+
+  loadOtherParticipantProfiles(participants: Participant[]) {
+    from(participants).pipe(
+      mergeMap((participant) => this._userService.get(participant.identity)),
+    ).subscribe((user) => {
+      this.otherParticipantProfiles.push(user);
     });
   }
 
@@ -77,6 +89,8 @@ export class ConversationHistoryItemComponent implements OnDestroy {
       this.lastMessage = paginator.items.find(
         (message) => message.index === this.conversation.lastMessage.index,
       );
+
+      this.checkUnreadMessages();
 
       this.getLastMessageAuthorName(this.lastMessage.author);
     });
@@ -88,34 +102,14 @@ export class ConversationHistoryItemComponent implements OnDestroy {
     });
   }
 
-  checkUnreadMessages(lastMessageIndex: number) {
-    this.hasUnreadMessages =
-      !this.selected && this.conversation.lastReadMessageIndex !== lastMessageIndex;
+  checkUnreadMessages() {
+    this.hasUnreadMessages = this.conversation.lastMessage && this.conversation.lastReadMessageIndex && this.conversation.lastMessage.index > this.conversation.lastReadMessageIndex;
   }
 
-  loadConversationTitle() {
-    if (this.conversation.attributes['matterId']) {
-      this._matterService
-        .getById(this.conversation.attributes['matterId'])
-        .pipe(
-          tap(matter => {
-            this.matter = matter;
-          }),
-          pluck('title'),
-          map((title) => {
-            if (title && title.length) {
-              return title;
-            }
-
-            return this.otherParticipants[0].attributes['friendlyName'];
-          }),
-        )
-        .subscribe((title) => {
-          this.conversationTitle = title;
-        });
-    } else {
-      this.conversationTitle = this.otherParticipants[0].attributes['friendlyName'];
-    }
+  loadMatter() {
+    this._matterService.getById(this.conversation.attributes['matterId']).subscribe((matter) => {
+      this.matter = matter;
+    });
   }
 
   listenForUpdates() {
@@ -126,6 +120,11 @@ export class ConversationHistoryItemComponent implements OnDestroy {
         const lastMessageUpdated = updateReasons.includes('lastMessage');
         if (lastMessageUpdated) {
           this.loadLastMessage();
+        }
+
+        const lastReadMessageUpdated = updateReasons.includes('lastReadMessageIndex');
+        if (lastReadMessageUpdated) {
+          this.checkUnreadMessages();
         }
       },
     );
