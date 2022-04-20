@@ -1,4 +1,6 @@
 
+      <form [formGroup]="userProfileForm">
+
 <div *ngIf="formSettings.isClient === true" class="grid grid-cols-1 gap-4 lg:grid-cols-1 mt-2">
   <div class="relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
     <div class="flex-shrink-0">
@@ -42,8 +44,7 @@
   </div>
 
 
-    <div class= "mt-2 relative rounded-lg border border-gray-300 bg-white px-3 py-2 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">    
-      <form [formGroup]="userProfileForm">
+    <div class= "mt-2 relative rounded-lg border border-gray-300 bg-white px-3 py-2 shadow-sm hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">    
 
         <div class="flex items-center flex-1 bg-white px-3 py-3 border-b border-gray-200 sm:px-2">
             <svg class="flex-shrink-0 w-6 h-6 text-slate-400 lg:mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -229,8 +230,11 @@
       </button>
     
   </div>
+
+      </div>
+
 </form>
-       <!-- <div class="border-t border-gray-200 py-6 px-4 px-6 lg:p-8">
+      <!-- <div class="border-t border-gray-200 py-6 px-4 px-6 lg:p-8">
                 <h4 class="sr-only">Status</h4>
                 <p class="text-sm  text-gray-900">Preparing to ship on <time datetime="2021-03-24">March 24, 2021</time></p>
                 <div class="mt-6" aria-hidden="true">
