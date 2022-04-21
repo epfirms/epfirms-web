@@ -10,15 +10,16 @@ export class FinancialSummaryService {
   constructor(private http : HttpClient) { }
 
   upsert(data) : Observable<any> {
-    return this.http.post('/api/v1/financial-summary', data);
+    console.log("client side", data);
+    return this.http.post('/api/financial-summary', data);
   }
 
   getWithUserId(userId) : Observable<any> {
-    return this.http.get('/api/v1/financial-summary/' + userId);
+    return this.http.get('/api/financial-summary/' + userId);
   }
 
   getWithJointId(jointId) : Observable<any> {
-    return this.http.get('/api/v1/financial-summary/' + jointId);
+    return this.http.get('/api/financial-summary/' + jointId);
   }
 
 }

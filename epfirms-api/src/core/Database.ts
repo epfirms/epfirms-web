@@ -421,8 +421,8 @@ export class Database {
     this.models.matter.hasMany(this.models.specific_requests, {foreignKey: 'matter_id'});
     this.models.specific_requests.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
 
-    this.models.user.hasOne(this.models.finanacial_summary, {foreignKey: 'user_id'});
-    this.models.finanacial_summary.belongsTo(this.models.user, {foreignKey: 'user_id'});
+    this.models.user.hasOne(this.models.financial_summary, {foreignKey: 'user_id'});
+    this.models.financial_summary.belongsTo(this.models.user, {foreignKey: 'user_id'});
   }
 
   public static async start() {

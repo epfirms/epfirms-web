@@ -7,7 +7,7 @@ export class FinancialSummaryService {
      public static async upsert(data) : Promise<any> {
         try {
 
-            const created = await Database.models.financial_summary.upsert(data, {where: {id: data.id}});
+            const created = await Database.models.financial_summary.upsert(data, {where: {user_id: data.user_id}});
             return Promise.resolve(created);
         }
         catch (error){
@@ -29,7 +29,7 @@ export class FinancialSummaryService {
 public static async getAllWithId(id) : Promise<any> {
         try {
 
-            const all = await Database.models.financial_summary.findAll({where: {id: id}});
+            const all = await Database.models.financial_summary.findAll({where: {user_id: id}});
             return Promise.resolve(all);
         }
         catch (error){

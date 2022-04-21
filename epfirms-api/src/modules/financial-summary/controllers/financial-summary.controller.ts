@@ -10,6 +10,7 @@ export class FinancialSummaryController {
 
     public async upsert(req : Request, res : Response) : Promise<any> {
         try {
+            console.log("SERVER SIDE", req.body);
                 const created = await FinancialSummaryService.upsert(req.body);
                 res.status(StatusConstants.CREATED).send(created);
         }
