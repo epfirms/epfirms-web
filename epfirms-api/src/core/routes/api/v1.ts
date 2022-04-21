@@ -33,6 +33,7 @@ import { estatePlanningRouter } from '@src/modules/estate-planning/routes';
 import { githubRouter } from '@src/modules/github/routes';
 import { toolAccessRouter } from '@src/modules/tool-access/routes';
 import { probateRouter } from '@src/modules/probate/routes';
+import { financialSummaryRouter } from '@src/modules/financial-summary/routes';
 
 const v1Router = express.Router();
 
@@ -71,4 +72,5 @@ v1Router.use('/specific-requests', specificRequestsRouter);
 v1Router.use('/github', githubRouter);
 v1Router.use('/tools', toolAccessRouter);
 v1Router.use('/probate', probateRouter);
+v1Router.use('/financial-summary', financialSummaryRouter);
 export { v1Router }
