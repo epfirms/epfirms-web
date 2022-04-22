@@ -7,7 +7,8 @@ export class FinancialSummaryService {
      public static async upsert(data) : Promise<any> {
         try {
 
-            const created = await Database.models.financial_summary.upsert(data, {where: {user_id: data.user_id}});
+            console.log("UPSERT", data);
+            const created = await Database.models.financial_summary.upsert(data);
             return Promise.resolve(created);
         }
         catch (error){
