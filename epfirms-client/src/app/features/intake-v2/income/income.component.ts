@@ -59,11 +59,10 @@ export class IncomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.client = this.matter.client;
     this.clientIncomeForm.user_id = this.client.id;
     this.loadSpouse();
-    
+
     this.loadClientFinancialSummary();
   }
 
@@ -72,25 +71,21 @@ export class IncomeComponent implements OnInit {
       this.spouse = res.filter((member) => member.family_member.relationship_type === 'spouse')[0];
       this.includeSpouseIncome = true;
       if (this.spouse) {
-       this.loadSpouseFinancialSummary(); 
+        this.loadSpouseFinancialSummary();
       }
 
-      console.log("SPOUSE", this.spouse);
       this.spouseIncomeForm.user_id = this.spouse.id;
     });
   }
 
   private loadClientFinancialSummary(): void {
     this.financialSummaryService.getWithUserId(this.client.id).subscribe((res) => {
-      console.log("load client financial summary", res);
       this.clientIncomeForm = this.parseResponse(res[0]);
     });
   }
 
   private loadSpouseFinancialSummary(): void {
     this.financialSummaryService.getWithUserId(this.spouse.id).subscribe((res) => {
-      
-      console.log("load spouse financial summary", res);
       this.spouseIncomeForm = this.parseResponse(res[0]);
     });
   }
@@ -107,15 +102,15 @@ export class IncomeComponent implements OnInit {
       other: parseFloat(this.removeDollarSign(incomeForm.other)),
       income_total: parseFloat(this.removeDollarSign(incomeForm.income_total)),
     };
-    income.income_total = income.social_security + income.pension + income.work + income.annuity + income.other;
+    income.income_total =
+      income.social_security + income.pension + income.work + income.annuity + income.other;
     return income;
   }
 
   // method that removes "$" from the input
-private  removeDollarSign(value): string {
+  private removeDollarSign(value): string {
     return value.replace('$', '');
   }
-
 
   // parse the response into strings
   private parseResponse(response): any {
@@ -132,27 +127,20 @@ private  removeDollarSign(value): string {
     return income;
   }
 
-
-
-
-
-
   upsertFinancialSummary(): void {
-    console.log(this.clientIncomeForm);
     if (this.spouse) {
-      console.log(this.spouseIncomeForm);
     }
-    this.financialSummaryService.upsert(this.parseIncomeForm(this.clientIncomeForm)).subscribe((res) => {
-      console.log(res);
-      this.clientIncomeForm = this.parseResponse(res[0]);
-      console.log("form after response", this.clientIncomeForm);
-    });
-    if (this.spouse) {
-      this.financialSummaryService.upsert(this.parseIncomeForm(this.spouseIncomeForm)).subscribe((res) => {
-        console.log(res);
-        this.spouseIncomeForm = this.parseResponse(res[0]);
-        console.log("form after res", this.spouseIncomeForm);
+    this.financialSummaryService
+      .upsert(this.parseIncomeForm(this.clientIncomeForm))
+      .subscribe((res) => {
+        this.clientIncomeForm = this.parseResponse(res[0]);
       });
+    if (this.spouse) {
+      this.financialSummaryService
+        .upsert(this.parseIncomeForm(this.spouseIncomeForm))
+        .subscribe((res) => {
+          this.spouseIncomeForm = this.parseResponse(res[0]);
+        });
     }
   }
 
