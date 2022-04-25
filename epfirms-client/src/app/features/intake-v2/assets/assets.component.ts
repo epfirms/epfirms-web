@@ -156,9 +156,13 @@ export class AssetsComponent implements OnInit {
     });
   }
 
-  // method that removes "$" from the input
-  private removeDollarSign(value): string {
-    return value.replace('$', '');
+  // method that formats the string; removes '$' and ','
+  private toStringFloat(value): string {
+    let formatted = value.replace(/\$/g, '');
+    formatted = formatted.replace(/,/g, '');
+
+    return formatted;
+
   }
 
   // method that parses the response and returns the object
@@ -191,43 +195,44 @@ export class AssetsComponent implements OnInit {
   }
 
   private parseAssetForm(assetForm): any {
-    
+    console.log(this.toStringFloat(assetForm.checking));
+    console.log("before parsed asset form", assetForm);
     const asset = {
       id: assetForm.id,
       user_id: assetForm.user_id,
       is_joint: assetForm.is_joint,
       joint_user_id: assetForm.joint_user_id,
-      checking: parseFloat(this.removeDollarSign(assetForm.checking)),
-      savings: parseFloat(this.removeDollarSign(assetForm.savings)),
-      other_bank: parseFloat(this.removeDollarSign(assetForm.other_bank)),
-      nc_bank: parseFloat(this.removeDollarSign(assetForm.nc_bank)),
+      checking: parseFloat(this.toStringFloat(assetForm.checking)),
+      savings: parseFloat(this.toStringFloat(assetForm.savings)),
+      other_bank: parseFloat(this.toStringFloat(assetForm.other_bank)),
+      nc_bank: parseFloat(this.toStringFloat(assetForm.nc_bank)),
       employer_retirement_plan: parseFloat(
-        this.removeDollarSign(assetForm.employer_retirement_plan),
+        this.toStringFloat(assetForm.employer_retirement_plan),
       ),
-      ira: parseFloat(this.removeDollarSign(assetForm.ira)),
+      ira: parseFloat(this.toStringFloat(assetForm.ira)),
       other_qualified_investment: parseFloat(
-        this.removeDollarSign(assetForm.other_qualified_investment),
+        this.toStringFloat(assetForm.other_qualified_investment),
       ),
       nc_employer_retirement_plan: parseFloat(
-        this.removeDollarSign(assetForm.nc_employer_retirement_plan),
+        this.toStringFloat(assetForm.nc_employer_retirement_plan),
       ),
-      nc_ira: parseFloat(this.removeDollarSign(assetForm.nc_ira)),
+      nc_ira: parseFloat(this.toStringFloat(assetForm.nc_ira)),
       nc_other_qualified_investment: parseFloat(
-        this.removeDollarSign(assetForm.nc_other_qualified_investment),
+        this.toStringFloat(assetForm.nc_other_qualified_investment),
       ),
-      unqualified_investment: parseFloat(this.removeDollarSign(assetForm.unqualified_investment)),
-      hard_assets: parseFloat(this.removeDollarSign(assetForm.hard_assets)),
+      unqualified_investment: parseFloat(this.toStringFloat(assetForm.unqualified_investment)),
+      hard_assets: parseFloat(this.toStringFloat(assetForm.hard_assets)),
       other_unqualified_investment: parseFloat(
-        this.removeDollarSign(assetForm.other_unqualified_investment),
+        this.toStringFloat(assetForm.other_unqualified_investment),
       ),
       nc_unqualified_investment: parseFloat(
-        this.removeDollarSign(assetForm.nc_unqualified_investment),
+        this.toStringFloat(assetForm.nc_unqualified_investment),
       ),
-      nc_hard_assets: parseFloat(this.removeDollarSign(assetForm.nc_hard_assets)),
+      nc_hard_assets: parseFloat(this.toStringFloat(assetForm.nc_hard_assets)),
       nc_other_unqualified_investment: parseFloat(
-        this.removeDollarSign(assetForm.nc_other_unqualified_investment),
+        this.toStringFloat(assetForm.nc_other_unqualified_investment),
       ),
-      total_assets: parseFloat(this.removeDollarSign(assetForm.total_assets)),
+      total_assets: parseFloat(this.toStringFloat(assetForm.total_assets)),
     };
     asset.total_assets =
       asset.checking +
@@ -248,6 +253,7 @@ export class AssetsComponent implements OnInit {
       asset.nc_other_unqualified_investment;
 
       
+      console.log("after parsed asset form", asset);
     return asset;
   }
 

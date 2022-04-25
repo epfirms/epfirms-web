@@ -95,23 +95,27 @@ export class IncomeComponent implements OnInit {
     const income = {
       id: incomeForm.id,
       user_id: incomeForm.user_id,
-      social_security: parseFloat(this.removeDollarSign(incomeForm.social_security)),
-      pension: parseFloat(this.removeDollarSign(incomeForm.pension)),
-      work: parseFloat(this.removeDollarSign(incomeForm.work)),
-      annuity: parseFloat(this.removeDollarSign(incomeForm.annuity)),
-      other: parseFloat(this.removeDollarSign(incomeForm.other)),
-      income_total: parseFloat(this.removeDollarSign(incomeForm.income_total)),
+      social_security: parseFloat(this.toStringFloat(incomeForm.social_security)),
+      pension: parseFloat(this.toStringFloat(incomeForm.pension)),
+      work: parseFloat(this.toStringFloat(incomeForm.work)),
+      annuity: parseFloat(this.toStringFloat(incomeForm.annuity)),
+      other: parseFloat(this.toStringFloat(incomeForm.other)),
+      income_total: parseFloat(this.toStringFloat(incomeForm.income_total)),
     };
     income.income_total =
       income.social_security + income.pension + income.work + income.annuity + income.other;
     return income;
   }
 
-  // method that removes "$" from the input
-  private removeDollarSign(value): string {
-    return value.replace('$', '');
-  }
 
+  // method that formats the string; removes '$' and ','
+  private toStringFloat(value): string {
+    let formatted = value.replace(/\$/g, '');
+    formatted = formatted.replace(/,/g, '');
+
+    return formatted;
+
+  }
   // parse the response into strings
   private parseResponse(response): any {
     const income = {
