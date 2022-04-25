@@ -8,20 +8,23 @@
         <li
           *ngFor="let tab of tabs; let i = index"
           (click)="setSelectedIndex(i)"
-          class="px-2 tab"
+          class="relative flex items-center justify-center px-4 py-2 -ml-px border rounded-t border-gray-900/5 group"
           [class.selected]="selectedIndex === i && expanded"
           [class.z-20]="selectedIndex === i"
           [class.not-selected]="selectedIndex !== i || !expanded"
         >
-          <div class="flex items-center max-w-[10rem]">
+          <div class="flex items-center max-w-[10rem] w-full min-w-[10rem]">
             <span [ngTemplateOutlet]="tab.titleTemplate"></span>
-            <button (click)="onClose(i, $event)" type="button" class="inline-flex items-center justify-center flex-shrink-0 w-4 h-4 ml-6 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-500 focus:outline-none focus:bg-gray-500 focus:text-white">
+          </div>
+          <div class="absolute right-0 flex items-center h-full px-3 transition-all rounded opacity-0 close-btn-container bg-gradient-to-l group-hover:opacity-100" [class.opacity-100]="selectedIndex === i && expanded">
+            <button (click)="onClose(i, $event)" type="button" class="inline-flex items-center justify-center flex-shrink-0 w-4 h-4 text-gray-400 bg-transparent rounded-full hover:bg-gray-200 hover:text-gray-500 focus:outline-none focus:bg-gray-500 focus:text-white">
               <span class="sr-only">Remove large option</span>
               <svg class="w-2 h-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
                 <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
               </svg>
             </button>
           </div>
+
         </li>
       </ul>
     </div>
@@ -59,7 +62,7 @@
 
 <!-- Tab content -->
 <div
-  class="relative inset-x-0 z-10 h-full min-h-0 border-t shadow-lg border-gray-200"
+  class="relative inset-x-0 z-10 h-full min-h-0 border-t border-gray-900/5"
 >
     <div
       tab-body

@@ -1,4 +1,4 @@
-<div class="flex items-center min-w-0 text-sm" [ngClass]="{'text-sm': epSize === 'md' || epSize === 'sm', 'text-xs': epSize === 'xs'}">
+<div class="flex items-center max-w-xs min-w-0 text-sm" [ngClass]="{'text-sm': epSize === 'md' || epSize === 'sm', 'text-xs': epSize === 'xs'}">
   <div class="flex-shrink-0" [ngClass]="{'w-6 h-6': epSize === 'xs', 'w-8 h-8': epSize === 'sm', 'w-10 h-10': epSize === 'md'}">
     <ep-avatar
       [epSize]="epSize === 'xs' ? 'xsmall' : epSize === 'sm' ? 'small' : 'medium'"
@@ -12,9 +12,38 @@
     <div class="font-medium text-gray-900 truncate" [ngClass]="{'leading-4': epSize === 'sm', 'leading-3': epSize === 'xs'}">{{ client.full_name | titlecase }}
       <span class="text-xs text-gray-500" *ngIf="spouse">& {{ spouse.full_name | titlecase }}</span>
     </div>
-    <div class="text-gray-500 truncate" [ngClass]="{'leading-4': epSize === 'sm', 'leading-3': epSize === 'xs'}">
-      <span *ngIf="epSize !== 'xs'">{{ matter.matter_type === 'case' ? '#' + matter.case_id : 'Lead'}} <span class="font-bold">&#183;</span></span>
-      {{ matter.title || matter.matter_type | titlecase }}
-    </div>
+    <editable class="text-gray-500 truncate" [enabled]="epSize === 'md'" [ngClass]="{'leading-4': epSize === 'sm', 'leading-3': epSize === 'xs'}" [onlyTextOverflow]="true" [tippy]="matter.title || matter.matter_type"  (save)="saveChanges();" (cancel)="cancelChanges()" (click)="$event.stopPropagation()">
+        <ng-template viewMode>
+          <div class="truncate" [class.hover:text-gray-600]="epSize === 'md'">
+          <span *ngIf="epSize !== 'xs'">{{ matter.matter_type === 'case' ? '#' + matter.case_id : 'Lead'}} <span class="font-bold">&#183;</span></span>
+          {{ matter.title || matter.matter_type | titlecase }}
+        </div>
+        </ng-template>
+        <ng-template editMode>
+          <div class="flex items-center">
+            <input #edit editableFocusable editableOnEnter type="text" class="w-full p-0 m-0 text-sm bg-gray-100 border-0 rounded focus:shadow-none focus:outline-none focus:border-0 focus:ring-0"
+            (click)="$event.stopPropagation()" [(ngModel)]="descriptionChange">
+  
+            <span
+            class="p-0.5 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-600 ml-1.5 ring-1 ring-gray-200 ring-inset"
+            editableOnSave
+            [tippy]="'Save'"
+            ><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            </span>
+  
+            <span
+            class="p-0.5 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-600 ml-1 ring-1 ring-gray-200 ring-inset"
+            editableOnCancel
+            [tippy]="'Cancel'"
+            ><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+            </span>
+          </div>
+        </ng-template>
+
+    </editable>
   </div>
 </div>

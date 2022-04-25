@@ -65,7 +65,7 @@ export class MatterTabsService {
 
   init(): void {
 
-    this.tabsOverlay = this.overlay.create({disposeOnNavigation: false, hasBackdrop: false, panelClass: ['right-0', 'left-20', 'lg:left-64', 'bottom-0', 'duration-500', 'ease-in-out', 'matter-tab-overlay', 'bg-gray-50', 'ring-1', 'ring-black', 'ring-opacity-5', 'shadow-[0_10px_15px_2px_rgb(0,0,0,0.1),_0_4px_6px_3px_rgb(0,0,0,0.1)]']});
+    this.tabsOverlay = this.overlay.create({disposeOnNavigation: false, hasBackdrop: false, panelClass: ['right-0', 'left-20', 'lg:left-64', 'bottom-0', 'duration-500', 'ease-in-out', 'matter-tab-overlay', 'bg-gray-100', 'ring-1', 'ring-gray-900/[0.07]', 'shadow-[0_2px_11px_rgba(0,0,0,0.1),0_3px_6px_rgba(0,0,0,0.05)]']});
     const matterTabPortal = new ComponentPortal(MatterTabsComponent);
     this.tabsOverlay.attach(matterTabPortal);
   }
