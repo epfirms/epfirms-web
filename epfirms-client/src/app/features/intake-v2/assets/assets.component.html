@@ -87,7 +87,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.checking"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.checking"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -97,7 +98,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.checking"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.checking"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -107,7 +109,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.checking"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.checking"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -128,7 +131,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.savings"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.savings"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -138,7 +142,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.savings"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.savings"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -148,7 +153,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.savings"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.savings"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -169,7 +175,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.other_bank"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.other_bank"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -179,7 +186,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.other_bank"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.other_bank"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -189,7 +197,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.other_bank"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.other_bank"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -210,7 +219,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.nc_bank"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_bank"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -220,7 +230,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.nc_bank"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_bank"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -230,7 +241,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.nc_bank"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_bank"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -319,7 +331,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.employer_retirement_plan"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.employer_retirement_plan"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -329,7 +342,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.employer_retirement_plan"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.employer_retirement_plan"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -339,7 +353,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.employer_retirement_plan"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.employer_retirement_plan"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -360,7 +375,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.ira"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.ira"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -370,7 +386,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.ira"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.ira"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -380,7 +397,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.ira"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.ira"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -401,7 +419,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.other_qualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.other_qualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -411,7 +430,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.other_qualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.other_qualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -421,7 +441,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.other_qualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.other_qualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -442,7 +463,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.nc_employer_retirement_plan"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_employer_retirement_plan"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -452,7 +474,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.nc_employer_retirement_plan"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_employer_retirement_plan"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -462,7 +485,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.nc_employer_retirement_plan"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_employer_retirement_plan"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -487,7 +511,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.nc_ira"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_ira"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -497,7 +522,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.nc_ira"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_ira"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -507,7 +533,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.nc_ira"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_ira"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -532,7 +559,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.nc_other_qualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_other_qualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -542,7 +570,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.nc_other_qualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_other_qualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -552,7 +581,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.nc_other_qualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_other_qualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -639,7 +669,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -649,7 +680,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -659,7 +691,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -680,7 +713,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.hard_assets"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.hard_assets"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -690,7 +724,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.hard_assets"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.hard_assets"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -700,7 +735,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.hard_assets"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.hard_assets"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -721,7 +757,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.other_unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.other_unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -731,7 +768,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.other_unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.other_unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -741,7 +779,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.other_unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.other_unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -762,7 +801,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.nc_unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -772,7 +812,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.nc_unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -782,7 +823,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.nc_unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -807,7 +849,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.nc_hard_assets"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_hard_assets"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -817,7 +860,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.nc_hard_assets"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_hard_assets"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -827,7 +871,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.nc_hard_assets"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_hard_assets"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -852,7 +897,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="clientAssetForm.nc_other_unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_other_unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -862,7 +908,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="spouseAssetForm.nc_other_unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_other_unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>
@@ -872,7 +919,8 @@
                           <input
                             type="text"
                             [inputMask]="currencyInputMask"
-                            [ngModel]="jointAssetForm.nc_other_unqualified_investment"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_other_unqualified_investment"
                             class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
                           />
                         </td>

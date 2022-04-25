@@ -3,6 +3,7 @@ import { AssetService } from '@app/client-portal/_services/asset-service/asset.s
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { Asset } from '@app/core/interfaces/asset';
 import { createMask } from '@ngneat/input-mask';
+import { FinancialSummaryService } from '../services/financial-summary.service';
 
 @Component({
   selector: 'app-assets',
@@ -14,7 +15,6 @@ export class AssetsComponent implements OnInit {
   @Output() back = new EventEmitter<boolean>();
   @Output() continue = new EventEmitter<boolean>();
   @Input() matter;
-
 
   // client's assets
   clientAssetForm: any = {
@@ -97,8 +97,7 @@ export class AssetsComponent implements OnInit {
   // spouse of client
   spouse;
 
-
-currencyInputMask = createMask({
+  currencyInputMask = createMask({
     prefix: '$',
     alias: 'numeric',
     groupSeparator: ',',
@@ -107,18 +106,182 @@ currencyInputMask = createMask({
     placeholder: '0',
   });
 
-
   constructor(
     private familyMemberService: FamilyMemberService,
+    private financialSummaryService: FinancialSummaryService,
   ) {}
 
   ngOnInit(): void {
+    this.loadClientAsset();
+    this.loadJointAsset();
+    this.loadSpouse();
   }
-  
-  
 
+  private loadSpouse(): void {
+    this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
+      this.spouse = res.filter((member) => member.family_member.relationship_type === 'spouse')[0];
+      if (this.spouse) {
+        this.loadSpouseAsset();
+        this.spouseAssetForm.user_id = this.spouse.id;
+        this.jointAssetForm.joint_user_id = this.spouse.id;
+      }
+    });
+  }
 
-  
+  private loadClientAsset(): void {
+    this.clientAssetForm.user_id = this.matter.client.id;
+    this.financialSummaryService.getWithUserId(this.matter.client.id).subscribe((res) => {
+      if (res.filter((asset) => asset.is_joint === false).length > 0) {
+        this.clientAssetForm = this.parseResponse(
+          res.filter((asset) => asset.is_joint === false)[0],
+        );
+      }
+    });
+  }
+
+  private loadSpouseAsset(): void {
+    this.financialSummaryService.getWithUserId(this.spouse.id).subscribe((res) => {
+      if (res.length > 0) {
+        this.spouseAssetForm = this.parseResponse(res[0]);
+      }
+    });
+  }
+
+  private loadJointAsset(): void {
+    this.jointAssetForm.user_id = this.matter.client.id;
+    this.financialSummaryService.getWithUserId(this.matter.client.id).subscribe((res) => {
+      if (res.filter((asset) => asset.is_joint === true).length > 0) {
+        this.jointAssetForm = this.parseResponse(res.filter((asset) => asset.is_joint === true)[0]);
+      }
+    });
+  }
+
+  // method that removes "$" from the input
+  private removeDollarSign(value): string {
+    return value.replace('$', '');
+  }
+
+  // method that parses the response and returns the object
+  private parseResponse(response): any {
+    const parsedResponse = {
+      id: response.id,
+      user_id: response.user_id,
+      is_joint: response.is_joint,
+      joint_user_id: response.joint_user_id,
+      checking: response.checking.toString(),
+      savings: response.savings.toString(),
+      other_bank: response.other_bank.toString(),
+      nc_bank: response.nc_bank.toString(),
+      employer_retirement_plan: response.employer_retirement_plan.toString(),
+      ira: response.ira.toString(),
+      other_qualified_investment: response.other_qualified_investment.toString(),
+      nc_employer_retirement_plan: response.nc_employer_retirement_plan.toString(),
+      nc_ira: response.nc_ira.toString(),
+      nc_other_qualified_investment: response.nc_other_qualified_investment.toString(),
+      unqualified_investment: response.unqualified_investment.toString(),
+      hard_assets: response.hard_assets.toString(),
+      other_unqualified_investment: response.other_unqualified_investment.toString(),
+      nc_unqualified_investment: response.nc_unqualified_investment.toString(),
+      nc_hard_assets: response.nc_hard_assets.toString(),
+      nc_other_unqualified_investment: response.nc_other_unqualified_investment.toString(),
+      total_assets: response.total_assets.toString(),
+    };
+    
+    return parsedResponse;
+  }
+
+  private parseAssetForm(assetForm): any {
+    
+    const asset = {
+      id: assetForm.id,
+      user_id: assetForm.user_id,
+      is_joint: assetForm.is_joint,
+      joint_user_id: assetForm.joint_user_id,
+      checking: parseFloat(this.removeDollarSign(assetForm.checking)),
+      savings: parseFloat(this.removeDollarSign(assetForm.savings)),
+      other_bank: parseFloat(this.removeDollarSign(assetForm.other_bank)),
+      nc_bank: parseFloat(this.removeDollarSign(assetForm.nc_bank)),
+      employer_retirement_plan: parseFloat(
+        this.removeDollarSign(assetForm.employer_retirement_plan),
+      ),
+      ira: parseFloat(this.removeDollarSign(assetForm.ira)),
+      other_qualified_investment: parseFloat(
+        this.removeDollarSign(assetForm.other_qualified_investment),
+      ),
+      nc_employer_retirement_plan: parseFloat(
+        this.removeDollarSign(assetForm.nc_employer_retirement_plan),
+      ),
+      nc_ira: parseFloat(this.removeDollarSign(assetForm.nc_ira)),
+      nc_other_qualified_investment: parseFloat(
+        this.removeDollarSign(assetForm.nc_other_qualified_investment),
+      ),
+      unqualified_investment: parseFloat(this.removeDollarSign(assetForm.unqualified_investment)),
+      hard_assets: parseFloat(this.removeDollarSign(assetForm.hard_assets)),
+      other_unqualified_investment: parseFloat(
+        this.removeDollarSign(assetForm.other_unqualified_investment),
+      ),
+      nc_unqualified_investment: parseFloat(
+        this.removeDollarSign(assetForm.nc_unqualified_investment),
+      ),
+      nc_hard_assets: parseFloat(this.removeDollarSign(assetForm.nc_hard_assets)),
+      nc_other_unqualified_investment: parseFloat(
+        this.removeDollarSign(assetForm.nc_other_unqualified_investment),
+      ),
+      total_assets: parseFloat(this.removeDollarSign(assetForm.total_assets)),
+    };
+    asset.total_assets =
+      asset.checking +
+      asset.savings +
+      asset.other_bank +
+      asset.nc_bank +
+      asset.employer_retirement_plan +
+      asset.ira +
+      asset.other_qualified_investment +
+      asset.nc_employer_retirement_plan +
+      asset.nc_ira +
+      asset.nc_other_qualified_investment +
+      asset.unqualified_investment +
+      asset.hard_assets +
+      asset.other_unqualified_investment +
+      asset.nc_unqualified_investment +
+      asset.nc_hard_assets +
+      asset.nc_other_unqualified_investment;
+
+      
+    return asset;
+  }
+
+  submit(): void {
+    this.upsertClientAsset();
+    this.upsertSpouseAsset();
+    this.upsertJointAsset();
+  }
+
+  // upsert client assets
+  private upsertClientAsset(): void {
+    const asset = this.parseAssetForm(this.clientAssetForm);
+
+    this.financialSummaryService.upsert(asset).subscribe((res) => {
+      this.clientAssetForm = this.parseResponse(res[0]);
+    });
+  }
+
+  private upsertSpouseAsset(): void {
+    const asset = this.parseAssetForm(this.spouseAssetForm);
+
+    this.financialSummaryService.upsert(asset).subscribe((res) => {
+      this.spouseAssetForm = this.parseResponse(res[0]);
+    });
+  }
+
+  private upsertJointAsset(): void {
+    const asset = this.parseAssetForm(this.jointAssetForm);
+
+    this.financialSummaryService.upsert(asset).subscribe((res) => {
+      this.jointAssetForm = this.parseResponse(res[0]);
+    });
+  }
+
   backButton(): void {
     this.back.emit(true);
   }
@@ -126,6 +289,4 @@ currencyInputMask = createMask({
   continueButton(): void {
     this.continue.emit(true);
   }
-
-  
 }
