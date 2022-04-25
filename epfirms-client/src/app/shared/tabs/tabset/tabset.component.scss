@@ -15,18 +15,24 @@
         rounded-t-lg
         text-sm
         border-l
-        border-r border-t border-gray-300/75
+        border-r border-t border-slate-300/75
         bg-white
         mr-1
         font-medium;
 }
 
 .selected {
-  @apply bg-opacity-100 shadow-sm;
+  @apply bg-white border-gray-900/10;
+  & > .close-btn-container {
+    @apply from-white via-white;
+  }
 }
 
 .not-selected {
-  @apply bg-opacity-0 opacity-80 transition-all hover:opacity-100 hover:bg-opacity-50;
+  @apply bg-transparent transition-all opacity-80 hover:opacity-90 rounded-none border-t-transparent;
+  & > .close-btn-container {
+    @apply from-gray-100 via-gray-100;
+  }
 }
 
 .remove-tab-button {
@@ -36,8 +42,8 @@
         items-center
         border border-transparent
         rounded-md
-        text-gray-400
-        hover:bg-gray-300
+        text-slate-400
+        hover:bg-slate-300
         focus:outline-none
         focus:ring-2
         focus:ring-offset-2
