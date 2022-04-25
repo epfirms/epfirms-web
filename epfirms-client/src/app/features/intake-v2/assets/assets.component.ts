@@ -162,7 +162,6 @@ export class AssetsComponent implements OnInit {
     formatted = formatted.replace(/,/g, '');
 
     return formatted;
-
   }
 
   // method that parses the response and returns the object
@@ -190,13 +189,13 @@ export class AssetsComponent implements OnInit {
       nc_other_unqualified_investment: response.nc_other_unqualified_investment.toString(),
       total_assets: response.total_assets.toString(),
     };
-    
+
     return parsedResponse;
   }
 
   private parseAssetForm(assetForm): any {
     console.log(this.toStringFloat(assetForm.checking));
-    console.log("before parsed asset form", assetForm);
+    console.log('before parsed asset form', assetForm);
     const asset = {
       id: assetForm.id,
       user_id: assetForm.user_id,
@@ -206,9 +205,7 @@ export class AssetsComponent implements OnInit {
       savings: parseFloat(this.toStringFloat(assetForm.savings)),
       other_bank: parseFloat(this.toStringFloat(assetForm.other_bank)),
       nc_bank: parseFloat(this.toStringFloat(assetForm.nc_bank)),
-      employer_retirement_plan: parseFloat(
-        this.toStringFloat(assetForm.employer_retirement_plan),
-      ),
+      employer_retirement_plan: parseFloat(this.toStringFloat(assetForm.employer_retirement_plan)),
       ira: parseFloat(this.toStringFloat(assetForm.ira)),
       other_qualified_investment: parseFloat(
         this.toStringFloat(assetForm.other_qualified_investment),
@@ -252,8 +249,7 @@ export class AssetsComponent implements OnInit {
       asset.nc_hard_assets +
       asset.nc_other_unqualified_investment;
 
-      
-      console.log("after parsed asset form", asset);
+    console.log('after parsed asset form', asset);
     return asset;
   }
 
@@ -261,6 +257,19 @@ export class AssetsComponent implements OnInit {
     this.upsertClientAsset();
     this.upsertSpouseAsset();
     this.upsertJointAsset();
+  }
+
+
+  //formatted sum: because the mask converts things to a string,
+  // the frontend sums need a method that return a number
+  // this makes use of the rest operator that provides a variable number of parameters
+  // see typescript docs
+  formattedSum(...n : string[]) : number {
+    let sum = 0;
+    n.forEach(element => {
+      sum += parseFloat(this.toStringFloat(element));
+    });
+    return sum;
   }
 
   // upsert client assets

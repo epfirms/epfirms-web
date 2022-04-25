@@ -115,7 +115,7 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.checking, spouseAssetForm.checking, jointAssetForm.checking) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                       <tr>
