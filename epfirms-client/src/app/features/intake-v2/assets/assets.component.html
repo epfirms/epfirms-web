@@ -359,7 +359,7 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.employer_retirement_plan, spouseAssetForm.employer_retirement_plan, jointAssetForm.employer_retirement_plan) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                       <tr>
@@ -403,7 +403,7 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.ira, spouseAssetForm.ira, jointAssetForm.ira) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                       <tr>
@@ -447,7 +447,7 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.other_qualified_investment, spouseAssetForm.other_qualified_investment, jointAssetForm.other_qualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                       <tr>
@@ -494,7 +494,7 @@
                           class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
                         ></td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.nc_employer_retirement_plan, spouseAssetForm.nc_employer_retirement_plan, jointAssetForm.nc_employer_retirement_plan) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
 
@@ -542,7 +542,7 @@
                           class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
                         ></td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.nc_ira, spouseAssetForm.nc_ira, jointAssetForm.nc_ira) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
 
@@ -590,7 +590,7 @@
                           class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
                         ></td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.nc_other_qualified_investment, spouseAssetForm.nc_other_qualified_investment, jointAssetForm.nc_other_qualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                     </tbody>
@@ -601,19 +601,19 @@
                           Total
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.employer_retirement_plan, clientAssetForm.ira, clientAssetForm.nc_ira, clientAssetForm.nc_other_qualified_investment, clientAssetForm.other_qualified_investment, clientAssetForm.nc_employer_retirement_plan) | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
-                          $4,485.00
+                        {{formattedSum(spouseAssetForm.employer_retirement_plan, spouseAssetForm.ira, spouseAssetForm.nc_ira, spouseAssetForm.nc_other_qualified_investment, spouseAssetForm.other_qualified_investment, spouseAssetForm.nc_employer_retirement_plan) | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
-                          $4,485.00
+                        {{formattedSum(jointAssetForm.employer_retirement_plan, jointAssetForm.ira, jointAssetForm.nc_ira, jointAssetForm.nc_other_qualified_investment, jointAssetForm.other_qualified_investment, jointAssetForm.nc_employer_retirement_plan) | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-red-600">
-                          $10,390.00
+                        {{formattedSum(clientAssetForm.nc_employer_retirement_plan, spouseAssetForm.nc_employer_retirement_plan, jointAssetForm.nc_employer_retirement_plan, clientAssetForm.nc_ira, spouseAssetForm.nc_ira, jointAssetForm.nc_ira, clientAssetForm.nc_other_qualified_investment, spouseAssetForm.nc_other_qualified_investment, jointAssetForm.nc_other_qualified_investment ) | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-blue-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.employer_retirement_plan, spouseAssetForm.employer_retirement_plan, jointAssetForm.employer_retirement_plan, clientAssetForm.ira, spouseAssetForm.ira, jointAssetForm.ira, clientAssetForm.other_qualified_investment, spouseAssetForm.other_qualified_investment, jointAssetForm.other_qualified_investment )| currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                     </tfoot>
@@ -697,7 +697,7 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.unqualified_investment, spouseAssetForm.unqualified_investment, jointAssetForm.unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                       <tr>
@@ -741,7 +741,7 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.hard_assets, spouseAssetForm.hard_assets, jointAssetForm.hard_assets) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                       <tr>
@@ -785,7 +785,7 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.other_unqualified_investment, spouseAssetForm.other_unqualified_investment, jointAssetForm.other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                       <tr>
@@ -832,7 +832,7 @@
                           class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
                         ></td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.nc_unqualified_investment, spouseAssetForm.nc_unqualified_investment, jointAssetForm.nc_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
 
@@ -880,7 +880,7 @@
                           class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
                         ></td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.nc_hard_assets, spouseAssetForm.nc_hard_assets, jointAssetForm.nc_hard_assets) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
 
@@ -928,7 +928,7 @@
                           class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
                         ></td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.nc_other_unqualified_investment, spouseAssetForm.nc_other_unqualified_investment, jointAssetForm.nc_other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                     </tbody>
@@ -939,19 +939,19 @@
                           Total
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.unqualified_investment, clientAssetForm.hard_assets, clientAssetForm.other_unqualified_investment, clientAssetForm.nc_unqualified_investment, clientAssetForm.nc_hard_assets, clientAssetForm.nc_other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
-                          $4,485.00
+                        {{formattedSum(spouseAssetForm.unqualified_investment, spouseAssetForm.hard_assets, spouseAssetForm.other_unqualified_investment, spouseAssetForm.nc_unqualified_investment, spouseAssetForm.nc_hard_assets, spouseAssetForm.nc_other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
-                          $4,485.00
+                        {{formattedSum(jointAssetForm.unqualified_investment, jointAssetForm.hard_assets, jointAssetForm.other_unqualified_investment, jointAssetForm.nc_unqualified_investment, jointAssetForm.nc_hard_assets, jointAssetForm.nc_other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-red-600">
-                          $10,390.00
+                        {{formattedSum(clientAssetForm.nc_unqualified_investment, spouseAssetForm.nc_unqualified_investment, jointAssetForm.nc_unqualified_investment, clientAssetForm.nc_hard_assets, spouseAssetForm.nc_hard_assets, jointAssetForm.nc_hard_assets, clientAssetForm.nc_other_unqualified_investment, spouseAssetForm.nc_other_unqualified_investment, jointAssetForm.nc_other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-blue-600">
-                          $3,285.00
+                          {{formattedSum(clientAssetForm.unqualified_investment, clientAssetForm.hard_assets, clientAssetForm.other_unqualified_investment, spouseAssetForm.unqualified_investment, spouseAssetForm.hard_assets, spouseAssetForm.other_unqualified_investment, jointAssetForm.unqualified_investment, jointAssetForm.hard_assets, jointAssetForm.other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                     </tfoot>
@@ -1001,19 +1001,19 @@
                           Investments
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right font-semibold text-gray-900">
-                          $3,285.00
+                        {{clientAssetForm.total_assets | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right font-semibold text-gray-900">
-                          $4,485.00
+                        {{spouseAssetForm.total_assets | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right font-semibold text-gray-900">
-                          $4,485.00
+                        {{jointAssetForm.total_assets | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right font-semibold text-red-600">
-                          $10,390.00
+                        {{formattedSum(clientAssetForm.total_countable, spouseAssetForm.total_countable, jointAssetForm.total_countable) | currency:'USD':true:'1.2-2'}}
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right font-semibold text-blue-600">
-                          $3,285.00
+                        {{formattedSum(clientAssetForm.total_nc, spouseAssetForm.total_nc, jointAssetForm.total_nc) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                     </tfoot>

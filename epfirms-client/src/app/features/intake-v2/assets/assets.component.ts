@@ -39,6 +39,8 @@ export class AssetsComponent implements OnInit {
     nc_hard_assets: '0',
     nc_other_unqualified_investment: '0',
     total_assets: '0',
+    total_nc: '0',
+    total_countable: '0'
   };
 
   // spouse assets
@@ -65,6 +67,8 @@ export class AssetsComponent implements OnInit {
     nc_hard_assets: '0',
     nc_other_unqualified_investment: '0',
     total_assets: '0',
+    total_nc: '0',
+    total_countable: '0'
   };
 
   // joint assets
@@ -93,6 +97,8 @@ export class AssetsComponent implements OnInit {
     nc_hard_assets: '0',
     nc_other_unqualified_investment: '0',
     total_assets: '0',
+    total_nc: '0',
+    total_countable: '0'
   };
   // spouse of client
   spouse;
@@ -188,6 +194,8 @@ export class AssetsComponent implements OnInit {
       nc_hard_assets: response.nc_hard_assets.toString(),
       nc_other_unqualified_investment: response.nc_other_unqualified_investment.toString(),
       total_assets: response.total_assets.toString(),
+      total_nc: response.total_nc.toString(),
+      total_countable: response.total_countable.toString(),
     };
 
     return parsedResponse;
@@ -230,6 +238,9 @@ export class AssetsComponent implements OnInit {
         this.toStringFloat(assetForm.nc_other_unqualified_investment),
       ),
       total_assets: parseFloat(this.toStringFloat(assetForm.total_assets)),
+      total_nc: parseFloat(this.toStringFloat(assetForm.total_nc)),
+      total_countable: parseFloat(this.toStringFloat(assetForm.total_countable)),
+
     };
     asset.total_assets =
       asset.checking +
@@ -248,6 +259,26 @@ export class AssetsComponent implements OnInit {
       asset.nc_unqualified_investment +
       asset.nc_hard_assets +
       asset.nc_other_unqualified_investment;
+
+      // sum of all nc assets
+      asset.total_nc = asset.nc_bank +
+      asset.nc_employer_retirement_plan +
+      asset.nc_ira +
+      asset.nc_other_qualified_investment +
+      asset.nc_unqualified_investment +
+      asset.nc_hard_assets +
+      asset.nc_other_unqualified_investment;
+
+      // sum of all assets with no nc
+      asset.total_countable = asset.checking +
+      asset.savings +
+      asset.other_bank +
+      asset.employer_retirement_plan +
+      asset.ira +
+      asset.other_qualified_investment +
+      asset.unqualified_investment +
+      asset.hard_assets +
+      asset.other_unqualified_investment;
 
     console.log('after parsed asset form', asset);
     return asset;
