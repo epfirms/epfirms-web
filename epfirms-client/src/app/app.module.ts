@@ -39,7 +39,7 @@ const tooltipConfig: Partial<TippyProps> = {
   trigger: 'mouseenter focus',
   arrow: false,
   animation: 'shift-away-subtle',
-  offset: [0, 0],
+  offset: [0, 5],
   duration: [50, 25],
   delay: [500, 0]
 };
