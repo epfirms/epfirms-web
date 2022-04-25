@@ -141,6 +141,68 @@ module.exports = (sequelize, { INTEGER, STRING, TEXT, FLOAT, BOOLEAN }) => {
         type: FLOAT,
         defaultValue: 0.0,
       },
+      // real estate summary section will consist of primary and then 4 additional
+      primary_residence_address: {
+        type: STRING,
+        defaultValue: '',
+      },
+      primary_residence_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      primary_residence_loan_amount: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      property_1_address: {
+        type: STRING,
+        defaultValue: '',
+      },
+      property_1_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+
+      },
+      property_1_loan_amount: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      property_2_address: {
+        type: STRING,
+        defaultValue: '',
+      },
+      property_2_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      property_2_loan_amount: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      property_3_address: {
+        type: STRING,
+        defaultValue: '',
+      },
+      property_3_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      property_3_loan_amount: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      property_4_address: {
+        type: STRING,
+        defaultValue: '',
+      },
+      property_4_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      property_4_loan_amount: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      }
     },
     {
       tableName,
