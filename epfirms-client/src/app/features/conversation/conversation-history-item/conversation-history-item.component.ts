@@ -17,7 +17,6 @@ export class ConversationHistoryItemComponent implements OnDestroy {
 
   @Input()
   set conversation(value: Conversation) {
-    console.log(value);
     this._conversation = value;
     this.loadOtherParticipants();
     this.loadLastMessage();

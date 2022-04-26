@@ -1,57 +1,57 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { ConnectionState, State } from '@twilio/conversations';
-import {
-  decreaseUnreadMessageCount,
-  increaseUnreadMessageCount,
-  updateClientState,
-  updateConnectionState,
-  updateUnreadMessageCount,
-} from './conversation.actions';
+import { ConnectionState } from '@twilio/conversations';
+import { ConversationActions } from './conversation.actions';
 
 export interface ConversationState {
-  clientState: State | null;
   unreadMessageCount: number | null;
   connectionState: ConnectionState;
+  accessToken: string | null;
 }
 
 export const initialState: ConversationState = {
-  clientState: null,
   unreadMessageCount: 0,
   connectionState: 'unknown',
+  accessToken: null
 };
 
 export const conversationFeature = createFeature({
   name: 'conversation',
   reducer: createReducer(
     initialState,
-    on(updateUnreadMessageCount, (state, { unreadMessageCount }) => {
+    on(ConversationActions.UpdateUnreadMessageCount, (state, { payload }) => {
       return {
         ...state,
-        unreadMessageCount,
+        unreadMessageCount: payload,
       };
     }),
-    on(updateConnectionState, (state, { connectionState }) => {
+    on(ConversationActions.UpdateConnectionState, (state, { payload }) => {
       return {
         ...state,
-        connectionState,
+        connectionState: payload,
       };
     }),
-    on(updateClientState, (state, { clientState }) => {
-      return {
-        ...state,
-        clientState,
-      };
-    }),
-    on(increaseUnreadMessageCount, (state, { payload }) => {
+    on(ConversationActions.IncreaseUnreadMessageCount, (state, { payload }) => {
       return {
         ...state,
         unreadMessageCount: state.unreadMessageCount + payload,
       };
     }),
-    on(decreaseUnreadMessageCount, (state, { payload }) => {
+    on(ConversationActions.DecreaseUnreadMessageCount, (state, { payload }) => {
       return {
         ...state,
         unreadMessageCount: state.unreadMessageCount - payload,
+      };
+    }),
+    on(ConversationActions.SetAccessToken, (state, { payload }) => {
+      return {
+        ...state,
+        accessToken: payload,
+      };
+    }),
+    on(ConversationActions.ClearAccessToken, (state) => {
+      return {
+        ...state,
+        accessToken: null,
       };
     }),
   ),
@@ -63,5 +63,5 @@ export const {
   selectConversationState,
   selectConnectionState,
   selectUnreadMessageCount,
-  selectClientState,
+  selectAccessToken,
 } = conversationFeature;

@@ -7,17 +7,16 @@ import { ConversationState } from '@twilio/conversations';
 import { EMPTY, from } from 'rxjs';
 import {
   map,
-  mergeMap,
   catchError,
   pluck,
   switchMap,
   tap,
   filter,
   concatMap,
+  exhaustMap
 } from 'rxjs/operators';
 import { ConversationService } from '../services/conversation.service';
-import { updateAccessToken } from './conversation.actions';
-import * as ConversationActions from '../store/conversation.actions';
+import { ConversationActions } from './conversation.actions';
 import { HotToastService } from '@ngneat/hot-toast';
 import { UserService } from '@app/features/user/services/user.service';
 import { ConversationNotification } from '../interfaces/conversation-notification';
@@ -28,19 +27,14 @@ export class ConversationEffects {
   /** Initialize twilio client. */
   connect$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ConversationActions.init),
+      ofType(ConversationActions.Init),
       switchMap(() =>
         this.conversationService.getAccessToken().pipe(
           pluck('data'),
           // Initialize the conversations client using the generated access token.
-          switchMap((token) => this.conversationService.init(token)),
-          tap((connectionState) => {
-            if (connectionState === 'connected') {
-              this.store.dispatch(ConversationActions.loadConversations());
-            }
-          }),
+          switchMap((token) => this.conversationService.init(token).pipe(tap(() => {this.store.dispatch(ConversationActions.SetAccessToken({ payload: token }))}))),
           // Update client initialization state in store.
-          map((connectionState) => ConversationActions.updateConnectionState({ connectionState })),
+          map(() => ConversationActions.InitSuccess()),
           catchError(() => EMPTY),
         ),
       ),
@@ -49,7 +43,7 @@ export class ConversationEffects {
 
   loadConversations$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ConversationActions.loadConversations),
+      ofType(ConversationActions.InitSuccess),
       switchMap(() => this.conversationService.conversationJoinedEvent()),
       tap((conversation) => {
         const sortedConversations = [
@@ -78,72 +72,39 @@ export class ConversationEffects {
           }),
         ),
       ),
-      map((count) => ConversationActions.increaseUnreadMessageCount({ payload: count })),
+      map((count) => ConversationActions.IncreaseUnreadMessageCount({ payload: count })),
       catchError(() => EMPTY),
     ),
   );
 
-  tokenAboutToExpire$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(ConversationActions.updateConnectionState),
-        filter((action) => action.connectionState === 'connected'),
-        switchMap(() => {
-          return this.conversationService.tokenAboutToExpire().pipe(
-            tap(() => {
-              this.store.dispatch(ConversationActions.updateAccessToken());
-            }),
-          );
-        }),
-      ),
-    { dispatch: false },
-  );
-
-  tokenExpiredEvent$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(ConversationActions.updateConnectionState),
-        filter((action) => action.connectionState === 'connected'),
-        switchMap(() => {
-          return this.conversationService.tokenExpired().pipe(
-            tap(() => {
-              this.store.dispatch(ConversationActions.updateAccessToken());
-            }),
-          );
-        }),
-      ),
-    { dispatch: false },
-  );
-
-  addEventHandlers$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(ConversationActions.updateConnectionState),
-        tap((state) => {
-          switch (state.connectionState) {
-            case 'connected':
-              this.conversationService.syncUserProfile();
-              break;
-            case 'disconnecting':
-            case 'disconnected':
-            case 'error':
-              this.store.dispatch(ConversationActions.updateAccessToken());
-              break;
-            case 'denied':
-              this._authService.logout();
-              break;
-          }
-        }),
-        catchError(() => EMPTY),
-      ),
-    { dispatch: false },
-  );
+  // addEventHandlers$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(ConversationActions.UpdateConnectionState),
+  //       tap((state) => {
+  //         if (state.connectionState === 'connecting') { }
+  //         if (state.connectionState === 'connected') {
+  //           this.conversationService.syncUserProfile();
+  //           this.store.dispatch(ConversationActions.LoadConversations());
+  //           this.store.dispatch(ConversationActions.AddEventListeners());
+  //         }
+  //         if (state.connectionState === 'disconnecting') { }
+  //         if (state.connectionState === 'disconnected') {
+  //           this.store.dispatch(ConversationActions.RemoveEventListeners());
+  //         }
+  //         if (state.connectionState === 'denied') {
+  //           this._authService.logout();
+  //         }
+  //       }),
+  //       catchError(() => EMPTY),
+  //     ),
+  //   { dispatch: false },
+  // );
 
   messageAdded$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ConversationActions.updateConnectionState),
-        filter((action) => action.connectionState === 'connected'),
+        ofType(ConversationActions.InitSuccess),
         switchMap(() =>
           this.conversationService.messageAdded().pipe(
             tap((message) => {
@@ -187,7 +148,7 @@ export class ConversationEffects {
                 toastRef.afterClosed.subscribe((data) => {
                   if (!data.dismissedByAction) {
                     this.store.dispatch(
-                      ConversationActions.increaseUnreadMessageCount({ payload: 1 }),
+                      ConversationActions.IncreaseUnreadMessageCount({ payload: 1 }),
                     );
                   }
                 });
@@ -203,15 +164,17 @@ export class ConversationEffects {
   updateToken$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(updateAccessToken),
-        map(() =>
+        ofType(ConversationActions.UpdateAccessToken),
+        exhaustMap(() =>
           this.conversationService.getAccessToken().pipe(
             pluck('data'),
-            switchMap((token) => this.conversationService.updateAccessToken(token)),
+            switchMap((token) => this.conversationService.updateAccessToken(token).pipe(
+              map(() => ConversationActions.SetAccessToken({ payload: token })),
+              catchError(() => EMPTY),
+            )),
           ),
         ),
       ),
-    { dispatch: false },
   );
 
   disconnect$ = createEffect(
