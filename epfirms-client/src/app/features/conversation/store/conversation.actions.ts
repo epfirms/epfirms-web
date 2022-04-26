@@ -32,6 +32,8 @@ const SetAccessToken = createAction(
 const UpdateAccessToken = createAction('[Conversation] Update Access Token');
 const ClearAccessToken = createAction('[Conversation] Clear Access Token');
 
+const SyncUserProfile = createAction('[Conversation] User Profile Synced');
+
 export const ConversationActions = {
   Init,
   InitSuccess,
@@ -45,4 +47,5 @@ export const ConversationActions = {
   DecreaseUnreadMessageCount,
   SetAccessToken,
   ClearAccessToken,
+  SyncUserProfile
 };

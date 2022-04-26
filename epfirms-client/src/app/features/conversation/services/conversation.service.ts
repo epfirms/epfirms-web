@@ -8,7 +8,7 @@ import {
   Conversation,
   Message,
 } from '@twilio/conversations';
-import { BehaviorSubject, from, fromEventPattern, Observable, of, pluck } from 'rxjs';
+import { BehaviorSubject, from, fromEventPattern, merge, Observable, of, pluck, switchMap, take } from 'rxjs';
 import { ConversationState } from '../store/conversation.store';
 
 @Injectable({
@@ -147,11 +147,8 @@ export class ConversationService {
   }
 
   /** Updates friendlyName and profileImage for logged-in user. */
-  syncUserProfile() {
+  syncUserProfile(): Observable<any> {
     const currentUser$ = this._store.select('currentUser');
-    currentUser$.pipe(pluck('user')).subscribe((user) => {
-      this.updateUserFriendlyName(user.full_name).subscribe();
-      this.updateUserAttributes(user.profile_image).subscribe();
-    });
+    return currentUser$.pipe(take(1), pluck('user'), switchMap((user) => merge(this.updateUserFriendlyName(user.full_name), this.updateUserAttributes(user.profile_image))));
   }
 }
