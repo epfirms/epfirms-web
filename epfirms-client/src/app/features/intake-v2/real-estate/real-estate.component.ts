@@ -144,6 +144,49 @@ submit(): void {
 
 }
 
+ //formatted sum: because the mask converts things to a string,
+  // the frontend sums need a method that return a number
+  // this makes use of the rest operator that provides a variable number of parameters
+  // see typescript docs
+  formattedSum(...n : string[]) : number {
+    let sum = 0;
+    n.forEach(element => {
+      sum += parseFloat(this.toStringFloat(element));
+    });
+    return sum;
+  }
+
+  //formatted difference
+  // this is for returning equity
+  formattedEquity(value : string, loan : string) : number {
+    return parseFloat(this.toStringFloat(value)) - parseFloat(this.toStringFloat(loan));
+  }
+
+  // returns the non countable amount based on the limit for the state
+  // it would be good to have those limits grabbed from somewhere and stored
+  // as they vary state by state by year
+  formattedNonCountable(value : string, loan : string, limit : number) : number {
+    let equity = this.formattedEquity(value, loan);
+    if (equity > limit) {
+      return limit;
+    }
+    else {
+      return equity;
+    }
+  }
+
+  // returns the countable amount based on the limit for the state
+  formattedCountable(value : string, loan : string, limit : number) : number {
+    let equity = this.formattedEquity(value, loan);
+    if (equity > limit) {
+      return equity - limit;
+    }
+    else {
+      return 0;
+    }
+  }
+
+
   backButton(): void {
     this.back.emit(true);
   }

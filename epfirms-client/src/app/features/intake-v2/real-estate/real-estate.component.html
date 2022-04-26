@@ -204,13 +204,13 @@
                           />
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-gray-600">
-                          $1,280,000.00
+                        {{formattedEquity(financialSummaryForm.primary_residence_value, financialSummaryForm.primary_residence_loan_amount) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-red-600">
-                          $70,000.00
+                        {{formattedCountable(financialSummaryForm.primary_residence_value, financialSummaryForm.primary_residence_loan_amount, 270000) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-blue-600">
-                          $1,350,000.00
+                        {{formattedNonCountable(financialSummaryForm.primary_residence_value, financialSummaryForm.primary_residence_loan_amount, 270000) | currency}}
                         </td>
                       </tr>
                     </tbody>
@@ -221,19 +221,19 @@
                           Total
                         </td>
                         <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
-                          $1,223,285.00
+                        {{formattedSum(financialSummaryForm.primary_residence_value) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
-                          $1,224,485.00
+                        {{formattedSum(financialSummaryForm.primary_residence_loan_amount) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-4 text-sm font-semibold text-gray-600">
-                          $1,2280,000.00
+                        {{formattedEquity(financialSummaryForm.primary_residence_value, financialSummaryForm.primary_residence_loan_amount) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-4 text-sm font-semibold text-red-600">
-                          $1,270,000.00
+                        {{formattedCountable(financialSummaryForm.primary_residence_value, financialSummaryForm.primary_residence_loan_amount, 270000) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-4 text-sm font-semibold text-blue-600">
-                          $1,350,000.00
+                        {{formattedNonCountable(financialSummaryForm.primary_residence_value, financialSummaryForm.primary_residence_loan_amount, 270000) | currency}}
                         </td>
                         <td
                           class="text-right pl-3 pr-1 pt-4 text-sm font-semibold text-purple-600"
@@ -318,13 +318,13 @@
                           />
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-gray-600">
-                          $22,223,285.00
+                        {{formattedEquity(financialSummaryForm.property_1_value, financialSummaryForm.property_1_loan_amount) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-red-600">
-                          $23,222,285.00
+                        {{formattedCountable(financialSummaryForm.property_1_value, financialSummaryForm.property_1_loan_amount, 0) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-purple-600">
-                          $22,222,285.00
+                        {{formattedCountable(financialSummaryForm.property_1_value, financialSummaryForm.property_1_loan_amount, 0) | currency}}
                         </td>
                       </tr>
                       <tr>
@@ -362,13 +362,13 @@
                           />
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-gray-600">
-                          $22,223,285.00
+                        {{formattedEquity(financialSummaryForm.property_2_value, financialSummaryForm.property_2_loan_amount) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-red-600">
-                          $23,222,285.00
+                        {{formattedCountable(financialSummaryForm.property_2_value, financialSummaryForm.property_2_loan_amount, 0) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-purple-600">
-                          $22,222,285.00
+                        {{formattedCountable(financialSummaryForm.property_2_value, financialSummaryForm.property_2_loan_amount, 0) | currency}}
                         </td>
                       </tr>
                       <tr>
@@ -406,13 +406,13 @@
                           />
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-gray-600">
-                          $22,223,285.00
+                        {{formattedEquity(financialSummaryForm.property_3_value, financialSummaryForm.property_3_loan_amount) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-red-600">
-                          $23,222,285.00
+                        {{formattedCountable(financialSummaryForm.property_3_value, financialSummaryForm.property_3_loan_amount, 0) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-purple-600">
-                          $22,222,285.00
+                        {{formattedCountable(financialSummaryForm.property_3_value, financialSummaryForm.property_3_loan_amount, 0) | currency}}
                         </td>
                       </tr>
                       <tr>
@@ -450,13 +450,13 @@
                           />
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-gray-600">
-                          $22,223,285.00
+                        {{formattedEquity(financialSummaryForm.property_4_value, financialSummaryForm.property_4_loan_amount) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-red-600">
-                          $23,222,285.00
+                        {{formattedCountable(financialSummaryForm.property_4_value, financialSummaryForm.property_4_loan_amount, 0) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-purple-600">
-                          $22,222,285.00
+                        {{formattedCountable(financialSummaryForm.property_4_value, financialSummaryForm.property_4_loan_amount, 0) | currency}}
                         </td>
                       </tr>
                     </tbody>
@@ -467,17 +467,22 @@
                           Total
                         </td>
                         <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
-                          $22,223,285.00
+                        {{formattedSum(financialSummaryForm.property_1_value, financialSummaryForm.property_2_value, financialSummaryForm.property_3_value, financialSummaryForm.property_4_value) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
-                          $22,224,485.00
+                        {{formattedSum(financialSummaryForm.property_1_loan_amount, financialSummaryForm.property_2_loan_amount, financialSummaryForm.property_3_loan_amount, financialSummaryForm.property_4_loan_amount) | currency}}
                         </td>
                         <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
-                          $22,224,485.00
+                        {{formattedEquity(financialSummaryForm.property_1_value, financialSummaryForm.property_1_loan_amount) + formattedEquity(financialSummaryForm.property_2_value, financialSummaryForm.property_2_loan_amount) + formattedEquity(financialSummaryForm.property_3_value, financialSummaryForm.property_3_loan_amount) + formattedEquity(financialSummaryForm.property_4_value, financialSummaryForm.property_4_loan_amount)  | currency}}
                         </td>
 
+                        <td class="text-right pl-3 pr-1 pt-4 text-sm font-semibold text-red-600">
+
+                        {{formattedEquity(financialSummaryForm.property_1_value, financialSummaryForm.property_1_loan_amount) + formattedEquity(financialSummaryForm.property_2_value, financialSummaryForm.property_2_loan_amount) + formattedEquity(financialSummaryForm.property_3_value, financialSummaryForm.property_3_loan_amount) + formattedEquity(financialSummaryForm.property_4_value, financialSummaryForm.property_4_loan_amount)  | currency}}
+                        </td>
                         <td class="text-right pl-3 pr-1 pt-4 text-sm font-semibold text-purple-600">
-                          $22,210,390.00
+
+                        {{formattedEquity(financialSummaryForm.property_1_value, financialSummaryForm.property_1_loan_amount) + formattedEquity(financialSummaryForm.property_2_value, financialSummaryForm.property_2_loan_amount) + formattedEquity(financialSummaryForm.property_3_value, financialSummaryForm.property_3_loan_amount) + formattedEquity(financialSummaryForm.property_4_value, financialSummaryForm.property_4_loan_amount)  | currency}}
                         </td>
                       </tr>
                     </tfoot>
@@ -488,7 +493,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-7 text-right">
+      <!-- <div class="mt-7 text-right">
         <div class="flex justify-end">
           <button
             (click)="backButton()"
@@ -504,7 +509,7 @@
             Continue
           </button>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </body>
