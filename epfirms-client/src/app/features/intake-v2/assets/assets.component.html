@@ -72,6 +72,13 @@
                       >
                         Non-Countable
                       </th>
+
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Unprotected
+                      </th>
                     </thead>
                     <tbody class="bg-white">
                       <tr>
@@ -115,6 +122,12 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                        {{formattedSum(clientAssetForm.checking, spouseAssetForm.checking, jointAssetForm.checking) | currency:'USD':true:'1.2-2'}}
+                        </td>
+                        
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
                         {{formattedSum(clientAssetForm.checking, spouseAssetForm.checking, jointAssetForm.checking) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
@@ -161,6 +174,13 @@
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
                         {{formattedSum(clientAssetForm.savings, spouseAssetForm.savings, jointAssetForm.savings) | currency:'USD':true:'1.2-2'}}
                         </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                        </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                        {{formattedSum(clientAssetForm.savings, spouseAssetForm.savings, jointAssetForm.savings) | currency:'USD':true:'1.2-2'}}
+                        </td>
                       </tr>
                       <tr>
                         <th
@@ -203,6 +223,12 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                        {{formattedSum(clientAssetForm.other_bank, spouseAssetForm.other_bank, jointAssetForm.other_bank) | currency:'USD':true:'1.2-2'}}
+                        </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
                         {{formattedSum(clientAssetForm.other_bank, spouseAssetForm.other_bank, jointAssetForm.other_bank) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
@@ -252,6 +278,10 @@
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
                         {{formattedSum(clientAssetForm.nc_bank, spouseAssetForm.nc_bank, jointAssetForm.nc_bank) | currency:'USD':true:'1.2-2'}}
                         </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                        {{formattedSum(clientAssetForm.nc_bank, spouseAssetForm.nc_bank, jointAssetForm.nc_bank) | currency:'USD':true:'1.2-2'}}
+                        </td>
                       </tr>
                     </tbody>
 
@@ -274,6 +304,10 @@
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-blue-600">
                         {{formattedSum(clientAssetForm.nc_bank, spouseAssetForm.nc_bank, jointAssetForm.nc_bank) | currency:'USD':true:'1.2-2'}}
+                        </td>
+
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-purple-600">
+                        {{formattedSum(clientAssetForm.checking, clientAssetForm.savings, clientAssetForm.other_bank, clientAssetForm.nc_bank, spouseAssetForm.checking, spouseAssetForm.savings, spouseAssetForm.other_bank, spouseAssetForm.nc_bank, jointAssetForm.checking, jointAssetForm.savings, jointAssetForm.other_bank, jointAssetForm.nc_bank) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                     </tfoot>
@@ -654,6 +688,13 @@
                       >
                         Non-Countable
                       </th>
+
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                       Unprotected 
+                      </th>
                     </thead>
                     <tbody class="bg-white">
                       <tr>
@@ -697,6 +738,13 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                        {{formattedSum(clientAssetForm.unqualified_investment, spouseAssetForm.unqualified_investment, jointAssetForm.unqualified_investment) | currency:'USD':true:'1.2-2'}}
+                        </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                        {{formattedSum(clientAssetForm.unqualified_investment, spouseAssetForm.unqualified_investment, jointAssetForm.unqualified_investment) | currency:'USD':true:'1.2-2'}}
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
                         {{formattedSum(clientAssetForm.unqualified_investment, spouseAssetForm.unqualified_investment, jointAssetForm.unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
@@ -743,6 +791,12 @@
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
                         {{formattedSum(clientAssetForm.hard_assets, spouseAssetForm.hard_assets, jointAssetForm.hard_assets) | currency:'USD':true:'1.2-2'}}
                         </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                        {{formattedSum(clientAssetForm.hard_assets, spouseAssetForm.hard_assets, jointAssetForm.hard_assets) | currency:'USD':true:'1.2-2'}}
+                        </td>
                       </tr>
                       <tr>
                         <th
@@ -785,6 +839,12 @@
                           />
                         </td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                        {{formattedSum(clientAssetForm.other_unqualified_investment, spouseAssetForm.other_unqualified_investment, jointAssetForm.other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
+                        </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
                         {{formattedSum(clientAssetForm.other_unqualified_investment, spouseAssetForm.other_unqualified_investment, jointAssetForm.other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
@@ -832,6 +892,11 @@
                           class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
                         ></td>
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
+                        {{formattedSum(clientAssetForm.nc_unqualified_investment, spouseAssetForm.nc_unqualified_investment, jointAssetForm.nc_unqualified_investment) | currency:'USD':true:'1.2-2'}}
+                        </td>
+
+                        
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
                         {{formattedSum(clientAssetForm.nc_unqualified_investment, spouseAssetForm.nc_unqualified_investment, jointAssetForm.nc_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
@@ -882,6 +947,11 @@
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
                         {{formattedSum(clientAssetForm.nc_hard_assets, spouseAssetForm.nc_hard_assets, jointAssetForm.nc_hard_assets) | currency:'USD':true:'1.2-2'}}
                         </td>
+
+                        
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                        {{formattedSum(clientAssetForm.nc_hard_assets, spouseAssetForm.nc_hard_assets, jointAssetForm.nc_hard_assets) | currency:'USD':true:'1.2-2'}}
+                        </td>
                       </tr>
 
                       <tr>
@@ -930,6 +1000,11 @@
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
                         {{formattedSum(clientAssetForm.nc_other_unqualified_investment, spouseAssetForm.nc_other_unqualified_investment, jointAssetForm.nc_other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
+
+                        
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                        {{formattedSum(clientAssetForm.nc_other_unqualified_investment, spouseAssetForm.nc_other_unqualified_investment, jointAssetForm.nc_other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
+                        </td>
                       </tr>
                     </tbody>
 
@@ -952,6 +1027,10 @@
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-blue-600">
                           {{formattedSum(clientAssetForm.unqualified_investment, clientAssetForm.hard_assets, clientAssetForm.other_unqualified_investment, spouseAssetForm.unqualified_investment, spouseAssetForm.hard_assets, spouseAssetForm.other_unqualified_investment, jointAssetForm.unqualified_investment, jointAssetForm.hard_assets, jointAssetForm.other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
+                        </td>
+
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-purple-600">
+                          {{formattedSum(clientAssetForm.nc_unqualified_investment, spouseAssetForm.nc_unqualified_investment, jointAssetForm.nc_unqualified_investment, clientAssetForm.nc_hard_assets, spouseAssetForm.nc_hard_assets, jointAssetForm.nc_hard_assets, clientAssetForm.nc_other_unqualified_investment, spouseAssetForm.nc_other_unqualified_investment, jointAssetForm.nc_other_unqualified_investment, clientAssetForm.unqualified_investment, clientAssetForm.hard_assets, clientAssetForm.other_unqualified_investment, spouseAssetForm.unqualified_investment, spouseAssetForm.hard_assets, spouseAssetForm.other_unqualified_investment, jointAssetForm.unqualified_investment, jointAssetForm.hard_assets, jointAssetForm.other_unqualified_investment) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                     </tfoot>
@@ -992,6 +1071,13 @@
                       >
                         Non-Countable
                       </th>
+
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right font-semibold text-gray-900"
+                      >
+                        Unprotected
+                      </th>
                     </thead>
                     <tbody class="bg-white"></tbody>
 
@@ -1014,6 +1100,10 @@
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right font-semibold text-blue-600">
                         {{formattedSum(clientAssetForm.total_nc, spouseAssetForm.total_nc, jointAssetForm.total_nc) | currency:'USD':true:'1.2-2'}}
+                        </td>
+
+                        <td class="pl-3 pr-2 pt-4 text-right font-semibold text-purple-600">
+                        {{formattedSum(clientAssetForm.nc_unqualified_investment, spouseAssetForm.nc_unqualified_investment, jointAssetForm.nc_unqualified_investment, clientAssetForm.nc_hard_assets, spouseAssetForm.nc_hard_assets, jointAssetForm.nc_hard_assets, clientAssetForm.nc_other_unqualified_investment, spouseAssetForm.nc_other_unqualified_investment, jointAssetForm.nc_other_unqualified_investment, clientAssetForm.unqualified_investment, clientAssetForm.hard_assets, clientAssetForm.other_unqualified_investment, spouseAssetForm.unqualified_investment, spouseAssetForm.hard_assets, spouseAssetForm.other_unqualified_investment, jointAssetForm.unqualified_investment, jointAssetForm.hard_assets, jointAssetForm.other_unqualified_investment, clientAssetForm.checking, clientAssetForm.savings, clientAssetForm.other_bank, clientAssetForm.nc_bank, spouseAssetForm.checking, spouseAssetForm.savings, spouseAssetForm.other_bank, spouseAssetForm.nc_bank, jointAssetForm.checking, jointAssetForm.savings, jointAssetForm.other_bank, jointAssetForm.nc_bank) | currency:'USD':true:'1.2-2'}}
                         </td>
                       </tr>
                     </tfoot>
