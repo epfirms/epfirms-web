@@ -29,13 +29,10 @@ export class ConversationComponent implements OnInit {
 
   ngOnInit(): void {
     this.conversationComponentStore.getConversation();
-    this.matter$.subscribe(console.log);
-    this.conversationTitle$.subscribe(console.log)
   }
 
   /** Fetch additional pages from message paginator. */
   loadMoreMessages(): void {
-    console.log('load more');
     this.conversationComponentStore.getNextMessagePage();
   }
 

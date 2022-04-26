@@ -1,28 +1,51 @@
 import { createAction, props } from '@ngrx/store';
-import { ConnectionState, State } from '@twilio/conversations';
+import { ConnectionState } from '@twilio/conversations';
 
-export const init = createAction('[Conversation] Initialize Client');
-export const connect = createAction('[Conversation] Connect');
-export const updateUnreadMessageCount = createAction(
+const Init = createAction('[Conversation] Initialize Client');
+const InitSuccess = createAction('[Conversation] Initialize Client Success');
+
+const Connect = createAction('[Conversation] Connect');
+const UpdateUnreadMessageCount = createAction(
   '[Conversation] Update Unread Message Count',
-  props<{ unreadMessageCount: number }>(),
+  props<{ payload: number }>(),
 );
-export const updateConnectionState = createAction(
+const UpdateConnectionState = createAction(
   '[Conversation] Update Connection State',
-  props<{ connectionState: ConnectionState }>(),
+  props<{ payload: ConnectionState }>(),
 );
-export const updateAccessToken = createAction('[Conversation] Update Access Token');
-export const updateClientState = createAction(
-  '[Conversation] Update Client State',
-  props<{ clientState: State }>(),
-);
-export const loadUnreadMessageCount = createAction('[Conversation] Load Unread Message Count');
-export const loadConversations = createAction('[Conversation] Load Conversations');
-export const increaseUnreadMessageCount = createAction(
+const LoadUnreadMessageCount = createAction('[Conversation] Load Unread Message Count');
+const LoadConversations = createAction('[Conversation] Load Conversations');
+const IncreaseUnreadMessageCount = createAction(
   '[Conversation] Increase Unread Message Count',
   props<{ payload: number }>(),
 );
-export const decreaseUnreadMessageCount = createAction(
+const DecreaseUnreadMessageCount = createAction(
   '[Conversation] Decrease Unread Message Count',
   props<{ payload: number }>(),
 );
+
+const SetAccessToken = createAction(
+  '[Conversation] Set Access Token',
+  props<{ payload: string }>(),
+);
+
+const UpdateAccessToken = createAction('[Conversation] Update Access Token');
+const ClearAccessToken = createAction('[Conversation] Clear Access Token');
+
+const SyncUserProfile = createAction('[Conversation] User Profile Synced');
+
+export const ConversationActions = {
+  Init,
+  InitSuccess,
+  Connect,
+  UpdateUnreadMessageCount,
+  UpdateConnectionState,
+  UpdateAccessToken,
+  LoadUnreadMessageCount,
+  LoadConversations,
+  IncreaseUnreadMessageCount,
+  DecreaseUnreadMessageCount,
+  SetAccessToken,
+  ClearAccessToken,
+  SyncUserProfile
+};

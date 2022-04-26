@@ -4,7 +4,7 @@ import { catchError, filter, take } from 'rxjs/operators';
 import { EMPTY, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectConnectionState } from '@app/features/conversation/store/conversation.store';
-import { init } from '@app/features/conversation/store/conversation.actions';
+import { ConversationActions } from '@app/features/conversation/store/conversation.actions';
 import { AuthService } from '@app/core/services/auth.service';
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +12,7 @@ export class ConversationResolver implements Resolve<any> {
   constructor(private store: Store, private _authService: AuthService) {}
 
   resolve(): Observable<any> | Observable<never> {
-    this.store.dispatch(init());
+    this.store.dispatch(ConversationActions.Init());
     const connectionState = this.store.select(selectConnectionState);
     return connectionState.pipe(
       filter((state) => state === 'connected'),

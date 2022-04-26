@@ -48,6 +48,7 @@ export class ConversationService {
   ): Promise<AccessToken> {
     const token = new AccessToken(TWILIO_ACCOUNT_SID, TWILIO_API_KEY_SID, TWILIO_API_KEY_SECRET, {
       identity: identity,
+      ttl: 43200
     });
 
     token.addGrant(grants.chat);
