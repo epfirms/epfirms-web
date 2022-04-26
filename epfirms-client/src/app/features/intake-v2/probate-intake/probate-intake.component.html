@@ -1,0 +1,152 @@
+<div class="flex place-content-center">
+  <div class="m-5 pt-8 w-1/2">
+    
+    <div>
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Probate Questionaire</h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">
+        These questions will collect information for a probate case.
+      </p>
+    </div>
+    <div class="mt-6 grid grid-cols-2 gap-y-6 gap-x-4">
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Date of Birth</label>
+        <div class="mt-1">
+          <input
+            [(ngModel)]="form.date_of_birth"
+            type="date"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+          />
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Place of Birth </label>
+        <div class="mt-1">
+          <input
+          [(ngModel)]="form.place_of_birth"
+            type="text"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+          />
+        </div>
+      </div>
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Date of Death</label>
+        <div class="mt-1">
+          <input
+          [(ngModel)]="form.date_of_death"
+            type="date"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+          />
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Place of Death </label>
+        <div class="mt-1">
+          <input
+          [(ngModel)]="form.place_of_death"
+            type="text"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+          />
+        </div>
+
+        <div class="col-span-3">
+          <label class="block text-sm font-medium text-gray-700"> US Citizen? </label>
+          <div class="mt-1">
+            <select
+            [(ngModel)]="form.us_citizen"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-span-3">
+          <label class="block text-sm font-medium text-gray-700"> Naturalized Citizen? </label>
+          <div class="mt-1">
+            <select
+            [(ngModel)]="form.naturalized_citizen"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-span-3">
+          <label class="block text-sm font-medium text-gray-700"> Date of Naturalization</label>
+          <div class="mt-1">
+            <input
+            [(ngModel)]="form.date_of_naturalization"
+              type="date"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+
+        <div class="col-span-3">
+          <label class="block text-sm font-medium text-gray-700"> Place of Naturalization </label>
+          <div class="mt-1">
+            <input
+            [(ngModel)]="form.place_of_naturalization"
+              type="text"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+
+          <div class="col-span-3">
+            <label class="block text-sm font-medium text-gray-700"> Date of Will</label>
+            <div class="mt-1">
+              <input
+                type="date"
+                [(ngModel)]="form.date_of_will"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+          <div class="col-span-3">
+            <label class="block text-sm font-medium text-gray-700"> Date of Codicils</label>
+            <div class="mt-1">
+              <input
+              [(ngModel)]="form.date_of_codicils"
+                type="date"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+
+<div class="col-span-3 mt-5 flex justify-end">
+
+    <button
+      (click)="backButton()"
+      type="button"
+      class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+    >
+      Back
+    </button>
+    <button
+      (click)="submit()"
+      class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+    >
+      Continue
+    </button>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+
+

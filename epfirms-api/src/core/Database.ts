@@ -72,6 +72,8 @@ export class Database {
       estate_planning: require('../models/EstatePlanning')(this.sequelize, Sequelize),
       excluded_children: require('../models/ExcludedChildren')(this.sequelize, Sequelize),
       specific_requests: require('../models/SpecificRequests')(this.sequelize, Sequelize),
+      bug_reporter_access: require('../models/BugReporterAccess')(this.sequelize, Sequelize),
+      probate: require('../models/Probate')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee, as: 'employer', foreignKey: 'user_id' });

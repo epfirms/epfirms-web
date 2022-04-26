@@ -26,6 +26,7 @@ import { SpouseInformationComponent } from './spouse-information/spouse-informat
 import { ChildrenInformationComponent } from './children-information/children-information.component';
 import { OtherFamilyInformationComponent } from './other-family-information/other-family-information.component';
 import { EstatePlanningFormComponent } from './firm-intake-components/estate-planning-form/estate-planning-form.component';
+import { ProbateIntakeComponent } from './probate-intake/probate-intake.component';
 
 
 
@@ -48,7 +49,8 @@ import { EstatePlanningFormComponent } from './firm-intake-components/estate-pla
     SpouseInformationComponent,
     ChildrenInformationComponent,
     OtherFamilyInformationComponent,
-    EstatePlanningFormComponent
+    EstatePlanningFormComponent,
+    ProbateIntakeComponent
   ],
   imports: [
     CommonModule,
