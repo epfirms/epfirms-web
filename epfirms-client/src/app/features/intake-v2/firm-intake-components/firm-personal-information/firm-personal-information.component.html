@@ -662,121 +662,35 @@
                             <label
                               class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
                             >
-                              Parent 1</label
+                               Parent 1 Name</label
                             >
-                            <div class="flex">
-                              <span class="text-sm font-medium text-gray-900 pr-2 id="
-                                >[Parent Name]</span
-                              >
-                              <button
-                                type="button"
-                                class="bg-red-600 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                role="switch"
-                                aria-checked="false"
-                              >
-                                <span class="sr-only">Use setting</span>
-                                <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
-                                <span
-                                  class="translate-x-0 pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
-                                >
-                                  <!-- Enabled: "opacity-0 ease-out duration-100", Not Enabled: "opacity-100 ease-in duration-200" -->
-                                  <span
-                                    class="opacity-100 ease-in duration-200 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
-                                    aria-hidden="true"
-                                  >
-                                    <svg
-                                      class="h-3 w-3 text-gray-300"
-                                      fill="none"
-                                      viewBox="0 0 12 12"
-                                    >
-                                      <path
-                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
-                                  </span>
-                                  <!-- Enabled: "opacity-100 ease-in duration-200", Not Enabled: "opacity-0 ease-out duration-100" -->
-                                  <span
-                                    class="opacity-0 ease-out duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
-                                    aria-hidden="true"
-                                  >
-                                    <svg
-                                      class="h-3 w-3 text-green-600"
-                                      fill="currentColor"
-                                      viewBox="0 0 12 12"
-                                    >
-                                      <path
-                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
-                                      />
-                                    </svg>
-                                  </span>
-                                </span>
-                              </button>
-                            </div>
+                            <input
+                              [(ngModel)]="child.parent_1_name"
+                              type="text"
+                              name="first-name"
+                              id="first-name"
+                              autocomplete="given-name"
+                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
+                            />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-4/12">
+<td class="relative border border-gray-200 px-3 py-3 w-4/12">
                             <label
                               class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
                             >
-                              Parent 2</label
+                               Parent 2 Name</label
                             >
-                            <div class="flex">
-                              <span class="text-sm font-medium text-gray-900 pr-2 id=">
-                                [Parent 2 Name]
-                              </span>
-                              <button
-                                type="button"
-                                class="bg-red-600 py-3relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-blue-500"
-                                role="switch"
-                                aria-checked="false"
-                              >
-                                <span class="sr-only">Use setting</span>
-                                <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
-                                <span
-                                  class="translate-x-0 pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
-                                >
-                                  <!-- Enabled: "opacity-0 ease-out duration-100", Not Enabled: "opacity-100 ease-in duration-200" -->
-                                  <span
-                                    class="opacity-100 ease-in duration-200 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
-                                    aria-hidden="true"
-                                  >
-                                    <svg
-                                      class="h-3 w-3 text-gray-300"
-                                      fill="none"
-                                      viewBox="0 0 12 12"
-                                    >
-                                      <path
-                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
-                                  </span>
-                                  <!-- Enabled: "opacity-100 ease-in duration-200", Not Enabled: "opacity-0 ease-out duration-100" -->
-                                  <span
-                                    class="opacity-0 ease-out duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
-                                    aria-hidden="true"
-                                  >
-                                    <svg
-                                      class="h-3 w-3 text-green-600"
-                                      fill="currentColor"
-                                      viewBox="0 0 12 12"
-                                    >
-                                      <path
-                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
-                                      />
-                                    </svg>
-                                  </span>
-                                </span>
-                              </button>
-                            </div>
+                            <input
+                              [(ngModel)]="child.parent_2_name"
+                              type="text"
+                              name="first-name"
+                              id="first-name"
+                              autocomplete="given-name"
+                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
+                            />
                           </td>
+
+                          
 
                           <td class="relative border border-gray-200 px-3 py-3 w-2/12">
                             <label
