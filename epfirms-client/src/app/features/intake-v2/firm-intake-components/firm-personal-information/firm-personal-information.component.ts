@@ -8,7 +8,7 @@ import { USAState } from '@app/shared/utils/us-states/typings';
 @Component({
   selector: 'app-firm-personal-information',
   templateUrl: './firm-personal-information.component.html',
-  styleUrls: ['./firm-personal-information.component.scss']
+  styleUrls: ['./firm-personal-information.component.scss'],
 })
 export class FirmPersonalInformationComponent implements OnInit {
   // INPUT BINDINGS
@@ -23,8 +23,7 @@ export class FirmPersonalInformationComponent implements OnInit {
   client;
 
   // does the client have a spouse?
-  hasSpouse : boolean = false;
-  
+  hasSpouse: boolean = false;
 
   // states list
   public usaStates: USAState[] = usaStatesFull;
@@ -36,7 +35,6 @@ export class FirmPersonalInformationComponent implements OnInit {
 
   // array that holds children
   children = [];
-
 
   // client form
   clientForm = {
@@ -53,13 +51,12 @@ export class FirmPersonalInformationComponent implements OnInit {
     dob: '',
     ssn: '',
     drivers_id: '',
-  }
-
+  };
 
   // client form
   spouseForm = {
     id: undefined,
-    
+
     first_name: '',
     last_name: '',
     email: '',
@@ -73,18 +70,10 @@ export class FirmPersonalInformationComponent implements OnInit {
     ssn: '',
     drivers_id: '',
     relationship_type: 'spouse',
-  }
+  };
 
   // relationship types
-  relationshipTypes = [
-    'sibling',
-    'parent',
-    'grandchild',
-    'grandparent',
-    'other',
-  ];
-
-
+  relationshipTypes = ['sibling', 'parent', 'grandchild', 'grandparent', 'other'];
 
   constructor(
     private clientService: ClientService,
@@ -92,42 +81,90 @@ export class FirmPersonalInformationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
     this.loadClientData();
-    this.loadFamilyMembers();
+    this.getFamilyMembers();
   }
 
-  loadFamilyMembers(): void {
-    this.familyMemberService
-      .getByUserId(this.client.id)
-      .subscribe((familyMembers) => {
-        this.familyMembers = familyMembers;
-        console.log("family members", this.familyMembers);
-        this.loadSpouse();
+  getFamilyMembers(): void {
+    this.familyMemberService.getByUserId(this.client.id).subscribe((familyMembers) => {
+      // filter out the family members in response
+      familyMembers.forEach((member) => {
+        if (member.family_member.relationship_type === 'spouse') {
+          this.spouse = member;
+          this.hasSpouse = true;
+          this.loadSpouseForm();
+        } else if (member.family_member.relationship_type === 'child') {
+          this.loadChildren(member);
+        } else {
+          this.loadFamilyMembers(member);
+        }
       });
-  }
-  private loadSpouse() : void {
-    this.spouse = this.familyMembers.filter(member => member.family_member.relationship_type === 'spouse')[0];
-    if (this.spouse) {
-      this.spouseForm.id = this.spouse.id;
-      this.spouseForm.first_name = this.spouse.first_name;
-      this.spouseForm.last_name = this.spouse.last_name;
-      this.spouseForm.email = this.spouse.email;
-      this.spouseForm.phone = this.spouse.phone;
-      this.spouseForm.cell_phone = this.spouse.cell_phone;
-      this.spouseForm.address = this.spouse.address;
-      this.spouseForm.city = this.spouse.city;
-      this.spouseForm.state = this.spouse.state;
-      this.spouseForm.zip = this.spouse.zip;
-      this.spouseForm.dob = this.spouse.dob;
-      this.spouseForm.ssn = this.spouse.ssn;
-      this.spouseForm.drivers_id = this.spouse.drivers_id;
-    }
+    });
   }
 
+  private loadFamilyMembers(member): void {
+    let memberForm = {
+      id: member.id,
+      first_name: member.first_name,
+      last_name: member.last_name,
+      email: member.email,
+      phone: member.phone,
+      cell_phone: member.cell_phone,
+      address: member.address,
+      city: member.city,
+      state: member.state,
+      zip: member.zip,
+      dob: member.dob,
+      ssn: member.ssn,
+      drivers_id: member.drivers_id,
+      relationship_type: member.family_member.relationship_type,
+    };
+    this.familyMembers.push(memberForm);
+  }
+
+  private loadChildren(child): void {
+    let childForm = {
+      id: child.id,
+      first_name: child.first_name,
+      last_name: child.last_name,
+      email: child.email,
+      phone: child.phone,
+      cell_phone: child.cell_phone,
+      address: child.address,
+      city: child.city,
+      state: child.state,
+      zip: child.zip,
+      dob: child.dob,
+      ssn: child.ssn,
+      drivers_id: child.drivers_id,
+      relationship_type: child.family_member.relationship_type,
+      parent_1_name: child.family_member.parent_1_name,
+      parent_2_name: child.family_member.parent_2_name,
+      parent_1_id: child.family_member.parent_1_id,
+      parent_2_id: child.family_member.parent_2_id,
+    };
+    this.children.push(childForm);
+  }
+
+  private loadSpouseForm(): void {
+    this.spouseForm.id = this.spouse.id;
+    this.spouseForm.first_name = this.spouse.first_name;
+    this.spouseForm.last_name = this.spouse.last_name;
+    this.spouseForm.email = this.spouse.email;
+    this.spouseForm.phone = this.spouse.phone;
+    this.spouseForm.cell_phone = this.spouse.cell_phone;
+    this.spouseForm.address = this.spouse.address;
+    this.spouseForm.city = this.spouse.city;
+    this.spouseForm.state = this.spouse.state;
+    this.spouseForm.zip = this.spouse.zip;
+    this.spouseForm.dob = this.spouse.dob;
+    this.spouseForm.ssn = this.spouse.ssn;
+    this.spouseForm.drivers_id = this.spouse.drivers_id;
+    this.spouseForm.relationship_type = this.spouse.family_member.relationship_type;
+  }
   private loadClientData(): void {
     this.client = this.matter.client;
-    console.log("client", this.client);
+    console.log('client', this.client);
 
     this.clientForm.id = this.client.id;
     this.clientForm.first_name = this.client.first_name;
@@ -142,10 +179,23 @@ export class FirmPersonalInformationComponent implements OnInit {
     this.clientForm.dob = this.client.dob;
     this.clientForm.ssn = this.client.ssn;
     this.clientForm.drivers_id = this.client.drivers_id;
-
   }
 
-  addChild() : void {
+  private upsertSpouse(): void {
+    if (this.hasSpouse) {
+      this.familyMemberService
+        .addFamilyMemberForUser(this.client.id, this.spouseForm)
+        .subscribe((res) => {
+          console.log('upsert spouse', res);
+        });
+    }
+  }
+
+  submit(): void {
+    this.upsertSpouse();
+  }
+
+  addChild(): void {
     let child = {
       id: undefined,
       first_name: '',
@@ -167,13 +217,12 @@ export class FirmPersonalInformationComponent implements OnInit {
       parent_1_id: this.client.id,
       parent_2_name: this.spouse ? this.spouse.first_name + ' ' + this.spouse.last_name : '',
       parent_2_id: this.spouse ? this.spouse.id : undefined,
-    }
+    };
 
     this.children.push(child);
   }
 
-
-  addFamilyMember() : void {
+  addFamilyMember(): void {
     let familyMember = {
       id: undefined,
       first_name: '',
@@ -189,12 +238,11 @@ export class FirmPersonalInformationComponent implements OnInit {
       ssn: '',
       drivers_id: '',
       relationship_type: '',
-    }
+    };
 
     this.familyMembers.push(familyMember);
   }
 
-  
   backButton(): void {
     this.back.emit(true);
   }
@@ -202,5 +250,4 @@ export class FirmPersonalInformationComponent implements OnInit {
   continueButton(): void {
     this.continue.emit(true);
   }
-
 }
