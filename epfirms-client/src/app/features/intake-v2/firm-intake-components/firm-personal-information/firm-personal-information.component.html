@@ -228,7 +228,10 @@
                           autocomplete="address-level1"
                           class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
                         >
-                          <option></option>
+                        
+                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+                  {{ state.name }}
+                </option>
                         </select>
                       </td>
 
@@ -443,7 +446,10 @@
                             autocomplete="address-level1"
                             class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
                           >
-                            <option></option>
+
+                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+                  {{ state.name }}
+                </option>
                           </select>
                         </td>
 
@@ -615,7 +621,10 @@
                               autocomplete="address-level1"
                               class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
                             >
-                              <option></option>
+
+                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+                  {{ state.name }}
+                </option>
                             </select>
                           </td>
 
@@ -1018,7 +1027,10 @@
                                 autocomplete="address-level1"
                                 class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
                               >
-                                <option></option>
+
+                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+                  {{ state.name }}
+                </option>
                               </select>
                             </td>
 

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { ClientMatterService } from '@app/client-portal/_services/matter-service/client-matter.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
+import { usaStatesFull } from '@app/shared/utils/us-states/states';
+import { USAState } from '@app/shared/utils/us-states/typings';
 
 @Component({
   selector: 'app-firm-personal-information',
@@ -21,6 +23,8 @@ export class FirmPersonalInformationComponent implements OnInit {
   client;
   
 
+  // states list
+  public usaStates: USAState[] = usaStatesFull;
   // spouse
   spouse;
 
