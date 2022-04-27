@@ -27,6 +27,9 @@ export class FirmPersonalInformationComponent implements OnInit {
   //array that holds family members
   familyMembers = [];
 
+  // array that holds children
+  children = [];
+
 
   // client form
   clientForm = {
@@ -123,6 +126,47 @@ export class FirmPersonalInformationComponent implements OnInit {
     this.clientForm.ssn = this.client.ssn;
     this.clientForm.drivers_id = this.client.drivers_id;
 
+  }
+
+  addChild() : void {
+    let child = {
+      id: undefined,
+      first_name: '',
+      last_name: '',
+      email: '',
+      phone: '',
+      cell_phone: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      dob: '',
+      ssn: '',
+      drivers_id: '',
+    }
+
+    this.children.push(child);
+  }
+
+
+  addFamilyMember() : void {
+    let familyMember = {
+      id: undefined,
+      first_name: '',
+      last_name: '',
+      email: '',
+      phone: '',
+      cell_phone: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      dob: '',
+      ssn: '',
+      drivers_id: '',
+    }
+
+    this.familyMembers.push(familyMember);
   }
 
   

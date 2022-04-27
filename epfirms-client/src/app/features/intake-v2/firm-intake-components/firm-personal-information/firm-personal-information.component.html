@@ -473,6 +473,7 @@
                     </div>
                     <div class="relative flex justify-center">
                       <button
+                        (click)="addChild()"
                         type="button"
                         class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-200 text-sm leading-5 font-medium rounded-full text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                       >
@@ -495,7 +496,7 @@
                     </div>
                   </div>
 
-                  <div>
+                  <div *ngFor="let child of children">
                     <div class="flex mt-8">
                       <span
                         class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
@@ -872,12 +873,15 @@
                       </tbody>
                     </table>
 
-                    <div class="relative mt-10">
+                   
+                  </div>
+ <div class="relative mt-10">
                       <div class="absolute inset-0 flex items-center" aria-hidden="true">
                         <div class="w-full border-t border-gray-200"></div>
                       </div>
                       <div class="relative flex justify-center">
                         <button
+                        (click)="addFamilyMember()"
                           type="button"
                           class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-200 text-sm leading-5 font-medium rounded-full text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
@@ -900,7 +904,7 @@
                       </div>
                     </div>
 
-                    <div>
+                    <div *ngFor="let member of familyMembers" class="mb-8">
                       <div class="flex mt-8">
                         <span
                           class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
@@ -1036,7 +1040,6 @@
                         </tbody>
                       </table>
                     </div>
-                  </div>
                 </div>
               </div>
             </div>
