@@ -69,6 +69,7 @@ export class FirmPersonalInformationComponent implements OnInit {
     dob: '',
     ssn: '',
     drivers_id: '',
+    relationship_type: 'spouse',
   }
 
   // relationship types
@@ -156,6 +157,13 @@ export class FirmPersonalInformationComponent implements OnInit {
       dob: '',
       ssn: '',
       drivers_id: '',
+      relationship_type: 'child',
+      has_special_needs: false,
+      is_excluded: false,
+      parent_1_name: this.client.first_name + ' ' + this.client.last_name,
+      parent_1_id: this.client.id,
+      parent_2_name: this.spouse ? this.spouse.first_name + ' ' + this.spouse.last_name : '',
+      parent_2_id: this.spouse ? this.spouse.id : undefined,
     }
 
     this.children.push(child);
@@ -177,6 +185,7 @@ export class FirmPersonalInformationComponent implements OnInit {
       dob: '',
       ssn: '',
       drivers_id: '',
+      relationship_type: '',
     }
 
     this.familyMembers.push(familyMember);
