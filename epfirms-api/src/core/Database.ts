@@ -91,16 +91,8 @@ export class Database {
       as: 'firm_client'
     });
 
-    this.models.user.belongsToMany(this.models.user, {
-      through: this.models.family_member,
-      as: 'member',
-      foreignKey: 'user_id'
-    });
-    this.models.user.belongsToMany(this.models.user, {
-      through: this.models.family_member,
-      as: 'member_user',
-      foreignKey: 'family_member_id'
-    });
+    this.models.user.hasMany(this.models.family_member, {foreignKey: 'user_id'});
+    this.models.family_member.belongsTo(this.models.user, {foreignKey: 'user_id'});
 
     this.models.user.hasMany(this.models.real_estate, { foreignKey: 'user_id' });
     this.models.real_estate.belongsTo(this.models.user, { foreignKey: 'user_id' });

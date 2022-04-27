@@ -32,7 +32,8 @@ export class FamilyMemberController {
       const { user_id } = req.params;
       const familyMemberData = req.body;
       const familyMemberUser = await this._userService.addFamilyMember(user_id, familyMemberData);       
-      resp.status(StatusConstants.CREATED).send();
+      console.log("family member controller call",familyMemberUser);
+      resp.status(StatusConstants.CREATED).send(familyMemberUser);
     } catch (error) {
       console.error(error);
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
