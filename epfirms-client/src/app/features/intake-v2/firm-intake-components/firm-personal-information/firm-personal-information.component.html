@@ -228,10 +228,9 @@
                           autocomplete="address-level1"
                           class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
                         >
-                        
-                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
-                  {{ state.name }}
-                </option>
+                          <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+                            {{ state.name }}
+                          </option>
                         </select>
                       </td>
 
@@ -275,7 +274,7 @@
                             First Name</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.first_name"
+                            [(ngModel)]="spouseForm.first_name"
                             type="text"
                             name="first-name"
                             id="first-name"
@@ -291,7 +290,7 @@
                             Last Name</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.last_name"
+                            [(ngModel)]="spouseForm.last_name"
                             type="text"
                             name="last-name"
                             id="last-name"
@@ -307,7 +306,7 @@
                             Date of Birth</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.dob"
+                            [(ngModel)]="spouseForm.dob"
                             type="date"
                             name="birth-date"
                             id="birth-date"
@@ -322,7 +321,7 @@
                             SSN</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.ssn"
+                            [(ngModel)]="spouseForm.ssn"
                             type="password"
                             id="ssn"
                             class="block w-full border-0 p-0 text-gray-300 placeholder-gray-300 focus:ring-0"
@@ -343,7 +342,7 @@
                             Driver's ID #</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.drivers_id"
+                            [(ngModel)]="spouseForm.drivers_id"
                             type="text"
                             id="drivers_id"
                             autocomplete="given-name"
@@ -358,7 +357,7 @@
                             Email</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.email"
+                            [(ngModel)]="spouseForm.email"
                             id="email"
                             name="email"
                             type="email"
@@ -373,7 +372,7 @@
                             >Cell Phone</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.cell_phone"
+                            [(ngModel)]="spouseForm.cell_phone"
                             type="text"
                             name="cellphone"
                             id="cellphone"
@@ -387,7 +386,7 @@
                             >Home Phone</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.phone"
+                            [(ngModel)]="spouseForm.phone"
                             type="text"
                             name="homephone"
                             id="homephone"
@@ -409,7 +408,7 @@
                             Street Address</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.address"
+                            [(ngModel)]="spouseForm.address"
                             type="text"
                             name="street-address"
                             id="street-address"
@@ -425,7 +424,7 @@
                             City</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.city"
+                            [(ngModel)]="spouseForm.city"
                             type="text"
                             name="city"
                             id="city"
@@ -440,16 +439,15 @@
                             >State</label
                           >
                           <select
-                          [(ngModel)]="spouseForm.state"
+                            [(ngModel)]="spouseForm.state"
                             id="region"
                             name="region"
                             autocomplete="address-level1"
                             class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
                           >
-
-                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
-                  {{ state.name }}
-                </option>
+                            <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+                              {{ state.name }}
+                            </option>
                           </select>
                         </td>
 
@@ -460,7 +458,7 @@
                             Zip Code</label
                           >
                           <input
-                          [(ngModel)]="spouseForm.zip"
+                            [(ngModel)]="spouseForm.zip"
                             type="text"
                             name="postal-code"
                             id="postal-code"
@@ -621,10 +619,12 @@
                               autocomplete="address-level1"
                               class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
                             >
-
-                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
-                  {{ state.name }}
-                </option>
+                              <option
+                                *ngFor="let state of usaStates"
+                                [ngValue]="state.abbreviation"
+                              >
+                                {{ state.name }}
+                              </option>
                             </select>
                           </td>
 
@@ -881,177 +881,188 @@
                         </tr>
                       </tbody>
                     </table>
-
-                   
                   </div>
- <div class="relative mt-10">
-                      <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                        <div class="w-full border-t border-gray-200"></div>
-                      </div>
-                      <div class="relative flex justify-center">
-                        <button
+                  <div class="relative mt-10">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                      <div class="w-full border-t border-gray-200"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                      <button
                         (click)="addFamilyMember()"
-                          type="button"
-                          class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-200 text-sm leading-5 font-medium rounded-full text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        type="button"
+                        class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-200 text-sm leading-5 font-medium rounded-full text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      >
+                        <!-- Heroicon name: solid/plus-sm -->
+                        <svg
+                          class="-ml-1.5 mr-1 h-5 w-5 text-gray-300"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
                         >
-                          <!-- Heroicon name: solid/plus-sm -->
-                          <svg
-                            class="-ml-1.5 mr-1 h-5 w-5 text-gray-300"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                              clip-rule="evenodd"
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <span>Extended Family</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div *ngFor="let member of familyMembers" class="mb-8">
+                    <div class="flex mt-8">
+                      <span
+                        class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
+                      >
+                        <span class="font-medium leading-none text-white">DF</span>
+                      </span>
+                      <h1 class="pl-2 font-semibold text-gray-600">
+                        [Select Relationship]'s Information
+                      </h1>
+                    </div>
+
+                    <table class="mt-7 min-w-full">
+                      <tbody class="bg-white">
+                        <tr>
+                          <th scope="row" class="bg-orange-300 px-1"></th>
+                          <td class="relative border border-gray-200 px-3 py-3">
+                            <label
+                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
+                              >Relationship Type</label
+                            >
+                            <select
+                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
+                            >
+                            <option *ngFor="let type of relationshipTypes" [ngValue]="type">{{type | titlecase }}</option>
+                            </select>
+                          </td>
+                          <td class="relative border border-gray-200 px-3 py-3 w-3/12">
+                            <label
+                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
+                            >
+                              First Name</label
+                            >
+                          </td>
+
+                          <td class="relative border border-gray-200 px-3 py-3 w-3.5/12">
+                            <label
+                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
+                            >
+                              Last Name</label
+                            >
+                            <input
+                              type="text"
+                              name="last-name"
+                              id="last-name"
+                              autocomplete="family-name"
+                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
                             />
-                          </svg>
-                          <span>Extended Family</span>
-                        </button>
-                      </div>
-                    </div>
+                          </td>
 
-                    <div *ngFor="let member of familyMembers" class="mb-8">
-                      <div class="flex mt-8">
-                        <span
-                          class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
-                        >
-                          <span class="font-medium leading-none text-white">DF</span>
-                        </span>
-                        <h1 class="pl-2 font-semibold text-gray-600">
-                          [Insert Relationship]'s Information
-                        </h1>
-                      </div>
+                          <td class="relative border border-gray-200 px-3 py-3 w-2/12">
+                            <label
+                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
+                              >Cell Phone</label
+                            >
+                            <input
+                              type="text"
+                              name="cellphone"
+                              id="cellphone"
+                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
+                            />
+                          </td>
+                          <td class="relative border border-gray-200 px-3 py-3 w-2.5/12">
+                            <label
+                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
+                            >
+                              Email</label
+                            >
+                            <input
+                              id="email"
+                              name="email"
+                              type="email"
+                              autocomplete="email"
+                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
 
-                      <table class="mt-7 min-w-full">
-                        <tbody class="bg-white">
-                          <tr>
-                            <th scope="row" class="bg-orange-300 px-1"></th>
-                            <td class="relative border border-gray-200 px-3 py-3 w-3/12">
-                              <label
-                                class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >
-                                First Name</label
-                              >
-                            </td>
+                    <table class="mt-3 min-w-full">
+                      <tbody class="bg-white">
+                        <tr>
+                          <th scope="row" class="bg-orange-300 px-1"></th>
+                          <td class="relative border border-gray-200 px-3 py-3 w-5/12">
+                            <label
+                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs font-medium text-gray-300"
+                            >
+                              Street Address</label
+                            >
+                            <input
+                              type="text"
+                              name="street-address"
+                              id="street-address"
+                              autocomplete="street-address"
+                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
+                            />
+                          </td>
 
-                            <td class="relative border border-gray-200 px-3 py-3 w-3.5/12">
-                              <label
-                                class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >
-                                Last Name</label
-                              >
-                              <input
-                                type="text"
-                                name="last-name"
-                                id="last-name"
-                                autocomplete="family-name"
-                                class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                              />
-                            </td>
+                          <td class="relative border border-gray-200 px-3 py-3">
+                            <label
+                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
+                            >
+                              City</label
+                            >
+                            <input
+                              type="text"
+                              name="city"
+                              id="city"
+                              autocomplete="address-level2"
+                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
+                            />
+                          </td>
 
-                            <td class="relative border border-gray-200 px-3 py-3 w-2/12">
-                              <label
-                                class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                                >Cell Phone</label
+                          <td class="relative border border-gray-200 px-3 py-3">
+                            <label
+                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
+                              >State</label
+                            >
+                            <select
+                              id="region"
+                              name="region"
+                              autocomplete="address-level1"
+                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
+                            >
+                              <option
+                                *ngFor="let state of usaStates"
+                                [ngValue]="state.abbreviation"
                               >
-                              <input
-                                type="text"
-                                name="cellphone"
-                                id="cellphone"
-                                class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                              />
-                            </td>
-                            <td class="relative border border-gray-200 px-3 py-3 w-2.5/12">
-                              <label
-                                class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >
-                                Email</label
-                              >
-                              <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                autocomplete="email"
-                                class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                                {{ state.name }}
+                              </option>
+                            </select>
+                          </td>
 
-                      <table class="mt-3 min-w-full">
-                        <tbody class="bg-white">
-                          <tr>
-                            <th scope="row" class="bg-orange-300 px-1"></th>
-                            <td class="relative border border-gray-200 px-3 py-3 w-5/12">
-                              <label
-                                class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs font-medium text-gray-300"
-                              >
-                                Street Address</label
-                              >
-                              <input
-                                type="text"
-                                name="street-address"
-                                id="street-address"
-                                autocomplete="street-address"
-                                class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                              />
-                            </td>
-
-                            <td class="relative border border-gray-200 px-3 py-3">
-                              <label
-                                class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >
-                                City</label
-                              >
-                              <input
-                                type="text"
-                                name="city"
-                                id="city"
-                                autocomplete="address-level2"
-                                class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                              />
-                            </td>
-
-                            <td class="relative border border-gray-200 px-3 py-3">
-                              <label
-                                class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                                >State</label
-                              >
-                              <select
-                                id="region"
-                                name="region"
-                                autocomplete="address-level1"
-                                class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                              >
-
-                <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
-                  {{ state.name }}
-                </option>
-                              </select>
-                            </td>
-
-                            <td class="relative border border-gray-200 px-3 py-3">
-                              <label
-                                class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >
-                                Zip Code</label
-                              >
-                              <input
-                                type="text"
-                                name="postal-code"
-                                id="postal-code"
-                                autocomplete="postal-code"
-                                class="w-20 block border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                          <td class="relative border border-gray-200 px-3 py-3">
+                            <label
+                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
+                            >
+                              Zip Code</label
+                            >
+                            <input
+                              type="text"
+                              name="postal-code"
+                              id="postal-code"
+                              autocomplete="postal-code"
+                              class="w-20 block border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

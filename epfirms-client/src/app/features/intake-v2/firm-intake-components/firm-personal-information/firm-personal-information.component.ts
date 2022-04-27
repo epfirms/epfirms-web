@@ -71,6 +71,15 @@ export class FirmPersonalInformationComponent implements OnInit {
     drivers_id: '',
   }
 
+  // relationship types
+  relationshipTypes = [
+    'sibling',
+    'parent',
+    'grandchild',
+    'grandparent',
+    'other',
+  ];
+
 
 
   constructor(
