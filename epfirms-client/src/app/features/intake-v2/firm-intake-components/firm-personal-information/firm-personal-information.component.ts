@@ -41,14 +41,14 @@ export class FirmPersonalInformationComponent implements OnInit {
     id: undefined,
     first_name: '',
     last_name: '',
-    email: '',
+    email: null,
     phone: '',
     cell_phone: '',
     address: '',
     city: '',
     state: '',
     zip: '',
-    dob: '',
+    dob: new Date(),
     ssn: '',
     drivers_id: '',
   };
@@ -59,14 +59,14 @@ export class FirmPersonalInformationComponent implements OnInit {
 
     first_name: '',
     last_name: '',
-    email: '',
+    email: null,
     phone: '',
     cell_phone: '',
     address: '',
     city: '',
     state: '',
     zip: '',
-    dob: '',
+    dob: new Date(),
     ssn: '',
     drivers_id: '',
     relationship_type: 'spouse',
@@ -191,8 +191,31 @@ export class FirmPersonalInformationComponent implements OnInit {
     }
   }
 
+  private upsertChildren(): void {
+    this.children.forEach((child) => {
+      this.familyMemberService
+        .addFamilyMemberForUser(this.client.id, child)
+        .subscribe((res) => {
+          console.log('upsert child', res);
+        });
+    });
+  }
+
+  private upsertFamilyMembers(): void {
+    this.familyMembers.forEach((member) => {
+      this.familyMemberService
+        .addFamilyMemberForUser(this.client.id, member)
+        .subscribe((res) => {
+          console.log('upsert family member', res);
+        });
+    });
+  }
+
+
   submit(): void {
     this.upsertSpouse();
+    this.upsertChildren();
+    this.upsertFamilyMembers();
   }
 
   addChild(): void {
@@ -200,14 +223,14 @@ export class FirmPersonalInformationComponent implements OnInit {
       id: undefined,
       first_name: '',
       last_name: '',
-      email: '',
+      email: null,
       phone: '',
       cell_phone: '',
       address: '',
       city: '',
       state: '',
       zip: '',
-      dob: '',
+      dob: new Date(),
       ssn: '',
       drivers_id: '',
       relationship_type: 'child',
@@ -227,14 +250,14 @@ export class FirmPersonalInformationComponent implements OnInit {
       id: undefined,
       first_name: '',
       last_name: '',
-      email: '',
+      email: null,
       phone: '',
       cell_phone: '',
       address: '',
       city: '',
       state: '',
       zip: '',
-      dob: '',
+      dob: new Date(),
       ssn: '',
       drivers_id: '',
       relationship_type: '',
