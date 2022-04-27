@@ -21,6 +21,9 @@ export class FirmPersonalInformationComponent implements OnInit {
 
   // holds the properties of the client
   client;
+
+  // does the client have a spouse?
+  hasSpouse : boolean = false;
   
 
   // states list

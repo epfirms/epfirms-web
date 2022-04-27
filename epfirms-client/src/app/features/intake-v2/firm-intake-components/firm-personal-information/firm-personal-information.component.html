@@ -110,6 +110,23 @@
                           class="block w-full border-0 p-0 text-gray-300 placeholder-gray-300 focus:ring-0"
                         />
                       </td>
+
+                      <td class="relative border border-gray-200 px-3 py-3">
+                        <label
+                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
+                          >Spouse?</label
+                        >
+                        <select
+                          [(ngModel)]="hasSpouse"
+                          id="region"
+                          name="region"
+                          autocomplete="address-level1"
+                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
+                        >
+                        <option [ngValue]="false">No</option>
+                        <option [ngValue]="true">Yes</option>
+                        </select>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -249,12 +266,17 @@
                           class="w-20 block border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
                         />
                       </td>
+
                     </tr>
                   </tbody>
                 </table>
 
                 <div>
-                  <div class="flex mt-8">
+                  
+
+                  <!-- has a spouse?  -->
+<div *ngIf="hasSpouse">
+    <div class="flex mt-8">
                     <span
                       class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
                     >
@@ -470,6 +492,7 @@
                       </tr>
                     </tbody>
                   </table>
+</div>
 
                   <div class="relative mt-10">
                     <div class="absolute inset-0 flex items-center" aria-hidden="true">
