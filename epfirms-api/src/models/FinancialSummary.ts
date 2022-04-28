@@ -31,6 +31,11 @@ module.exports = (sequelize, { INTEGER, STRING, TEXT, FLOAT, BOOLEAN }) => {
         type: FLOAT,
         defaultValue: 0.0,
       },
+      business_income: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+
       other: {
         type: FLOAT,
         defaultValue: 0.0,

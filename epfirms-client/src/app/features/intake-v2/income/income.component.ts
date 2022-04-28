@@ -27,6 +27,7 @@ export class IncomeComponent implements OnInit {
     annuity: '0',
     other: '0',
     income_total: '0',
+    business_income: '0',
   };
 
   spouseIncomeForm: any = {
@@ -38,6 +39,7 @@ export class IncomeComponent implements OnInit {
     annuity: '0',
     other: '0',
     income_total: '0',
+    business_income: '0',
   };
 
   currencyInputMask = createMask({
@@ -80,13 +82,19 @@ export class IncomeComponent implements OnInit {
 
   private loadClientFinancialSummary(): void {
     this.financialSummaryService.getWithUserId(this.client.id).subscribe((res) => {
+      if (res) {
+
       this.clientIncomeForm = this.parseResponse(res[0]);
+      }
     });
   }
 
   private loadSpouseFinancialSummary(): void {
     this.financialSummaryService.getWithUserId(this.spouse.id).subscribe((res) => {
+      if (res) {
+
       this.spouseIncomeForm = this.parseResponse(res[0]);
+      }
     });
   }
 
@@ -101,6 +109,7 @@ export class IncomeComponent implements OnInit {
       annuity: parseFloat(this.toStringFloat(incomeForm.annuity)),
       other: parseFloat(this.toStringFloat(incomeForm.other)),
       income_total: parseFloat(this.toStringFloat(incomeForm.income_total)),
+      business_income: parseFloat(this.toStringFloat(incomeForm.business_income)),
     };
     income.income_total =
       income.social_security + income.pension + income.work + income.annuity + income.other;
@@ -127,6 +136,7 @@ export class IncomeComponent implements OnInit {
       annuity: response.annuity.toString(),
       other: response.other.toString(),
       income_total: response.income_total.toString(),
+      business_income: response.business_income.toString(),
     };
     return income;
   }
