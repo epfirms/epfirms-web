@@ -80,38 +80,43 @@ export class UserService {
   }
 
   public async getAllFamilyMembers(userId: number): Promise<any> {
-    
-    const familyMembers = await Database.models.family_member.findAll({
-      where: {
-        user_id: userId,
-      },
-      include: {
-        model: Database.models.user,
-        
-      }
-    });
-
+    const { family_member, user } = Database.models;
+    const foundUser = await user.findByPk(userId);
+    const familyMembers = await foundUser.getMember();
 
     return Promise.resolve(familyMembers);
   }
 
   public async addFamilyMember(userId: number, familyMember): Promise<any> {
-    const { user, family_member } = Database.models;
+    const { user } = Database.models;
 
     const currentUser = await user.findByPk(userId);
 
-    const upsertedUser = await user.upsert(familyMember);
-    
-    familyMember.user_id = currentUser.id;
-    familyMember.family_member_id = upsertedUser[0].id;
+    let existingUser;
+    if (familyMember.id) {
+      existingUser = await user.findOne({
+        where: {
+          id: familyMember.id,
+        },
+      });
+    }
 
-    console.log("familyMember", familyMember);
+    // if existing user update the user's info that is coming in with request
+    if (existingUser) {
+      const updated = await user.update(familyMember, { where: { id: existingUser.id } });
+    }
+    let member;
+    if (existingUser && existingUser.id) {
+      member = await currentUser.addMember(existingUser, {
+        through: { relationship_type: familyMember.relationship_type },
+      });
+    } else {
+      member = await currentUser.createMember(familyMember, {
+        through: { relationship_type: familyMember.relationship_type },
+      });
+    }
 
-    const upsertedFamilyMember = await family_member.upsert(familyMember);
-
-
-        return Promise.resolve({user: upsertedUser[0], familyMember: upsertedFamilyMember[0]});
-
+    return Promise.resolve();
   }
 
   public async updateFamilyMember(familyMember): Promise<any> {

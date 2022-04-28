@@ -18,19 +18,6 @@ module.exports = (sequelize, {
             type: STRING,
             allowNull: false
         },
-        // this is the id of the user who is the client
-        user_id: {
-
-            type: INTEGER,
-            allowNull: false
-        },
-        // this is the id of the family member's entry on the user table
-        family_member_id: {
-
-            type: INTEGER,
-            allowNull: false
-        },
-
         // these are children specific properties
         // they might need to refactored into a better table later but for now
         // this was the easiest place to keep them
