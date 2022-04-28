@@ -186,6 +186,7 @@ export class FirmPersonalInformationComponent implements OnInit {
       this.familyMemberService
         .addFamilyMemberForUser(this.client.id, this.spouseForm)
         .subscribe((res) => {
+          this.spouseForm.id = res.id;
           console.log('upsert spouse', res);
         });
     }
@@ -196,6 +197,7 @@ export class FirmPersonalInformationComponent implements OnInit {
       this.familyMemberService
         .addFamilyMemberForUser(this.client.id, child)
         .subscribe((res) => {
+          child.id = res.id;
           console.log('upsert child', res);
         });
     });
@@ -206,16 +208,25 @@ export class FirmPersonalInformationComponent implements OnInit {
       this.familyMemberService
         .addFamilyMemberForUser(this.client.id, member)
         .subscribe((res) => {
+          member.id = res.id
           console.log('upsert family member', res);
         });
     });
   }
+
+  private upsertClient(): void {
+    this.clientService.updateClient(this.clientForm).subscribe((res) => {
+      console.log('upsert client', res);
+    });
+  }
+
 
 
   submit(): void {
     this.upsertSpouse();
     this.upsertChildren();
     this.upsertFamilyMembers();
+    this.upsertClient();
   }
 
   addChild(): void {
