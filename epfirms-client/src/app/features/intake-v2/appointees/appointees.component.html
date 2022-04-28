@@ -6,12 +6,29 @@
           <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
               <div class="flex">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-</svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="gray"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
                 <h1 class="px-4 text-xl font-semibold text-gray-600">Appointees</h1>
               </div>
-              <p class="mt-2 text-sm text-gray-700">Please provide the executor, trustee, power of attorney, and medicial power of attorney for any estate planning documents that are being drafted. The system makes assumptions to limit intake time. First assumption is that the spouse will be the executor, trustee, POA, and MPOA. However, you can override the assumption by entering a different person in the trustee section.</p>
+              <p class="mt-2 text-sm text-gray-700">
+                Please provide the executor, trustee, power of attorney, and medicial power of
+                attorney for any estate planning documents that are being drafted. The system makes
+                assumptions to limit intake time. First assumption is that the spouse will be the
+                executor, trustee, POA, and MPOA. However, you can override the assumption by
+                entering a different person in the trustee section.
+              </p>
             </div>
 
             <!-- <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -24,196 +41,906 @@
               <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div>
                   <h3 class="font-semibold text-gray-600">Executor</h3>
+<div class="relative mt-10">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                      <div class="w-full border-t border-gray-200"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                      <button
+                        type="button"
+                        class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-200 text-sm leading-5 font-medium rounded-full text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                      >
+                        <!-- Heroicon name: solid/plus-sm -->
+                        <svg
+                          class="-ml-1.5 mr-1 h-5 w-5 text-gray-300"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <span>Add Executor</span>
+                      </button>
+                    </div>
+                  </div>
+
 
                   <table class="mt-5 min-w-full">
                     <thead>
-                      <td class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700">Rank</td>
-                      <th scope="col" class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700">Executor</th>
-                      <th scope="col" class="px-2 py-3.5 text-left text-sm font-semibold text-gray-700">Address</th>
-                      <th scope="col" class="px-2 py-3.5 text-left text-sm font-semibold text-gray-700">Phone</th>
+                      <td
+                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Rank
+                      </td>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Executor
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Address
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Phone
+                      </th>
                     </thead>
                     <tbody class="bg-white">
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
 
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="text-left group py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="text-left group py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
 
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                     </tbody>
                   </table>
 
                   <h3 class="mt-8 font-semibold text-gray-600">Trustee</h3>
-
+<div class="relative mt-10">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                      <div class="w-full border-t border-gray-200"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                      <button
+                        type="button"
+                        class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-200 text-sm leading-5 font-medium rounded-full text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                      >
+                        <!-- Heroicon name: solid/plus-sm -->
+                        <svg
+                          class="-ml-1.5 mr-1 h-5 w-5 text-gray-300"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <span>Add Trustee</span>
+                      </button>
+                    </div>
+                  </div>
                   <table class="mt-5 min-w-full">
                     <thead>
-                      <td class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700">Rank</td>
-                      <th scope="col" class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700">Trustee</th>
-                      <th scope="col" class="px-2 py-3.5 text-left text-sm font-semibold text-gray-700">Address</th>
-                      <th scope="col" class="w-15 px-2 py-3.5 text-left text-sm font-semibold text-gray-700">Phone</th>
+                      <td
+                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Rank
+                      </td>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Trustee
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Address
+                      </th>
+                      <th
+                        scope="col"
+                        class="w-15 px-2 py-3.5 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Phone
+                      </th>
                     </thead>
                     <tbody class="bg-white">
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
 
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
 
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                     </tbody>
                   </table>
 
-                   <h3 class="mt-8 font-semibold text-gray-600">Financial Power of Attorney and/or Guardian of the Estate</h3>
-
+                  <h3 class="mt-8 font-semibold text-gray-600">
+                    Financial Power of Attorney and/or Guardian of the Estate
+                  </h3>
+<div class="relative mt-10">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                      <div class="w-full border-t border-gray-200"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                      <button
+                        type="button"
+                        class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-200 text-sm leading-5 font-medium rounded-full text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                      >
+                        <!-- Heroicon name: solid/plus-sm -->
+                        <svg
+                          class="-ml-1.5 mr-1 h-5 w-5 text-gray-300"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <span>Add Agent</span>
+                      </button>
+                    </div>
+                  </div>
                   <table class="mt-5 min-w-full">
                     <thead>
-                      <td class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700">Rank</td>
-                      <th scope="col" class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700">Trustee</th>
-                      <th scope="col" class="px-2 py-3.5 text-left text-sm font-semibold text-gray-700">Address</th>
-                      <th scope="col" class="w-15 px-2 py-3.5 text-left text-sm font-semibold text-gray-700">Phone</th>
+                      <td
+                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Rank
+                      </td>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Trustee
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Address
+                      </th>
+                      <th
+                        scope="col"
+                        class="w-15 px-2 py-3.5 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Phone
+                      </th>
                     </thead>
                     <tbody class="bg-white">
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
 
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
 
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                     </tbody>
                   </table>
 
-                   <h3 class="mt-8 font-semibold text-gray-600">Medicial Power of Attorney and/or Guardian of the Person</h3>
-
+                  <h3 class="mt-8 font-semibold text-gray-600">
+                    Medicial Power of Attorney and/or Guardian of the Person
+                  </h3>
+<div class="relative mt-10">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                      <div class="w-full border-t border-gray-200"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                      <button
+                        type="button"
+                        class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-200 text-sm leading-5 font-medium rounded-full text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                      >
+                        <!-- Heroicon name: solid/plus-sm -->
+                        <svg
+                          class="-ml-1.5 mr-1 h-5 w-5 text-gray-300"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <span>Add Agent</span>
+                      </button>
+                    </div>
+                  </div>
                   <table class="mt-5 min-w-full">
                     <thead>
-                      <td class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700">Rank</td>
-                      <th scope="col" class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700">Trustee</th>
-                      <th scope="col" class="px-2 py-3.5 text-left text-sm font-semibold text-gray-700">Address</th>
-                      <th scope="col" class="w-15 px-2 py-3.5 text-left text-sm font-semibold text-gray-700">Phone</th>
+                      <td
+                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Rank
+                      </td>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Trustee
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Address
+                      </th>
+                      <th
+                        scope="col"
+                        class="w-15 px-2 py-3.5 text-left text-sm font-semibold text-gray-700"
+                      >
+                        Phone
+                      </th>
                     </thead>
                     <tbody class="bg-white">
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
 
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
 
                       <tr>
-                        <th scope="row" class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"></th>
-                        <td class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" [inputMask]="" [ngModel]="" class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"><input type="text" formControlName="address" name="street-address" id="street-address" autocomplete="street-address" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070" /></td>
-                        <td class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800">
-                          <input type="text" name="email" formControlName="phone" id="email" class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm" placeholder="e.g. (555)-987-6543" />
+                        <th
+                          scope="row"
+                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        ></th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]=""
+                            [ngModel]=""
+                            class="inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            
+                            name="street-address"
+                            id="street-address"
+                            autocomplete="street-address"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                          />
+                        </td>
+                        <td
+                          class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                        >
+                          <input
+                            type="text"
+                            name="email"
+                            
+                            id="email"
+                            class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
+                            placeholder="e.g. (555)-987-6543"
+                          />
                         </td>
                       </tr>
                     </tbody>
                   </table>
-
-                  
-
-                  
                 </div>
               </div>
             </div>
@@ -222,12 +949,21 @@
       </div>
       <div class="mt-7 text-left">
         <div class="flex justify-end">
-          <button (click)="backButton()" type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Back</button>
-          <button (click)="submit()" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Continue</button>
+          <button
+            (click)="backButton()"
+            type="button"
+            class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Back
+          </button>
+          <button
+            (click)="submit()"
+            class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Continue
+          </button>
         </div>
       </div>
     </div>
   </div>
 </body>
-
-
