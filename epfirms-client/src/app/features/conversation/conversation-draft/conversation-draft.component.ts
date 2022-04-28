@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from '@app/core/interfaces/client';
 import { Staff } from '@app/core/interfaces/staff';
 import { TeamService } from '@app/features/team/services/team.service';
@@ -19,8 +20,6 @@ import { ConversationService } from '../services/conversation.service';
   styleUrls: ['./conversation-draft.component.scss'],
 })
 export class ConversationDraftComponent implements OnInit, OnDestroy {
-  @Output() conversationFound: EventEmitter<Conversation> = new EventEmitter<Conversation>();
-
   searchInput: string;
 
   staffMembers: Staff[] = [];
@@ -51,6 +50,8 @@ export class ConversationDraftComponent implements OnInit, OnDestroy {
     private _teamService: TeamService,
     private _modalService: EpModalService,
     private _firmService: FirmService,
+    private _router: Router,
+    private _route: ActivatedRoute,
   ) {
     this.staff$ = this._staffService.entities$;
     this.clients$ = this._clientService.entities$;
@@ -112,7 +113,7 @@ export class ConversationDraftComponent implements OnInit, OnDestroy {
       this.participantType = 'chat';
       const existingConversation = await this.findDirectConversation(this.participantType);
       if (existingConversation) {
-        this.conversationFound.emit(existingConversation);
+        this.navigateToConversation(existingConversation);
       }
     }
   }
@@ -129,7 +130,13 @@ export class ConversationDraftComponent implements OnInit, OnDestroy {
       },
       epOkDisabled: true,
       epOnOk: (componentInstance) => {
-        this.createGroupConversation(componentInstance.selectedMatter);
+        this.findDirectConversation(this.participantType).then((conversation) => {
+          if (conversation) {
+            this.navigateToConversation(conversation);
+          } else {
+            this.createGroupConversation(componentInstance.selectedMatter);
+          }
+        });
       }
     });  }
 
@@ -193,6 +200,10 @@ export class ConversationDraftComponent implements OnInit, OnDestroy {
       });
   }
 
+  navigateToConversation(conversation: Conversation) {
+    this._router.navigate(['..', `${conversation.sid}`], { relativeTo: this._route });
+  }
+
   createConversation(): void {
     this._conversationService
       .createConversation()
@@ -222,7 +233,7 @@ export class ConversationDraftComponent implements OnInit, OnDestroy {
       )
       .subscribe((conversation) => {
         from(conversation.sendMessage(this.messageBody)).subscribe(() => {
-          this.conversationFound.emit(conversation);
+          this.navigateToConversation(conversation);
         });
       });
   }

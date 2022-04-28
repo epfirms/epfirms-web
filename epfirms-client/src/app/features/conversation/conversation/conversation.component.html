@@ -36,8 +36,9 @@
           </ng-container>
         </a>
 
-        <div *ngIf="conversation$ | async as conversation">
+        <div *ngIf="conversation$ | async as conversation" Menu class="relative">
           <button
+            MenuButton
             type="button"
             class="inline-flex items-center justify-center w-8 h-8 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             id="pinned-project-options-menu-0-button"
@@ -56,6 +57,20 @@
               />
             </svg>
           </button>
+
+          <div *MenuItems class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div class="py-1" MenuItem>
+              <ng-template let-active="active">
+                <a class="flex items-center px-4 py-2 text-sm group" [class.bg-gray-100]="active" [class.text-gray-900]="active">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                  </svg>
+                  Invite people
+                </a>
+              </ng-template>
+
+            </div>
+          </div>
         </div>
       </div>
     </div>

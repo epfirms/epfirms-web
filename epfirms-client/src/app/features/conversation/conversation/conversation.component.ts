@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Matter } from '@app/core/interfaces/matter';
 import { Conversation, Message, Participant } from '@twilio/conversations';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ConversationComponentStore } from './conversation.component-store';
 
 @Component({

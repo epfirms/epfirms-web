@@ -1,22 +1,17 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Conversation } from '@twilio/conversations';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-conversation-history-list',
   templateUrl: './conversation-history-list.component.html',
   styleUrls: ['./conversation-history-list.component.scss'],
 })
-export class ConversationHistoryListComponent
-  extends SelectionModel<Conversation>
-  implements OnInit, OnDestroy
-{
+export class ConversationHistoryListComponent extends SelectionModel<Conversation> {
   @Input() set conversations(value: Conversation[]) {
     if (!this._conversations.length && value.length) {
       this._conversations = value;
       this.select(this._conversations[0]);
-      this.selectedConversationChange.emit(this._conversations[0]);
     } else {
       this._conversations = value;
     }
@@ -26,36 +21,26 @@ export class ConversationHistoryListComponent
     return this._conversations;
   }
 
-  @Input() set selectedConversation(value: Conversation) {
-    this.selectConversation(value);
+  @Input() set selectedConversationSid(value: string | null) {
+    const conversation = this.conversations.find((c) => c.sid === value);
+    this.select(conversation);
   }
 
-  get selectedConversation(): Conversation {
-    return this.selected[0];
+  get selectedConversationSid(): string | null {
+    return this.selected.length ? this.selected[0].sid : null;
   }
 
-  @Output() selectedConversationChange = new EventEmitter<Conversation>();
+  @Output() selectedConversationSidChange: EventEmitter<string> = new EventEmitter();
 
   private _conversations: Conversation[] = [];
 
-  destroy$: Subject<void> = new Subject<void>();
+  @Output() changed;
 
   constructor() {
     super(false, []);
   }
 
-  ngOnInit(): void {
-    this.changed.pipe(takeUntil(this.destroy$)).subscribe((change) => {
-      this.selectedConversationChange.emit(change.added[0]);
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   selectConversation(conversation: Conversation) {
-    this.select(conversation);
+    this.selectedConversationSidChange.emit(conversation.sid);
   }
 }
