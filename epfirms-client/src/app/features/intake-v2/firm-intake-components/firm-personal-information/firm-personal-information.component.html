@@ -42,7 +42,7 @@
                   <span
                     class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
                   >
-                    <span class="font-medium leading-none text-white">TW</span>
+                    <span class="font-medium leading-none text-white">{{clientForm.first_name[0]}}{{clientForm.last_name[0]}}</span>
                   </span>
                   <h1 class="pl-2 font-semibold text-gray-600">Client's Information</h1>
                 </div>
@@ -290,7 +290,7 @@
                       <span
                         class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
                       >
-                        <span class="font-medium leading-none text-white">JW</span>
+                        <span class="font-medium leading-none text-white">{{spouseForm.first_name[0]}}{{spouseForm.last_name[0]}}</span>
                       </span>
                       <h1 class="pl-2 font-semibold text-gray-600">Spouse's Information</h1>
                     </div>
@@ -553,7 +553,7 @@
                       <span
                         class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
                       >
-                        <span class="font-medium leading-none text-white">DW</span>
+                        <span class="font-medium leading-none text-white">{{child.first_name[0]}}{{child.last_name[0]}}</span>
                       </span>
                       <h1 class="pl-2 font-semibold text-gray-600">Child's Information</h1>
                     </div>
@@ -820,7 +820,7 @@
                       <span
                         class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
                       >
-                        <span class="font-medium leading-none text-white">DF</span>
+                        <span class="font-medium leading-none text-white">{{member.first_name[0]}}{{member.last_name[0]}}</span>
                       </span>
                       <h1 class="pl-2 font-semibold text-gray-600">
                         {{member.relationship_type || "Family Member" | titlecase }} Information
