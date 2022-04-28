@@ -139,7 +139,7 @@
                 <label for="price" class="block text-sm font-medium text-gray-700">Document Name</label>
                 <div class="relative mt-1 rounded-md shadow-sm">
 
-                  <input type="text" value="{{document.doc_name}}" (blur)="setDocName(document, $event)" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-gray-300">
+                  <input type="text" value="{{document.doc_name}}" [disabled]="true" class="block w-full pr-12 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm border-gray-300">
                 </div>
                 <!-- This example requires Tailwind CSS v2.0+ -->
                 <!--
