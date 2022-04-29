@@ -26,6 +26,8 @@ import { SpouseInformationComponent } from './spouse-information/spouse-informat
 import { ChildrenInformationComponent } from './children-information/children-information.component';
 import { OtherFamilyInformationComponent } from './other-family-information/other-family-information.component';
 import { EstatePlanningFormComponent } from './firm-intake-components/estate-planning-form/estate-planning-form.component';
+import { InputMaskModule } from '@ngneat/input-mask';
+import { TippyModule } from '@ngneat/helipopper';
 import { ProbateIntakeComponent } from './probate-intake/probate-intake.component';
 
 
@@ -62,6 +64,8 @@ import { ProbateIntakeComponent } from './probate-intake/probate-intake.componen
     RealEstateFormModule,
     AppointeeFormModule,
     ReactiveFormsModule,
+    InputMaskModule,
+    TippyModule,
     NgScrollbarModule
   ],
   exports: [

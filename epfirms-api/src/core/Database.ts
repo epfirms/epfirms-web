@@ -74,6 +74,8 @@ export class Database {
       specific_requests: require('../models/SpecificRequests')(this.sequelize, Sequelize),
       bug_reporter_access: require('../models/BugReporterAccess')(this.sequelize, Sequelize),
       probate: require('../models/Probate')(this.sequelize, Sequelize),
+      financial_summary: require('../models/FinancialSummary')(this.sequelize, Sequelize),
+      appointee_summary: require('../models/AppointeeSummary')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -419,6 +421,12 @@ export class Database {
 
     this.models.matter.hasMany(this.models.specific_requests, {foreignKey: 'matter_id'});
     this.models.specific_requests.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+
+    this.models.user.hasOne(this.models.financial_summary, {foreignKey: 'user_id'});
+    this.models.financial_summary.belongsTo(this.models.user, {foreignKey: 'user_id'});
+
+    this.models.user.hasOne(this.models.appointee_summary, {foreignKey: 'user_id'});
+    this.models.appointee_summary.belongsTo(this.models.user, {foreignKey: 'user_id'});
   }
 
   public static async start() {
