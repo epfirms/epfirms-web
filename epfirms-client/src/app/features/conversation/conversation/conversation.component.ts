@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Matter } from '@app/core/interfaces/matter';
 import { Conversation, Message, Participant } from '@twilio/conversations';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ConversationComponentStore } from './conversation.component-store';
 
 @Component({
@@ -29,13 +29,10 @@ export class ConversationComponent implements OnInit {
 
   ngOnInit(): void {
     this.conversationComponentStore.getConversation();
-    this.matter$.subscribe(console.log);
-    this.conversationTitle$.subscribe(console.log)
   }
 
   /** Fetch additional pages from message paginator. */
   loadMoreMessages(): void {
-    console.log('load more');
     this.conversationComponentStore.getNextMessagePage();
   }
 

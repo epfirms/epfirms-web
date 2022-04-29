@@ -12,7 +12,6 @@ import { MenuModule } from '@app/shared/menu/menu.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgScrollbarReachedModule } from 'ngx-scrollbar/reached-event';
 import { ConversationDraftComponent } from './conversation-draft/conversation-draft.component';
-import { ConversationRoutingModule } from './conversation-routing.module';
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { ConversationMatterSelectModalComponent } from './conversation-matter-select-modal/conversation-matter-select-modal.component';
 import { MatterModule } from '../matter/matter.module';
@@ -37,7 +36,6 @@ import { ConversationNotificationComponent } from './conversation-notification/c
     MenuModule,
     InfiniteScrollModule,
     NgScrollbarReachedModule,
-    ConversationRoutingModule,
     AvatarModule,
     MatterModule
   ],

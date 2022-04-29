@@ -24,6 +24,7 @@ import { conversationFeature } from '@app/features/conversation/store/conversati
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { UserModule } from '@app/features/user/user.module';
+import { ConversationEventEffects } from '@app/features/conversation/store/conversation-event.effects';
 import { DeveloperToolsModule } from '@app/developer-tools/developer-tools.module';
 
 
@@ -51,7 +52,7 @@ import { DeveloperToolsModule } from '@app/developer-tools/developer-tools.modul
     ModalModule,
     InputMaskModule,
     StoreModule.forFeature(conversationFeature),
-    EffectsModule.forFeature([ConversationEffects]),
+    EffectsModule.forFeature([ConversationEffects, ConversationEventEffects]),
     UserModule,
     DeveloperToolsModule,
   ]

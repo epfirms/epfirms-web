@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as ConversationActions from '../store/conversation.actions';
+import { ConversationActions } from '../store/conversation.actions';
 import { Store } from '@ngrx/store';
 import {
   Client as ConversationsClient,
@@ -8,7 +8,7 @@ import {
   Conversation,
   Message,
 } from '@twilio/conversations';
-import { BehaviorSubject, from, fromEvent, fromEventPattern, Observable, pluck } from 'rxjs';
+import { BehaviorSubject, from, fromEventPattern, merge, Observable, of, pluck, switchMap, take } from 'rxjs';
 import { ConversationState } from '../store/conversation.store';
 
 @Injectable({
@@ -40,10 +40,10 @@ export class ConversationService {
     return from(this.conversationsClient.updateToken(token));
   }
 
-  /** Initializes client and emits the connection state. */
-  init(token: string): Observable<any> {
+  /** Initializes the conversations client. */
+  init(token: string): Observable<ConversationsClient> {
     this.conversationsClient = new ConversationsClient(token, { logLevel: 'error' });
-    return this.connectionStateChanged();
+    return of(this.conversationsClient);
   }
 
   /** Creates a conversation and adds the creator as participant. Direct messages are between 2 users. */
@@ -93,7 +93,7 @@ export class ConversationService {
     return true;
   }
 
-  connectionStateChanged() {
+  connectionStateChanged(): Observable<ConnectionState> {
     const addHandler = (handler) =>
       this.conversationsClient.onWithReplay('connectionStateChanged', handler);
     const removeHandler = (handler) =>
@@ -104,40 +104,51 @@ export class ConversationService {
   setAllMessagesRead(conversation: Conversation) {
     conversation.getUnreadMessagesCount().then((count) => {
       conversation.setAllMessagesRead().then(() => {
-        this._store.dispatch(ConversationActions.decreaseUnreadMessageCount({ payload: count }));
+        this._store.dispatch(ConversationActions.DecreaseUnreadMessageCount({ payload: count }));
       });
     });
   }
 
   messageAdded() {
-    return fromEvent(this.conversationsClient, 'messageAdded') as Observable<Message>;
+    const addHandler = (handler) => this.conversationsClient.on('messageAdded', handler);
+    const removeHandler = (handler) =>
+      this.conversationsClient.removeListener('messageAdded', handler);
+    return fromEventPattern(addHandler, removeHandler) as Observable<Message>;
   }
 
   conversationJoinedEvent() {
     const addHandler = (handler) => this.conversationsClient.on('conversationJoined', handler);
-    return fromEventPattern(addHandler) as Observable<Conversation>;
+    const removeHandler = (handler) =>
+      this.conversationsClient.removeListener('conversationJoined', handler);
+    return fromEventPattern(addHandler, removeHandler) as Observable<Conversation>;
   }
 
   connectionError() {
-    return fromEvent(this.conversationsClient, 'connectionError');
+    const addHandler = (handler) => this.conversationsClient.on('connectionError', handler);
+    const removeHandler = (handler) =>
+      this.conversationsClient.removeListener('connectionError', handler);
+    return fromEventPattern(addHandler, removeHandler);
   }
 
   /** Dispatch action when token is about to expire (<3 min until expiration). */
   tokenAboutToExpire() {
-    return fromEvent(this.conversationsClient, 'tokenAboutToExpire');
+    const addHandler = (handler) => this.conversationsClient.on('tokenAboutToExpire', handler);
+    const removeHandler = (handler) =>
+      this.conversationsClient.removeListener('tokenAboutToExpire', handler);
+    return fromEventPattern(addHandler, removeHandler);
   }
 
   /** Dispatch action when token is expired. */
   tokenExpired() {
-    return fromEvent(this.conversationsClient, 'tokenExpired');
+    const addHandler = (handler) => this.conversationsClient.on('tokenExpired', handler);
+    const removeHandler = (handler) =>
+      this.conversationsClient.removeListener('tokenExpired', handler);
+    return fromEventPattern(addHandler, removeHandler);
   }
 
   /** Updates friendlyName and profileImage for logged-in user. */
-  syncUserProfile() {
+  syncUserProfile(): Observable<any> {
     const currentUser$ = this._store.select('currentUser');
-    currentUser$.pipe(pluck('user')).subscribe((user) => {
-      this.updateUserFriendlyName(user.full_name).subscribe();
-      this.updateUserAttributes(user.profile_image).subscribe();
-    });
+    return currentUser$.pipe(take(1), pluck('user'), switchMap((user) => merge(this.updateUserFriendlyName(user.full_name), this.updateUserAttributes(user.profile_image))));
   }
 }

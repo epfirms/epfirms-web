@@ -1,25 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { Conversation } from '@twilio/conversations';
-import { MessagesPageStore } from '../messages-page.store';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConversationService } from '@app/features/conversation/services/conversation.service';
+import { selectRouteParams } from '@app/store/router.selectors';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-messages-page',
   templateUrl: './messages-page.component.html',
   styleUrls: ['./messages-page.component.scss'],
-  providers: [MessagesPageStore],
 })
-export class MessagesPageComponent implements OnInit {
-  selectedConversation$ = this.messagesPageStore.selectedConversation$;
+export class MessagesPageComponent {
+  selectedConversationSid$ = this.store.select(selectRouteParams).pipe(map((params) => params.id));
 
-  conversationItems$ = this.messagesPageStore.conversationItems$;
+  conversationItems$ = this._conversationService.conversations$;
 
-  constructor(private readonly messagesPageStore: MessagesPageStore) {}
+  constructor(
+    private store: Store,
+    private _conversationService: ConversationService,
+    private _router: Router,
+    private _route: ActivatedRoute,
+  ) {}
 
-  ngOnInit(): void {
-    this.messagesPageStore.loadConversationItems();
-  }
-
-  setSelectedConversation(conversation: Conversation | null = null) {
-    this.messagesPageStore.selectConversation(conversation);
+  setSelectedConversation(sid: string | null = null) {
+    if (sid && sid.length) {
+      this._router.navigate([`${sid}`], { relativeTo: this._route });
+    } else {
+      this._router.navigate(['new'], { relativeTo: this._route });
+    }
   }
 }
