@@ -95,6 +95,7 @@ export class FirmPersonalInformationComponent implements OnInit {
           this.hasSpouse = true;
           this.loadSpouseForm();
         } else if (member.family_member.relationship_type === 'child') {
+          console.log("on load child", member);
           this.loadChildren(member);
         } else {
           this.loadFamilyMembers(member);
@@ -140,11 +141,12 @@ export class FirmPersonalInformationComponent implements OnInit {
       dob: child.dob,
       ssn: child.ssn,
       drivers_id: child.drivers_id,
+      has_special_needs: child.has_special_needs,
       relationship_type: child.family_member.relationship_type,
-      parent_1_name: child.family_member.parent_1_name,
-      parent_2_name: child.family_member.parent_2_name,
-      parent_1_id: child.family_member.parent_1_id,
-      parent_2_id: child.family_member.parent_2_id,
+      parent_1_name: child.parent_1_name,
+      parent_2_name: child.parent_2_name,
+      parent_1_id: child.parent_1_id,
+      parent_2_id: child.parent_2_id,
     };
     this.children.push(childForm);
   }
@@ -200,6 +202,7 @@ export class FirmPersonalInformationComponent implements OnInit {
 
   private upsertChildren(): void {
     this.children.forEach((child) => {
+      console.log("child on upsert", child);
       this.familyMemberService
         .addFamilyMemberForUser(this.client.id, child)
         .subscribe((res) => {

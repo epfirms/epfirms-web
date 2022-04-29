@@ -24,21 +24,7 @@ module.exports = (sequelize, {
         is_minor: {
           type: BOOLEAN,
         },
-        has_special_needs: {
-          type: BOOLEAN,
-        },
-        parent_1_name: {
-          type: STRING,
-        },
-        parent_1_id: {
-          type: INTEGER,
-        },
-        parent_2_name: {
-          type: STRING,
-        },
-        parent_2_id: {
-          type: INTEGER,
-        },
+        
 
 
       }, {
