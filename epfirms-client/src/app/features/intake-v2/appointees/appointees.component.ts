@@ -180,6 +180,7 @@ spouseAppointeeSummary = {
       this.spouse = res.find((x) => x.family_member.relationship_type === 'spouse');
       if (this.spouse) {
         this.initClientAppointeeForm();
+        this.initSpouseAppointeeForm();
       }
       console.log("spouse", this.spouse);
       }
@@ -205,6 +206,27 @@ spouseAppointeeSummary = {
     this.clientAppointeeSummary.mpoa_1_name = this.spouse.first_name + " " + this.spouse.last_name;
     this.clientAppointeeSummary.mpoa_1_address = this.spouse.address + " " + this.spouse.city + " " + this.spouse.state + " " + this.spouse.zip;
     this.clientAppointeeSummary.mpoa_1_phone = this.spouse.phone;
+
+
+  }
+
+   private initSpouseAppointeeForm(): void {
+
+    this.spouseAppointeeSummary.executor_1_name = this.client.first_name + " " + this.client.last_name;
+    this.spouseAppointeeSummary.executor_1_address = this.client.address + " " + this.client.city + " " + this.client.state + " " + this.client.zip;
+    this.spouseAppointeeSummary.executor_1_phone = this.client.phone;
+
+    this.spouseAppointeeSummary.trustee_1_name = this.client.first_name + " " + this.client.last_name;
+    this.spouseAppointeeSummary.trustee_1_address = this.client.addressi + " " + this.client.city + " " + this.client.state + " " + this.client.zip;
+    this.spouseAppointeeSummary.trustee_1_phone = this.client.phone;
+
+    this.spouseAppointeeSummary.fpoa_1_name = this.client.first_name + " " + this.client.last_name;
+    this.spouseAppointeeSummary.fpoa_1_address = this.client.address + " " + this.client.city + " " + this.client.state + " " + this.client.zip;
+    this.spouseAppointeeSummary.fpoa_1_phone = this.client.phone;
+
+    this.spouseAppointeeSummary.mpoa_1_name = this.client.first_name + " " + this.client.last_name;
+    this.spouseAppointeeSummary.mpoa_1_address = this.client.address + " " + this.client.city + " " + this.client.state + " " + this.client.zip;
+    this.spouseAppointeeSummary.mpoa_1_phone = this.client.phone;
 
 
   }
