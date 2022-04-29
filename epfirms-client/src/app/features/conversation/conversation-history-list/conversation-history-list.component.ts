@@ -11,6 +11,7 @@ export class ConversationHistoryListComponent extends SelectionModel<Conversatio
   @Input() set conversations(value: Conversation[]) {
     if (!this._conversations.length && value.length) {
       this._conversations = value;
+      this.selectConversation(value[0]);
       this.select(this._conversations[0]);
     } else {
       this._conversations = value;
