@@ -87,6 +87,7 @@ export class FirmPersonalInformationComponent implements OnInit {
 
   getFamilyMembers(): void {
     this.familyMemberService.getByUserId(this.client.id).subscribe((familyMembers) => {
+      if (familyMembers) {
       // filter out the family members in response
       familyMembers.forEach((member) => {
         if (member.family_member.relationship_type === 'spouse') {
@@ -99,6 +100,8 @@ export class FirmPersonalInformationComponent implements OnInit {
           this.loadFamilyMembers(member);
         }
       });
+
+      }
     });
   }
 
@@ -186,8 +189,11 @@ export class FirmPersonalInformationComponent implements OnInit {
       this.familyMemberService
         .addFamilyMemberForUser(this.client.id, this.spouseForm)
         .subscribe((res) => {
+          if (res) {
+
           this.spouseForm.id = res.id;
           console.log('upsert spouse', res);
+          }
         });
     }
   }
@@ -197,8 +203,11 @@ export class FirmPersonalInformationComponent implements OnInit {
       this.familyMemberService
         .addFamilyMemberForUser(this.client.id, child)
         .subscribe((res) => {
+          if (res) {
+
           child.id = res.id;
           console.log('upsert child', res);
+          }
         });
     });
   }
@@ -208,15 +217,21 @@ export class FirmPersonalInformationComponent implements OnInit {
       this.familyMemberService
         .addFamilyMemberForUser(this.client.id, member)
         .subscribe((res) => {
+          if (res) {
+
           member.id = res.id
           console.log('upsert family member', res);
+          }
         });
     });
   }
 
   private upsertClient(): void {
     this.clientService.updateClient(this.clientForm).subscribe((res) => {
+      if (res) {
+
       console.log('upsert client', res);
+      }
     });
   }
 
