@@ -74,12 +74,13 @@ export class IncomeComponent implements OnInit {
         this.spouse = res.filter(
           (member) => member.family_member.relationship_type === 'spouse',
         )[0];
-        this.includeSpouseIncome = true;
         if (this.spouse) {
+          
+        this.includeSpouseIncome = true;
+        this.spouseIncomeForm.user_id = this.spouse.id;
           this.loadSpouseFinancialSummary();
         }
 
-        this.spouseIncomeForm.user_id = this.spouse.id;
       }
     });
   }
