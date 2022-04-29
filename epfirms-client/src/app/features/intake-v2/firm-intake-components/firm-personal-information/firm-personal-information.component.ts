@@ -295,6 +295,38 @@ export class FirmPersonalInformationComponent implements OnInit {
     this.familyMembers.push(familyMember);
   }
 
+  deleteSpouse() : void {
+    this.familyMemberService.deleteFamilyMemberById(this.client.id, this.spouse.id).subscribe((res) => {
+      if (res) {
+        console.log('delete spouse', res);
+      }
+    }
+    );
+    this.spouse = null;
+    this.hasSpouse = false;
+  }
+
+  deleteChild(child: any) : void {
+    this.familyMemberService.deleteFamilyMemberById(this.client.id, child.id).subscribe((res) => {
+      if (res) {
+        console.log('delete child', res);
+        this.children = this.children.filter((child) => child.id !== child.id);
+      }
+    }
+    );
+  }
+
+  deleteFamilyMember(familyMember: any) : void {
+    this.familyMemberService.deleteFamilyMemberById(this.client.id, familyMember.id).subscribe((res) => {
+      if (res) {
+        console.log('delete family member', res);
+        this.familyMembers = this.familyMembers.filter((familyMember) => familyMember.id !== familyMember.id);
+      }
+    }
+    );
+  }
+
+
   backButton(): void {
     this.back.emit(true);
   }
