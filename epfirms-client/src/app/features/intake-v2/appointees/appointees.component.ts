@@ -178,8 +178,34 @@ spouseAppointeeSummary = {
       if (res) {
 
       this.spouse = res.find((x) => x.family_member.relationship_type === 'spouse');
+      if (this.spouse) {
+        this.initClientAppointeeForm();
+      }
       console.log("spouse", this.spouse);
       }
     });
+  }
+
+  // if there is a spouse, this will set the rank 1 
+  // of each type to the spouse information
+  private initClientAppointeeForm(): void {
+
+    this.clientAppointeeSummary.executor_1_name = this.spouse.first_name + " " + this.spouse.last_name;
+    this.clientAppointeeSummary.executor_1_address = this.spouse.address + " " + this.spouse.city + " " + this.spouse.state + " " + this.spouse.zip;
+    this.clientAppointeeSummary.executor_1_phone = this.spouse.phone;
+
+    this.clientAppointeeSummary.trustee_1_name = this.spouse.first_name + " " + this.spouse.last_name;
+    this.clientAppointeeSummary.trustee_1_address = this.spouse.addressi + " " + this.spouse.city + " " + this.spouse.state + " " + this.spouse.zip;
+    this.clientAppointeeSummary.trustee_1_phone = this.spouse.phone;
+
+    this.clientAppointeeSummary.fpoa_1_name = this.spouse.first_name + " " + this.spouse.last_name;
+    this.clientAppointeeSummary.fpoa_1_address = this.spouse.address + " " + this.spouse.city + " " + this.spouse.state + " " + this.spouse.zip;
+    this.clientAppointeeSummary.fpoa_1_phone = this.spouse.phone;
+
+    this.clientAppointeeSummary.mpoa_1_name = this.spouse.first_name + " " + this.spouse.last_name;
+    this.clientAppointeeSummary.mpoa_1_address = this.spouse.address + " " + this.spouse.city + " " + this.spouse.state + " " + this.spouse.zip;
+    this.clientAppointeeSummary.mpoa_1_phone = this.spouse.phone;
+
+
   }
 }

@@ -164,58 +164,16 @@
                    >Property</a
                 >
                 <a
-                  (click)="setState('executors')"
+                  (click)="setState('appointees')"
                   [ngClass]="
                     state === 'executors'
                     ? 'bg-blue-100 text-black text-sm'
                     : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
                   "
                   class= "text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
-                  >Executors</a
+                  >Appointees</a
                 >
-                <a
-                  (click)="setState('trustees')"
-                  [ngClass]="
-                    state === 'trustees'
-                    ? 'bg-blue-100 text-black text-sm'
-                    : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
-                  "
-                  class= "text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
-                  >Trustees</a
-                >
-
-                <a
-                  (click)="setState('goc')"
-                  [ngClass]="
-                    state === 'goc'
-                    ? 'bg-blue-100 text-black text-sm'
-                    : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
-                  "
-                  class= "text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
-                   >Guardians</a
-                >
-
-                <a
-                  (click)="setState('dpoa')"
-                  [ngClass]="
-                    state === 'dpoa'
-                    ? 'bg-blue-100 text-black text-sm'
-                    : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
-                  "
-                  class= "text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
-                  >FPOA</a
-                >
-
-                <a
-                  (click)="setState('mpoa')"
-                  [ngClass]="
-                    state === 'mpoa'
-                    ? 'bg-blue-100 text-black text-sm'
-                    : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
-                  "
-                  class= "text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
-                   >MPOA</a
-                >
+                
 
                  <a
                   (click)="setState('estate planning')"
@@ -273,40 +231,10 @@
         ></app-real-estate>
 
         <app-appointees
-          *ngIf="state === 'executors'"
-          [appointeeType]="'executor'"
+          *ngIf="state === 'appointees'"
           [matter]="matter"
-          (back)="back()"
-          (continue)="setState('trustees')"
         ></app-appointees>
-        <app-appointees
-          *ngIf="state === 'trustees'"
-          [appointeeType]="'trustee'"
-          [matter]="matter"
-          (back)="back()"
-          (continue)="setState('goc')"
-        ></app-appointees>
-        <app-appointees
-          *ngIf="state === 'goc'"
-          [appointeeType]="'guardian of children'"
-          [matter]="matter"
-          (back)="back()"
-          (continue)="setState('dpoa')"
-        ></app-appointees>
-        <app-appointees
-          *ngIf="state === 'dpoa'"
-          [appointeeType]="'durable power of attorney'"
-          [matter]="matter"
-          (back)="back()"
-          (continue)="setState('mpoa')"
-        ></app-appointees>
-        <app-appointees
-          *ngIf="state === 'mpoa'"
-          [appointeeType]="'medical power of attorney'"
-          [matter]="matter"
-          (back)="back()"
-        ></app-appointees>
-
+        
         <app-estate-planning-form
           *ngIf="state === 'estate planning'"
           [matter]="matter"
