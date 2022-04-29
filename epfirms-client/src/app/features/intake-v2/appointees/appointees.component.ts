@@ -9,7 +9,7 @@ import { FamilyMemberService } from '@app/client-portal/_services/family-member-
 export class AppointeesComponent implements OnInit {
   @Input() matter;
 
-  @Input() appointeeType;
+  
 
   spouse;
   client;
