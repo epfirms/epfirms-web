@@ -59,7 +59,7 @@ export class RealEstateComponent implements OnInit {
 load() : void {
   this.financialSummaryService.getWithUserId(this.matter.client.id).subscribe(
     res => {
-      console.log(res);
+      if (res) {
       // check if there is a summary that is not joint for the client; else upsert
       if (res.filter(summary => summary.is_joint === false).length > 0) {
       this.financialSummaryForm = this.parseResponse(res.filter(summary => summary.is_joint === false)[0]);
@@ -70,11 +70,14 @@ load() : void {
         this.financialSummaryService.upsert({user_id: this.matter.client.id, primary_residence_address: this.matter.client.address}).subscribe(
           createdRes => {
           console.log("created res", createdRes);
-          this.financialSummaryForm = this.parseResponse(res[0]);
+          this.financialSummaryForm = this.parseResponse(createdRes[0]);
           }
         )
 
       }
+      }
+      console.log(res);
+
     });
 }
 
@@ -114,7 +117,7 @@ private parseForm() : any {
   let form = {
     id: this.financialSummaryForm.id,
     user_id: this.financialSummaryForm.user_id,
-    primary_residence_address: this.financialSummaryForm.primary_residence_address,
+    primary_residence_address: this.matter.client.address,
     primary_residence_value: parseFloat(this.toStringFloat(this.financialSummaryForm.primary_residence_value)),
     primary_residence_loan_amount: parseFloat(this.toStringFloat(this.financialSummaryForm.primary_residence_loan_amount)),
     property_1_address: this.financialSummaryForm.property_1_address,

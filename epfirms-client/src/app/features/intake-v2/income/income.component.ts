@@ -70,21 +70,25 @@ export class IncomeComponent implements OnInit {
 
   loadSpouse(): void {
     this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
-      this.spouse = res.filter((member) => member.family_member.relationship_type === 'spouse')[0];
-      this.includeSpouseIncome = true;
-      if (this.spouse) {
-        this.loadSpouseFinancialSummary();
-      }
+      if (res) {
+        this.spouse = res.filter(
+          (member) => member.family_member.relationship_type === 'spouse',
+        )[0];
+        if (this.spouse) {
+          
+        this.includeSpouseIncome = true;
+        this.spouseIncomeForm.user_id = this.spouse.id;
+          this.loadSpouseFinancialSummary();
+        }
 
-      this.spouseIncomeForm.user_id = this.spouse.id;
+      }
     });
   }
 
   private loadClientFinancialSummary(): void {
     this.financialSummaryService.getWithUserId(this.client.id).subscribe((res) => {
       if (res) {
-
-      this.clientIncomeForm = this.parseResponse(res[0]);
+        this.clientIncomeForm = this.parseResponse(res[0]);
       }
     });
   }
@@ -92,8 +96,7 @@ export class IncomeComponent implements OnInit {
   private loadSpouseFinancialSummary(): void {
     this.financialSummaryService.getWithUserId(this.spouse.id).subscribe((res) => {
       if (res) {
-
-      this.spouseIncomeForm = this.parseResponse(res[0]);
+        this.spouseIncomeForm = this.parseResponse(res[0]);
       }
     });
   }
@@ -116,14 +119,12 @@ export class IncomeComponent implements OnInit {
     return income;
   }
 
-
   // method that formats the string; removes '$' and ','
   private toStringFloat(value): string {
     let formatted = value.replace(/\$/g, '');
     formatted = formatted.replace(/,/g, '');
 
     return formatted;
-
   }
   // parse the response into strings
   private parseResponse(response): any {
@@ -147,13 +148,17 @@ export class IncomeComponent implements OnInit {
     this.financialSummaryService
       .upsert(this.parseIncomeForm(this.clientIncomeForm))
       .subscribe((res) => {
-        this.clientIncomeForm = this.parseResponse(res[0]);
+        if (res) {
+          this.clientIncomeForm = this.parseResponse(res[0]);
+        }
       });
     if (this.spouse) {
       this.financialSummaryService
         .upsert(this.parseIncomeForm(this.spouseIncomeForm))
         .subscribe((res) => {
-          this.spouseIncomeForm = this.parseResponse(res[0]);
+          if (res) {
+            this.spouseIncomeForm = this.parseResponse(res[0]);
+          }
         });
     }
   }
