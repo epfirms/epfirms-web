@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AppointeeService } from '@app/client-portal/_services/appointee-service/appointee.service';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 
 @Component({
@@ -15,12 +14,20 @@ export class AppointeesComponent implements OnInit {
   spouse;
   client;
 
-  constructor(
-    private familyMemberService: FamilyMemberService,
-    private appointeeService: AppointeeService,
-  ) {}
+  constructor(private familyMemberService: FamilyMemberService) {}
 
   ngOnInit(): void {
     this.client = this.matter.client;
+    this.loadSpouse();
+  }
+
+  private loadSpouse(): void {
+    this.familyMemberService.getByUserId(this.client.id).subscribe((res) => {
+      if (res) {
+
+      this.spouse = res.find((x) => x.family_member.relationship_type === 'spouse');
+      console.log("spouse", this.spouse);
+      }
+    });
   }
 }
