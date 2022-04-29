@@ -170,7 +170,10 @@ export class AppointeesComponent implements OnInit {
 
   ngOnInit(): void {
     this.client = this.matter.client;
+    this.clientAppointeeSummary.user_id = this.client.id;
     this.loadSpouse();
+    this.loadClientAppointeeSummary();
+    
   }
 
   private loadSpouse(): void {
@@ -178,13 +181,41 @@ export class AppointeesComponent implements OnInit {
       if (res) {
         this.spouse = res.find((x) => x.family_member.relationship_type === 'spouse');
         if (this.spouse) {
-          this.initClientAppointeeForm();
-          this.initSpouseAppointeeForm();
+          console.log("There should be a spouse", this.spouse);
+          this.spouseAppointeeSummary.user_id = this.spouse.id;
+          this.loadSpouseAppointeeSummary();
         }
         console.log('spouse', this.spouse);
       }
     });
   }
+
+  // loads the client appointee summary from the db if it exists
+  private loadClientAppointeeSummary() : void {
+
+    this.appointeeSummaryService.getWithUserId(this.client.id).subscribe((res) => {
+      if (res) {
+
+        this.clientAppointeeSummary = res;
+        console.log('clientAppointeeSummary load', this.clientAppointeeSummary);
+      }
+    }
+    );
+  }
+
+  // loads the spouse appointee summary from the db if it exists
+  private loadSpouseAppointeeSummary() : void {
+
+    this.appointeeSummaryService.getWithUserId(this.spouse.id).subscribe((res) => {
+      if (res) {
+
+        this.spouseAppointeeSummary = res;
+        console.log('spouseAppointeeSummary load', this.spouseAppointeeSummary);
+      }
+    }
+    );
+  }
+
 
   // if there is a spouse, this will set the rank 1
   // of each type to the spouse information
@@ -290,6 +321,7 @@ export class AppointeesComponent implements OnInit {
   upsertClient(): void {
     this.appointeeSummaryService.upsert(this.clientAppointeeSummary).subscribe((res) => {
       console.log('client appointee summary', res);
+      this.clientAppointeeSummary = res[0];
     });
   }
 
@@ -298,6 +330,7 @@ export class AppointeesComponent implements OnInit {
     if (this.spouse) {
       this.appointeeSummaryService.upsert(this.spouseAppointeeSummary).subscribe((res) => {
         console.log('spouse appointee summary', res);
+        this.spouseAppointeeSummary = res[0];
       });
     }
   }

@@ -6,6 +6,8 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, FLOAT, STRING }) => {
     {
       id: {
         type: INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
       },
       user_id: {
         type: INTEGER,
