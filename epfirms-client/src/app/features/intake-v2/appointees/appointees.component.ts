@@ -13,9 +13,14 @@ export class AppointeesComponent implements OnInit {
   spouse;
   client;
 
+  // state that manages tabs when there is spouse
+  state: string = 'client';
+
   // options that are going to be passed to the combo box
 
-  options  = [];
+  clientOptions = [];
+
+  spouseOptions = [];
 
   // this is not the best way to store appointees but this
   // is how it was requested
@@ -181,32 +186,50 @@ export class AppointeesComponent implements OnInit {
     this.clientAppointeeSummary.user_id = this.client.id;
     this.loadSpouse();
     this.loadClientAppointeeSummary();
-    
+
     this.initOptions();
   }
 
-  private initOptions() : void {
-    
+  private initOptions(): void {
     this.familyMemberService.getByUserId(this.client.id).subscribe((familyMembers) => {
       this.familyMembers = familyMembers;
       this.familyMembers.forEach((familyMember) => {
-        this.options.push({
+        this.clientOptions.push({
           label: familyMember.first_name + ' ' + familyMember.last_name,
           value: familyMember.first_name + ' ' + familyMember.last_name,
-          data: {address: `${familyMember.address},${familyMember.city},${familyMember.state},${familyMember.zip}`, phone: familyMember.phone}
+          data: {
+            address: `${familyMember.address},${familyMember.city},${familyMember.state},${familyMember.zip}`,
+            phone: familyMember.phone,
+          },
+        });
+        this.spouseOptions.push({
+          label: familyMember.first_name + ' ' + familyMember.last_name,
+          value: familyMember.first_name + ' ' + familyMember.last_name,
+          data: {
+            address: `${familyMember.address},${familyMember.city},${familyMember.state},${familyMember.zip}`,
+            phone: familyMember.phone,
+          },
         });
       });
-     
+
+        this.spouseOptions.push({
+          label: this.client.first_name + ' ' + this.client.last_name,
+          value: this.client.first_name + ' ' + this.client.last_name,
+          data: {
+            address: `${this.client.address},${this.client.city},${this.client.state},${this.client.zip}`,
+            phone: this.client.phone,
+          },
+        });
+        this.spouseOptions = this.spouseOptions.filter((option) => option.value !== this.spouse.first_name + ' ' + this.spouse.last_name);
     });
-  }     
-    
+  }
 
   private loadSpouse(): void {
     this.familyMemberService.getByUserId(this.client.id).subscribe((res) => {
       if (res) {
         this.spouse = res.find((x) => x.family_member.relationship_type === 'spouse');
         if (this.spouse) {
-          console.log("There should be a spouse", this.spouse);
+          console.log('There should be a spouse', this.spouse);
           this.spouseAppointeeSummary.user_id = this.spouse.id;
           this.loadSpouseAppointeeSummary();
         }
@@ -216,32 +239,25 @@ export class AppointeesComponent implements OnInit {
   }
 
   // loads the client appointee summary from the db if it exists
-  private loadClientAppointeeSummary() : void {
-
+  private loadClientAppointeeSummary(): void {
     this.appointeeSummaryService.getWithUserId(this.client.id).subscribe((res) => {
       if (res) {
-
         this.clientAppointeeSummary = res;
         console.log('clientAppointeeSummary load', this.clientAppointeeSummary);
         this.clientSummaryLoaded = true;
       }
-    }
-    );
+    });
   }
 
   // loads the spouse appointee summary from the db if it exists
-  private loadSpouseAppointeeSummary() : void {
-
+  private loadSpouseAppointeeSummary(): void {
     this.appointeeSummaryService.getWithUserId(this.spouse.id).subscribe((res) => {
       if (res) {
-
         this.spouseAppointeeSummary = res;
         console.log('spouseAppointeeSummary load', this.spouseAppointeeSummary);
       }
-    }
-    );
+    });
   }
-
 
   // if there is a spouse, this will set the rank 1
   // of each type to the spouse information
@@ -362,6 +378,6 @@ export class AppointeesComponent implements OnInit {
   }
 
   handleComboBoxEvent(event: any) {
-    console.log("combo box output", event);
+    console.log('combo box output', event);
   }
 }
