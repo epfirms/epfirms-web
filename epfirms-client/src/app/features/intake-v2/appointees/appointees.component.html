@@ -142,7 +142,6 @@
                               clientAppointeeSummary.executor_1_name = $event.value;
                               clientAppointeeSummary.executor_1_address = $event.data.address;
                               clientAppointeeSummary.executor_1_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -203,7 +202,6 @@
                               clientAppointeeSummary.executor_2_name = $event.value;
                               clientAppointeeSummary.executor_2_address = $event.data.address;
                               clientAppointeeSummary.executor_2_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -265,7 +263,6 @@
                               clientAppointeeSummary.executor_3_name = $event.value;
                               clientAppointeeSummary.executor_3_address = $event.data.address;
                               clientAppointeeSummary.executor_3_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -326,7 +323,6 @@
                               clientAppointeeSummary.executor_4_name = $event.value;
                               clientAppointeeSummary.executor_4_address = $event.data.address;
                               clientAppointeeSummary.executor_4_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -369,23 +365,7 @@
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Trustee
 
-                    <button class="text-gray-400 align-middle" [tippy]="'RESET'">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
-                    </button>
-                    <button class="text-green-400 align-middle" [tippy]="'COPY'">
+                    <button (click)="copyDown('client', 'trustee')" class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -453,7 +433,6 @@
                               clientAppointeeSummary.trustee_1_name = $event.value;
                               clientAppointeeSummary.trustee_1_address = $event.data.address;
                               clientAppointeeSummary.trustee_1_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -515,7 +494,6 @@
                               clientAppointeeSummary.trustee_2_name = $event.value;
                               clientAppointeeSummary.trustee_2_address = $event.data.address;
                               clientAppointeeSummary.trustee_2_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -576,7 +554,6 @@
                               clientAppointeeSummary.trustee_3_name = $event.value;
                               clientAppointeeSummary.trustee_3_address = $event.data.address;
                               clientAppointeeSummary.trustee_3_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -637,7 +614,6 @@
                               clientAppointeeSummary.trustee_4_name = $event.value;
                               clientAppointeeSummary.trustee_4_address = $event.data.address;
                               clientAppointeeSummary.trustee_4_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -679,23 +655,8 @@
 
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Financial Power of Attorney and/or Guardian of the Estate
-                    <button class="text-gray-400 align-middle" [tippy]="'RESET'">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
-                    </button>
-                    <button class="text-green-400 align-middle" [tippy]="'COPY'">
+
+                    <button (click)="copyDown('client', 'fpoa')" class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -763,7 +724,6 @@
                               clientAppointeeSummary.fpoa_1_name = $event.value;
                               clientAppointeeSummary.fpoa_1_address = $event.data.address;
                               clientAppointeeSummary.fpoa_1_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -824,7 +784,6 @@
                               clientAppointeeSummary.fpoa_2_name = $event.value;
                               clientAppointeeSummary.fpoa_2_address = $event.data.address;
                               clientAppointeeSummary.fpoa_2_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -885,7 +844,6 @@
                               clientAppointeeSummary.fpoa_3_name = $event.value;
                               clientAppointeeSummary.fpoa_3_address = $event.data.address;
                               clientAppointeeSummary.fpoa_3_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -946,7 +904,6 @@
                               clientAppointeeSummary.fpoa_4_name = $event.value;
                               clientAppointeeSummary.fpoa_4_address = $event.data.address;
                               clientAppointeeSummary.fpoa_4_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -988,23 +945,8 @@
 
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Medicial Power of Attorney and/or Guardian of the Person
-                    <button class="text-gray-400 align-middle" [tippy]="'RESET'">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
-                    </button>
-                    <button class="text-green-400 align-middle" [tippy]="'COPY'">
+
+                    <button (click)="copyDown('client', 'mpoa')" class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -1072,7 +1014,6 @@
                               clientAppointeeSummary.mpoa_1_name = $event.value;
                               clientAppointeeSummary.mpoa_1_address = $event.data.address;
                               clientAppointeeSummary.mpoa_1_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -1133,7 +1074,6 @@
                               clientAppointeeSummary.mpoa_2_name = $event.value;
                               clientAppointeeSummary.mpoa_2_address = $event.data.address;
                               clientAppointeeSummary.mpoa_2_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -1194,7 +1134,6 @@
                               clientAppointeeSummary.mpoa_3_name = $event.value;
                               clientAppointeeSummary.mpoa_3_address = $event.data.address;
                               clientAppointeeSummary.mpoa_3_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -1255,7 +1194,6 @@
                               clientAppointeeSummary.mpoa_4_name = $event.value;
                               clientAppointeeSummary.mpoa_4_address = $event.data.address;
                               clientAppointeeSummary.mpoa_4_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertClient()
                             "
                             (onTyped)="
@@ -1357,7 +1295,6 @@
                               spouseAppointeeSummary.executor_1_name = $event.value;
                               spouseAppointeeSummary.executor_1_address = $event.data.address;
                               spouseAppointeeSummary.executor_1_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -1418,7 +1355,6 @@
                               spouseAppointeeSummary.executor_2_name = $event.value;
                               spouseAppointeeSummary.executor_2_address = $event.data.address;
                               spouseAppointeeSummary.executor_2_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -1480,7 +1416,6 @@
                               spouseAppointeeSummary.executor_3_name = $event.value;
                               spouseAppointeeSummary.executor_3_address = $event.data.address;
                               spouseAppointeeSummary.executor_3_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -1541,7 +1476,6 @@
                               spouseAppointeeSummary.executor_4_name = $event.value;
                               spouseAppointeeSummary.executor_4_address = $event.data.address;
                               spouseAppointeeSummary.executor_4_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -1584,23 +1518,7 @@
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Trustee
 
-                    <button class="text-gray-400 align-middle" [tippy]="'RESET'">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
-                    </button>
-                    <button class="text-green-400 align-middle" [tippy]="'COPY'">
+                    <button (click)="copyDown('spouse', 'trustee')" class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -1668,7 +1586,6 @@
                               spouseAppointeeSummary.trustee_1_name = $event.value;
                               spouseAppointeeSummary.trustee_1_address = $event.data.address;
                               spouseAppointeeSummary.trustee_1_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -1730,7 +1647,6 @@
                               spouseAppointeeSummary.trustee_2_name = $event.value;
                               spouseAppointeeSummary.trustee_2_address = $event.data.address;
                               spouseAppointeeSummary.trustee_2_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -1791,7 +1707,6 @@
                               spouseAppointeeSummary.trustee_3_name = $event.value;
                               spouseAppointeeSummary.trustee_3_address = $event.data.address;
                               spouseAppointeeSummary.trustee_3_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -1852,7 +1767,6 @@
                               spouseAppointeeSummary.trustee_4_name = $event.value;
                               spouseAppointeeSummary.trustee_4_address = $event.data.address;
                               spouseAppointeeSummary.trustee_4_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -1894,23 +1808,8 @@
 
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Financial Power of Attorney and/or Guardian of the Estate
-                    <button class="text-gray-400 align-middle" [tippy]="'RESET'">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
-                    </button>
-                    <button class="text-green-400 align-middle" [tippy]="'COPY'">
+
+                    <button (click)="copyDown('spouse', 'fpoa')" class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -1978,7 +1877,6 @@
                               spouseAppointeeSummary.fpoa_1_name = $event.value;
                               spouseAppointeeSummary.fpoa_1_address = $event.data.address;
                               spouseAppointeeSummary.fpoa_1_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -2039,7 +1937,6 @@
                               spouseAppointeeSummary.fpoa_2_name = $event.value;
                               spouseAppointeeSummary.fpoa_2_address = $event.data.address;
                               spouseAppointeeSummary.fpoa_2_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -2100,7 +1997,6 @@
                               spouseAppointeeSummary.fpoa_3_name = $event.value;
                               spouseAppointeeSummary.fpoa_3_address = $event.data.address;
                               spouseAppointeeSummary.fpoa_3_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -2161,7 +2057,6 @@
                               spouseAppointeeSummary.fpoa_4_name = $event.value;
                               spouseAppointeeSummary.fpoa_4_address = $event.data.address;
                               spouseAppointeeSummary.fpoa_4_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -2203,23 +2098,8 @@
 
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Medicial Power of Attorney and/or Guardian of the Person
-                    <button class="text-gray-400 align-middle" [tippy]="'RESET'">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
-                    </button>
-                    <button class="text-green-400 align-middle" [tippy]="'COPY'">
+
+                    <button (click)="copyDown('spouse', 'mpoa')"  class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -2287,7 +2167,6 @@
                               spouseAppointeeSummary.mpoa_1_name = $event.value;
                               spouseAppointeeSummary.mpoa_1_address = $event.data.address;
                               spouseAppointeeSummary.mpoa_1_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -2348,7 +2227,6 @@
                               spouseAppointeeSummary.mpoa_2_name = $event.value;
                               spouseAppointeeSummary.mpoa_2_address = $event.data.address;
                               spouseAppointeeSummary.mpoa_2_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -2409,7 +2287,6 @@
                               spouseAppointeeSummary.mpoa_3_name = $event.value;
                               spouseAppointeeSummary.mpoa_3_address = $event.data.address;
                               spouseAppointeeSummary.mpoa_3_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="
@@ -2470,7 +2347,6 @@
                               spouseAppointeeSummary.mpoa_4_name = $event.value;
                               spouseAppointeeSummary.mpoa_4_address = $event.data.address;
                               spouseAppointeeSummary.mpoa_4_phone = $event.data.phone;
-                              handleComboBoxEvent($event);
                               upsertSpouse()
                             "
                             (onTyped)="

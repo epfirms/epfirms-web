@@ -275,4 +275,130 @@ export class AppointeesComponent implements OnInit {
     }
   }
 
+  //copy down
+  // mode: 'client' or 'spouse'
+  // location: 'trustee' or 'fpoa' or 'mpoa'
+  copyDown(mode: string, location: string): void {
+
+    if (mode === 'client'){
+
+      if (location === 'trustee'){
+        this.clientAppointeeSummary.trustee_1_rank = this.clientAppointeeSummary.executor_1_rank;
+        this.clientAppointeeSummary.trustee_1_name = this.clientAppointeeSummary.executor_1_name;
+        this.clientAppointeeSummary.trustee_1_address = this.clientAppointeeSummary.executor_1_address;
+        this.clientAppointeeSummary.trustee_1_phone = this.clientAppointeeSummary.executor_1_phone;
+        this.clientAppointeeSummary.trustee_2_rank = this.clientAppointeeSummary.executor_2_rank;
+        this.clientAppointeeSummary.trustee_2_name = this.clientAppointeeSummary.executor_2_name;
+        this.clientAppointeeSummary.trustee_2_address = this.clientAppointeeSummary.executor_2_address;
+        this.clientAppointeeSummary.trustee_2_phone = this.clientAppointeeSummary.executor_2_phone;
+        this.clientAppointeeSummary.trustee_3_rank = this.clientAppointeeSummary.executor_3_rank;
+        this.clientAppointeeSummary.trustee_3_name = this.clientAppointeeSummary.executor_3_name;
+        this.clientAppointeeSummary.trustee_3_address = this.clientAppointeeSummary.executor_3_address;
+        this.clientAppointeeSummary.trustee_3_phone = this.clientAppointeeSummary.executor_3_phone;
+        this.clientAppointeeSummary.trustee_4_rank = this.clientAppointeeSummary.executor_4_rank;
+        this.clientAppointeeSummary.trustee_4_name = this.clientAppointeeSummary.executor_4_name;
+        this.clientAppointeeSummary.trustee_4_address = this.clientAppointeeSummary.executor_4_address;
+        this.clientAppointeeSummary.trustee_4_phone = this.clientAppointeeSummary.executor_4_phone;
+
+      } else if (location === 'fpoa'){
+        this.clientAppointeeSummary.fpoa_1_rank = this.clientAppointeeSummary.trustee_1_rank;
+        this.clientAppointeeSummary.fpoa_1_name = this.clientAppointeeSummary.trustee_1_name;
+        this.clientAppointeeSummary.fpoa_1_address = this.clientAppointeeSummary.trustee_1_address;
+        this.clientAppointeeSummary.fpoa_1_phone = this.clientAppointeeSummary.trustee_1_phone;
+        this.clientAppointeeSummary.fpoa_2_rank = this.clientAppointeeSummary.trustee_2_rank;
+        this.clientAppointeeSummary.fpoa_2_name = this.clientAppointeeSummary.trustee_2_name;
+        this.clientAppointeeSummary.fpoa_2_address = this.clientAppointeeSummary.trustee_2_address;
+        this.clientAppointeeSummary.fpoa_2_phone = this.clientAppointeeSummary.trustee_2_phone;
+        this.clientAppointeeSummary.fpoa_3_rank = this.clientAppointeeSummary.trustee_3_rank;
+        this.clientAppointeeSummary.fpoa_3_name = this.clientAppointeeSummary.trustee_3_name;
+        this.clientAppointeeSummary.fpoa_3_address = this.clientAppointeeSummary.trustee_3_address;
+        this.clientAppointeeSummary.fpoa_3_phone = this.clientAppointeeSummary.trustee_3_phone;
+        this.clientAppointeeSummary.fpoa_4_rank = this.clientAppointeeSummary.trustee_4_rank;
+        this.clientAppointeeSummary.fpoa_4_name = this.clientAppointeeSummary.trustee_4_name;
+        this.clientAppointeeSummary.fpoa_4_address = this.clientAppointeeSummary.trustee_4_address;
+        this.clientAppointeeSummary.fpoa_4_phone = this.clientAppointeeSummary.trustee_4_phone;
+        
+      }
+      else if (location === 'mpoa'){
+        this.clientAppointeeSummary.mpoa_1_rank = this.clientAppointeeSummary.fpoa_1_rank;
+        this.clientAppointeeSummary.mpoa_1_name = this.clientAppointeeSummary.fpoa_1_name;
+        this.clientAppointeeSummary.mpoa_1_address = this.clientAppointeeSummary.fpoa_1_address;
+        this.clientAppointeeSummary.mpoa_1_phone = this.clientAppointeeSummary.fpoa_1_phone;
+        this.clientAppointeeSummary.mpoa_2_rank = this.clientAppointeeSummary.fpoa_2_rank;
+        this.clientAppointeeSummary.mpoa_2_name = this.clientAppointeeSummary.fpoa_2_name;
+        this.clientAppointeeSummary.mpoa_2_address = this.clientAppointeeSummary.fpoa_2_address;
+        this.clientAppointeeSummary.mpoa_2_phone = this.clientAppointeeSummary.fpoa_2_phone;
+        this.clientAppointeeSummary.mpoa_3_rank = this.clientAppointeeSummary.fpoa_3_rank;
+        this.clientAppointeeSummary.mpoa_3_name = this.clientAppointeeSummary.fpoa_3_name;
+        this.clientAppointeeSummary.mpoa_3_address = this.clientAppointeeSummary.fpoa_3_address;
+        this.clientAppointeeSummary.mpoa_3_phone = this.clientAppointeeSummary.fpoa_3_phone;
+        this.clientAppointeeSummary.mpoa_4_rank = this.clientAppointeeSummary.fpoa_4_rank;
+        this.clientAppointeeSummary.mpoa_4_name = this.clientAppointeeSummary.fpoa_4_name;
+        this.clientAppointeeSummary.mpoa_4_address = this.clientAppointeeSummary.fpoa_4_address;
+        this.clientAppointeeSummary.mpoa_4_phone = this.clientAppointeeSummary.fpoa_4_phone;
+
+      }
+    }
+    else if (mode === 'spouse'){
+
+ if (location === 'trustee'){
+        this.spouseAppointeeSummary.trustee_1_rank = this.spouseAppointeeSummary.executor_1_rank;
+        this.spouseAppointeeSummary.trustee_1_name = this.spouseAppointeeSummary.executor_1_name;
+        this.spouseAppointeeSummary.trustee_1_address = this.spouseAppointeeSummary.executor_1_address;
+        this.spouseAppointeeSummary.trustee_1_phone = this.spouseAppointeeSummary.executor_1_phone;
+        this.spouseAppointeeSummary.trustee_2_rank = this.spouseAppointeeSummary.executor_2_rank;
+        this.spouseAppointeeSummary.trustee_2_name = this.spouseAppointeeSummary.executor_2_name;
+        this.spouseAppointeeSummary.trustee_2_address = this.spouseAppointeeSummary.executor_2_address;
+        this.spouseAppointeeSummary.trustee_2_phone = this.spouseAppointeeSummary.executor_2_phone;
+        this.spouseAppointeeSummary.trustee_3_rank = this.spouseAppointeeSummary.executor_3_rank;
+        this.spouseAppointeeSummary.trustee_3_name = this.spouseAppointeeSummary.executor_3_name;
+        this.spouseAppointeeSummary.trustee_3_address = this.spouseAppointeeSummary.executor_3_address;
+        this.spouseAppointeeSummary.trustee_3_phone = this.spouseAppointeeSummary.executor_3_phone;
+        this.spouseAppointeeSummary.trustee_4_rank = this.spouseAppointeeSummary.executor_4_rank;
+        this.spouseAppointeeSummary.trustee_4_name = this.spouseAppointeeSummary.executor_4_name;
+        this.spouseAppointeeSummary.trustee_4_address = this.spouseAppointeeSummary.executor_4_address;
+        this.spouseAppointeeSummary.trustee_4_phone = this.spouseAppointeeSummary.executor_4_phone;
+
+      } else if (location === 'fpoa'){
+        this.spouseAppointeeSummary.fpoa_1_rank = this.spouseAppointeeSummary.trustee_1_rank;
+        this.spouseAppointeeSummary.fpoa_1_name = this.spouseAppointeeSummary.trustee_1_name;
+        this.spouseAppointeeSummary.fpoa_1_address = this.spouseAppointeeSummary.trustee_1_address;
+        this.spouseAppointeeSummary.fpoa_1_phone = this.spouseAppointeeSummary.trustee_1_phone;
+        this.spouseAppointeeSummary.fpoa_2_rank = this.spouseAppointeeSummary.trustee_2_rank;
+        this.spouseAppointeeSummary.fpoa_2_name = this.spouseAppointeeSummary.trustee_2_name;
+        this.spouseAppointeeSummary.fpoa_2_address = this.spouseAppointeeSummary.trustee_2_address;
+        this.spouseAppointeeSummary.fpoa_2_phone = this.spouseAppointeeSummary.trustee_2_phone;
+        this.spouseAppointeeSummary.fpoa_3_rank = this.spouseAppointeeSummary.trustee_3_rank;
+        this.spouseAppointeeSummary.fpoa_3_name = this.spouseAppointeeSummary.trustee_3_name;
+        this.spouseAppointeeSummary.fpoa_3_address = this.spouseAppointeeSummary.trustee_3_address;
+        this.spouseAppointeeSummary.fpoa_3_phone = this.spouseAppointeeSummary.trustee_3_phone;
+        this.spouseAppointeeSummary.fpoa_4_rank = this.spouseAppointeeSummary.trustee_4_rank;
+        this.spouseAppointeeSummary.fpoa_4_name = this.spouseAppointeeSummary.trustee_4_name;
+        this.spouseAppointeeSummary.fpoa_4_address = this.spouseAppointeeSummary.trustee_4_address;
+        this.spouseAppointeeSummary.fpoa_4_phone = this.spouseAppointeeSummary.trustee_4_phone;
+        
+      }
+      else if (location === 'mpoa'){
+        this.spouseAppointeeSummary.mpoa_1_rank = this.spouseAppointeeSummary.fpoa_1_rank;
+        this.spouseAppointeeSummary.mpoa_1_name = this.spouseAppointeeSummary.fpoa_1_name;
+        this.spouseAppointeeSummary.mpoa_1_address = this.spouseAppointeeSummary.fpoa_1_address;
+        this.spouseAppointeeSummary.mpoa_1_phone = this.spouseAppointeeSummary.fpoa_1_phone;
+        this.spouseAppointeeSummary.mpoa_2_rank = this.spouseAppointeeSummary.fpoa_2_rank;
+        this.spouseAppointeeSummary.mpoa_2_name = this.spouseAppointeeSummary.fpoa_2_name;
+        this.spouseAppointeeSummary.mpoa_2_address = this.spouseAppointeeSummary.fpoa_2_address;
+        this.spouseAppointeeSummary.mpoa_2_phone = this.spouseAppointeeSummary.fpoa_2_phone;
+        this.spouseAppointeeSummary.mpoa_3_rank = this.spouseAppointeeSummary.fpoa_3_rank;
+        this.spouseAppointeeSummary.mpoa_3_name = this.spouseAppointeeSummary.fpoa_3_name;
+        this.spouseAppointeeSummary.mpoa_3_address = this.spouseAppointeeSummary.fpoa_3_address;
+        this.spouseAppointeeSummary.mpoa_3_phone = this.spouseAppointeeSummary.fpoa_3_phone;
+        this.spouseAppointeeSummary.mpoa_4_rank = this.spouseAppointeeSummary.fpoa_4_rank;
+        this.spouseAppointeeSummary.mpoa_4_name = this.spouseAppointeeSummary.fpoa_4_name;
+        this.spouseAppointeeSummary.mpoa_4_address = this.spouseAppointeeSummary.fpoa_4_address;
+        this.spouseAppointeeSummary.mpoa_4_phone = this.spouseAppointeeSummary.fpoa_4_phone;
+
+      }
+    }
+
+  }
+
 }
