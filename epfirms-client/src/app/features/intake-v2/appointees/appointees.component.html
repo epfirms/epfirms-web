@@ -37,7 +37,7 @@
           </div>
 
           <div class="mt-8 flex flex-col">
-            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
               <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div>
                   <h3 class="font-semibold text-gray-600">Executor</h3>
@@ -146,13 +146,23 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.executor_2_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.executor_2_name = $event.value;
+                            clientAppointeeSummary.executor_2_address = $event.data.address;
+                            clientAppointeeSummary.executor_2_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.executor_2_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.executor_2_name" 
+                        >
+
+                        </app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -199,13 +209,21 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.executor_3_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.executor_3_name = $event.value;
+                            clientAppointeeSummary.executor_3_address = $event.data.address;
+                            clientAppointeeSummary.executor_3_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.executor_3_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.executor_3_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -252,13 +270,21 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.executor_4_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.executor_4_name = $event.value;
+                            clientAppointeeSummary.executor_4_address = $event.data.address;
+                            clientAppointeeSummary.executor_4_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.executor_4_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.executor_4_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -336,13 +362,24 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.trustee_1_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.trustee_1_name = $event.value;
+                            clientAppointeeSummary.trustee_1_address = $event.data.address;
+                            clientAppointeeSummary.trustee_1_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.trustee_1_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.trustee_1_name"
+                        >
+
+
+                        </app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -389,13 +426,21 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.trustee_2_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.trustee_2_name = $event.value;
+                            clientAppointeeSummary.trustee_2_address = $event.data.address;
+                            clientAppointeeSummary.trustee_2_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.trustee_2_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.trustee_2_name" 
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -442,13 +487,21 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.trustee_3_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox 
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.trustee_3_name = $event.value;
+                            clientAppointeeSummary.trustee_3_address = $event.data.address;
+                            clientAppointeeSummary.trustee_3_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.trustee_3_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.trustee_3_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -495,13 +548,21 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.trustee_4_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.trustee_4_name = $event.value;
+                            clientAppointeeSummary.trustee_4_address = $event.data.address;
+                            clientAppointeeSummary.trustee_4_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.trustee_4_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.trustee_4_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -573,7 +634,7 @@
                           <input
                             type="text"
                             [inputMask]=""
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_1_rank"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_1_rank"
                             (change)="upsertSpouse()"
                             class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
@@ -581,20 +642,28 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_1_name"
-                            (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.fpoa_1_name = $event.value;
+                            clientAppointeeSummary.fpoa_1_address = $event.data.address;
+                            clientAppointeeSummary.fpoa_1_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.fpoa_1_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.fpoa_1_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_1_address"
-                            (change)="upsertSpouse()"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_1_address"
+                            (change)="upsertClient()"
                             type="text"
                             name="street-address"
                             id="street-address"
@@ -607,8 +676,8 @@
                           class="text-left group py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_1_phone"
-                            (change)="upsertSpouse()"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_1_phone"
+                            (change)="upsertClient()"
                             type="text"
                             name="email"
                             id="email"
@@ -626,28 +695,36 @@
                           <input
                             type="text"
                             [inputMask]=""
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_2_rank"
-                            (change)="upsertSpouse()"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_2_rank"
+                            (change)="upsertClient()"
                             class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_2_name"
-                            (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.fpoa_2_name = $event.value;
+                            clientAppointeeSummary.fpoa_2_address = $event.data.address;
+                            clientAppointeeSummary.fpoa_2_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.fpoa_2_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.fpoa_2_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_2_address"
-                            (change)="upsertSpouse()"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_2_address"
+                            (change)="upsertClient()"
                             type="text"
                             name="street-address"
                             id="street-address"
@@ -660,8 +737,8 @@
                           class="text-left group py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_2_phone"
-                            (change)="upsertSpouse()"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_2_phone"
+                            (change)="upsertClient()"
                             type="text"
                             name="email"
                             id="email"
@@ -679,28 +756,36 @@
                           <input
                             type="text"
                             [inputMask]=""
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_3_rank"
-                            (change)="upsertSpouse()"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_3_rank"
+                            (change)="upsertClient()"
                             class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_3_name"
-                            (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.fpoa_3_name = $event.value;
+                            clientAppointeeSummary.fpoa_3_address = $event.data.address;
+                            clientAppointeeSummary.fpoa_3_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.fpoa_3_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.fpoa_3_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_3_address"
-                            (change)="upsertSpouse()"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_3_address"
+                            (change)="upsertClient()"
                             type="text"
                             name="street-address"
                             id="street-address"
@@ -713,8 +798,8 @@
                           class="text-left group py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_3_phone"
-                            (change)="upsertSpouse()"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_3_phone"
+                            (change)="upsertClient()"
                             type="text"
                             name="email"
                             id="email"
@@ -732,27 +817,35 @@
                           <input
                             type="text"
                             [inputMask]=""
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_4_rank"
-                            (change)="upsertSpouse()"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_4_rank"
+                            (change)="upsertClient()"
                             class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_4_name"
-                            (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.fpoa_4_name = $event.value;
+                            clientAppointeeSummary.fpoa_4_address = $event.data.address;
+                            clientAppointeeSummary.fpoa_4_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertSpouse()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.fpoa_4_name = $event.value;
+                            upsertSpouse()"
+                          [defaultValue]="clientAppointeeSummary.fpoa_4_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_4_address"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_4_address"
                             (change)="upsertSpouse()"
                             type="text"
                             name="street-address"
@@ -766,7 +859,7 @@
                           class="text-left group py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
-                            [(ngModel)]="spouseAppointeeSummary.fpoa_4_phone"
+                            [(ngModel)]="clientAppointeeSummary.fpoa_4_phone"
                             (change)="upsertSpouse()"
                             type="text"
                             name="email"
@@ -826,13 +919,21 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.mpoa_1_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.mpoa_1_name = $event.value;
+                            clientAppointeeSummary.mpoa_1_address = $event.data.address;
+                            clientAppointeeSummary.mpoa_1_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.mpoa_1_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.mpoa_1_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -879,13 +980,21 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.mpoa_2_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.mpoa_2_name = $event.value;
+                            clientAppointeeSummary.mpoa_2_address = $event.data.address;
+                            clientAppointeeSummary.mpoa_2_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.mpoa_2_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.mpoa_2_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -932,13 +1041,21 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.mpoa_3_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.mpoa_3_name = $event.value;
+                            clientAppointeeSummary.mpoa_3_address = $event.data.address;
+                            clientAppointeeSummary.mpoa_3_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.mpoa_3_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.mpoa_3_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -974,6 +1091,7 @@
                           scope="row"
                           class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
+
                           <input
                             type="text"
                             [inputMask]=""
@@ -981,17 +1099,25 @@
                             (change)="upsertClient()"
                             class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
-                        </th>
+                       </th>
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.mpoa_4_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                        <app-combobox
+                          *ngIf="clientSummaryLoaded"
+                          [options]="options"
+                          (onSelected)="
+                            clientAppointeeSummary.mpoa_4_name = $event.value;
+                            clientAppointeeSummary.mpoa_4_address = $event.data.address;
+                            clientAppointeeSummary.mpoa_4_phone = $event.data.phone;
+                            handleComboBoxEvent($event);
+                            upsertClient()
+                          "
+                          (onTyped)="
+                            clientAppointeeSummary.mpoa_4_name = $event.value;
+                            upsertClient()"
+                          [defaultValue]="clientAppointeeSummary.mpoa_4_name"
+                        ></app-combobox>
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
@@ -1030,7 +1156,7 @@
 
           <!-- SPOUSE EXECUTORS -->
           <div *ngIf="spouse" class="mt-8 flex flex-col">
-            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
               <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div>
                   <h3 class="font-semibold text-gray-600">Spouse Executor</h3>
