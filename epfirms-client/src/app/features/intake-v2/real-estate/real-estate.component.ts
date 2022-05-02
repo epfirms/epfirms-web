@@ -41,6 +41,7 @@ export class RealEstateComponent implements OnInit {
   ngOnInit(): void {
 
     this.load();
+    this.financialSummaryForm.user_id = this.matter.client.id;
   }
 
   // currency mask
