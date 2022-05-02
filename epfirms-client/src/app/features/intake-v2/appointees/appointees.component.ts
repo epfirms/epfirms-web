@@ -193,6 +193,7 @@ export class AppointeesComponent implements OnInit {
         this.options.push({
           label: familyMember.first_name + ' ' + familyMember.last_name,
           value: familyMember.first_name + ' ' + familyMember.last_name,
+          data: {address: `${familyMember.address},${familyMember.city},${familyMember.state},${familyMember.zip}`, phone: familyMember.phone}
         });
       });
      

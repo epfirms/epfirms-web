@@ -15,10 +15,14 @@ export class ComboboxComponent implements OnInit {
   //optional input that set default selected option
   @Input() defaultValue;
 
+  // options data object that contains more stuff about option
+  @Input() data: any;
   // the list of options
   @Input() options: Option[];
   // the output that sends the selected option to the parent component
   @Output() onSelected: EventEmitter<any> = new EventEmitter<any>();
+  // the output when it is just typed
+  @Output() onTyped: EventEmitter<any> = new EventEmitter<any>();
   // the search term that will be used to filter the list of options
   searchTerm: string = '';
 
@@ -43,12 +47,13 @@ export class ComboboxComponent implements OnInit {
     console.log('defaultValue', this.defaultValue);
     console.log('oninit', this.selectedOption);
     console.log('oninit', this.searchTerm);
+    console.log("options", this.options);
   }
 
   // this is called when the user selects an option`
   onSelect(option: any) {
     this.selectedOption = option;
-    this.searchTerm = this.selectedOption;
+    this.searchTerm = this.selectedOption.value;
     this.onSelected.emit(option);
     this.isVisible = false;
     this.options = this.defaultOptions;
@@ -59,15 +64,19 @@ export class ComboboxComponent implements OnInit {
     this.isVisible = !this.isVisible;
   }
 
+
   // handle typing in the search
   onSearch(): void {
     this.options = this.options.filter((option) => {
       return option.label.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
+    if (this.options.length === 0) {
+      this.isVisible = false;
+    }
     if (this.searchTerm === '') {
       this.options = this.defaultOptions;
     }
 
-    this.onSelected.emit(this.searchTerm);
+    this.onTyped.emit(this.searchTerm);
   }
 }

@@ -18,7 +18,7 @@
       -->
       <li *ngFor="let option of options"  class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 hover:text-white hover:bg-blue-600" id="option-0" role="option" tabindex="-1">
         <!-- Selected: "font-semibold" -->
-        <span (click)="onSelect(option.value)" [ngClass]="option.value === selectedOption ? 'font-semibold':''" class="block truncate">{{option.label}}</span>
+        <span (click)="onSelect(option)" [ngClass]="option === selectedOption ? 'font-semibold':''" class="block truncate">{{option.label}}</span>
 
         <!--
           Checkmark, only display for selected option.
