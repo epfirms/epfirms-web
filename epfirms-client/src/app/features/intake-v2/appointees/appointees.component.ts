@@ -13,6 +13,10 @@ export class AppointeesComponent implements OnInit {
   spouse;
   client;
 
+  // options that are going to be passed to the combo box
+
+  options  = [];
+
   // this is not the best way to store appointees but this
   // is how it was requested
   // this might need to be changed in the future
@@ -162,6 +166,10 @@ export class AppointeesComponent implements OnInit {
     mpoa_4_address: '',
     mpoa_4_phone: '',
   };
+  familyMembers: any;
+
+  // boolean to check when client summary is loaded
+  clientSummaryLoaded = false;
 
   constructor(
     private familyMemberService: FamilyMemberService,
@@ -174,7 +182,23 @@ export class AppointeesComponent implements OnInit {
     this.loadSpouse();
     this.loadClientAppointeeSummary();
     
+    this.initOptions();
   }
+
+  private initOptions() : void {
+    
+    this.familyMemberService.getByUserId(this.client.id).subscribe((familyMembers) => {
+      this.familyMembers = familyMembers;
+      this.familyMembers.forEach((familyMember) => {
+        this.options.push({
+          label: familyMember.first_name + ' ' + familyMember.last_name,
+          value: familyMember.first_name + ' ' + familyMember.last_name,
+        });
+      });
+     
+    });
+  }     
+    
 
   private loadSpouse(): void {
     this.familyMemberService.getByUserId(this.client.id).subscribe((res) => {
@@ -198,6 +222,7 @@ export class AppointeesComponent implements OnInit {
 
         this.clientAppointeeSummary = res;
         console.log('clientAppointeeSummary load', this.clientAppointeeSummary);
+        this.clientSummaryLoaded = true;
       }
     }
     );
@@ -333,5 +358,9 @@ export class AppointeesComponent implements OnInit {
         this.spouseAppointeeSummary = res[0];
       });
     }
+  }
+
+  handleComboBoxEvent(event: any) {
+    console.log("combo box output", event);
   }
 }

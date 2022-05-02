@@ -85,7 +85,7 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                         <app-combobox></app-combobox> 
+                         <app-combobox *ngIf="clientSummaryLoaded"  [options]="options" (onSelected)="clientAppointeeSummary.executor_1_name = $event; upsertClient()" [defaultValue]="clientAppointeeSummary.executor_1_name"></app-combobox> 
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
