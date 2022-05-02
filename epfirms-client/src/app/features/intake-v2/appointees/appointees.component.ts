@@ -212,15 +212,17 @@ export class AppointeesComponent implements OnInit {
         });
       });
 
-        this.spouseOptions.push({
-          label: this.client.first_name + ' ' + this.client.last_name,
-          value: this.client.first_name + ' ' + this.client.last_name,
-          data: {
-            address: `${this.client.address},${this.client.city},${this.client.state},${this.client.zip}`,
-            phone: this.client.phone,
-          },
-        });
-        this.spouseOptions = this.spouseOptions.filter((option) => option.value !== this.spouse.first_name + ' ' + this.spouse.last_name);
+      this.spouseOptions.push({
+        label: this.client.first_name + ' ' + this.client.last_name,
+        value: this.client.first_name + ' ' + this.client.last_name,
+        data: {
+          address: `${this.client.address},${this.client.city},${this.client.state},${this.client.zip}`,
+          phone: this.client.phone,
+        },
+      });
+      this.spouseOptions = this.spouseOptions.filter(
+        (option) => option.value !== this.spouse.first_name + ' ' + this.spouse.last_name,
+      );
     });
   }
 
@@ -229,11 +231,9 @@ export class AppointeesComponent implements OnInit {
       if (res) {
         this.spouse = res.find((x) => x.family_member.relationship_type === 'spouse');
         if (this.spouse) {
-          console.log('There should be a spouse', this.spouse);
           this.spouseAppointeeSummary.user_id = this.spouse.id;
           this.loadSpouseAppointeeSummary();
         }
-        console.log('spouse', this.spouse);
       }
     });
   }
@@ -243,7 +243,7 @@ export class AppointeesComponent implements OnInit {
     this.appointeeSummaryService.getWithUserId(this.client.id).subscribe((res) => {
       if (res) {
         this.clientAppointeeSummary = res;
-        console.log('clientAppointeeSummary load', this.clientAppointeeSummary);
+
         this.clientSummaryLoaded = true;
       }
     });
@@ -254,7 +254,6 @@ export class AppointeesComponent implements OnInit {
     this.appointeeSummaryService.getWithUserId(this.spouse.id).subscribe((res) => {
       if (res) {
         this.spouseAppointeeSummary = res;
-        console.log('spouseAppointeeSummary load', this.spouseAppointeeSummary);
       }
     });
   }
@@ -362,7 +361,6 @@ export class AppointeesComponent implements OnInit {
   //upserts the client appointee form
   upsertClient(): void {
     this.appointeeSummaryService.upsert(this.clientAppointeeSummary).subscribe((res) => {
-      console.log('client appointee summary', res);
       this.clientAppointeeSummary = res[0];
     });
   }
@@ -371,13 +369,10 @@ export class AppointeesComponent implements OnInit {
   upsertSpouse(): void {
     if (this.spouse) {
       this.appointeeSummaryService.upsert(this.spouseAppointeeSummary).subscribe((res) => {
-        console.log('spouse appointee summary', res);
         this.spouseAppointeeSummary = res[0];
       });
     }
   }
 
-  handleComboBoxEvent(event: any) {
-    console.log('combo box output', event);
-  }
+  handleComboBoxEvent(event: any) {}
 }

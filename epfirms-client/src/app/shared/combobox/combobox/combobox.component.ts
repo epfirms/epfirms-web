@@ -44,10 +44,6 @@ export class ComboboxComponent implements OnInit {
     this.defaultOptions = this.options;
     this.selectedOption = this.defaultValue;
     this.searchTerm = this.defaultValue;
-    console.log('defaultValue', this.defaultValue);
-    console.log('oninit', this.selectedOption);
-    console.log('oninit', this.searchTerm);
-    console.log("options", this.options);
   }
 
   // this is called when the user selects an option`
@@ -63,7 +59,6 @@ export class ComboboxComponent implements OnInit {
   toggleDropdown() {
     this.isVisible = !this.isVisible;
   }
-
 
   // handle typing in the search
   onSearch(): void {
