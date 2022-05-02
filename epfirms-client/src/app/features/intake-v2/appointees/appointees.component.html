@@ -85,13 +85,7 @@
                         <td
                           class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
-                          <input
-                            type="text"
-                            [inputMask]=""
-                            [(ngModel)]="clientAppointeeSummary.executor_1_name"
-                            (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                         <app-combobox></app-combobox> 
                         </td>
                         <td
                           class="group py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
