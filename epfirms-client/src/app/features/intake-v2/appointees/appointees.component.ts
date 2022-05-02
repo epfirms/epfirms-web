@@ -258,105 +258,6 @@ export class AppointeesComponent implements OnInit {
     });
   }
 
-  // if there is a spouse, this will set the rank 1
-  // of each type to the spouse information
-  private initClientAppointeeForm(): void {
-    this.clientAppointeeSummary.user_id = this.client.id;
-    this.clientAppointeeSummary.executor_1_name =
-      this.spouse.first_name + ' ' + this.spouse.last_name;
-    this.clientAppointeeSummary.executor_1_address =
-      this.spouse.address +
-      ' ' +
-      this.spouse.city +
-      ' ' +
-      this.spouse.state +
-      ' ' +
-      this.spouse.zip;
-    this.clientAppointeeSummary.executor_1_phone = this.spouse.phone;
-
-    this.clientAppointeeSummary.trustee_1_name =
-      this.spouse.first_name + ' ' + this.spouse.last_name;
-    this.clientAppointeeSummary.trustee_1_address =
-      this.spouse.addressi +
-      ' ' +
-      this.spouse.city +
-      ' ' +
-      this.spouse.state +
-      ' ' +
-      this.spouse.zip;
-    this.clientAppointeeSummary.trustee_1_phone = this.spouse.phone;
-
-    this.clientAppointeeSummary.fpoa_1_name = this.spouse.first_name + ' ' + this.spouse.last_name;
-    this.clientAppointeeSummary.fpoa_1_address =
-      this.spouse.address +
-      ' ' +
-      this.spouse.city +
-      ' ' +
-      this.spouse.state +
-      ' ' +
-      this.spouse.zip;
-    this.clientAppointeeSummary.fpoa_1_phone = this.spouse.phone;
-
-    this.clientAppointeeSummary.mpoa_1_name = this.spouse.first_name + ' ' + this.spouse.last_name;
-    this.clientAppointeeSummary.mpoa_1_address =
-      this.spouse.address +
-      ' ' +
-      this.spouse.city +
-      ' ' +
-      this.spouse.state +
-      ' ' +
-      this.spouse.zip;
-    this.clientAppointeeSummary.mpoa_1_phone = this.spouse.phone;
-  }
-
-  private initSpouseAppointeeForm(): void {
-    this.spouseAppointeeSummary.user_id = this.spouse.id;
-    this.spouseAppointeeSummary.executor_1_name =
-      this.client.first_name + ' ' + this.client.last_name;
-    this.spouseAppointeeSummary.executor_1_address =
-      this.client.address +
-      ' ' +
-      this.client.city +
-      ' ' +
-      this.client.state +
-      ' ' +
-      this.client.zip;
-    this.spouseAppointeeSummary.executor_1_phone = this.client.phone;
-
-    this.spouseAppointeeSummary.trustee_1_name =
-      this.client.first_name + ' ' + this.client.last_name;
-    this.spouseAppointeeSummary.trustee_1_address =
-      this.client.addressi +
-      ' ' +
-      this.client.city +
-      ' ' +
-      this.client.state +
-      ' ' +
-      this.client.zip;
-    this.spouseAppointeeSummary.trustee_1_phone = this.client.phone;
-
-    this.spouseAppointeeSummary.fpoa_1_name = this.client.first_name + ' ' + this.client.last_name;
-    this.spouseAppointeeSummary.fpoa_1_address =
-      this.client.address +
-      ' ' +
-      this.client.city +
-      ' ' +
-      this.client.state +
-      ' ' +
-      this.client.zip;
-    this.spouseAppointeeSummary.fpoa_1_phone = this.client.phone;
-
-    this.spouseAppointeeSummary.mpoa_1_name = this.client.first_name + ' ' + this.client.last_name;
-    this.spouseAppointeeSummary.mpoa_1_address =
-      this.client.address +
-      ' ' +
-      this.client.city +
-      ' ' +
-      this.client.state +
-      ' ' +
-      this.client.zip;
-    this.spouseAppointeeSummary.mpoa_1_phone = this.client.phone;
-  }
 
   //upserts the client appointee form
   upsertClient(): void {
@@ -374,5 +275,4 @@ export class AppointeesComponent implements OnInit {
     }
   }
 
-  handleComboBoxEvent(event: any) {}
 }
