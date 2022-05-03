@@ -240,10 +240,19 @@ export class AppointeesComponent implements OnInit {
   // loads the client appointee summary from the db if it exists
   private loadClientAppointeeSummary(): void {
     this.appointeeSummaryService.getWithUserId(this.client.id).subscribe((res) => {
+      console.log("before check", res);
       if (res) {
         this.clientAppointeeSummary = res;
 
+        console.log("res", res);
         this.clientSummaryLoaded = true;
+      }
+      else {
+        this.appointeeSummaryService.upsert(this.clientAppointeeSummary).subscribe((res) => {
+          this.clientAppointeeSummary = res;
+          this.clientSummaryLoaded = true;
+        }
+        );
       }
     });
   }
@@ -253,6 +262,12 @@ export class AppointeesComponent implements OnInit {
     this.appointeeSummaryService.getWithUserId(this.spouse.id).subscribe((res) => {
       if (res) {
         this.spouseAppointeeSummary = res;
+      }
+      else {
+        this.appointeeSummaryService.upsert(this.spouseAppointeeSummary).subscribe((res) => {
+          this.spouseAppointeeSummary = res;
+        }
+        );
       }
     });
   }
