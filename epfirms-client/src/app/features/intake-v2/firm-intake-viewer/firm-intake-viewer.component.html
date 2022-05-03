@@ -245,7 +245,7 @@
         ></app-estate-planning-form>
 
         <!-- life insurance section -->
-        <app-life-insurance></app-life-insurance>
+        <app-life-insurance *ngIf="state === 'life insurance'" [matter]="matter"></app-life-insurance>
         <!-- /End replace -->
       </div>
     </main>
