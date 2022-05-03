@@ -338,6 +338,7 @@ export class AppointeesComponent implements OnInit {
         this.clientAppointeeSummary.mpoa_4_phone = this.clientAppointeeSummary.fpoa_4_phone;
 
       }
+      this.upsertClient();
     }
     else if (mode === 'spouse'){
 
@@ -397,6 +398,7 @@ export class AppointeesComponent implements OnInit {
         this.spouseAppointeeSummary.mpoa_4_phone = this.spouseAppointeeSummary.fpoa_4_phone;
 
       }
+      this.upsertSpouse();
     }
 
   }

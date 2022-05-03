@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 export interface Option {
   label: string;
@@ -11,7 +11,7 @@ export interface Option {
   templateUrl: './combobox.component.html',
   styleUrls: ['./combobox.component.scss'],
 })
-export class ComboboxComponent implements OnInit {
+export class ComboboxComponent implements OnInit, OnChanges {
   //optional input that set default selected option
   @Input() defaultValue;
 
@@ -53,6 +53,10 @@ export class ComboboxComponent implements OnInit {
     this.onSelected.emit(option);
     this.isVisible = false;
     this.options = this.defaultOptions;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.searchTerm = changes.defaultValue.currentValue;
   }
 
   // toggle the dropdown visibility
