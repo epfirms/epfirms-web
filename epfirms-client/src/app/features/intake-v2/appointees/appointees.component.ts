@@ -248,9 +248,12 @@ export class AppointeesComponent implements OnInit {
         this.clientSummaryLoaded = true;
       }
       else {
-        this.appointeeSummaryService.upsert(this.clientAppointeeSummary).subscribe((res) => {
-          this.clientAppointeeSummary = res;
+        this.appointeeSummaryService.upsert(this.clientAppointeeSummary).subscribe((upsertRes) => {
+          if (upsertRes) {
+
+          this.clientAppointeeSummary = upsertRes[0];
           this.clientSummaryLoaded = true;
+          }
         }
         );
       }
@@ -264,8 +267,11 @@ export class AppointeesComponent implements OnInit {
         this.spouseAppointeeSummary = res;
       }
       else {
-        this.appointeeSummaryService.upsert(this.spouseAppointeeSummary).subscribe((res) => {
-          this.spouseAppointeeSummary = res;
+        this.appointeeSummaryService.upsert(this.spouseAppointeeSummary).subscribe((upsertRes) => {
+          if (upsertRes) {
+
+          this.spouseAppointeeSummary = upsertRes[0];
+          }
         }
         );
       }
@@ -275,7 +281,10 @@ export class AppointeesComponent implements OnInit {
   //upserts the client appointee form
   upsertClient(): void {
     this.appointeeSummaryService.upsert(this.clientAppointeeSummary).subscribe((res) => {
+      if (res) {
+
       this.clientAppointeeSummary = res[0];
+      }
     });
   }
 
@@ -283,7 +292,11 @@ export class AppointeesComponent implements OnInit {
   upsertSpouse(): void {
     if (this.spouse) {
       this.appointeeSummaryService.upsert(this.spouseAppointeeSummary).subscribe((res) => {
+        if (res) {
+
+          
         this.spouseAppointeeSummary = res[0];
+        }
       });
     }
   }
