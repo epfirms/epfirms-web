@@ -66,7 +66,7 @@ export class FirmPortalComponent implements OnInit {
         console.log('bug report modal ok', componentInstance);
         if (componentInstance.details !== '') {
           this._bugReportService
-            .createGHIssue({ type: componentInstance.type, details: componentInstance.details })
+            .createGHIssue({ type: componentInstance.type, details: componentInstance.details, reporter: componentInstance.reporter})
             .subscribe((res) => {
               console.log('after github submission', res);
               if (res.status === 201) {
