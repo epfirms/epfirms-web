@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { createMask } from '@ngneat/input-mask';
 
 @Component({
   selector: 'app-life-insurance',
@@ -6,6 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./life-insurance.component.scss']
 })
 export class LifeInsuranceComponent implements OnInit {
+
+
+  currencyInputMask = createMask({
+    prefix: '$',
+    alias: 'numeric',
+    groupSeparator: ',',
+    digits: 2,
+    digitsOptional: false,
+    placeholder: '0',
+  });
+
+
 
   constructor() { }
 
