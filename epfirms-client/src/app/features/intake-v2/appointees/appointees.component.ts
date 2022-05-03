@@ -13,6 +13,15 @@ export class AppointeesComponent implements OnInit {
   spouse;
   client;
 
+  // state that manages tabs when there is spouse
+  state: string = 'client';
+
+  // options that are going to be passed to the combo box
+
+  clientOptions = [];
+
+  spouseOptions = [];
+
   // this is not the best way to store appointees but this
   // is how it was requested
   // this might need to be changed in the future
@@ -162,6 +171,10 @@ export class AppointeesComponent implements OnInit {
     mpoa_4_address: '',
     mpoa_4_phone: '',
   };
+  familyMembers: any;
+
+  // boolean to check when client summary is loaded
+  clientSummaryLoaded = false;
 
   constructor(
     private familyMemberService: FamilyMemberService,
@@ -173,7 +186,43 @@ export class AppointeesComponent implements OnInit {
     this.clientAppointeeSummary.user_id = this.client.id;
     this.loadSpouse();
     this.loadClientAppointeeSummary();
-    
+
+    this.initOptions();
+  }
+
+  private initOptions(): void {
+    this.familyMemberService.getByUserId(this.client.id).subscribe((familyMembers) => {
+      this.familyMembers = familyMembers;
+      this.familyMembers.forEach((familyMember) => {
+        this.clientOptions.push({
+          label: familyMember.first_name + ' ' + familyMember.last_name,
+          value: familyMember.first_name + ' ' + familyMember.last_name,
+          data: {
+            address: `${familyMember.address},${familyMember.city},${familyMember.state},${familyMember.zip}`,
+            phone: familyMember.phone,
+          },
+        });
+        if (familyMember.family_member.relationship !== 'spouse') {
+          this.spouseOptions.push({
+            label: familyMember.first_name + ' ' + familyMember.last_name,
+            value: familyMember.first_name + ' ' + familyMember.last_name,
+            data: {
+              address: `${familyMember.address},${familyMember.city},${familyMember.state},${familyMember.zip}`,
+              phone: familyMember.phone,
+            },
+          });
+        }
+      });
+
+      this.spouseOptions.push({
+        label: this.client.first_name + ' ' + this.client.last_name,
+        value: this.client.first_name + ' ' + this.client.last_name,
+        data: {
+          address: `${this.client.address},${this.client.city},${this.client.state},${this.client.zip}`,
+          phone: this.client.phone,
+        },
+      });
+    });
   }
 
   private loadSpouse(): void {
@@ -181,146 +230,36 @@ export class AppointeesComponent implements OnInit {
       if (res) {
         this.spouse = res.find((x) => x.family_member.relationship_type === 'spouse');
         if (this.spouse) {
-          console.log("There should be a spouse", this.spouse);
           this.spouseAppointeeSummary.user_id = this.spouse.id;
           this.loadSpouseAppointeeSummary();
         }
-        console.log('spouse', this.spouse);
       }
     });
   }
 
   // loads the client appointee summary from the db if it exists
-  private loadClientAppointeeSummary() : void {
-
+  private loadClientAppointeeSummary(): void {
     this.appointeeSummaryService.getWithUserId(this.client.id).subscribe((res) => {
       if (res) {
-
         this.clientAppointeeSummary = res;
-        console.log('clientAppointeeSummary load', this.clientAppointeeSummary);
+
+        this.clientSummaryLoaded = true;
       }
-    }
-    );
+    });
   }
 
   // loads the spouse appointee summary from the db if it exists
-  private loadSpouseAppointeeSummary() : void {
-
+  private loadSpouseAppointeeSummary(): void {
     this.appointeeSummaryService.getWithUserId(this.spouse.id).subscribe((res) => {
       if (res) {
-
         this.spouseAppointeeSummary = res;
-        console.log('spouseAppointeeSummary load', this.spouseAppointeeSummary);
       }
-    }
-    );
-  }
-
-
-  // if there is a spouse, this will set the rank 1
-  // of each type to the spouse information
-  private initClientAppointeeForm(): void {
-    this.clientAppointeeSummary.user_id = this.client.id;
-    this.clientAppointeeSummary.executor_1_name =
-      this.spouse.first_name + ' ' + this.spouse.last_name;
-    this.clientAppointeeSummary.executor_1_address =
-      this.spouse.address +
-      ' ' +
-      this.spouse.city +
-      ' ' +
-      this.spouse.state +
-      ' ' +
-      this.spouse.zip;
-    this.clientAppointeeSummary.executor_1_phone = this.spouse.phone;
-
-    this.clientAppointeeSummary.trustee_1_name =
-      this.spouse.first_name + ' ' + this.spouse.last_name;
-    this.clientAppointeeSummary.trustee_1_address =
-      this.spouse.addressi +
-      ' ' +
-      this.spouse.city +
-      ' ' +
-      this.spouse.state +
-      ' ' +
-      this.spouse.zip;
-    this.clientAppointeeSummary.trustee_1_phone = this.spouse.phone;
-
-    this.clientAppointeeSummary.fpoa_1_name = this.spouse.first_name + ' ' + this.spouse.last_name;
-    this.clientAppointeeSummary.fpoa_1_address =
-      this.spouse.address +
-      ' ' +
-      this.spouse.city +
-      ' ' +
-      this.spouse.state +
-      ' ' +
-      this.spouse.zip;
-    this.clientAppointeeSummary.fpoa_1_phone = this.spouse.phone;
-
-    this.clientAppointeeSummary.mpoa_1_name = this.spouse.first_name + ' ' + this.spouse.last_name;
-    this.clientAppointeeSummary.mpoa_1_address =
-      this.spouse.address +
-      ' ' +
-      this.spouse.city +
-      ' ' +
-      this.spouse.state +
-      ' ' +
-      this.spouse.zip;
-    this.clientAppointeeSummary.mpoa_1_phone = this.spouse.phone;
-  }
-
-  private initSpouseAppointeeForm(): void {
-    this.spouseAppointeeSummary.user_id = this.spouse.id;
-    this.spouseAppointeeSummary.executor_1_name =
-      this.client.first_name + ' ' + this.client.last_name;
-    this.spouseAppointeeSummary.executor_1_address =
-      this.client.address +
-      ' ' +
-      this.client.city +
-      ' ' +
-      this.client.state +
-      ' ' +
-      this.client.zip;
-    this.spouseAppointeeSummary.executor_1_phone = this.client.phone;
-
-    this.spouseAppointeeSummary.trustee_1_name =
-      this.client.first_name + ' ' + this.client.last_name;
-    this.spouseAppointeeSummary.trustee_1_address =
-      this.client.addressi +
-      ' ' +
-      this.client.city +
-      ' ' +
-      this.client.state +
-      ' ' +
-      this.client.zip;
-    this.spouseAppointeeSummary.trustee_1_phone = this.client.phone;
-
-    this.spouseAppointeeSummary.fpoa_1_name = this.client.first_name + ' ' + this.client.last_name;
-    this.spouseAppointeeSummary.fpoa_1_address =
-      this.client.address +
-      ' ' +
-      this.client.city +
-      ' ' +
-      this.client.state +
-      ' ' +
-      this.client.zip;
-    this.spouseAppointeeSummary.fpoa_1_phone = this.client.phone;
-
-    this.spouseAppointeeSummary.mpoa_1_name = this.client.first_name + ' ' + this.client.last_name;
-    this.spouseAppointeeSummary.mpoa_1_address =
-      this.client.address +
-      ' ' +
-      this.client.city +
-      ' ' +
-      this.client.state +
-      ' ' +
-      this.client.zip;
-    this.spouseAppointeeSummary.mpoa_1_phone = this.client.phone;
+    });
   }
 
   //upserts the client appointee form
   upsertClient(): void {
     this.appointeeSummaryService.upsert(this.clientAppointeeSummary).subscribe((res) => {
-      console.log('client appointee summary', res);
       this.clientAppointeeSummary = res[0];
     });
   }
@@ -329,9 +268,131 @@ export class AppointeesComponent implements OnInit {
   upsertSpouse(): void {
     if (this.spouse) {
       this.appointeeSummaryService.upsert(this.spouseAppointeeSummary).subscribe((res) => {
-        console.log('spouse appointee summary', res);
         this.spouseAppointeeSummary = res[0];
       });
+    }
+  }
+
+  //copy down
+  // mode: 'client' or 'spouse'
+  // location: 'trustee' or 'fpoa' or 'mpoa'
+  copyDown(mode: string, location: string): void {
+    if (mode === 'client') {
+      if (location === 'trustee') {
+        this.clientAppointeeSummary.trustee_1_rank = this.clientAppointeeSummary.executor_1_rank;
+        this.clientAppointeeSummary.trustee_1_name = this.clientAppointeeSummary.executor_1_name;
+        this.clientAppointeeSummary.trustee_1_address =
+          this.clientAppointeeSummary.executor_1_address;
+        this.clientAppointeeSummary.trustee_1_phone = this.clientAppointeeSummary.executor_1_phone;
+        this.clientAppointeeSummary.trustee_2_rank = this.clientAppointeeSummary.executor_2_rank;
+        this.clientAppointeeSummary.trustee_2_name = this.clientAppointeeSummary.executor_2_name;
+        this.clientAppointeeSummary.trustee_2_address =
+          this.clientAppointeeSummary.executor_2_address;
+        this.clientAppointeeSummary.trustee_2_phone = this.clientAppointeeSummary.executor_2_phone;
+        this.clientAppointeeSummary.trustee_3_rank = this.clientAppointeeSummary.executor_3_rank;
+        this.clientAppointeeSummary.trustee_3_name = this.clientAppointeeSummary.executor_3_name;
+        this.clientAppointeeSummary.trustee_3_address =
+          this.clientAppointeeSummary.executor_3_address;
+        this.clientAppointeeSummary.trustee_3_phone = this.clientAppointeeSummary.executor_3_phone;
+        this.clientAppointeeSummary.trustee_4_rank = this.clientAppointeeSummary.executor_4_rank;
+        this.clientAppointeeSummary.trustee_4_name = this.clientAppointeeSummary.executor_4_name;
+        this.clientAppointeeSummary.trustee_4_address =
+          this.clientAppointeeSummary.executor_4_address;
+        this.clientAppointeeSummary.trustee_4_phone = this.clientAppointeeSummary.executor_4_phone;
+      } else if (location === 'fpoa') {
+        this.clientAppointeeSummary.fpoa_1_rank = this.clientAppointeeSummary.trustee_1_rank;
+        this.clientAppointeeSummary.fpoa_1_name = this.clientAppointeeSummary.trustee_1_name;
+        this.clientAppointeeSummary.fpoa_1_address = this.clientAppointeeSummary.trustee_1_address;
+        this.clientAppointeeSummary.fpoa_1_phone = this.clientAppointeeSummary.trustee_1_phone;
+        this.clientAppointeeSummary.fpoa_2_rank = this.clientAppointeeSummary.trustee_2_rank;
+        this.clientAppointeeSummary.fpoa_2_name = this.clientAppointeeSummary.trustee_2_name;
+        this.clientAppointeeSummary.fpoa_2_address = this.clientAppointeeSummary.trustee_2_address;
+        this.clientAppointeeSummary.fpoa_2_phone = this.clientAppointeeSummary.trustee_2_phone;
+        this.clientAppointeeSummary.fpoa_3_rank = this.clientAppointeeSummary.trustee_3_rank;
+        this.clientAppointeeSummary.fpoa_3_name = this.clientAppointeeSummary.trustee_3_name;
+        this.clientAppointeeSummary.fpoa_3_address = this.clientAppointeeSummary.trustee_3_address;
+        this.clientAppointeeSummary.fpoa_3_phone = this.clientAppointeeSummary.trustee_3_phone;
+        this.clientAppointeeSummary.fpoa_4_rank = this.clientAppointeeSummary.trustee_4_rank;
+        this.clientAppointeeSummary.fpoa_4_name = this.clientAppointeeSummary.trustee_4_name;
+        this.clientAppointeeSummary.fpoa_4_address = this.clientAppointeeSummary.trustee_4_address;
+        this.clientAppointeeSummary.fpoa_4_phone = this.clientAppointeeSummary.trustee_4_phone;
+      } else if (location === 'mpoa') {
+        this.clientAppointeeSummary.mpoa_1_rank = this.clientAppointeeSummary.fpoa_1_rank;
+        this.clientAppointeeSummary.mpoa_1_name = this.clientAppointeeSummary.fpoa_1_name;
+        this.clientAppointeeSummary.mpoa_1_address = this.clientAppointeeSummary.fpoa_1_address;
+        this.clientAppointeeSummary.mpoa_1_phone = this.clientAppointeeSummary.fpoa_1_phone;
+        this.clientAppointeeSummary.mpoa_2_rank = this.clientAppointeeSummary.fpoa_2_rank;
+        this.clientAppointeeSummary.mpoa_2_name = this.clientAppointeeSummary.fpoa_2_name;
+        this.clientAppointeeSummary.mpoa_2_address = this.clientAppointeeSummary.fpoa_2_address;
+        this.clientAppointeeSummary.mpoa_2_phone = this.clientAppointeeSummary.fpoa_2_phone;
+        this.clientAppointeeSummary.mpoa_3_rank = this.clientAppointeeSummary.fpoa_3_rank;
+        this.clientAppointeeSummary.mpoa_3_name = this.clientAppointeeSummary.fpoa_3_name;
+        this.clientAppointeeSummary.mpoa_3_address = this.clientAppointeeSummary.fpoa_3_address;
+        this.clientAppointeeSummary.mpoa_3_phone = this.clientAppointeeSummary.fpoa_3_phone;
+        this.clientAppointeeSummary.mpoa_4_rank = this.clientAppointeeSummary.fpoa_4_rank;
+        this.clientAppointeeSummary.mpoa_4_name = this.clientAppointeeSummary.fpoa_4_name;
+        this.clientAppointeeSummary.mpoa_4_address = this.clientAppointeeSummary.fpoa_4_address;
+        this.clientAppointeeSummary.mpoa_4_phone = this.clientAppointeeSummary.fpoa_4_phone;
+      }
+      this.upsertClient();
+    } else if (mode === 'spouse') {
+      if (location === 'trustee') {
+        this.spouseAppointeeSummary.trustee_1_rank = this.spouseAppointeeSummary.executor_1_rank;
+        this.spouseAppointeeSummary.trustee_1_name = this.spouseAppointeeSummary.executor_1_name;
+        this.spouseAppointeeSummary.trustee_1_address =
+          this.spouseAppointeeSummary.executor_1_address;
+        this.spouseAppointeeSummary.trustee_1_phone = this.spouseAppointeeSummary.executor_1_phone;
+        this.spouseAppointeeSummary.trustee_2_rank = this.spouseAppointeeSummary.executor_2_rank;
+        this.spouseAppointeeSummary.trustee_2_name = this.spouseAppointeeSummary.executor_2_name;
+        this.spouseAppointeeSummary.trustee_2_address =
+          this.spouseAppointeeSummary.executor_2_address;
+        this.spouseAppointeeSummary.trustee_2_phone = this.spouseAppointeeSummary.executor_2_phone;
+        this.spouseAppointeeSummary.trustee_3_rank = this.spouseAppointeeSummary.executor_3_rank;
+        this.spouseAppointeeSummary.trustee_3_name = this.spouseAppointeeSummary.executor_3_name;
+        this.spouseAppointeeSummary.trustee_3_address =
+          this.spouseAppointeeSummary.executor_3_address;
+        this.spouseAppointeeSummary.trustee_3_phone = this.spouseAppointeeSummary.executor_3_phone;
+        this.spouseAppointeeSummary.trustee_4_rank = this.spouseAppointeeSummary.executor_4_rank;
+        this.spouseAppointeeSummary.trustee_4_name = this.spouseAppointeeSummary.executor_4_name;
+        this.spouseAppointeeSummary.trustee_4_address =
+          this.spouseAppointeeSummary.executor_4_address;
+        this.spouseAppointeeSummary.trustee_4_phone = this.spouseAppointeeSummary.executor_4_phone;
+      } else if (location === 'fpoa') {
+        this.spouseAppointeeSummary.fpoa_1_rank = this.spouseAppointeeSummary.trustee_1_rank;
+        this.spouseAppointeeSummary.fpoa_1_name = this.spouseAppointeeSummary.trustee_1_name;
+        this.spouseAppointeeSummary.fpoa_1_address = this.spouseAppointeeSummary.trustee_1_address;
+        this.spouseAppointeeSummary.fpoa_1_phone = this.spouseAppointeeSummary.trustee_1_phone;
+        this.spouseAppointeeSummary.fpoa_2_rank = this.spouseAppointeeSummary.trustee_2_rank;
+        this.spouseAppointeeSummary.fpoa_2_name = this.spouseAppointeeSummary.trustee_2_name;
+        this.spouseAppointeeSummary.fpoa_2_address = this.spouseAppointeeSummary.trustee_2_address;
+        this.spouseAppointeeSummary.fpoa_2_phone = this.spouseAppointeeSummary.trustee_2_phone;
+        this.spouseAppointeeSummary.fpoa_3_rank = this.spouseAppointeeSummary.trustee_3_rank;
+        this.spouseAppointeeSummary.fpoa_3_name = this.spouseAppointeeSummary.trustee_3_name;
+        this.spouseAppointeeSummary.fpoa_3_address = this.spouseAppointeeSummary.trustee_3_address;
+        this.spouseAppointeeSummary.fpoa_3_phone = this.spouseAppointeeSummary.trustee_3_phone;
+        this.spouseAppointeeSummary.fpoa_4_rank = this.spouseAppointeeSummary.trustee_4_rank;
+        this.spouseAppointeeSummary.fpoa_4_name = this.spouseAppointeeSummary.trustee_4_name;
+        this.spouseAppointeeSummary.fpoa_4_address = this.spouseAppointeeSummary.trustee_4_address;
+        this.spouseAppointeeSummary.fpoa_4_phone = this.spouseAppointeeSummary.trustee_4_phone;
+      } else if (location === 'mpoa') {
+        this.spouseAppointeeSummary.mpoa_1_rank = this.spouseAppointeeSummary.fpoa_1_rank;
+        this.spouseAppointeeSummary.mpoa_1_name = this.spouseAppointeeSummary.fpoa_1_name;
+        this.spouseAppointeeSummary.mpoa_1_address = this.spouseAppointeeSummary.fpoa_1_address;
+        this.spouseAppointeeSummary.mpoa_1_phone = this.spouseAppointeeSummary.fpoa_1_phone;
+        this.spouseAppointeeSummary.mpoa_2_rank = this.spouseAppointeeSummary.fpoa_2_rank;
+        this.spouseAppointeeSummary.mpoa_2_name = this.spouseAppointeeSummary.fpoa_2_name;
+        this.spouseAppointeeSummary.mpoa_2_address = this.spouseAppointeeSummary.fpoa_2_address;
+        this.spouseAppointeeSummary.mpoa_2_phone = this.spouseAppointeeSummary.fpoa_2_phone;
+        this.spouseAppointeeSummary.mpoa_3_rank = this.spouseAppointeeSummary.fpoa_3_rank;
+        this.spouseAppointeeSummary.mpoa_3_name = this.spouseAppointeeSummary.fpoa_3_name;
+        this.spouseAppointeeSummary.mpoa_3_address = this.spouseAppointeeSummary.fpoa_3_address;
+        this.spouseAppointeeSummary.mpoa_3_phone = this.spouseAppointeeSummary.fpoa_3_phone;
+        this.spouseAppointeeSummary.mpoa_4_rank = this.spouseAppointeeSummary.fpoa_4_rank;
+        this.spouseAppointeeSummary.mpoa_4_name = this.spouseAppointeeSummary.fpoa_4_name;
+        this.spouseAppointeeSummary.mpoa_4_address = this.spouseAppointeeSummary.fpoa_4_address;
+        this.spouseAppointeeSummary.mpoa_4_phone = this.spouseAppointeeSummary.fpoa_4_phone;
+      }
+      this.upsertSpouse();
     }
   }
 }
