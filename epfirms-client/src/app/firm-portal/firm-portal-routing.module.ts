@@ -83,6 +83,16 @@ const routes: Routes = [
             data: { title: 'Messages' },
           },
 
+          {
+            path: 'referrals',
+            canActivate: [AuthGuard],
+            loadChildren: () =>
+              import('../features/referral/referral.module').then(
+                (m) => m.ReferralModule,
+              ),
+            data: { title: 'Referrals' },
+          },
+
           
         ],
       },

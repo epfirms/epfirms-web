@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReferralStatsComponent } from './referral-stats/referral-stats.component';
+import { ReferralRoutingModule } from './referral-routing.module';
 
 
 
@@ -9,7 +10,8 @@ import { ReferralStatsComponent } from './referral-stats/referral-stats.componen
     ReferralStatsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReferralRoutingModule,
   ]
 })
 export class ReferralModule { }
