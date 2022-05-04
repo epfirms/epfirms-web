@@ -428,6 +428,9 @@ export class Database {
 
     this.models.user.hasOne(this.models.appointee_summary, {foreignKey: 'user_id'});
     this.models.appointee_summary.belongsTo(this.models.user, {foreignKey: 'user_id'});
+
+    this.models.matter.hasOne(this.models.referral, {foreignKey: 'matter_id'});
+    this.models.referral.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
   }
 
   public static async start() {
