@@ -15,9 +15,9 @@
           </thead>
           <tbody class="divide-y divide-gray-200">
             <tr *ngFor="let team of teams" (click)="addTeamMember(team)" class="group hover:bg-gray-50 hover:cursor-pointer">
-              <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6 md:pl-0">{{team.owner.user.full_name | titlecase}}</td>
-              <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{team.twilio_phone_number | phone}}</td>
-              <td class="px-3 py-4 text-sm text-center text-gray-500 whitespace-nowrap">{{team.firm_team_members.length || 0}}</td>
+              <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6 md:pl-0">{{team.team.name | titlecase}}</td>
+              <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{team.team.twilio_phone_number | phone}}</td>
+              <td class="px-3 py-4 text-sm text-center text-gray-500 whitespace-nowrap">{{team.members.length || 0}}</td>
               <td class="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6 md:pr-0">
                 <a class="text-blue-600 hover:text-blue-900">Edit</a>
               </td>

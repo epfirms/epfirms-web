@@ -6,84 +6,100 @@ export class TeamService {
   constructor() {}
 
   public async findOne(id: number): Promise<any> {
-    const { firm_team } = Database.models;
-    const team = await firm_team.findOne({
+    const { team } = Database.models;
+    const teamInstance = await team.findOne({
       where: {
         id,
       },
     });
 
-    return Promise.resolve(team);
+    return Promise.resolve(teamInstance);
   }
 
   public async findAll(firmId: number): Promise<any> {
-    const { firm_team } = Database.models;
-    const teams = await firm_team.findAll({
+    const { team } = Database.models;
+    const teamInstances = await team.findAll({
       where: {
         firm_id: firmId,
       },
     });
 
-    return Promise.resolve(teams);
+    return Promise.resolve(teamInstances);
   }
 
   public async create(firmId: number, teamDetails): Promise<any> {
-    const { firm_team } = Database.models;
-    const team = await firm_team.create({
+    const { team } = Database.models;
+    const teamInstance = await team.create({
       ...teamDetails,
       firm_id: firmId,
     });
 
-    return Promise.resolve(team);
+    return Promise.resolve(teamInstance);
   }
 
-  public async findAllByUserId(firmId: number, userId: number): Promise<any> {
-    const { firm_employee, firm_team, firm_team_member } = Database.models;
-    const employee = await firm_employee.findOne({where: {firm_id: firmId, user_id: userId}});
-    const teams = await firm_team.findAll({
+  public async findAllByUserId(firmId: number, employeeId: number, opts: {role?: string} = {}): Promise<any> {
+    const { firm_employee, team } = Database.models;
+
+    const employee = await firm_employee.findByPk(employeeId, {
       include: [
         {
-          model: firm_team_member,
+          model: team,
           where: {
-            firm_employee_id: employee.id,
+            firm_id: firmId
           },
-          required: true,
+          through: {
+            where: opts
+          }
         }
       ]
     });
 
-
-    return Promise.resolve(teams);
+    return Promise.resolve(employee.teams);
   }
 
   public async findAllMembers(teamId: number): Promise<any> {
-    const { firm_team_member, firm_employee, user} = Database.models;
-    const members = await firm_team_member.findAll({
+    const { team_member } = Database.models;
+    const members = await team_member.findAll({
       where: {
-        firm_team_id: teamId
-      },
-      include: [{
-        model: firm_employee,
-        attributes: ['user_id'],
-        include: [{
-          model: user,
-          attributes: ['first_name', 'last_name', 'profile_image']
-        }]
-      }]
+        team_id: teamId
+      }
     });
 
     return Promise.resolve(members);
   }
 
   public async updateMember(teamId: number, memberId: number, data): Promise<any> {
-    const { firm_team_member } = Database.models;
-    const members = await firm_team_member.update(data, {
+    const { team_member } = Database.models;
+    const members = await team_member.update(data, {
       where: {
         id: memberId,
-        firm_team_id: teamId
+        team_id: teamId
       }
     });
 
     return Promise.resolve(members);
+  }
+
+  public async addEmployeeToTeam(teamId: number, employeeId: number, role: string): Promise<any> {
+    const { team, firm_employee, team_member } = Database.sequelize.models;
+    const teamInstance: any = await team.findByPk(teamId);
+    const employeeInstance: any = await firm_employee.findByPk(employeeId);
+    const teamMember = await team_member.create({
+      team_id: teamInstance.id,
+      firm_employee_id: employeeInstance.id,
+      role
+    });
+
+    return Promise.resolve(teamMember);
+  }
+
+  public async removeEmployeeFromTeam(teamId: number, memberId: number, role: string): Promise<any> {
+    const { team_member } = Database.sequelize.models;
+    await team_member.destroy({where: {
+      team_id: teamId,
+      firm_employee_id: memberId,
+      role
+    }});
+    return Promise.resolve(true);
   }
 }

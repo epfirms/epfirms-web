@@ -146,58 +146,14 @@ export class ConversationDraftComponent implements OnInit, OnDestroy {
   }
 
   createGroupConversation(matter) {
-    this._teamService
-      .getAllByUserId(matter.attorney_id)
-      .pipe(
-        switchMap((teams) =>
-          this._teamService
-            .getAllMembers(teams[0].id)
-            .pipe(map((response) => ({ teams, members: response.data }))),
-        ),
-      )
-      .subscribe(({ teams, members }) => {
+    this._conversationService.createMatterConversation(matter.id).subscribe((response) => {
+      this._firmService.getCurrentFirm().subscribe((firm) => {
+        const message = `Hello, this is your attorney, ${matter.attorney.full_name}, at ${firm.name}. I would like to communicate with you through text. If you do not want me to text you, please reply STOP.`;
         this._conversationService
-          .createConversation('group', { matterId: matter.id })
-          .pipe(
-            mergeMap((conversation) =>
-              this._conversationService
-                .addParticipant(conversation, {
-                  messagingBinding: { address: matter.client.cell_phone },
-                  attributes: {
-                    friendlyName: matter.client.full_name,
-                    phone: matter.client.cell_phone,
-                  },
-                })
-                .pipe(map(() => conversation)),
-            ),
-            mergeMap((conversation) =>
-              from(members).pipe(
-                mergeMap((member: any) =>
-                  this._conversationService.addParticipant(conversation, {
-                    identity: member.firm_employee.user_id,
-                    messagingBinding: { projectedAddress: teams[0].twilio_phone_number },
-                    attributes: {
-                      friendlyName:
-                        member.firm_employee.user.first_name +
-                        ' ' +
-                        member.firm_employee.user.last_name,
-                    },
-                  }),
-                ),
-              ).pipe(map(() => conversation)),
-            ),
-            take(1)
-          )
-          // Add selected participant.
-          .subscribe((conversation) => {
-            this._firmService.getCurrentFirm().subscribe((firm) => {
-              const message = `Hello, this is your attorney, ${matter.attorney.full_name}, at ${firm.name}. I would like to communicate with you through text. If you do not want me to text you, please reply STOP.`;
-              this._conversationService
-                .sendMessage(conversation.sid, { body: message, author: matter.attorney_id })
-                .subscribe(() => {});
-            });
-          });
+          .sendMessage(response.data.conversationSid, { body: message, author: matter.attorney_id })
+          .subscribe(() => {});
       });
+    });
   }
 
   navigateToConversation(conversation: Conversation) {

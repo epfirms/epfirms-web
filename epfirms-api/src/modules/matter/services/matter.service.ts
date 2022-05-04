@@ -1,7 +1,6 @@
 import { Database } from '@src/core/Database';
+import { QueryTypes, Sequelize, Op } from 'sequelize';
 import { Service } from 'typedi';
-const { Op } = require('sequelize');
-const bcrypt = require('bcrypt');
 
 @Service()
 export class MatterService {
@@ -16,18 +15,17 @@ export class MatterService {
       matter_task_file,
       matter_billing_settings
     } = Database.models;
-    const { sequelize } = Database;
     const matters = await matter.findOne({
       attributes: {
         include: [
           [
-            sequelize.literal(
+            Sequelize.literal(
               '(SELECT SUM(amount) FROM `matter_billing` WHERE type = 0 AND matter_id = `matter`.id)'
             ),
             'total_billed'
           ],
           [
-            sequelize.literal(
+            Sequelize.literal(
               '(SELECT SUM(amount) FROM `matter_billing` WHERE type = 1 AND matter_id = `matter`.id)'
             ),
             'total_paid'
@@ -89,7 +87,7 @@ export class MatterService {
       ],
       order: [
         [
-          sequelize.literal(
+          Sequelize.literal(
             '(CASE WHEN `matter_tasks`.completed = 1 THEN 1 END) asc, (CASE WHEN `matter_tasks`.due IS NULL THEN 3 END) asc, `matter_tasks`.due asc'
           )
         ]
@@ -110,18 +108,17 @@ export class MatterService {
       matter_task_file,
       matter_billing_settings
     } = Database.models;
-    const { sequelize } = Database;
     const matters = await matter.findAll({
       attributes: {
         include: [
           [
-            sequelize.literal(
+            Sequelize.literal(
               '(SELECT SUM(amount) FROM `matter_billing` WHERE type = 0 AND matter_id = `matter`.id)'
             ),
             'total_billed'
           ],
           [
-            sequelize.literal(
+            Sequelize.literal(
               '(SELECT SUM(amount) FROM `matter_billing` WHERE type = 1 AND matter_id = `matter`.id)'
             ),
             'total_paid'
@@ -183,7 +180,7 @@ export class MatterService {
       ],
       order: [
         [
-          sequelize.literal(
+          Sequelize.literal(
             '(CASE WHEN `matter_tasks`.completed = 1 THEN 1 END) asc, (CASE WHEN `matter_tasks`.due IS NULL THEN 3 END) asc, `matter_tasks`.due asc'
           )
         ]
@@ -202,8 +199,8 @@ export class MatterService {
     )
     as caseid;`;
 
-    const generatedCaseId = await Database.sequelize.query(query, {
-      type: Database.sequelize.QueryTypes.SELECT
+    const generatedCaseId: any[] = await Database.sequelize.query(query, {
+      type: QueryTypes.SELECT
     });
 
     matterData.case_id = generatedCaseId[0].caseid;

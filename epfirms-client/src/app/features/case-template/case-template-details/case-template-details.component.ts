@@ -108,7 +108,7 @@ export class CaseTemplateDetailsComponent implements OnInit {
       no_of_days_from_start_date: null,
       firm_template_task_files: [],
       duration_minutes: null,
-      firm_role_id: null
+      role: null
     });
   }
 
@@ -122,10 +122,10 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
     if (assigneeType === 'Role') {
       this.template.firm_template_tasks[index].user_id = null;
-      this.template.firm_template_tasks[index].firm_role_id = selectedOption
+      this.template.firm_template_tasks[index].role = selectedOption
     } else if (assigneeType === 'Staff') {
       this.template.firm_template_tasks[index].user_id = selectedOption;
-      this.template.firm_template_tasks[index].firm_role_id = null;
+      this.template.firm_template_tasks[index].role = null;
     }
 
     // this.template.firm_template_tasks[index].assignee_type = selectedOption.type;
@@ -190,7 +190,7 @@ export class CaseTemplateDetailsComponent implements OnInit {
   /** Populates assignee groups with staff members and firm roles. */
   private _createAssigneeGroups(): void {
     const getStaff = this.staff$.pipe(take(1), map(staff => ({type: 'Staff', assignees: [...staff]})));
-    const getRoles = this._firmRoleService.get().pipe(map(response => ({type: 'Role', assignees: [...response.roles]})));
+    const getRoles = this._firmRoleService.get().pipe(map(response => ({type: 'Role', assignees: [...response]})));
 
     forkJoin({staff: getStaff, roles: getRoles}).pipe().subscribe(({staff, roles}) => {
       const staffAssignees: TemplateTaskAssignee[] = staff.assignees.map(a => (
@@ -203,8 +203,7 @@ export class CaseTemplateDetailsComponent implements OnInit {
       // Assignees are normalized for consistent use.
       const roleAssignees: TemplateTaskAssignee[] = roles.assignees.map(a => (
         {
-          id:a.id,
-          name: a.name
+          name: a
         } as TemplateTaskAssignee
         ));
         
