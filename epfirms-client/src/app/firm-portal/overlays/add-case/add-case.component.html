@@ -160,6 +160,29 @@
         </div>
       </div>
 
+<div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+        <div>
+          <label for="project-description" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
+            Referral
+          </label>
+        </div>
+        <div class="sm:col-span-2">
+
+<div>
+  <select [(ngModel)]="selectedReferralType" [ngModelOptions]="{standalone: true}" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+    <option *ngFor="let type of referralTypes" [ngValue]="type.value">{{type.label}}</option>
+  </select>
+<div>
+  <div *ngIf="selectedReferralType === 'friend_or_family' || selectedReferralType === 'professional'" class="mt-1">
+    <input [(ngModel)]="refererName" [ngModelOptions]="{standalone: true}" type="text"  class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Referral Name">
+  </div>
+</div>
+
+</div>
+
+        </div>
+      </div>
+
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
           <label for="project-description" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">

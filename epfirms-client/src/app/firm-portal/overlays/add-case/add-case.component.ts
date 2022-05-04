@@ -18,6 +18,7 @@ import { EpModalRef } from '@app/shared/modal/modal-ref';
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { ConversationService } from '@app/features/conversation/services/conversation.service';
 import { createMask } from '@ngneat/input-mask';
+import { referralTypes } from '@app/shared/utils/referral-types';
 
 @Component({
   selector: 'app-add-case',
@@ -93,6 +94,12 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   selectedClient;
 
   selectedAttorney;
+
+  // properties for the referral selction
+  referralTypes = referralTypes;
+  // if the referral type is friend_or_family, or professional, we need to show the text input
+  refererName : string = "";
+  selectedReferralType : string = "";
   
   constructor(
     private _fb: FormBuilder,
@@ -259,6 +266,6 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.close({matter: this.caseForm.value, note: this.note, chatToTextNumber: this.enableChatToText && this.chatToTextNumber.valid ? this.chatToTextNumber : null});
+    this.close({matter: this.caseForm.value, note: this.note, chatToTextNumber: this.enableChatToText && this.chatToTextNumber.valid ? this.chatToTextNumber : null, referral: {referralType: this.selectedReferralType, refererName: this.refererName}});
   }
 }

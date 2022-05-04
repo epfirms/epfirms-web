@@ -16,6 +16,8 @@ import { ConversationService } from '@app/features/conversation/services/convers
 import { Store } from '@ngrx/store';
 import { FirmService } from '../_services/firm-service/firm.service';
 import { TeamService } from '@app/features/team/services/team.service';
+import { Referral } from '@app/core/interfaces/Referral';
+import { ReferralService } from '@app/features/referral/referral.service';
 
 @Component({
   selector: 'app-cases',
@@ -103,6 +105,7 @@ export class CasesComponent implements OnInit {
     private _firmService: FirmService,
     private readonly store: Store,
     private _teamService: TeamService,
+    private referralService: ReferralService,
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.cases$ = _matterService.filteredEntities$;
@@ -156,6 +159,22 @@ export class CasesComponent implements OnInit {
               }
             }
 
+            if (newMatter.id) {
+              // if the new matter is created and has a referral,
+              // create a referral with the service
+              if (data.referral) {
+                const referral = new Referral(
+                  newMatter.id,
+                  data.referral.referralType,
+                  data.referral.refererName,
+                );
+
+                this.referralService.upsert(referral).subscribe((newReferral) => {
+                  console.log('new referral', newReferral);
+                });
+              }
+            }
+
             if (data.chatToTextNumber) {
               this.createConversation(newMatter);
             }
@@ -174,9 +193,12 @@ export class CasesComponent implements OnInit {
       .getAllByUserId(matter.attorney_id)
       .pipe(
         switchMap((teams) =>
-          this._teamService
-            .getAllMembers(teams[0].id)
-            .pipe(map((response) => ({ teams, members: response.data.filter(m => m.include_in_group_chat)}))),
+          this._teamService.getAllMembers(teams[0].id).pipe(
+            map((response) => ({
+              teams,
+              members: response.data.filter((m) => m.include_in_group_chat),
+            })),
+          ),
         ),
       )
       .subscribe(({ teams, members }) => {
@@ -195,22 +217,24 @@ export class CasesComponent implements OnInit {
                 .pipe(map(() => conversation)),
             ),
             mergeMap((conversation) =>
-              from(members).pipe(
-                mergeMap((member: any) =>
-                  this._conversationService.addParticipant(conversation, {
-                    identity: member.firm_employee.user_id,
-                    messagingBinding: { projectedAddress: teams[0].twilio_phone_number },
-                    attributes: {
-                      friendlyName:
-                        member.firm_employee.user.first_name +
-                        ' ' +
-                        member.firm_employee.user.last_name,
-                    },
-                  }),
-                ),
-              ).pipe(map(() => conversation)),
+              from(members)
+                .pipe(
+                  mergeMap((member: any) =>
+                    this._conversationService.addParticipant(conversation, {
+                      identity: member.firm_employee.user_id,
+                      messagingBinding: { projectedAddress: teams[0].twilio_phone_number },
+                      attributes: {
+                        friendlyName:
+                          member.firm_employee.user.first_name +
+                          ' ' +
+                          member.firm_employee.user.last_name,
+                      },
+                    }),
+                  ),
+                )
+                .pipe(map(() => conversation)),
             ),
-            take(1)
+            take(1),
           )
           // Add selected participant.
           .subscribe((conversation) => {
