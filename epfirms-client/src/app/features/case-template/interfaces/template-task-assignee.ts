@@ -1,5 +1,5 @@
 export interface TemplateTaskAssignee {
-    id: number | null;
+    id?: number | null;
     name: string;
     profile_image?: string;
 };

@@ -18,6 +18,9 @@ import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { OptionComponent } from '@app/shared/option/option/option.component';
 import { DOWN_ARROW, ENTER, ESCAPE, TAB, UP_ARROW, hasModifierKey } from '@angular/cdk/keycodes';
 import { NgScrollbar } from 'ngx-scrollbar';
+import { TeamService } from '@app/features/team/services/team.service';
+import { concatMap, from, map, mergeMap } from 'rxjs';
+import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 
 @Component({
   selector: 'app-case-template-selection',
@@ -60,7 +63,8 @@ export class CaseTemplateSelectionComponent implements OnInit, AfterViewInit {
   constructor(
     private _caseTemplateService: CaseTemplateService,
     private _modalRef: EpModalRef,
-    private _firmTeamService: FirmTeamService,
+    private _teamService: TeamService,
+    private _staffService: StaffService,
   ) {}
 
   ngOnInit(): void {
@@ -82,9 +86,32 @@ export class CaseTemplateSelectionComponent implements OnInit, AfterViewInit {
       this.filteredCaseTemplates = this.caseTemplates;
     });
 
-    this._firmTeamService.getTeamsByOwner(this.attorney_id).subscribe((res) => {
-      this.members = res.teams.length ? res.teams[0].firm_team_members : [];
-    });
+    this._teamService
+      .getAllByUserId(this.attorney_id, { role: 'attorney' })
+      .pipe(
+        concatMap((res) => {
+          return res.data && res.data.length
+            ? this._teamService
+                .getAllMembers(res.data[0].id)
+                .pipe(mergeMap(({data}) => this._staffService.entities$.pipe(map((staff) => {
+                  return data.reduce((acc, curr) => {
+                    const employee = staff.find((s) => s.id === curr.firm_employee_id);
+                    if (employee) {
+                      acc.push({
+                        ...curr,
+                        user_id: employee.user.id
+                      });
+                    }
+
+                    return acc;
+                  }, []);
+                }))))
+            : from([]);
+        }),
+      )
+      .subscribe((response) => {
+        this.members = response;
+      });
   }
 
   ngAfterViewInit(): void {
@@ -103,9 +130,9 @@ export class CaseTemplateSelectionComponent implements OnInit, AfterViewInit {
   public formatTasks(): MatterTask[] {
     const tasks = this.activeOption.value.firm_template_tasks;
     return tasks.map((t) => {
-      // Get an employee based on the specified user_id or firm_role
+      // Get an employee based on the specified user_id or role
       const assigneeId: number =
-        t.firm_role_id && !t.user_id ? this.getAssigneeIdFromRole(t.firm_role_id) : t.user_id;
+        t.role && !t.user_id ? this.getAssigneeIdFromRole(t.role) : t.user_id;
 
       return {
         name: t.name,
@@ -192,9 +219,9 @@ export class CaseTemplateSelectionComponent implements OnInit, AfterViewInit {
    * Gets the user id from the member on the attorney's team with a matching role.
    * If there is no team member assigned to that role, use the attorney id instead.
    */
-  private getAssigneeIdFromRole(firm_role_id: number): number {
-    const teamMember = this.members.find((m) => m.firm_role_id === firm_role_id);
-    return teamMember ? teamMember.firm_employee.user_id : this.attorney_id;
+  private getAssigneeIdFromRole(role: string): number {
+    const teamMember = this.members.find((m) => m.role === role);
+    return teamMember ? teamMember.user_id : this.attorney_id;
   }
 
   private addDaysToDate(date: Date, numberOfDays: number): Date {

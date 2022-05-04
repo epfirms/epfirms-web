@@ -6,13 +6,18 @@ import { LocalInstance } from 'twilio/lib/rest/api/v2010/account/availablePhoneN
 import { AccountInstance } from 'twilio/lib/rest/api/v2010/account';
 import { AddChatParticipantDto } from './dto';
 import { UserInstance } from 'twilio/lib/rest/conversations/v1/service/user';
-import { MessageInstance, MessageListInstanceCreateOptions } from 'twilio/lib/rest/conversations/v1/service/conversation/message';
+import {
+  MessageInstance,
+  MessageListInstanceCreateOptions,
+} from 'twilio/lib/rest/conversations/v1/service/conversation/message';
+import { ConversationListInstanceCreateOptions } from 'twilio/lib/rest/conversations/v1/conversation';
+import { ConversationInstance } from 'twilio/lib/rest/conversations/v1/service/conversation';
 const {
   TWILIO_ACCOUNT_SID,
   TWILIO_AUTH_TOKEN,
   TWILIO_API_KEY_SID,
   TWILIO_API_KEY_SECRET,
-  TWILIO_CONVERSATIONS_SERVICE_SID
+  TWILIO_CONVERSATIONS_SERVICE_SID,
 } = require('@configs/vars');
 
 /**
@@ -29,7 +34,7 @@ export class ConversationService {
   /**
    * Creates a grant for a client to use Chat as a given user, on a given device.
    */
-  public async createChatGrant(): Promise<AccessToken.ChatGrant> {
+  async createChatGrant(): Promise<AccessToken.ChatGrant> {
     const chatGrant = new AccessToken.ChatGrant({
       serviceSid: TWILIO_CONVERSATIONS_SERVICE_SID,
     });
@@ -40,61 +45,108 @@ export class ConversationService {
   /**
    * Creates an access token for use with twilio SDK client.
    */
-  public async createAccessToken(
+  async createAccessToken(
     identity: string,
     grants: {
-      chat: AccessToken.ChatGrant,
-    }
+      chat: AccessToken.ChatGrant;
+    },
   ): Promise<AccessToken> {
     const token = new AccessToken(TWILIO_ACCOUNT_SID, TWILIO_API_KEY_SID, TWILIO_API_KEY_SECRET, {
       identity: identity,
-      ttl: 43200
+      ttl: 43200,
     });
 
     token.addGrant(grants.chat);
     return Promise.resolve(token);
   }
 
-  public async createMessage(
+  async createConversation(opts: ConversationListInstanceCreateOptions): Promise<ConversationInstance> {
+    const conversation = await this.twilioClient.conversations
+      .services(TWILIO_CONVERSATIONS_SERVICE_SID)
+      .conversations.create(opts);
+
+    return Promise.resolve(conversation);
+  }
+
+  async createMessage(
     conversationSid: string,
-    opts: MessageListInstanceCreateOptions
+    opts: MessageListInstanceCreateOptions,
   ): Promise<MessageInstance> {
-    const message = await this.twilioClient.conversations.services(TWILIO_CONVERSATIONS_SERVICE_SID).conversations(conversationSid).messages.create(opts);
+    const message = await this.twilioClient.conversations
+      .services(TWILIO_CONVERSATIONS_SERVICE_SID)
+      .conversations(conversationSid)
+      .messages.create(opts);
 
     return Promise.resolve(message);
   }
 
-  public async createUser(identity: string, friendlyName: string): Promise<any> {
-    const user = await this.twilioClient.conversations.services(TWILIO_CONVERSATIONS_SERVICE_SID).users.create({identity, friendlyName});
+  async createUser(identity: string, friendlyName: string): Promise<any> {
+    const user = await this.twilioClient.conversations
+      .services(TWILIO_CONVERSATIONS_SERVICE_SID)
+      .users.create({ identity, friendlyName });
     return Promise.resolve(user);
   }
 
-  public async fetchUser(userSid: string): Promise<UserInstance> {
-    const user = await this.twilioClient.conversations.services(TWILIO_CONVERSATIONS_SERVICE_SID).users(userSid).fetch();
+  async fetchUser(userSid: string): Promise<UserInstance> {
+    const user = await this.twilioClient.conversations
+      .services(TWILIO_CONVERSATIONS_SERVICE_SID)
+      .users(userSid)
+      .fetch();
     return Promise.resolve(user);
   }
 
-  public async fetchConversationParticipant(conversationSid: string, participantSid: string): Promise<ParticipantInstance> {
-    const participant = await this.twilioClient.conversations.services(TWILIO_CONVERSATIONS_SERVICE_SID).conversations(conversationSid).participants(participantSid).fetch();
+  async fetchConversationParticipant(
+    conversationSid: string,
+    participantSid: string,
+  ): Promise<ParticipantInstance> {
+    const participant = await this.twilioClient.conversations
+      .services(TWILIO_CONVERSATIONS_SERVICE_SID)
+      .conversations(conversationSid)
+      .participants(participantSid)
+      .fetch();
     return Promise.resolve(participant);
   }
 
-  public async addChatParticipant(conversationSid: string, opts: AddChatParticipantDto): Promise<ParticipantInstance> {
-    const participant = await this.twilioClient.conversations.services(TWILIO_CONVERSATIONS_SERVICE_SID).conversations(conversationSid).participants.create(opts);
+  async addChatParticipant(
+    conversationSid: string,
+    opts: AddChatParticipantDto,
+  ): Promise<ParticipantInstance> {
+    const participant = await this.twilioClient.conversations
+      .services(TWILIO_CONVERSATIONS_SERVICE_SID)
+      .conversations(conversationSid)
+      .participants.create(opts);
 
     return Promise.resolve(participant);
   }
 
-  public async createSubaccount(friendlyName: string): Promise<AccountInstance> {
-    const subaccount = await this.twilioClient.api.accounts.create({friendlyName});
+  async deleteConversations(conversationSid: string): Promise<boolean> {
+    const deleted = await this.twilioClient.conversations
+    .services(TWILIO_CONVERSATIONS_SERVICE_SID)
+    .conversations(conversationSid)
+    .remove();
+    return Promise.resolve(deleted);
+  }
+
+  async createSubaccount(friendlyName: string): Promise<AccountInstance> {
+    const subaccount = await this.twilioClient.api.accounts.create({ friendlyName });
     subaccount.sid;
 
     return Promise.resolve(subaccount);
-  } 
+  }
 
-  public async fetchAvailablePhoneNumbers(): Promise<LocalInstance[]> {
-    const phoneNumberList = await this.twilioClient.availablePhoneNumbers('US').local.list({mmsEnabled: true, smsEnabled: true, limit: 20});
+  async fetchAvailablePhoneNumbers(): Promise<LocalInstance[]> {
+    const phoneNumberList = await this.twilioClient
+      .availablePhoneNumbers('US')
+      .local.list({ mmsEnabled: true, smsEnabled: true, limit: 20 });
 
     return Promise.resolve(phoneNumberList);
+  }
+
+  async fetchConversationsByParticipantSid(phone: string): Promise<any> {
+    const conversations = await this.twilioClient.conversations
+      .services(TWILIO_CONVERSATIONS_SERVICE_SID)
+      .participantConversations.list({address: phone});
+      
+    return Promise.resolve(conversations);
   }
 }

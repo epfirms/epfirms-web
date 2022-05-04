@@ -15,13 +15,13 @@ export class TeamService {
   }
 
   /** Returns the records for all teams in the authorized user's firm. */
-  getAll() {
+  getAll(): Observable<any> {
     return this._http.get('/api/teams');
   }
 
   /** Returns the records for all teams where the given user is assigned. */
-  getAllByUserId(userId: number | "me") {
-    return this._http.get(`/api/user/${userId}/teams`);
+  getAllByUserId(userId: number | "me", opts: { role?: string } = {}): Observable<any> {
+    return this._http.get(`/api/user/${userId}/teams`, {params: opts});
   }
 
   /** Creates a new team within the current firm. */
@@ -34,8 +34,8 @@ export class TeamService {
    * The user must be a member of the team or have firm admin privileges.
    * The user being added must be a member of the same firm as the team.
    */
-  addUser(id: number, userId: number) {
-    return this._http.post(`/api/teams/${id}/add-user`, { userId });
+  addEmployee(id: number, employeeId: number, role: string): Observable<any> {
+    return this._http.post(`/api/teams/${id}/add-employee`, { employee: employeeId, role });
   }
 
   /**
@@ -43,8 +43,8 @@ export class TeamService {
    * The user must be a member of the team or have firm admin privileges.
    */
 
-  removeUser(id: number, userId: number) {
-    return this._http.delete(`/api/teams/${id}/remove-user/${userId}`);
+  removeEmployee(id: number, userId: number, role: string) {
+    return this._http.post(`/api/teams/${id}/remove-employee/${userId}`, { role});
   }
 
   getAllMembers(id: number): Observable<any> {

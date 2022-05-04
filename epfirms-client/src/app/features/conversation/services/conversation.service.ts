@@ -151,4 +151,8 @@ export class ConversationService {
     const currentUser$ = this._store.select('currentUser');
     return currentUser$.pipe(take(1), pluck('user'), switchMap((user) => merge(this.updateUserFriendlyName(user.full_name), this.updateUserAttributes(user.profile_image))));
   }
+
+  createMatterConversation(matterId: number): Observable<any> {
+    return this._http.post(`/api/chat/matter`, { matter: matterId });
+  }
 }

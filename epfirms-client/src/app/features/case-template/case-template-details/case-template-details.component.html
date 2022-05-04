@@ -23,7 +23,7 @@
         <div class="mt-1">
           <input [(ngModel)]="template.template_name" type="text" name="template-name" id="template-name"
             autocomplete="off"
-            class="block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300">
+            class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
         </div>
       </div>
   
@@ -33,7 +33,7 @@
         </label>
         <div class="mt-1">
           <select [(ngModel)]="template.law_category"
-            class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             <option *ngFor="let lawCategory of caseTemplateLawCategories" [ngValue]="lawCategory">{{lawCategory}}</option>
           </select>
         </div>
@@ -45,36 +45,36 @@
         </label>
         <div class="mt-1">
           <select [(ngModel)]="template.state_category"
-            class="block w-full py-2 pl-3 pr-10 mt-1 text-base rounded-md border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{state.name}}</option>
           </select>
         </div>
       </div>
     </div>
-    <div class="mt-6 overflow-y-auto border rounded-md max-h-72 border-gray-200">
+    <div class="mt-6 overflow-y-auto border border-gray-200 rounded-md max-h-72">
       <table class="min-w-full" *ngIf="template.firm_template_tasks.length">
         <thead>
           <tr>
-            <th class="px-3 py-3 text-xs font-medium tracking-wider text-left uppercase bg-white border-r border-gray-200 text-gray-500 whitespace-nowrap">
+            <th class="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-r border-gray-200 whitespace-nowrap">
               <span>Task</span>
             </th>
-            <th class="px-3 py-3 text-xs font-medium tracking-wider text-left uppercase bg-white border-l border-r border-gray-200 text-gray-500 whitespace-nowrap">
+            <th class="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-l border-r border-gray-200 whitespace-nowrap">
               Assignee / role
             </th>
-            <th class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left uppercase bg-white border-l md:table-cell border-gray-200 text-gray-500 whitespace-nowrap">
+            <th class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-l border-gray-200 md:table-cell whitespace-nowrap">
               Days until due
             </th>
-            <!-- <th class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left uppercase bg-white border-l md:table-cell border-gray-200 text-gray-500 whitespace-nowrap">
+            <!-- <th class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-l border-gray-200 md:table-cell whitespace-nowrap">
       Duration
     </th> -->
-            <th class="table-cell px-4 py-3 text-xs font-medium tracking-wider text-left uppercase bg-white text-gray-500 whitespace-nowrap">
+            <th class="table-cell px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white whitespace-nowrap">
             </th>
           </tr>
         </thead>
         <tbody class="bg-white">
           <ng-container>
             <tr class="task-row group" *ngFor="let task of template.firm_template_tasks; let i=index; last as isLast">
-              <td class="w-full px-1 py-1 text-sm font-medium border-t border-r max-w-0 whitespace-nowrap text-gray-900 border-gray-200" [class.border-b]="!isLast">
+              <td class="w-full px-1 py-1 text-sm font-medium text-gray-900 border-t border-r border-gray-200 max-w-0 whitespace-nowrap" [class.border-b]="!isLast">
                 <div class="flex items-center">
                   <editable-input [value]="task.name" placeholder="Enter a task name"
                     (onChange)="setDescription($event, i)" class="flex-1"></editable-input>
@@ -83,7 +83,7 @@
                     (deleteFile)="deleteTaskFile($event, i)"></app-task-file-button>
                 </div>
               </td>
-              <td class="w-full px-1 py-1 text-sm font-medium border-t border-r whitespace-nowrap text-gray-900 border-gray-200" [class.border-b]="!isLast">
+              <td class="w-full px-1 py-1 text-sm font-medium text-gray-900 border-t border-r border-gray-200 whitespace-nowrap" [class.border-b]="!isLast">
                 <div *ngIf="filteredAssigneeGroups && filteredAssigneeGroups.length">
                   <ep-input-group *ngIf="task.user_id">
                     <ep-avatar ep-input-icon epSize="xsmall" [epSrc]="task.user?.profile_image" [epText]="task.user?.full_name"></ep-avatar>
@@ -92,13 +92,13 @@
                       (ngModelChange)="filterStaffMembers($event)" [epAutocomplete]="auto" placeholder="Select assignee/role">
                   </ep-input-group>
   
-                  <input *ngIf="task.firm_role_id || !task.user_id" ep-input [epEditable]="true" type="text" [ngModel]="task.firm_role_id"
+                  <input *ngIf="task.role || !task.user_id" ep-input [epEditable]="true" type="text" [ngModel]="task.role"
                   (ngModelChange)="filterStaffMembers($event)" [epAutocomplete]="auto" placeholder="Select assignee/role">
   
                 <ep-autocomplete #auto="epAutocomplete" [displayWith]="displayFn"
                   (optionSelected)="setAssignee($event, i)" panelWidth="auto">
                   <ep-option-group [label]="assigneeGroup.type" *ngFor="let assigneeGroup of filteredAssigneeGroups">
-                    <ep-option *ngFor="let assignee of assigneeGroup.assignees" [value]="assignee.id" [displayValue]="assignee">
+                    <ep-option *ngFor="let assignee of assigneeGroup.assignees" [value]="assigneeGroup.type === 'Role' ? assignee.name : assignee.id" [displayValue]="assignee">
                       <ep-avatar *ngIf="assigneeGroup.type === 'Staff'" epSize="xsmall" [epSrc]="assignee.profile_image"
                       [epText]="assignee.name">
                     </ep-avatar>
@@ -111,22 +111,22 @@
                 </div>
               </td>
   
-              <td class="px-1 py-1 text-sm font-medium border-t text-gray-900 border-gray-200" [class.border-b]="!isLast">
+              <td class="px-1 py-1 text-sm font-medium text-gray-900 border-t border-gray-200" [class.border-b]="!isLast">
                 <div>
                   <input [(ngModel)]="task.no_of_days_from_start_date" type="number" min="0"
-                    class="w-full px-2 py-1 text-sm text-center bg-transparent border border-transparent border-dashed text-gray-800 hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm">
+                    class="w-full px-2 py-1 text-sm text-center text-gray-800 bg-transparent border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm">
                 </div>
               </td>
-              <!-- <td class="px-1 py-1 text-sm font-medium border-t border-b text-gray-900 border-gray-200">
+              <!-- <td class="px-1 py-1 text-sm font-medium text-gray-900 border-t border-b border-gray-200">
             <div>
-              <input [(ngModel)]="task.duration_minutes" [inputMask]="timeInputMask" class="w-full px-2 py-1 text-sm text-center bg-transparent border border-transparent border-dashed text-gray-800 hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm">
+              <input [(ngModel)]="task.duration_minutes" [inputMask]="timeInputMask" class="w-full px-2 py-1 text-sm text-center text-gray-800 bg-transparent border border-transparent border-dashed hover:bg-white hover:border-gray-300 focus:bg-white focus:border-transparent focus:shadow-sm">
             </div>
           </td> -->
-              <td class="px-1 py-1 text-sm font-medium border-t text-gray-900 border-gray-200" [class.border-b]="!isLast">
+              <td class="px-1 py-1 text-sm font-medium text-gray-900 border-t border-gray-200" [class.border-b]="!isLast">
                 <div class="flex items-center">
   
                   <button (click)="removeTemplateTask(i)" type="button"
-                    class="flex items-center p-2 -m-2 rounded-full text-gray-300 hover:text-gray-600"
+                    class="flex items-center p-2 -m-2 text-gray-300 rounded-full hover:text-gray-600"
                     id="options-menu-0-button" aria-expanded="false" aria-haspopup="true">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd"
@@ -183,7 +183,7 @@
       Save
     </button>
     <button type="button" (click)="close()"
-      class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium bg-white border rounded-md shadow-sm border-gray-300 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+      class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
       Cancel
     </button>
   </div>

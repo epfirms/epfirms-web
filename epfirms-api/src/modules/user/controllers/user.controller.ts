@@ -48,8 +48,8 @@ export class UserController {
     try {
       const id = req.params.id === 'me' ? req.user.id : req.params.id;
       const firmId = req.user.firm_access.firm_id;
-      const response = await this._teamService.findAllByUserId(firmId, id);
-      resp.status(StatusConstants.OK).send(response);
+      const response = await this._teamService.findAllByUserId(firmId, id, req.query);
+      resp.status(StatusConstants.OK).send({data: response});
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
     }

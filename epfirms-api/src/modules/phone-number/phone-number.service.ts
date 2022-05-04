@@ -26,4 +26,11 @@ export class PhoneNumberService {
 
     return Promise.resolve(typeName);
   }
+
+  public async isUniqueMobileNumber(phone: string): Promise<boolean> {
+    const { user } = Database.models;
+    const count = await user.count({where: {cell_phone: phone}});
+
+    return count < 1;
+  }
 }
