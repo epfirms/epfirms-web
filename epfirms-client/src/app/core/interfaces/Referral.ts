@@ -1,6 +1,7 @@
 export class Referral {
     id?: number;
     matter_id: number;
+    firm_id: number;
     date: string;
     friend_or_family: boolean;
     professional: boolean;

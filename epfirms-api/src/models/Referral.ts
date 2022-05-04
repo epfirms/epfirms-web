@@ -17,6 +17,10 @@ module.exports = (sequelize, {
           type: INTEGER,
           allowNull: false,
         },
+        firm_id: {
+          type: INTEGER,
+          allowNull: false,
+        },
         date: {
             type: STRING,
             allowNull: false,
