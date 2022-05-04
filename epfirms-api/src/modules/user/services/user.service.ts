@@ -100,6 +100,9 @@ export class UserService {
         },
       });
     }
+    else {
+      existingUser = await user.create(familyMember);
+    }
 
     // if existing user update the user's info that is coming in with request
     if (existingUser) {
@@ -110,13 +113,8 @@ export class UserService {
       member = await currentUser.addMember(existingUser, {
         through: { relationship_type: familyMember.relationship_type },
       });
-    } else {
-      member = await currentUser.createMember(familyMember, {
-        through: { relationship_type: familyMember.relationship_type },
-      });
-    }
-
-    return Promise.resolve();
+    } 
+    return Promise.resolve(existingUser);
   }
 
   public async updateFamilyMember(familyMember): Promise<any> {

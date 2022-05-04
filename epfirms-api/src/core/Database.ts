@@ -77,6 +77,8 @@ export class Database {
       team: require('../models/Team')(this.sequelize),
       team_member: require('../models/TeamMember')(this.sequelize),
       firm_employee: require('../models/FirmEmployee')(this.sequelize, Sequelize),
+      financial_summary: require('../models/FinancialSummary')(this.sequelize, Sequelize),
+      appointee_summary: require('../models/AppointeeSummary')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.sequelize.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -410,6 +412,12 @@ export class Database {
 
     this.sequelize.models.team.belongsToMany(this.sequelize.models.firm_employee, { through: {model: this.sequelize.models.team_member, unique: false}, foreignKey: 'team_id' });
     this.sequelize.models.firm_employee.belongsToMany(this.sequelize.models.team, { through: {model: this.sequelize.models.team_member, unique: false}, foreignKey: 'firm_employee_id' });
+    
+    this.models.user.hasOne(this.models.financial_summary, {foreignKey: 'user_id'});
+    this.models.financial_summary.belongsTo(this.models.user, {foreignKey: 'user_id'});
+
+    this.models.user.hasOne(this.models.appointee_summary, {foreignKey: 'user_id'});
+    this.models.appointee_summary.belongsTo(this.models.user, {foreignKey: 'user_id'});
   }
 
   public static async start() {

@@ -19,10 +19,12 @@ module.exports = (sequelize, {
           allowNull: false,
         },
         total_value: {
-          type: INTEGER
+          type: INTEGER,
+          defaultValue: 0,
         },
         loan_amount: {
-            type: INTEGER
+            type: INTEGER,
+            defaultValue: 0,
         },
         full_address: {
             type: STRING,
@@ -32,7 +34,11 @@ module.exports = (sequelize, {
         },
         has_mineral_rights : {
           type : BOOLEAN,
-        } 
+        }, 
+        primary_residence : {
+          type : BOOLEAN,
+          defaultValue: false,
+        }
       }, {
         tableName,
         defaultScope: {

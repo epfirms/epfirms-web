@@ -54,9 +54,9 @@ export class ProfileCardComponent implements OnInit {
     state: new FormControl(''),
     zip: new FormControl(''),
     relationship_type: new FormControl(''),
-    // ssn: new FormControl(''),
-    // dob: new FormControl(null),
-    // drivers_id: new FormControl(''),
+    ssn: new FormControl(''),
+    dob: new FormControl(null),
+    drivers_id: new FormControl(''),
   });
   constructor(
     private familyMemberService: FamilyMemberService,
@@ -92,9 +92,9 @@ export class ProfileCardComponent implements OnInit {
       relationship_type: this.formSettings.isClient
         ? null
         : this.userProfile.family_member.relationship_type,
-      // ssn: this.userProfile.ssn,
-      // dob: this.userProfile.dob,
-      // drivers_id: this.userProfile.drivers_id,
+      ssn: this.userProfile.ssn,
+      dob: this.userProfile.dob,
+      drivers_id: this.userProfile.drivers_id,
     });
   }
 

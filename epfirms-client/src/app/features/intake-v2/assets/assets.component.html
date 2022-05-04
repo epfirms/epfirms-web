@@ -1,37 +1,1531 @@
-<div class="text-right m-4">
-  <button
-    (click)="addAsset()"
-    type="button"
-    class="m-2 inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-  >
-    Add Asset
-  </button>
-</div>
-<div class="space-y-6">
-  <ng-scrollbar style="height: 400px;">
-  
-  
-  <app-asset-form
-    *ngFor="let asset of assets"
-    [matter]="matter"
-    [formSettings]="{ title: 'Asset Information', subtitle: asset.institution }"
-    [asset]="asset"
-  ></app-asset-form>
-  
-  </ng-scrollbar>
-  <div class="flex justify-end">
-    <button
-      (click)="backButton()"
-      type="button"
-      class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-    >
-      Back
-    </button>
-    <button
-      (click)="submit()"
-      class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-    >
-      Continue
-    </button>
+<body class="h-screen antialiased">
+  <div class="" style="">
+    <div class="h-screen py-2">
+      <div class="mx-auto max-w-7xl">
+        <div class="px-4 sm:px-6 lg:px-8">
+          <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+              <div class="flex">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="gray"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <h1 class="px-4 text-xl font-semibold text-gray-600">Investments</h1>
+              </div>
+              <p class="mt-2 text-sm text-gray-700">
+                Please enter your client's investments (This does not include businesses, real
+                estate, and life insurance). EPFirms calculates monthly income to determine if the
+                client needs additional planning.
+              </p>
+            </div>
+            <!-- <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto">Add income</button>
+            </div> -->
+          </div>
+
+          <div class="mt-8 flex flex-col">
+            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <div>
+                  <table class="min-w-full">
+                    <thead>
+                      <td class="border-b border-white px-4 text-gray-600 font-semibold">
+                        Bank Accounts
+                      </td>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Client
+                      </th>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Spouse
+                      </th>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Joint
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Countable
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Non-Countable
+                      </th>
+
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Unprotected
+                      </th>
+                    </thead>
+                    <tbody class="bg-white">
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-gray-900"
+                        >
+                          Total Checking Accounts
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.checking"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.checking"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.checking"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.checking,
+                              spouseAssetForm.checking,
+                              jointAssetForm.checking
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.checking,
+                              spouseAssetForm.checking,
+                              jointAssetForm.checking
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 pl-2 text-right text-sm font-normal text-gray-900"
+                        >
+                          Total Savings Accounts
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.savings"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.savings"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.savings"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.savings,
+                              spouseAssetForm.savings,
+                              jointAssetForm.savings
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600"
+                        ></td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.savings,
+                              spouseAssetForm.savings,
+                              jointAssetForm.savings
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-gray-900"
+                        >
+                          All Other Accounts
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.other_bank"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.other_bank"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.other_bank"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.other_bank,
+                              spouseAssetForm.other_bank,
+                              jointAssetForm.other_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.other_bank,
+                              spouseAssetForm.other_bank,
+                              jointAssetForm.other_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 pl-2 text-right text-sm font-normal text-blue-400"
+                        >
+                          Non-Countable Accounts
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_bank"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_bank"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_bank"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_bank,
+                              spouseAssetForm.nc_bank,
+                              jointAssetForm.nc_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_bank,
+                              spouseAssetForm.nc_bank,
+                              jointAssetForm.nc_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+
+                    <tfoot>
+                      <tr>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          Total
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          {{
+                            formattedSum(
+                              clientAssetForm.checking,
+                              clientAssetForm.savings,
+                              clientAssetForm.other_bank,
+                              clientAssetForm.nc_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          {{
+                            formattedSum(
+                              spouseAssetForm.checking,
+                              spouseAssetForm.savings,
+                              spouseAssetForm.other_bank,
+                              spouseAssetForm.nc_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          {{
+                            formattedSum(
+                              jointAssetForm.checking,
+                              jointAssetForm.savings,
+                              jointAssetForm.other_bank,
+                              jointAssetForm.nc_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.checking,
+                              clientAssetForm.savings,
+                              clientAssetForm.other_bank,
+                              spouseAssetForm.checking,
+                              spouseAssetForm.savings,
+                              spouseAssetForm.other_bank,
+                              jointAssetForm.checking,
+                              jointAssetForm.savings,
+                              jointAssetForm.other_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_bank,
+                              spouseAssetForm.nc_bank,
+                              jointAssetForm.nc_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.checking,
+                              clientAssetForm.savings,
+                              clientAssetForm.other_bank,
+                              clientAssetForm.nc_bank,
+                              spouseAssetForm.checking,
+                              spouseAssetForm.savings,
+                              spouseAssetForm.other_bank,
+                              spouseAssetForm.nc_bank,
+                              jointAssetForm.checking,
+                              jointAssetForm.savings,
+                              jointAssetForm.other_bank,
+                              jointAssetForm.nc_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+
+                  <h3 class="mt-7 px-4 font-semibold text-gray-600">
+                    Qualified Investment Accounts
+                  </h3>
+
+                  <table class="min-w-full">
+                    <thead>
+                      <td class="w-0 border-b border-white"></td>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Client
+                      </th>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Spouse
+                      </th>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Joint
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Countable
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Non-Countable
+                      </th>
+                    </thead>
+                    <tbody class="bg-white">
+                      <tr>
+                        <th
+                          scope="row"
+                          class="px-11 whitespace-nowrap border-r border-gray-200 py-1 pr-2 pl-2 text-right text-sm font-normal text-gray-900"
+                        >
+                          Total 401k Accounts
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.employer_retirement_plan"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.employer_retirement_plan"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.employer_retirement_plan"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.employer_retirement_plan,
+                              spouseAssetForm.employer_retirement_plan,
+                              jointAssetForm.employer_retirement_plan
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          class="px-11 whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-gray-900"
+                        >
+                          Total IRA Accounts
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.ira"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.ira"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.ira"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.ira,
+                              spouseAssetForm.ira,
+                              jointAssetForm.ira
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-gray-900"
+                        >
+                          All Other Accounts
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.other_qualified_investment"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.other_qualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.other_qualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.other_qualified_investment,
+                              spouseAssetForm.other_qualified_investment,
+                              jointAssetForm.other_qualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-blue-400"
+                        >
+                          401k NCA
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_employer_retirement_plan"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_employer_retirement_plan"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_employer_retirement_plan"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_employer_retirement_plan,
+                              spouseAssetForm.nc_employer_retirement_plan,
+                              jointAssetForm.nc_employer_retirement_plan
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-blue-400"
+                        >
+                          IRA NCA
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_ira"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_ira"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_ira"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_ira,
+                              spouseAssetForm.nc_ira,
+                              jointAssetForm.nc_ira
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-blue-400"
+                        >
+                          All Other NCA
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_other_qualified_investment"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_other_qualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_other_qualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_other_qualified_investment,
+                              spouseAssetForm.nc_other_qualified_investment,
+                              jointAssetForm.nc_other_qualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+
+                    <tfoot>
+                      <tr>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          Total
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          {{
+                            formattedSum(
+                              clientAssetForm.employer_retirement_plan,
+                              clientAssetForm.ira,
+                              clientAssetForm.nc_ira,
+                              clientAssetForm.nc_other_qualified_investment,
+                              clientAssetForm.other_qualified_investment,
+                              clientAssetForm.nc_employer_retirement_plan
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          {{
+                            formattedSum(
+                              spouseAssetForm.employer_retirement_plan,
+                              spouseAssetForm.ira,
+                              spouseAssetForm.nc_ira,
+                              spouseAssetForm.nc_other_qualified_investment,
+                              spouseAssetForm.other_qualified_investment,
+                              spouseAssetForm.nc_employer_retirement_plan
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          {{
+                            formattedSum(
+                              jointAssetForm.employer_retirement_plan,
+                              jointAssetForm.ira,
+                              jointAssetForm.nc_ira,
+                              jointAssetForm.nc_other_qualified_investment,
+                              jointAssetForm.other_qualified_investment,
+                              jointAssetForm.nc_employer_retirement_plan
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_employer_retirement_plan,
+                              spouseAssetForm.nc_employer_retirement_plan,
+                              jointAssetForm.nc_employer_retirement_plan,
+                              clientAssetForm.nc_ira,
+                              spouseAssetForm.nc_ira,
+                              jointAssetForm.nc_ira,
+                              clientAssetForm.nc_other_qualified_investment,
+                              spouseAssetForm.nc_other_qualified_investment,
+                              jointAssetForm.nc_other_qualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.employer_retirement_plan,
+                              spouseAssetForm.employer_retirement_plan,
+                              jointAssetForm.employer_retirement_plan,
+                              clientAssetForm.ira,
+                              spouseAssetForm.ira,
+                              jointAssetForm.ira,
+                              clientAssetForm.other_qualified_investment,
+                              spouseAssetForm.other_qualified_investment,
+                              jointAssetForm.other_qualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+
+                  <h3 class="mt-7 px-4 font-semibold text-gray-600">Other Investments</h3>
+
+                  <table class="min-w-full">
+                    <thead>
+                      <td class="w-0 border-b border-white"></td>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 py-3.5 pl-4 pr-2 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Client
+                      </th>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Spouse
+                      </th>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Joint
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Countable
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Non-Countable
+                      </th>
+
+                      <th
+                        scope="col"
+                        class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900"
+                      >
+                        Unprotected
+                      </th>
+                    </thead>
+                    <tbody class="bg-white">
+                      <tr>
+                        <th
+                          scope="row"
+                          class="px-11 whitespace-nowrap border-r border-gray-200 py-1 pr-2 pl-2 text-right text-sm font-normal text-gray-900"
+                        >
+                          Investment Accounts
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.unqualified_investment"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.unqualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.unqualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.unqualified_investment,
+                              spouseAssetForm.unqualified_investment,
+                              jointAssetForm.unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                          
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.unqualified_investment,
+                              spouseAssetForm.unqualified_investment,
+                              jointAssetForm.unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          class="px-11 whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-gray-900"
+                        >
+                          Hard Assets
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.hard_assets"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.hard_assets"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.hard_assets"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.hard_assets,
+                              spouseAssetForm.hard_assets,
+                              jointAssetForm.hard_assets
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.hard_assets,
+                              spouseAssetForm.hard_assets,
+                              jointAssetForm.hard_assets
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-gray-900"
+                        >
+                          All Other Investments
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.other_unqualified_investment"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.other_unqualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.other_unqualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.other_unqualified_investment,
+                              spouseAssetForm.other_unqualified_investment,
+                              jointAssetForm.other_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-red-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.other_unqualified_investment,
+                              spouseAssetForm.other_unqualified_investment,
+                              jointAssetForm.other_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-blue-400"
+                        >
+                          NC Investment Account
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_unqualified_investment"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_unqualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_unqualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_unqualified_investment,
+                              spouseAssetForm.nc_unqualified_investment,
+                              jointAssetForm.nc_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_unqualified_investment,
+                              spouseAssetForm.nc_unqualified_investment,
+                              jointAssetForm.nc_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-blue-400"
+                        >
+                          NC Hard Assets
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_hard_assets"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_hard_assets"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_hard_assets"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_hard_assets,
+                              spouseAssetForm.nc_hard_assets,
+                              jointAssetForm.nc_hard_assets
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_hard_assets,
+                              spouseAssetForm.nc_hard_assets,
+                              jointAssetForm.nc_hard_assets
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-normal text-blue-400"
+                        >
+                          NC Other Investments
+                        </th>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="clientAssetForm.nc_other_unqualified_investment"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="spouseAssetForm.nc_other_unqualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 text-right hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <input
+                            type="text"
+                            [inputMask]="currencyInputMask"
+                            (change)="submit()"
+                            [(ngModel)]="jointAssetForm.nc_other_unqualified_investment"
+                            [disabled]="spouse === undefined || spouse === null"
+                            class="text-right text-sm text-gray-500 inline-block bg-transparent focus:bg-white hover:border-gray-300 rounded-md hover:cursor-text p-1 leading-none border border-transparent"
+                          />
+                        </td>
+                        <td
+                          class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
+                        ></td>
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_other_unqualified_investment,
+                              spouseAssetForm.nc_other_unqualified_investment,
+                              jointAssetForm.nc_other_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_other_unqualified_investment,
+                              spouseAssetForm.nc_other_unqualified_investment,
+                              jointAssetForm.nc_other_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+
+                    <tfoot>
+                      <tr>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          Total
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          {{
+                            formattedSum(
+                              clientAssetForm.unqualified_investment,
+                              clientAssetForm.hard_assets,
+                              clientAssetForm.other_unqualified_investment,
+                              clientAssetForm.nc_unqualified_investment,
+                              clientAssetForm.nc_hard_assets,
+                              clientAssetForm.nc_other_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          {{
+                            formattedSum(
+                              spouseAssetForm.unqualified_investment,
+                              spouseAssetForm.hard_assets,
+                              spouseAssetForm.other_unqualified_investment,
+                              spouseAssetForm.nc_unqualified_investment,
+                              spouseAssetForm.nc_hard_assets,
+                              spouseAssetForm.nc_other_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-gray-900">
+                          {{
+                            formattedSum(
+                              jointAssetForm.unqualified_investment,
+                              jointAssetForm.hard_assets,
+                              jointAssetForm.other_unqualified_investment,
+                              jointAssetForm.nc_unqualified_investment,
+                              jointAssetForm.nc_hard_assets,
+                              jointAssetForm.nc_other_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_unqualified_investment,
+                              spouseAssetForm.nc_unqualified_investment,
+                              jointAssetForm.nc_unqualified_investment,
+                              clientAssetForm.nc_hard_assets,
+                              spouseAssetForm.nc_hard_assets,
+                              jointAssetForm.nc_hard_assets,
+                              clientAssetForm.nc_other_unqualified_investment,
+                              spouseAssetForm.nc_other_unqualified_investment,
+                              jointAssetForm.nc_other_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.unqualified_investment,
+                              clientAssetForm.hard_assets,
+                              clientAssetForm.other_unqualified_investment,
+                              spouseAssetForm.unqualified_investment,
+                              spouseAssetForm.hard_assets,
+                              spouseAssetForm.other_unqualified_investment,
+                              jointAssetForm.unqualified_investment,
+                              jointAssetForm.hard_assets,
+                              jointAssetForm.other_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_unqualified_investment,
+                              spouseAssetForm.nc_unqualified_investment,
+                              jointAssetForm.nc_unqualified_investment,
+                              clientAssetForm.nc_hard_assets,
+                              spouseAssetForm.nc_hard_assets,
+                              jointAssetForm.nc_hard_assets,
+                              clientAssetForm.nc_other_unqualified_investment,
+                              spouseAssetForm.nc_other_unqualified_investment,
+                              jointAssetForm.nc_other_unqualified_investment,
+                              clientAssetForm.unqualified_investment,
+                              clientAssetForm.hard_assets,
+                              clientAssetForm.other_unqualified_investment,
+                              spouseAssetForm.unqualified_investment,
+                              spouseAssetForm.hard_assets,
+                              spouseAssetForm.other_unqualified_investment,
+                              jointAssetForm.unqualified_investment,
+                              jointAssetForm.hard_assets,
+                              jointAssetForm.other_unqualified_investment
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+
+                  <h3 class="mt-7 px-4 font-semibold text-gray-600">Investment Totals</h3>
+
+                  <table class="min-w-full">
+                    <thead>
+                      <td class="w-0 border-b border-white"></td>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 py-3.5 pl-10 pr-2 text-right font-semibold text-gray-900"
+                      >
+                        Client's Total
+                      </th>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right font-semibold text-gray-900"
+                      >
+                        Spouse
+                      </th>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right font-semibold text-gray-900"
+                      >
+                        Joint
+                      </th>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right font-semibold text-gray-900"
+                      >
+                        Countable
+                      </th>
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right font-semibold text-gray-900"
+                      >
+                        Non-Countable
+                      </th>
+
+                      <th
+                        scope="col"
+                        class="border-b border-gray-200 px-2 py-3.5 text-right font-semibold text-gray-900"
+                      >
+                        Unprotected
+                      </th>
+                    </thead>
+                    <tbody class="bg-white"></tbody>
+
+                    <tfoot>
+                      <tr>
+                        <td class="pl-11 pr-2 pt-4 text-right font-semibold text-gray-900">
+                          Investments
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right font-semibold text-gray-900">
+                          {{ clientAssetForm.total_assets | currency: 'USD':true:'1.2-2' }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right font-semibold text-gray-900">
+                          {{ spouseAssetForm.total_assets | currency: 'USD':true:'1.2-2' }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right font-semibold text-gray-900">
+                          {{ jointAssetForm.total_assets | currency: 'USD':true:'1.2-2' }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right font-semibold text-red-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.total_countable,
+                              spouseAssetForm.total_countable,
+                              jointAssetForm.total_countable
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                        <td class="pl-3 pr-2 pt-4 text-right font-semibold text-blue-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.total_nc,
+                              spouseAssetForm.total_nc,
+                              jointAssetForm.total_nc
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+
+                        <td class="pl-3 pr-2 pt-4 text-right font-semibold text-purple-600">
+                          {{
+                            formattedSum(
+                              clientAssetForm.nc_unqualified_investment,
+                              spouseAssetForm.nc_unqualified_investment,
+                              jointAssetForm.nc_unqualified_investment,
+                              clientAssetForm.nc_hard_assets,
+                              spouseAssetForm.nc_hard_assets,
+                              jointAssetForm.nc_hard_assets,
+                              clientAssetForm.nc_other_unqualified_investment,
+                              spouseAssetForm.nc_other_unqualified_investment,
+                              jointAssetForm.nc_other_unqualified_investment,
+                              clientAssetForm.unqualified_investment,
+                              clientAssetForm.hard_assets,
+                              clientAssetForm.other_unqualified_investment,
+                              spouseAssetForm.unqualified_investment,
+                              spouseAssetForm.hard_assets,
+                              spouseAssetForm.other_unqualified_investment,
+                              jointAssetForm.unqualified_investment,
+                              jointAssetForm.hard_assets,
+                              jointAssetForm.other_unqualified_investment,
+                              clientAssetForm.checking,
+                              clientAssetForm.savings,
+                              clientAssetForm.other_bank,
+                              clientAssetForm.nc_bank,
+                              spouseAssetForm.checking,
+                              spouseAssetForm.savings,
+                              spouseAssetForm.other_bank,
+                              spouseAssetForm.nc_bank,
+                              jointAssetForm.checking,
+                              jointAssetForm.savings,
+                              jointAssetForm.other_bank,
+                              jointAssetForm.nc_bank
+                            ) | currency: 'USD':true:'1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</body>

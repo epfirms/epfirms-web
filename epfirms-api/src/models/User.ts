@@ -1,15 +1,9 @@
-module.exports = (sequelize, {
-  STRING,
-  INTEGER,
-  DATEONLY,
-  TEXT,
-  VIRTUAL,
-  TINYINT
-}) => {
+module.exports = (sequelize, { STRING, INTEGER, DATEONLY, TEXT, VIRTUAL, TINYINT, BOOLEAN }) => {
   const tableName = 'user';
 
   const User = sequelize.define(
-    tableName, {
+    tableName,
+    {
       id: {
         type: INTEGER,
         primaryKey: true,
@@ -39,11 +33,11 @@ module.exports = (sequelize, {
       },
       phone: {
         type: STRING,
-        unique: true
+        unique: true,
       },
       cell_phone: {
         type: STRING,
-        unique: true
+        unique: true,
       },
       address: {
         type: STRING,
@@ -67,30 +61,46 @@ module.exports = (sequelize, {
         type: TEXT,
       },
       full_name: {
-        type: VIRTUAL
+        type: VIRTUAL,
       },
       verified: {
-        type: TINYINT
+        type: TINYINT,
       },
       ssn: {
         type: STRING,
       },
       drivers_id: {
-        type: STRING
+        type: STRING,
       },
       note: {
-        type: TEXT
-      }
-    }, {
+        type: TEXT,
+      },
+      has_special_needs: {
+        type: BOOLEAN,
+      },
+      parent_1_name: {
+        type: STRING,
+      },
+      parent_1_id: {
+        type: INTEGER,
+      },
+      parent_2_name: {
+        type: STRING,
+      },
+      parent_2_id: {
+        type: INTEGER,
+      },
+    },
+    {
       tableName,
       defaultScope: {
-        attributes: { exclude: ['password', 'createdAt', 'updatedAt'] }
+        attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
       },
       getterMethods: {
-        full_name: function(this: typeof User) {
-          return this.getDataValue('first_name') + ' ' + this.getDataValue('last_name')
-        }
-      }
+        full_name: function (this: typeof User) {
+          return this.getDataValue('first_name') + ' ' + this.getDataValue('last_name');
+        },
+      },
     },
   );
 
