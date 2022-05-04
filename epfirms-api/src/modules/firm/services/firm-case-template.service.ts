@@ -1,12 +1,12 @@
 import { Database } from '@src/core/Database';
+import { Sequelize } from 'sequelize';
 import { Service } from 'typedi';
 
 @Service()
 export class FirmCaseTemplateService {
   public async get(firmId: number):Promise<any> {
     try {
-      const { sequelize } = Database;
-      const {firm_case_template, firm_template_task, firm_template_task_file, user, firm_role} = Database.models;
+      const {firm_case_template, firm_template_task, firm_template_task_file, user} = Database.models;
 
       const caseTemplates = await firm_case_template.findAll({where: {
         firm_id: firmId
@@ -17,16 +17,13 @@ export class FirmCaseTemplateService {
             model: user
           },
           {
-            model: firm_role
-          },
-          {
             model: firm_template_task_file,
           }
         ],
       },
       order: [
         [
-          sequelize.literal(
+          Sequelize.literal(
             '`firm_template_tasks`.no_of_days_from_start_date asc'
           )
         ]

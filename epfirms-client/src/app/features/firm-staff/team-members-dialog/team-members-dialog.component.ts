@@ -3,7 +3,6 @@ import { Staff } from '@app/core/interfaces/staff';
 import { TeamService } from '@app/features/team/services/team.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { Observable, take } from 'rxjs';
-import { FirmRoleService } from '../services/firm-role.service';
 import { FirmTeamService } from '../services/firm-team.service';
 
 @Component({
@@ -14,9 +13,15 @@ import { FirmTeamService } from '../services/firm-team.service';
 export class TeamMembersDialogComponent implements OnInit {
   members: any[] = [];
 
-  firmRoles: any[] = [];
-
-  memberGroups: any[] = [];
+  roles: any[] = [
+    'attorney',
+    'associate attorney',
+    'paralegal',
+    'legal assistant',
+    'receptionist',
+    'office manager',
+    'other',
+  ];
 
   public staff$: Observable<Staff[]>;
 
@@ -24,52 +29,45 @@ export class TeamMembersDialogComponent implements OnInit {
 
   filteredStaffMembers: Staff[];
 
-  newMember = '';
-
   team;
 
+  selectedEmployeeId: number;
+
+  selectedRole: string = null;
+
   constructor(
-    private _firmRoleService: FirmRoleService,
     private _staffService: StaffService,
     private _firmTeamService: FirmTeamService,
-    private _teamService: TeamService
+    private _teamService: TeamService,
   ) {
     this.staff$ = _staffService.filteredEntities$;
   }
 
   ngOnInit(): void {
-    this.members = [...this.team.firm_team_members];
     this._staffService.setFilter({ active: true });
     this.staff$.pipe(take(1)).subscribe((staff) => {
       this.staffMembers = [...staff];
       this.filteredStaffMembers = [...staff];
-    });
-    this.getMemberGroups();
-  }
-
-  getMemberGroups(){
-    this._firmRoleService.get().subscribe((response) => {
-      this.firmRoles = [...response.roles];
-
-      this.memberGroups = this.firmRoles.map((role) => {
-        return {
-          role: role,
-          member: this.members.find((m) => role.id === m.firm_role_id),
-        };
-      });
+      this.members = this.team.members.reduce((acc, curr) => {
+        acc.push({
+          ...curr,
+          firm_employee: staff.find((s) => s.id === curr.firm_employee_id),
+        });
+        return acc;
+      }, []);
     });
   }
 
   setRole(event, roleId: number) {
-    this._firmTeamService
-      .addMember(this.team.id, event.option.value, roleId)
-      .subscribe();
+    this._firmTeamService.addMember(this.team.id, event.option.value, roleId).subscribe();
   }
 
   updateMember(member, event) {
-    member.include_in_group_chat = !member.include_in_group_chat
-    console.log(event);
-    this._teamService.updateMember(member.firm_team_id, member.id, {include_in_group_chat: member.include_in_group_chat}).subscribe();
+    this._teamService
+      .updateMember(member.team_id, member.id, {
+        include_in_group_chat: member.include_in_group_chat,
+      })
+      .subscribe();
   }
 
   displayFn(value, options): string {
@@ -86,10 +84,30 @@ export class TeamMembersDialogComponent implements OnInit {
         : [...this.staffMembers];
   }
 
-  removeMember(id: number): void{
-    this._firmTeamService.removeMember(id).subscribe(() => {
-      const removedIndex = this.memberGroups.findIndex((g) => g.member && (g.member.id === id));
-      this.memberGroups[removedIndex].member = undefined;
+  removeMember(member): void {
+    this._teamService.removeEmployee(this.team.team.id, member.firm_employee_id, member.role).subscribe((res) => {
+      this.members = this.members.filter((m) => m.id !== member.id);
     });
+  }
+
+  addMember(): void {
+    this._teamService
+      .addEmployee(this.team.team.id, this.selectedEmployeeId, this.selectedRole)
+      .subscribe((res) => {
+        this.members.push({
+          ...res.data,
+          firm_employee: this.staffMembers.find((s) => s.id === res.data.firm_employee_id),
+        });
+        this.selectedEmployeeId = null;
+        this.selectedRole = null;
+      });
+  }
+
+  setSelectedEmployee(event) {
+    this.selectedEmployeeId = event.option.value;
+  }
+
+  checkIfRoleExists(role: string): boolean {
+    return this.members.some((m) => m.role === role);
   }
 }

@@ -18,13 +18,13 @@ teamRouter.get('/:id/members', passport.authenticate('bearer', { session: false 
 teamRouter.post('/', passport.authenticate('bearer', { session: false }), (req, res) =>
   teamController.create(req, res),
 );
-teamRouter.get('/:id/add-user', passport.authenticate('bearer', { session: false }), (req, res) =>
-  teamController.addUser(req, res),
+teamRouter.post('/:id/add-employee', passport.authenticate('bearer', { session: false }), (req, res) =>
+  teamController.addEmployee(req, res),
 );
-teamRouter.get(
-  '/:id/remove-user',
+teamRouter.post(
+  '/:id/remove-employee/:employeeId',
   passport.authenticate('bearer', { session: false }),
-  (req, res) => teamController.removeUser(req, res),
+  (req, res) => teamController.removeEmployee(req, res),
 );
 teamRouter.put(
   '/:id/members/:member_id',

@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { LegalArea } from '@app/core/interfaces/legal-area';
 import { Matter } from '@app/core/interfaces/matter';
 import { Staff } from '@app/core/interfaces/staff';
-import { from, Observable } from 'rxjs';
-import { map, mergeMap, switchMap, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { AddCaseComponent } from '../overlays/add-case/add-case.component';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
@@ -13,9 +13,7 @@ import { StaffService } from '../_services/staff-service/staff.service';
 import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete.component';
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { ConversationService } from '@app/features/conversation/services/conversation.service';
-import { Store } from '@ngrx/store';
 import { FirmService } from '../_services/firm-service/firm.service';
-import { TeamService } from '@app/features/team/services/team.service';
 
 @Component({
   selector: 'app-leads',
@@ -101,8 +99,6 @@ export class LeadsComponent implements OnInit {
     private _modalService: EpModalService,
     private _conversationService: ConversationService,
     private _firmService: FirmService,
-    private readonly store: Store,
-    private _teamService: TeamService,
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.leads$ = _matterService.filteredEntities$;
@@ -166,58 +162,14 @@ export class LeadsComponent implements OnInit {
   }
 
   createConversation(matter) {
-    this._teamService
-      .getAllByUserId(matter.attorney_id)
-      .pipe(
-        switchMap((teams) =>
-          this._teamService
-            .getAllMembers(teams[0].id)
-            .pipe(map((response) => ({ teams, members: response.data.filter(m => m.include_in_group_chat) }))),
-        ),
-      )
-      .subscribe(({ teams, members }) => {
+    this._conversationService.createMatterConversation(matter.id).subscribe((response) => {
+      this._firmService.getCurrentFirm().subscribe((firm) => {
+        const message = `Hello, this is your attorney, ${matter.attorney.full_name}, at ${firm.name}. I would like to communicate with you through text. If you do not want me to text you, please reply STOP.`;
         this._conversationService
-          .createConversation('group', { matterId: matter.id })
-          .pipe(
-            mergeMap((conversation) =>
-              this._conversationService
-                .addParticipant(conversation, {
-                  messagingBinding: { address: matter.client.cell_phone },
-                  attributes: {
-                    friendlyName: matter.client.full_name,
-                    phone: matter.client.cell_phone,
-                  },
-                })
-                .pipe(map(() => conversation)),
-            ),
-            mergeMap((conversation) =>
-              from(members).pipe(
-                mergeMap((member: any) =>
-                  this._conversationService.addParticipant(conversation, {
-                    identity: member.firm_employee.user_id,
-                    messagingBinding: { projectedAddress: teams[0].twilio_phone_number },
-                    attributes: {
-                      friendlyName:
-                        member.firm_employee.user.first_name +
-                        ' ' +
-                        member.firm_employee.user.last_name,
-                    },
-                  }),
-                ),
-              ).pipe(map(() => conversation)),
-            ),
-            take(1)
-          )
-          // Add selected participant.
-          .subscribe((conversation) => {
-            this._firmService.getCurrentFirm().subscribe((firm) => {
-              const message = `Hello, this is your attorney, ${matter.attorney.full_name}, at ${firm.name}. I would like to communicate with you through text. If you do not want me to text you, please reply STOP.`;
-              this._conversationService
-                .sendMessage(conversation.sid, { body: message, author: matter.attorney_id })
-                .subscribe(() => {});
-            });
-          });
+          .sendMessage(response.data.conversationSid, { body: message, author: matter.attorney_id })
+          .subscribe(() => {});
       });
+    });
   }
 
   setAttorney(matter: Matter, event: AutocompleteSelectedEvent) {

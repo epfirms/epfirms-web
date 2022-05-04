@@ -1,4 +1,4 @@
-module.exports = (sequelize, { INTEGER, STRING }) => {
+module.exports = (sequelize, { INTEGER, STRING, ENUM }) => {
   const tableName = 'firm_template_task';
 
   const FirmTemplateTask = sequelize.define(
@@ -24,8 +24,17 @@ module.exports = (sequelize, { INTEGER, STRING }) => {
       duration_minutes: {
         type: INTEGER
       },
-      firm_role_id: {
-        type: INTEGER
+      role: {
+        type: ENUM,
+        values: [
+          'attorney',
+          'associate attorney',
+          'paralegal',
+          'legal assistant',
+          'receptionist',
+          'office manager',
+          'other',
+        ],
       }
     },
     {
