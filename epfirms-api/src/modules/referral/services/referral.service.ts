@@ -37,4 +37,13 @@ export class ReferralService {
       console.error(error);
     }
   }
+
+  public static async getAllWithFirmId(firm_id): Promise<any> {
+    try {
+      const all = await Database.models.referral.findAll({ where: { firm_id: firm_id } });
+      return Promise.resolve(all);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

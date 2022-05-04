@@ -46,4 +46,14 @@ export class ReferralController {
       console.error(error);
     }
   }
+
+  public async getAllWithFirmId(req: Request, res: Response): Promise<any> {
+    try {
+      const all = await ReferralService.getAllWithFirmId(req.params.firm_id);
+      res.status(StatusConstants.OK).send(all);
+    } catch (error) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+      console.error(error);
+    }
+  }
 }
