@@ -37,7 +37,7 @@ export class TeamService {
     return Promise.resolve(teamInstance);
   }
 
-  public async findAllByUserId(firmId: number, employeeId: number, opts: {role?: string} = {}): Promise<any> {
+  public async findAllByEmployeeId(firmId: number, employeeId: number, opts: {role?: string} = {}): Promise<any> {
     const { firm_employee, team } = Database.models;
 
     const employee = await firm_employee.findByPk(employeeId, {
@@ -46,6 +46,29 @@ export class TeamService {
           model: team,
           where: {
             firm_id: firmId
+          },
+          through: {
+            where: opts
+          }
+        }
+      ]
+    });
+
+    return Promise.resolve(employee.teams);
+  }
+
+  public async findAllByUserId(firmId: number, userId: number, opts: {role?: string} = {}): Promise<any> {
+    const { firm_employee, team } = Database.models;
+
+    const employee = await firm_employee.findOne({
+      where: {
+        user_id: userId,
+      },
+      include: [
+        {
+          model: team,
+          where: {
+            firm_id: firmId,
           },
           through: {
             where: opts

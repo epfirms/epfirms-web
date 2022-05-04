@@ -101,7 +101,7 @@ export class ChatController {
         }),
       };
       const conversation = await this._conversationService.createConversation(opts);
-      const teams = await this._teamService.findAllByUserId(firmId, matter.attorney_id, {
+      const teams = await this._teamService.findAllByEmployeeId(firmId, matter.attorney_id, {
         role: 'attorney',
       });
 
@@ -157,7 +157,7 @@ export class ChatController {
         }),
       };
       const conversation = await this._conversationService.createConversation(opts);
-      const teams = await this._teamService.findAllByUserId(firmId, matter.attorney_id, {
+      const teams = await this._teamService.findAllByEmployeeId(firmId, matter.attorney_id, {
         role: 'attorney',
       });
 
