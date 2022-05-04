@@ -76,6 +76,7 @@ export class Database {
       probate: require('../models/Probate')(this.sequelize, Sequelize),
       financial_summary: require('../models/FinancialSummary')(this.sequelize, Sequelize),
       appointee_summary: require('../models/AppointeeSummary')(this.sequelize, Sequelize),
+      referral: require('../models/Referral')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
