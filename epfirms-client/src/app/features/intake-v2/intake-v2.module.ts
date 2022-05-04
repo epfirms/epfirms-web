@@ -30,6 +30,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
 import { TippyModule } from '@ngneat/helipopper';
 import { ProbateIntakeComponent } from './probate-intake/probate-intake.component';
 import { ComboboxModule } from '@app/shared/combobox/combobox.module';
+import { FinancialSummaryComponent } from './financial-summary/financial-summary.component';
 
 
 
@@ -53,7 +54,8 @@ import { ComboboxModule } from '@app/shared/combobox/combobox.module';
     ChildrenInformationComponent,
     OtherFamilyInformationComponent,
     EstatePlanningFormComponent,
-    ProbateIntakeComponent
+    ProbateIntakeComponent,
+    FinancialSummaryComponent
   ],
   imports: [
     CommonModule,
