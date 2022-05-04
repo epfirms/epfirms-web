@@ -256,7 +256,7 @@
 
 
         <!-- FINANCIAL SUMMARY -->
-        <app-financial-summary [matter]="matter"></app-financial-summary>
+        <app-financial-summary *ngIf="state === 'financial summary'" [matter]="matter"></app-financial-summary>
 
         <!-- /End replace -->
       </div>
