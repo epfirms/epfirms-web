@@ -79,12 +79,6 @@
                       >
                         Non-Countable
                       </th>
-                      <th
-                        scope="col"
-                        class="px-2 py-3.5 text-right text-sm font-semibold text-purple-600"
-                      >
-                        Unprotected
-                      </th>
                     </thead>
                     <tbody class="bg-white">
                       <tr>
@@ -133,9 +127,6 @@
                         <td
                           class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600"
                         >{{formattedSum(lifeInsuranceForm.total_term_death_benefit) | currency}}</td>
-                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
-                          $3,285.00
-                        </td>
                       </tr>
                       <tr>
                         <th
@@ -186,9 +177,6 @@
                       
                         {{formattedSum(lifeInsuranceForm.total_life_death_benefit) | currency}}
                       </td>
-                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
-                          $3,285.00
-                        </td>
                       </tr>
                       <tr>
                         <th
@@ -239,9 +227,6 @@
                       
                         {{formattedSum(lifeInsuranceForm.total_index_death_benefit) | currency}}
                       </td>
-                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
-                          $3,285.00
-                        </td>
                       </tr>
                       <tr>
                         <th
@@ -291,9 +276,6 @@
                         <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-blue-600">
                         {{formattedSum(lifeInsuranceForm.total_other_death_benefit) | currency}}
                         </td>
-                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
-                          $3,285.00
-                        </td>
                       </tr>
                     </tbody>
 
@@ -316,9 +298,6 @@
                         </td>
                         <td class="pl-3 pr-2 pt-4 text-right text-sm font-semibold text-blue-600">
                         {{formattedSum(lifeInsuranceForm.total_term_death_benefit, lifeInsuranceForm.total_life_death_benefit, lifeInsuranceForm.total_index_death_benefit, lifeInsuranceForm.total_other_death_benefit) | currency}}
-                        </td>
-                        <td class="pl-3 pr-1 pt-1 text-right text-sm font-semibold text-purple-600">
-                          $10,390.00
                         </td>
                       </tr>
                     </tfoot>
