@@ -29,6 +29,9 @@ export class IntakeMainComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
+    this.matters$.subscribe(res => {
+      console.log("matters res intake main", res);
+    });
   }
 
 
