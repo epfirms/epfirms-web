@@ -60,11 +60,10 @@
 
 
 <!-- ESTATE PLANNING INTAKE FORM CONTAINER -->
-<ng-container *ngIf="selectedMatter">
+<ng-container  *ngIf="selectedMatter" >
 <div *ngIf="selectedMatter.matter_intake.type === 'estate planning'">
 
-<app-estate-law-intake [matter]="selectedMatter" [intake]="selectedMatter.matter_intake"></app-estate-law-intake>
-
+<app-client-estate-planning-intake [matter]="selectedMatter"></app-client-estate-planning-intake>
 
 </div>
 

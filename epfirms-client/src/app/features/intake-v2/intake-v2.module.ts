@@ -31,6 +31,7 @@ import { TippyModule } from '@ngneat/helipopper';
 import { ProbateIntakeComponent } from './probate-intake/probate-intake.component';
 import { ComboboxModule } from '@app/shared/combobox/combobox.module';
 import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
+import { ClientEstatePlanningIntakeComponent } from './client-intake-components/client-estate-planning-intake/client-estate-planning-intake.component';
 
 
 
@@ -55,7 +56,8 @@ import { LifeInsuranceComponent } from './life-insurance/life-insurance.componen
     OtherFamilyInformationComponent,
     EstatePlanningFormComponent,
     ProbateIntakeComponent,
-    LifeInsuranceComponent
+    LifeInsuranceComponent,
+    ClientEstatePlanningIntakeComponent
   ],
   imports: [
     CommonModule,
