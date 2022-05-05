@@ -90,17 +90,22 @@ export class ChatController {
   }
 
   public async createConversationForMatter(req, res) {
+    const firmId = req.user.firm_access.firm_id;
+    const matterId = req.body.matter;
+    let conversation;
+
     try {
-      const firmId = req.user.firm_access.firm_id;
-      const matterId = req.body.matter;
       const matter = await this._matterService.getById(matterId);
+
       const opts: ConversationListInstanceCreateOptions = {
         attributes: JSON.stringify({
           type: 'group',
           matterId: matter.id,
         }),
       };
-      const conversation = await this._conversationService.createConversation(opts);
+
+      conversation = await this._conversationService.createConversation(opts);
+
       const teams = await this._teamService.findAllByUserId(firmId, matter.attorney_id, {
         role: 'attorney',
       });
@@ -139,8 +144,9 @@ export class ChatController {
         },
       });
     } catch (error) {
-      console.log(error);
-      console.error(error);
+      if (conversation && conversation.sid) {
+        await this._conversationService.deleteConversations(conversation.sid);
+      }
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
     }
   }
