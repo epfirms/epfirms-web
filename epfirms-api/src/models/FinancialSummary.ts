@@ -207,7 +207,57 @@ module.exports = (sequelize, { INTEGER, STRING, TEXT, FLOAT, BOOLEAN }) => {
       property_4_loan_amount: {
         type: FLOAT,
         defaultValue: 0.0,
-      }
+      },
+      // life insurance summary section: this will involve totals of life insurance
+      // 'term', 'life' aka whole life, 'index', 'other'
+      total_term_death_benefit: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      total_term_cash_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      total_term_surrender_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      total_life_death_benefit: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      total_life_cash_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },  
+      total_life_surrender_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      total_index_death_benefit: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      total_index_cash_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      total_index_surrender_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      total_other_death_benefit: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      total_other_cash_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
+      total_other_surrender_value: {
+        type: FLOAT,
+        defaultValue: 0.0,
+      },
     },
     {
       tableName,

@@ -143,8 +143,6 @@ export class IncomeComponent implements OnInit {
   }
 
   upsertFinancialSummary(): void {
-    if (this.spouse) {
-    }
     this.financialSummaryService
       .upsert(this.parseIncomeForm(this.clientIncomeForm))
       .subscribe((res) => {

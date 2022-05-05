@@ -1,21 +1,17 @@
 import { Database } from '@src/core/Database';
+import { Sequelize } from 'sequelize';
 import { Service } from 'typedi';
 
 @Service()
 export class CaseTemplateCommunityService {
   public async getAllByFirmId(firmId: number):Promise<any> {
     try {
-      const { sequelize } = Database;
-      const {community_case_template, community_template_task, community_template_task_file, firm_role, firm} = Database.models;
+      const {community_case_template, community_template_task, community_template_task_file, firm} = Database.models;
 
       const caseTemplates = await community_case_template.findAll({
         include: [{
         model: community_template_task,
         include: [
-          {
-            model: firm_role,
-            attributes: ['name']
-          },
           {
             model: community_template_task_file,
           }
@@ -31,7 +27,7 @@ export class CaseTemplateCommunityService {
     ],
       order: [
         [
-          sequelize.literal(
+          Sequelize.literal(
             '`community_template_tasks`.no_of_days_from_start_date asc'
           )
         ]
@@ -44,8 +40,7 @@ export class CaseTemplateCommunityService {
   }
   public async getById(id: number):Promise<any> {
     try {
-      const { sequelize } = Database;
-      const {community_case_template, community_template_task, community_template_task_file, firm_role, firm} = Database.models;
+      const {community_case_template, community_template_task, community_template_task_file, firm} = Database.models;
 
       const caseTemplates = await community_case_template.findOne({
         where: {
@@ -55,10 +50,6 @@ export class CaseTemplateCommunityService {
         model: community_template_task,
         include: [
           {
-            model: firm_role,
-            attributes: ['name']
-          },
-          {
             model: community_template_task_file,
           }
         ],
@@ -66,7 +57,7 @@ export class CaseTemplateCommunityService {
     ],
       order: [
         [
-          sequelize.literal(
+          Sequelize.literal(
             '`community_template_tasks`.no_of_days_from_start_date asc'
           )
         ]
@@ -80,17 +71,12 @@ export class CaseTemplateCommunityService {
 
   public async get(firmId: number):Promise<any> {
     try {
-      const { sequelize } = Database;
-      const {community_case_template, community_template_task, community_template_task_file, firm_role, firm} = Database.models;
+      const {community_case_template, community_template_task, community_template_task_file, firm} = Database.models;
 
       const caseTemplates = await community_case_template.findAll({
         include: [{
         model: community_template_task,
         include: [
-          {
-            model: firm_role,
-            attributes: ['name']
-          },
           {
             model: community_template_task_file,
           }
@@ -99,7 +85,7 @@ export class CaseTemplateCommunityService {
     ],
       order: [
         [
-          sequelize.literal(
+          Sequelize.literal(
             '`community_template_tasks`.no_of_days_from_start_date asc'
           )
         ]

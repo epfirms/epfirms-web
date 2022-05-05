@@ -40,7 +40,7 @@ export class AssetsComponent implements OnInit {
     nc_other_unqualified_investment: '0',
     total_assets: '0',
     total_nc: '0',
-    total_countable: '0'
+    total_countable: '0',
   };
 
   // spouse assets
@@ -68,7 +68,7 @@ export class AssetsComponent implements OnInit {
     nc_other_unqualified_investment: '0',
     total_assets: '0',
     total_nc: '0',
-    total_countable: '0'
+    total_countable: '0',
   };
 
   // joint assets
@@ -98,7 +98,7 @@ export class AssetsComponent implements OnInit {
     nc_other_unqualified_investment: '0',
     total_assets: '0',
     total_nc: '0',
-    total_countable: '0'
+    total_countable: '0',
   };
   // spouse of client
   spouse;
@@ -125,11 +125,15 @@ export class AssetsComponent implements OnInit {
 
   private loadSpouse(): void {
     this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
-      this.spouse = res.filter((member) => member.family_member.relationship_type === 'spouse')[0];
-      if (this.spouse) {
-        this.loadSpouseAsset();
-        this.spouseAssetForm.user_id = this.spouse.id;
-        this.jointAssetForm.joint_user_id = this.spouse.id;
+      if (res) {
+        this.spouse = res.filter(
+          (member) => member.family_member.relationship_type === 'spouse',
+        )[0];
+        if (this.spouse) {
+          this.loadSpouseAsset();
+          this.spouseAssetForm.user_id = this.spouse.id;
+          this.jointAssetForm.joint_user_id = this.spouse.id;
+        }
       }
     });
   }
@@ -137,18 +141,22 @@ export class AssetsComponent implements OnInit {
   private loadClientAsset(): void {
     this.clientAssetForm.user_id = this.matter.client.id;
     this.financialSummaryService.getWithUserId(this.matter.client.id).subscribe((res) => {
-      if (res.filter((asset) => asset.is_joint === false).length > 0) {
-        this.clientAssetForm = this.parseResponse(
-          res.filter((asset) => asset.is_joint === false)[0],
-        );
+      if (res) {
+        if (res.filter((asset) => asset.is_joint === false).length > 0) {
+          this.clientAssetForm = this.parseResponse(
+            res.filter((asset) => asset.is_joint === false)[0],
+          );
+        }
       }
     });
   }
 
   private loadSpouseAsset(): void {
     this.financialSummaryService.getWithUserId(this.spouse.id).subscribe((res) => {
-      if (res.length > 0) {
-        this.spouseAssetForm = this.parseResponse(res[0]);
+      if (res) {
+        if (res.length > 0) {
+          this.spouseAssetForm = this.parseResponse(res[0]);
+        }
       }
     });
   }
@@ -156,8 +164,12 @@ export class AssetsComponent implements OnInit {
   private loadJointAsset(): void {
     this.jointAssetForm.user_id = this.matter.client.id;
     this.financialSummaryService.getWithUserId(this.matter.client.id).subscribe((res) => {
-      if (res.filter((asset) => asset.is_joint === true).length > 0) {
-        this.jointAssetForm = this.parseResponse(res.filter((asset) => asset.is_joint === true)[0]);
+      if (res) {
+        if (res.filter((asset) => asset.is_joint === true).length > 0) {
+          this.jointAssetForm = this.parseResponse(
+            res.filter((asset) => asset.is_joint === true)[0],
+          );
+        }
       }
     });
   }
@@ -240,7 +252,6 @@ export class AssetsComponent implements OnInit {
       total_assets: parseFloat(this.toStringFloat(assetForm.total_assets)),
       total_nc: parseFloat(this.toStringFloat(assetForm.total_nc)),
       total_countable: parseFloat(this.toStringFloat(assetForm.total_countable)),
-
     };
     asset.total_assets =
       asset.checking +
@@ -260,8 +271,9 @@ export class AssetsComponent implements OnInit {
       asset.nc_hard_assets +
       asset.nc_other_unqualified_investment;
 
-      // sum of all nc assets
-      asset.total_nc = asset.nc_bank +
+    // sum of all nc assets
+    asset.total_nc =
+      asset.nc_bank +
       asset.nc_employer_retirement_plan +
       asset.nc_ira +
       asset.nc_other_qualified_investment +
@@ -269,8 +281,9 @@ export class AssetsComponent implements OnInit {
       asset.nc_hard_assets +
       asset.nc_other_unqualified_investment;
 
-      // sum of all assets with no nc
-      asset.total_countable = asset.checking +
+    // sum of all assets with no nc
+    asset.total_countable =
+      asset.checking +
       asset.savings +
       asset.other_bank +
       asset.employer_retirement_plan +
@@ -286,18 +299,19 @@ export class AssetsComponent implements OnInit {
 
   submit(): void {
     this.upsertClientAsset();
-    this.upsertSpouseAsset();
-    this.upsertJointAsset();
+    if (this.spouse) {
+      this.upsertSpouseAsset();
+      this.upsertJointAsset();
+    }
   }
-
 
   //formatted sum: because the mask converts things to a string,
   // the frontend sums need a method that return a number
   // this makes use of the rest operator that provides a variable number of parameters
   // see typescript docs
-  formattedSum(...n : string[]) : number {
+  formattedSum(...n: string[]): number {
     let sum = 0;
-    n.forEach(element => {
+    n.forEach((element) => {
       sum += parseFloat(this.toStringFloat(element));
     });
     return sum;
@@ -308,7 +322,9 @@ export class AssetsComponent implements OnInit {
     const asset = this.parseAssetForm(this.clientAssetForm);
 
     this.financialSummaryService.upsert(asset).subscribe((res) => {
-      this.clientAssetForm = this.parseResponse(res[0]);
+      if (res) {
+        this.clientAssetForm = this.parseResponse(res[0]);
+      }
     });
   }
 
@@ -316,7 +332,9 @@ export class AssetsComponent implements OnInit {
     const asset = this.parseAssetForm(this.spouseAssetForm);
 
     this.financialSummaryService.upsert(asset).subscribe((res) => {
-      this.spouseAssetForm = this.parseResponse(res[0]);
+      if (res) {
+        this.spouseAssetForm = this.parseResponse(res[0]);
+      }
     });
   }
 
@@ -324,7 +342,9 @@ export class AssetsComponent implements OnInit {
     const asset = this.parseAssetForm(this.jointAssetForm);
 
     this.financialSummaryService.upsert(asset).subscribe((res) => {
-      this.jointAssetForm = this.parseResponse(res[0]);
+      if (res) {
+        this.jointAssetForm = this.parseResponse(res[0]);
+      }
     });
   }
 

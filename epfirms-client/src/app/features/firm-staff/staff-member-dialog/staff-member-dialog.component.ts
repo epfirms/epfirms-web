@@ -60,7 +60,7 @@ export class StaffMemberDialogComponent implements OnInit {
     }
 
     this._firmRoleService.get().subscribe((response) => {
-      this.roleOptions = [...response.roles];
+      this.roleOptions = [...response];
     });
   }
 
