@@ -155,6 +155,20 @@ export class CasesComponent implements OnInit {
             if (data.chatToTextNumber) {
               this.createConversation(newMatter);
             }
+            // create the intake and send notification to client
+            // atm the moment we only have one intake flow done and that is estate planning
+            if (data.intake === 'estate planning') {
+              let intake = {
+
+                matter_id : newMatter.id,
+                status: 'sent',
+                type: 'estate planning',
+              }
+              this._matterService.createIntake(newMatter.id).subscribe((response) => {
+                console.log(response);
+              } 
+              );
+            }
           });
         });
       }
