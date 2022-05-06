@@ -93,6 +93,9 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   selectedClient;
 
   selectedAttorney;
+
+ // the selected intake type
+ selectedIntake : string = 'none'; 
   
   constructor(
     private _fb: FormBuilder,
@@ -259,6 +262,6 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.close({matter: this.caseForm.value, note: this.note, chatToTextNumber: this.enableChatToText && this.chatToTextNumber.valid ? this.chatToTextNumber : null});
+    this.close({matter: this.caseForm.value, intake: this.selectedIntake, note: this.note, chatToTextNumber: this.enableChatToText && this.chatToTextNumber.valid ? this.chatToTextNumber : null});
   }
 }

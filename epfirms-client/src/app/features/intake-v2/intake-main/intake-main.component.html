@@ -28,7 +28,9 @@
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
                 <ng-container *ngIf="matters$ | async as matters">
-              <tr *ngFor="let matter of matters">
+                  <ng-container *ngFor="let matter of matters">
+
+              <tr *ngIf="matter.matter_intake">
 
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                     <button 
@@ -41,6 +43,9 @@
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{matter.matter_intake.status | uppercase}}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>
               </tr>
+
+
+                  </ng-container>
               </ng-container>
 
               <!-- More people... -->
@@ -60,11 +65,10 @@
 
 
 <!-- ESTATE PLANNING INTAKE FORM CONTAINER -->
-<ng-container *ngIf="selectedMatter">
+<ng-container  *ngIf="selectedMatter" >
 <div *ngIf="selectedMatter.matter_intake.type === 'estate planning'">
 
-<app-estate-law-intake [matter]="selectedMatter" [intake]="selectedMatter.matter_intake"></app-estate-law-intake>
-
+<app-client-estate-planning-intake [matter]="selectedMatter"></app-client-estate-planning-intake>
 
 </div>
 
