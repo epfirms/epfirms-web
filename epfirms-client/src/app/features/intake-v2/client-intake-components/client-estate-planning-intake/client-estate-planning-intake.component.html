@@ -170,16 +170,6 @@
                   >Appointees</a
                 >
 
-                <a
-                  (click)="setState('estate planning')"
-                  [ngClass]="
-                    state === 'estate planning'
-                      ? 'bg-blue-100 text-black text-sm'
-                      : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
-                  "
-                  class="text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
-                  >Questions</a
-                >
 
                 <a
                   (click)="setState('life insurance')"
@@ -198,7 +188,9 @@
         </div>
       </div>
     </nav>
-    <main>
+    <ng-scrollbar style="height: 600px">
+
+<main>
       <div class="max-w-7xl mx-auto py-1 sm:px-1 lg:px-0">
         <!-- Replace with your content -->
         <div class="px-4 py-4 sm:px-0">
@@ -240,5 +232,7 @@
         <!-- /End replace -->
       </div>
     </main>
+    </ng-scrollbar>
+    
   </div>
 </div>
