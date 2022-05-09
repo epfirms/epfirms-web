@@ -33,6 +33,10 @@ import { ComboboxModule } from '@app/shared/combobox/combobox.module';
 import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
 import { ClientEstatePlanningIntakeComponent } from './client-intake-components/client-estate-planning-intake/client-estate-planning-intake.component';
 import { EstatePlanningWorkflowComponent } from './estate-planning-workflow/estate-planning-workflow.component';
+import { ProbateWorkflowComponent } from './probate-workflow/probate-workflow.component';
+import { PersonalRepresentativeInformationComponent } from './personal-representative-information/personal-representative-information.component';
+import { DecedentInformationComponent } from './decedent-information/decedent-information.component';
+import { DecedentPropertyComponent } from './decedent-property/decedent-property.component';
 
 
 
@@ -59,7 +63,11 @@ import { EstatePlanningWorkflowComponent } from './estate-planning-workflow/esta
     ProbateIntakeComponent,
     LifeInsuranceComponent,
     ClientEstatePlanningIntakeComponent,
-    EstatePlanningWorkflowComponent
+    EstatePlanningWorkflowComponent,
+    ProbateWorkflowComponent,
+    PersonalRepresentativeInformationComponent,
+    DecedentInformationComponent,
+    DecedentPropertyComponent
   ],
   imports: [
     CommonModule,
