@@ -59,7 +59,7 @@
         <!-- Replace with your content -->
         <div class="px-4 py-4 sm:px-0">
           
-            <app-personal-representative-information *ngIf="state === 'personal representative'"></app-personal-representative-information>
+            <app-personal-representative-information *ngIf="state === 'personal representative'" [matter]="matter"></app-personal-representative-information>
             <app-decedent-information *ngIf="state === 'decedent information'"></app-decedent-information>
             <app-decedent-property *ngIf="state === 'decedent property'"></app-decedent-property>
         </div>
