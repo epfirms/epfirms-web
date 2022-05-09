@@ -14,6 +14,7 @@ module.exports = (sequelize, {
           primaryKey: true,
           autoIncrement: true,
         },
+        // this is a reference to the decendent information
         user_id: {
           type: INTEGER,
         },
@@ -53,6 +54,7 @@ module.exports = (sequelize, {
         date_of_codicils: {
             type: STRING,
         },
+        // this is the user id for the person who holds/manages the case
         personal_representative_id: {
             type: INTEGER,
         },
