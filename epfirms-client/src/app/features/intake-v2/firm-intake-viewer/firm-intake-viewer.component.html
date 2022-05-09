@@ -1,4 +1,5 @@
 
+<div *ngIf="intake">
 
 <!-- IF ESTATE PLANNING INTAKE -->
 <div *ngIf="intake.type === 'estate planning'">
@@ -7,4 +8,5 @@
 
 <div *ngIf="intake.type === 'probate'">
 <app-probate-workflow></app-probate-workflow>
+</div>
 </div>
