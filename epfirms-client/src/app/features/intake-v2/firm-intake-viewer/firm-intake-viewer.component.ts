@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { ClientMatterService } from '@app/client-portal/_services/matter-service/client-matter.service';
+import { Matter } from '@app/core/interfaces/matter';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
@@ -13,50 +14,15 @@ import { emailService } from '@app/shared/_services/email-service/email.service'
 })
 export class FirmIntakeViewerComponent implements OnInit {
  // input bindings
-  @Input() intake;
-  @Input() matter;
-  @Output() onIntakeSubmit = new EventEmitter<boolean>();
+  @Input() matter : Matter;
 
-  //state that manages the views
-  state: string = 'personal info';
-  // stack that manages the views and enables the back() functionality
-  history = [];
 
   constructor(
-    private currentUserService: CurrentUserService,
-    private clientMatterService : ClientMatterService,
-    private matterService : MatterService,
-    private emailService : emailService
     
     ) {}
 
   ngOnInit(): void {
-    console.log(this.intake);
-    console.log("matter", this.matter);
   }
 
-  setState(state: string): void {
-    this.history.push(this.state);
-    this.state = state;
-  }
-
-  sendIntake() : void {
-    this.matterService.createIntake(this.matter.id).subscribe(res => {
-      if (res) {
-        console.log(res);
-        this.matter.matter_intake = res;
-        if (this.matter.client.email) {
-          this.emailService.sendIntakeNotifcation(this.matter.client.email).subscribe();
-        }
-      }
-    });
-  }
-
-  back(): void {
-    this.state = this.history.pop();
-  }
-
-  submit() : void {
-    this.clientMatterService.updateMatterIntake({id: this.intake.id, status: "complete"}).subscribe();
-  }
+  
 }
