@@ -4,3 +4,7 @@
 <div *ngIf="intake.type === 'estate planning'">
 <app-estate-planning-workflow [matter]="matter"></app-estate-planning-workflow>
 </div>
+
+<div *ngIf="intake.type === 'probate'">
+<app-probate-workflow></app-probate-workflow>
+</div>
