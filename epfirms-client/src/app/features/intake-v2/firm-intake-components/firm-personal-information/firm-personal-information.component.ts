@@ -306,21 +306,21 @@ export class FirmPersonalInformationComponent implements OnInit {
     this.hasSpouse = false;
   }
 
-  deleteChild(child: any) : void {
-    this.familyMemberService.deleteFamilyMemberById(this.client.id, child.id).subscribe((res) => {
+  deleteChild(deletedChild: any) : void {
+    this.familyMemberService.deleteFamilyMemberById(this.client.id, deletedChild.id).subscribe((res) => {
       if (res) {
         console.log('delete child', res);
-        this.children = this.children.filter((child) => child.id !== child.id);
+        this.children = this.children.filter((child) => child.id !== deletedChild.id);
       }
     }
     );
   }
 
-  deleteFamilyMember(familyMember: any) : void {
-    this.familyMemberService.deleteFamilyMemberById(this.client.id, familyMember.id).subscribe((res) => {
+  deleteFamilyMember(deletedFamilyMember: any) : void {
+    this.familyMemberService.deleteFamilyMemberById(this.client.id, deletedFamilyMember.id).subscribe((res) => {
       if (res) {
         console.log('delete family member', res);
-        this.familyMembers = this.familyMembers.filter((familyMember) => familyMember.id !== familyMember.id);
+        this.familyMembers = this.familyMembers.filter((familyMember) => familyMember.id !== deletedFamilyMember.id);
       }
     }
     );
