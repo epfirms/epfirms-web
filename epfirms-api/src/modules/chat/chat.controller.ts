@@ -89,6 +89,17 @@ export class ChatController {
     }
   }
 
+  public async getConversation(req, res) {
+    try {
+      const conversationSid = req.params.conversationSid;
+      const conversation = await this._conversationService.fetchConversation(conversationSid);
+
+      res.status(StatusConstants.CREATED).send({ data: conversation });
+    } catch (error) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
+    }
+  }
+
   public async createConversationForMatter(req, res) {
     const firmId = req.user.firm_access.firm_id;
     const matterId = req.body.matter;

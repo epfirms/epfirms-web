@@ -1,9 +1,13 @@
 import { Response, Request } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
 import { PaymentProcessorService } from '@modules/payment-processor/services/payment-processor.service';
+import { Service } from 'typedi';
 
+@Service()
 export class PaymentProcessorWebhookController {
-  constructor() {}
+  constructor(
+    private _paymentProcessorService: PaymentProcessorService
+  ) {}
 
   public async handleInvoiceWebhook(req: Request, resp: Response): Promise<any> {
     try {
@@ -12,13 +16,13 @@ export class PaymentProcessorWebhookController {
       const current_period_end = lines.data[0].period.end;
       switch (event.type) {
         case 'invoice.paid':
-          await PaymentProcessorService.handlePaidInvoice(customer, current_period_end);
+          await this._paymentProcessorService.handlePaidInvoice(customer, current_period_end);
           break;
         case 'invoice.upcoming':
-          await PaymentProcessorService.handleUpcomingInvoice(customer_email);
+          await this._paymentProcessorService.handleUpcomingInvoice(customer_email);
           break;
         case 'invoice.payment_failed':
-          await PaymentProcessorService.handlePaymentFailed(customer, customer_email);
+          await this._paymentProcessorService.handlePaymentFailed(customer, customer_email);
           break;
       }
 

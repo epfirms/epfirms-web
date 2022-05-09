@@ -42,18 +42,6 @@ export class FirmController {
 
       // await this._firmEmployeeService.add(createdUser.id, createdFirm.id, roles);
 
-      const stripeCustomer = await PaymentProcessorService.createCustomer(user.email);
-
-      // await Stripe.addPayment(stripeCustomer.id, source);
-
-      const subscription = await PaymentProcessorService.subscribe(stripeCustomer.id);
-
-      await this._firmService.createSubscription(
-        createdFirm.id,
-        subscription.customer,
-        subscription.current_period_end
-      );
-
       await this._firmRoleService.initDefault(createdFirm.id);
       
       resp.status(StatusConstants.CREATED).send({ success: true });

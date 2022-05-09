@@ -149,4 +149,9 @@ export class ConversationService {
       
     return Promise.resolve(conversations);
   }
+
+  async fetchConversation(sid: string): Promise<any> {
+    const conversation = await this.twilioClient.conversations.services('IS1faac97ab6954bb8828c6edead9e4513').conversations(sid).fetch();
+    return Promise.resolve(conversation);
+  }
 }

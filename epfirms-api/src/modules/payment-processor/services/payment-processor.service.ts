@@ -1,25 +1,32 @@
 import { Database } from '@src/core/Database';
 const { STRIPE_SECRET, STRIPE_PLAN } = require('@configs/vars');
-const stripe = require('stripe')(STRIPE_SECRET);
+import Stripe from 'stripe';
+import { Service } from 'typedi';
 
+@Service()
 export class PaymentProcessorService {
-  // Creates a new customer object and returns stripe customer object
-  public static async createCustomer(email): Promise<any> {
-    const customer = await stripe.customers.create({
-      email
+  stripe: Stripe;
+
+  constructor() {
+    this.stripe = new Stripe(STRIPE_SECRET, {
+      apiVersion: '2020-08-27',
     });
+  }
+  // Creates a new customer object and returns stripe customer object
+  async createCustomer(params: Stripe.CustomerCreateParams, opts?: Stripe.RequestOptions): Promise<any> {
+    const customer = await this.stripe.customers.create(params, opts);
 
     return Promise.resolve(customer);
   }
 
-  public static async addPayment(customerId, source): Promise<any> {
-    const newCard = await stripe.customers.createSource(customerId, { source });
+  async addPayment(customerId, source): Promise<any> {
+    const newCard = await this.stripe.customers.createSource(customerId, { source });
 
     return Promise.resolve(newCard);
   }
 
-  public static async subscribe(customerId): Promise<any> {
-    const subscription = await stripe.subscriptions.create({
+  async subscribe(customerId): Promise<any> {
+    const subscription = await this.stripe.subscriptions.create({
       customer: customerId,
       items: [{ price: STRIPE_PLAN}],
       expand: ['latest_invoice.payment_intent'],
@@ -29,7 +36,7 @@ export class PaymentProcessorService {
     return Promise.resolve(subscription);
   }
 
-  public static async handlePaidInvoice(customerId, currentPeriodEnd): Promise<any> {
+  async handlePaidInvoice(customerId, currentPeriodEnd): Promise<any> {
     const currentPeriodEndDate = new Date(currentPeriodEnd * 1000);
 
     const updateSubscription = await Database.models.firm_subscription.update(
@@ -42,12 +49,12 @@ export class PaymentProcessorService {
     return Promise.resolve(updateSubscription);
   }
 
-  public static async handleUpcomingInvoice(customerEmail): Promise<string> {
+  async handleUpcomingInvoice(customerEmail): Promise<string> {
     // TODO: Send reminder email for upcoming invoice
     return Promise.resolve('handled');
   }
 
-  public static async handlePaymentFailed(customerId, customerEmail): Promise<any> {
+  async handlePaymentFailed(customerId, customerEmail): Promise<any> {
     const updateSubscription = await Database.models.firm_subscription.update(
       {
         current_period_end: null

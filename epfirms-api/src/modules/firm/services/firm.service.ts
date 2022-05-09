@@ -55,18 +55,6 @@ export class FirmService {
     }
   }
 
-  public async createSubscription(id, customerId, currentPeriodEnd): Promise<string> {
-    const current_period_end = new Date(currentPeriodEnd * 1000);
-
-    const subscription = await Database.models.firm_subscription.create({
-      customer_id: customerId,
-      firm_id: id,
-      current_period_end
-    });
-
-    return Promise.resolve(subscription);
-  }
-
   public async getClients(firmId: number): Promise<any> {
     const { user, firm, client, matter, legal_area } = Database.models;
     const { sequelize } = Database;

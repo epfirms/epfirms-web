@@ -1,48 +1,85 @@
-import 'reflect-metadata';
-var express = require('express');
+import express from 'express';
 import { Express } from 'express';
-import { InitializeMiddleWare } from './InitializeMiddleware';
-import { InitializeRoutes } from './InitializeRoutes';
 import { Database } from './Database';
-import { Server } from 'socket.io';
+import { Server as SocketServer } from 'socket.io';
 import { createAdapter } from '@socket.io/redis-adapter';
 import { RedisClient } from 'redis';
 import { Logger } from '@utils/logger/Logger';
-const jwt = require('jsonwebtoken');
-const axios = require('axios').default;
-const { SERVER_HOST, SERVER_PORT, REDIS_HOST, REDIS_PORT, JWT_SECRET, COMMIT_ID } = require('@configs/vars');
+import * as jwt from 'jsonwebtoken';
+import { Service } from 'typedi';
+const {
+  SERVER_HOST,
+  SERVER_PORT,
+  REDIS_HOST,
+  REDIS_PORT,
+  JWT_SECRET,
+  COMMIT_ID,
+} = require('@configs/vars');
+import { stripeWebhookRouter } from './routes/stripewebhook/stribewebhook';
+import { v1Router } from './routes/api/v1';
+import { webhookRouter } from './routes/webhook/webhook';
+import { CommonMiddleware } from '@src/middleware/CommonMiddleware';
+import { ErrorHandlingMiddleware } from '../middleware/ErrorHandlingMiddleware';
 
-export async function server() {
-  let app: Express = express();
+@Service()
+export class Server {
+  app: Express;
 
-  let host = SERVER_HOST;
-  let port = SERVER_PORT;
+  constructor(
+    private _middleware: CommonMiddleware,
+    private _errorHandlingMiddleware: ErrorHandlingMiddleware,
+  ) {
+    this.app = express();
+    Database.connect();
+    Database.start();
+    this.intializeUnparsedRoutes();
+    this.initializeMiddleware();
+    this.initializeRoutes();
+    this.initializeErrorHandlingMiddleware();
+    this.start();
+  }
 
-  await Database.connect();
-  await Database.start();
-  await InitializeRoutes.InitializeStripeRoutes(app);
-  await InitializeMiddleWare.InitializeCommonMiddleware(app);
-  await InitializeRoutes.Initialize(app);
-  await InitializeMiddleWare.InitializeErrorHandlingMiddleware(app);
+  start() {
+    const httpServer = this.app.listen(SERVER_PORT, SERVER_HOST, () => {
+      console.log(
+        `Server  started listening at ${SERVER_HOST} on ${SERVER_PORT} port. Redis: ${REDIS_HOST}:${REDIS_PORT}`,
+      );
+    });
 
-  const httpServer = app.listen(port, host, () => {
-    console.log(
-      `Server  started listening at ${host} on ${port} port. Redis: ${REDIS_HOST}:${REDIS_PORT}`
-    );
-  });
+    socketServer(httpServer);
+  }
 
-  await socketServer(httpServer);
+  initializeRoutes() {
+    this.app.use('/api', v1Router);
+    this.app.use('/webhook', webhookRouter);
+  }
 
-  return Promise.resolve(app);
+  intializeUnparsedRoutes() {
+    this.app.use('/stripewebhook', stripeWebhookRouter);
+  }
+
+  initializeMiddleware() {
+    this.app.use(this._middleware.useCompression());
+    this.app.use(this._middleware.usePassport());
+    this.app.use(this._middleware.useHelmet());
+    this.app.use(this._middleware.useBodyParser());
+    this.app.use(this._middleware.useURLencoded());
+    this.app.use(this._middleware.useCors());
+    this.app.use(this._middleware.logRequests());
+  }
+
+  initializeErrorHandlingMiddleware() {
+    this.app.use(this._errorHandlingMiddleware.handle404Error());
+  }
 }
 
-export async function socketServer(httpServer) {
-  const io = new Server(httpServer, {
+export function socketServer(httpServer) {
+  const io = new SocketServer(httpServer, {
     cors: {
-      origin: '*/*'
+      origin: '*/*',
     },
     path: '/socket',
-    transports: ['websocket']
+    transports: ['websocket'],
   });
   const pubClient = new RedisClient({ host: REDIS_HOST, port: REDIS_PORT });
   const subClient = pubClient.duplicate();
@@ -64,7 +101,7 @@ export async function socketServer(httpServer) {
       let logger = Logger.getLogger();
       logger.info(`Error connecting to socket room.`);
       if (socket.handshake?.auth?.token) {
-        logger.info(`Token: ${socket.handshake.auth.token}`)
+        logger.info(`Token: ${socket.handshake.auth.token}`);
       } else {
         logger.info(`No token found in socket.handshake.auth.token`);
       }
@@ -75,7 +112,9 @@ export async function socketServer(httpServer) {
   // Namespace connection handler
   firmWorkspace.on('connection', (socket) => {
     let logger = Logger.getLogger();
-    logger.info(`Socket connected to workspace: ${socket.nsp.name} (${socket.handshake.auth.token})`);
+    logger.info(
+      `Socket connected to workspace: ${socket.nsp.name} (${socket.handshake.auth.token})`,
+    );
 
     socket.emit(`app:version`, COMMIT_ID);
     // Firm namespace
@@ -145,25 +184,22 @@ export async function socketServer(httpServer) {
   return Promise.resolve(io);
 }
 
-function getSocketRoom(token): string {
+function getSocketRoom(token) {
   let logger = Logger.getLogger();
+  try {
+    const jwtPayload: any = jwt.verify(token, JWT_SECRET);
 
-  return jwt.verify(token, JWT_SECRET, function (err, user) {
-    if (err) {
-      logger.info(err);
-      return null;
+    if (!jwtPayload.id) {
+      throw jwtPayload;
     }
 
-    if (!user.id) {
-      logger.info(user);
-      return null;
+    if (!jwtPayload.firm_access) {
+      throw jwtPayload;
     }
 
-    if (!user.firm_access) {
-      logger.info(user);
-      return null;
-    }
-
-    return `/firm-${user.firm_access.firm_id}`;
-  });
+    return `/firm-${jwtPayload.firm_access.firm_id}`;
+  } catch (err) {
+    logger.info(err);
+    return null;
+  }
 }

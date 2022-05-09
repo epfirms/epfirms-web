@@ -11,6 +11,6 @@ chatRouter.post('/', passport.authenticate('bearer', { session: false }), (req, 
 chatRouter.post('/:conversationSid/participants', passport.authenticate('bearer', { session: false }), (req, res) => chatController.addParticipant(req, res));
 chatRouter.post('/:conversationSid/messages', passport.authenticate('bearer', { session: false }), (req, res) => chatController.sendMessage(req, res));
 chatRouter.post('/matter', passport.authenticate('bearer', { session: false }), (req, res) => chatController.createConversationForMatter(req, res))
-chatRouter.delete('/:conversationSid', (req, res) => chatController.deleteConversation(req, res))
-
+// chatRouter.delete('/:conversationSid', (req, res) => chatController.deleteConversation(req, res))
+// chatRouter.get('/:conversationSid', (req, res) => chatController.getConversation(req, res))
 export { chatRouter };

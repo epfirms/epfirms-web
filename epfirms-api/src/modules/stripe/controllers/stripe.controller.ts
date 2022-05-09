@@ -4,6 +4,7 @@ import { StripeService } from '../services/stripe.service';
 import { send } from 'process';
 import { emailsService } from '@src/modules/emails/services/emails.service';
 import { Service } from 'typedi';
+import { StripeClientService } from '../services/stripe-client.service';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const passport = require('passport');
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
@@ -17,7 +18,7 @@ export class StripeController {
   feeRate : number = 0.029 + 0.011;
   feePercent : number = 4;
   
-  constructor(private _emailService : emailsService) {}
+  constructor(private _emailService : emailsService, private _stripeService: StripeService, private _stripeClient: StripeClientService) {}
 
   
 
@@ -63,7 +64,7 @@ export class StripeController {
         firm_id = req.user.firm_access.firm_id
       }
       // get the stripe account record if it exists in db
-      const stripeAccount = await StripeService.getStripeAccountId(firm_id);
+      const stripeAccount = await this._stripeService.getStripeAccountId(firm_id);
       // if there is an existing stripe account, use the stripe api to compare it to connected
       // accounts.
       if (stripeAccount !== null){
@@ -96,14 +97,14 @@ export class StripeController {
 
       const origin = `${req.headers.referer}`;
       // check to see if there is an existing entry with a Stripe account_id for the firm
-      const existing_account = await StripeService.getStripeAccountId(req.user.firm_access.firm_id);
+      const existing_account = await this._stripeService.getStripeAccountId(req.user.firm_access.firm_id);
 
       // if there is no existing account_id then create a new one and save to DB
       if (existing_account === null){
         const account = await stripe.accounts.create({
           type: 'standard',
         });
-        const createEntry = await StripeService.createStripeAccount(account.id, req.user.firm_access.firm_id);
+        const createEntry = await this._stripeService.createStripeAccount(account.id, req.user.firm_access.firm_id);
         const accountLinkURL = await this._generateAccountLink(account.id, origin);
         res.send({ url: accountLinkURL });
       }
@@ -164,6 +165,17 @@ export class StripeController {
       
       res.status(StatusConstants.OK).send({url: session.url, session_id: session.id});
     } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  public async getPublicKey(req, res: Response): Promise<any> {
+    try {
+      const key = await this._stripeClient.getKey();
+      res.status(StatusConstants.OK).send({key});
+
+    } catch(err) {
       console.error(err);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
     }
@@ -237,9 +249,9 @@ export class StripeController {
 
       if (event.type === 'checkout.session.completed'){
         
-        const fufillment = await StripeService.fufillPaymentSession(session);
+        const fufillment = await this._stripeService.fufillPaymentSession(session);
         if (session.subscription){
-          const subscription = await StripeService.fufillSubscriptionSession(session);
+          const subscription = await this._stripeService.fufillSubscriptionSession(session);
         }
 
         res.status(200).send();
@@ -258,7 +270,7 @@ export class StripeController {
         console.log("INVOICE PAYMENT SUCCESS SESSION");
         console.log(session);
         if (session.subscription) {
-          const updatedCustomerAccount = await StripeService.fufillInvoicePaymentSuccess(session);
+          const updatedCustomerAccount = await this._stripeService.fufillInvoicePaymentSuccess(session);
           // if the updated customer account has an associated subscription and its active, it will send the email
           if (updatedCustomerAccount.sendEmail){
             //send an email template for successful payment
