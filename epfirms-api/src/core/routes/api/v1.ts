@@ -35,6 +35,7 @@ import { toolAccessRouter } from '@src/modules/tool-access/routes';
 import { probateRouter } from '@src/modules/probate/routes';
 import { financialSummaryRouter } from '@src/modules/financial-summary/routes';
 import { appointeeSummaryRouter } from '@src/modules/appointee-summary/routes';
+import { intakeRouter } from '@src/modules/intake/routes';
 
 const v1Router = express.Router();
 
@@ -75,4 +76,5 @@ v1Router.use('/tools', toolAccessRouter);
 v1Router.use('/probate', probateRouter);
 v1Router.use('/financial-summary', financialSummaryRouter);
 v1Router.use('/appointee-summary', appointeeSummaryRouter);
+v1Router.use('/intake', intakeRouter);
 export { v1Router }
