@@ -1,6 +1,6 @@
 
 
 <!-- IF ESTATE PLANNING INTAKE -->
-<div >
+<div *ngIf="intake.type === 'estate planning'">
 <app-estate-planning-workflow [matter]="matter"></app-estate-planning-workflow>
 </div>
