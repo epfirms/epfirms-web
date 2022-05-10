@@ -3,6 +3,7 @@ import { FamilyMemberService } from '@app/client-portal/_services/family-member-
 import { UserService } from '@app/features/user/services/user.service';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { USAState } from '@app/shared/utils/us-states/typings';
+import {Decedent} from '@app/core/interfaces/decedent';
 
 @Component({
   selector: 'app-decedent-information',
@@ -16,8 +17,11 @@ export class DecedentInformationComponent implements OnInit {
 
 
   // holds the properties of the client
+  // note that in this case, the client is the decedent user profile
   client;
 
+  //decedent holds the record from the DB about the decedent and the matter
+  decedent : Decedent;
   // does the client have a spouse?
   hasSpouse: boolean = false;
 
@@ -100,6 +104,18 @@ export class DecedentInformationComponent implements OnInit {
 
       }
     });
+  }
+
+  private init() : void {
+    // check to see if there is a decedent record assosciated with the matter id
+
+
+    // if there is a decedent record, make the call to the user service to get the decedent user profile
+
+    // if there is no decedent record, make the new user, and then create decedent record
+
+    // then init the family members
+
   }
 
   private loadFamilyMembers(member): void {
