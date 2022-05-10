@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProbateQuestions } from '@app/core/interfaces/ProbateQuestions';
-import { ProbateService } from '../services/probate.service';
 
 @Component({
   selector: 'app-probate-intake',
@@ -16,7 +15,7 @@ export class ProbateIntakeComponent implements OnInit {
   // the form for the probate
 form : ProbateQuestions;
 
-  constructor(private probateService : ProbateService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.form = new ProbateQuestions();
@@ -38,7 +37,6 @@ form : ProbateQuestions;
     this.form.matter_id = this.matter.id;
     this.form.user_id = this.decedent.id;
     }
-    this.probateService.upsert(this.form).subscribe(res => console.log(res));
     console.log("On submit", this.form);
     this.continueButton();
   }

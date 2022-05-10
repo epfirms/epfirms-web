@@ -5,9 +5,9 @@ module.exports = (sequelize, {
     STRING,
     TEXT
   }) => {
-    const tableName = 'probate';
+    const tableName = 'decedent';
 
-    const Probate = sequelize.define(
+    const Decedent = sequelize.define(
       tableName, {
         id: {
           type: INTEGER,
@@ -70,5 +70,5 @@ module.exports = (sequelize, {
       },
     );
 
-    return Probate;
+    return Decedent;
   };

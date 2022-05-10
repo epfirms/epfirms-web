@@ -73,12 +73,12 @@ export class Database {
       excluded_children: require('../models/ExcludedChildren')(this.sequelize, Sequelize),
       specific_requests: require('../models/SpecificRequests')(this.sequelize, Sequelize),
       bug_reporter_access: require('../models/BugReporterAccess')(this.sequelize, Sequelize),
-      probate: require('../models/Probate')(this.sequelize, Sequelize),
       team: require('../models/Team')(this.sequelize),
       team_member: require('../models/TeamMember')(this.sequelize),
       firm_employee: require('../models/FirmEmployee')(this.sequelize, Sequelize),
       financial_summary: require('../models/FinancialSummary')(this.sequelize, Sequelize),
       appointee_summary: require('../models/AppointeeSummary')(this.sequelize, Sequelize),
+      decedent: require('../models/Decedent')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.sequelize.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -94,6 +94,13 @@ export class Database {
       through: this.models.client,
       as: 'firm_client'
     });
+
+    //decedent relationships
+    this.models.user.hasOne(this.models.decedent, {foreignKey: 'user_id'});
+    this.models.decedent.belongsTo(this.models.user, {foreignKey: 'user_id'});
+    this.models.matter.hasOne(this.models.decedent, {foreignKey: 'matter_id'});
+    this.models.decedent.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+
 
     this.models.user.belongsToMany(this.models.user, {
       through: this.models.family_member,
