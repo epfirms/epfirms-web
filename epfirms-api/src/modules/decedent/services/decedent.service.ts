@@ -26,10 +26,10 @@ export class DecedentService {
         }
     }
 
-public static async getAllWithId(id) : Promise<any> {
+public static async getWithMatterId(id) : Promise<any> {
         try {
 
-            const all = await Database.models.decedent.findAll({where: {id: id}});
+            const all = await Database.models.decedent.findOne({where: {matter_id: id}});
             return Promise.resolve(all);
         }
         catch (error){

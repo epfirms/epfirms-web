@@ -32,11 +32,11 @@ export class DecedentController {
         }
     }
 
-public async getAllWithId(req : Request, res : Response) : Promise<any> {
+public async getWithMatterId(req : Request, res : Response) : Promise<any> {
         try {
 
-            const all = await DecedentService.getAllWithId(req.params.id);
-            res.status(StatusConstants.OK).send(all);
+            const found = await DecedentService.getWithMatterId(req.params.matter_id);
+            res.status(StatusConstants.OK).send(found);
         }
         catch (error){
             res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
