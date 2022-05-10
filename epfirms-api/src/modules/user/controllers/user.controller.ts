@@ -34,6 +34,17 @@ export class UserController {
     }
   }
 
+  public async upsertUser(req: any, resp: Response): Promise<any> {
+    try {
+      const { body } = req;
+      const response = await this._userService.upsertUser(body);
+      resp.status(StatusConstants.OK).send(response);
+    } catch (error) {
+      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
+
+
   public async updateUser(req: Request, resp: Response): Promise<any> {
     try {
       const { body } = req;

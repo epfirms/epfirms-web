@@ -9,6 +9,8 @@ userRouter.get('/',
   (req, res) => userController.getUser(req, res)
 )
 
+userRouter.post('/upsert', passport.authenticate('bearer', {session: false}), (req, res) => userController.upsertUser(req, res))
+
 userRouter.post('/',
   (req, res) => userController.createUser(req, res)
 )
