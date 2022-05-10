@@ -3,25 +3,25 @@ import { FamilyMemberService } from '@app/client-portal/_services/family-member-
 import { UserService } from '@app/features/user/services/user.service';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { USAState } from '@app/shared/utils/us-states/typings';
-import {Decedent} from '@app/core/interfaces/decedent';
+import { Decedent } from '@app/core/interfaces/decedent';
+import { DecedentService } from '../services/decedent.service';
 
 @Component({
   selector: 'app-decedent-information',
   templateUrl: './decedent-information.component.html',
-  styleUrls: ['./decedent-information.component.scss']
+  styleUrls: ['./decedent-information.component.scss'],
 })
 export class DecedentInformationComponent implements OnInit {
   // INPUT BINDINGS
   @Input() isVisible: boolean;
   @Input() matter;
 
-
   // holds the properties of the client
   // note that in this case, the client is the decedent user profile
   client;
 
   //decedent holds the record from the DB about the decedent and the matter
-  decedent : Decedent;
+  decedent: Decedent;
   // does the client have a spouse?
   hasSpouse: boolean = false;
 
@@ -78,44 +78,72 @@ export class DecedentInformationComponent implements OnInit {
   constructor(
     private familyMemberService: FamilyMemberService,
     private userService: UserService,
+    private decedentService: DecedentService,
   ) {}
 
   ngOnInit(): void {
-    this.loadClientData();
-    this.getFamilyMembers();
+    this.init();
   }
 
   getFamilyMembers(): void {
     this.familyMemberService.getByUserId(this.client.id).subscribe((familyMembers) => {
       if (familyMembers) {
-      // filter out the family members in response
-      familyMembers.forEach((member) => {
-        if (member.family_member.relationship_type === 'spouse') {
-          this.spouse = member;
-          this.hasSpouse = true;
-          this.loadSpouseForm();
-        } else if (member.family_member.relationship_type === 'child') {
-          console.log("on load child", member);
-          this.loadChildren(member);
-        } else {
-          this.loadFamilyMembers(member);
-        }
-      });
-
+        // filter out the family members in response
+        familyMembers.forEach((member) => {
+          if (member.family_member.relationship_type === 'spouse') {
+            this.spouse = member;
+            this.hasSpouse = true;
+            this.loadSpouseForm();
+          } else if (member.family_member.relationship_type === 'child') {
+            console.log('on load child', member);
+            this.loadChildren(member);
+          } else {
+            this.loadFamilyMembers(member);
+          }
+        });
       }
     });
   }
 
-  private init() : void {
+  private init(): void {
     // check to see if there is a decedent record assosciated with the matter id
 
+    this.decedentService.getDecedentWithMatterId(this.matter.id).subscribe((decedent) => {
+      if (decedent) {
+        this.decedent = decedent;
 
-    // if there is a decedent record, make the call to the user service to get the decedent user profile
+        // if there is a decedent record, make the call to the user service to get the decedent user profile
+        this.userService.get(decedent.user_id).subscribe((user) => {
+          if (user) {
+            this.client = user;
+            this.loadClientData();
+            this.getFamilyMembers();
+          }
+        });
+      } else {
+        // if there is no decedent record, make the new user, and then create decedent record
+        this.userService.upsert(this.clientForm).subscribe((createdUser) => {
+          if (createdUser) {
+            this.client = createdUser[0];
+            this.loadClientData();
+            this.getFamilyMembers();
+            this.decedentService
+              .upsert({
+                user_id: this.client.id,
+                matter_id: this.matter.id,
+                personal_representative_id: this.matter.client.id,
+              })
+              .subscribe((createdDecedent) => {
+                if (createdDecedent) {
+                  this.decedent = createdDecedent;
+                }
+              });
+          }
+        });
 
-    // if there is no decedent record, make the new user, and then create decedent record
-
-    // then init the family members
-
+        // then init the family members
+      }
+    });
   }
 
   private loadFamilyMembers(member): void {
@@ -203,9 +231,8 @@ export class DecedentInformationComponent implements OnInit {
         .addFamilyMemberForUser(this.client.id, this.spouseForm)
         .subscribe((res) => {
           if (res) {
-
-          this.spouseForm.id = res.id;
-          console.log('upsert spouse', res);
+            this.spouseForm.id = res.id;
+            console.log('upsert spouse', res);
           }
         });
     }
@@ -213,43 +240,34 @@ export class DecedentInformationComponent implements OnInit {
 
   private upsertChildren(): void {
     this.children.forEach((child) => {
-      console.log("child on upsert", child);
-      this.familyMemberService
-        .addFamilyMemberForUser(this.client.id, child)
-        .subscribe((res) => {
-          if (res) {
-
+      console.log('child on upsert', child);
+      this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe((res) => {
+        if (res) {
           child.id = res.id;
           console.log('upsert child', res);
-          }
-        });
+        }
+      });
     });
   }
 
   private upsertFamilyMembers(): void {
     this.familyMembers.forEach((member) => {
-      this.familyMemberService
-        .addFamilyMemberForUser(this.client.id, member)
-        .subscribe((res) => {
-          if (res) {
-
-          member.id = res.id
+      this.familyMemberService.addFamilyMemberForUser(this.client.id, member).subscribe((res) => {
+        if (res) {
+          member.id = res.id;
           console.log('upsert family member', res);
-          }
-        });
+        }
+      });
     });
   }
 
   private upsertClient(): void {
     this.userService.upsert(this.clientForm).subscribe((res) => {
       if (res) {
-
-      console.log('upsert client', res);
+        console.log('upsert client', res);
       }
     });
   }
-
-
 
   submit(): void {
     this.upsertSpouse();
@@ -306,37 +324,37 @@ export class DecedentInformationComponent implements OnInit {
     this.familyMembers.push(familyMember);
   }
 
-  deleteSpouse() : void {
-    this.familyMemberService.deleteFamilyMemberById(this.client.id, this.spouse.id).subscribe((res) => {
-      if (res) {
-        console.log('delete spouse', res);
-      }
-    }
-    );
+  deleteSpouse(): void {
+    this.familyMemberService
+      .deleteFamilyMemberById(this.client.id, this.spouse.id)
+      .subscribe((res) => {
+        if (res) {
+          console.log('delete spouse', res);
+        }
+      });
     this.spouse = null;
     this.hasSpouse = false;
   }
 
-  deleteChild(child: any) : void {
+  deleteChild(child: any): void {
     this.familyMemberService.deleteFamilyMemberById(this.client.id, child.id).subscribe((res) => {
       if (res) {
         console.log('delete child', res);
         this.children = this.children.filter((child) => child.id !== child.id);
       }
-    }
-    );
+    });
   }
 
-  deleteFamilyMember(familyMember: any) : void {
-    this.familyMemberService.deleteFamilyMemberById(this.client.id, familyMember.id).subscribe((res) => {
-      if (res) {
-        console.log('delete family member', res);
-        this.familyMembers = this.familyMembers.filter((familyMember) => familyMember.id !== familyMember.id);
-      }
-    }
-    );
+  deleteFamilyMember(familyMember: any): void {
+    this.familyMemberService
+      .deleteFamilyMemberById(this.client.id, familyMember.id)
+      .subscribe((res) => {
+        if (res) {
+          console.log('delete family member', res);
+          this.familyMembers = this.familyMembers.filter(
+            (familyMember) => familyMember.id !== familyMember.id,
+          );
+        }
+      });
   }
-
-
-
 }
