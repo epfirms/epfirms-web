@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { ClientMatterService } from '@app/client-portal/_services/matter-service/client-matter.service';
+import { UserService } from '@app/features/user/services/user.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { USAState } from '@app/shared/utils/us-states/typings';
@@ -78,30 +79,29 @@ export class FirmPersonalInformationComponent implements OnInit {
   constructor(
     private clientService: ClientService,
     private familyMemberService: FamilyMemberService,
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
     this.loadClientData();
-    this.getFamilyMembers();
   }
 
   getFamilyMembers(): void {
     this.familyMemberService.getByUserId(this.client.id).subscribe((familyMembers) => {
       if (familyMembers) {
-      // filter out the family members in response
-      familyMembers.forEach((member) => {
-        if (member.family_member.relationship_type === 'spouse') {
-          this.spouse = member;
-          this.hasSpouse = true;
-          this.loadSpouseForm();
-        } else if (member.family_member.relationship_type === 'child') {
-          console.log("on load child", member);
-          this.loadChildren(member);
-        } else {
-          this.loadFamilyMembers(member);
-        }
-      });
-
+        // filter out the family members in response
+        familyMembers.forEach((member) => {
+          if (member.family_member.relationship_type === 'spouse') {
+            this.spouse = member;
+            this.hasSpouse = true;
+            this.loadSpouseForm();
+          } else if (member.family_member.relationship_type === 'child') {
+            console.log('on load child', member);
+            this.loadChildren(member);
+          } else {
+            this.loadFamilyMembers(member);
+          }
+        });
       }
     });
   }
@@ -168,22 +168,25 @@ export class FirmPersonalInformationComponent implements OnInit {
     this.spouseForm.relationship_type = this.spouse.family_member.relationship_type;
   }
   private loadClientData(): void {
-    this.client = this.matter.client;
-    console.log('client', this.client);
+    this.userService.get(this.matter.client.id).subscribe((res) => {
+      this.client = res;
+      console.log('client', this.client);
 
-    this.clientForm.id = this.client.id;
-    this.clientForm.first_name = this.client.first_name;
-    this.clientForm.last_name = this.client.last_name;
-    this.clientForm.email = this.client.email;
-    this.clientForm.phone = this.client.phone;
-    this.clientForm.cell_phone = this.client.cell_phone;
-    this.clientForm.address = this.client.address;
-    this.clientForm.city = this.client.city;
-    this.clientForm.state = this.client.state;
-    this.clientForm.zip = this.client.zip;
-    this.clientForm.dob = this.client.dob;
-    this.clientForm.ssn = this.client.ssn;
-    this.clientForm.drivers_id = this.client.drivers_id;
+      this.clientForm.id = this.client.id;
+      this.clientForm.first_name = this.client.first_name;
+      this.clientForm.last_name = this.client.last_name;
+      this.clientForm.email = this.client.email;
+      this.clientForm.phone = this.client.phone;
+      this.clientForm.cell_phone = this.client.cell_phone;
+      this.clientForm.address = this.client.address;
+      this.clientForm.city = this.client.city;
+      this.clientForm.state = this.client.state;
+      this.clientForm.zip = this.client.zip;
+      this.clientForm.dob = this.client.dob;
+      this.clientForm.ssn = this.client.ssn;
+      this.clientForm.drivers_id = this.client.drivers_id;
+      this.getFamilyMembers();
+    });
   }
 
   private upsertSpouse(): void {
@@ -192,9 +195,8 @@ export class FirmPersonalInformationComponent implements OnInit {
         .addFamilyMemberForUser(this.client.id, this.spouseForm)
         .subscribe((res) => {
           if (res) {
-
-          this.spouseForm.id = res.id;
-          console.log('upsert spouse', res);
+            this.spouseForm.id = res.id;
+            console.log('upsert spouse', res);
           }
         });
     }
@@ -202,43 +204,34 @@ export class FirmPersonalInformationComponent implements OnInit {
 
   private upsertChildren(): void {
     this.children.forEach((child) => {
-      console.log("child on upsert", child);
-      this.familyMemberService
-        .addFamilyMemberForUser(this.client.id, child)
-        .subscribe((res) => {
-          if (res) {
-
+      console.log('child on upsert', child);
+      this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe((res) => {
+        if (res) {
           child.id = res.id;
           console.log('upsert child', res);
-          }
-        });
+        }
+      });
     });
   }
 
   private upsertFamilyMembers(): void {
     this.familyMembers.forEach((member) => {
-      this.familyMemberService
-        .addFamilyMemberForUser(this.client.id, member)
-        .subscribe((res) => {
-          if (res) {
-
-          member.id = res.id
+      this.familyMemberService.addFamilyMemberForUser(this.client.id, member).subscribe((res) => {
+        if (res) {
+          member.id = res.id;
           console.log('upsert family member', res);
-          }
-        });
+        }
+      });
     });
   }
 
   private upsertClient(): void {
     this.clientService.updateClient(this.clientForm).subscribe((res) => {
       if (res) {
-
-      console.log('upsert client', res);
+        console.log('upsert client', res);
       }
     });
   }
-
-
 
   submit(): void {
     this.upsertSpouse();
@@ -295,37 +288,41 @@ export class FirmPersonalInformationComponent implements OnInit {
     this.familyMembers.push(familyMember);
   }
 
-  deleteSpouse() : void {
-    this.familyMemberService.deleteFamilyMemberById(this.client.id, this.spouse.id).subscribe((res) => {
-      if (res) {
-        console.log('delete spouse', res);
-      }
-    }
-    );
+  deleteSpouse(): void {
+    this.familyMemberService
+      .deleteFamilyMemberById(this.client.id, this.spouse.id)
+      .subscribe((res) => {
+        if (res) {
+          console.log('delete spouse', res);
+        }
+      });
     this.spouse = null;
     this.hasSpouse = false;
   }
 
-  deleteChild(deletedChild: any) : void {
-    this.familyMemberService.deleteFamilyMemberById(this.client.id, deletedChild.id).subscribe((res) => {
-      if (res) {
-        console.log('delete child', res);
-        this.children = this.children.filter((child) => child.id !== deletedChild.id);
-      }
-    }
-    );
+  deleteChild(deletedChild: any): void {
+    this.familyMemberService
+      .deleteFamilyMemberById(this.client.id, deletedChild.id)
+      .subscribe((res) => {
+        if (res) {
+          console.log('delete child', res);
+          this.children = this.children.filter((child) => child.id !== deletedChild.id);
+        }
+      });
   }
 
-  deleteFamilyMember(deletedFamilyMember: any) : void {
-    this.familyMemberService.deleteFamilyMemberById(this.client.id, deletedFamilyMember.id).subscribe((res) => {
-      if (res) {
-        console.log('delete family member', res);
-        this.familyMembers = this.familyMembers.filter((familyMember) => familyMember.id !== deletedFamilyMember.id);
-      }
-    }
-    );
+  deleteFamilyMember(deletedFamilyMember: any): void {
+    this.familyMemberService
+      .deleteFamilyMemberById(this.client.id, deletedFamilyMember.id)
+      .subscribe((res) => {
+        if (res) {
+          console.log('delete family member', res);
+          this.familyMembers = this.familyMembers.filter(
+            (familyMember) => familyMember.id !== deletedFamilyMember.id,
+          );
+        }
+      });
   }
-
 
   backButton(): void {
     this.back.emit(true);
