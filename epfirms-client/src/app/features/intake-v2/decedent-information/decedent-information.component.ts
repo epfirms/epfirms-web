@@ -3,7 +3,7 @@ import { FamilyMemberService } from '@app/client-portal/_services/family-member-
 import { UserService } from '@app/features/user/services/user.service';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { USAState } from '@app/shared/utils/us-states/typings';
-import { Decedent } from '@app/core/interfaces/decedent';
+import { Decedent } from '@app/core/interfaces/Decedent';
 import { DecedentService } from '../services/decedent.service';
 
 @Component({
