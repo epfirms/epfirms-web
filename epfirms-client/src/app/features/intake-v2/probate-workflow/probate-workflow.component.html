@@ -46,6 +46,18 @@
                   >Property</a
                 >
 
+
+                <a
+                  (click)="setState('questions')"
+                  [ngClass]="
+                    state === 'questions'
+                      ? 'bg-blue-100 text-black text-sm'
+                      : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
+                  "
+                  class="text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
+                  >Questions</a
+                >
+
                 
               </div>
             </div>
@@ -62,6 +74,7 @@
             <app-personal-representative-information *ngIf="state === 'personal representative'" [matter]="matter"></app-personal-representative-information>
             <app-decedent-information *ngIf="state === 'decedent information'" [matter]="matter"></app-decedent-information>
             <app-decedent-property *ngIf="state === 'decedent property'" [matter]="matter"></app-decedent-property>
+            <app-probate-intake *ngIf="state === 'questions'" [matter]="matter"></app-probate-intake>
         </div>
                 <!-- /End replace -->
       </div>

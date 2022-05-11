@@ -13,6 +13,7 @@ module.exports = (sequelize, {
           type: INTEGER,
           primaryKey: true,
           autoIncrement: true,
+          unique: true
         },
         // this is a reference to the decendent information
         user_id: {
@@ -60,6 +61,10 @@ module.exports = (sequelize, {
         },
         alternative_representative_id: {
             type: INTEGER,
+        },
+        notes: {
+
+            type: TEXT,
         },
 
      }, {
