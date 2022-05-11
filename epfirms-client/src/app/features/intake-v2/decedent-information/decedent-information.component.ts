@@ -21,7 +21,7 @@ export class DecedentInformationComponent implements OnInit {
   client;
 
   //decedent holds the record from the DB about the decedent and the matter
-  decedent: Decedent;
+  decedent;
   // does the client have a spouse?
   hasSpouse: boolean = false;
 
