@@ -13,6 +13,7 @@ module.exports = (sequelize, {
           type: INTEGER,
           primaryKey: true,
           autoIncrement: true,
+          unique: true,
         },
         user_id: {
           type: INTEGER,
@@ -20,11 +21,9 @@ module.exports = (sequelize, {
         },
         matter_id: {
             type: INTEGER,
-            unique: true,
         },
         decedent_id: {
             type: INTEGER,
-            unique: true,
         },
         value: {
             type: FLOAT,

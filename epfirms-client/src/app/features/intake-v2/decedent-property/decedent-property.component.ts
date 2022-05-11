@@ -222,10 +222,20 @@ export class DecedentPropertyComponent implements OnInit {
     );
   }
 
-
   upsertProperties(): void {
     this.properties.forEach((property) => {
-      this.decedentPropertyService.upsert(property).subscribe((res) => {
+      let upserted = {
+        id: property.id ? property.id : null,
+        user_id: property.user_id,
+        matter_id: property.matter_id,
+        decedent_id: property.decedent_id,
+        value: this.toStringFloat(property.value),
+        name: property.name,
+        beneficiary: property.beneficiary,
+        note: property.note,
+      };
+
+      this.decedentPropertyService.upsert(upserted).subscribe((res) => {
         console.log('res', res);
         if (res) {
           property.id = res[0].id;
@@ -241,12 +251,14 @@ export class DecedentPropertyComponent implements OnInit {
         console.log('res', res);
         if (res.length > 0) {
           res.forEach((property) => {
-            this.properties.push(property);
+            this.loadProperty(property);
           });
+        } else {
+          this.addProperty();
         }
       });
   }
-  private loadProperty(property) : void {
+  private loadProperty(property): void {
     let created = {
       id: property.id,
       user_id: property.user_id,
@@ -257,6 +269,22 @@ export class DecedentPropertyComponent implements OnInit {
       value: property.value.toString(),
       beneficiary: property.beneficiary,
       note: property.note,
+    };
+    this.properties.push(created);
+  }
+
+  remove(property): void {
+    this.properties = this.properties.filter((element) => element !== property);
+    if (property.id) {
+      this.decedentPropertyService.delete(property).subscribe((res) => {
+        console.log('res', res);
+      });
+    }
+  }
+
+  onKeyPress(event) {
+    if (event.key === 'Enter') {
+      this.addProperty();
     }
   }
 }
