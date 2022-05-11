@@ -22,6 +22,10 @@ module.exports = (sequelize, {
             type: INTEGER,
             unique: true,
         },
+        decedent_id: {
+            type: INTEGER,
+            unique: true,
+        },
         value: {
             type: FLOAT,
             defaultValue: 0,
