@@ -1,4 +1,4 @@
-module.exports = (sequelize, { INTEGER, STRING }) => {
+module.exports = (sequelize, { INTEGER, STRING, ENUM }) => {
   const tableName = 'community_template_task';
 
   const CommunityTemplateTask = sequelize.define(
@@ -12,9 +12,6 @@ module.exports = (sequelize, { INTEGER, STRING }) => {
       template_id: {
         type: INTEGER
       },
-      firm_role_id: {
-        type: INTEGER
-      },
       name: {
         type: STRING
       },
@@ -23,6 +20,18 @@ module.exports = (sequelize, { INTEGER, STRING }) => {
       },
       duration_minutes: {
         type: INTEGER
+      },
+      role: {
+        type: ENUM,
+        values: [
+          'attorney',
+          'associate attorney',
+          'paralegal',
+          'legal assistant',
+          'receptionist',
+          'office manager',
+          'other',
+        ],
       }
     },
     {

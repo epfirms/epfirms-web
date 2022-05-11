@@ -29,6 +29,9 @@ import { EstatePlanningFormComponent } from './firm-intake-components/estate-pla
 import { InputMaskModule } from '@ngneat/input-mask';
 import { TippyModule } from '@ngneat/helipopper';
 import { ProbateIntakeComponent } from './probate-intake/probate-intake.component';
+import { ComboboxModule } from '@app/shared/combobox/combobox.module';
+import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
+import { ClientEstatePlanningIntakeComponent } from './client-intake-components/client-estate-planning-intake/client-estate-planning-intake.component';
 
 
 
@@ -52,7 +55,9 @@ import { ProbateIntakeComponent } from './probate-intake/probate-intake.componen
     ChildrenInformationComponent,
     OtherFamilyInformationComponent,
     EstatePlanningFormComponent,
-    ProbateIntakeComponent
+    ProbateIntakeComponent,
+    LifeInsuranceComponent,
+    ClientEstatePlanningIntakeComponent
   ],
   imports: [
     CommonModule,
@@ -66,7 +71,8 @@ import { ProbateIntakeComponent } from './probate-intake/probate-intake.componen
     ReactiveFormsModule,
     InputMaskModule,
     TippyModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    ComboboxModule,
   ],
   exports: [
     ClientIntakeComponent,

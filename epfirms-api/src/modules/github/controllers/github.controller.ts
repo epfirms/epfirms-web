@@ -15,9 +15,9 @@ export class GithubController {
   owner: "epfirms",
   repo: "epfirms-web",
   title: req.body.type === 'bug' ? 'Bug Report' : 'Feature Request',
-  body: req.body.details,
+  body: `REPORTER: ${req.body.reporter.full_name}\n REPORTER EMAIL: ${req.body.reporter.email}\n\n${req.body.details}`,
   assignees: ["BridgerJones", "jaerqs"],
-  label: req.body.type === 'bug' ? ['bug'] : ['feature request'],
+  labels: req.body.type === 'bug' ? ['bug'] : ['enhancement'],
 });
       console.log('octokit', data);
       res.status(StatusConstants.CREATED).send(data);

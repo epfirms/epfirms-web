@@ -40,17 +40,25 @@ export class TeamController {
     }
   }
 
-  public async addUser(req, res) {
+  public async addEmployee(req, res) {
     try {
-      res.status(StatusConstants.OK).send({ data: 'TODO' });
+      const teamIdentifier = req.params.id;
+      const employeeIdentifier = req.body.employee;
+      const role = req.body.role;
+      const member = await this.teamService.addEmployeeToTeam(teamIdentifier, employeeIdentifier, role);
+      res.status(StatusConstants.OK).send({ data: member });
     } catch (error) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
     }
   }
 
-  public async removeUser(req, res) {
+  public async removeEmployee(req, res) {
     try {
-      res.status(StatusConstants.OK).send({ data: 'TODO' });
+      const teamIdentifier = req.params.id;
+      const employeeIdentifier = req.params.employeeId;
+      const role = req.body.role;
+      const isRemoved = await this.teamService.removeEmployeeFromTeam(teamIdentifier, employeeIdentifier, role);
+      res.status(StatusConstants.OK).send({ data: {removed: isRemoved} });
     } catch (error) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
     }

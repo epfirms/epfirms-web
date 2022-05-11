@@ -10,6 +10,7 @@ import {
 } from '@twilio/conversations';
 import { BehaviorSubject, from, fromEventPattern, merge, Observable, of, pluck, switchMap, take } from 'rxjs';
 import { ConversationState } from '../store/conversation.store';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ export class ConversationService {
   constructor(
     private _http: HttpClient,
     private _store: Store<{ conversation: ConversationState; currentUser: any }>,
+    private _toastService: HotToastService
   ) {}
 
   /** Retrieves an access token for the client. */
@@ -150,5 +152,15 @@ export class ConversationService {
   syncUserProfile(): Observable<any> {
     const currentUser$ = this._store.select('currentUser');
     return currentUser$.pipe(take(1), pluck('user'), switchMap((user) => merge(this.updateUserFriendlyName(user.full_name), this.updateUserAttributes(user.profile_image))));
+  }
+
+  createMatterConversation(matterId: number): Observable<any> {
+    return this._http.post(`/api/chat/matter`, { matter: matterId }).pipe(
+      this._toastService.observe({
+        loading: `Creating conversation...`,
+        success: () => 'Successfully created conversation!',
+        error: () => 'An error occurred. Make sure the client has a valid cell phone number.',
+      }),
+    );
   }
 }

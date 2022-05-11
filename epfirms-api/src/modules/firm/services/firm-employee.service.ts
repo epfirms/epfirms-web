@@ -115,6 +115,16 @@ export class FirmEmployeeService {
     return Promise.resolve(true);
   }
 
+  public async getById(id: number): Promise<any> {
+    const { firm_employee, user } = Database.models;
+    const employee = await firm_employee.findByPk(id, {
+      include: [
+        {model: user}
+      ]
+    });
+    return Promise.resolve(employee);
+  }
+
   private async _addFromExistingUser(firmInstance, userInstance) {
     const employerList = await userInstance.getEmployer();
 

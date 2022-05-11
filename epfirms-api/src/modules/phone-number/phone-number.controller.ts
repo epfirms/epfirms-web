@@ -10,10 +10,11 @@ export class PhoneNumberController {
     try {
       const numberString = req.params.number;
       const number = await this.phoneNumberService.parse(numberString);
-      const valid = await this.phoneNumberService.isValidNumber(number);
+      const validFormat = await this.phoneNumberService.isValidNumber(number);
+      const isUnique = await this.phoneNumberService.isUniqueMobileNumber(numberString);
       const type = await this.phoneNumberService.getType(number);
       res.status(StatusConstants.OK).send({ data: {
-        valid,
+        valid: validFormat && isUnique,
         type,
         number
       } });
