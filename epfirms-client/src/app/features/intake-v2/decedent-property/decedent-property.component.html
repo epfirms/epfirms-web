@@ -384,6 +384,7 @@
                   <div class="sm:flex-auto">
                     <div class="flex">
                       <svg
+                        (click)="addProperty()"
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
                         fill="none"
@@ -438,12 +439,14 @@
                         </th>
                       </thead>
                       <tbody class="bg-white">
-                        <tr>
+                        <tr *ngFor="let property of properties">
                           <th
                             scope="row"
                             class="text-right whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-sm font-normal text-gray-900"
                           >
                             <input
+                              [(ngModel)]="property.name"
+                              (change)="upsertProperties()"
                               type="text"
                               placeholder="Type Item Name Here"
                               class="text-right inline-block w-full rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
@@ -453,6 +456,8 @@
                             class="text-right group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
                           >
                             <input
+                              [(ngModel)]="property.value"
+                              (change)="upsertProperties()"
                               type="text"
                               [inputMask]="currencyInputMask"
                               class="text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
@@ -463,6 +468,8 @@
                             class="text-right group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
                           >
                             <input
+                              [(ngModel)]="property.beneficiary"
+                              (change)="upsertProperties()"
                               type="text"
                               class="text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                             />
@@ -472,6 +479,8 @@
                             class="text-right group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
                           >
                             <input
+                              [(ngModel)]="property.note"
+                              (change)="upsertProperties()"
                               type="text"
                               class="text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                             />

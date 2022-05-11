@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Decedent } from '@app/core/interfaces/Decedent';
+import { DecedentProperty } from '@app/core/interfaces/DecedentProperty';
 import { Matter } from '@app/core/interfaces/matter';
 import { UserService } from '@app/features/user/services/user.service';
 import { HotToastService } from '@ngneat/hot-toast';
 import { createMask } from '@ngneat/input-mask';
+import { DecedentPropertyService } from '../services/decedent-property.service';
 import { DecedentService } from '../services/decedent.service';
 import { FinancialSummaryService } from '../services/financial-summary.service';
 
@@ -42,11 +44,16 @@ export class DecedentPropertyComponent implements OnInit {
     property_4_value: '0',
     property_4_loan_amount: '0',
   };
+
+  // list of decedent's properties: aka assets or whatever they would be potentially leaving behind
+  properties: DecedentProperty[] = [];
+
   constructor(
     private decedentService: DecedentService,
     private userService: UserService,
     private toastService: HotToastService,
     private financialSummaryService: FinancialSummaryService,
+    private decedentPropertyService: DecedentPropertyService,
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +67,7 @@ export class DecedentPropertyComponent implements OnInit {
       if (decedent) {
         this.decedent = decedent;
 
+        this.loadProperties();
         // if there is a decedent record, make the call to the user service to get the decedent user profile
         this.userService.get(decedent.user_id).subscribe((user) => {
           if (user) {
@@ -90,7 +98,7 @@ export class DecedentPropertyComponent implements OnInit {
 
   //load the financial summary
   // if no summary, upsert/init new one
-  load(): void {
+  private load(): void {
     this.financialSummaryService.getWithUserId(this.decedent.user_id).subscribe((res) => {
       if (res) {
         // check if there is a summary that is not joint for the client; else upsert
@@ -205,5 +213,50 @@ export class DecedentPropertyComponent implements OnInit {
   // this is for returning equity
   formattedEquity(value: string, loan: string): number {
     return parseFloat(this.toStringFloat(value)) - parseFloat(this.toStringFloat(loan));
+  }
+
+  // add a property into the list
+  addProperty(): void {
+    this.properties.push(
+      new DecedentProperty(this.decedent.user_id, this.matter.id, this.decedent.id),
+    );
+  }
+
+
+  upsertProperties(): void {
+    this.properties.forEach((property) => {
+      this.decedentPropertyService.upsert(property).subscribe((res) => {
+        console.log('res', res);
+        if (res) {
+          property.id = res[0].id;
+        }
+      });
+    });
+  }
+
+  private loadProperties(): void {
+    this.decedentPropertyService
+      .getDecedentPropertyWithDecedentId(this.decedent.id)
+      .subscribe((res) => {
+        console.log('res', res);
+        if (res.length > 0) {
+          res.forEach((property) => {
+            this.properties.push(property);
+          });
+        }
+      });
+  }
+  private loadProperty(property) : void {
+    let created = {
+      id: property.id,
+      user_id: property.user_id,
+      matter_id: property.matter_id,
+      decedent_id: property.decedent_id,
+
+      name: property.name,
+      value: property.value.toString(),
+      beneficiary: property.beneficiary,
+      note: property.note,
+    }
   }
 }
