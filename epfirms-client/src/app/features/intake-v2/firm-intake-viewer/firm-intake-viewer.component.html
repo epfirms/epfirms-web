@@ -1,12 +1,87 @@
-
 <div *ngIf="intake">
+  <!-- IF ESTATE PLANNING INTAKE -->
+  <div *ngIf="intake.type === 'estate planning'">
+    <app-estate-planning-workflow [matter]="matter"></app-estate-planning-workflow>
+  </div>
 
-<!-- IF ESTATE PLANNING INTAKE -->
-<div *ngIf="intake.type === 'estate planning'">
-<app-estate-planning-workflow [matter]="matter"></app-estate-planning-workflow>
+  <div *ngIf="intake.type === 'probate'">
+    <app-probate-workflow [matter]="matter"></app-probate-workflow>
+  </div>
 </div>
 
-<div *ngIf="intake.type === 'probate'">
-<app-probate-workflow [matter]="matter"></app-probate-workflow>
-</div>
+<div *ngIf="intake === undefined" class="bg-white">
+  <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 lg:flex lg:justify-between">
+    <div class="max-w-xl">
+      <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+        Intakes
+      </h2>
+      <p class="mt-5 text-xl text-gray-500">Select An Intake to Get Started.</p>
+    </div>
+    <div class="mt-10 w-full max-w-xs">
+      <label class="block text-base font-medium text-gray-500">Intakes</label>
+      <div class="mt-1.5 relative">
+        <select
+          [(ngModel)]="selectedIntake"
+          class="appearance-none block w-full bg-none bg-white border border-gray-300 rounded-md pl-3 pr-10 py-2 text-base text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+          <option [ngValue]="'estate planning'">Estate Planning</option>
+
+          <option [ngValue]="'probate'">Probate</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 px-2 flex items-center">
+          <!-- Heroicon name: solid/chevron-down -->
+          <svg
+            class="h-4 w-4 text-gray-400"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
+      <!-- This example requires Tailwind CSS v2.0+ -->
+      <div class="flex items-center justify-between">
+        <span class="flex-grow flex flex-col">
+          <span class="text-sm font-medium text-gray-900" id="availability-label"
+            >Send Intake to Client</span
+          >
+          <span class="text-sm text-gray-500" id="availability-description"
+            >Client will receive an email inviting them to log into the portal and complete the
+            intake.</span
+          >
+        </span>
+        <!-- Enabled: "bg-blue-600", Not Enabled: "bg-gray-200" -->
+        <button
+          (click)="toggleSendIntakeToClient()"
+          [ngClass]="sendIntakeToClient ? 'bg-blue-600' : 'bg-gray-200'"
+          type="button"
+          class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          role="switch"
+          aria-checked="false"
+          aria-labelledby="availability-label"
+          aria-describedby="availability-description"
+        >
+          <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+          <span
+            aria-hidden="true"
+            [ngClass]="sendIntakeToClient ? 'translate-x-5' : 'translate-x-0'"
+            class="translate-x-0 pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+          ></span>
+        </button>
+      </div>
+      <button
+        (click)="startIntake()"
+        type="button"
+        class="inline-flex items-center m-2 ml-auto px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      >
+        Begin
+      </button>
+    </div>
+  </div>
 </div>

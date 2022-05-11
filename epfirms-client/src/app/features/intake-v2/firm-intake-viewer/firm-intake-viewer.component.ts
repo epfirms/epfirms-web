@@ -19,17 +19,48 @@ export class FirmIntakeViewerComponent implements OnInit {
 
   intake;
 
-  constructor(private intakeService: IntakeService) {}
+  // selectedIntake for when the user needs to select one to start
+  selectedIntake: string;
+
+  // boolean that determines whether to send the intake to client
+  sendIntakeToClient: boolean = false;
+
+  constructor(private intakeService: IntakeService, private emailService : emailService) {}
 
   ngOnInit(): void {
-    console.log("matter", this.matter);
+    console.log('matter', this.matter);
     this.intakeService.getOneWithMatterId(this.matter.id).subscribe((intake) => {
       console.log(intake);
       if (intake) {
-
         console.log('intake', intake);
-      this.intake = intake;
+        this.intake = intake;
       }
     });
+  }
+
+  toggleSendIntakeToClient(): void {
+    this.sendIntakeToClient = !this.sendIntakeToClient;
+  }
+
+  startIntake(): void {
+    console.log('startIntake');
+
+    console.log("send intake?", this.sendIntakeToClient);
+    this.intakeService
+      .upsert({
+        matter_id: this.matter.id,
+        type: this.selectedIntake,
+        status: this.sendIntakeToClient ? 'sent' : 'firm only',
+      })
+      .subscribe((intake) => {
+        if (intake) {
+          this.intake = intake[0];
+        }
+        if (intake && this.sendIntakeToClient) {
+
+          this.emailService.sendIntakeNotifcation(this.matter.client.email).subscribe();
+        }
+        console.log(intake);
+      });
   }
 }
