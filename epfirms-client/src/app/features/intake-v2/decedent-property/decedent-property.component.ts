@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Decedent } from '@app/core/interfaces/Decedent';
 import { Matter } from '@app/core/interfaces/matter';
 import { UserService } from '@app/features/user/services/user.service';
+import { HotToastService } from '@ngneat/hot-toast';
 import { DecedentService } from '../services/decedent.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class DecedentPropertyComponent implements OnInit {
 
   decedent: Decedent;
 
-  constructor(private decedentService: DecedentService, private userService: UserService) {}
+  constructor(private decedentService: DecedentService, private userService: UserService, private toastService : HotToastService) {}
 
   ngOnInit(): void {
     this.init();
@@ -35,10 +36,12 @@ export class DecedentPropertyComponent implements OnInit {
         this.userService.get(decedent.user_id).subscribe((user) => {
           if (user) {
             this.decedentInfo = user;
-            console.log("decedentInfo", this.decedentInfo);
-            console.log("decedent", this.decedent);
+            console.log('decedentInfo', this.decedentInfo);
+            console.log('decedent', this.decedent);
           }
         });
+      } else {
+        this.toastService.error('Please enter Decedent Information First!');
       }
     });
   }
