@@ -61,7 +61,7 @@
           
             <app-personal-representative-information *ngIf="state === 'personal representative'" [matter]="matter"></app-personal-representative-information>
             <app-decedent-information *ngIf="state === 'decedent information'" [matter]="matter"></app-decedent-information>
-            <app-decedent-property *ngIf="state === 'decedent property'"></app-decedent-property>
+            <app-decedent-property *ngIf="state === 'decedent property'" [matter]="matter"></app-decedent-property>
         </div>
                 <!-- /End replace -->
       </div>
