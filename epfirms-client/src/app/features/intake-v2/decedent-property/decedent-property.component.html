@@ -64,7 +64,6 @@
                       >
                         Equity
                       </th>
-                      
                     </thead>
                     <tbody class="bg-white">
                       <tr>
@@ -105,13 +104,23 @@
                           Total
                         </td>
                         <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
-                        {{formattedSum(financialSummaryForm.primary_residence_value) | currency}}
+                          {{
+                            formattedSum(financialSummaryForm.primary_residence_value) | currency
+                          }}
                         </td>
                         <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
-                        {{formattedSum(financialSummaryForm.primary_residence_loan_amount) | currency}}
+                          {{
+                            formattedSum(financialSummaryForm.primary_residence_loan_amount)
+                              | currency
+                          }}
                         </td>
                         <td class="text-right pl-3 pr-1 pt-4 text-sm font-semibold text-gray-600">
-                        {{formattedEquity(financialSummaryForm.primary_residence_value, financialSummaryForm.primary_residence_loan_amount) | currency}}
+                          {{
+                            formattedEquity(
+                              financialSummaryForm.primary_residence_value,
+                              financialSummaryForm.primary_residence_loan_amount
+                            ) | currency
+                          }}
                         </td>
                         <td
                           class="text-right pl-3 pr-1 pt-4 text-sm font-semibold text-purple-600"
@@ -147,7 +156,6 @@
                       >
                         Equity
                       </th>
-                      
                     </thead>
                     <tbody class="bg-white">
                       <tr>
@@ -185,7 +193,12 @@
                           />
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-gray-600">
-                        {{formattedEquity(financialSummaryForm.property_1_value, financialSummaryForm.property_1_loan_amount) | currency}}
+                          {{
+                            formattedEquity(
+                              financialSummaryForm.property_1_value,
+                              financialSummaryForm.property_1_loan_amount
+                            ) | currency
+                          }}
                         </td>
                       </tr>
                       <tr>
@@ -223,7 +236,12 @@
                           />
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-gray-600">
-                        {{formattedEquity(financialSummaryForm.property_2_value, financialSummaryForm.property_2_loan_amount) | currency}}
+                          {{
+                            formattedEquity(
+                              financialSummaryForm.property_2_value,
+                              financialSummaryForm.property_2_loan_amount
+                            ) | currency
+                          }}
                         </td>
                       </tr>
                       <tr>
@@ -261,7 +279,12 @@
                           />
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-gray-600">
-                        {{formattedEquity(financialSummaryForm.property_3_value, financialSummaryForm.property_3_loan_amount) | currency}}
+                          {{
+                            formattedEquity(
+                              financialSummaryForm.property_3_value,
+                              financialSummaryForm.property_3_loan_amount
+                            ) | currency
+                          }}
                         </td>
                       </tr>
                       <tr>
@@ -299,7 +322,12 @@
                           />
                         </td>
                         <td class="text-right pl-3 pr-1 pt-1 text-sm font-normal text-gray-600">
-                        {{formattedEquity(financialSummaryForm.property_4_value, financialSummaryForm.property_4_loan_amount) | currency}}
+                          {{
+                            formattedEquity(
+                              financialSummaryForm.property_4_value,
+                              financialSummaryForm.property_4_loan_amount
+                            ) | currency
+                          }}
                         </td>
                       </tr>
                     </tbody>
@@ -310,25 +338,202 @@
                           Total
                         </td>
                         <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
-                        {{formattedSum(financialSummaryForm.property_1_value, financialSummaryForm.property_2_value, financialSummaryForm.property_3_value, financialSummaryForm.property_4_value) | currency}}
+                          {{
+                            formattedSum(
+                              financialSummaryForm.property_1_value,
+                              financialSummaryForm.property_2_value,
+                              financialSummaryForm.property_3_value,
+                              financialSummaryForm.property_4_value
+                            ) | currency
+                          }}
                         </td>
                         <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
-                        {{formattedSum(financialSummaryForm.property_1_loan_amount, financialSummaryForm.property_2_loan_amount, financialSummaryForm.property_3_loan_amount, financialSummaryForm.property_4_loan_amount) | currency}}
+                          {{
+                            formattedSum(
+                              financialSummaryForm.property_1_loan_amount,
+                              financialSummaryForm.property_2_loan_amount,
+                              financialSummaryForm.property_3_loan_amount,
+                              financialSummaryForm.property_4_loan_amount
+                            ) | currency
+                          }}
                         </td>
                         <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
-                        {{formattedEquity(financialSummaryForm.property_1_value, financialSummaryForm.property_1_loan_amount) + formattedEquity(financialSummaryForm.property_2_value, financialSummaryForm.property_2_loan_amount) + formattedEquity(financialSummaryForm.property_3_value, financialSummaryForm.property_3_loan_amount) + formattedEquity(financialSummaryForm.property_4_value, financialSummaryForm.property_4_loan_amount)  | currency}}
+                          {{
+                            formattedEquity(
+                              financialSummaryForm.property_1_value,
+                              financialSummaryForm.property_1_loan_amount
+                            ) +
+                              formattedEquity(
+                                financialSummaryForm.property_2_value,
+                                financialSummaryForm.property_2_loan_amount
+                              ) +
+                              formattedEquity(
+                                financialSummaryForm.property_3_value,
+                                financialSummaryForm.property_3_loan_amount
+                              ) +
+                              formattedEquity(
+                                financialSummaryForm.property_4_value,
+                                financialSummaryForm.property_4_loan_amount
+                              ) | currency
+                          }}
                         </td>
-
                       </tr>
                     </tfoot>
                   </table>
+
+                  <div class="sm:flex-auto">
+                    <div class="flex">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+
+                      <h1 class="px-4 text-xl font-semibold text-gray-600">Other Property</h1>
+                    </div>
+                    <!-- <p class="mt-2 text-sm text-gray-700">
+                Real Estate is one of the primary reasons why a client will need to probate an
+                estate. Proper planning can elimiate the need to probate an estate. In addition,
+                proper planning can help protect real estate from litigation.
+              </p> -->
+
+                    <!-- OTHER PROPERTY TABLE -->
+                    <table class="mt-5 min-w-full">
+                      <thead>
+                        <th class="w-full border-b border-white px-4 font-semibold text-gray-600">
+                          Item
+                        </th>
+                        <th
+                          scope="col"
+                          class="text-right border-b border-gray-200 py-3.5 pl-4 pr-2 text-sm font-semibold text-gray-900"
+                        >
+                          Value
+                        </th>
+                        <th
+                          scope="col"
+                          class="text-right border-b border-gray-200 px-2 py-3.5 text-sm font-semibold text-gray-900"
+                        >
+                          Beneficiary
+                        </th>
+                        <th
+                          scope="col"
+                          class="text-right px-2 py-3.5 text-sm font-semibold text-gray-600"
+                        >
+                          Notes
+                        </th>
+                        <th
+                          scope="col"
+                          class="text-right px-2 py-3.5 text-sm font-semibold text-gray-600"
+                        >
+                          Action
+                        </th>
+                      </thead>
+                      <tbody class="bg-white">
+                        <tr>
+                          <th
+                            scope="row"
+                            class="text-right whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-sm font-normal text-gray-900"
+                          >
+                            <input
+                              type="text"
+                              placeholder="Type Item Name Here"
+                              class="text-right inline-block w-full rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            />
+                          </th>
+                          <td
+                            class="text-right group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                          >
+                            <input
+                              type="text"
+                              [inputMask]="currencyInputMask"
+                              class="text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            />
+                          </td>
+
+                          <td
+                            class="text-right group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                          >
+                            <input
+                              type="text"
+                              class="text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            />
+                          </td>
+
+                          <td
+                            class="text-right group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
+                          >
+                            <input
+                              type="text"
+                              class="text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+
+                      <!-- <tfoot>
+                        <tr>
+                          <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
+                            Total
+                          </td>
+                          <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
+                            {{
+                              formattedSum(
+                                financialSummaryForm.property_1_value,
+                                financialSummaryForm.property_2_value,
+                                financialSummaryForm.property_3_value,
+                                financialSummaryForm.property_4_value
+                              ) | currency
+                            }}
+                          </td>
+                          <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
+                            {{
+                              formattedSum(
+                                financialSummaryForm.property_1_loan_amount,
+                                financialSummaryForm.property_2_loan_amount,
+                                financialSummaryForm.property_3_loan_amount,
+                                financialSummaryForm.property_4_loan_amount
+                              ) | currency
+                            }}
+                          </td>
+                          <td class="text-right pl-3 pr-2 pt-4 text-sm font-semibold text-gray-900">
+                            {{
+                              formattedEquity(
+                                financialSummaryForm.property_1_value,
+                                financialSummaryForm.property_1_loan_amount
+                              ) +
+                                formattedEquity(
+                                  financialSummaryForm.property_2_value,
+                                  financialSummaryForm.property_2_loan_amount
+                                ) +
+                                formattedEquity(
+                                  financialSummaryForm.property_3_value,
+                                  financialSummaryForm.property_3_loan_amount
+                                ) +
+                                formattedEquity(
+                                  financialSummaryForm.property_4_value,
+                                  financialSummaryForm.property_4_loan_amount
+                                ) | currency
+                            }}
+                          </td>
+                        </tr>
+                      </tfoot> -->
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </body>
