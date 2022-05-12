@@ -31,6 +31,12 @@ export class Client {
 
     profile_image?: string;
 
+    ssn?: string;
+
+    drivers_id?: string;
+
+
+
     // TODO: Change client property to matters
     client?: Matter[];
 

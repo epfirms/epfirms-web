@@ -30,7 +30,7 @@
                 <ng-container *ngIf="matters$ | async as matters">
                   <ng-container *ngFor="let matter of matters">
 
-              <tr *ngIf="matter.matter_intake">
+              <tr *ngIf="matter.matter_intake && matter.matter_intake.status !== 'firm only'">
 
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                     <button 
@@ -38,7 +38,7 @@
                     [disabled]="matter.matter_intake.status === 'complete'"
                     type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Begin</button>
                 </td>
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">{{matter.case_id}}</td>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">{{matter.title}}: {{matter.case_id}}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{matter.matter_intake.type | uppercase}}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{matter.matter_intake.status | uppercase}}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>
@@ -66,11 +66,18 @@
 
 <!-- ESTATE PLANNING INTAKE FORM CONTAINER -->
 <ng-container  *ngIf="selectedMatter" >
+  <ng-scrollbar style="height: 1000px;">
+
 <div *ngIf="selectedMatter.matter_intake.type === 'estate planning'">
 
 <app-client-estate-planning-intake [matter]="selectedMatter"></app-client-estate-planning-intake>
 
 </div>
 
+<app-probate-workflow *ngIf="selectedMatter.matter_intake.type === 'probate'" [matter]="selectedMatter" [clientMode]="true"></app-probate-workflow>
+
+
+
+  </ng-scrollbar>
 
 </ng-container>

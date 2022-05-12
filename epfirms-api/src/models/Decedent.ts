@@ -5,15 +5,17 @@ module.exports = (sequelize, {
     STRING,
     TEXT
   }) => {
-    const tableName = 'probate';
+    const tableName = 'decedent';
 
-    const Probate = sequelize.define(
+    const Decedent = sequelize.define(
       tableName, {
         id: {
           type: INTEGER,
           primaryKey: true,
           autoIncrement: true,
+          unique: true
         },
+        // this is a reference to the decendent information
         user_id: {
           type: INTEGER,
         },
@@ -53,11 +55,16 @@ module.exports = (sequelize, {
         date_of_codicils: {
             type: STRING,
         },
+        // this is the user id for the person who holds/manages the case
         personal_representative_id: {
             type: INTEGER,
         },
         alternative_representative_id: {
             type: INTEGER,
+        },
+        notes: {
+
+            type: TEXT,
         },
 
      }, {
@@ -68,5 +75,5 @@ module.exports = (sequelize, {
       },
     );
 
-    return Probate;
+    return Decedent;
   };
