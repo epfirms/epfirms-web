@@ -100,6 +100,8 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   // if the referral type is friend_or_family, or professional, we need to show the text input
   refererName : string = "";
   selectedReferralType : string = "";
+ // the selected intake type
+ selectedIntake : string = 'none'; 
   
   constructor(
     private _fb: FormBuilder,
@@ -266,6 +268,6 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.close({matter: this.caseForm.value, note: this.note, chatToTextNumber: this.enableChatToText && this.chatToTextNumber.valid ? this.chatToTextNumber : null, referral: {referralType: this.selectedReferralType, refererName: this.refererName}});
+    this.close({matter: this.caseForm.value, intake: this.selectedIntake, note: this.note, chatToTextNumber: this.enableChatToText && this.chatToTextNumber.valid ? this.chatToTextNumber : null, referral: {referralType: this.selectedReferralType, refererName: this.refererName}});
   }
 }

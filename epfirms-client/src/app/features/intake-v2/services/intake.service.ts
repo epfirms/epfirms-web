@@ -5,20 +5,21 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ProbateService {
+export class IntakeService {
 
   constructor(private http : HttpClient) { }
 
-
+getOneWithMatterId(id) : Observable<any> {
+    return this.http.get(`/api/intake/${id}`);
+  }
 
   upsert(data) : Observable<any> {
-    return this.http.post('/api/probate', data);
+    return this.http.post(`/api/intake`, data);
   }
-  getProbateWithId(id) : Observable<any> {
-    return this.http.get('/api/probate/' + id);
+
+  delete(id) : Observable<any> {
+    return this.http.delete(`/api/intake/${id}`);
   }
-  delete(id) :  Observable<any> {
-    return this.http.delete('/api/probate/' + id);
-  }
+
 
 }

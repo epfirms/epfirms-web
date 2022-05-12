@@ -135,6 +135,29 @@
         </div>
       </div>
 
+
+      <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+        <div>
+          <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
+            Intake
+          </label>
+        </div>
+        <div class="sm:col-span-2">
+        
+
+<div>
+  <select [(ngModel)]="selectedIntake" [ngModelOptions]="{standalone: true}" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+    <option [ngValue]="'none'">None</option>
+
+    <option [ngValue]="'estate planning'">Estate Planning</option>
+    
+    <option [ngValue]="'probate'">Probate</option>
+  </select>
+</div>
+
+        </div>
+      </div>
+
       <div class="px-4 space-y-1 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
         <div>
           <label for="project-name" class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">

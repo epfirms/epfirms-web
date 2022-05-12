@@ -1,9 +1,11 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize';
 const { DB_NAME, DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT } = require('@configs/vars');
 
 export class Database {
   public static models: any;
-  public static sequelize: any;
+
+  public static sequelize: Sequelize;
+  
   public static async connect() {
     this.sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
       host: DB_HOST,
@@ -11,7 +13,6 @@ export class Database {
       dialect: 'mysql',
       define: {
         underscored: true,
-        underscoredAll: true,
         createdAt: 'created_at',
         updatedAt: 'updated_at'
       },
@@ -27,7 +28,6 @@ export class Database {
     this.models = {
       user: require('../models/User')(this.sequelize, Sequelize),
       firm: require('../models/Firm')(this.sequelize, Sequelize),
-      firm_employee: require('../models/FirmEmployee')(this.sequelize, Sequelize),
       client: require('../models/Client')(this.sequelize, Sequelize),
       matter: require('../models/Matter')(this.sequelize, Sequelize),
       matter_task: require('../models/MatterTask')(this.sequelize, Sequelize),
@@ -73,16 +73,20 @@ export class Database {
       excluded_children: require('../models/ExcludedChildren')(this.sequelize, Sequelize),
       specific_requests: require('../models/SpecificRequests')(this.sequelize, Sequelize),
       bug_reporter_access: require('../models/BugReporterAccess')(this.sequelize, Sequelize),
-      probate: require('../models/Probate')(this.sequelize, Sequelize),
+      team: require('../models/Team')(this.sequelize),
+      team_member: require('../models/TeamMember')(this.sequelize),
+      firm_employee: require('../models/FirmEmployee')(this.sequelize, Sequelize),
       financial_summary: require('../models/FinancialSummary')(this.sequelize, Sequelize),
       appointee_summary: require('../models/AppointeeSummary')(this.sequelize, Sequelize),
       referral: require('../models/Referral')(this.sequelize, Sequelize),
+      decedent: require('../models/Decedent')(this.sequelize, Sequelize),
+      decedent_property: require('../models/DecedentProperty')(this.sequelize, Sequelize),
     };
 
-    this.models.user.belongsToMany(this.models.firm, { through: this.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
-    this.models.firm.belongsToMany(this.models.user, { through: this.models.firm_employee, as: 'employee', foreignKey: 'firm_id' });
-    this.models.firm.hasMany(this.models.firm_employee, {foreignKey: 'firm_id'});
-    this.models.firm_employee.belongsTo(this.models.user, {foreignKey: 'user_id'});
+    this.models.user.belongsToMany(this.models.firm, { through: this.sequelize.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
+    this.models.firm.belongsToMany(this.models.user, { through: this.sequelize.models.firm_employee, as: 'employee', foreignKey: 'firm_id' });
+    this.models.firm.hasMany(this.sequelize.models.firm_employee, {foreignKey: 'firm_id'});
+    this.sequelize.models.firm_employee.belongsTo(this.models.user, {foreignKey: 'user_id'});
 
     this.models.user.belongsToMany(this.models.firm, {
       through: this.models.client,
@@ -92,6 +96,15 @@ export class Database {
       through: this.models.client,
       as: 'firm_client'
     });
+
+    //decedent relationships
+    this.models.user.hasOne(this.models.decedent, {foreignKey: 'user_id'});
+    this.models.decedent.belongsTo(this.models.user, {foreignKey: 'user_id'});
+    this.models.matter.hasOne(this.models.decedent, {foreignKey: 'matter_id'});
+    this.models.decedent.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+    this.models.decedent.hasMany(this.models.decedent_property, {foreignKey: 'decedent_id'});
+    this.models.decedent_property.belongsTo(this.models.decedent, {foreignKey: 'decedent_id'});
+
 
     this.models.user.belongsToMany(this.models.user, {
       through: this.models.family_member,
@@ -298,13 +311,6 @@ export class Database {
       foreignKey: 'user_id'
     });
 
-    this.models.firm_role.hasMany(this.models.firm_template_task, {
-      foreignKey: 'firm_role_id'
-    });
-    this.models.firm_template_task.belongsTo(this.models.firm_role, {
-      foreignKey: 'firm_role_id'
-    });
-
     this.models.firm_template_task.hasMany(this.models.firm_template_task_file, {
       foreignKey: 'firm_template_task_id'
     });
@@ -344,14 +350,6 @@ export class Database {
       foreignKey: 'template_id'
     });
 
-    this.models.firm_role.hasMany(this.models.community_template_task, {
-      foreignKey: 'firm_role_id'
-    });
-
-    this.models.community_template_task.belongsTo(this.models.firm_role, {
-      foreignKey: 'firm_role_id'
-    });
-
     this.models.community_template_task.hasMany(this.models.community_template_task_file, {
       foreignKey: 'community_template_task_id'
     });
@@ -366,25 +364,25 @@ export class Database {
       foreignKey: 'firm_id'
     });
 
-    this.models.firm_employee.hasMany(this.models.firm_team, {
+    this.sequelize.models.firm_employee.hasMany(this.models.firm_team, {
       foreignKey: 'owner'
     });
 
-    this.models.firm_team.belongsTo(this.models.firm_employee, {
+    this.models.firm_team.belongsTo(this.sequelize.models.firm_employee, {
       foreignKey: 'owner'
     });
 
-    this.models.firm_employee.hasMany(this.models.firm_team_member, {
+    this.sequelize.models.firm_employee.hasMany(this.models.firm_team_member, {
       foreignKey: 'firm_employee_id'
     });
-    this.models.firm_team_member.belongsTo(this.models.firm_employee);
+    this.models.firm_team_member.belongsTo(this.sequelize.models.firm_employee);
 
     this.models.firm_team.hasMany(this.models.firm_team_member, {
       foreignKey: 'firm_team_id'
     });
     this.models.firm_team_member.belongsTo(this.models.firm_team);
-    // this.models.firm_team.belongsToMany(this.models.firm_employee, { through: { model: this.models.firm_team_member, unique: false }, as: 'member', unique: false, foreignKey: 'firm_team_id'});
-    // this.models.firm_employee.belongsToMany(this.models.firm_team, { through: { model: this.models.firm_team_member, unique: false }, as: 'team', unique: false, foreignKey: 'firm_employee_id'});
+    // this.models.firm_team.belongsToMany(this.sequelize.models.firm_employee, { through: { model: this.models.firm_team_member, unique: false }, as: 'member', unique: false, foreignKey: 'firm_team_id'});
+    // this.sequelize.models.firm_employee.belongsToMany(this.models.firm_team, { through: { model: this.models.firm_team_member, unique: false }, as: 'team', unique: false, foreignKey: 'firm_employee_id'});
 
     this.models.firm_role.hasMany(this.models.firm_team_member, {
       foreignKey: 'firm_role_id'
@@ -396,8 +394,8 @@ export class Database {
       foreignKey: 'firm_id'
     });
 
-    this.models.firm_employee.belongsToMany(this.models.firm_role, { through: 'firm_employee_role', as: 'role', foreignKey: 'firm_employee_id'});
-    this.models.firm_role.belongsToMany(this.models.firm_employee, { through: 'firm_employee_role', foreignKey: 'firm_role_id'});
+    this.sequelize.models.firm_employee.belongsToMany(this.models.firm_role, { through: 'firm_employee_role', as: 'role', foreignKey: 'firm_employee_id'});
+    this.models.firm_role.belongsToMany(this.sequelize.models.firm_employee, { through: 'firm_employee_role', foreignKey: 'firm_role_id'});
 
     this.models.matter.hasOne(this.models.customer_account, {foreignKey: 'matter_id'});
     this.models.customer_account.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
@@ -423,6 +421,9 @@ export class Database {
     this.models.matter.hasMany(this.models.specific_requests, {foreignKey: 'matter_id'});
     this.models.specific_requests.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
 
+    this.sequelize.models.team.belongsToMany(this.sequelize.models.firm_employee, { through: {model: this.sequelize.models.team_member, unique: false}, foreignKey: 'team_id' });
+    this.sequelize.models.firm_employee.belongsToMany(this.sequelize.models.team, { through: {model: this.sequelize.models.team_member, unique: false}, foreignKey: 'firm_employee_id' });
+    
     this.models.user.hasOne(this.models.financial_summary, {foreignKey: 'user_id'});
     this.models.financial_summary.belongsTo(this.models.user, {foreignKey: 'user_id'});
 
