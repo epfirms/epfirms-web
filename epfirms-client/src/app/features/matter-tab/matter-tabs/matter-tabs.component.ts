@@ -14,6 +14,7 @@ import { EpModalService } from '@app/shared/modal/modal.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { AddClientComponent } from '@app/firm-portal/overlays/add-client/add-client.component';
 import { IntakeService } from '@app/features/intake-v2/services/intake.service';
+import { emailService } from '@app/shared/_services/email-service/email.service';
 
 @Component({
   selector: 'app-matter-tabs',
@@ -74,6 +75,7 @@ export class MatterTabsComponent implements OnInit {
     private _modalService: EpModalService,
     private _clientService: ClientService,
     private _intakeService: IntakeService,
+    private _emailService: emailService,
   ) {
     this.tabs$ = this._matterTabsService.tabs$;
 
