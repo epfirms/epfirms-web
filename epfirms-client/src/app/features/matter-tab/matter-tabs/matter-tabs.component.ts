@@ -124,10 +124,18 @@ export class MatterTabsComponent implements OnInit {
   }
 
   // this will only change an existing intake status to 'sent' so the client can see it
-  sendIntake(matterId: number) {
-    this._intakeService.getOneWithMatterId(matterId).subscribe((intake) => {
+  sendIntake(matter: Matter) {
+    this._intakeService.getOneWithMatterId(matter.id).subscribe((intake) => {
       if (intake) {
-        this._intakeService.upsert({ id: intake.id, status: 'sent' }).subscribe();
+        this._intakeService.upsert({ id: intake.id, status: 'sent' }).subscribe(res => {
+          if (res) {
+            this._toastService.success('Intake sent');
+            this._emailService.sendIntakeNotifcation(matter.client.email);
+          }
+          else {
+            this._toastService.error('Error sending intake');
+          }
+        });
       }
     });
   }
