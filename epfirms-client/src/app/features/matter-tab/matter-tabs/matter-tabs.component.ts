@@ -13,6 +13,7 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { AddClientComponent } from '@app/firm-portal/overlays/add-client/add-client.component';
+import { IntakeService } from '@app/features/intake-v2/services/intake.service';
 
 @Component({
   selector: 'app-matter-tabs',
@@ -72,6 +73,7 @@ export class MatterTabsComponent implements OnInit {
     private _toastService: HotToastService,
     private _modalService: EpModalService,
     private _clientService: ClientService,
+    private _intakeService: IntakeService,
   ) {
     this.tabs$ = this._matterTabsService.tabs$;
 
@@ -119,8 +121,13 @@ export class MatterTabsComponent implements OnInit {
       .subscribe();
   }
 
+  // this will only change an existing intake status to 'sent' so the client can see it
   sendIntake(matterId: number) {
-    this._matterService.createIntake(matterId).subscribe();
+    this._intakeService.getOneWithMatterId(matterId).subscribe((intake) => {
+      if (intake) {
+        this._intakeService.upsert({ id: intake.id, status: 'sent' }).subscribe();
+      }
+    });
   }
 
   handleUserInfoOption(matter, optionData) {

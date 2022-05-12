@@ -30,7 +30,7 @@
                 <ng-container *ngIf="matters$ | async as matters">
                   <ng-container *ngFor="let matter of matters">
 
-              <tr *ngIf="matter.matter_intake">
+              <tr *ngIf="matter.matter_intake && matter.matter_intake.status !== 'firm only'">
 
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                     <button 
