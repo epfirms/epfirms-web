@@ -10,6 +10,7 @@ export class ProbateWorkflowComponent implements OnInit {
 
   //input bindings
   @Input() matter : Matter;
+  @Input() clientMode : boolean;
 
   // state manages the view
   state : string = 'personal representative';

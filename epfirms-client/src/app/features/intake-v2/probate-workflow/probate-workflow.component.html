@@ -48,6 +48,7 @@
 
 
                 <a
+                *ngIf="clientMode === false"
                   (click)="setState('questions')"
                   [ngClass]="
                     state === 'questions'
@@ -74,7 +75,7 @@
             <app-personal-representative-information *ngIf="state === 'personal representative'" [matter]="matter"></app-personal-representative-information>
             <app-decedent-information *ngIf="state === 'decedent information'" [matter]="matter"></app-decedent-information>
             <app-decedent-property *ngIf="state === 'decedent property'" [matter]="matter"></app-decedent-property>
-            <app-probate-intake *ngIf="state === 'questions'" [matter]="matter"></app-probate-intake>
+            <app-probate-intake *ngIf="state === 'questions' && clientMode === false" [matter]="matter"></app-probate-intake>
         </div>
                 <!-- /End replace -->
       </div>
