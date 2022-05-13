@@ -16,7 +16,7 @@ export class IntakeController {
         id: created[0].matter_id,
         matter_intake_id: created[0].id,
       });
-      console.log('UPDATED', updated);
+
       res.status(StatusConstants.CREATED).send(created);
     } catch (error) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);

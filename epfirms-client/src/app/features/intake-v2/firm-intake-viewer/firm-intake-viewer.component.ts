@@ -4,9 +4,11 @@ import { ClientMatterService } from '@app/client-portal/_services/matter-service
 import { Matter } from '@app/core/interfaces/matter';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { EpModalService } from '@app/shared/modal/modal.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { emailService } from '@app/shared/_services/email-service/email.service';
 import { IntakeService } from '../services/intake.service';
+import { IntakeSettingsOverlayComponent } from './intake-settings-overlay/intake-settings-overlay.component';
 
 @Component({
   selector: 'app-firm-intake-viewer',
@@ -25,14 +27,15 @@ export class FirmIntakeViewerComponent implements OnInit {
   // boolean that determines whether to send the intake to client
   sendIntakeToClient: boolean = false;
 
-  constructor(private intakeService: IntakeService, private emailService : emailService) {}
+  constructor(
+    private intakeService: IntakeService,
+    private emailService: emailService,
+    private modalService: EpModalService,
+  ) {}
 
   ngOnInit(): void {
-    console.log('matter', this.matter);
     this.intakeService.getOneWithMatterId(this.matter.id).subscribe((intake) => {
-      console.log(intake);
       if (intake) {
-        console.log('intake', intake);
         this.intake = intake;
       }
     });
@@ -43,9 +46,6 @@ export class FirmIntakeViewerComponent implements OnInit {
   }
 
   startIntake(): void {
-    console.log('startIntake');
-
-    console.log("send intake?", this.sendIntakeToClient);
     this.intakeService
       .upsert({
         matter_id: this.matter.id,
@@ -57,10 +57,28 @@ export class FirmIntakeViewerComponent implements OnInit {
           this.intake = intake[0];
         }
         if (intake && this.sendIntakeToClient) {
-
           this.emailService.sendIntakeNotifcation(this.matter.client.email).subscribe();
         }
-        console.log(intake);
       });
+  }
+
+  // open the firm settings modal where you can change the intake type
+  openIntakeSettingsModal(): void {
+    const modal = this.modalService.create({
+      epContent: IntakeSettingsOverlayComponent,
+      epModalType: 'slideOver',
+      epComponentParams: {
+        matter: this.matter,
+        intake: this.intake,
+      },
+    });
+
+    modal.afterClose.subscribe((data) => {
+      if (data) {
+        this.intakeService.upsert(data).subscribe((intake) => {
+          this.intake.type = data.type;
+        });
+      }
+    });
   }
 }
