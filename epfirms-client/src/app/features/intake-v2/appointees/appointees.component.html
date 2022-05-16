@@ -137,7 +137,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.executor_1_name = $event.value;
                               clientAppointeeSummary.executor_1_address = $event.data.address;
@@ -197,7 +197,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.executor_2_name = $event.value;
                               clientAppointeeSummary.executor_2_address = $event.data.address;
@@ -258,7 +258,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.executor_3_name = $event.value;
                               clientAppointeeSummary.executor_3_address = $event.data.address;
@@ -318,7 +318,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.executor_4_name = $event.value;
                               clientAppointeeSummary.executor_4_address = $event.data.address;
@@ -365,7 +365,7 @@
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Trustee
 
-                    <button (click)="copyDown('spouse', 'trustee')" class="text-green-400 align-middle" [tippy]="'COPY'">
+                    <button (click)="copyDown('client', 'trustee')" class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -428,7 +428,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.trustee_1_name = $event.value;
                               clientAppointeeSummary.trustee_1_address = $event.data.address;
@@ -489,7 +489,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.trustee_2_name = $event.value;
                               clientAppointeeSummary.trustee_2_address = $event.data.address;
@@ -549,7 +549,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.trustee_3_name = $event.value;
                               clientAppointeeSummary.trustee_3_address = $event.data.address;
@@ -609,7 +609,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.trustee_4_name = $event.value;
                               clientAppointeeSummary.trustee_4_address = $event.data.address;
@@ -656,7 +656,7 @@
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Financial Power of Attorney and/or Guardian of the Estate
 
-                    <button (click)="copyDown('spouse', 'fpoa')" class="text-green-400 align-middle" [tippy]="'COPY'">
+                    <button (click)="copyDown('client', 'fpoa')" class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -719,7 +719,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.fpoa_1_name = $event.value;
                               clientAppointeeSummary.fpoa_1_address = $event.data.address;
@@ -779,7 +779,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.fpoa_2_name = $event.value;
                               clientAppointeeSummary.fpoa_2_address = $event.data.address;
@@ -839,7 +839,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.fpoa_3_name = $event.value;
                               clientAppointeeSummary.fpoa_3_address = $event.data.address;
@@ -899,7 +899,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.fpoa_4_name = $event.value;
                               clientAppointeeSummary.fpoa_4_address = $event.data.address;
@@ -946,7 +946,7 @@
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Medicial Power of Attorney and/or Guardian of the Person
 
-                    <button (click)="copyDown('spouse', 'mpoa')"  class="text-green-400 align-middle" [tippy]="'COPY'">
+                    <button (click)="copyDown('client', 'mpoa')"  class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -1009,7 +1009,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.mpoa_1_name = $event.value;
                               clientAppointeeSummary.mpoa_1_address = $event.data.address;
@@ -1069,7 +1069,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.mpoa_2_name = $event.value;
                               clientAppointeeSummary.mpoa_2_address = $event.data.address;
@@ -1129,7 +1129,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.mpoa_3_name = $event.value;
                               clientAppointeeSummary.mpoa_3_address = $event.data.address;
@@ -1189,7 +1189,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="spouseOptions"
+                            [options]="clientOptions"
                             (onSelected)="
                               clientAppointeeSummary.mpoa_4_name = $event.value;
                               clientAppointeeSummary.mpoa_4_address = $event.data.address;
