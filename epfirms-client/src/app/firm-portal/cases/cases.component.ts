@@ -14,6 +14,7 @@ import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { ConversationService } from '@app/features/conversation/services/conversation.service';
 import { FirmService } from '../_services/firm-service/firm.service';
+import { IntakeService } from '@app/features/intake-v2/services/intake.service';
 
 @Component({
   selector: 'app-cases',
@@ -99,6 +100,7 @@ export class CasesComponent implements OnInit {
     private _modalService: EpModalService,
     private _conversationService: ConversationService,
     private _firmService: FirmService,
+    private _intakeService: IntakeService,
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.cases$ = _matterService.filteredEntities$;
@@ -157,14 +159,14 @@ export class CasesComponent implements OnInit {
             }
             // create the intake and send notification to client
             // atm the moment we only have one intake flow done and that is estate planning
-            if (data.intake === 'estate planning') {
+            if (data.intake !== 'none') {
               let intake = {
 
                 matter_id : newMatter.id,
                 status: 'sent',
-                type: 'estate planning',
+                type: data.intake,
               }
-              this._matterService.createIntake(newMatter.id).subscribe((response) => {
+              this._intakeService.upsert(intake).subscribe((response) => {
                 console.log(response);
               } 
               );

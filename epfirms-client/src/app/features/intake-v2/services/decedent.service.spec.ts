@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ProbateService } from './probate.service';
+import { DecedentService } from './decedent.service';
 
-describe('ProbateService', () => {
-  let service: ProbateService;
+describe('DecedentService', () => {
+  let service: DecedentService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ProbateService);
+    service = TestBed.inject(DecedentService);
   });
 
   it('should be created', () => {

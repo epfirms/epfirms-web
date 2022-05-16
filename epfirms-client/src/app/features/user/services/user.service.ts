@@ -24,4 +24,8 @@ export class UserService {
   validateEmail(email: string): Observable<any> {
     return this.http.get(`/api/user/email-address/${email}`);
   }
+
+  upsert(userData) : Observable<any> {
+    return this.http.post(`/api/user/upsert`, userData);
+  }
 }
