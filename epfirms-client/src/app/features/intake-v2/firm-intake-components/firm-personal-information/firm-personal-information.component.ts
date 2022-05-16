@@ -4,6 +4,7 @@ import { ClientMatterService } from '@app/client-portal/_services/matter-service
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { USAState } from '@app/shared/utils/us-states/typings';
+import { createMask } from '@ngneat/input-mask';
 
 @Component({
   selector: 'app-firm-personal-information',
@@ -334,4 +335,18 @@ export class FirmPersonalInformationComponent implements OnInit {
   continueButton(): void {
     this.continue.emit(true);
   }
+
+  phoneInputMask = createMask({
+    mask: '(999) 999-9999',
+    placeholder: ' ',
+    prefix: '+1',
+    onBeforeMask: (value: string) => {
+      const val = value.slice(2);
+      return val;
+    },
+    parser: (value: string) => {
+      const val = '+1' + value.replaceAll(/\(|\)|\-|\s/g, '');
+      return val;
+    },
+  });
 }
