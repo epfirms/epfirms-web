@@ -36,9 +36,8 @@
    
   </nav>
 
-  <header class="bg-white shadow-sm">
+  <!-- <header class="bg-white shadow-sm">
     <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-<!-- This example requires Tailwind CSS v2.0+ -->
 <div>
   <h3 class="text-lg leading-6 font-medium text-gray-900">Last 30 days</h3>
   <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -60,13 +59,11 @@
 </div>
 
     </div>
-  </header>
+  </header> -->
   <main>
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       <!-- Replace with your content -->
-      <div class="px-4 py-4 sm:px-0">
-        <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
-      </div>
+      <app-flat-rate-view *ngIf="state === 'flat-rate'"></app-flat-rate-view>
       <!-- /End replace -->
     </div>
   </main>

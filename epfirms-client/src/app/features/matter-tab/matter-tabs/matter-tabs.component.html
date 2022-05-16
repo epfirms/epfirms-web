@@ -136,7 +136,7 @@
                     </ng-container>
                   </section>
                 </div>
-                <aside *ngIf="selectedSubtab !== 'intake'" class="hidden overflow-y-auto lg:block w-96">
+                <aside *ngIf="selectedSubtab === 'tasks' || selectedSubtab === 'activity' || selectedSubtab === 'notes' || selectedSubtab === 'documents' " class="hidden overflow-y-auto lg:block w-96">
                   <div class="pb-16">
                     <app-matter-tab-user-card [user]="matter.client" [label]="'client'" (optionClicked)="handleUserInfoOption(matter, $event)"></app-matter-tab-user-card>
                     <app-matter-tab-user-card [user]="matter.spouse" [label]="'spouse'" (addClicked)="addSpouse(matter, $event);" (optionClicked)="handleUserInfoOption(matter, $event)"></app-matter-tab-user-card>

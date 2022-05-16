@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FirmBillingMainComponent implements OnInit {
 
+  // state controls the view of the bottom of the component
+  state : string = 'flat-rate';
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
+  setState(state : string) {
+    this.state = state;
+  }
+  
 
 }
