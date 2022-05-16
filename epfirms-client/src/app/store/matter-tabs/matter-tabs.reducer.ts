@@ -16,7 +16,7 @@ export const initialState: Tabs = {
   selectedIndex: null,
   expanded: false,
   openTabs: [],
-  subtabs: ['tasks', 'activity', 'notes', 'documents', 'intake', 'billing'],
+  subtabs: ['tasks', 'activity', 'notes', 'documents', 'intake', 'billing', 'billing-v2'],
 };
 
 const _matterTabsReducer = createReducer(
