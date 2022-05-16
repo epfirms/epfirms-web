@@ -86,7 +86,7 @@
             </ol>
           </nav>
 
-          <div *ngIf="state === 'client' || !spouse" class="mt-8 flex flex-col">
+          <div *ngIf="state === 'client'" class="mt-8 flex flex-col">
             <div class="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
               <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div>
@@ -95,7 +95,7 @@
                   <table class="mt-5 min-w-full">
                     <thead>
                       <td
-                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                        class="w-6 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
                       >
                         Rank
                       </td>
@@ -122,14 +122,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.executor_1_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -137,7 +137,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.executor_1_name = $event.value;
                               clientAppointeeSummary.executor_1_address = $event.data.address;
@@ -161,7 +161,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -174,7 +174,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -182,14 +182,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.executor_2_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -197,7 +197,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.executor_2_name = $event.value;
                               clientAppointeeSummary.executor_2_address = $event.data.address;
@@ -222,7 +222,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -235,7 +235,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -243,14 +243,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.executor_3_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -258,7 +258,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.executor_3_name = $event.value;
                               clientAppointeeSummary.executor_3_address = $event.data.address;
@@ -282,7 +282,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -295,7 +295,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -303,14 +303,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.executor_4_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -318,7 +318,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.executor_4_name = $event.value;
                               clientAppointeeSummary.executor_4_address = $event.data.address;
@@ -342,7 +342,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -355,7 +355,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -365,7 +365,7 @@
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Trustee
 
-                    <button (click)="copyDown('client', 'trustee')" class="text-green-400 align-middle" [tippy]="'COPY'">
+                    <button (click)="copyDown('spouse', 'trustee')" class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -386,7 +386,7 @@
                   <table class="mt-5 min-w-full">
                     <thead>
                       <td
-                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                        class="w-6 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
                       >
                         Rank
                       </td>
@@ -413,14 +413,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.trustee_1_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -428,7 +428,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.trustee_1_name = $event.value;
                               clientAppointeeSummary.trustee_1_address = $event.data.address;
@@ -453,7 +453,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -466,7 +466,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -474,14 +474,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.trustee_2_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -489,7 +489,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.trustee_2_name = $event.value;
                               clientAppointeeSummary.trustee_2_address = $event.data.address;
@@ -513,7 +513,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -526,7 +526,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -534,14 +534,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.trustee_3_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -549,7 +549,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.trustee_3_name = $event.value;
                               clientAppointeeSummary.trustee_3_address = $event.data.address;
@@ -573,7 +573,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -586,7 +586,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -594,14 +594,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.trustee_4_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -609,7 +609,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.trustee_4_name = $event.value;
                               clientAppointeeSummary.trustee_4_address = $event.data.address;
@@ -633,7 +633,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -646,7 +646,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -656,7 +656,7 @@
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Financial Power of Attorney and/or Guardian of the Estate
 
-                    <button (click)="copyDown('client', 'fpoa')" class="text-green-400 align-middle" [tippy]="'COPY'">
+                    <button (click)="copyDown('spouse', 'fpoa')" class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -677,7 +677,7 @@
                   <table class="mt-5 min-w-full">
                     <thead>
                       <td
-                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                        class="w-6 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
                       >
                         Rank
                       </td>
@@ -704,14 +704,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.fpoa_1_rank"
-                            (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            (change)="upsertClient()"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -719,7 +719,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.fpoa_1_name = $event.value;
                               clientAppointeeSummary.fpoa_1_address = $event.data.address;
@@ -743,7 +743,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -756,7 +756,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -764,14 +764,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.fpoa_2_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -779,7 +779,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.fpoa_2_name = $event.value;
                               clientAppointeeSummary.fpoa_2_address = $event.data.address;
@@ -803,7 +803,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -816,7 +816,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -824,14 +824,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.fpoa_3_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -839,7 +839,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.fpoa_3_name = $event.value;
                               clientAppointeeSummary.fpoa_3_address = $event.data.address;
@@ -863,7 +863,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -876,7 +876,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -884,14 +884,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.fpoa_4_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -899,15 +899,15 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.fpoa_4_name = $event.value;
                               clientAppointeeSummary.fpoa_4_address = $event.data.address;
                               clientAppointeeSummary.fpoa_4_phone = $event.data.phone;
-                              upsertSpouse()
+                              upsertClient()
                             "
                             (onTyped)="
-                              clientAppointeeSummary.fpoa_4_name = $event; upsertSpouse()
+                              clientAppointeeSummary.fpoa_4_name = $event; upsertClient()
                             "
                             [defaultValue]="clientAppointeeSummary.fpoa_4_name"
                           ></app-combobox>
@@ -917,13 +917,13 @@
                         >
                           <input
                             [(ngModel)]="clientAppointeeSummary.fpoa_4_address"
-                            (change)="upsertSpouse()"
+                            (change)="upsertClient()"
                             type="text"
                             name="street-address"
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -931,12 +931,12 @@
                         >
                           <input
                             [(ngModel)]="clientAppointeeSummary.fpoa_4_phone"
-                            (change)="upsertSpouse()"
+                            (change)="upsertClient()"
                             type="text"
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -946,7 +946,7 @@
                   <h3 class="mt-8 font-semibold text-gray-600">
                     Medicial Power of Attorney and/or Guardian of the Person
 
-                    <button (click)="copyDown('client', 'mpoa')" class="text-green-400 align-middle" [tippy]="'COPY'">
+                    <button (click)="copyDown('spouse', 'mpoa')"  class="text-green-400 align-middle" [tippy]="'COPY'">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -967,7 +967,7 @@
                   <table class="mt-5 min-w-full">
                     <thead>
                       <td
-                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                        class="w-6 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
                       >
                         Rank
                       </td>
@@ -994,14 +994,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.mpoa_1_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1009,7 +1009,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.mpoa_1_name = $event.value;
                               clientAppointeeSummary.mpoa_1_address = $event.data.address;
@@ -1033,7 +1033,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1046,7 +1046,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1054,14 +1054,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.mpoa_2_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1069,7 +1069,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.mpoa_2_name = $event.value;
                               clientAppointeeSummary.mpoa_2_address = $event.data.address;
@@ -1093,7 +1093,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1106,7 +1106,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1114,14 +1114,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.mpoa_3_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1129,7 +1129,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.mpoa_3_name = $event.value;
                               clientAppointeeSummary.mpoa_3_address = $event.data.address;
@@ -1153,7 +1153,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1166,7 +1166,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1174,14 +1174,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="clientAppointeeSummary.mpoa_4_rank"
                             (change)="upsertClient()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1189,7 +1189,7 @@
                         >
                           <app-combobox
                             *ngIf="clientSummaryLoaded"
-                            [options]="clientOptions"
+                            [options]="spouseOptions"
                             (onSelected)="
                               clientAppointeeSummary.mpoa_4_name = $event.value;
                               clientAppointeeSummary.mpoa_4_address = $event.data.address;
@@ -1213,7 +1213,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1226,7 +1226,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1248,7 +1248,7 @@
                   <table class="mt-5 min-w-full">
                     <thead>
                       <td
-                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                        class="w-6 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
                       >
                         Rank
                       </td>
@@ -1275,14 +1275,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.executor_1_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1314,7 +1314,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1327,7 +1327,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1335,14 +1335,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.executor_2_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1375,7 +1375,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1388,7 +1388,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1396,14 +1396,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.executor_3_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1435,7 +1435,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1448,7 +1448,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1456,14 +1456,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.executor_4_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1495,7 +1495,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1508,7 +1508,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1539,7 +1539,7 @@
                   <table class="mt-5 min-w-full">
                     <thead>
                       <td
-                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                        class="w-6 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
                       >
                         Rank
                       </td>
@@ -1566,14 +1566,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.trustee_1_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1606,7 +1606,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1619,7 +1619,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1627,14 +1627,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.trustee_2_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1666,7 +1666,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1679,7 +1679,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1687,14 +1687,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.trustee_3_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1726,7 +1726,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1739,7 +1739,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1747,14 +1747,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.trustee_4_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1786,7 +1786,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1799,7 +1799,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1830,7 +1830,7 @@
                   <table class="mt-5 min-w-full">
                     <thead>
                       <td
-                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                        class="w-6 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
                       >
                         Rank
                       </td>
@@ -1857,14 +1857,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.fpoa_1_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1896,7 +1896,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1909,7 +1909,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1917,14 +1917,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.fpoa_2_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -1956,7 +1956,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -1969,7 +1969,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -1977,14 +1977,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.fpoa_3_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -2016,7 +2016,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -2029,7 +2029,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -2037,14 +2037,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.fpoa_4_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -2076,7 +2076,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -2089,7 +2089,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -2120,7 +2120,7 @@
                   <table class="mt-5 min-w-full">
                     <thead>
                       <td
-                        class="w-3 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
+                        class="w-6 border-b border-gray-200 py-3.5 pl-4 pr-2 text-left text-sm font-semibold text-gray-700"
                       >
                         Rank
                       </td>
@@ -2147,14 +2147,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.mpoa_1_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -2186,7 +2186,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -2199,7 +2199,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -2207,14 +2207,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.mpoa_2_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -2246,7 +2246,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -2259,7 +2259,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -2267,14 +2267,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.mpoa_3_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -2306,7 +2306,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -2319,7 +2319,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -2327,14 +2327,14 @@
                       <tr>
                         <th
                           scope="row"
-                          class="group w-3 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
+                          class="group w-6 border-b border-r border-l border-gray-200 py-1.5 pl-4 pr-1 text-left hover:cursor-text hover:bg-gray-50 hover:text-gray-800"
                         >
                           <input
                             type="text"
                             [inputMask]=""
                             [(ngModel)]="spouseAppointeeSummary.mpoa_4_rank"
                             (change)="upsertSpouse()"
-                            class="w-13 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                            class="w-6 inline-block rounded-md border border-transparent bg-transparent p-1 text-left text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
                           />
                         </th>
                         <td
@@ -2366,7 +2366,7 @@
                             id="street-address"
                             autocomplete="street-address"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. 5534 Dunningham Drive, McKinney,Texas 75070"
+                            
                           />
                         </td>
                         <td
@@ -2379,7 +2379,7 @@
                             name="email"
                             id="email"
                             class="border-0 block w-full p-0 text-gray-700 placeholder-gray-300 focus:ring-0 sm:text-sm"
-                            placeholder="e.g. (555)-987-6543"
+                            
                           />
                         </td>
                       </tr>
@@ -2394,3 +2394,6 @@
     </div>
   </div>
 </body>
+
+
+

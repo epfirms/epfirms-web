@@ -47,6 +47,7 @@ export class PersonalInformationComponent implements OnInit {
     this.client = this.matter.client;
   }
 
+
   addFamilyMember(): void {
     let member = {
       first_name: '',

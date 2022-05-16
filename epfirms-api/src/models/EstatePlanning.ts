@@ -161,6 +161,18 @@ module.exports = (sequelize, {
         spouse_signed_post_marital_agreement: {
             type: BOOLEAN,
         },
+        // property distribution instructions
+        property_distribution_instructions: {
+            type: TEXT,
+        },
+        property_distribution_selection: {
+            type: STRING,   
+        },
+
+        // package selection
+        package_selection: {
+            type: STRING,
+        },
         
      }, {
         tableName,
