@@ -4,18 +4,22 @@ import { FirmBillingMainComponent } from './firm/firm-billing-main/firm-billing-
 import { FlatRateViewComponent } from './firm/flat-rate-view/flat-rate-view.component';
 import { FormsModule } from '@angular/forms';
 import { EditableModule } from '@app/shared/editable/editable.module';
+import { HourlyRateViewComponent } from './firm/hourly-rate-view/hourly-rate-view.component';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 
 
 @NgModule({
   declarations: [
     FirmBillingMainComponent,
-    FlatRateViewComponent
+    FlatRateViewComponent,
+    HourlyRateViewComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    EditableModule
+    EditableModule,
+    InputMaskModule,
   ],
   exports: [
     FirmBillingMainComponent
