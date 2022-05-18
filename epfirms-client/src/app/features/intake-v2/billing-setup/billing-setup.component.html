@@ -29,9 +29,7 @@
     <!-- FLAT RATE -->
     <ng-container *ngIf="billingType === 'flat-rate'">
       <div class="col-span-1">
-        <label class="block text-sm font-medium text-gray-700">
-          Flat Rate Amount?</label
-        >
+        <label class="block text-sm font-medium text-gray-700"> Flat Rate Amount?</label>
         <div>
           <div class="mt-1 relative rounded-md shadow-sm">
             <input
@@ -125,18 +123,14 @@
           Write a note letting the client know what they are being charged for.
         </p>
       </div>
-
     </ng-container>
 
     <!-- -------------------------- -->
 
     <!-- HOURLY -->
     <ng-container *ngIf="billingType === 'hourly'">
-
       <div class="col-span-1">
-        <label class="block text-sm font-medium text-gray-700">
-          Retainer Amount?</label
-        >
+        <label class="block text-sm font-medium text-gray-700"> Retainer Amount?</label>
         <div>
           <div class="mt-1 relative rounded-md shadow-sm">
             <input
@@ -162,14 +156,12 @@
           Write a note letting the client know what they are being charged for.
         </p>
       </div>
-
     </ng-container>
     <!-- --------------------------- -->
 
     <!-- Contingency -->
 
     <ng-container *ngIf="billingType === 'contingency'">
-
       <div class="col-span-1">
         <label class="block text-sm font-medium text-gray-700"> Pre-Settlement Percent?</label>
         <div>
@@ -207,35 +199,99 @@
           </div>
         </div>
       </div>
-
     </ng-container>
-
 
     <!-- ------------------------- -->
 
     <!-- Insurance -->
     <ng-container *ngIf="billingType === 'insurance'">
+        
+    
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Insurance Company</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Policy Holder</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Policy Number</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700">Claim Number</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
 
 
 
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Insurance Notes </label>
+        <div class="mt-1">
+          <textarea
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Write a note about insurance claim if needed.
+        </p>
+      </div>
+    
+    
     </ng-container>
+
     <!-- --------------------------------------- -->
 
-<div class="col-span-1"></div>
-      
+    <div class="col-span-1"></div>
   </div>
 </div>
 <div class="justify-end flex m-2">
-        <button
-          type="button"
-          class="m-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-        >
-          Save
-        </button>
-        <button
-          type="button"
-          class="m-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Save and Send
-        </button>
-      </div>
+  <button
+    type="button"
+    class="m-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+  >
+    Save
+  </button>
+  <button
+    type="button"
+    class="m-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+  >
+    Save and Send
+  </button>
+</div>
