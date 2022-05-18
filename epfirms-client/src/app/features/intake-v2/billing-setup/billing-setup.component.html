@@ -138,5 +138,50 @@
     </ng-container>
 
     <!-- -------------------------- -->
+
+    <!-- HOURLY -->
+    <ng-container *ngIf="billingType === 'hourly'">
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700">
+          Retainer Amount?</label
+        >
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              [inputMask]="currencyInputMask"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-span-2"></div>
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Retainer Invoice Message </label>
+        <div class="mt-1">
+          <textarea
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Write a note letting the client know what they are being charged for.
+        </p>
+      </div>
+
+      <div class="col-span-2"></div>
+      <div class="col-span-1 justify-end flex">
+        <button
+          type="button"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Confirm
+        </button>
+      </div>
+    </ng-container>
+    <!-- --------------------------- -->
   </div>
 </div>
