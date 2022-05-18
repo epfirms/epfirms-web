@@ -1,1 +1,142 @@
-<p>billing-setup works!</p>
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="pb-5 border-b border-gray-200">
+  <h3 class="text-lg leading-6 font-medium text-gray-900">Billing Setup</h3>
+  <p class="mt-2 max-w-4xl text-sm text-gray-500">How are you planning on billing the client?</p>
+</div>
+
+<div class="pt-8">
+  <div class="mt-6 grid grid-cols-3 gap-y-6 gap-x-4">
+    <!-- FORM SECTION -->
+    <div class="col-span-1">
+      <label class="block text-sm font-medium text-gray-700">
+        How are you planning on billing the client?</label
+      >
+      <div class="mt-1">
+        <select
+          [(ngModel)]="billingType"
+          class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="'flat-rate'">Flat Rate</option>
+          <option [ngValue]="'hourly'">Hourly</option>
+          <option [ngValue]="'contingency'">Contingency</option>
+
+          <option [ngValue]="'insurance'">Insurance</option>
+          <option [ngValue]="'monthly'">Monthly Payment Agreement</option>
+        </select>
+      </div>
+    </div>
+    <!-- -------------------------- -->
+    <!-- FLAT RATE -->
+    <ng-container *ngIf="billingType === 'flat-rate'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700">
+          How much are you asking them to pay?</label
+        >
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              [inputMask]="currencyInputMask"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700">
+          Do you want to split the payment?</label
+        >
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <select
+              [(ngModel)]="splitPayment"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Initial Payment Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              [inputMask]="currencyInputMask"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+      <div *ngIf="splitPayment" class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Final Payment Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              [inputMask]="currencyInputMask"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="splitPayment" class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Final Payment Due Date?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="date"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Invoice Message </label>
+        <div class="mt-1">
+          <textarea
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Write a note letting the client know what they are being charged for.
+        </p>
+      </div>
+
+      <div *ngIf="splitPayment" class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Final Invoice Message </label>
+        <div class="mt-1">
+          <textarea
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Write a note letting the client know what they are being charged for.
+        </p>
+      </div>
+
+      <div class="col-span-2"></div>
+      <div class="col-span-1 justify-end flex">
+        <button
+          type="button"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Confirm
+        </button>
+      </div>
+    </ng-container>
+
+    <!-- -------------------------- -->
+  </div>
+</div>
