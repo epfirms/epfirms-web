@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { HourlyRateViewComponent } from './firm/hourly-rate-view/hourly-rate-view.component';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { ComboboxModule } from '@app/shared/combobox/combobox.module';
 
 
 
@@ -20,6 +21,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
     FormsModule,
     EditableModule,
     InputMaskModule,
+    ComboboxModule,
   ],
   exports: [
     FirmBillingMainComponent

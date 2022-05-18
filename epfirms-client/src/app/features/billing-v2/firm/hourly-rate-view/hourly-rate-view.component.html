@@ -14,9 +14,9 @@
     </div>
   </div>
   <div class="mt-8 flex flex-col">
-    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="h-96 -my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-        <div class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+        <div class="relative  shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
           <!-- Selected row actions, only show when rows are selected. -->
           <div
             *ngIf="isAllSelected"
@@ -83,34 +83,33 @@
                 </td>
                 <!-- Selected: "text-blue-600", Not Selected: "text-gray-900" -->
                 <td class="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">
-                  Lindsay Walton
+                <app-combobox [options]="staffOptions"></app-combobox>
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  Front-end Developer
+                  <input
+                    type="text"
+                    class="w-7/12 text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                  />
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-
-                    <input
-                            type="number"
-                            class=" w-5/12 text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
+                  <input
+                    type="number"
+                    class="w-5/12 text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                  />
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-
-                    <input
-                            type="number"
-                            class="w-5/12 text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
-
+                  <input
+                    type="number"
+                    class="w-5/12 text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                  />
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <input
-                            type="text"
-                            [inputMask]="currencyInputMask"
-                            class="w-7/12 text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
-                          />
-                    
-                    </td>
+                  <input
+                    type="text"
+                    [inputMask]="currencyInputMask"
+                    class="w-7/12 text-right inline-block rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                  />
+                </td>
                 <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                   <a href="#" class="text-blue-600 hover:text-blue-900"
                     >Edit<span class="sr-only">, Lindsay Walton</span></a
