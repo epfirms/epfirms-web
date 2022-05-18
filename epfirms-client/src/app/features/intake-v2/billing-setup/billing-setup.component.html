@@ -30,7 +30,7 @@
     <ng-container *ngIf="billingType === 'flat-rate'">
       <div class="col-span-1">
         <label class="block text-sm font-medium text-gray-700">
-          How much are you asking them to pay?</label
+          Flat Rate Amount?</label
         >
         <div>
           <div class="mt-1 relative rounded-md shadow-sm">
@@ -61,7 +61,7 @@
         </div>
       </div>
 
-      <div class="col-span-1">
+      <div *ngIf="splitPayment" class="col-span-1">
         <label class="block text-sm font-medium text-gray-700"> Initial Payment Amount?</label>
         <div>
           <div class="mt-1 relative rounded-md shadow-sm">
@@ -126,15 +126,6 @@
         </p>
       </div>
 
-      <div class="col-span-2"></div>
-      <div class="col-span-1 justify-end flex">
-        <button
-          type="button"
-          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Confirm
-        </button>
-      </div>
     </ng-container>
 
     <!-- -------------------------- -->
@@ -172,15 +163,6 @@
         </p>
       </div>
 
-      <div class="col-span-2"></div>
-      <div class="col-span-1 justify-end flex">
-        <button
-          type="button"
-          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Confirm
-        </button>
-      </div>
     </ng-container>
     <!-- --------------------------- -->
 
@@ -189,7 +171,7 @@
     <ng-container *ngIf="billingType === 'contingency'">
 
       <div class="col-span-1">
-        <label class="block text-sm font-medium text-gray-700"> Contingency 1 Percent?</label>
+        <label class="block text-sm font-medium text-gray-700"> Pre-Settlement Percent?</label>
         <div>
           <div class="mt-1 relative rounded-md shadow-sm">
             <input
@@ -202,7 +184,7 @@
       </div>
 
       <div class="col-span-1">
-        <label class="block text-sm font-medium text-gray-700"> Contingency 2 Percent?</label>
+        <label class="block text-sm font-medium text-gray-700"> Post-Settlement Percent?</label>
         <div>
           <div class="mt-1 relative rounded-md shadow-sm">
             <input
@@ -226,16 +208,6 @@
         </div>
       </div>
 
-      <div class="col-span-2"></div>
-      <div class="col-span-2"></div>
-      <div class="col-span-1 justify-end flex">
-        <button
-          type="button"
-          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Confirm
-        </button>
-      </div>
     </ng-container>
 
 
@@ -248,5 +220,22 @@
 
     </ng-container>
     <!-- --------------------------------------- -->
+
+<div class="col-span-1"></div>
+      
   </div>
 </div>
+<div class="justify-end flex m-2">
+        <button
+          type="button"
+          class="m-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          class="m-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Save and Send
+        </button>
+      </div>
