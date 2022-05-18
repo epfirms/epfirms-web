@@ -278,7 +278,32 @@
 
     <!-- --------------------------------------- -->
 
-    <div class="col-span-1"></div>
+
+<!-- MONTHLY PAYMENT AGREEMENT    -->
+
+<ng-container *ngIf="billingType === 'monthly'">
+
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700">  Minimum Payment Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              [inputMask]="currencyInputMask"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+
+</ng-container>
+
+
+<!-- -------------------------------- -->
+
+
   </div>
 </div>
 <div class="justify-end flex m-2">
