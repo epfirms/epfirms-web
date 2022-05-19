@@ -30,6 +30,45 @@ module.exports = (sequelize, {
           type: STRING,
           defaultValue: 'private pay'
         },
+        
+        
+        contingency_percent: {
+          type: FLOAT
+        },
+        // flat rate specifics
+
+        flat_rate_amount: {
+          type: FLOAT
+        },
+        split_flate_rate: {
+          type: BOOLEAN
+        },
+        initial_payment: {
+          type: FLOAT
+        },
+        final_payment: {
+          type: FLOAT
+        },
+        final_payment_due_date: {
+          type: DATE
+        },
+        initial_invoice_message: {
+          type: TEXT
+        },
+        final_invoice_message: {
+          type: TEXT
+        },
+        // hourly specifics
+        retainer_amount: {
+          type: FLOAT
+        },
+        retainer_invoice_message: {
+          type: TEXT
+        },
+
+        //contingency specifics
+        // settlement amounts are percents
+        //appeal amount is also percent
         before_settlement: {
           type: FLOAT
         },
@@ -39,15 +78,55 @@ module.exports = (sequelize, {
         settlement_date: {
           type: DATE
         },
-        retainer_amount: {
+        appeal_amount: {
           type: FLOAT
         },
-        contingency_percent: {
+
+        // insurance specifics
+        company_name: {
+          type: STRING
+        },
+        policy_holder_name: {
+          type: STRING
+        },
+        policy_number: {
+          type: STRING
+        },
+        claim_number: {
+          type: STRING
+        },
+        insurance_notes: {
+          type: TEXT
+        },
+
+        // monthly specifics
+
+        minimum_payment_amount: {
           type: FLOAT
         },
-        flat_rate_amount: {
-          type: FLOAT
-        }
+        minimum_payment_due_date: {
+          type: DATE
+        },
+
+        // billing types that are more secure as booleans
+        is_hourly: {
+          type: BOOLEAN
+        },
+        is_flat_rate: {
+          type: BOOLEAN
+        },
+        is_monthly: {
+          type: BOOLEAN
+        },
+        is_contingency: {
+          type: BOOLEAN
+        },
+        is_insurance: {
+          type: BOOLEAN
+        },
+
+
+
       }, {
         tableName,
         defaultScope: {
