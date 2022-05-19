@@ -40,7 +40,7 @@ module.exports = (sequelize, {
         flat_rate_amount: {
           type: FLOAT
         },
-        split_flate_rate: {
+        split_flat_rate: {
           type: BOOLEAN
         },
         initial_payment: {
