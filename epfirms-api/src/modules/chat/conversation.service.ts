@@ -14,11 +14,13 @@ import { ConversationListInstanceCreateOptions } from 'twilio/lib/rest/conversat
 import { ConversationInstance } from 'twilio/lib/rest/conversations/v1/service/conversation';
 const {
   TWILIO_ACCOUNT_SID,
+  TWILIO_SUBACCOUNT_SID,
   TWILIO_AUTH_TOKEN,
   TWILIO_API_KEY_SID,
   TWILIO_API_KEY_SECRET,
   TWILIO_CONVERSATIONS_SERVICE_SID,
 } = require('@configs/vars');
+import { Database } from '@src/core/Database';
 
 /**
  * Handles chat-to-chat capabilities.
@@ -28,7 +30,9 @@ export class ConversationService {
   twilioClient: twilio.Twilio;
 
   constructor() {
-    this.twilioClient = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+    this.twilioClient = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, {
+      accountSid: TWILIO_SUBACCOUNT_SID,
+    });
   }
 
   /**
@@ -51,16 +55,23 @@ export class ConversationService {
       chat: AccessToken.ChatGrant;
     },
   ): Promise<AccessToken> {
-    const token = new AccessToken(TWILIO_ACCOUNT_SID, TWILIO_API_KEY_SID, TWILIO_API_KEY_SECRET, {
-      identity: identity,
-      ttl: 43200,
-    });
+    const token = new AccessToken(
+      TWILIO_SUBACCOUNT_SID,
+      TWILIO_API_KEY_SID,
+      TWILIO_API_KEY_SECRET,
+      {
+        identity: identity,
+        ttl: 43200,
+      },
+    );
 
     token.addGrant(grants.chat);
     return Promise.resolve(token);
   }
 
-  async createConversation(opts: ConversationListInstanceCreateOptions): Promise<ConversationInstance> {
+  async createConversation(
+    opts: ConversationListInstanceCreateOptions,
+  ): Promise<ConversationInstance> {
     const conversation = await this.twilioClient.conversations
       .services(TWILIO_CONVERSATIONS_SERVICE_SID)
       .conversations.create(opts);
@@ -121,9 +132,9 @@ export class ConversationService {
 
   async deleteConversations(conversationSid: string): Promise<boolean> {
     const deleted = await this.twilioClient.conversations
-    .services(TWILIO_CONVERSATIONS_SERVICE_SID)
-    .conversations(conversationSid)
-    .remove();
+      .services(TWILIO_CONVERSATIONS_SERVICE_SID)
+      .conversations(conversationSid)
+      .remove();
     return Promise.resolve(deleted);
   }
 
@@ -145,13 +156,26 @@ export class ConversationService {
   async fetchConversationsByParticipantSid(phone: string): Promise<any> {
     const conversations = await this.twilioClient.conversations
       .services(TWILIO_CONVERSATIONS_SERVICE_SID)
-      .participantConversations.list({address: phone});
-      
+      .participantConversations.list({ address: phone });
+
     return Promise.resolve(conversations);
   }
 
   async fetchConversation(sid: string): Promise<any> {
-    const conversation = await this.twilioClient.conversations.services('IS1faac97ab6954bb8828c6edead9e4513').conversations(sid).fetch();
+    const conversation = await this.twilioClient.conversations
+      .services('IS1faac97ab6954bb8828c6edead9e4513')
+      .conversations(sid)
+      .fetch();
     return Promise.resolve(conversation);
+  }
+
+  async getTwilioSubaccount(accountSid: string): Promise<any> {
+    const { twilio_subaccount } = Database.models;
+    const subaccount = await twilio_subaccount.findOne({
+      where: {
+        account_sid: accountSid,
+      },
+    });
+    return Promise.resolve(subaccount);
   }
 }

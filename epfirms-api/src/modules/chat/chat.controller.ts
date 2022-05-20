@@ -9,7 +9,12 @@ import { MatterService } from '../matter/services/matter.service';
 import { ConversationListInstanceCreateOptions } from 'twilio/lib/rest/conversations/v1/service/conversation';
 import { TeamService } from '../team/team.service';
 import { FirmEmployeeService } from '../firm/services/firm-employee.service';
-
+import { StripeMeteredUsageService } from '../stripe/services/stripe-metered-usage.service';
+const {
+  STRIPE_PRICE_MESSAGING_SMS,
+  STRIPE_PRICE_MESSAGING_USER,
+  TWILIO_SUBACCOUNT_SID,
+} = require('@configs/vars');
 @Service()
 export class ChatController {
   constructor(
@@ -18,6 +23,7 @@ export class ChatController {
     private _matterService: MatterService,
     private _teamService: TeamService,
     private _firmEmployeeService: FirmEmployeeService,
+    private _stripeMeteredUsageService: StripeMeteredUsageService,
   ) {}
 
   public async getAccessToken(req, res) {
@@ -124,7 +130,10 @@ export class ChatController {
       if (!teams.length) {
       }
       const teamMembers = await this._teamService.findAllMembers(teams[0].id);
-      const filteredMembers = teamMembers.filter((val, index, self) => self.findIndex(s => s.firm_employee_id === val.firm_employee_id) === index);
+      const filteredMembers = teamMembers.filter(
+        (val, index, self) =>
+          self.findIndex((s) => s.firm_employee_id === val.firm_employee_id) === index,
+      );
       const clientParticipant = await this._conversationService.addChatParticipant(
         conversation.sid,
         {
@@ -137,9 +146,7 @@ export class ChatController {
       );
       for (let teamMember of filteredMembers) {
         const employee = await this._firmEmployeeService.getById(teamMember.firm_employee_id);
-        if (
-          teamMember.include_in_group_chat
-        ) {
+        if (teamMember.include_in_group_chat) {
           await this._conversationService.addChatParticipant(conversation.sid, {
             identity: employee.user_id,
             messagingBinding: { projectedAddress: teams[0].twilio_phone_number },
@@ -181,7 +188,10 @@ export class ChatController {
       if (!teams.length) {
       }
       const teamMembers = await this._teamService.findAllMembers(teams[0].id);
-      const filteredMembers = teamMembers.filter((val, index, self) => self.findIndex(s => s.firm_employee_id === val.firm_employee_id) === index);
+      const filteredMembers = teamMembers.filter(
+        (val, index, self) =>
+          self.findIndex((s) => s.firm_employee_id === val.firm_employee_id) === index,
+      );
       const clientParticipant = await this._conversationService.addChatParticipant(
         conversation.sid,
         {
@@ -194,9 +204,7 @@ export class ChatController {
       );
       for (let teamMember of filteredMembers) {
         const employee = await this._firmEmployeeService.getById(teamMember.firm_employee_id);
-        if (
-          teamMember.include_in_group_chat
-        ) {
+        if (teamMember.include_in_group_chat) {
           await this._conversationService.addChatParticipant(conversation.sid, {
             identity: employee.user_id,
             messagingBinding: { projectedAddress: teams[0].twilio_phone_number },
@@ -216,5 +224,99 @@ export class ChatController {
       console.error(error);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
     }
+  }
+
+  public async createSubscription(req, res) {
+    try {
+      const customer = req.body.customerId;
+      const subscription = await this._stripeMeteredUsageService.createSubscription({
+        customer,
+        items: [{ price: STRIPE_PRICE_MESSAGING_SMS }, { price: STRIPE_PRICE_MESSAGING_USER }],
+      });
+      res.status(StatusConstants.CREATED).send({ data: { subscription } });
+    } catch (err) {
+      console.error(err.message);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: err.message });
+    }
+  }
+
+  async handlePreEventWebhook(req, res) {
+    try {
+      console.log(req.body);
+      const webhookBody = req.body;
+      switch (webhookBody.EventType) {
+        case 'onMessageAdd':
+          await await this.preMessageAdd(webhookBody);
+          break;
+      }
+      res.status(StatusConstants.OK).send({});
+    } catch (error) {
+      console.log(error);
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
+    }
+  }
+
+  async handlePostEventWebhook(req, res) {
+    try {
+      console.log(req.body);
+      const webhookBody = req.body;
+      switch (webhookBody.EventType) {
+        case 'onMessageAdded':
+          await this.postMessageAdd(webhookBody);
+          break;
+      }
+      res.status(StatusConstants.OK).send({ data: req.body });
+    } catch (error) {
+      console.log(error);
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
+    }
+  }
+
+  private async preMessageAdd(data) {
+    if (data.AccountSid === TWILIO_SUBACCOUNT_SID) {
+      const twilioSubaccount = await this._conversationService.getTwilioSubaccount(data.AccountSid);
+      const stripeCustomerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(
+        twilioSubaccount.firm_id,
+      );
+      const hasFunds = await this._stripeMeteredUsageService.hasFundsForItem(
+        stripeCustomerId,
+        STRIPE_PRICE_MESSAGING_SMS,
+      );
+
+      if (hasFunds) {
+        return Promise.resolve();
+      }
+    }
+
+    return Promise.reject(new Error('Pre-webhook error'));
+  }
+
+  private async postMessageAdd(data) {
+    if (data.AccountSid === TWILIO_SUBACCOUNT_SID) {
+      const twilioSubaccount = await this._conversationService.getTwilioSubaccount(data.AccountSid);
+
+      if (twilioSubaccount && twilioSubaccount.firm_id) {
+        const stripeCustomerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(
+          twilioSubaccount.firm_id,
+        );
+
+        if (stripeCustomerId) {
+          const subscriptionItem =
+            await this._stripeMeteredUsageService.getSubscriptionItemByPriceId(
+              stripeCustomerId,
+              STRIPE_PRICE_MESSAGING_SMS,
+            );
+
+          const currentTimestamp = Math.floor(Date.now() / 1000);
+          await this._stripeMeteredUsageService.createUsageRecord(subscriptionItem.id, {
+            quantity: 1,
+            timestamp: currentTimestamp,
+          });
+        }
+      }
+    }
+    return Promise.resolve();
   }
 }

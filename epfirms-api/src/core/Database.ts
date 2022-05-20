@@ -79,6 +79,7 @@ export class Database {
       firm_employee: require('../models/FirmEmployee')(this.sequelize, Sequelize),
       financial_summary: require('../models/FinancialSummary')(this.sequelize, Sequelize),
       appointee_summary: require('../models/AppointeeSummary')(this.sequelize, Sequelize),
+      stripe_customer: require('../models/StripeCustomer')(this.sequelize, Sequelize)
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.sequelize.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -418,6 +419,9 @@ export class Database {
 
     this.models.user.hasOne(this.models.appointee_summary, {foreignKey: 'user_id'});
     this.models.appointee_summary.belongsTo(this.models.user, {foreignKey: 'user_id'});
+
+    this.models.firm.hasOne(this.models.stripe_customer, {foreignKey: 'firm_id'});
+    this.models.stripe_customer.belongsTo(this.models.firm, {foreignKey: 'firm_id'});
   }
 
   public static async start() {
