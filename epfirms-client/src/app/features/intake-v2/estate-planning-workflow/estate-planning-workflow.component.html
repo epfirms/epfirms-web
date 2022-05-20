@@ -155,7 +155,7 @@
         <!-- life insurance section -->
         <app-life-insurance *ngIf="state === 'life insurance'" [matter]="matter"></app-life-insurance>
         <!-- /End replace -->
-        <app-billing-setup *ngIf="state === 'billing'"></app-billing-setup>
+        <app-billing-setup *ngIf="state === 'billing'" [matter]="matter"></app-billing-setup>
       </div>
     </main>
   </div>
