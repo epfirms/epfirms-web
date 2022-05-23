@@ -25,7 +25,7 @@ export class IntakeSettingsOverlayComponent implements OnInit {
   }
 
   submit(): void {
-    let intake = { id: this.intake.id, type: this.selectedIntake, matter_id: this.matter.id };
+    let intake = { id: this.intake.id, status: this.intake.status, type: this.selectedIntake, matter_id: this.matter.id };
     this._modalRef.close(intake);
   }
 }
