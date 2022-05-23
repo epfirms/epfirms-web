@@ -52,6 +52,9 @@ export class BillingSetupComponent implements OnInit {
   upsertBillingSettings() {
     this.matterBillingSettingsService.create(this.billingSettings).subscribe(res => {
       console.log("billing settings upsert", res);
+      if (res) {
+        this.billingSettings.id = res[0].id;
+      }
     });
   }
 }
