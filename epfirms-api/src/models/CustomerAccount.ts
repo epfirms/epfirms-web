@@ -24,6 +24,9 @@ module.exports = (sequelize, {
           type: INTEGER,
           allowNull: false,
         },
+        customer_id: {
+          type: STRING,
+        },
         matter_id: {
             type: INTEGER,
             unique: true,
