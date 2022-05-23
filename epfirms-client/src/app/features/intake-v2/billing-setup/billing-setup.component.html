@@ -1,0 +1,337 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="pb-5 border-b border-gray-200">
+  <h3 class="text-lg leading-6 font-medium text-gray-900">Billing Setup</h3>
+  <p class="mt-2 max-w-4xl text-sm text-gray-500">How are you planning on billing the client?</p>
+</div>
+
+<div class="pt-8">
+  <div class="mt-6 grid grid-cols-3 gap-y-6 gap-x-4">
+    <!-- FORM SECTION -->
+    <div class="col-span-1">
+      <label class="block text-sm font-medium text-gray-700">
+        How are you planning on billing the client?</label
+      >
+      <div class="mt-1">
+        <select
+          [(ngModel)]="billingSettings.billing_type"
+          (change)="upsertBillingSettings()"
+          class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="'flatrate'">Flat Rate</option>
+          <option [ngValue]="'hourly'">Hourly</option>
+          <option [ngValue]="'contingency'">Contingency</option>
+
+          <option [ngValue]="'insurance'">Insurance</option>
+          <option [ngValue]="'monthly'">Monthly Payment Agreement</option>
+        </select>
+      </div>
+    </div>
+    <!-- -------------------------- -->
+    <!-- FLAT RATE -->
+    <ng-container *ngIf="billingSettings.billing_type === 'flatrate'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Flat Rate Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.flat_rate_amount"
+              (change)="upsertBillingSettings()"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700">
+          Do you want to split the payment?</label
+        >
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <select
+              [(ngModel)]="billingSettings.split_flat_rate"
+              (change)="upsertBillingSettings()"
+              [(ngModel)]="billingSettings.split_flat_rate"
+              (change)="upsertBillingSettings()"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="billingSettings.split_flat_rate" class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Initial Payment Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.initial_payment"
+              (change)="upsertBillingSettings()"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+      <div *ngIf="billingSettings.split_flat_rate" class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Final Payment Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.final_payment"
+              (change)="upsertBillingSettings()"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="billingSettings.split_flat_rate" class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Final Payment Due Date?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.final_payment_due_date"
+              (change)="upsertBillingSettings()"
+              type="date"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Invoice Message </label>
+        <div class="mt-1">
+          <textarea
+            [(ngModel)]="billingSettings.initial_invoice_message"
+            (change)="upsertBillingSettings()"
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Write a note letting the client know what they are being charged for.
+        </p>
+      </div>
+
+      <div *ngIf="billingSettings.split_flat_rate" class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Final Invoice Message </label>
+        <div class="mt-1">
+          <textarea
+            [(ngModel)]="billingSettings.final_invoice_message"
+            (change)="upsertBillingSettings()"
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Write a note letting the client know what they are being charged for.
+        </p>
+      </div>
+    </ng-container>
+
+    <!-- -------------------------- -->
+
+    <!-- HOURLY -->
+    <ng-container *ngIf="billingSettings.billing_type === 'hourly'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Retainer Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.retainer_amount"
+              (change)="upsertBillingSettings()"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-span-2"></div>
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Retainer Invoice Message </label>
+        <div class="mt-1">
+          <textarea
+            [(ngModel)]="billingSettings.retainer_invoice_message"
+            (change)="upsertBillingSettings()"
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Write a note letting the client know what they are being charged for.
+        </p>
+      </div>
+    </ng-container>
+    <!-- --------------------------- -->
+
+    <!-- Contingency -->
+
+    <ng-container *ngIf="billingSettings.billing_type === 'contingency'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Pre-Settlement Percent?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.before_settlement"
+              (change)="upsertBillingSettings()"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Post-Settlement Percent?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.after_settlement"
+              (change)="upsertBillingSettings()"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Appeal Percent?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.appeal_amount"
+              (change)="upsertBillingSettings()"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ------------------------- -->
+
+    <!-- Insurance -->
+    <ng-container *ngIf="billingSettings.billing_type === 'insurance'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Insurance Company</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.company_name"
+              (change)="upsertBillingSettings()"
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Policy Holder</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.policy_holder_name"
+              (change)="upsertBillingSettings()"
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Policy Number</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.policy_number"
+              (change)="upsertBillingSettings()"
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700">Claim Number</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.claim_number"
+              (change)="upsertBillingSettings()"
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Insurance Notes </label>
+        <div class="mt-1">
+          <textarea
+            [(ngModel)]="billingSettings.insurance_notes"
+            (change)="upsertBillingSettings()"
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">Write a note about insurance claim if needed.</p>
+      </div>
+    </ng-container>
+
+    <!-- --------------------------------------- -->
+
+    <!-- MONTHLY PAYMENT AGREEMENT    -->
+
+    <ng-container *ngIf="billingSettings.billing_type === 'monthly'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Minimum Payment Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.minimum_payment_amount"
+              (change)="upsertBillingSettings()"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- -------------------------------- -->
+  </div>
+</div>
+<div class="justify-end flex m-2">
+  <button
+    type="button"
+    class="m-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+  >
+    Save
+  </button>
+  <button
+    type="button"
+    class="m-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+  >
+    Save and Send
+  </button>
+</div>
