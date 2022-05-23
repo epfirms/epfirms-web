@@ -80,6 +80,7 @@ export class Database {
       appointee_summary: require('../models/AppointeeSummary')(this.sequelize, Sequelize),
       decedent: require('../models/Decedent')(this.sequelize, Sequelize),
       decedent_property: require('../models/DecedentProperty')(this.sequelize, Sequelize),
+      invoice : require('../models/Invoice')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.sequelize.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -104,6 +105,8 @@ export class Database {
     this.models.decedent.hasMany(this.models.decedent_property, {foreignKey: 'decedent_id'});
     this.models.decedent_property.belongsTo(this.models.decedent, {foreignKey: 'decedent_id'});
 
+    this.models.matter.hasMany(this.models.invoice, {foreignKey: 'matter_id'});
+    this.models.invoice.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
 
     this.models.user.belongsToMany(this.models.user, {
       through: this.models.family_member,
