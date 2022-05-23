@@ -271,17 +271,5 @@ export class StripeController {
     }
   }
 
-  // create a invoice
-  public async createInvoice(req, res: Response): Promise<any> {
-    try {
-      // see if existing customer exists with matter_id
-      // if not, create a new customer
-      // create a new invoice with auto fufillment
-      // send invoice
-
-    } catch (error) {
-      console.error(error);
-      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
-    }
-  }
+  
 }
