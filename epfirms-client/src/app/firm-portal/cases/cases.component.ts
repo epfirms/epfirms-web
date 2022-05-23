@@ -15,6 +15,8 @@ import { EpModalService } from '@app/shared/modal/modal.service';
 import { ConversationService } from '@app/features/conversation/services/conversation.service';
 import { FirmService } from '../_services/firm-service/firm.service';
 import { IntakeService } from '@app/features/intake-v2/services/intake.service';
+import { emailService } from '@app/shared/_services/email-service/email.service';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-cases',
@@ -101,6 +103,8 @@ export class CasesComponent implements OnInit {
     private _conversationService: ConversationService,
     private _firmService: FirmService,
     private _intakeService: IntakeService,
+    private _emailService: emailService,
+    private _toastService: HotToastService,
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.cases$ = _matterService.filteredEntities$;
@@ -163,8 +167,12 @@ export class CasesComponent implements OnInit {
               let intake = {
 
                 matter_id : newMatter.id,
-                status: 'sent',
+                status: data.sendIntake ? 'sent' : 'firm only',
                 type: data.intake,
+              }
+              if (data.sendIntake) {
+               this._emailService.sendIntakeNotifcation(newMatter.email); 
+               this._toastService.success('Intake sent to client');
               }
               this._intakeService.upsert(intake).subscribe((response) => {
                 console.log(response);
