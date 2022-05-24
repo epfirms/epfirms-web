@@ -271,5 +271,16 @@ export class StripeController {
     }
   }
 
-  
+  public async createInvoice(req, res: Response): Promise<any> {
+    try {
+      // get the invoice from the db
+      // get the customer record else create one
+      // create the invoice
+      // update the invoice record with stripe invoice id and status
+      // send the invoice to the customer
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
 }
