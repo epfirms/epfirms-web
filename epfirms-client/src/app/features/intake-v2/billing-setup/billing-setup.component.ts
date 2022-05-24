@@ -4,6 +4,7 @@ import { Matter } from '@app/core/interfaces/matter';
 import { MatterBillingSettings } from '@app/core/interfaces/MatterBillingSettings';
 import { InvoiceService } from '@app/features/billing-v2/services/invoice.service';
 import { MatterBillingSettingsService } from '@app/shared/_services/matter-billing-settings-service/matter-billing-settings.service';
+import { HotToastService } from '@ngneat/hot-toast';
 import { createMask } from '@ngneat/input-mask';
 
 @Component({
@@ -32,6 +33,7 @@ export class BillingSetupComponent implements OnInit {
   constructor(
     private matterBillingSettingsService: MatterBillingSettingsService,
     private invoiceService: InvoiceService,
+    private toastService: HotToastService,
   ) {}
 
   ngOnInit(): void {
@@ -62,38 +64,61 @@ export class BillingSetupComponent implements OnInit {
     });
   }
 
+  private submitFlatRate(): void {
+    // if their is a split, there will be two invoices generated
+    // the intial due date is always 30 days from today
+    // the final invoice due date is the date the user enters
+    if (this.billingSettings.split_flat_rate) {
+      const initialInvoice = new Invoice(
+        this.matter.id,
+        this.matter.client.id,
+        this.matter.firm_id,
+        this.billingSettings.initial_payment,
+        this.billingSettings.initial_invoice_message,
+      );
+
+      const finalInvoice = new Invoice(
+        this.matter.id,
+        this.matter.client.id,
+        this.matter.firm_id,
+        this.billingSettings.final_payment,
+        this.billingSettings.final_invoice_message,
+      );
+
+      this.invoiceService.upsert(initialInvoice).subscribe((intial) => {
+        console.log('initial invoice', intial);
+      });
+      this.invoiceService.upsert(finalInvoice).subscribe((final) => {
+        console.log('final invoice', final);
+      });
+    }
+    // if not split
+    else {
+    }
+  }
+
   submit(): void {
     // handle the flat rate invoice automation
     if (this.billingSettings.billing_type === 'flatrate') {
-      // if their is a split, there will be two invoices generated
-      // the intial due date is always 30 days from today
-      // the final invoice due date is the date the user enters
-      if (this.billingSettings.split_flat_rate) {
-        const initialInvoice = new Invoice(
-          this.matter.id,
-          this.matter.client.id,
-          this.matter.firm_id,
-          this.billingSettings.initial_payment,
-          this.billingSettings.initial_invoice_message,
-        );
-
-        const finalInvoice = new Invoice(
-          this.matter.id,
-          this.matter.client.id,
-          this.matter.firm_id,
-          this.billingSettings.final_payment,
-          this.billingSettings.final_invoice_message,
-        );
-
-        this.invoiceService.upsert(initialInvoice).subscribe((intial) => {
-          console.log('initial invoice', intial);
-        });
-        this.invoiceService.upsert(finalInvoice).subscribe((final) => {
-          console.log('final invoice', final);
-        });
-      }
-      // if not split
-      else {
+      if (
+        this.billingSettings.flat_rate_amount <= 0 &&
+        this.billingSettings.split_flat_rate === false
+      ) {
+        this.toastService.error('Please enter an amount for flat rate');
+      } else if (
+        this.billingSettings.initial_payment <= 0 &&
+        this.billingSettings.split_flat_rate === true
+      ) {
+        this.toastService.error('Please enter an amount for initial payment');
+      } else if (
+        this.billingSettings.final_payment <= 0 &&
+        this.billingSettings.split_flat_rate === true
+      ) {
+        this.toastService.error('Please enter an amount for final payment');
+      } else if (this.billingSettings.final_payment_due_date === null) {
+        this.toastService.error('Please enter a due date for final payment');
+      } else {
+        this.submitFlatRate();
       }
     }
   }
