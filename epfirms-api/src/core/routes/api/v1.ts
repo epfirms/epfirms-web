@@ -38,6 +38,7 @@ import { intakeRouter } from '@src/modules/intake/routes';
 import { decedentRouter } from '@src/modules/decedent/routes';
 import { decedentPropertyRouter } from '@src/modules/decedent-property/routes';
 import { invoiceRouter } from '@src/modules/invoice/routes';
+import { transactionRouter } from '@src/modules/transaction/routes';
 
 const v1Router = express.Router();
 
@@ -81,4 +82,5 @@ v1Router.use('/appointee-summary', appointeeSummaryRouter);
 v1Router.use('/intake', intakeRouter);
 v1Router.use('/decedent-property', decedentPropertyRouter);
 v1Router.use('/invoice', invoiceRouter);
+v1Router.use('/transaction', transactionRouter);
 export { v1Router }
