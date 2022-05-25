@@ -60,6 +60,16 @@ export class BillingSetupComponent implements OnInit {
       });
   }
 
+  private roundDownAmounts() : void {
+    this.matterBillingSetting.initial_payment = Math.floor(this.matterBillingSetting.initial_payment);
+    this.matterBillingSetting.flat_rate_amount = Math.floor(this.matterBillingSetting.flat_rate_amount);
+    this.matterBillingSetting.final_payment = Math.floor(this.matterBillingSetting.final_payment);
+
+    this.matterBillingSetting.retainer_amount = Math.floor(this.matterBillingSetting.retainer_amount);
+    this.matterBillingSetting.minimum_payment_amount = Math.floor(this.matterBillingSetting.minimum_payment_amount);
+
+  }
+
   upsertBillingSettings() {
     this.matterBillingSettingsService.create(this.billingSettings).subscribe((res) => {
       console.log('billing settings upsert', res);
@@ -75,56 +85,107 @@ export class BillingSetupComponent implements OnInit {
     this.upsertBillingSettings();
   }
 
+  private splitRateAutomation(): void {
+    const initialInvoice = new Invoice(
+      this.matter.id,
+      this.matter.client.id,
+      this.matter.firm_id,
+      this.billingSettings.initial_payment,
+      this.billingSettings.initial_invoice_message,
+    );
+
+    const finalInvoice = new Invoice(
+      this.matter.id,
+      this.matter.client.id,
+      this.matter.firm_id,
+      this.billingSettings.final_payment,
+      this.billingSettings.final_invoice_message,
+    );
+
+    finalInvoice.setDate(new Date(this.billingSettings.final_payment_due_date).getTime() / 1000);
+
+    this.invoiceService.upsert(initialInvoice).subscribe((initial) => {
+      console.log('initial invoice', initial);
+      if (initial) {
+        this.stripeService.createInvoice(initial[0].id).subscribe((invoice) => {
+          console.log('initial stripe invoice route', invoice);
+          if (invoice) {
+            this.updateInvoiceSentStatus();
+          }
+
+          this.invoiceService.upsert(finalInvoice).subscribe((final) => {
+            console.log('final invoice', final);
+            this.stripeService.createInvoice(final[0].id).subscribe((finalInvoice) => {
+              console.log('final stripe invoice route', finalInvoice);
+              if (finalInvoice) {
+                this.updateInvoiceSentStatus();
+              }
+            });
+          });
+        });
+      }
+    });
+  }
+
+  private nonSplitRateAutomation(): void {
+    const initialInvoice = new Invoice(
+      this.matter.id,
+      this.matter.client.id,
+      this.matter.firm_id,
+      this.billingSettings.flat_rate_amount,
+      this.billingSettings.initial_invoice_message,
+    );
+    this.invoiceService.upsert(initialInvoice).subscribe((initial) => {
+      console.log('initial invoice, not split', initial);
+      if (initial) {
+        this.stripeService.createInvoice(initial[0].id).subscribe((invoice) => {
+          console.log('initial stripe invoice route', invoice);
+          if (invoice) {
+            this.updateInvoiceSentStatus();
+          }
+        });
+      }
+    });
+  }
+
   private submitFlatRate(): void {
     // if their is a split, there will be two invoices generated
     // the initial due date is always 30 days from today
     // the final invoice due date is the date the user enters
     if (this.billingSettings.split_flat_rate) {
-      const initialInvoice = new Invoice(
-        this.matter.id,
-        this.matter.client.id,
-        this.matter.firm_id,
-        this.billingSettings.initial_payment,
-        this.billingSettings.initial_invoice_message,
-      );
-
-      const finalInvoice = new Invoice(
-        this.matter.id,
-        this.matter.client.id,
-        this.matter.firm_id,
-        this.billingSettings.final_payment,
-        this.billingSettings.final_invoice_message,
-      );
-
-      this.invoiceService.upsert(initialInvoice).subscribe((initial) => {
-        console.log('initial invoice', initial);
-        if (initial) {
-          this.stripeService.createInvoice(initial[0].id).subscribe((invoice) => {
-            console.log('initial stripe invoice route', invoice);
-          });
-        }
-      });
-      this.invoiceService.upsert(finalInvoice).subscribe((final) => {
-        console.log('final invoice', final);
-      });
+      this.splitRateAutomation();
     }
     // if not split
     else {
-      const initialInvoice = new Invoice(
-        this.matter.id,
-        this.matter.client.id,
-        this.matter.firm_id,
-        this.billingSettings.flat_rate_amount,
-        this.billingSettings.initial_invoice_message,
-      );
-      this.invoiceService.upsert(initialInvoice).subscribe((initial) => {
-        console.log('initial invoice, not split', initial);
-        if (initial) {
-          this.stripeService.createInvoice(initial[0].id).subscribe((invoice) => {
-            console.log('initial stripe invoice route', invoice);
-          });
-        }
-      });
+      this.nonSplitRateAutomation();
+    }
+  }
+
+  private handleFlatRateSubmission(): void {
+    if (
+      this.billingSettings.flat_rate_amount <= 0 &&
+      this.billingSettings.split_flat_rate === false
+    ) {
+      this.toastService.error('Please enter an amount for flat rate');
+    } else if (
+      this.billingSettings.initial_payment <= 0 &&
+      this.billingSettings.split_flat_rate === true
+    ) {
+      this.toastService.error('Please enter an amount for initial payment');
+    } else if (
+      this.billingSettings.final_payment <= 0 &&
+      this.billingSettings.split_flat_rate === true
+    ) {
+      this.toastService.error('Please enter an amount for final payment');
+    } else if (
+      this.billingSettings.final_payment_due_date === null &&
+      this.billingSettings.split_flat_rate === true
+    ) {
+      this.toastService.error('Please enter a due date for final payment');
+    } else {
+      console.log('submit flat rate called');
+      this.submitFlatRate();
+      this.closeConfirmationModal();
     }
   }
 
@@ -139,31 +200,7 @@ export class BillingSetupComponent implements OnInit {
   submit(): void {
     // handle the flat rate invoice automation
     if (this.billingSettings.billing_type === 'flatrate') {
-      if (
-        this.billingSettings.flat_rate_amount <= 0 &&
-        this.billingSettings.split_flat_rate === false
-      ) {
-        this.toastService.error('Please enter an amount for flat rate');
-      } else if (
-        this.billingSettings.initial_payment <= 0 &&
-        this.billingSettings.split_flat_rate === true
-      ) {
-        this.toastService.error('Please enter an amount for initial payment');
-      } else if (
-        this.billingSettings.final_payment <= 0 &&
-        this.billingSettings.split_flat_rate === true
-      ) {
-        this.toastService.error('Please enter an amount for final payment');
-      } else if (
-        this.billingSettings.final_payment_due_date === null &&
-        this.billingSettings.split_flat_rate === true
-      ) {
-        this.toastService.error('Please enter a due date for final payment');
-      } else {
-        console.log('submit flat rate called');
-        this.submitFlatRate();
-        this.closeConfirmationModal();
-      }
+      this.handleFlatRateSubmission();
     }
   }
 }

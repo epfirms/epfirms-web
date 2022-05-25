@@ -4,7 +4,7 @@ export class Invoice {
     firm_id: number;
     matter_id: number;
     invoice_id: string;
-    due_date: string;
+    due_date: number;
     description: string;
     status: string;
     total: number;
@@ -17,7 +17,7 @@ export class Invoice {
         this.firm_id = firmId;
         this.matter_id = matterId;
         this.invoice_id = "";
-        this.due_date = new Date(Date.now() + (1000 * 60 * 60 * 24 * 30)).toISOString();
+        this.due_date = Math.floor((new Date(Date.now() + (1000 * 60 * 60 * 24 * 30)).getTime() / 1000));
         this.description = description;
         this.status = "";
         this.total = total;
@@ -26,7 +26,7 @@ export class Invoice {
         this.is_client_visible = false;
     }
 
-    setDate(date: string) {
+    setDate(date: number) {
         this.due_date = date;
     }
 

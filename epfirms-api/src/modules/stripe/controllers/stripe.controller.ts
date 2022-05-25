@@ -307,20 +307,38 @@ export class StripeController {
       }
       // get the transactions associated to invoice and create the stripe InvoiceItem
       //TODO
-      // create the invoice item
-      const invoiceItem = await stripe.invoiceItems.create({
-        customer: customerID,
-        amount: invoice.total * 100,
-        currency: 'usd',
+      const transactions = await Database.models.transaction.findAll({
+        where: { invoice_id: invoice.id },
       });
+
+      console.log('TRANSACTIONS', transactions);
+
+      if (transactions.length > 0) {
+        transactions.forEach(async (transaction) => {
+          await stripe.invoiceItems.create({
+            customer: customerID,
+            amount: transaction.amount,
+            currency: 'usd',
+            description: transaction.description,
+          });
+        });
+      } else if (transactions.length === 0) {
+        // create the invoice item
+        console.log('CREATING INVOICE ITEM', invoice);
+        const invoiceItem = await stripe.invoiceItems.create({
+          customer: customerID,
+          amount: invoice.total * 100,
+          currency: 'usd',
+        });
+      }
+      console.log("DUE DATE", invoice.due_date);
       //create the invoice
       const invoiceStripe = await stripe.invoices.create({
         customer: customerID,
         auto_advance: true,
         collection_method: 'send_invoice',
-        days_until_due: 30,
         description: invoice.description,
-        due_date: invoice.due_date,
+        due_date: invoice.due_date
       });
 
       // update the invoice record with stripe invoice id and status

@@ -90,5 +90,6 @@ export class MatterBillingSettings {
     this.retainer_amount = matterBillingSettings.retainer_amount;
     this.retainer_invoice_message = matterBillingSettings.retainer_invoice_message;
     this.billing_type = matterBillingSettings.billing_type;
+    this.initial_invoice_sent = matterBillingSettings.initial_invoice_sent;
   }
 }
