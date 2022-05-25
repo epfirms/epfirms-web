@@ -305,6 +305,8 @@ export class StripeController {
           firm_id: invoice.firm_id,
         });
       }
+      // get the transactions associated to invoice and create the stripe InvoiceItem
+      //TODO
       // create the invoice item
       const invoiceItem = await stripe.invoiceItems.create({
         customer: customerID,
@@ -317,6 +319,8 @@ export class StripeController {
         auto_advance: true,
         collection_method: 'send_invoice',
         days_until_due: 30,
+        description: invoice.description,
+        due_date: invoice.due_date,
       });
 
       // update the invoice record with stripe invoice id and status
