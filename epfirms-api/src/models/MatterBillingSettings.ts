@@ -131,6 +131,9 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, JSON, FLOAT, DATE
       is_insurance: {
         type: BOOLEAN,
       },
+      initial_invoice_sent: {
+        type: BOOLEAN,
+      }
     },
     {
       tableName,

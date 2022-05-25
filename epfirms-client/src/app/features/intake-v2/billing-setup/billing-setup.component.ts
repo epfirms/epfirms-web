@@ -30,6 +30,9 @@ export class BillingSetupComponent implements OnInit {
   matterBillingSetting: MatterBillingSettings;
   billingSettings: MatterBillingSettings;
 
+  // confirmation modal properties
+  isModalVisible: boolean = false;
+
   constructor(
     private matterBillingSettingsService: MatterBillingSettingsService,
     private invoiceService: InvoiceService,
@@ -64,6 +67,13 @@ export class BillingSetupComponent implements OnInit {
     });
   }
 
+  // updates the initial_invoice_sent property on the MatterBillingSettings
+  private updateInvoiceSentStatus() : void {
+
+    this.billingSettings.initial_invoice_sent = true;
+    this.upsertBillingSettings();
+  }
+
   private submitFlatRate(): void {
     // if their is a split, there will be two invoices generated
     // the intial due date is always 30 days from today
@@ -94,7 +104,25 @@ export class BillingSetupComponent implements OnInit {
     }
     // if not split
     else {
+      const initialInvoice = new Invoice(
+        this.matter.id,
+        this.matter.client.id,
+        this.matter.firm_id,
+        this.billingSettings.flat_rate_amount,
+        this.billingSettings.initial_invoice_message,
+      );
+      this.invoiceService.upsert(initialInvoice).subscribe((intial) => {
+        console.log('initial invoice, not split', intial);
+      });
     }
+  }
+
+  openConfirmationModal(): void {
+    this.isModalVisible = true;
+  }
+
+  closeConfirmationModal(): void {
+    this.isModalVisible = false;
   }
 
   submit(): void {
@@ -115,10 +143,15 @@ export class BillingSetupComponent implements OnInit {
         this.billingSettings.split_flat_rate === true
       ) {
         this.toastService.error('Please enter an amount for final payment');
-      } else if (this.billingSettings.final_payment_due_date === null) {
+      } else if (
+        this.billingSettings.final_payment_due_date === null &&
+        this.billingSettings.split_flat_rate === true
+      ) {
         this.toastService.error('Please enter a due date for final payment');
       } else {
+        console.log('submit flat rate called');
         this.submitFlatRate();
+        this.closeConfirmationModal();
       }
     }
   }

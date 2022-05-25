@@ -27,6 +27,7 @@ export class MatterBillingSettings {
   retainer_amount: number;
   retainer_invoice_message: string;
   billing_type: string;
+  initial_invoice_sent : boolean;
 
   constructor(matterID) {
     this.matter_id = matterID;
@@ -56,6 +57,7 @@ export class MatterBillingSettings {
     this.retainer_amount = 0;
     this.retainer_invoice_message = '';
     this.billing_type = 'flatrate';
+    this.initial_invoice_sent = false;
   }
 
 
