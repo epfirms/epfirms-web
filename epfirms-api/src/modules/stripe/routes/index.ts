@@ -9,4 +9,5 @@ stripeRouter.get('/status', passport.authenticate('bearer', { session: false }),
 stripeRouter.post('/payment', passport.authenticate('bearer', {session: false}), (req, res) => stripeController.createPaymentSession(req, res));
 stripeRouter.post('/subscription', passport.authenticate('bearer', {session: false}), (req, res) => stripeController.createSubscriptionSession(req, res));
 
+stripeRouter.post('/invoice', passport.authenticate('bearer', {session: false}), (req, res) => stripeController.createInvoice(req, res));
 export { stripeRouter };

@@ -4,6 +4,7 @@ import { StripeService } from '../services/stripe.service';
 import { send } from 'process';
 import { emailsService } from '@src/modules/emails/services/emails.service';
 import { Service } from 'typedi';
+import { Database } from '@src/core/Database';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const passport = require('passport');
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
@@ -274,10 +275,66 @@ export class StripeController {
   public async createInvoice(req, res: Response): Promise<any> {
     try {
       // get the invoice from the db
+      console.log(req.body);
+      const invoiceId = req.body.invoice_id;
+      console.log('INVOICE ID', invoiceId);
+      const invoice = await Database.models.invoice.findOne({ where: { id: invoiceId } });
+      if (!invoice) {
+        res.status(StatusConstants.INTERNAL_SERVER_ERROR).send('INVOICE NOT FOUND');
+      }
+
+      //get the user information
+      const user = await Database.models.user.findOne({ where: { id: invoice.user_id } });
+
       // get the customer record else create one
-      // create the invoice
+      let customer = await Database.models.customer_account.findOne({
+        where: { user_id: invoice.user_id },
+      });
+      let customerID = customer.customer_id;
+      if (!customer) {
+        customer = await stripe.customers.create({
+          email: user.email,
+          name: user.first_name + ' ' + user.last_name,
+        });
+        // updated the customerID
+        customerID = customer.id;
+        // create customer account in db
+        await Database.models.customer_account.create({
+          user_id: user.id,
+          customer_id: customerID,
+          firm_id: invoice.firm_id,
+        });
+      }
+      // create the invoice item
+      const invoiceItem = await stripe.invoiceItems.create({
+        customer: customerID,
+        amount: invoice.total * 100,
+        currency: 'usd',
+      });
+      //create the invoice
+      const invoiceStripe = await stripe.invoices.create({
+        customer: customerID,
+        auto_advance: true,
+        collection_method: 'send_invoice',
+        days_until_due: 30,
+      });
+
       // update the invoice record with stripe invoice id and status
+      await Database.models.invoice.update(
+        {
+          invoice_id: invoiceStripe.id,
+        },
+        {
+          where: {
+            id: invoice.id,
+          },
+        },
+      );
+
       // send the invoice to the customer
+      const sentInvoice = await stripe.invoices.sendInvoice(invoiceStripe.id);
+
+      res.status(StatusConstants.OK).send(sentInvoice);
     } catch (error) {
       console.error(error);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);

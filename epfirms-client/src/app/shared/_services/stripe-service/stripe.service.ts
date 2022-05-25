@@ -24,4 +24,8 @@ export class StripeService {
   createSubscriptionSession(data) : Observable<any> {
     return this._http.post('/api/stripe/subscription', data);
   }
+
+  createInvoice(invoiceId) : Observable<any> {
+    return this._http.post('/api/stripe/invoice' , {invoice_id: invoiceId});
+  }
 }
