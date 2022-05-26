@@ -22,16 +22,25 @@
                   />
                 </svg>
 
-
-                <h1 class="text-lg font-medium leading-6 text-slate-900 sm:truncate">
+                <h1 class="pl-2 text-lg font-medium leading-6 text-slate-900 sm:truncate">
                   Monthly Income
                 </h1>
+                 <!-- Tool Tip -->
+              <div [tippy]="'Monthly income calculates SSI benefits, life insurance requirements, and other estate planning needs'">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 pl-2" viewBox="0 0 20 20" fill="#3b82f6">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <!-- END OF TOOLTIP -->
               </div>
               <p class="mt-2 text-sm text-gray-700">
                 Please enter your client's household monthly income. EPFirms calculates monthly
                 income to determine if the client needs additional planning.
               </p>
             </div>
+
+             
+
             <!-- <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto">Add income</button>
             </div> -->
@@ -63,7 +72,7 @@
                       <tr>
                         <th
                           scope="row"
-                          class="whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-right text-sm font-semibold text-gray-900"
+                          class="whitespace-nowrap border-r-2 border-blue-500 py-1 pr-2 text-right text-sm font-semibold text-gray-900"
                         >
                           Social Security
                         </th>
@@ -94,7 +103,7 @@
                       <tr>
                         <th
                           scope="row"
-                          class="whitespace-nowrap border-r border-gray-200 py-2 pr-2 text-right text-sm font-semibold text-gray-900"
+                          class="whitespace-nowrap border-r-2 border-blue-500 py-2 pr-2 text-right text-sm font-semibold text-gray-900"
                         >
                           Pension
                         </th>
@@ -110,7 +119,7 @@
                           />
                         </td>
                         <td
-                          class="border-b border-r border-gray-200 py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-700 group text-right"
+                          class="border-b  border-r border-gray-200 py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-700 group text-right"
                           *ngIf="includeSpouseIncome"
                         >
                           <input
@@ -125,7 +134,7 @@
                       <tr>
                         <th
                           scope="row"
-                          class="whitespace-nowrap border-r border-gray-200 py-2 pr-2 text-right text-sm font-semibold text-gray-900"
+                          class="whitespace-nowrap border-r-2 border-blue-500 py-2 pr-2 text-right text-sm font-semibold text-gray-900"
                         >
                           Work
                         </th>
@@ -156,7 +165,7 @@
                       <tr>
                         <th
                           scope="row"
-                          class="whitespace-nowrap border-r border-gray-200 py-2 pr-2 text-right text-sm font-semibold text-gray-900"
+                          class="whitespace-nowrap border-r-2 border-blue-500 py-2 pr-2 text-right text-sm font-semibold text-gray-900"
                         >
                           Annuity
                         </th>
@@ -187,7 +196,7 @@
  <tr>
                         <th
                           scope="row"
-                          class="whitespace-nowrap border-r border-gray-200 py-2 pr-2 text-right text-sm font-semibold text-gray-900"
+                          class="whitespace-nowrap border-r-2 border-blue-500 py-2 pr-2 text-right text-sm font-semibold text-gray-900"
                         >
                           Business Income
                         </th>
@@ -218,7 +227,7 @@
                       <tr>
                         <th
                           scope="row"
-                          class="whitespace-nowrap border-r border-gray-200 py-2 pr-2 text-right text-sm font-semibold text-gray-900"
+                          class="whitespace-nowrap border-r-2 border-blue-500 py-2 pr-2 text-right text-sm font-semibold text-gray-900"
                         >
                           Other
                         </th>

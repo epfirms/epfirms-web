@@ -30,6 +30,14 @@ import { InputMaskModule } from '@ngneat/input-mask';
 import { TippyModule } from '@ngneat/helipopper';
 import { ProbateIntakeComponent } from './probate-intake/probate-intake.component';
 import { ComboboxModule } from '@app/shared/combobox/combobox.module';
+import { LifeInsuranceComponent } from './life-insurance/life-insurance.component';
+import { ClientEstatePlanningIntakeComponent } from './client-intake-components/client-estate-planning-intake/client-estate-planning-intake.component';
+import { EstatePlanningWorkflowComponent } from './estate-planning-workflow/estate-planning-workflow.component';
+import { ProbateWorkflowComponent } from './probate-workflow/probate-workflow.component';
+import { PersonalRepresentativeInformationComponent } from './personal-representative-information/personal-representative-information.component';
+import { DecedentInformationComponent } from './decedent-information/decedent-information.component';
+import { DecedentPropertyComponent } from './decedent-property/decedent-property.component';
+import { IntakeSettingsOverlayComponent } from './firm-intake-viewer/intake-settings-overlay/intake-settings-overlay.component';
 
 
 
@@ -53,7 +61,15 @@ import { ComboboxModule } from '@app/shared/combobox/combobox.module';
     ChildrenInformationComponent,
     OtherFamilyInformationComponent,
     EstatePlanningFormComponent,
-    ProbateIntakeComponent
+    ProbateIntakeComponent,
+    LifeInsuranceComponent,
+    ClientEstatePlanningIntakeComponent,
+    EstatePlanningWorkflowComponent,
+    ProbateWorkflowComponent,
+    PersonalRepresentativeInformationComponent,
+    DecedentInformationComponent,
+    DecedentPropertyComponent,
+    IntakeSettingsOverlayComponent
   ],
   imports: [
     CommonModule,

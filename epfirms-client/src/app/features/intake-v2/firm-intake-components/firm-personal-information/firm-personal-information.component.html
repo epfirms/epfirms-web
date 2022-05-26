@@ -5,28 +5,12 @@
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
             <div class="flex">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="gray"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <h1 class="px-4 text-xl font-semibold text-gray-600">
-                Personal and Family Information
-              </h1>
+              <h1 class="px-4 text-xl font-semibold text-gray-600">Personal and Family Information</h1>
             </div>
-            <p class="mt-2 text-sm text-gray-900 font-semibold">
-              Please provide the the information for all family members who will be part of your
-              case.
-            </p>
+            <p class="mt-2 pl-1 text-sm text-gray-700">Please provide the the information for all family members who will be part of your case.</p>
           </div>
 
           <!-- <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -38,247 +22,105 @@
           <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-3 align-middle md:px-6 lg:px-8">
               <div>
-                <div class="flex mt-8">
-                  <span
-                    class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
-                  >
+                <div class="mt-10 flex">
+                  <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-blue-500 shadow-md shadow-gray-300">
                     <span class="font-medium leading-none text-white">{{clientForm.first_name[0]}}{{clientForm.last_name[0]}}</span>
                   </span>
                   <h1 class="pl-2 font-semibold text-gray-600">Client's Information</h1>
                 </div>
-                <table class="mt-3 min-w-full">
-                  <tbody class="bg-white">
+                <table class="mt-6 min-w-full">
+                  <tbody class="bg-white shadow-md shadow-gray-200">
                     <tr>
-                      <th scope="row" class="bg-blue-500 px-1"></th>
-                      <td class="relative border border-gray-200 px-3 py-3 w-3/12">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                        >
-                          First Name</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.first_name"
-                          (change)="submit()"
-                          type="text"
-                          name="first-name"
-                          id="first-name"
-                          autocomplete="given-name"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        />
+                      <th scope="row" class="inset-y-1 left-0 bg-blue-500"></th>
+                      <td class="relative w-3/12 border border-gray-200 px-3 py-3">
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> First Name</label>
+                        <input [(ngModel)]="clientForm.first_name" (change)="submit()" type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                       </td>
 
-                      <td class="relative border border-gray-200 px-3 py-3 w-4/12">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                        >
-                          Last Name</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.last_name"
-                          (change)="submit()"
-                          type="text"
-                          name="last-name"
-                          id="last-name"
-                          autocomplete="family-name"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        />
+                      <td class="relative w-4/12 border border-gray-200 px-3 py-3">
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Last Name</label>
+                        <input [(ngModel)]="clientForm.last_name" (change)="submit()" type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                       </td>
 
-                      <td class="relative border border-gray-200 px-3 py-3 2.5/12">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                        >
-                          Date of Birth</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.dob"
-                          (change)="submit()"
-                          type="date"
-                          name="birth-date"
-                          id="birth-date"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        />
+                      <td class="2.5/12 relative border border-gray-200 px-3 py-3">
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Date of Birth</label>
+                        <input [(ngModel)]="clientForm.dob" (change)="submit()" type="date" name="birth-date" id="birth-date" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                       </td>
 
-                      <td class="relative border border-gray-200 px-3 py-3 2.5/12">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                        >
-                          SSN</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.ssn"
-                          (change)="submit()"
-                          type="password"
-                          id="ssn"
-                          class="block w-full border-0 p-0 text-gray-300 placeholder-gray-300 focus:ring-0"
-                        />
+                      <td class="relative w-2/12 border border-gray-200 px-3 py-3">
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Last 4 of SSN</label>
+                        <input [(ngModel)]="clientForm.ssn" (change)="submit()" type="text" id="ssn" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                       </td>
 
-                      <td class="relative border border-gray-200 px-3 py-3">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                          >Spouse?</label
-                        >
-                        <select
-                          [(ngModel)]="hasSpouse"
-                          (change)="submit()"
-                          id="region"
-                          name="region"
-                          autocomplete="address-level1"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        >
+                      <td class="relative w-1/12 border border-gray-200 px-3 py-3">
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Spouse?</label>
+                        <select [(ngModel)]="hasSpouse" (change)="submit()" id="region" name="region" autocomplete="address-level1" class="focus:ring-3 block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300">
                           <option [ngValue]="false">No</option>
                           <option [ngValue]="true">Yes</option>
                         </select>
                       </td>
+                      <th scope="row" class="inset-y-1 left-0 bg-blue-500"></th>
                     </tr>
                   </tbody>
                 </table>
 
-                <table class="mt-3 min-w-full">
-                  <tbody class="bg-white">
+                <table class="mt-4 min-w-full">
+                  <tbody class="mt-2 bg-white shadow-md shadow-gray-200">
                     <tr>
-                      <th scope="row" class="bg-blue-500 px-1"></th>
-                      <td class="relative border border-gray-200 px-3 py-3 w-2/12">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                        >
-                          Driver's ID #</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.drivers_id"
-                          (change)="submit()"
-                          type="text"
-                          id="drivers_id"
-                          autocomplete="given-name"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        />
+                      <th scope="row" class="inset-y-1 left-0 bg-blue-500"></th>
+                      <td class="relative w-2/12 border border-gray-200 px-3 py-3">
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Driver's ID #</label>
+                        <input [(ngModel)]="clientForm.drivers_id" (change)="submit()" type="text" id="drivers_id" autocomplete="given-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                       </td>
 
-                      <td class="relative border border-gray-200 px-3 py-3 w-4/12">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                        >
-                          Email</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.email"
-                          (change)="submit()"
-                          id="email"
-                          name="email"
-                          type="email"
-                          autocomplete="email"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        />
+                      <td class="relative w-4/12 border border-gray-200 px-3 py-3">
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Email</label>
+                        <input [(ngModel)]="clientForm.email" (change)="submit()" id="email" name="email" type="email" autocomplete="email" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                       </td>
 
-                      <td class="relative border border-gray-200 px-3 py-3 w-3/12">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                          >Cell Phone</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.cell_phone"
-                          (change)="submit()"
-                          type="text"
-                          name="cellphone"
-                          id="cellphone"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        />
+                      <td class="relative w-3/12 border border-gray-200 px-3 py-3">
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Cell Phone</label>
+                        <input [(ngModel)]="clientForm.cell_phone" (change)="submit()" type="text" name="cellphone" id="cellphone" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"  autocomplete="off"
+                        [inputMask]="phoneInputMask" />
+                        
                       </td>
 
-                      <td class="relative border border-gray-200 px-3 py-3 w-3/12">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                          >Home Phone</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.phone"
-                          (change)="submit()"
-                          type="text"
-                          name="homephone"
-                          id="homephone"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        />
+                      <td class="relative w-3/12 border border-gray-200 px-3 py-3">
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Home Phone</label>
+                        <input [(ngModel)]="clientForm.phone" (change)="submit()" type="text" name="homephone" id="homephone" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"  autocomplete="off"
+                        [inputMask]="phoneInputMask"/>
                       </td>
+                      <th scope="row" class="inset-y-1 left-0 bg-blue-500"></th>
                     </tr>
                   </tbody>
                 </table>
 
-                <table class="mt-3 min-w-full">
-                  <tbody class="bg-white">
+                <table class="mt-4 min-w-full">
+                  <tbody class="bg-white shadow-md shadow-gray-200">
                     <tr>
-                      <th scope="row" class="bg-blue-500 px-1"></th>
-                      <td class="relative border border-gray-200 px-3 py-3 w-5/12">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs font-medium text-gray-300"
-                        >
-                          Street Address</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.address"
-                          (change)="submit()"
-                          type="text"
-                          name="street-address"
-                          id="street-address"
-                          autocomplete="street-address"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        />
+                      <th scope="row" class="inset-y-1 left-0 bg-blue-500"></th>
+                      <td class="relative w-5/12 border border-gray-200 px-3 py-3">
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs text-gray-400"> Street Address</label>
+                        <input [(ngModel)]="clientForm.address" (change)="submit()" type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                       </td>
 
                       <td class="relative border border-gray-200 px-3 py-3">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                        >
-                          City</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.city"
-                          (change)="submit()"
-                          type="text"
-                          name="city"
-                          id="city"
-                          autocomplete="address-level2"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        />
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> City</label>
+                        <input [(ngModel)]="clientForm.city" (change)="submit()" type="text" name="city" id="city" autocomplete="address-level2" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                       </td>
 
                       <td class="relative border border-gray-200 px-3 py-3">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                          >State</label
-                        >
-                        <select
-                          [(ngModel)]="clientForm.state"
-                          (change)="submit()"
-                          id="region"
-                          name="region"
-                          autocomplete="address-level1"
-                          class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        >
-                          <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
-                            {{ state.name }}
-                          </option>
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">State</label>
+                        <select [(ngModel)]="clientForm.state" (change)="submit()" id="region" name="region" autocomplete="address-level1" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0">
+                          <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{ state.name }}</option>
                         </select>
                       </td>
 
                       <td class="relative border border-gray-200 px-3 py-3">
-                        <label
-                          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                        >
-                          Zip Code</label
-                        >
-                        <input
-                          [(ngModel)]="clientForm.zip"
-                          (change)="submit()"
-                          type="text"
-                          name="postal-code"
-                          id="postal-code"
-                          autocomplete="postal-code"
-                          class="w-20 block border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                        />
+                        <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Zip Code</label>
+                        <input [(ngModel)]="clientForm.zip" (change)="submit()" type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-20 border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                       </td>
+                      <th scope="row" class="inset-y-1 left-0 bg-blue-500"></th>
                     </tr>
                   </tbody>
                 </table>
@@ -286,244 +128,105 @@
                 <div>
                   <!-- has a spouse?  -->
                   <div *ngIf="hasSpouse">
-                    <div class="flex mt-8">
-                      <span
-                        class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
-                      >
+                    <div class="mt-10 flex">
+                      <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-red-500 shadow-md shadow-gray-300">
                         <span class="font-medium leading-none text-white">{{spouseForm.first_name[0]}}{{spouseForm.last_name[0]}}</span>
                       </span>
                       <h1 class="pl-2 font-semibold text-gray-600">Spouse's Information</h1>
                       <!-- delete icon -->
                       <div class="ml-auto">
                         <button (click)="deleteSpouse()">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
- 
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
                         </button>
-
                       </div>
-                   </div>
+                    </div>
 
-                    <table class="mt-3 min-w-full">
-                      <tbody class="bg-white">
+                    <table class="mt-8 min-w-full">
+                      <tbody class="bg-white shadow-md shadow-gray-200">
                         <tr>
-                          <th scope="row" class="bg-red-500 px-1"></th>
-                          <td class="relative border border-gray-200 px-3 py-3 w-3/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              First Name</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.first_name"
-                              (change)="submit()"
-                              type="text"
-                              name="first-name"
-                              id="first-name"
-                              autocomplete="given-name"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <th scope="row" class="inset-y-1 left-0 bg-red-500"></th>
+                          <td class="relative w-3/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> First Name</label>
+                            <input [(ngModel)]="spouseForm.first_name" (change)="submit()" type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-4/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Last Name</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.last_name"
-                              (change)="submit()"
-                              type="text"
-                              name="last-name"
-                              id="last-name"
-                              autocomplete="family-name"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="relative w-4/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Last Name</label>
+                            <input [(ngModel)]="spouseForm.last_name" (change)="submit()" type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 2.5/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Date of Birth</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.dob"
-                              (change)="submit()"
-                              type="date"
-                              name="birth-date"
-                              id="birth-date"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="2.5/12 relative border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Date of Birth</label>
+                            <input [(ngModel)]="spouseForm.dob" (change)="submit()" type="date" name="birth-date" id="birth-date" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 2.5/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              SSN</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.ssn"
-                              (change)="submit()"
-                              type="password"
-                              id="ssn"
-                              class="block w-full border-0 p-0 text-gray-300 placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="2.5/12 relative border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Last 4 of SSN</label>
+                            <input [(ngModel)]="spouseForm.ssn" (change)="submit()" type="text" id="ssn" class="block w-full border-0 p-0 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
+                          <th scope="row" class="inset-y-1 left-0 bg-red-500"></th>
                         </tr>
                       </tbody>
                     </table>
 
-                    <table class="mt-3 min-w-full">
-                      <tbody class="bg-white">
+                    <table class="mt-4 min-w-full">
+                      <tbody class="bg-white shadow-md shadow-gray-200">
                         <tr>
-                          <th scope="row" class="bg-red-500 px-1"></th>
-                          <td class="relative border border-gray-200 px-3 py-3 w-2/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Driver's ID #</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.drivers_id"
-                              (change)="submit()"
-                              type="text"
-                              id="drivers_id"
-                              autocomplete="given-name"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <th scope="row" class="inset-y-1 left-0 bg-red-500"></th>
+                          <td class="relative w-2/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Driver's ID #</label>
+                            <input [(ngModel)]="spouseForm.drivers_id" (change)="submit()" type="text" id="drivers_id" autocomplete="given-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-4/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Email</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.email"
-                              (change)="submit()"
-                              id="email"
-                              name="email"
-                              type="email"
-                              autocomplete="email"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="relative w-4/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Email</label>
+                            <input [(ngModel)]="spouseForm.email" (change)="submit()" id="email" name="email" type="email" autocomplete="email" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-3/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >Cell Phone</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.cell_phone"
-                              (change)="submit()"
-                              type="text"
-                              name="cellphone"
-                              id="cellphone"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="relative w-3/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Cell Phone</label>
+                            <input [(ngModel)]="spouseForm.cell_phone" (change)="submit()" type="text" name="cellphone" id="cellphone" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"  autocomplete="off"
+                            [inputMask]="phoneInputMask"/>
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-3/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >Home Phone</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.phone"
-                              (change)="submit()"
-                              type="text"
-                              name="homephone"
-                              id="homephone"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="relative w-3/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Home Phone</label>
+                            <input [(ngModel)]="spouseForm.phone" (change)="submit()" type="text" name="homephone" id="homephone" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"  autocomplete="off"
+                            [inputMask]="phoneInputMask"/>
                           </td>
+                          <th scope="row" class="inset-y-1 left-0 bg-red-500"></th>
                         </tr>
                       </tbody>
                     </table>
 
-                    <table class="mt-3 min-w-full">
-                      <tbody class="bg-white">
+                    <table class="mt-4 min-w-full">
+                      <tbody class="bg-white shadow-md shadow-gray-200">
                         <tr>
-                          <th scope="row" class="bg-red-500 px-1"></th>
-                          <td class="relative border border-gray-200 px-3 py-3 w-5/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs font-medium text-gray-300"
-                            >
-                              Street Address</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.address"
-                              (change)="submit()"
-                              type="text"
-                              name="street-address"
-                              id="street-address"
-                              autocomplete="street-address"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <th scope="row" class="inset-y-1 left-0 bg-red-500"></th>
+                          <td class="relative w-5/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs text-gray-400"> Street Address</label>
+                            <input [(ngModel)]="spouseForm.address" (change)="submit()" type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
                           <td class="relative border border-gray-200 px-3 py-3">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              City</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.city"
-                              (change)="submit()"
-                              type="text"
-                              name="city"
-                              id="city"
-                              autocomplete="address-level2"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> City</label>
+                            <input [(ngModel)]="spouseForm.city" (change)="submit()" type="text" name="city" id="city" autocomplete="address-level2" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
                           <td class="relative border border-gray-200 px-3 py-3">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >State</label
-                            >
-                            <select
-                              [(ngModel)]="spouseForm.state"
-                              (change)="submit()"
-                              id="region"
-                              name="region"
-                              autocomplete="address-level1"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            >
-                              <option
-                                *ngFor="let state of usaStates"
-                                [ngValue]="state.abbreviation"
-                              >
-                                {{ state.name }}
-                              </option>
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">State</label>
+                            <select [(ngModel)]="spouseForm.state" (change)="submit()" id="region" name="region" autocomplete="address-level1" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0">
+                              <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{ state.name }}</option>
                             </select>
                           </td>
 
                           <td class="relative border border-gray-200 px-3 py-3">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Zip Code</label
-                            >
-                            <input
-                              [(ngModel)]="spouseForm.zip"
-                              (change)="submit()"
-                              type="text"
-                              name="postal-code"
-                              id="postal-code"
-                              autocomplete="postal-code"
-                              class="w-20 block border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                              placeholder="e.g. 75070"
-                            />
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Zip Code</label>
+                            <input [(ngModel)]="spouseForm.zip" (change)="submit()" type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-20 border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
+                          <th scope="row" class="inset-y-1 left-0 bg-red-500"></th>
                         </tr>
                       </tbody>
                     </table>
@@ -534,24 +237,10 @@
                       <div class="w-full border-t border-gray-200"></div>
                     </div>
                     <div class="relative flex justify-center">
-                      <button
-                        (click)="addChild()"
-                        type="button"
-                        class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-200 text-sm leading-5 font-medium rounded-full text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                      >
+                      <button (click)="addChild()" type="button" class="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-1.5 pl-1 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                         <!-- Heroicon name: solid/plus-sm -->
-                        <svg
-                          class="-ml-1.5 mr-1 h-5 w-5 text-gray-300"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                            clip-rule="evenodd"
-                          />
+                        <svg class="-ml-1.5 mr-1 h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
                         </svg>
                         <span>Add Children</span>
                       </button>
@@ -559,10 +248,8 @@
                   </div>
 
                   <div *ngFor="let child of children">
-                    <div class="flex mt-8">
-                      <span
-                        class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
-                      >
+                    <div class="mt-10 flex">
+                      <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-purple-500 shadow-md shadow-gray-300">
                         <span class="font-medium leading-none text-white">{{child.first_name[0]}}{{child.last_name[0]}}</span>
                       </span>
                       <h1 class="pl-2 font-semibold text-gray-600">Child's Information</h1>
@@ -570,239 +257,101 @@
                       <!-- delete icon -->
                       <div class="ml-auto">
                         <button (click)="deleteChild(child)">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
- 
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
                         </button>
-
                       </div>
                     </div>
 
-                    <table class="mt-7 min-w-full">
-                      <tbody class="bg-white">
+                    <table class="mt-8 min-w-full">
+                      <tbody class="bg-white shadow-md shadow-gray-200">
                         <tr>
-                          <th scope="row" class="bg-purple-500 px-1"></th>
-                          <td class="relative border border-gray-200 px-3 py-3 w-3/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              First Name</label
-                            >
-                            <input
-                              [(ngModel)]="child.first_name"
-                              (change)="submit()"
-                              type="text"
-                              name="first-name"
-                              id="first-name"
-                              autocomplete="given-name"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <th scope="row" class="inset-y-1 left-0 bg-purple-500"></th>
+                          <td class="relative w-3/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> First Name</label>
+                            <input [(ngModel)]="child.first_name" (change)="submit()" type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-4/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Last Name</label
-                            >
-                            <input
-                              [(ngModel)]="child.last_name"
-                              (change)="submit()"
-                              type="text"
-                              name="last-name"
-                              id="last-name"
-                              autocomplete="family-name"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="relative w-4/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Last Name</label>
+                            <input [(ngModel)]="child.last_name" (change)="submit()" type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 2.5/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Date of Birth</label
-                            >
-                            <input
-                              [(ngModel)]="child.dob"
-                              (change)="submit()"
-                              type="date"
-                              name="birth-date"
-                              id="birth-date"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="2.5/12 relative border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Date of Birth</label>
+                            <input [(ngModel)]="child.dob" (change)="submit()" type="date" name="birth-date" id="birth-date" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-3/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >Cell Phone</label
-                            >
-                            <input
-                              [(ngModel)]="child.cell_phone"
-                              (change)="submit()"
-                              type="text"
-                              name="cellphone"
-                              id="cellphone"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="relative w-3/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Cell Phone</label>
+                            <input [(ngModel)]="child.cell_phone" (change)="submit()" type="text" name="cellphone" id="cellphone" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"  autocomplete="off"
+                            [inputMask]="phoneInputMask" />
                           </td>
+                          <th scope="row" class="inset-y-1 left-0 bg-purple-500"></th>
                         </tr>
                       </tbody>
                     </table>
 
-                    <table class="mt-3 min-w-full">
-                      <tbody class="bg-white">
+                    <table class="mt-4 min-w-full">
+                      <tbody class="bg-white shadow-md shadow-gray-200">
                         <tr>
-                          <th scope="row" class="bg-purple-500 px-1"></th>
-                          <td class="relative border border-gray-200 px-3 py-3 w-5/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs font-medium text-gray-300"
-                            >
-                              Street Address</label
-                            >
-                            <input
-                              [(ngModel)]="child.address"
-                              (change)="submit()"
-                              type="text"
-                              name="street-address"
-                              id="street-address"
-                              autocomplete="street-address"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <th scope="row" class="inset-y-1 left-0 bg-purple-500"></th>
+                          <td class="relative w-5/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs text-gray-400"> Street Address</label>
+                            <input [(ngModel)]="child.address" (change)="submit()" type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
                           <td class="relative border border-gray-200 px-3 py-3">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              City</label
-                            >
-                            <input
-                              [(ngModel)]="child.city"
-                              (change)="submit()"
-                              type="text"
-                              name="city"
-                              id="city"
-                              autocomplete="address-level2"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> City</label>
+                            <input [(ngModel)]="child.city" (change)="submit()" type="text" name="city" id="city" autocomplete="address-level2" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
                           <td class="relative border border-gray-200 px-3 py-3">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >State</label
-                            >
-                            <select
-                              [(ngModel)]="child.state"
-                              (change)="submit()"
-                              id="region"
-                              name="region"
-                              autocomplete="address-level1"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            >
-                              <option
-                                *ngFor="let state of usaStates"
-                                [ngValue]="state.abbreviation"
-                              >
-                                {{ state.name }}
-                              </option>
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">State</label>
+                            <select [(ngModel)]="child.state" (change)="submit()" id="region" name="region" autocomplete="address-level1" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0">
+                              <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{ state.name }}</option>
                             </select>
                           </td>
 
                           <td class="relative border border-gray-200 px-3 py-3">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Zip Code</label
-                            >
-                            <input
-                              [(ngModel)]="child.zip"
-                              (change)="submit()"
-                              type="text"
-                              name="postal-code"
-                              id="postal-code"
-                              autocomplete="postal-code"
-                              class="w-20 block border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Zip Code</label>
+                            <input [(ngModel)]="child.zip" (change)="submit()" type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-20 border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
+                          <th scope="row" class="inset-y-1 left-0 bg-purple-500"></th>
                         </tr>
                       </tbody>
                     </table>
 
-                    <table class="mt-3 min-w-full">
-                      <tbody class="bg-white">
+                    <table class="mt-4 min-w-full">
+                      <tbody class="bg-white shadow-md shadow-gray-200">
                         <tr>
-                          <th scope="row" class="bg-purple-500 px-1"></th>
-                          <td class="relative border border-gray-200 px-3 py-3 w-4/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Parent 1 Name</label
-                            >
-                            <input
-                              [(ngModel)]="child.parent_1_name"
-                              (change)="submit()"
-                              type="text"
-                              name="first-name"
-                              id="first-name"
-                              autocomplete="given-name"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <th scope="row" class="inset-y-1 left-0 bg-purple-500"></th>
+                          <td class="relative w-4/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Parent 1 Name</label>
+                            <input [(ngModel)]="child.parent_1_name" (change)="submit()" type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-4/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Parent 2 Name</label
-                            >
-                            <input
-                              [(ngModel)]="child.parent_2_name"
-                              (change)="submit()"
-                              type="text"
-                              name="first-name"
-                              id="first-name"
-                              autocomplete="given-name"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="relative w-4/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Parent 2 Name</label>
+                            <input [(ngModel)]="child.parent_2_name" (change)="submit()" type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-2/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >Has Special Needs?</label
-                            >
-                            <select
-                              [(ngModel)]="child.has_special_needs"
-                              (change)="submit()"
-                              id="region"
-                              name="region"
-                              autocomplete="address-level1"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            >
+                          <td class="relative w-2/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Has Special Needs?</label>
+                            <select [(ngModel)]="child.has_special_needs" (change)="submit()" id="region" name="region" autocomplete="address-level1" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0">
                               <option [ngValue]="false">No</option>
                               <option [ngValue]="true">Yes</option>
                             </select>
                           </td>
-                          <td class="relative border border-gray-200 px-3 py-3 w-2/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >Excluded?</label
-                            >
-                            <select
-                              [(ngModel)]="child.is_excluded"
-                              (change)="submit()"
-                              id="region"
-                              name="region"
-                              autocomplete="address-level1"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            >
+                          <td class="relative w-2/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Excluded?</label>
+                            <select [(ngModel)]="child.is_excluded" (change)="submit()" id="region" name="region" autocomplete="address-level1" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0">
                               <option [ngValue]="false">No</option>
                               <option [ngValue]="true">Yes</option>
                             </select>
                           </td>
+                          <th scope="row" class="inset-y-1 left-0 bg-purple-500"></th>
                         </tr>
                       </tbody>
                     </table>
@@ -812,24 +361,10 @@
                       <div class="w-full border-t border-gray-200"></div>
                     </div>
                     <div class="relative flex justify-center">
-                      <button
-                        (click)="addFamilyMember()"
-                        type="button"
-                        class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-200 text-sm leading-5 font-medium rounded-full text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                      >
+                      <button (click)="addFamilyMember()" type="button" class="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-1.5 pl-1 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                         <!-- Heroicon name: solid/plus-sm -->
-                        <svg
-                          class="-ml-1.5 mr-1 h-5 w-5 text-gray-300"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                            clip-rule="evenodd"
-                          />
+                        <svg class="-ml-1.5 mr-1 h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
                         </svg>
                         <span>Extended Family</span>
                       </button>
@@ -837,192 +372,83 @@
                   </div>
 
                   <div *ngFor="let member of familyMembers" class="mb-8">
-                    <div class="flex mt-8">
-                      <span
-                        class="inline-flex items-center justify-center h-8 w-8 rounded-md bg-gray-400"
-                      >
+                    <div class="mt-10 flex">
+                      <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-orange-500 shadow-md shadow-gray-300">
                         <span class="font-medium leading-none text-white">{{member.first_name[0]}}{{member.last_name[0]}}</span>
                       </span>
-                      <h1 class="pl-2 font-semibold text-gray-600">
-                        {{member.relationship_type || "Family Member" | titlecase }} Information
-                      </h1>
+                      <h1 class="pl-2 font-semibold text-gray-600">{{member.relationship_type || "Family Member" | titlecase }} Information</h1>
 
                       <!-- delete icon -->
                       <div class="ml-auto">
                         <button (click)="deleteFamilyMember(member)">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
- 
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
                         </button>
-
                       </div>
                     </div>
 
                     <table class="mt-7 min-w-full">
-                      <tbody class="bg-white">
+                      <tbody class="bg-white shadow-md shadow-gray-200">
                         <tr>
-                          <th scope="row" class="bg-orange-300 px-1"></th>
+                          <th scope="row" class="inset-y-1 left-0 bg-orange-500"></th>
                           <td class="relative border border-gray-200 px-3 py-3">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >Relationship Type</label
-                            >
-                            <select
-                              [(ngModel)]="member.relationship_type"
-                              (change)="submit()"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            >
-                              <option *ngFor="let type of relationshipTypes" [ngValue]="type">
-                                {{ type | titlecase }}
-                              </option>
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Relationship</label>
+                            <select [(ngModel)]="member.relationship_type" (change)="submit()" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0">
+                              <option *ngFor="let type of relationshipTypes" [ngValue]="type">{{ type | titlecase }}</option>
                             </select>
                           </td>
-                          <td class="relative border border-gray-200 px-3 py-3 w-3/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              First Name</label
-                            >
+                          <td class="relative w-3/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> First Name</label>
 
-                            <input
-                              [(ngModel)]="member.first_name"
-                              (change)="submit()"
-                              type="text"
-                              name="last-name"
-                              id="last-name"
-                              autocomplete="family-name"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                            <input [(ngModel)]="member.first_name" (change)="submit()" type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-3.5/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Last Name</label
-                            >
-                            <input
-                              [(ngModel)]="member.last_name"
-                              (change)="submit()"
-                              type="text"
-                              name="last-name"
-                              id="last-name"
-                              autocomplete="family-name"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="w-3.5/12 relative border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Last Name</label>
+                            <input [(ngModel)]="member.last_name" (change)="submit()" type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative border border-gray-200 px-3 py-3 w-2/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >Cell Phone</label
-                            >
-                            <input
-                              [(ngModel)]="member.cell_phone"
-                              (change)="submit()"
-                              type="text"
-                              name="cellphone"
-                              id="cellphone"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="relative w-2/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Cell Phone</label>
+                            <input [(ngModel)]="member.cell_phone" (change)="submit()" type="text" name="cellphone" id="cellphone" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"  autocomplete="off"
+                            [inputMask]="phoneInputMask"/>
                           </td>
-                          <td class="relative border border-gray-200 px-3 py-3 w-2.5/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Email</label
-                            >
-                            <input
-                              [(ngModel)]="member.email"
-                              (change)="submit()"
-                              id="email"
-                              name="email"
-                              type="email"
-                              autocomplete="email"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <td class="w-2.5/12 relative border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Email</label>
+                            <input [(ngModel)]="member.email" (change)="submit()" id="email" name="email" type="email" autocomplete="email" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
+                          <th scope="row" class="inset-y-1 left-0 bg-orange-500"></th>
                         </tr>
                       </tbody>
                     </table>
 
-                    <table class="mt-3 min-w-full">
-                      <tbody class="bg-white">
+                    <table class="mt-4 min-w-full">
+                      <tbody class="bg-white shadow-md shadow-gray-200">
                         <tr>
-                          <th scope="row" class="bg-orange-300 px-1"></th>
-                          <td class="relative border border-gray-200 px-3 py-3 w-5/12">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs font-medium text-gray-300"
-                            >
-                              Street Address</label
-                            >
-                            <input
-                              [(ngModel)]="member.address"
-                              (change)="submit()"
-                              type="text"
-                              name="street-address"
-                              id="street-address"
-                              autocomplete="street-address"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                          <th scope="row" class="inset-y-1 left-0 bg-orange-500"></th>
+                          <td class="relative w-5/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs text-gray-400"> Street Address</label>
+                            <input [(ngModel)]="member.address" (change)="submit()" type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
                           <td class="relative border border-gray-200 px-3 py-3">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              City</label
-                            >
-                            <input
-                              [(ngModel)]="member.city"
-                              (change)="submit()"
-                              type="text"
-                              name="city"
-                              id="city"
-                              autocomplete="address-level2"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> City</label>
+                            <input [(ngModel)]="member.city" (change)="submit()" type="text" name="city" id="city" autocomplete="address-level2" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
                           <td class="relative border border-gray-200 px-3 py-3">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                              >State</label
-                            >
-                            <select
-                              [(ngModel)]="member.state"
-                              (change)="submit()"
-                              id="region"
-                              name="region"
-                              autocomplete="address-level1"
-                              class="block w-full border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            >
-                              <option
-                                *ngFor="let state of usaStates"
-                                [ngValue]="state.abbreviation"
-                              >
-                                {{ state.name }}
-                              </option>
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">State</label>
+                            <select [(ngModel)]="member.state" (change)="submit()" id="region" name="region" autocomplete="address-level1" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0">
+                              <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{ state.name }}</option>
                             </select>
                           </td>
 
                           <td class="relative border border-gray-200 px-3 py-3">
-                            <label
-                              class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-300"
-                            >
-                              Zip Code</label
-                            >
-                            <input
-                              [(ngModel)]="member.zip"
-                              (change)="submit()"
-                              type="text"
-                              name="postal-code"
-                              id="postal-code"
-                              autocomplete="postal-code"
-                              class="w-20 block border-0 p-0 text-gray-900 font-semibold placeholder-gray-300 focus:ring-0"
-                            />
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"> Zip Code</label>
+                            <input [(ngModel)]="member.zip" (change)="submit()" type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-20 border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
+                          <th scope="row" class="inset-y-1 left-0 bg-orange-500"></th>
                         </tr>
                       </tbody>
                     </table>

@@ -225,4 +225,12 @@ export class UserService {
 
     return Promise.resolve(!users.length);
   }
+
+  public async upsertUser(user: any): Promise<any> {
+    const { user: User } = Database.models;
+
+    const existingUser = await User.upsert(user);
+
+    return Promise.resolve(existingUser);
+  }
 }
