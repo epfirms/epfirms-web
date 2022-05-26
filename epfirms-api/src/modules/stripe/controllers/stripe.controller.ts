@@ -275,10 +275,9 @@ export class StripeController {
   public async createInvoice(req, res: Response): Promise<any> {
     try {
       // get the invoice from the db
-      console.log(req.body);
       const invoiceId = req.body.invoice_id;
-      console.log('INVOICE ID', invoiceId);
       const invoice = await Database.models.invoice.findOne({ where: { id: invoiceId } });
+      // if there is invoice, this process must not continue and should send an error
       if (!invoice) {
         res.status(StatusConstants.INTERNAL_SERVER_ERROR).send('INVOICE NOT FOUND');
       }
@@ -290,7 +289,23 @@ export class StripeController {
       let customer = await Database.models.customer_account.findOne({
         where: { user_id: invoice.user_id },
       });
+      // the customerID is the stripe assigned Customer id
       let customerID = customer.customer_id;
+      // if there is no customer id, we need to create one with stripe
+      if (!customerID) {
+        let stripeCustomer = await stripe.customers.create({
+          email: user.email,
+          name: user.first_name + ' ' + user.last_name,
+        });
+        customerID = stripeCustomer.id;
+        // update the customer record with the new customer id
+        await Database.models.customer_account.update(
+          { customer_id: customerID },
+          { where: { user_id: invoice.user_id } },
+        );
+      }
+      // if there isn't a customer account record in the DB, create one and then create a stripe Customer
+      // and update the record as well
       if (!customer) {
         customer = await stripe.customers.create({
           email: user.email,
@@ -306,13 +321,12 @@ export class StripeController {
         });
       }
       // get the transactions associated to invoice and create the stripe InvoiceItem
-      //TODO
       const transactions = await Database.models.transaction.findAll({
         where: { invoice_id: invoice.id },
       });
 
-      console.log('TRANSACTIONS', transactions);
-
+      // usually, the invoice will be created from the transactions and that is the total that stripe goes by
+      // they should be synced
       if (transactions.length > 0) {
         transactions.forEach(async (transaction) => {
           await stripe.invoiceItems.create({
@@ -322,23 +336,23 @@ export class StripeController {
             description: transaction.description,
           });
         });
+        // there are a few cases where the invoice is just created with one InvoiceItem instead of from transactions
+        // a notable example of this is in the billing setup automations where there are no transactions on the matter yet
       } else if (transactions.length === 0) {
         // create the invoice item
-        console.log('CREATING INVOICE ITEM', invoice);
         const invoiceItem = await stripe.invoiceItems.create({
           customer: customerID,
           amount: invoice.total * 100,
           currency: 'usd',
         });
       }
-      console.log("DUE DATE", invoice.due_date);
       //create the invoice
       const invoiceStripe = await stripe.invoices.create({
         customer: customerID,
         auto_advance: true,
         collection_method: 'send_invoice',
         description: invoice.description,
-        due_date: invoice.due_date
+        due_date: invoice.due_date,
       });
 
       // update the invoice record with stripe invoice id and status
