@@ -1,9 +1,7 @@
 require('module-alias/register')
-import { server } from "@src/core/Server";
 import chai from "chai";
 import { expect } from "chai";
 import chaiHttp from "chai-http";
-import { Express } from 'express'
 import { epfserver } from "../../../../../index";
 
 chai.use(chaiHttp);

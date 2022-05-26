@@ -8,16 +8,14 @@ const helmet = require('helmet');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('@configs/vars');
 import { Database } from '@src/core/Database';
+import { Service } from 'typedi';
 const compression = require('compression');
 
+@Service()
 export class CommonMiddleware {
-  app: Express;
+  constructor() {}
 
-  constructor(_app: Express) {
-    this.app = _app;
-  }
-
-  public async usePassport() {
+  usePassport() {
     passport.use(
       new Strategy(function (token, done) {
         jwt.verify(token, JWT_SECRET, function (err, user) {
@@ -29,43 +27,41 @@ export class CommonMiddleware {
             return done(null, false);
           }
 
-          return done(null, user, {scope: 'all'})
+          return done(null, user, { scope: 'all' });
         });
-      })
+      }),
     );
-    this.app.use(passport.initialize());
+    return passport.initialize();
   }
 
-  public async useHelmet() {
-    this.app.use(helmet());
+  useHelmet() {
+    return helmet();
   }
 
-  public async useBodyParser() {
-    this.app.use(bodyParser.json({limit: '5mb'}));
+  useBodyParser() {
+    return bodyParser.json({ limit: '5mb' });
   }
 
-  public async useURLencoded() {
-    this.app.use(
-      bodyParser.urlencoded({
-        limit: '5mb',
-        extended: true
-      })
-    );
+  useURLencoded() {
+    return bodyParser.urlencoded({
+      limit: '5mb',
+      extended: true,
+    });
   }
 
-  public async useCors() {
-    this.app.use(cors());
+  useCors() {
+    return cors();
   }
 
-  public async useCompression() {
-    this.app.use(compression());
+  useCompression() {
+    return compression();
   }
 
-  public async logRequests() {
+  logRequests() {
     let logger = Logger.getLogger();
-    this.app.use((req, res, done) => {
+    return (req, res, done) => {
       logger.info(`[${req.ip}] ${req.method} ${req.originalUrl}`);
       done();
-    });
+    };
   }
 }

@@ -22,6 +22,12 @@ import { CaseTemplateCommunityComponent } from './case-template-community/case-t
 import { CaseTemplateCommunityTableComponent } from '@app/features/case-template-community/case-template-community-table/case-template-community-table.component';
 import { CaseTemplateCommunityTemplatePageComponent } from '@app/features/case-template-community/case-template-community-template-page/case-template-community-template-page.component';
 import { ContractBuilderComponent } from '@app/features/contract-builder/contract-builder/contract-builder.component';
+import { BillingOverviewComponent } from './billing-overview/billing-overview.component';
+import { NgxStripeModule } from 'ngx-stripe';
+import { InputMaskModule } from '@ngneat/input-mask';
+import { BillingPaymentComponent } from './billing-payment/billing-payment.component';
+import { ButtonModule } from '@app/shared/button/button.module';
+import { BillingSavePaymentMethodComponent } from './billing-save-payment-method/billing-save-payment-method.component';
 
 const FirmSettingsRoute: Routes = [
   {
@@ -38,6 +44,12 @@ const FirmSettingsRoute: Routes = [
       ]},
       { path: 'delete-firm', component: DeleteFirmComponent },
       { path: 'profile', component: FirmDetailsComponent },
+      {path: 'balance', children: [
+        {path: 'overview', component: BillingOverviewComponent},
+        {path: 'payment-method', component: BillingSavePaymentMethodComponent},
+        {path: ':customer', component: BillingPaymentComponent},
+        {path: '', pathMatch: 'full', redirectTo: 'overview'}
+      ]},
       { path: '', pathMatch: 'full', redirectTo: 'profile'},
       {path: 'contracts', component: ContractBuilderComponent}
     ]
@@ -54,6 +66,9 @@ const FirmSettingsRoute: Routes = [
     ManageStaffComponent,
     BillingIntegrationComponent,
     CaseTemplateCommunityComponent,
+    BillingOverviewComponent,
+    BillingPaymentComponent,
+    BillingSavePaymentMethodComponent,
   ],
   imports: [
     CommonModule,
@@ -66,7 +81,10 @@ const FirmSettingsRoute: Routes = [
     TagModule,
     EditableModule,
     FirmStaffModule,
-    CaseTemplateCommunityModule
+    CaseTemplateCommunityModule,
+    NgxStripeModule,
+    InputMaskModule,
+    ButtonModule
   ]
 })
 export class FirmSettingsModule { }

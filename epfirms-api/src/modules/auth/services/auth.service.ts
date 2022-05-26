@@ -16,26 +16,24 @@ export interface AccessToken {
 
 @Service()
 export class AuthService {
-  constructor(private _userService: UserService) {
-
-  }
-  public async validate(email, password): Promise<{valid: boolean, msg: string}> {
+  constructor(private _userService: UserService) {}
+  public async validate(email, password): Promise<{ valid: boolean; msg: string }> {
     const user = await Database.models.user.findOne({
       attributes: ['id', 'email', 'password'],
       where: {
-        email
-      }
+        email,
+      },
     });
 
-    if (user.password && user.password.startsWith("$2a")) {
-      return Promise.resolve({valid: false, msg: "update"});
+    if (user.password && user.password.startsWith('$2a')) {
+      return Promise.resolve({ valid: false, msg: 'update' });
     }
 
     if (user && bcrypt.compareSync(password, user.password)) {
-      return Promise.resolve({valid: true, msg: ''});
+      return Promise.resolve({ valid: true, msg: '' });
     }
 
-    return Promise.reject({valid: false, msg: "incorrect username/password combination"});
+    return Promise.reject({ valid: false, msg: 'incorrect username/password combination' });
   }
 
   public async generateToken(user, clientAccess, firmAccess): Promise<string> {
@@ -45,7 +43,7 @@ export class AuthService {
       last_name: user.last_name,
       email: user.email,
       client_access: clientAccess,
-      firm_access: firmAccess
+      firm_access: firmAccess,
     };
 
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '120h' });
@@ -53,39 +51,28 @@ export class AuthService {
   }
 
   public async getFirmScope(userId: number): Promise<any> {
-    const { firm_employee, firm_subscription, firm_role } = Database.models;
+    const { firm_employee, firm_role } = Database.models;
 
     const firmScope = await firm_employee.findOne({
       attributes: {
-        exclude: ['id', 'active', 'userId', 'firmId']
+        exclude: ['id', 'active', 'userId', 'firmId'],
       },
       where: {
         user_id: userId,
-        active: true
+        active: true,
       },
       include: [
         {
           model: firm_role,
           as: 'role',
-          attributes: ['id', 'name']
-        }
-      ]
+          attributes: ['id', 'name'],
+        },
+      ],
     });
 
     if (firmScope && firmScope.firm_id) {
-      const subscription = await firm_subscription.findOne({
-        where: {
-          firm_id: firmScope.firm_id
-        }
-      });
-
-      const currentPeriodEnd = new Date(subscription.current_period_end);
-      const subscriptionExpired = await this.isPastDate(currentPeriodEnd);
-
-      if (subscription && !subscriptionExpired) {
-        delete firmScope.role.firm_employee_role;
-        return Promise.resolve(firmScope);
-      }
+      delete firmScope.role.firm_employee_role;
+      return Promise.resolve(firmScope);
     }
 
     return Promise.resolve(null);
@@ -114,9 +101,9 @@ export class AuthService {
         through: {
           model: client,
           where: { active: true },
-          attributes: []
-        }
-      }
+          attributes: [],
+        },
+      },
     });
 
     if (clientScope) {
@@ -133,36 +120,36 @@ export class AuthService {
     jwt.verify(token, JWT_SECRET, (err, payload) => {
       if (err === null) {
         user_id = payload.user_id;
-      }
-      else if (err.name === 'TokenExpiredError') {
+      } else if (err.name === 'TokenExpiredError') {
         booly = false;
-
-      }
-      else if (err.name === 'JsonWebTokenError') {
+      } else if (err.name === 'JsonWebTokenError') {
         booly = false;
       }
     });
-    if(!booly){
+    if (!booly) {
       return Promise.resolve(false);
     }
     // Set user that's connected to user_id verified to 1 (True).
-    await Database.models.user.update({ verified: 1 }, {
-      where: {
-        id: user_id
-      }
-    });
+    await Database.models.user.update(
+      { verified: 1 },
+      {
+        where: {
+          id: user_id,
+        },
+      },
+    );
     // Remove row with token from verification_token
     await Database.models.verification_token.destroy({
       where: {
-        user_id: user_id
-      }
+        user_id: user_id,
+      },
     });
     return Promise.resolve(true);
   }
 
   public async verifyPasswordToken(userId: number, token: string): Promise<boolean> {
     const { password_reset_token } = Database.models;
-    const passwordResetToken = await password_reset_token.findOne({where: {user_id: userId}});
+    const passwordResetToken = await password_reset_token.findOne({ where: { user_id: userId } });
 
     if (!passwordResetToken) {
       return Promise.reject(false);
@@ -179,7 +166,7 @@ export class AuthService {
 
   public async resetPassword(userId: number, token: string, password: string): Promise<boolean> {
     const { password_reset_token } = Database.models;
-    const passwordResetToken = await password_reset_token.findOne({where: {user_id: userId}});
+    const passwordResetToken = await password_reset_token.findOne({ where: { user_id: userId } });
 
     if (!passwordResetToken) {
       return Promise.reject(false);
@@ -191,9 +178,9 @@ export class AuthService {
       return Promise.reject(false);
     }
 
-    await this._userService.update({id: userId, password});
+    await this._userService.update({ id: userId, password });
 
-    await password_reset_token.destroy({where: {user_id: userId}});
+    await password_reset_token.destroy({ where: { user_id: userId } });
 
     return Promise.resolve(true);
   }

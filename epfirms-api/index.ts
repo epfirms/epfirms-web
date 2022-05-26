@@ -1,5 +1,8 @@
-require('module-alias/register')
-import { server } from "./src/core/Server";
+import 'reflect-metadata';
+require('module-alias/register');
+import Container from 'typedi';
+import { Server } from '@src/core/Server';
 
-let epf = server();
-export const epfserver = epf;
+const server = Container.get(Server)
+
+export const epfserver = server.app;
