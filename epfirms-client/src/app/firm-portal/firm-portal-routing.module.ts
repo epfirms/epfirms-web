@@ -83,6 +83,13 @@ const routes: Routes = [
             data: { title: 'Messages' },
           },
 
+          {
+            path: 'billing',
+            canActivate: [AuthGuard],
+            loadChildren: () =>
+              import('../features/billing-v2/billing-v2.module').then((m) => m.BillingV2Module),
+            data: { title: 'Billing' },
+          },
           
         ],
       },

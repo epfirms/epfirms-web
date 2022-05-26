@@ -7,6 +7,8 @@ import { EditableModule } from '@app/shared/editable/editable.module';
 import { HourlyRateViewComponent } from './firm/hourly-rate-view/hourly-rate-view.component';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { ComboboxModule } from '@app/shared/combobox/combobox.module';
+import { BillingV2RoutingModule } from './billing-v2-routing.module';
+
 
 
 
@@ -22,6 +24,7 @@ import { ComboboxModule } from '@app/shared/combobox/combobox.module';
     EditableModule,
     InputMaskModule,
     ComboboxModule,
+    BillingV2RoutingModule
   ],
   exports: [
     FirmBillingMainComponent
