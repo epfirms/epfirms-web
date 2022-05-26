@@ -37,4 +37,33 @@ stripeRouter.get('/customer', passport.authenticate('bearer', { session: false }
   stripeController.getCustomerById(req, res),
 );
 
-export { stripeRouter };
+stripeRouter.post(
+  '/setup-intent',
+  passport.authenticate('bearer', { session: false }),
+  (req, res) => stripeController.createSetupIntent(req, res),
+);
+
+stripeRouter.get(
+  '/customer/:customer/payment-methods',
+  passport.authenticate('bearer', { session: false }),
+  (req, res) => stripeController.getCustomerPaymentMethods(req, res),
+);
+
+stripeRouter.post(
+  '/payment-intent/:id',
+  passport.authenticate('bearer', { session: false }),
+  (req, res) => stripeController.updatePaymentIntentAmount(req, res),
+);
+
+stripeRouter.post(
+  '/customer/:id',
+  passport.authenticate('bearer', { session: false }),
+  (req, res) => stripeController.updateCustomer(req, res),
+);
+
+
+const stripeWebhookRouter = express.Router();
+
+stripeWebhookRouter.post('/', express.raw({type: 'application/json'}), (req, res) => stripeController.handleWebhookEvent(req, res));
+
+export { stripeRouter, stripeWebhookRouter };

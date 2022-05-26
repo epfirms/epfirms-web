@@ -1,88 +1,113 @@
-<div class="flex flex-col items-center justify-center w-full h-full">
-  <div class="w-full max-w-md mb-6">
-    <nav aria-label="Back">
-      <a
-        [routerLink]="['..']"
-        class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
-      >
-        <!-- Heroicon name: solid/chevron-left -->
-        <svg
-          class="flex-shrink-0 w-5 h-5 mr-1 -ml-1 text-gray-400"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          />
-        </svg>
-        Back
-      </a>
-    </nav>
-  </div>
-  <div [formGroup]="stripeTest" class="max-w-md">
-    <div class="grid grid-cols-2 gap-2">
-      <div class="col-span-1 mb-2">
-        <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-        <div class="relative mt-1 rounded-md shadow-sm">
-          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <span class="text-gray-500 sm:text-sm"> $ </span>
+<div>
+    <div class="px-4 py-5 sm:px-6 sm:py-4">
+      <h3 class="font-medium leading-6 text-gray-900">Add Funds</h3>
+    </div>
+    <div class="px-4 py-5 border-t border-gray-200 sm:px-6">
+      <div [formGroup]="stripeTest">
+        <div class="col-span-2 mb-2" *ngIf="!isCustomAmount">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-medium text-gray-900">Amount</h2>
+            <a (click)="toggleCustomAmount()" class="text-sm font-medium text-blue-600 hover:text-blue-500 hover:cursor-pointer">Set a custom amount</a>
           </div>
-          <input
-            [inputMask]="currencyMask"
-            autocomplete="off"
-            type="text"
-            name="price"
-            id="price"
-            formControlName="amount"
-            class="block w-full pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm"
-            placeholder="0.00"
-            aria-describedby="price-currency"
-          />
-          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            <span class="text-gray-500 sm:text-sm" id="price-currency"> USD </span>
+        
+          <fieldset class="mt-2">
+            <legend class="sr-only">Amount</legend>
+            <div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
+              <!--
+                In Stock: "cursor-pointer", Out of Stock: "opacity-25 cursor-not-allowed"
+                Active: "ring-2 ring-offset-2 ring-blue-500"
+                Checked: "bg-blue-600 border-transparent text-white hover:bg-blue-700", Not Checked: "bg-white border-gray-200 text-gray-900 hover:bg-gray-50"
+              -->
+              <label [ngClass]="{'bg-white border-gray-200 text-gray-900 hover:bg-gray-50': stripeTest.get('amount').value !== 5000, 'bg-blue-500 border-transparent text-white hover:bg-blue-600': stripeTest.get('amount').value === 5000}" class="flex items-center justify-center px-3 py-3 text-sm font-medium uppercase border rounded-md cursor-pointer sm:flex-1 focus:outline-none">
+                <input type="radio" name="amount-option" [value]="50" (change)="setAmount('50')" class="sr-only" >
+                <span id="amount-option-0-label"> $50 </span>
+              </label>
+        
+              <label 
+              [ngClass]="{'bg-white border-gray-200 text-gray-900 hover:bg-gray-50': stripeTest.get('amount').value !== 10000, 'bg-blue-500 border-transparent text-white hover:bg-blue-600': stripeTest.get('amount').value === 10000}"
+              class="flex items-center justify-center px-3 py-3 text-sm font-medium uppercase border rounded-md cursor-pointer sm:flex-1 focus:outline-none">
+                <input type="radio" name="amount-option" [value]="100" (change)="setAmount('100')" class="sr-only">
+                <span id="amount-option-1-label"> $100</span>
+              </label>
+        
+              <label 
+              [ngClass]="{'bg-white border-gray-200 text-gray-900 hover:bg-gray-50': stripeTest.get('amount').value !== 15000, 'bg-blue-500 border-transparent text-white hover:bg-blue-600': stripeTest.get('amount').value === 15000}"
+              class="flex items-center justify-center px-3 py-3 text-sm font-medium uppercase border rounded-md cursor-pointer sm:flex-1 focus:outline-none">
+                <input type="radio" name="amount-option" [value]="150" (change)="setAmount('150')" class="sr-only">
+                <span id="amount-option-2-label"> $150 </span>
+              </label>
+
+              <label 
+              [ngClass]="{'bg-white border-gray-200 text-gray-900 hover:bg-gray-50': stripeTest.get('amount').value !== 20000, 'bg-blue-500 border-transparent text-white hover:bg-blue-600': stripeTest.get('amount').value === 20000}"
+              class="flex items-center justify-center px-3 py-3 text-sm font-medium uppercase border rounded-md cursor-pointer sm:flex-1 focus:outline-none">
+                <input type="radio" name="amount-option" [value]="200" (change)="setAmount('200')" class="sr-only">
+                <span id="amount-option-2-label"> $200 </span>
+              </label>
+
+              <label 
+              [ngClass]="{'bg-white border-gray-200 text-gray-900 hover:bg-gray-50': stripeTest.get('amount').value !== 50000, 'bg-blue-500 border-transparent text-white hover:bg-blue-600': stripeTest.get('amount').value === 50000}"
+              class="flex items-center justify-center px-3 py-3 text-sm font-medium uppercase border rounded-md cursor-pointer sm:flex-1 focus:outline-none">
+                <input type="radio" name="amount-option" [value]="500" (change)="setAmount('500')" class="sr-only">
+                <span id="amount-option-2-label"> $500 </span>
+              </label>
+
+              <label 
+              [ngClass]="{'bg-white border-gray-200 text-gray-900 hover:bg-gray-50': stripeTest.get('amount').value !== 100000, 'bg-blue-500 border-transparent text-white hover:bg-blue-600': stripeTest.get('amount').value === 100000}"
+              class="flex items-center justify-center px-3 py-3 text-sm font-medium uppercase border rounded-md cursor-pointer sm:flex-1 focus:outline-none">
+                <input type="radio" name="amount-option" [value]="1000" (change)="setAmount('1000')" class="sr-only">
+                <span id="amount-option-2-label"> $1000 </span>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="col-span-1 mb-2" *ngIf="isCustomAmount">
+            <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+            <div class="relative mt-1 rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <span class="text-gray-500 sm:text-sm"> $ </span>
+              </div>
+              <input
+              #amountInput
+                [inputMask]="currencyMask"
+                autocomplete="off"
+                type="text"
+                name="price"
+                id="price"
+                formControlName="amount"
+                (input)="setAmount(amountInput.value)"
+                class="block w-full pr-12 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 pl-7 sm:text-sm"
+                placeholder="0.00"
+                aria-describedby="price-currency"
+              />
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <span class="text-gray-500 sm:text-sm" id="price-currency"> USD </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-2 mb-2">
+            <label for="cardholder" class="block text-sm font-medium text-gray-700">Name</label>
+            <input
+              name="cardholder"
+              id="cardholder"
+              type="text"
+              placeholder="Cardholder Name"
+              formControlName="name"
+              autocomplete="off"
+              class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
           </div>
         </div>
+    
+        <ng-container *ngIf="elementsOptions?.clientSecret as clientSecret">
+          <ngx-stripe-payment
+            [clientSecret]="clientSecret"
+            [elementsOptions]="elementsOptions"
+            [options]="options"
+          >
+          </ngx-stripe-payment>
+        </ng-container>
       </div>
-      <div class="col-span-2 mb-2">
-        <label for="cardholder" class="block text-sm font-medium text-gray-700">Name</label>
-        <input
-          name="cardholder"
-          id="cardholder"
-          type="text"
-          placeholder="Cardholder Name"
-          formControlName="name"
-          autocomplete="off"
-          class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-        />
-      </div>
-    </div>
-
-    <ng-container *ngIf="elementsOptions?.clientSecret as clientSecret">
-      <ngx-stripe-payment
-        [clientSecret]="clientSecret"
-        [elementsOptions]="elementsOptions"
-        [options]="options"
-      >
-      </ngx-stripe-payment>
-    </ng-container>
-    <div class="mt-6">
-      <button
-        type="submit"
-        (click)="pay()"
-        class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
-      >
-        Add
-        {{
-          stripeTest.get('amount').value
-            ? '$' + convertCentsToDollars(stripeTest.get('amount').value)
-            : ''
-        }}
-        to my balance
-      </button>
     </div>
   </div>
-</div>
+  

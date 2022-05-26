@@ -26,6 +26,8 @@ import { BillingOverviewComponent } from './billing-overview/billing-overview.co
 import { NgxStripeModule } from 'ngx-stripe';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { BillingPaymentComponent } from './billing-payment/billing-payment.component';
+import { ButtonModule } from '@app/shared/button/button.module';
+import { BillingSavePaymentMethodComponent } from './billing-save-payment-method/billing-save-payment-method.component';
 
 const FirmSettingsRoute: Routes = [
   {
@@ -44,6 +46,7 @@ const FirmSettingsRoute: Routes = [
       { path: 'profile', component: FirmDetailsComponent },
       {path: 'balance', children: [
         {path: 'overview', component: BillingOverviewComponent},
+        {path: 'payment-method', component: BillingSavePaymentMethodComponent},
         {path: ':customer', component: BillingPaymentComponent},
         {path: '', pathMatch: 'full', redirectTo: 'overview'}
       ]},
@@ -65,6 +68,7 @@ const FirmSettingsRoute: Routes = [
     CaseTemplateCommunityComponent,
     BillingOverviewComponent,
     BillingPaymentComponent,
+    BillingSavePaymentMethodComponent,
   ],
   imports: [
     CommonModule,
@@ -79,7 +83,8 @@ const FirmSettingsRoute: Routes = [
     FirmStaffModule,
     CaseTemplateCommunityModule,
     NgxStripeModule,
-    InputMaskModule
+    InputMaskModule,
+    ButtonModule
   ]
 })
 export class FirmSettingsModule { }

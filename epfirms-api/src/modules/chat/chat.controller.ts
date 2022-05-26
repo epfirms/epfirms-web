@@ -314,9 +314,27 @@ export class ChatController {
             quantity: 1,
             timestamp: currentTimestamp,
           });
+
+          this.autoRecharge(stripeCustomerId)
+
         }
       }
     }
     return Promise.resolve();
+  }
+
+  private async autoRecharge(customerId) {
+    const customer = await this._stripeMeteredUsageService.fetchCustomer(customerId);
+    const metadata = !customer.deleted ? customer['metadata'] : {};
+
+    if (metadata && metadata.auto_recharge) {
+      const currentBalance = await this._stripeMeteredUsageService.getAdjustedCustomerBalance(customerId) * -1;
+      const autoRechargeTrigger = metadata.auto_recharge_trigger;
+      if (currentBalance <= autoRechargeTrigger) {
+        const amount = metadata.auto_recharge_amount - currentBalance;
+        const paymentIntent = await this._stripeMeteredUsageService.createAutoRechargePaymentIntent(customerId, metadata.auto_recharge_payment_method, amount);
+        await this._stripeMeteredUsageService.creditCustomerBalance(customerId, paymentIntent.amount_received);
+      }
+    }
   }
 }

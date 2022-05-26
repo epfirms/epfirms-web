@@ -7,6 +7,15 @@
 @import 'assets/scss/app.scss';
 @import '@angular/cdk/overlay-prebuilt.css';
 
+@layer utilities {
+  .button-blue {
+    background: padding-box linear-gradient(#4488f7 1%,#3b82f6 100%),border-box linear-gradient(#60a5fa 1px, #3b82f6 100%);
+  }
+  .button-blue-hover {
+    background: padding-box linear-gradient(#4488f7 1%,#2563eb 100%),border-box linear-gradient(#3b82f6 1px, #2563eb 100%);
+  }
+}
+
 .hot-toast-w{
   &>.hot-toast-icon {
     margin-right: 0.5rem !important;

@@ -23,6 +23,11 @@ export class StripeMeteredUsageService {
     return customer;
   }
 
+  async updateCustomer(id, params) {
+    const customer = await this.stripeBaseService.updateCustomer(id, params);
+    return customer;
+  }
+
   async createSubscription(
     params: Stripe.SubscriptionCreateParams,
     options?: Stripe.RequestOptions,
@@ -130,6 +135,7 @@ export class StripeMeteredUsageService {
     params: Stripe.UsageRecordCreateParams,
   ): Promise<Stripe.UsageRecord> {
     const usageRecord = await this.stripeBaseService.createUsageRecord(subscriptionId, params);
+    // if ()
     return usageRecord;
   }
 
@@ -137,5 +143,37 @@ export class StripeMeteredUsageService {
     const stripeCustomerModel = Database.sequelize.models.stripe_customer;
     const customer: any = await stripeCustomerModel.findOne({ where: { firm_id: firmId } });
     return customer.customer_id;
+  }
+
+  async createSetupIntent(customer: string) {
+    const intent = await this.stripeBaseService.createSetupIntent({customer});
+    return intent
+  }
+
+  async listPaymentMethodsForCustomer(customer: string) {
+    const paymentMethods = await this.stripeBaseService.listPaymentMethods({customer, type: 'card'});
+    return paymentMethods.data;
+  }
+  
+  async updatePaymentIntentAmount(paymentIntentId: string, amount: number) {
+    const paymentIntent = await this.stripeBaseService.updatePaymentIntent(paymentIntentId, {amount});
+    return paymentIntent;
+  }
+
+  async createAutoRechargePaymentIntent(customerId: string, paymentMethodId: string, amount: number) {
+    const key = await this.idService.generate();
+
+    const paymentIntent = await this.stripeBaseService.createPaymentIntent({
+      amount,
+      currency: 'usd',
+      customer: customerId,
+      payment_method: paymentMethodId,
+      off_session: true,
+      confirm: true,
+    },
+    {idempotencyKey: key}
+    );
+
+    return paymentIntent;
   }
 }

@@ -51,10 +51,10 @@ export class Server {
 
   initializeRoutes() {
     this.app.use('/api', v1Router);
-    this.app.use('/webhook', webhookRouter);
   }
 
   intializeUnparsedRoutes() {
+    this.app.use('/webhook', webhookRouter);
     this.app.use('/stripewebhook', stripeWebhookRouter);
   }
 

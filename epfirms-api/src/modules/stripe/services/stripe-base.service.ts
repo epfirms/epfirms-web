@@ -173,6 +173,19 @@ export class StripeBaseService {
     return response;
   }
 
+  async updatePaymentIntent(
+    id: string,
+    params?: Stripe.PaymentIntentUpdateParams,
+    options?: Stripe.RequestOptions,
+  ): Promise<Stripe.PaymentIntent> {
+    const response: Stripe.Response<Stripe.PaymentIntent> = await this.stripe.paymentIntents.update(
+      id,
+      params,
+      options,
+    );
+    return response;
+  }
+
   async fetchPaymentIntent(
     id: string,
     options?: Stripe.RequestOptions,
@@ -236,5 +249,15 @@ export class StripeBaseService {
     const response: Stripe.Response<Stripe.ApiList<Stripe.InvoiceLineItem>> =
       await this.stripe.invoices.listUpcomingLineItems(params, options);
     return response.data;
+  }
+
+  async createSetupIntent(params?: Stripe.SetupIntentCreateParams, options?: Stripe.RequestOptions): Promise<Stripe.SetupIntent> {
+    const response: Stripe.SetupIntent = await this.stripe.setupIntents.create(params, options);
+    return response;
+  }
+
+  async listPaymentMethods(params: Stripe.PaymentMethodListParams, options?: Stripe.RequestOptions) {
+    const response = await this.stripe.paymentMethods.list(params, options);
+    return response;
   }
 }

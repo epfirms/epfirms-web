@@ -4,6 +4,7 @@ import { StripeService } from '../services/stripe.service';
 import { emailsService } from '@src/modules/emails/services/emails.service';
 import { Service } from 'typedi';
 import { StripeMeteredUsageService } from '../services/stripe-metered-usage.service';
+import { ConfigService } from '@src/modules/config/config.service';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
 
@@ -18,6 +19,7 @@ export class StripeController {
     private _emailService: emailsService,
     private _stripeService: StripeService,
     private _stripeMeteredUsageService: StripeMeteredUsageService,
+    private _configService: ConfigService
   ) {}
 
   // This method takes the day in a month that the billing cycle will bill on
@@ -306,6 +308,31 @@ export class StripeController {
     }
   }
 
+  async updateCustomer(req, res: Response) {
+    try {
+      const firmId = req.user.firm_access.firm_id;
+      const changes = req.body;
+      const customerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(firmId);
+      const customer = await this._stripeMeteredUsageService.updateCustomer(customerId, changes);
+      res.status(StatusConstants.OK).send({ data: { customer } });
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  async createSetupIntent(req, res: Response) {
+    try {
+      const firmId = req.user.firm_access.firm_id;
+      const customerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(firmId);
+      const setupIntent = await this._stripeMeteredUsageService.createSetupIntent(customerId);
+      res.status(StatusConstants.OK).send({ data: { setupIntent } });
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
   async updateCreditBalance(req, res: Response) {
     try {
       const data = req.body;
@@ -315,6 +342,55 @@ export class StripeController {
     } catch (err) {
       console.error(err);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  async getCustomerPaymentMethods(req, res:Response) {
+    try {
+      const customerId = req.params.customer;
+      const paymentMethods =
+        await this._stripeMeteredUsageService.listPaymentMethodsForCustomer(customerId);
+      res.status(StatusConstants.OK).send({ data: paymentMethods });
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  async updatePaymentIntentAmount(req, res:Response) {
+    try {
+      const id = req.params.id;
+      const amount = req.body.amount;
+      const paymentIntent =
+        await this._stripeMeteredUsageService.updatePaymentIntentAmount(id, amount);
+      res.status(StatusConstants.OK).send({ data: paymentIntent });
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  async handleWebhookEvent(req, res: Response) {
+    const sig = req.headers['stripe-signature'];
+    const payload = req.body;
+    let event;
+    const webhookSecret = this._configService.get<string>('STRIPE_WEBHOOK_SECRET');
+
+    try {
+      event = stripe.webhooks.constructEvent(payload, sig, webhookSecret);
+      const data = event.data.object;
+      console.log(event.type);
+      console.log(data);
+      // switch(event.type) {
+      //   case '':
+
+      //     break;
+      // }
+      
+      res.status(StatusConstants.OK).send();
+    } catch(err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err.message);
     }
   }
 }
