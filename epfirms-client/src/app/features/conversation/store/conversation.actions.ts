@@ -34,6 +34,9 @@ const ClearAccessToken = createAction('[Conversation] Clear Access Token');
 
 const SyncUserProfile = createAction('[Conversation] User Profile Synced');
 
+
+const UpdateSubaccountStatus = createAction('[Conversation] Update Subaccount Status', props<{ payload: 'active' | 'suspended' | 'unknown' }>());
+
 export const ConversationActions = {
   Init,
   InitSuccess,
@@ -47,5 +50,6 @@ export const ConversationActions = {
   DecreaseUnreadMessageCount,
   SetAccessToken,
   ClearAccessToken,
-  SyncUserProfile
+  SyncUserProfile,
+  UpdateSubaccountStatus
 };

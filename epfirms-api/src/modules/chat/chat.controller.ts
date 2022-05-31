@@ -30,11 +30,17 @@ export class ChatController {
     try {
       const userId = req.user.id.toString();
       const chatGrant = await this._conversationService.createChatGrant();
-      const accessToken = await this._conversationService.createAccessToken(userId, {
-        chat: chatGrant,
-      });
+      const subaccount = await this._conversationService.fetchSubaccount(TWILIO_SUBACCOUNT_SID);
+      if (subaccount.status === 'active') {
+        const accessToken = await this._conversationService.createAccessToken(userId, {
+          chat: chatGrant,
+        });
+  
+        res.status(StatusConstants.OK).send({ data: accessToken.toJwt() });
+      } else {
+        throw new Error('Subaccount is not active');
+      }
 
-      res.status(StatusConstants.OK).send({ data: accessToken.toJwt() });
     } catch (error) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send({ message: error.message });
     }
@@ -276,7 +282,7 @@ export class ChatController {
 
   private async preMessageAdd(data) {
     if (data.AccountSid === TWILIO_SUBACCOUNT_SID) {
-      const twilioSubaccount = await this._conversationService.getTwilioSubaccount(data.AccountSid);
+      const twilioSubaccount = await this._conversationService.getTwilioSubaccount({account_sid: data.AccountSid});
       const stripeCustomerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(
         twilioSubaccount.firm_id,
       );
@@ -284,9 +290,11 @@ export class ChatController {
         stripeCustomerId,
         STRIPE_PRICE_MESSAGING_SMS,
       );
-
+      
       if (hasFunds) {
         return Promise.resolve();
+      } else {
+        const account = await this._conversationService.updateSubaccountStatus(data.AccountSid, 'suspended');
       }
     }
 
@@ -295,7 +303,7 @@ export class ChatController {
 
   private async postMessageAdd(data) {
     if (data.AccountSid === TWILIO_SUBACCOUNT_SID) {
-      const twilioSubaccount = await this._conversationService.getTwilioSubaccount(data.AccountSid);
+      const twilioSubaccount = await this._conversationService.getTwilioSubaccount({account_sid: data.AccountSid});
 
       if (twilioSubaccount && twilioSubaccount.firm_id) {
         const stripeCustomerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(

@@ -6,12 +6,14 @@ export interface ConversationState {
   unreadMessageCount: number | null;
   connectionState: ConnectionState;
   accessToken: string | null;
+  subaccountStatus: 'active' | 'suspended' | 'unknown';
 }
 
 export const initialState: ConversationState = {
   unreadMessageCount: 0,
   connectionState: 'unknown',
-  accessToken: null
+  accessToken: null,
+  subaccountStatus: 'unknown',
 };
 
 export const conversationFeature = createFeature({
@@ -54,6 +56,12 @@ export const conversationFeature = createFeature({
         accessToken: null,
       };
     }),
+    on(ConversationActions.UpdateSubaccountStatus, (state, { payload }) => {
+      return {
+        ...state,
+        subaccountStatus: payload,
+      };
+    }),
   ),
 });
 
@@ -64,4 +72,5 @@ export const {
   selectConnectionState,
   selectUnreadMessageCount,
   selectAccessToken,
+  selectSubaccountStatus
 } = conversationFeature;
