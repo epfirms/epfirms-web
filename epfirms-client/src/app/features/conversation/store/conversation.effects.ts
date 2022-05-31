@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { logout } from '@app/store/current-user/current-user.actions';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
+import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
+import { Action, Store } from '@ngrx/store';
 import { ConversationState } from '@twilio/conversations';
 import { EMPTY } from 'rxjs';
 import { map, catchError, pluck, switchMap, tap, filter, exhaustMap } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { ConversationService } from '../services/conversation.service';
 import { ConversationActions } from './conversation.actions';
 
 @Injectable()
-export class ConversationEffects {
+export class ConversationEffects implements OnInitEffects {
   /**
    * Initializes the twilio client.
    * */
@@ -28,7 +28,13 @@ export class ConversationEffects {
             ),
           ),
           map(() => ConversationActions.InitSuccess()),
-          catchError(() => EMPTY),
+          catchError((err) => {
+            if (err === 'Subaccount is not active') {
+              this.store.dispatch(ConversationActions.UpdateSubaccountStatus({payload: 'suspended'}));
+            }
+
+            return EMPTY;
+          }),
         ),
       ),
     ),
@@ -86,4 +92,8 @@ export class ConversationEffects {
     private conversationService: ConversationService,
     private store: Store<{ conversation: ConversationState }>,
   ) {}
+
+  ngrxOnInitEffects(): Action {
+    return ConversationActions.Init();
+  }
 }

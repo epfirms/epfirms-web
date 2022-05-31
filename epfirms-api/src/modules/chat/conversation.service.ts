@@ -145,6 +145,11 @@ export class ConversationService {
     return Promise.resolve(subaccount);
   }
 
+  async fetchSubaccount(sid: string): Promise<AccountInstance> {
+    const subaccount = await this.twilioClient.api.accounts(sid).fetch();
+    return Promise.resolve(subaccount);
+  }
+
   async fetchAvailablePhoneNumbers(): Promise<LocalInstance[]> {
     const phoneNumberList = await this.twilioClient
       .availablePhoneNumbers('US')
@@ -163,19 +168,22 @@ export class ConversationService {
 
   async fetchConversation(sid: string): Promise<any> {
     const conversation = await this.twilioClient.conversations
-      .services('IS1faac97ab6954bb8828c6edead9e4513')
+      .services(TWILIO_CONVERSATIONS_SERVICE_SID)
       .conversations(sid)
       .fetch();
     return Promise.resolve(conversation);
   }
 
-  async getTwilioSubaccount(accountSid: string): Promise<any> {
+  async getTwilioSubaccount(where: {account_sid?: string, firm_id?: number}): Promise<any> {
     const { twilio_subaccount } = Database.models;
     const subaccount = await twilio_subaccount.findOne({
-      where: {
-        account_sid: accountSid,
-      },
+      where
     });
     return Promise.resolve(subaccount);
+  }
+
+  async updateSubaccountStatus(sid: string, status: 'suspended' | 'active'): Promise<AccountInstance> {
+    const result = await this.twilioClient.api.accounts(sid).update({ status });
+    return Promise.resolve(result);
   }
 }

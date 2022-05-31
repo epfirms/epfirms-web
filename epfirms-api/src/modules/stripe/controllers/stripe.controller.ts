@@ -5,8 +5,12 @@ import { emailsService } from '@src/modules/emails/services/emails.service';
 import { Service } from 'typedi';
 import { StripeMeteredUsageService } from '../services/stripe-metered-usage.service';
 import { ConfigService } from '@src/modules/config/config.service';
+import { ConversationService } from '@src/modules/chat/conversation.service';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
+const {
+  TWILIO_SUBACCOUNT_SID,
+} = require('@configs/vars');
 
 @Service()
 export class StripeController {
@@ -19,7 +23,8 @@ export class StripeController {
     private _emailService: emailsService,
     private _stripeService: StripeService,
     private _stripeMeteredUsageService: StripeMeteredUsageService,
-    private _configService: ConfigService
+    private _configService: ConfigService,
+    private _conversationService: ConversationService
   ) {}
 
   // This method takes the day in a month that the billing cycle will bill on
@@ -338,6 +343,12 @@ export class StripeController {
       const data = req.body;
       const customerBalanceTransaction =
         await this._stripeMeteredUsageService.creditCustomerBalance(data.customerId, data.amount);
+        const subaccount = await this._conversationService.fetchSubaccount(TWILIO_SUBACCOUNT_SID);
+
+        if (subaccount.status !== 'active') {
+          await this._conversationService.updateSubaccountStatus(TWILIO_SUBACCOUNT_SID, 'active');
+        } 
+        
       res.status(StatusConstants.OK).send({ data: customerBalanceTransaction });
     } catch (err) {
       console.error(err);

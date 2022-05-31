@@ -34,7 +34,7 @@
         </button>
       </div>
 
-      <div>
+      <div *ngIf="autoRechargeMetadata.get('auto_recharge').value">
         <label for="location" class="block text-sm font-medium text-gray-700">Payment method</label>
         <select id="location" formControlName="auto_recharge_payment_method" name="location" class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
           <option [ngValue]="">Select a payment method</option>
@@ -91,13 +91,16 @@
           <h2 id="timeline-title" class="text-lg font-medium text-gray-900">Payment methods</h2>
         </div>
         <div class="flex-none">
-          <button ep-button [routerLink]="['../', 'payment-method']">
-            Add payment method
-          </button>
+          <button 
+          [routerLink]="['../', 'payment-method']" 
+          class="text-sm font-medium text-blue-600 hover:text-blue-500"
+          >Add
+        </button>
+
         </div>
       </div>
       <div>
-        <ul role="list" class="divide-y divide-gray-200">
+        <ul role="list" class="divide-y divide-gray-200" *ngIf="paymentMethods && paymentMethods.length; else emptyPaymentMethods">
           <li class="flex items-center py-4 text-sm rounded" [class.bg-gray-50]="customer.default_source === paymentMethod.id" *ngFor="let paymentMethod of paymentMethods">
             <svg class="w-auto h-8 sm:h-6 sm:flex-shrink-0" width="36" height="24" enable-background="new 0 0 36 24" version="1.1" viewBox="0 0 780 500" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
               <path d="M40,0h700c22.092,0,40,17.909,40,40v420c0,22.092-17.908,40-40,40H40c-22.091,0-40-17.908-40-40V40  C0,17.909,17.909,0,40,0z" fill="#2563eb" />
@@ -121,6 +124,12 @@
         
           <!-- More items... -->
         </ul>
+
+        <ng-template #emptyPaymentMethods>
+          <div class="py-4">
+            <p class="text-sm text-gray-400">No payment methods</p>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
