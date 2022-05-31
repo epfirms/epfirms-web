@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 export class WardService {
   constructor(private http: HttpClient) {}
 
-  get(id: number): Observable<any> {
+  getWardWithMatterId(id: number): Observable<any> {
     return this.http.get(`/api/wards/${id}`);
   }
-  create(ward: Ward): Observable<any> {
+  upsert(ward: Ward): Observable<any> {
     return this.http.post('/api/wards', ward);
   }
   update(ward: Ward): Observable<any> {
