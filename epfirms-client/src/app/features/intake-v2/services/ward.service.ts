@@ -10,15 +10,15 @@ export class WardService {
   constructor(private http: HttpClient) {}
 
   getWardWithMatterId(id: number): Observable<any> {
-    return this.http.get(`/api/wards/${id}`);
+    return this.http.get(`/api/ward/${id}`);
   }
   upsert(ward: Ward): Observable<any> {
-    return this.http.post('/api/wards', ward);
+    return this.http.post('/api/ward', ward);
   }
   update(ward: Ward): Observable<any> {
-    return this.http.put(`/api/wards/${ward.id}`, ward);
+    return this.http.put(`/api/ward/${ward.id}`, ward);
   }
   delete(id: number): Observable<any> {
-    return this.http.delete(`/api/wards/${id}`);
+    return this.http.delete(`/api/ward/${id}`);
   }
 }
