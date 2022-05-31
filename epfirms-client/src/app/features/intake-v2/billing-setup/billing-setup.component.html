@@ -343,6 +343,7 @@
 </div>
 <div class="justify-end flex m-2">
   <button
+  *ngIf="billingSettings.billing_type === 'flatrate' || billingSettings.billing_type === 'hourly'"
     [tippy]="billingSettings.initial_invoice_sent ? 'Invoice already sent' : 'Send Initial Invoice'"
     [disabled]="billingSettings.initial_invoice_sent"
     (click)="openConfirmationModal()"
