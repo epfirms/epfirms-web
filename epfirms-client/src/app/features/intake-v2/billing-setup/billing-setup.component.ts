@@ -235,8 +235,11 @@ export class BillingSetupComponent implements OnInit {
     // handle the flat rate invoice automation
     if (this.billingSettings.billing_type === 'flatrate') {
       this.handleFlatRateSubmission();
-    } else if (this.billingSettings.billing_type === 'hourly') {
-      this.handleHourlySubmission();
     }
+    // this has been removed until we figure out online payments for IOLTA
+    //  else if (this.billingSettings.billing_type === 'hourly') {
+    //   // this.handleHourlySubmission();
+    //   console.log("handle hourly")
+    // }
   }
 }
