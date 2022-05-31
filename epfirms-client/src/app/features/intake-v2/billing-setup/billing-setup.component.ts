@@ -60,14 +60,15 @@ export class BillingSetupComponent implements OnInit {
       });
   }
 
-  private roundDownAmounts() : void {
-    this.matterBillingSetting.initial_payment = Math.floor(this.matterBillingSetting.initial_payment);
-    this.matterBillingSetting.flat_rate_amount = Math.floor(this.matterBillingSetting.flat_rate_amount);
-    this.matterBillingSetting.final_payment = Math.floor(this.matterBillingSetting.final_payment);
+  private roundDownAmounts(): void {
+    this.billingSettings.initial_payment = Math.floor(this.billingSettings.initial_payment);
+    this.billingSettings.flat_rate_amount = Math.floor(this.billingSettings.flat_rate_amount);
+    this.billingSettings.final_payment = Math.floor(this.billingSettings.final_payment);
 
-    this.matterBillingSetting.retainer_amount = Math.floor(this.matterBillingSetting.retainer_amount);
-    this.matterBillingSetting.minimum_payment_amount = Math.floor(this.matterBillingSetting.minimum_payment_amount);
-
+    this.billingSettings.retainer_amount = Math.floor(this.billingSettings.retainer_amount);
+    this.billingSettings.minimum_payment_amount = Math.floor(
+      this.billingSettings.minimum_payment_amount,
+    );
   }
 
   upsertBillingSettings() {
@@ -189,6 +190,38 @@ export class BillingSetupComponent implements OnInit {
     }
   }
 
+  private hourlyAutomation(): void {
+    const hourlyInvoice = new Invoice(
+      this.matter.id,
+      this.matter.client.id,
+      this.matter.firm_id,
+      this.billingSettings.retainer_amount,
+      this.billingSettings.retainer_invoice_message,
+    );
+
+    this.invoiceService.upsert(hourlyInvoice).subscribe((invoice) => {
+      console.log('hourly invoice', invoice);
+      if (invoice) {
+        this.stripeService.createInvoice(invoice[0].id).subscribe((stripeInvoice) => {
+          console.log('hourly stripe invoice route', stripeInvoice);
+          if (stripeInvoice) {
+            this.updateInvoiceSentStatus();
+          }
+        });
+      }
+    });
+  }
+
+  private handleHourlySubmission(): void {
+    if (this.billingSettings.retainer_amount <= 0) {
+      this.toastService.error('Please enter an amount for retainer');
+    } else {
+      // this automation creates an invoice object and sends the initial retainer invoice to client
+      this.hourlyAutomation();
+      this.closeConfirmationModal();
+    }
+  }
+
   openConfirmationModal(): void {
     this.isModalVisible = true;
   }
@@ -198,9 +231,12 @@ export class BillingSetupComponent implements OnInit {
   }
 
   submit(): void {
+    this.roundDownAmounts();
     // handle the flat rate invoice automation
     if (this.billingSettings.billing_type === 'flatrate') {
       this.handleFlatRateSubmission();
+    } else if (this.billingSettings.billing_type === 'hourly') {
+      this.handleHourlySubmission();
     }
   }
 }
