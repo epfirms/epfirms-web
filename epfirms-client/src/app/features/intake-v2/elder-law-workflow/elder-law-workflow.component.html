@@ -1,0 +1,147 @@
+<!-- WORKFLOW DIV -->
+<div class="m-2">
+
+
+  <div class="min-h-half">
+    <nav class="bg-white">
+      <div class="mx-auto px-0 sm:px-0 lg:px-0">
+        <div class="flex justify-center h-10">
+          <div class="flex items-center">
+            <div class="flex-shrink-0"></div>
+            <div class="hidden md:block">
+              <div class="flex items-baseline space-x-4">
+                <!-- Current: "bg-blue-700 text-white", Default: "text-white hover:bg-blue-500 hover:bg-opacity-75" -->
+                <a
+                  (click)="setState('personal info')"
+                  class="text-black hover:bg-blue-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
+                  [ngClass]="
+                    state === 'caregiver'
+                      ? 'bg-blue-100 text-black text-sm'
+                      : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
+                  "
+                  aria-current="page"
+                >
+                 Caregiver Information
+                </a>
+
+                <a
+                  (click)="setState('income')"
+                  [ngClass]="
+                    state === 'income'
+                      ? 'bg-blue-100 text-black text-sm'
+                      : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
+                  "
+                  class="text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
+                  >Income</a
+                >
+
+                <a
+                  (click)="setState('asset')"
+                  [ngClass]="
+                    state === 'asset'
+                      ? 'bg-blue-100 text-black text-sm'
+                      : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
+                  "
+                  class="text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
+                  >Assets</a
+                >
+
+                <a
+                  (click)="setState('real estate')"
+                  [ngClass]="
+                    state === 'real estate'
+                      ? 'bg-blue-100 text-black text-sm'
+                      : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
+                  "
+                  class="text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
+                  >Property</a
+                >
+                <a
+                  (click)="setState('appointees')"
+                  [ngClass]="
+                    state === 'executors'
+                      ? 'bg-blue-100 text-black text-sm'
+                      : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
+                  "
+                  class="text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
+                  >Appointees</a
+                >
+
+                <a
+                  (click)="setState('estate planning')"
+                  [ngClass]="
+                    state === 'estate planning'
+                      ? 'bg-blue-100 text-black text-sm'
+                      : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
+                  "
+                  class="text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
+                  >Questions</a
+                >
+
+                <a
+                  (click)="setState('life insurance')"
+                  [ngClass]="
+                    state === 'life insurance'
+                      ? 'bg-blue-100 text-black text-sm'
+                      : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
+                  "
+                  class="text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
+                  >Life Insurance</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="hidden md:block"></div>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <div class="max-w-7xl mx-auto py-1 sm:px-1 lg:px-0">
+        <!-- Replace with your content -->
+        <div class="px-4 py-4 sm:px-0">
+        <app-caregiver-information *ngIf="state === 'caregiver'" [matter]="matter"></app-caregiver-information>
+        </div>
+        <!-- INCOME INFORMATION -->
+
+        <app-income
+          *ngIf="state === 'income'"
+          [matter]="matter"
+          
+          
+        ></app-income>
+        <!-- -------------------------- -->
+
+        <!-- ASSET INFORMATION -->
+
+        <app-assets
+          *ngIf="state === 'asset'"
+          [matter]="matter"
+          
+          
+        ></app-assets>
+        <!-- -------------------------- -->
+
+        <!-- REAL ESTATE INFORMATION -->
+        <app-real-estate
+          *ngIf="state === 'real estate'"
+          [matter]="matter"
+          
+          
+        ></app-real-estate>
+
+        <app-appointees *ngIf="state === 'appointees'" [matter]="matter"></app-appointees>
+
+        <app-estate-planning-form
+          *ngIf="state === 'estate planning'"
+          [matter]="matter"
+          
+        ></app-estate-planning-form>
+
+        <!-- life insurance section -->
+        <app-life-insurance *ngIf="state === 'life insurance'" [matter]="matter"></app-life-insurance>
+        <!-- /End replace -->
+      </div>
+    </main>
+  </div>
+</div>
+

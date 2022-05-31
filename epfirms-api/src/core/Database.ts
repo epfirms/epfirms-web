@@ -81,6 +81,7 @@ export class Database {
       stripe_customer: require('../models/StripeCustomer')(this.sequelize, Sequelize),
       decedent: require('../models/Decedent')(this.sequelize, Sequelize),
       decedent_property: require('../models/DecedentProperty')(this.sequelize, Sequelize),
+      ward: require('../models/Ward')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.sequelize.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -104,6 +105,13 @@ export class Database {
     this.models.decedent.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
     this.models.decedent.hasMany(this.models.decedent_property, {foreignKey: 'decedent_id'});
     this.models.decedent_property.belongsTo(this.models.decedent, {foreignKey: 'decedent_id'});
+
+    // ward relationships
+    this.models.user.hasOne(this.models.ward, {foreignKey: 'user_id'});
+    this.models.ward.belongsTo(this.models.user, {foreignKey: 'user_id'});
+    this.models.matter.hasOne(this.models.ward, {foreignKey: 'matter_id'});
+    this.models.ward.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+
 
 
     this.models.user.belongsToMany(this.models.user, {
