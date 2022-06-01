@@ -19,6 +19,22 @@ module.exports = (sequelize, {
       account_sid: {
         type: STRING,
         allowNull: false,
+      },
+      auth_token: {
+        type: STRING,
+        allowNull: false,
+      },
+      api_key: {
+        type: STRING,
+        allowNull: false,
+      },
+      api_secret: {
+        type: STRING,
+        allowNull: false,
+      },
+      conversations_service: {
+        type: STRING,
+        allowNull: false
       }
     }, {
       tableName,
