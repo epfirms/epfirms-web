@@ -5,7 +5,8 @@ import { emailsService } from '@src/modules/emails/services/emails.service';
 import { Service } from 'typedi';
 import { StripeMeteredUsageService } from '../services/stripe-metered-usage.service';
 import { ConfigService } from '@src/modules/config/config.service';
-import { ConversationService } from '@src/modules/chat/conversation.service';
+import { TwilioMainAccountService } from '@src/modules/chat/twilio-main-account.service';
+import { TwilioSubaccountCredentialsService } from '@src/modules/chat/twilio-subaccount-credentials.service';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
 const {
@@ -24,7 +25,8 @@ export class StripeController {
     private _stripeService: StripeService,
     private _stripeMeteredUsageService: StripeMeteredUsageService,
     private _configService: ConfigService,
-    private _conversationService: ConversationService
+    private _twilioMainAccountService: TwilioMainAccountService,
+    private _twilioCredentials: TwilioSubaccountCredentialsService
   ) {}
 
   // This method takes the day in a month that the billing cycle will bill on
@@ -341,13 +343,17 @@ export class StripeController {
   async updateCreditBalance(req, res: Response) {
     try {
       const data = req.body;
+      const user = req.user;
+      
       const customerBalanceTransaction =
         await this._stripeMeteredUsageService.creditCustomerBalance(data.customerId, data.amount);
-        const subaccount = await this._conversationService.fetchSubaccount(TWILIO_SUBACCOUNT_SID);
+      
+        const subaccountCredentials = await this._twilioCredentials.getByFirmId(user.firm_access.firm_id);
+        const subaccount = await this._twilioMainAccountService.fetchSubaccount(TWILIO_SUBACCOUNT_SID);
 
-        if (subaccount.status !== 'active') {
-          await this._conversationService.updateSubaccountStatus(TWILIO_SUBACCOUNT_SID, 'active');
-        } 
+        // if (subaccount.status !== 'active') {
+        //   await this._conversationService.updateSubaccountStatus(TWILIO_SUBACCOUNT_SID, 'active');
+        // } 
         
       res.status(StatusConstants.OK).send({ data: customerBalanceTransaction });
     } catch (err) {
