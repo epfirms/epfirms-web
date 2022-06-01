@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Matter } from '@app/core/interfaces/matter';
 import { UserService } from '@app/features/user/services/user.service';
+import { FinancialSummaryService } from '../services/financial-summary.service';
 
 @Component({
   selector: 'app-estate-planning-workflow',
@@ -18,7 +19,7 @@ export class EstatePlanningWorkflowComponent implements OnInit {
   // state that manages the views
   state: string = 'personal info';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private financialSummaryService : FinancialSummaryService) {}
 
   ngOnInit(): void {
     this.loadClient();
@@ -30,6 +31,7 @@ export class EstatePlanningWorkflowComponent implements OnInit {
       if (response) {
         console.log('loadClient', response);
         this.client = response;
+        this.financialSummaryService.upsert({user_id: this.client.id, matter_id: this.matter.id}).subscribe();
       }
     });
   }
