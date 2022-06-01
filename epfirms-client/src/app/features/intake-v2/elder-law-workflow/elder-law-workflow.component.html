@@ -1,7 +1,5 @@
 <!-- WORKFLOW DIV -->
 <div class="m-2">
-
-
   <div class="min-h-half">
     <nav class="bg-white">
       <div class="mx-auto px-0 sm:px-0 lg:px-0">
@@ -21,7 +19,7 @@
                   "
                   aria-current="page"
                 >
-                 Caregiver Information
+                  Caregiver Information
                 </a>
 
                 <a
@@ -34,7 +32,7 @@
                   "
                   aria-current="page"
                 >
-                 Ward Information
+                  Ward Information
                 </a>
                 <a
                   (click)="setState('income')"
@@ -111,50 +109,45 @@
       <div class="max-w-7xl mx-auto py-1 sm:px-1 lg:px-0">
         <!-- Replace with your content -->
         <div class="px-4 py-4 sm:px-0">
-        <app-caregiver-information *ngIf="state === 'caregiver'" [matter]="matter"></app-caregiver-information>
-        <app-ward-information *ngIf="state === 'ward'" [matter]="matter"></app-ward-information>
+          <app-caregiver-information
+            *ngIf="state === 'caregiver'"
+            [matter]="matter"
+          ></app-caregiver-information>
+          <app-ward-information *ngIf="state === 'ward'" [matter]="matter"></app-ward-information>
         </div>
         <!-- INCOME INFORMATION -->
 
-        <app-income
-          *ngIf="state === 'income'"
-          [matter]="matter"
-          
-          
-        ></app-income>
+        <app-income *ngIf="state === 'income'" [matter]="matter" [client]="ward"></app-income>
         <!-- -------------------------- -->
 
         <!-- ASSET INFORMATION -->
 
-        <app-assets
-          *ngIf="state === 'asset'"
-          [matter]="matter"
-          
-          
-        ></app-assets>
+        <app-assets *ngIf="state === 'asset'" [matter]="matter" [client]="ward"></app-assets>
         <!-- -------------------------- -->
 
         <!-- REAL ESTATE INFORMATION -->
         <app-real-estate
           *ngIf="state === 'real estate'"
           [matter]="matter"
-          
-          
+          [client]="ward"
         ></app-real-estate>
 
-        <app-appointees *ngIf="state === 'appointees'" [matter]="matter"></app-appointees>
+        <app-appointees *ngIf="state === 'appointees'" [client]="ward" [matter]="matter"></app-appointees>
 
         <app-estate-planning-form
           *ngIf="state === 'estate planning'"
           [matter]="matter"
-          
+          [client]="ward"
         ></app-estate-planning-form>
 
         <!-- life insurance section -->
-        <app-life-insurance *ngIf="state === 'life insurance'" [matter]="matter"></app-life-insurance>
+        <app-life-insurance
+          *ngIf="state === 'life insurance'"
+          [client]="ward"
+          [matter]="matter"
+        ></app-life-insurance>
         <!-- /End replace -->
       </div>
     </main>
   </div>
 </div>
-

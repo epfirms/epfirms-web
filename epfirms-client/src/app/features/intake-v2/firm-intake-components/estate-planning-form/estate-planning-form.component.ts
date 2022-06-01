@@ -14,8 +14,7 @@ import { FamilyMemberService } from '@app/client-portal/_services/family-member-
 })
 export class EstatePlanningFormComponent implements OnInit {
   @Input() matter;
-  @Output() back = new EventEmitter<boolean>();
-  @Output() continue = new EventEmitter<boolean>();
+  @Input() client;
 
   form: EstatePlanningQuestions;
 
@@ -63,7 +62,7 @@ export class EstatePlanningFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.form = new EstatePlanningQuestions(this.matter.client.id, this.matter.id);
+    this.form = new EstatePlanningQuestions(this.client.id, this.matter.id);
     this.loadEstateForm();
     this.loadSpecificRequests();
     this.loadFamilyMembers();
@@ -124,7 +123,7 @@ export class EstatePlanningFormComponent implements OnInit {
   }
 
   loadFamilyMembers(): void {
-    this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
+    this.familyMemberService.getByUserId(this.client.id).subscribe((res) => {
       
       this.children = res.filter((familyMember) =>
         familyMember.family_member.relationship_type.includes('child'),
@@ -208,11 +207,4 @@ export class EstatePlanningFormComponent implements OnInit {
     this.specificRequests.push(new SpecificRequests(this.matter.id));
   }
 
-  backButton(): void {
-    this.back.emit(true);
-  }
-
-  continueButton(): void {
-    this.continue.emit(true);
-  }
 }

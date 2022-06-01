@@ -8,10 +8,8 @@ import { FinancialSummaryService } from '../services/financial-summary.service';
   styleUrls: ['./real-estate.component.scss'],
 })
 export class RealEstateComponent implements OnInit {
-  // Input Bindings
-  @Output() back = new EventEmitter<boolean>();
-  @Output() continue = new EventEmitter<boolean>();
   @Input() matter;
+  @Input() client;
 
   financialSummaryForm = {
     id: undefined,
@@ -39,7 +37,7 @@ export class RealEstateComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
-    this.financialSummaryForm.user_id = this.matter.client.id;
+    this.financialSummaryForm.user_id = this.client.id;
   }
 
   // currency mask
@@ -56,7 +54,7 @@ export class RealEstateComponent implements OnInit {
   //load the financial summary
   // if no summary, upsert/init new one
   load(): void {
-    this.financialSummaryService.getWithUserId(this.matter.client.id).subscribe((res) => {
+    this.financialSummaryService.getWithUserId(this.client.id).subscribe((res) => {
       if (res) {
         // check if there is a summary that is not joint for the client; else upsert
         if (res.filter((summary) => summary.is_joint === false).length > 0) {
@@ -68,7 +66,7 @@ export class RealEstateComponent implements OnInit {
           // init and upsert
           this.financialSummaryService
             .upsert({
-              user_id: this.matter.client.id,
+              user_id: this.client.id,
               primary_residence_address: this.matter.client.address,
             })
             .subscribe((createdRes) => {
@@ -194,11 +192,4 @@ export class RealEstateComponent implements OnInit {
     }
   }
 
-  backButton(): void {
-    this.back.emit(true);
-  }
-
-  continueButton(): void {
-    this.continue.emit(true);
-  }
 }
