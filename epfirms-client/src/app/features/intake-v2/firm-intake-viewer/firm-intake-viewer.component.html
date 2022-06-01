@@ -19,6 +19,10 @@
   <div *ngIf="intake.type === 'probate'">
     <app-probate-workflow [matter]="matter" [clientMode]="false"></app-probate-workflow>
   </div>
+
+  <div *ngIf="intake.type === 'elderlaw'">
+    <app-elder-law-workflow [matter]="matter"></app-elder-law-workflow>
+    </div>
 </div>
 
 <div *ngIf="intake === undefined" class="bg-white">
@@ -39,6 +43,8 @@
           <option [ngValue]="'estate planning'">Estate Planning</option>
 
           <option [ngValue]="'probate'">Probate</option>
+
+          <option [ngValue]="'elderlaw'">Elder Law</option>
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 px-2 flex items-center">
           <!-- Heroicon name: solid/chevron-down -->

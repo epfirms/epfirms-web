@@ -11,10 +11,9 @@ import { FinancialSummaryService } from '../services/financial-summary.service';
   styleUrls: ['./assets.component.scss'],
 })
 export class AssetsComponent implements OnInit {
-  // Input Bindings
-  @Output() back = new EventEmitter<boolean>();
-  @Output() continue = new EventEmitter<boolean>();
   @Input() matter;
+  @Input() client;
+
 
   // client's assets
   clientAssetForm: any = {
@@ -124,7 +123,7 @@ export class AssetsComponent implements OnInit {
   }
 
   private loadSpouse(): void {
-    this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
+    this.familyMemberService.getByUserId(this.client.id).subscribe((res) => {
       if (res) {
         this.spouse = res.filter(
           (member) => member.family_member.relationship_type === 'spouse',
@@ -139,8 +138,8 @@ export class AssetsComponent implements OnInit {
   }
 
   private loadClientAsset(): void {
-    this.clientAssetForm.user_id = this.matter.client.id;
-    this.financialSummaryService.getWithUserId(this.matter.client.id).subscribe((res) => {
+    this.clientAssetForm.user_id = this.client.id;
+    this.financialSummaryService.getWithUserId(this.client.id).subscribe((res) => {
       if (res) {
         if (res.filter((asset) => asset.is_joint === false).length > 0) {
           this.clientAssetForm = this.parseResponse(
@@ -162,8 +161,8 @@ export class AssetsComponent implements OnInit {
   }
 
   private loadJointAsset(): void {
-    this.jointAssetForm.user_id = this.matter.client.id;
-    this.financialSummaryService.getWithUserId(this.matter.client.id).subscribe((res) => {
+    this.jointAssetForm.user_id = this.client.id;
+    this.financialSummaryService.getWithUserId(this.client.id).subscribe((res) => {
       if (res) {
         if (res.filter((asset) => asset.is_joint === true).length > 0) {
           this.jointAssetForm = this.parseResponse(
@@ -348,11 +347,4 @@ export class AssetsComponent implements OnInit {
     });
   }
 
-  backButton(): void {
-    this.back.emit(true);
-  }
-
-  continueButton(): void {
-    this.continue.emit(true);
-  }
 }

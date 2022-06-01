@@ -10,6 +10,7 @@ import { FinancialSummaryService } from '../services/financial-summary.service';
 })
 export class LifeInsuranceComponent implements OnInit {
   @Input() matter: Matter;
+  @Input() client;
 
   currencyInputMask = createMask({
     prefix: '$',
@@ -40,13 +41,13 @@ export class LifeInsuranceComponent implements OnInit {
   constructor(private financialSummaryService: FinancialSummaryService) {}
 
   ngOnInit(): void {
-    this.lifeInsuranceForm.user_id = this.matter.client.id;
+    this.lifeInsuranceForm.user_id = this.client.id;
     this.load();
   }
 
   //load the financial summary from the service
   private load(): void {
-    this.financialSummaryService.getWithUserId(this.matter.client.id).subscribe((response) => {
+    this.financialSummaryService.getWithUserId(this.client.id).subscribe((response) => {
       console.log("load res", response);
       if (response.length > 0) {
 

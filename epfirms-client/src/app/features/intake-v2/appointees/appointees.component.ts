@@ -9,9 +9,9 @@ import { AppointeeSummaryService } from '../services/appointee-summary.service';
 })
 export class AppointeesComponent implements OnInit {
   @Input() matter;
+  @Input() client;
 
   spouse;
-  client;
 
   // state that manages tabs when there is spouse
   state: string = 'client';
@@ -182,7 +182,6 @@ export class AppointeesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.client = this.matter.client;
     this.clientAppointeeSummary.user_id = this.client.id;
     this.loadSpouse();
     this.loadClientAppointeeSummary();
