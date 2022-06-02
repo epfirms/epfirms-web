@@ -1,19 +1,11 @@
 import { Inject, Service, Token } from 'typedi';
-import { Database } from '@src/core/Database';
-import { ConfigService } from '../config/config.service';
 import twilio = require('twilio');
 import { TwilioSubaccount } from './twilio.interface';
-import {
-  ConversationInstance,
-  ConversationListInstanceCreateOptions,
-} from 'twilio/lib/rest/conversations/v1/conversation';
-import {
-  MessageInstance,
-  MessageListInstanceCreateOptions,
-} from 'twilio/lib/rest/conversations/v1/conversation/message';
-import { UserInstance } from 'twilio/lib/rest/conversations/v1/user';
-import { ParticipantInstance } from 'twilio/lib/rest/conversations/v1/conversation/participant';
 import { AddChatParticipantDto } from './dto';
+import { UserInstance } from 'twilio/lib/rest/conversations/v1/service/user';
+import { ParticipantInstance } from 'twilio/lib/rest/conversations/v1/service/conversation/participant';
+import { ConversationInstance, ConversationListInstanceCreateOptions } from 'twilio/lib/rest/conversations/v1/service/conversation';
+import { MessageInstance, MessageListInstanceCreateOptions } from 'twilio/lib/rest/conversations/v1/service/conversation/message';
 
 /** Store a twilio subaccount's credentials. */
 export const TWILIO_SUBACCOUNT_TOKEN = new Token<TwilioSubaccount>('SUBACCOUNT_TOKEN');
@@ -30,7 +22,7 @@ export class TwilioSubaccountService {
   async createConversation(
     opts: ConversationListInstanceCreateOptions,
   ): Promise<ConversationInstance> {
-    const conversation = await this.twilioClient.conversations.conversations.create(opts);
+    const conversation = await this.twilioClient.conversations.services(this.subaccount.services.conversations.sid).conversations.create(opts);
     return Promise.resolve(conversation);
   }
 
@@ -39,6 +31,7 @@ export class TwilioSubaccountService {
     opts: MessageListInstanceCreateOptions,
   ): Promise<MessageInstance> {
     const message = await this.twilioClient.conversations
+      .services(this.subaccount.services.conversations.sid)
       .conversations(conversationSid)
       .messages.create(opts);
 
@@ -46,12 +39,12 @@ export class TwilioSubaccountService {
   }
 
   async createUser(identity: string, friendlyName: string): Promise<any> {
-    const user = await this.twilioClient.conversations.users.create({ identity, friendlyName });
+    const user = await this.twilioClient.conversations.services(this.subaccount.services.conversations.sid).users.create({ identity, friendlyName });
     return Promise.resolve(user);
   }
 
   async fetchUser(userSid: string): Promise<UserInstance> {
-    const user = await this.twilioClient.conversations.users(userSid).fetch();
+    const user = await this.twilioClient.conversations.services(this.subaccount.services.conversations.sid).users(userSid).fetch();
     return Promise.resolve(user);
   }
 
@@ -60,6 +53,7 @@ export class TwilioSubaccountService {
     participantSid: string,
   ): Promise<ParticipantInstance> {
     const participant = await this.twilioClient.conversations
+      .services(this.subaccount.services.conversations.sid)
       .conversations(conversationSid)
       .participants(participantSid)
       .fetch();
@@ -71,6 +65,7 @@ export class TwilioSubaccountService {
     opts: AddChatParticipantDto,
   ): Promise<ParticipantInstance> {
     const participant = await this.twilioClient.conversations
+      .services(this.subaccount.services.conversations.sid)
       .conversations(conversationSid)
       .participants.create(opts);
 
@@ -78,17 +73,17 @@ export class TwilioSubaccountService {
   }
 
   async fetchConversation(sid: string): Promise<any> {
-    const conversation = await this.twilioClient.conversations.conversations(sid).fetch();
+    const conversation = await this.twilioClient.conversations.services(this.subaccount.services.conversations.sid).conversations(sid).fetch();
     return Promise.resolve(conversation);
   }
 
   async deleteConversations(conversationSid: string): Promise<boolean> {
-    const deleted = await this.twilioClient.conversations.conversations(conversationSid).remove();
+    const deleted = await this.twilioClient.conversations.services(this.subaccount.services.conversations.sid).conversations(conversationSid).remove();
     return Promise.resolve(deleted);
   }
 
   async fetchConversationsByParticipantSid(phone: string): Promise<any> {
-    const conversations = await this.twilioClient.conversations.participantConversations.list({
+    const conversations = await this.twilioClient.conversations.services(this.subaccount.services.conversations.sid).participantConversations.list({
       address: phone,
     });
 
