@@ -7,12 +7,12 @@ import { MatterService } from '../matter/services/matter.service';
 import { TeamService } from '../team/team.service';
 import { FirmEmployeeService } from '../firm/services/firm-employee.service';
 import { StripeMeteredUsageService } from '../stripe/services/stripe-metered-usage.service';
-import { ParticipantInstance } from 'twilio/lib/rest/conversations/v1/conversation/participant';
-import { ConversationListInstanceCreateOptions } from 'twilio/lib/rest/conversations/v1/conversation';
 import { TwilioHelperLibraryService } from './twilio-helper-library.service';
 import { TwilioSubaccountService, TWILIO_SUBACCOUNT_TOKEN } from './twilio-subaccount.service';
 import { TwilioMainAccountService } from './twilio-main-account.service';
 import { TwilioSubaccountCredentialsService } from './twilio-subaccount-credentials.service';
+import { ParticipantInstance } from 'twilio/lib/rest/conversations/v1/service/conversation/participant';
+import { ConversationListInstanceCreateOptions } from 'twilio/lib/rest/conversations/v1/service/conversation';
 const { STRIPE_PRICE_MESSAGING_SMS, STRIPE_PRICE_MESSAGING_USER } = require('@configs/vars');
 
 @Service()
