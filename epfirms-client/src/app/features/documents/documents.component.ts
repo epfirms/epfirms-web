@@ -147,7 +147,7 @@ export class DocumentsComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       let file = new File(
         [files[i]],
-        `${dateString}_${this.matter.client.last_name}_${files[0].name}`,
+        `${dateString}_${this.matter.client.last_name}_${files[i].name}`,
         { type: files[i].type },
       );
       fileList.push(file);
