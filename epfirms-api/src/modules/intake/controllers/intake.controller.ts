@@ -12,9 +12,10 @@ export class IntakeController {
     try {
       const created = await IntakeService.upsert(req.body);
 
+      console.log('created', created);
       const updated = await this.matterService.update({
-        id: created[0].matter_id,
-        matter_intake_id: created[0].id,
+        id: created.matter_id,
+        matter_intake_id: created.id,
       });
 
       res.status(StatusConstants.CREATED).send(created);
