@@ -9,7 +9,7 @@ import { AwsService } from '@app/shared/_services/aws.service';
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
-  styleUrls: ['./documents.component.scss']
+  styleUrls: ['./documents.component.scss'],
 })
 export class DocumentsComponent implements OnInit {
   //Input binding from parent
@@ -43,7 +43,7 @@ export class DocumentsComponent implements OnInit {
 
   currentDocument: Document;
 
-  selectedFiles: FileList;
+  selectedFiles: Array<any>;
 
   //variables inherited from tab binding
   userId: number;
@@ -127,13 +127,33 @@ export class DocumentsComponent implements OnInit {
   onFilesSelected(event): void {
     const files: FileList = event.target.files;
     console.log(event);
+    console.log('file list', files);
+    let formattedFiles = this.fileFormatting(files);
+
     // create the document objects from the FILES
-    this.selectedDocuments = this.createDocumentObjects(files);
+    this.selectedDocuments = this.createDocumentObjects(formattedFiles);
     // this is a list of the actual FILE objects,
     // This contains the actual data
-    this.selectedFiles = files;
+    this.selectedFiles = formattedFiles;
     // opens the slide over to manage the documents
     this.toggleManageDocs();
+  }
+
+  private fileFormatting(files: FileList): Array<any> {
+    let fileList = [];
+    let d = new Date();
+    let dateString = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear();
+
+    for (let i = 0; i < files.length; i++) {
+      let file = new File(
+        [files[i]],
+        `${dateString}_${this.matter.client.last_name}_${files[0].name}`,
+        { type: files[i].type },
+      );
+      fileList.push(file);
+    }
+
+    return fileList;
   }
 
   /**
@@ -141,7 +161,7 @@ export class DocumentsComponent implements OnInit {
    * @return returns an array of document objects that will be used to
    * create references in the database
    */
-  createDocumentObjects(files: FileList): Array<Document> {
+  createDocumentObjects(files): Array<Document> {
     let documentList: Array<Document> = [];
     for (let i = 0; i < files.length; i++) {
       let currentFile = files[i];
@@ -151,7 +171,7 @@ export class DocumentsComponent implements OnInit {
         this.userId,
         this.firmId,
         'Firm Only',
-        this.matter.id
+        this.matter.id,
       );
 
       documentList.push(document);
@@ -173,29 +193,41 @@ export class DocumentsComponent implements OnInit {
   // the FILE references are saved to the db with their appropriate DOCUMENT object.
   // then it loops through the selected FILE objects and uploads them to aws.
   upload() {
-      // for every FILE in the selected files, upload them to the s3 bucket.
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        let currentFile = this.selectedFiles[i];
+    // for every FILE in the selected files, upload them to the s3 bucket.
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      let currentFile = this.selectedFiles[i];
 
-        //make the call to the server to generate the upload url
-        this._awsService
-          .getPresignedUrl(this.userId, this.currentDocument.doc_type, currentFile.name, currentFile.type)
-          .pipe()
-          .subscribe((res) => {
-            let document = new Document(i, currentFile.name, this.userId, this.firmId, "Firm Only", this.matter.id);
-            delete document.id;
-            document.doc_key = res.key;
-            document.doc_type = this.currentDocument.doc_type;
+      //make the call to the server to generate the upload url
+      this._awsService
+        .getPresignedUrl(
+          this.userId,
+          this.currentDocument.doc_type,
+          currentFile.name,
+          currentFile.type,
+        )
+        .pipe()
+        .subscribe((res) => {
+          let document = new Document(
+            i,
+            currentFile.name,
+            this.userId,
+            this.firmId,
+            'Firm Only',
+            this.matter.id,
+          );
+          delete document.id;
+          document.doc_key = res.key;
+          document.doc_type = this.currentDocument.doc_type;
 
-            this._awsService.uploadfileAWSS3(res.url, currentFile.type, currentFile).subscribe(
-              () => {},
-              () => {},
-              () => {
-                this.createDocuments(document);
-              }
-            );
-          });
-      }
+          this._awsService.uploadfileAWSS3(res.url, currentFile.type, currentFile).subscribe(
+            () => {},
+            () => {},
+            () => {
+              this.createDocuments(document);
+            },
+          );
+        });
+    }
     this.toggleManageDocs();
   }
 }
