@@ -15,7 +15,6 @@ export class TwilioSubaccountService {
   twilioClient: twilio.Twilio;
 
   constructor(@Inject(TWILIO_SUBACCOUNT_TOKEN) protected subaccount: TwilioSubaccount) {
-    console.log('TwilioSubaccountService instantiated');
     this.twilioClient = twilio(this.subaccount.sid, this.subaccount.authToken);
   }
 
@@ -84,9 +83,16 @@ export class TwilioSubaccountService {
 
   async fetchConversationsByParticipantSid(phone: string): Promise<any> {
     const conversations = await this.twilioClient.conversations.services(this.subaccount.services.conversations.sid).participantConversations.list({
-      address: phone,
+      identity: phone,
     });
 
     return Promise.resolve(conversations);
+  }
+
+  async fetchParticipants(conversation) {
+    const participants = await this.twilioClient.conversations.services(this.subaccount.services.conversations.sid).conversations(conversation)
+      .participants
+      .list({limit: 20});
+      return Promise.resolve(participants);
   }
 }
