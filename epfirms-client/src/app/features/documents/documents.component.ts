@@ -142,7 +142,7 @@ export class DocumentsComponent implements OnInit {
   private fileFormatting(files: FileList): Array<any> {
     let fileList = [];
     let d = new Date();
-    let dateString = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear();
+    let dateString = (d.getMonth() + 1) + '_' + d.getDate() + '_' + d.getFullYear();
 
     for (let i = 0; i < files.length; i++) {
       let file = new File(
