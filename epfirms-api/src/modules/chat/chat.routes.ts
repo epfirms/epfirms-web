@@ -35,4 +35,7 @@ chatRouter.post('/webhooks/pre', (req, res) => chatController.handlePreEventWebh
 
 chatRouter.post('/webhooks/post', (req, res) => chatController.handlePostEventWebhook(req, res));
 
+chatRouter.get('/TEST', (req, res) => chatController.TEST(req, res));
+chatRouter.delete('/del', (req, res) => chatController.del(req, res));
+
 export { chatRouter };

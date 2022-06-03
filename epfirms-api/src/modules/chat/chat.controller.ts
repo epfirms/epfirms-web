@@ -181,17 +181,10 @@ export class ChatController {
         (val, index, self) =>
           self.findIndex((s) => s.firm_employee_id === val.firm_employee_id) === index,
       );
-      await subaccountService.addChatParticipant(conversation.sid, {
-        messagingBinding: { address: matter.client.cell_phone },
-        attributes: JSON.stringify({
-          friendlyName: matter.client.full_name,
-          phone: matter.client.cell_phone,
-        }),
-      });
       for (let teamMember of filteredMembers) {
         const employee = await this._firmEmployeeService.getById(teamMember.firm_employee_id);
         if (teamMember.include_in_group_chat) {
-          await subaccountService.addChatParticipant(conversation.sid, {
+          const participant = await subaccountService.addChatParticipant(conversation.sid, {
             identity: employee.user_id,
             messagingBinding: { projectedAddress: teams[0].twilio_phone_number },
             attributes: JSON.stringify({
@@ -200,6 +193,14 @@ export class ChatController {
           });
         }
       }
+
+      const clientParticipant = await subaccountService.addChatParticipant(conversation.sid, {
+        messagingBinding: { address: matter.client.cell_phone },
+        attributes: JSON.stringify({
+          friendlyName: matter.client.full_name,
+          phone: matter.client.cell_phone,
+        }),
+      });
       res.status(StatusConstants.CREATED).send({
         data: {
           conversationSid: conversation.sid,
@@ -401,5 +402,24 @@ export class ChatController {
     const subaccountCredentials = await credentialsService.getByFirmId(scope);
     Container.of(scope).set(TWILIO_SUBACCOUNT_TOKEN, subaccountCredentials);
     return Container.of(scope);
+  }
+
+  async TEST(req, res) {
+    const firm = req.body.firm_id;
+    const identity = req.body.identity;
+    const scopedContainer = await this._createScopedContainer(firm);
+    const subaccountService = scopedContainer.get(TwilioSubaccountService);
+    const suba = await subaccountService.fetchConversationsByParticipantSid(identity);
+    const cuba = await subaccountService.fetchParticipants(suba[0].conversationSid);
+    res.status(StatusConstants.OK).send({b: suba, c: cuba});
+  }
+
+  async del(req,res) {
+    const firm = req.body.firm_id;
+    const identity = req.body.sid;
+    const scopedContainer = await this._createScopedContainer(firm);
+    const subaccountService = scopedContainer.get(TwilioSubaccountService);
+    const del = await subaccountService.deleteConversations(identity);
+    res.status(StatusConstants.OK).send({del});
   }
 }
