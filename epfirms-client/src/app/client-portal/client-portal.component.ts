@@ -7,7 +7,7 @@ import { StripeService } from '@app/shared/_services/stripe-service/stripe.servi
   templateUrl: './client-portal.component.html',
   styleUrls: ['./client-portal.component.scss'],
   host: {
-    class: 'inset-0 flex flex-col absolute overflow-hidden',
+    class: 'inset-0 flex flex-col absolute ',
   },
 })
 export class ClientPortalComponent implements OnInit {

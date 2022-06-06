@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Matter } from '@app/core/interfaces/matter';
 import { UserService } from '@app/features/user/services/user.service';
 import { FinancialSummaryService } from '../services/financial-summary.service';
+import { IntakeService } from '../services/intake.service';
 import { WardService } from '../services/ward.service';
 
 @Component({
@@ -13,6 +14,9 @@ export class ElderLawWorkflowComponent implements OnInit {
   // input bindings
   @Input() matter: Matter;
 
+  // client mode bool
+  @Input() clientMode: boolean;
+
   // state that manages the views
   state: string = 'caregiver';
 
@@ -23,6 +27,7 @@ export class ElderLawWorkflowComponent implements OnInit {
     private wardService: WardService,
     private userService: UserService,
     private financialSummaryService: FinancialSummaryService,
+    private intakeService : IntakeService
   ) {}
 
 
@@ -44,6 +49,22 @@ export class ElderLawWorkflowComponent implements OnInit {
   }
 
   setState(state: string): void {
+
+    if (state === 'appointees' && this.matter.matter_intake.is_review_eligible === false && this.clientMode === true) {
+      this.matterIntakeAutomation();
+    }
     this.state = state;
+  }
+
+
+// this will set the MatterIntake.is_review_eligible to true
+  // this will add task for assigned attorney/employee to review the intake
+  // this will send an email to assigned employee that the intake is ready for review
+  private matterIntakeAutomation(): void {
+    console.log("MATTER", this.matter);
+    
+    this.intakeService.statusChangeAutomation(this.matter.matter_intake).subscribe(res => {
+      console.log("automation client side res", res);
+    });
   }
 }
