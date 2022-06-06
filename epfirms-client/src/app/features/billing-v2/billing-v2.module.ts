@@ -8,6 +8,8 @@ import { HourlyRateViewComponent } from './firm/hourly-rate-view/hourly-rate-vie
 import { InputMaskModule } from '@ngneat/input-mask';
 import { ComboboxModule } from '@app/shared/combobox/combobox.module';
 import { BillingV2RoutingModule } from './billing-v2-routing.module';
+import { HotToastModule } from '@ngneat/hot-toast';
+import { TippyModule } from '@ngneat/helipopper';
 
 
 
@@ -24,7 +26,9 @@ import { BillingV2RoutingModule } from './billing-v2-routing.module';
     EditableModule,
     InputMaskModule,
     ComboboxModule,
-    BillingV2RoutingModule
+    BillingV2RoutingModule,
+    HotToastModule,
+    TippyModule
   ],
   exports: [
     FirmBillingMainComponent
