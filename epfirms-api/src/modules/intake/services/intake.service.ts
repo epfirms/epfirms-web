@@ -30,4 +30,35 @@ export class IntakeService {
       console.error(error);
     }
   }
+
+  public static async updateReviewStatus(data): Promise<any> {
+    try {
+      const updated = await Database.models.matter_intake.update(
+        { is_review_eligible: true},
+        { where: { id: data.id } },
+      );
+
+      // after the intake is updated, we need to get the matter and create a new MatterTask
+      // assigned to the attorney to review the intake
+
+      const matter = await Database.models.matter.findOne({ where: { id: data.matter_id } });
+
+
+      const task = {
+        matter_id: matter.id,
+        name: "Review Intake",
+        assignee_id: matter.attorney_id,
+        due: new Date(Date.now() + (1000 * 60 * 60 * 24 * 2)),
+
+      }
+
+      const createdTask = await Database.models.matter_task.create(task);
+
+      console.log("\n\n\n\ncreatedTask\n\n\n", createdTask);
+
+      return Promise.resolve(updated);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

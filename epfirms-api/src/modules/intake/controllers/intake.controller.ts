@@ -44,4 +44,16 @@ export class IntakeController {
       console.error(error);
     }
   }
+
+  public async updateReviewStatus(req: Request, res: Response): Promise<any> {
+    try {
+      const updated = await IntakeService.updateReviewStatus(req.body);
+
+      res.status(StatusConstants.OK).send(updated);
+    } catch (error) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+      console.error(error);
+    }
+  }
+
 }

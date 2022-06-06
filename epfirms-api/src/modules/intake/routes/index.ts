@@ -10,6 +10,9 @@ intakeRouter.post('/', passport.authenticate('bearer', { session: false }), (req
 intakeRouter.get('/:matter_id', passport.authenticate('bearer', { session: false }), (req, res) => intakeController.getOneWithMatterId(req, res));
 intakeRouter.delete('/:id', passport.authenticate('bearer', { session: false }), (req, res) => intakeController.delete(req, res));
 
+// automation route
+
+intakeRouter.put('/automation', passport.authenticate('bearer', { session: false }), (req, res) => intakeController.updateReviewStatus(req, res));
 
 
 export { intakeRouter };

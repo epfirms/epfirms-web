@@ -39,7 +39,7 @@ export class ClientEstatePlanningIntakeComponent implements OnInit {
   private matterIntakeAutomation(): void {
     console.log("MATTER", this.matter);
     
-    this.intakeService.statusChangeAutomation(this.matter.matter_intake.id, this.matter).subscribe(res => {
+    this.intakeService.statusChangeAutomation(this.matter.matter_intake).subscribe(res => {
       console.log("automation client side res", res);
     });
   }

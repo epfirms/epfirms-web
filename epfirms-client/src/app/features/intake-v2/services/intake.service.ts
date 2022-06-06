@@ -23,26 +23,9 @@ getOneWithMatterId(id) : Observable<any> {
     return this.http.delete(`/api/intake/${id}`);
   }
 
-  statusChangeAutomation(matterIntakeId : number, matter : Matter) : Observable<any> {
-
-    let status : boolean = false;
-    // make the change in db with api
-    this.http.post(`/api/intake`, {id: matterIntakeId, is_review_eligible: true}).subscribe(intake => {
-      if (intake[0].is_review_eligible) {
-        // add the task
-
-        this.matterService.addMatterTask({matter_id: matter.id, name: "REVIEW INTAKE", assignee_id: matter.attorney_id, due: new Date(Date.now() + (1000 * 60 * 60 * 48))}).subscribe(task => {
-          console.log("task automation", task);
-          if (task) {
-            status = true;
-          }
-  
-        });
-      }
-    });
-
-    return of(status);
+  statusChangeAutomation(matterIntake) : Observable<any> {
     
+    return this.http.put(`/api/intake/automation`, matterIntake);
   } 
   
   
