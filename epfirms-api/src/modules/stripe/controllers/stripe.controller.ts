@@ -1,13 +1,16 @@
-import { Response, Request } from 'express';
+import { Response } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
 import { StripeService } from '../services/stripe.service';
-import { send } from 'process';
 import { emailsService } from '@src/modules/emails/services/emails.service';
 import { Service } from 'typedi';
+import { StripeMeteredUsageService } from '../services/stripe-metered-usage.service';
+import { ConfigService } from '@src/modules/config/config.service';
+import { TwilioMainAccountService } from '@src/modules/chat/twilio-main-account.service';
+import { TwilioSubaccountCredentialsService } from '@src/modules/chat/twilio-subaccount-credentials.service';
 import { Database } from '@src/core/Database';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
-const passport = require('passport');
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
+const { TWILIO_SUBACCOUNT_SID } = require('@configs/vars');
 
 @Service()
 export class StripeController {
@@ -16,7 +19,14 @@ export class StripeController {
   feeRate: number = 0.029 + 0.011;
   feePercent: number = 4;
 
-  constructor(private _emailService: emailsService) {}
+  constructor(
+    private _emailService: emailsService,
+    private _stripeService: StripeService,
+    private _stripeMeteredUsageService: StripeMeteredUsageService,
+    private _configService: ConfigService,
+    private _twilioMainAccountService: TwilioMainAccountService,
+    private _twilioCredentials: TwilioSubaccountCredentialsService,
+  ) {}
 
   // This method takes the day in a month that the billing cycle will bill on
   // It then sets the anchor to be in the next month
@@ -57,7 +67,7 @@ export class StripeController {
         firm_id = req.user.firm_access.firm_id;
       }
       // get the stripe account record if it exists in db
-      const stripeAccount = await StripeService.getStripeAccountId(firm_id);
+      const stripeAccount = await this._stripeService.getStripeAccountId(firm_id);
       // if there is an existing stripe account, use the stripe api to compare it to connected
       // accounts.
       if (stripeAccount !== null) {
@@ -88,14 +98,16 @@ export class StripeController {
 
       const origin = `${req.headers.referer}`;
       // check to see if there is an existing entry with a Stripe account_id for the firm
-      const existing_account = await StripeService.getStripeAccountId(req.user.firm_access.firm_id);
+      const existing_account = await this._stripeService.getStripeAccountId(
+        req.user.firm_access.firm_id,
+      );
 
       // if there is no existing account_id then create a new one and save to DB
       if (existing_account === null) {
         const account = await stripe.accounts.create({
           type: 'standard',
         });
-        const createEntry = await StripeService.createStripeAccount(
+        const createEntry = await this._stripeService.createStripeAccount(
           account.id,
           req.user.firm_access.firm_id,
         );
@@ -220,9 +232,9 @@ export class StripeController {
       const session = event.data.object;
 
       if (event.type === 'checkout.session.completed') {
-        const fufillment = await StripeService.fufillPaymentSession(session);
+        const fufillment = await this._stripeService.fufillPaymentSession(session);
         if (session.subscription) {
-          const subscription = await StripeService.fufillSubscriptionSession(session);
+          const subscription = await this._stripeService.fufillSubscriptionSession(session);
         }
 
         res.status(200).send();
@@ -237,7 +249,9 @@ export class StripeController {
         console.log('INVOICE PAYMENT SUCCESS SESSION');
         console.log(session);
         if (session.subscription) {
-          const updatedCustomerAccount = await StripeService.fufillInvoicePaymentSuccess(session);
+          const updatedCustomerAccount = await this._stripeService.fufillInvoicePaymentSuccess(
+            session,
+          );
           // if the updated customer account has an associated subscription and its active, it will send the email
           if (updatedCustomerAccount.sendEmail) {
             //send an email template for successful payment
@@ -374,6 +388,141 @@ export class StripeController {
     } catch (error) {
       console.error(error);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
+
+  async getCustomerById(req, res: Response) {
+    try {
+      const firmId = req.user.firm_access.firm_id;
+      const customerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(firmId);
+      const customer = await this._stripeMeteredUsageService.fetchCustomer(customerId);
+      const adjustedBalance = await this._stripeMeteredUsageService.getAdjustedCustomerBalance(
+        customerId,
+      );
+      res
+        .status(StatusConstants.OK)
+        .send({ data: { customer: { ...customer, adjusted_balance: adjustedBalance } } });
+    } catch (err) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err.message);
+    }
+  }
+
+  async createPaymentIntent(req, res: Response) {
+    try {
+      const data = req.body.paymentIntent;
+      const firmId = req.user.firm_access.firm_id;
+      const customerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(firmId);
+      const paymentIntent = await this._stripeMeteredUsageService.createPaymentIntent(
+        customerId,
+        data.amount,
+      );
+      res.status(StatusConstants.OK).send({ data: { paymentIntent } });
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  async updateCustomer(req, res: Response) {
+    try {
+      const firmId = req.user.firm_access.firm_id;
+      const changes = req.body;
+      const customerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(firmId);
+      const customer = await this._stripeMeteredUsageService.updateCustomer(customerId, changes);
+      res.status(StatusConstants.OK).send({ data: { customer } });
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  async createSetupIntent(req, res: Response) {
+    try {
+      const firmId = req.user.firm_access.firm_id;
+      const customerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(firmId);
+      const setupIntent = await this._stripeMeteredUsageService.createSetupIntent(customerId);
+      res.status(StatusConstants.OK).send({ data: { setupIntent } });
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  async updateCreditBalance(req, res: Response) {
+    try {
+      const data = req.body;
+      const user = req.user;
+
+      const customerBalanceTransaction =
+        await this._stripeMeteredUsageService.creditCustomerBalance(data.customerId, data.amount);
+
+      const subaccountCredentials = await this._twilioCredentials.getByFirmId(
+        user.firm_access.firm_id,
+      );
+      const subaccount = await this._twilioMainAccountService.fetchSubaccount(
+        TWILIO_SUBACCOUNT_SID,
+      );
+
+      // if (subaccount.status !== 'active') {
+      //   await this._conversationService.updateSubaccountStatus(TWILIO_SUBACCOUNT_SID, 'active');
+      // }
+
+      res.status(StatusConstants.OK).send({ data: customerBalanceTransaction });
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  async getCustomerPaymentMethods(req, res: Response) {
+    try {
+      const customerId = req.params.customer;
+      const paymentMethods = await this._stripeMeteredUsageService.listPaymentMethodsForCustomer(
+        customerId,
+      );
+      res.status(StatusConstants.OK).send({ data: paymentMethods });
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  async updatePaymentIntentAmount(req, res: Response) {
+    try {
+      const id = req.params.id;
+      const amount = req.body.amount;
+      const paymentIntent = await this._stripeMeteredUsageService.updatePaymentIntentAmount(
+        id,
+        amount,
+      );
+      res.status(StatusConstants.OK).send({ data: paymentIntent });
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  async handleWebhookEvent(req, res: Response) {
+    const sig = req.headers['stripe-signature'];
+    const payload = req.body;
+    let event;
+    const webhookSecret = this._configService.get<string>('STRIPE_WEBHOOK_SECRET');
+
+    try {
+      event = stripe.webhooks.constructEvent(payload, sig, webhookSecret);
+      const data = event.data.object;
+      console.log(event.type);
+      console.log(data);
+      // switch(event.type) {
+      //   case '':
+
+      //     break;
+      // }
+
+      res.status(StatusConstants.OK).send();
+    } catch (err) {
+      console.error(err);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err.message);
     }
   }
 }

@@ -1,12 +1,27 @@
 import { Database } from '@src/core/Database';
 import { Service } from 'typedi';
+const { STRIPE_SECRET } = require('@configs/vars');
 const bcrypt = require('bcrypt');
-
+import Stripe from 'stripe';
 
 
 @Service()
 export class StripeService {
-  public static async getStripeAccountId(firmId): Promise<any> {
+  stripe: Stripe;
+
+  constructor() {
+    this.stripe = new Stripe(STRIPE_SECRET, {
+      apiVersion: '2020-08-27',
+    });
+  }
+  
+  async createCustomer(params: Stripe.CustomerCreateParams, options: Stripe.RequestOptions): Promise<Stripe.Customer> {
+    const response: Stripe.Customer = await this.stripe.customers.create(params, options);
+
+    return response;
+  }
+
+  async getStripeAccountId(firmId): Promise<any> {
     try {
       const account = await Database.models.stripe_account.findOne({where: {firm_id: firmId}});
       return account;
@@ -15,7 +30,7 @@ export class StripeService {
     }
   }
 
-  public static async createStripeAccount(accountId, firmId): Promise<any> {
+  async createStripeAccount(accountId, firmId): Promise<any> {
     try {
 
       const account = await Database.models.stripe_account.create({account_id: accountId, firm_id: firmId});
@@ -26,7 +41,7 @@ export class StripeService {
     }
   }
 
-  public static async fufillPaymentSession(session): Promise<any> {
+  async fufillPaymentSession(session): Promise<any> {
     try {
       const statements = await Database.models.statement.findAll({where: {stripe_session_id: session.id}});
 
@@ -52,7 +67,7 @@ export class StripeService {
     }
   }
 
-  public static async fufillSubscriptionSession(session): Promise<any> {
+  async fufillSubscriptionSession(session): Promise<any> {
     try {
       console.log("FUFILL SUB", session);
       const customerAccount = await Database.models.customer_account.findAll({where: {stripe_session_id: session.id}});
@@ -76,7 +91,7 @@ export class StripeService {
   
   // this method will find the associated customer account and update it
   // this method will also add a payment to the matterbill records
-  public static async fufillInvoicePaymentSuccess(session): Promise<any> {
+  async fufillInvoicePaymentSuccess(session): Promise<any> {
     try {
         let amountPaid = session.amount_paid / 100;
         const foundAccount = await Database.models.customer_account.findOne({where: {subscription_id: session.subscription}});

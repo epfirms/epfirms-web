@@ -15,7 +15,7 @@ export class ConversationResolver implements Resolve<any> {
     this.store.dispatch(ConversationActions.Init());
     const connectionState = this.store.select(selectConnectionState);
     return connectionState.pipe(
-      filter((state) => state === 'connected'),
+      filter((state) => state !== 'unknown'),
       take(1),
       catchError((err) => {
         this._authService.logout();

@@ -23,7 +23,6 @@ const routes: Routes = [
       legalAreas: LegalAreaResolver,
       matters: MatterResolver,
       staff: StaffResolver,
-      conversation: ConversationResolver
     },
     component: FirmPortalComponent,
     children: [

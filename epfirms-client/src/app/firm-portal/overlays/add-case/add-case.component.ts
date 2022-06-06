@@ -96,6 +96,9 @@ export class AddCaseComponent implements OnInit, OnDestroy {
 
  // the selected intake type
  selectedIntake : string = 'none'; 
+
+ // boolean that controls whether the client gets sent the intake
+ sendIntake : boolean = true;
   
   constructor(
     private _fb: FormBuilder,
@@ -262,6 +265,6 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.close({matter: this.caseForm.value, intake: this.selectedIntake, note: this.note, chatToTextNumber: this.enableChatToText && this.chatToTextNumber.valid ? this.chatToTextNumber : null});
+    this.close({matter: this.caseForm.value, intake: this.selectedIntake, sendIntake: this.sendIntake, note: this.note, chatToTextNumber: this.enableChatToText && this.chatToTextNumber.valid ? this.chatToTextNumber : null});
   }
 }

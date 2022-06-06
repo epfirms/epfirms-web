@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConversationService } from '@app/features/conversation/services/conversation.service';
+import { selectSubaccountStatus } from '@app/features/conversation/store/conversation.store';
 import { selectRouteParams } from '@app/store/router.selectors';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
@@ -14,6 +15,8 @@ export class MessagesPageComponent {
   selectedConversationSid$ = this.store.select(selectRouteParams).pipe(map((params) => params.id));
 
   conversationItems$ = this._conversationService.conversations$;
+
+  subAccountStatus$ = this.store.select(selectSubaccountStatus);
 
   constructor(
     private store: Store,

@@ -2,7 +2,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { NgxStripeModule } from 'ngx-stripe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -75,7 +74,6 @@ const quillConfig = [
     FormsModule,
     AutocompleteModule,
     ReactiveFormsModule,
-    NgxStripeModule.forRoot('pk_test_NaQ0K78jrNRGyacbblmpM2RW00mvwDjEh6'),
     StoreModule.forRoot({matterTabs: matterTabsReducer, currentUser: currentUserReducer, router: routerReducer}, {}),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([MatterTabsEffects, CurrentUserEffects]),
