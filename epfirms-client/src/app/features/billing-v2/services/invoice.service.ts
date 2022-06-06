@@ -24,4 +24,8 @@ export class InvoiceService {
    delete(id : number): Observable<any> {
     return this.http.delete('/api/invoice/' + id);
    }
+
+   getAllWithFirmId(firmId : number): Observable<any> {
+    return this.http.get('/api/invoice/firm/' + firmId);
+   }
 }

@@ -393,6 +393,7 @@ export class StripeController {
       await Database.models.invoice.update(
         {
           invoice_id: invoiceStripe.id,
+          status: invoiceStripe.status,
         },
         {
           where: {

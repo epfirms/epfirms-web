@@ -112,6 +112,8 @@ export class Database {
     this.models.invoice.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
     this.models.invoice.hasMany(this.models.transaction, {foreignKey: 'invoice_id'});
     this.models.transaction.belongsTo(this.models.invoice, {foreignKey: 'invoice_id'});
+    this.models.user.hasMany(this.models.invoice, {foreignKey: 'user_id'});
+    this.models.invoice.belongsTo(this.models.user, {foreignKey: 'user_id'});
     // ward relationships
     this.models.user.hasOne(this.models.ward, {foreignKey: 'user_id'});
     this.models.ward.belongsTo(this.models.user, {foreignKey: 'user_id'});

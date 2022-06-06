@@ -10,6 +10,7 @@ invoiceRouter.post('/', passport.authenticate('bearer', { session: false }), (re
 invoiceRouter.get('/:id', passport.authenticate('bearer', { session: false }), (req, res) => invoiceController.getOneWithId(req, res));
 invoiceRouter.delete('/:id', passport.authenticate('bearer', { session: false }), (req, res) => invoiceController.delete(req, res));
 
+invoiceRouter.get('/firm/:id', passport.authenticate('bearer', { session: false }), (req, res) => invoiceController.getAllWithFirmId(req, res));
 
 
 export { invoiceRouter };

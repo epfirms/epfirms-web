@@ -38,4 +38,14 @@ export class InvoiceService {
       console.error(error);
     }
   }
+
+  public static async getAllWithFirmId(firmId): Promise<any> {
+    try {
+      const all = await Database.models.invoice.findAll({ where: { firm_id: firmId }, include: { model: Database.models.user}});
+      return Promise.resolve(all);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 }

@@ -46,4 +46,16 @@ export class InvoiceController {
       console.error(error);
     }
   }
+
+  // get all of the invoices for a firm
+  public async getAllWithFirmId(req: Request, res: Response): Promise<any> {
+    try {
+      const all = await InvoiceService.getAllWithFirmId(req.params.id);
+      res.status(StatusConstants.OK).send(all);
+    } catch (error) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+      console.error(error);
+    }
+  }
+
 }
