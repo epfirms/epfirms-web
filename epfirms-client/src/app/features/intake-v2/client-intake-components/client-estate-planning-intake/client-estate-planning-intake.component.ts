@@ -27,9 +27,6 @@ export class ClientEstatePlanningIntakeComponent implements OnInit {
     });
   }
   setState(state: string): void {
-    if (state === 'appointees' && this.matter.matter_intake.is_review_eligible === false) {
-      this.matterIntakeAutomation();
-    }
     this.state = state;
   }
 

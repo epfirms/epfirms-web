@@ -6,6 +6,8 @@ export class IntakeService {
   public static async upsert(data): Promise<any> {
     try {
       const created = await Database.models.matter_intake.upsert(data);
+      console.log("newly upserted", created[0].id, created[0].matter_id);
+      const updatedMatter = await Database.models.matter.update({matter_intake_id: created[0].id}, {where: {id: created[0].matter_id}});
 
       return Promise.resolve(created);
     } catch (error) {
