@@ -296,6 +296,15 @@ export class StripeController {
         res.status(StatusConstants.INTERNAL_SERVER_ERROR).send('INVOICE NOT FOUND');
       }
 
+      //get the firms stripe account
+      const firmStripeAccount = await Database.models.stripe_account.findOne({
+        where: {firm_id: invoice.firm_id},
+      });
+
+      if (!firmStripeAccount) {
+        res.status(StatusConstants.INTERNAL_SERVER_ERROR).send('STRIPE ACCOUNT NOT FOUND');
+      }
+
       //get the user information
       const user = await Database.models.user.findOne({ where: { id: invoice.user_id } });
 
@@ -303,21 +312,18 @@ export class StripeController {
       let customer = await Database.models.customer_account.findOne({
         where: { user_id: invoice.user_id },
       });
-      // the customerID is the stripe assigned Customer id
-      let customerID = customer.customer_id;
-      // if there is no customer id, we need to create one with stripe
-      if (!customerID) {
-        let stripeCustomer = await stripe.customers.create({
-          email: user.email,
-          name: user.first_name + ' ' + user.last_name,
-        });
-        customerID = stripeCustomer.id;
-        // update the customer record with the new customer id
-        await Database.models.customer_account.update(
-          { customer_id: customerID },
-          { where: { user_id: invoice.user_id } },
-        );
+
+      //id to hold the customer_id that stripe uses, the object is different structure based on 
+      // whether or not we need to create one
+      // so we use this separate var to keep track of it
+      let customerID;
+       
+      if (customer) {
+
+      customerID = customer.customer_id;
       }
+      // the customerID is the stripe assigned Customer id
+      // if there is no customer id, we need to create one with stripe
       // if there isn't a customer account record in the DB, create one and then create a stripe Customer
       // and update the record as well
       if (!customer) {
@@ -325,12 +331,13 @@ export class StripeController {
           email: user.email,
           name: user.first_name + ' ' + user.last_name,
         });
-        // updated the customerID
         customerID = customer.id;
+        console.log("the created stripe customer is", customer);
+        // updated the customerID
         // create customer account in db
         await Database.models.customer_account.create({
           user_id: user.id,
-          customer_id: customerID,
+          customer_id: customer.id,
           firm_id: invoice.firm_id,
         });
       }
@@ -338,6 +345,8 @@ export class StripeController {
       const transactions = await Database.models.transaction.findAll({
         where: { invoice_id: invoice.id },
       });
+
+      console.log("customer before transactions", customer);
 
       // usually, the invoice will be created from the transactions and that is the total that stripe goes by
       // they should be synced
@@ -360,6 +369,7 @@ export class StripeController {
           currency: 'usd',
         });
       }
+      console.log("The customer before invoice is", customer);
       //create the invoice
       const invoiceStripe = await stripe.invoices.create({
         customer: customerID,
@@ -367,6 +377,16 @@ export class StripeController {
         collection_method: 'send_invoice',
         description: invoice.description,
         due_date: invoice.due_date,
+        // this on behalf of is the connected firm
+        // if this is setup correctly, it will load their hosted page
+        // as well as their invoicing stuff
+        // NOTE: there is now way to create invoice for connected account with GUI
+        on_behalf_of: firmStripeAccount.account_id,
+        transfer_data: {
+          destination: firmStripeAccount.account_id,
+        },
+        // the 4% charge that we take from the connected account
+        application_fee_amount: Math.floor(invoice.total * 0.04 * 100),
       });
 
       // update the invoice record with stripe invoice id and status
