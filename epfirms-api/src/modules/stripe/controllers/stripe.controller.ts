@@ -8,6 +8,7 @@ import { ConfigService } from '@src/modules/config/config.service';
 import { TwilioMainAccountService } from '@src/modules/chat/twilio-main-account.service';
 import { TwilioSubaccountCredentialsService } from '@src/modules/chat/twilio-subaccount-credentials.service';
 import { Database } from '@src/core/Database';
+import { InvoiceService } from '@src/modules/invoice/services/invoice.service';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
 const { TWILIO_SUBACCOUNT_SID } = require('@configs/vars');
@@ -245,6 +246,12 @@ export class StripeController {
       } else if (event.type === 'invoice.created') {
         console.log('INVOICE CREATED SESSION');
         console.log(session);
+      } else if (event.type === 'invoice.finalized') {
+        console.log('INVOICE FINALIZED SESSION');
+        console.log(session);
+        // update the invoice with the invoice id
+        const updatedInvoice = await Database.models.invoice.update({status: session.status, hosted_invoice_url: session.hosted_invoice_url }, {where: {invoice_id: session.id}});
+        res.status(200).send();
       } else if (event.type === 'invoice.payment_succeeded') {
         console.log('INVOICE PAYMENT SUCCESS SESSION');
         console.log(session);
@@ -298,7 +305,7 @@ export class StripeController {
 
       //get the firms stripe account
       const firmStripeAccount = await Database.models.stripe_account.findOne({
-        where: {firm_id: invoice.firm_id},
+        where: { firm_id: invoice.firm_id },
       });
 
       if (!firmStripeAccount) {
@@ -313,14 +320,13 @@ export class StripeController {
         where: { user_id: invoice.user_id },
       });
 
-      //id to hold the customer_id that stripe uses, the object is different structure based on 
+      //id to hold the customer_id that stripe uses, the object is different structure based on
       // whether or not we need to create one
       // so we use this separate var to keep track of it
       let customerID;
-       
-      if (customer) {
 
-      customerID = customer.customer_id;
+      if (customer) {
+        customerID = customer.customer_id;
       }
       // the customerID is the stripe assigned Customer id
       // if there is no customer id, we need to create one with stripe
@@ -332,7 +338,7 @@ export class StripeController {
           name: user.first_name + ' ' + user.last_name,
         });
         customerID = customer.id;
-        console.log("the created stripe customer is", customer);
+        console.log('the created stripe customer is', customer);
         // updated the customerID
         // create customer account in db
         await Database.models.customer_account.create({
@@ -346,7 +352,7 @@ export class StripeController {
         where: { invoice_id: invoice.id },
       });
 
-      console.log("customer before transactions", customer);
+      console.log('customer before transactions', customer);
 
       // usually, the invoice will be created from the transactions and that is the total that stripe goes by
       // they should be synced
@@ -369,7 +375,7 @@ export class StripeController {
           currency: 'usd',
         });
       }
-      console.log("The customer before invoice is", customer);
+      console.log('The customer before invoice is', customer);
       //create the invoice
       const invoiceStripe = await stripe.invoices.create({
         customer: customerID,

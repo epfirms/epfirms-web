@@ -39,4 +39,8 @@ export class FirmBillingMainComponent implements OnInit {
   setState(state: string) {
     this.state = state;
   }
+
+  openInvoice(url : string) : void {
+    window.open(url, '_blank');
+  }
 }
