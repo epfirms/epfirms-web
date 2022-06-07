@@ -252,7 +252,18 @@ export class StripeController {
         // update the invoice with the invoice id
         const updatedInvoice = await Database.models.invoice.update({status: session.status, hosted_invoice_url: session.hosted_invoice_url }, {where: {invoice_id: session.id}});
         res.status(200).send();
-      } else if (event.type === 'invoice.payment_succeeded') {
+      }
+      
+      else if (event.type === 'invoice.paid') {
+
+        console.log('INVOICE PAID SESSION');
+        console.log(session);
+        // update the invoice with the invoice id
+        const updatedInvoice = await Database.models.invoice.update({status: session.status}, {where: {invoice_id: session.id}});
+        res.status(200).send();
+      }
+      
+      else if (event.type === 'invoice.payment_succeeded') {
         console.log('INVOICE PAYMENT SUCCESS SESSION');
         console.log(session);
         if (session.subscription) {
