@@ -31,7 +31,7 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, DATE, DATEONLY, FLOAT }
         defaultValue: 0.25
       },
       due: {
-        type: DATE
+        type: DATE,
       },
       completed: {
         type: BOOLEAN,

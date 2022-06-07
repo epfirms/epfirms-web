@@ -18,12 +18,16 @@ export interface AccessToken {
 export class AuthService {
   constructor(private _userService: UserService) {}
   public async validate(email, password): Promise<{ valid: boolean; msg: string }> {
+  try {
+    console.log("\n\n\n THIS IS THE AUTH SERVICE VALIDATE METHOD \n\n\n");
     const user = await Database.models.user.findOne({
       attributes: ['id', 'email', 'password'],
       where: {
         email,
       },
     });
+
+    console.log("found user", user);
 
     if (user.password && user.password.startsWith('$2a')) {
       return Promise.resolve({ valid: false, msg: 'update' });
@@ -34,6 +38,10 @@ export class AuthService {
     }
 
     return Promise.reject({ valid: false, msg: 'incorrect username/password combination' });
+  } catch (error) {
+    
+    console.error(error);
+  }
   }
 
   public async generateToken(user, clientAccess, firmAccess): Promise<string> {

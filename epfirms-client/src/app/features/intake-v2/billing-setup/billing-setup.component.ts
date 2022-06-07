@@ -95,6 +95,8 @@ export class BillingSetupComponent implements OnInit {
       this.billingSettings.initial_invoice_message,
     );
 
+    console.log("initial invoice", initialInvoice);
+
     const finalInvoice = new Invoice(
       this.matter.id,
       this.matter.client.id,
@@ -103,8 +105,9 @@ export class BillingSetupComponent implements OnInit {
       this.billingSettings.final_invoice_message,
     );
 
-    finalInvoice.setDate(new Date(this.billingSettings.final_payment_due_date).getTime() / 1000);
+    finalInvoice.setDate(new Date(this.billingSettings.final_payment_due_date).toUTCString());
 
+    console.log("final invoice", finalInvoice);
     this.invoiceService.upsert(initialInvoice).subscribe((initial) => {
       console.log('initial invoice', initial);
       if (initial) {

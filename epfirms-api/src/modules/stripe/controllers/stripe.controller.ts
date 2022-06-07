@@ -376,7 +376,7 @@ export class StripeController {
         auto_advance: true,
         collection_method: 'send_invoice',
         description: invoice.description,
-        due_date: invoice.due_date,
+        due_date: invoice.due_date.getTime() / 1000,
         // this on behalf of is the connected firm
         // if this is setup correctly, it will load their hosted page
         // as well as their invoicing stuff

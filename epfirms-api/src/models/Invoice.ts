@@ -1,4 +1,4 @@
-module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, DATE, FLOAT }) => {
+module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, DATE}) => {
   const tableName = 'invoice';
 
   const Invoice = sequelize.define(
@@ -26,7 +26,7 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, TEXT, DATE, FLOAT }) =>
         type: STRING,
       },
       due_date: {
-        type: STRING,
+        type: DATE,
         allowNull: false,
       },
       description: {
