@@ -24,17 +24,12 @@ export class FirmEmployeeService {
    *
    */
      public async getByUserId(firmId: number, userId: number): Promise<any> {
-      const { firm_employee, firm_role, user } = Database.models;
+      const { firm_employee, user } = Database.models;
       const employeeInstance = await firm_employee.findOne({where: {
         firm_id: firmId,
         user_id: userId
-      },        attributes: ['id', 'active', 'hourly_rate', 'admin'],
+      },        attributes: ['id', 'active', 'hourly_rate', 'admin', 'role'],
       include: [
-        {
-          model: firm_role,
-          as: 'role',
-          attributes: ['id', 'name']
-        },
         {
           model: user
         }
@@ -50,7 +45,7 @@ export class FirmEmployeeService {
    *
    */
   public async getAll(firmId: number): Promise<boolean> {
-    const { user, firm, firm_employee, firm_role } = Database.models;
+    const { user, firm, firm_employee } = Database.models;
 
     const staff = await firm.findOne({
       where: {
@@ -58,13 +53,7 @@ export class FirmEmployeeService {
       },
       include: {
         model: firm_employee,
-        attributes: ['id', 'active', 'hourly_rate', 'admin'],
         include: [
-          {
-            model: firm_role,
-            as: 'role',
-            attributes: ['id', 'name']
-          },
           {
             model: user
           }
@@ -91,27 +80,12 @@ export class FirmEmployeeService {
     return Promise.resolve(employee.dataValues);
   }
 
-  public async setRoles(userId: number, roleIds: number[]): Promise<any> {
-    const { user, firm_role } = Database.models;
-
-    const userInstance = await user.findByPk(userId);
-    const employerList = await userInstance.getEmployer();
-
-    if (employerList.length) {
-      const employeeInstance = employerList[0].firm_employee;
-      const roleInstances = await firm_role.findAll({
-        where: { id: roleIds, firm_id: employeeInstance.firm_id }
-      });
-
-      await employeeInstance.setRole(roleInstances);
-
-      return Promise.resolve(roleInstances);
-    }
-  }
-
   public async update(id: number, data): Promise<any> {
-    const { firm_employee } = Database.models;
+    const { firm_employee, user } = Database.models;
     await firm_employee.update(data, {where: {id}});
+    if (data && data.user) {
+      await user.update(data.user, {where: {id: data.user.id}});
+    }
     return Promise.resolve(true);
   }
 

@@ -61,8 +61,6 @@ export class Database {
       community_template_task_file: require('../models/CommunityTemplateTaskFile')(this.sequelize, Sequelize),
       firm_team: require('../models/FirmTeam')(this.sequelize, Sequelize),
       firm_team_member: require('../models/FirmTeamMember')(this.sequelize, Sequelize),
-      firm_role: require('../models/FirmRole')(this.sequelize, Sequelize),
-      firm_employee_role: require('../models/FirmEmployeeRole')(this.sequelize, Sequelize),
       legal_insurance: require('../models/LegalInsurance')(this.sequelize, Sequelize),
       customer_account: require('../models/CustomerAccount')(this.sequelize, Sequelize),
       contract: require('../models/Contract')(this.sequelize, Sequelize),
@@ -391,19 +389,6 @@ export class Database {
     this.models.firm_team_member.belongsTo(this.models.firm_team);
     // this.models.firm_team.belongsToMany(this.sequelize.models.firm_employee, { through: { model: this.models.firm_team_member, unique: false }, as: 'member', unique: false, foreignKey: 'firm_team_id'});
     // this.sequelize.models.firm_employee.belongsToMany(this.models.firm_team, { through: { model: this.models.firm_team_member, unique: false }, as: 'team', unique: false, foreignKey: 'firm_employee_id'});
-
-    this.models.firm_role.hasMany(this.models.firm_team_member, {
-      foreignKey: 'firm_role_id'
-    });
-    this.models.firm_team_member.belongsTo(this.models.firm_role);
-
-    this.models.firm.hasMany(this.models.firm_role, {foreignKey: 'firm_id', as: 'firm_role'});
-    this.models.firm_role.belongsTo(this.models.firm, {
-      foreignKey: 'firm_id'
-    });
-
-    this.sequelize.models.firm_employee.belongsToMany(this.models.firm_role, { through: 'firm_employee_role', as: 'role', foreignKey: 'firm_employee_id'});
-    this.models.firm_role.belongsToMany(this.sequelize.models.firm_employee, { through: 'firm_employee_role', foreignKey: 'firm_role_id'});
 
     this.models.matter.hasOne(this.models.customer_account, {foreignKey: 'matter_id'});
     this.models.customer_account.belongsTo(this.models.matter, {foreignKey: 'matter_id'});

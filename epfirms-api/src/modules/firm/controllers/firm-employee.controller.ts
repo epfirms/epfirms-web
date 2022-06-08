@@ -22,12 +22,9 @@ export class FirmEmployeeController {
   public async create(req: any, resp: Response): Promise<any> {
     try {
       const firmEmployee = req.body;
-      const { role } = firmEmployee;
       const { firm_id } = req.user.firm_access;
 
       const newEmployee = await this._firmEmployeeService.add(firm_id, firmEmployee);
-
-      await this._firmEmployeeService.setRoles(newEmployee.id, role);
 
       const employee = await this._firmEmployeeService.getByUserId(firm_id, newEmployee.id);
 

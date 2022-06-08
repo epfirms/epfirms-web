@@ -51,27 +51,16 @@ export class AuthService {
   }
 
   public async getFirmScope(userId: number): Promise<any> {
-    const { firm_employee, firm_role } = Database.models;
+    const { firm_employee } = Database.models;
 
     const firmScope = await firm_employee.findOne({
-      attributes: {
-        exclude: ['id', 'active', 'userId', 'firmId'],
-      },
       where: {
         user_id: userId,
         active: true,
       },
-      include: [
-        {
-          model: firm_role,
-          as: 'role',
-          attributes: ['id', 'name'],
-        },
-      ],
     });
 
     if (firmScope && firmScope.firm_id) {
-      delete firmScope.role.firm_employee_role;
       return Promise.resolve(firmScope);
     }
 

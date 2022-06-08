@@ -28,7 +28,7 @@ export class FirmTeamService {
   }
 
   public async getAllByFirmId(firmId: number): Promise<any> {
-    const { firm, firm_employee, user, firm_role, firm_team, firm_team_member } = Database.models;
+    const { firm, firm_employee, user, firm_team, firm_team_member } = Database.models;
     const teams = await firm_team.findAll({
       where: {
         firm_id: firmId
@@ -75,7 +75,7 @@ export class FirmTeamService {
   }
 
   public async getMembersForTeam(teamId: number): Promise<any> {
-    const { firm_team, firm_employee, firm_role } = Database.models;
+    const { firm_team, firm_employee } = Database.models;
     const firmTeamInstance = await firm_team.findOne({
       where: {
         id: teamId,
