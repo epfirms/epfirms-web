@@ -6,7 +6,6 @@ import { UserService } from '@modules/user/services/user.service';
 import { EmailsController } from '@modules/emails/controllers';
 import { ClientSearchService } from '../services/client-search.service';
 import { Service } from 'typedi';
-import { FirmRoleService } from '../services/firm-role.service';
 import { FirmEmployeeService } from '../services/firm-employee.service';
 import { FirmTeamService } from '../services/firm-team.service';
 
@@ -16,7 +15,6 @@ export class FirmController {
     private _clientSearchService: ClientSearchService,
     private _firmService: FirmService,
     private _userService: UserService,
-    private _firmRoleService: FirmRoleService,
     private _firmEmployeeService: FirmEmployeeService,
     private _firmTeamService: FirmTeamService
   ) {}
@@ -40,10 +38,6 @@ export class FirmController {
 
       const createdFirm: Firm = await this._firmService.create(firm);
 
-      // await this._firmEmployeeService.add(createdUser.id, createdFirm.id, roles);
-
-      await this._firmRoleService.initDefault(createdFirm.id);
-      
       resp.status(StatusConstants.CREATED).send({ success: true });
 
       EmailsController.sendFirmConfirmation(req, resp);
@@ -120,32 +114,6 @@ export class FirmController {
       const searchKey = await this._clientSearchService.generateClientSearchKey(parseInt(firm_id));
 
       resp.status(StatusConstants.OK).send({ key: searchKey });
-    } catch (error) {
-      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
-    }
-  }
-
-  public async getRoleById(req: any, resp: Response): Promise<any> {
-    try {
-      const id = req.params.id;
-      const { firm_id } = req.user.firm_access;
-      const response = await this._firmRoleService.getById(id, firm_id);
-
-      resp.status(StatusConstants.OK).send({ data: response });
-    } catch (error) {
-      resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
-    }
-  }
-
-  public async getRoles(req: any, resp: Response): Promise<any> {
-    try {
-      const { firm_id } = req.user.firm_access;
-
-      let roles = await this._firmRoleService.get(parseInt(firm_id));
-      if (!(roles && roles.length)) {
-       roles = this._firmRoleService.initDefault(firm_id);
-      }
-      resp.status(StatusConstants.OK).send({ roles: roles });
     } catch (error) {
       resp.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error.message);
     }

@@ -1,5 +1,3 @@
-import { EmployeeRole } from "./role";
-
 export interface UserProfile {
   full_name?: string;
   id?: number;
@@ -32,7 +30,6 @@ export interface FirmAccess {
   twilio_phone_number?: string;
   created_at: string;
   updated_at: string;
-  role: EmployeeRole[];
 }
 
 export interface UserScope {

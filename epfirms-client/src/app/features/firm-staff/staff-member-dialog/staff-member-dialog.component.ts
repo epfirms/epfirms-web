@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DialogRef } from '@ngneat/dialog';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PhoneValidator } from '@app/features/user/directives/async-phone-validator.directive';
+import { UserService } from '@app/features/user/services/user.service';
 import { createMask } from '@ngneat/input-mask';
 import { FirmRoleService } from '../services/firm-role.service';
 
@@ -16,6 +17,8 @@ export class StaffMemberDialogComponent implements OnInit {
 
   role: any;
 
+  title: 'New' | 'Update';
+
   currencyInputMask = createMask({
     alias: 'numeric',
     groupSeparator: ',',
@@ -24,54 +27,29 @@ export class StaffMemberDialogComponent implements OnInit {
     placeholder: '0',
   });
 
+  phoneInputMask = createMask({
+    mask: '(999) 999-9999',
+    placeholder: ' ',
+    prefix: '+1',
+    onBeforeMask: (value: string) => {
+      const val = value.slice(2);
+      return val;
+    },
+    parser: (value: string) => {
+      const val = '+1' + value.replaceAll(/\(|\)|\-|\s/g, '');
+      return val;
+    },
+  });
+
   constructor(
-    private _dialogRef: DialogRef,
     private _fb: FormBuilder,
     private _firmRoleService: FirmRoleService,
+    private _userService: UserService
   ) {}
 
   ngOnInit(): void {
-    const dialogData = this._dialogRef.data;
-    if (dialogData) {
-      const staffMember = dialogData.staff;
-      this.staffForm = this._fb.group({
-        id: [staffMember.id, [Validators.required]],
-        hourly_rate: [staffMember.hourly_rate],
-        user: this._fb.group({
-          id: [staffMember.user.id, [Validators.required]],
-          first_name: [staffMember.user.first_name, [Validators.required]],
-          last_name: [staffMember.user.last_name, [Validators.required]],
-          phone: [staffMember.user.phone],
-          email: [staffMember.user.email, [Validators.email]],
-        }),
-      });
-
-      this.role = staffMember.role[0].id;
-    } else {
-      this.staffForm = this._fb.group({
-        hourly_rate: [0],
-        user: this._fb.group({
-          first_name: ['', [Validators.required]],
-          last_name: ['', [Validators.required]],
-          phone: [''],
-          email: [null, [Validators.email]],
-        }),
-      });
-    }
-
     this._firmRoleService.get().subscribe((response) => {
       this.roleOptions = [...response];
     });
-  }
-
-  add() {
-    this._dialogRef.close({
-      ...this.staffForm.value,
-      role: [this.role],
-    });
-  }
-
-  close() {
-    this._dialogRef.close();
   }
 }

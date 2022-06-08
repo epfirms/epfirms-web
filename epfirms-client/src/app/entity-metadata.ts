@@ -27,7 +27,7 @@ const entityMetadata: EntityMetadataMap = {
 export function staffFilter(entities: Staff[], staffFilters: {active?: boolean, role?: string[]}) {
   return entities.filter(e => {
     if (staffFilters.role && staffFilters.role.length) {
-      return e.active === staffFilters.active && e.role.some(s => staffFilters.role.includes(s.name));
+      return e.active === staffFilters.active && staffFilters.role.includes(e.role);
     }
     return e.active === staffFilters.active;
   });

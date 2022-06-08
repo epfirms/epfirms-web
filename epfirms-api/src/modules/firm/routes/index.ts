@@ -55,10 +55,6 @@ firmRouter.patch('/employees/:id', passport.authenticate('bearer', {session: fal
 
 firmRouter.delete('/employees/:id', passport.authenticate('bearer', {session: false}), (req, res) => firmEmployeeController.delete(req, res));
 
-firmRouter.get('/roles', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getRoles(req, res));
-
-firmRouter.get('/roles/:id', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getRoleById(req, res));
-
 firmRouter.get('/team', passport.authenticate('bearer', {session: false}), (req, res) => firmController.getTeams(req, res));
 
 firmRouter.post('/team', passport.authenticate('bearer', {session: false}), (req, res) => firmController.createTeam(req, res));
