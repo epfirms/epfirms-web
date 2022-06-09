@@ -1,3 +1,5 @@
+import { User } from "@app/features/user/interfaces/user";
+
 export class Invoice {
     id?: number;
     user_id: number;
@@ -11,6 +13,9 @@ export class Invoice {
     hosted_invoice_url: string;
     is_approved: boolean;
     is_client_visible: boolean;
+    created_at?: string;
+    updated_at?: string;
+    user? : User;
 
     constructor(matterId : number, userId: number, firmId: number, total: number, description: string) {
         this.user_id = userId;

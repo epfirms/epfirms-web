@@ -1,4 +1,38 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
+<!-- BILLING PAGE HEADER -->
+<div class="m-8">
+  <!-- This example requires Tailwind CSS v2.0+ -->
+  <div class="pb-5 border-b border-gray-200">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Billing Dashboard</h3>
+  </div>
+</div>
+
+<!-- STATS OVERVIEW BLOCK -->
+<div class="m-5">
+  <div>
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Last 30 days</h3>
+    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">Open Invoice Total</dt>
+        <dd *ngIf="invoices" class="mt-1 text-3xl font-semibold text-gray-900">{{getOpenInvoiceTotal() | currency}}</dd>
+      </div>
+
+      <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">Invoice Overdue Total</dt>
+        <dd *ngIf="invoices" class="mt-1 text-3xl font-semibold text-gray-900">{{getOverdueInvoiceTotal() | currency}}</dd>
+      </div>
+
+      <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">Revenue Collected</dt>
+        <dd *ngIf="invoices" class="mt-1 text-3xl font-semibold text-gray-900">{{getPaidInvoiceTotal() | currency}}</dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<!-- INVOICE SECTION -->
+<div class="mt-5">
+
+
 <div class="px-4 sm:px-6 lg:px-8">
   <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
@@ -75,7 +109,9 @@
                 </td>
 
                 <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                  {{ invoice.created_at | date}}
+                  {{ invoice.created_at | date }}
+                </td>
+
                 <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
                   {{ invoice.user.full_name }}
                 </td>
@@ -91,7 +127,12 @@
                 </td>
 
                 <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                  <button *ngIf="invoice.hosted_invoice_url.length > 0" (click)="openInvoice(invoice.hosted_invoice_url)" [disabled]="invoice.hosted_invoice_url.length <= 0 " [tippy]="'View Invoice'">
+                  <button
+                    *ngIf="invoice.hosted_invoice_url.length > 0"
+                    (click)="openInvoice(invoice.hosted_invoice_url)"
+                    [disabled]="invoice.hosted_invoice_url.length <= 0"
+                    [tippy]="'View Invoice'"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-6 w-6"
@@ -118,3 +159,8 @@
     </div>
   </div>
 </div>
+
+</div>
+
+
+

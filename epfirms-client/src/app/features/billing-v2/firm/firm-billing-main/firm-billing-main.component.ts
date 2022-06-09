@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Invoice } from '@app/core/interfaces/Invoice';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { InvoiceService } from '../../services/invoice.service';
 
@@ -12,7 +13,7 @@ export class FirmBillingMainComponent implements OnInit {
   state: string = 'flat-rate';
 
   // list of invoices
-  invoices;
+  invoices : Invoice[];
   firm;
 
   constructor(
@@ -42,5 +43,43 @@ export class FirmBillingMainComponent implements OnInit {
 
   openInvoice(url : string) : void {
     window.open(url, '_blank');
+  }
+
+  getOpenInvoiceTotal() : number {
+    let total = 0;
+    this.invoices.forEach((invoice) => {
+      if (invoice.status === 'open') {
+        total += invoice.total;
+      }
+    });
+    return total;
+  }
+
+  getPaidInvoiceTotal() : number {
+    let total = 0;
+    this.invoices.forEach((invoice) => {
+      if (invoice.status === 'paid') {
+        total += invoice.total;
+      }
+    });
+    return total;
+  }
+
+
+  getOverdueInvoiceTotal() : number {
+    let total = 0;
+    let today = new Date();
+
+    this.invoices.forEach((invoice) => {
+      if (invoice.status === 'open') {
+        console.log(invoice.due_date);
+        let dueDate = new Date(invoice.due_date);
+        if (today.getTime() > dueDate.getTime()) {
+
+        total += invoice.total;
+        }
+      }
+    });
+    return total;
   }
 }
