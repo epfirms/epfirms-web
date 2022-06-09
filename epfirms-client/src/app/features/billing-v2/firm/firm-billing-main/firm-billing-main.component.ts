@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Invoice } from '@app/core/interfaces/Invoice';
+import { EpModalService } from '@app/shared/modal/modal.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { InvoiceService } from '../../services/invoice.service';
+import { CreateInvoiceOverlayComponent } from '../create-invoice-overlay/create-invoice-overlay.component';
 
 @Component({
   selector: 'app-firm-billing-main',
@@ -16,9 +18,11 @@ export class FirmBillingMainComponent implements OnInit {
   invoices : Invoice[];
   firm;
 
+
   constructor(
     private _invoiceService: InvoiceService,
     private currentUserService: CurrentUserService,
+    private _modalService : EpModalService,
   ) {}
 
   ngOnInit(): void {
@@ -81,5 +85,14 @@ export class FirmBillingMainComponent implements OnInit {
       }
     });
     return total;
+  }
+
+  openCreateInvoiceOverlay() : void {
+
+    this._modalService.create({
+      epContent: CreateInvoiceOverlayComponent,
+      epModalType: 'slideOver',
+      epAutofocus: null,
+    });
   }
 }

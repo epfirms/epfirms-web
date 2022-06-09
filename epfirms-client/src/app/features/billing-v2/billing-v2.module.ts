@@ -10,6 +10,7 @@ import { ComboboxModule } from '@app/shared/combobox/combobox.module';
 import { BillingV2RoutingModule } from './billing-v2-routing.module';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { TippyModule } from '@ngneat/helipopper';
+import { CreateInvoiceOverlayComponent } from './firm/create-invoice-overlay/create-invoice-overlay.component';
 
 
 
@@ -18,7 +19,8 @@ import { TippyModule } from '@ngneat/helipopper';
   declarations: [
     FirmBillingMainComponent,
     FlatRateViewComponent,
-    HourlyRateViewComponent
+    HourlyRateViewComponent,
+    CreateInvoiceOverlayComponent
   ],
   imports: [
     CommonModule,
