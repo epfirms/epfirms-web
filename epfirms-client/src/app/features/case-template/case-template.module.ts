@@ -17,6 +17,7 @@ import { AccordionModule } from '@app/shared/accordion/accordion.module';
 import { CaseTemplateTaskListComponent } from './case-template-task-list/case-template-task-list.component';
 import { OptionModule } from '@app/shared/option/option.module';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { TaskModule } from '../task/task.module';
 
 
 @NgModule({
@@ -40,12 +41,14 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     InputModule,
     AccordionModule,
     OptionModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    TaskModule
   ],
   exports: [
     CaseTemplateListComponent,
     CaseTemplateSelectionComponent,
-    CaseTemplateTaskListComponent
+    CaseTemplateTaskListComponent,
+    CaseTemplateListItemComponent
   ]
 })
 export class CaseTemplateModule { }

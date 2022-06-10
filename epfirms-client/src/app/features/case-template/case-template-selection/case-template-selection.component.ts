@@ -68,7 +68,7 @@ export class CaseTemplateSelectionComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this._caseTemplateService.get().subscribe((templates) => {
+    this._caseTemplateService.getAll().subscribe((templates) => {
       this.caseTemplates = templates.reduce((acc, curr) => {
         const existingTemplate = acc.find((e) => e.category === curr.law_category);
         if (existingTemplate) {

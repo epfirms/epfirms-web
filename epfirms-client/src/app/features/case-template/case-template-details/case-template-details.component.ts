@@ -9,8 +9,6 @@ import {
   caseTemplateLawCategories
 } from '../enums/case-template-law-category';
 import { USAState } from '@app/shared/utils/us-states/typings';
-import { FirmTemplateTaskFile } from '../interfaces/firm-template-task-file';
-import { CaseTemplateService } from '../services/case-template.service';
 import { createMask } from '@ngneat/input-mask';
 import { map, take } from 'rxjs/operators';
 import { firmRoleOptions, FirmStaffRole } from '@app/features/firm-staff/enums/firm-staff-role';
@@ -69,7 +67,6 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
   constructor(
     private staffService: StaffService,
-    private _caseTemplateService: CaseTemplateService,
     private _firmRoleService: FirmRoleService,
     private _caseTemplateCommunityService: CaseTemplateCommunityService,
     private _toastService: HotToastService,
@@ -147,44 +144,6 @@ export class CaseTemplateDetailsComponent implements OnInit {
 
   setDescription(event, index) {
     this.template.firm_template_tasks[index].name = event;
-  }
-
-  attachFilesToTask(files: FileList, taskIndex: number) {
-    const file: File = files[0];
-
-    const taskFile: FirmTemplateTaskFile = {
-      name: file.name,
-      description: file.type,
-      file: file
-    };
-
-    this.template.firm_template_tasks[taskIndex].firm_template_task_files.push(taskFile);
-  }
-
-  editTaskFile(fileId: number) {}
-
-  deleteTaskFile(fileId: number, taskIndex: number) {
-    if (this.template.firm_template_tasks[taskIndex].id) {
-      this._modalService.create({
-        epContent: ConfirmDialogComponent,
-        epOkText: 'Confirm',
-        epCancelText: 'Cancel',
-        epAutofocus: null,
-        epComponentParams: {
-          title: 'Remove task file',
-          body: 'Are you sure you want to remove this file? This action cannot be undone.'
-        },
-        epOnOk: () => {
-          if (fileId) {
-            this._caseTemplateService.deleteTaskFile(fileId).subscribe();
-          }
-          this.template.firm_template_tasks[taskIndex].firm_template_task_files =
-            this.template.firm_template_tasks[taskIndex].firm_template_task_files.filter(
-              (t) => t.id !== fileId
-            );
-        }
-      });
-    }
   }
 
   /** Populates assignee groups with staff members and firm roles. */

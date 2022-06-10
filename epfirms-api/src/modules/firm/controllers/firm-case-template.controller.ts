@@ -9,6 +9,18 @@ const { S3_TASK_DOCUMENTS_BUCKET } = require('@configs/vars')
 export class FirmCaseTemplateController {
   constructor(private _firmCaseTemplateService: FirmCaseTemplateService, private _awsService: AwsService) {}
 
+  public async getOne(req: any, res: Response): Promise<any> {
+    try {
+      const { id } = req.params;
+
+      const template = await this._firmCaseTemplateService.getOne(id);
+
+      res.status(StatusConstants.OK).send(template);
+    } catch (err) {
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
   public async get(req: any, res: Response): Promise<any> {
     try {
       const { firm_id } = req.user.firm_access;

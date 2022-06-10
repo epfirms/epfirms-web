@@ -4,6 +4,37 @@ import { Service } from 'typedi';
 
 @Service()
 export class FirmCaseTemplateService {
+  public async getOne(templateId: number):Promise<any> {
+    try {
+      const {firm_case_template, firm_template_task, firm_template_task_file, user} = Database.models;
+
+      const template = await firm_case_template.findOne({where: {
+        id: templateId,
+      }, include: {
+        model: firm_template_task,
+        include: [
+          {
+            model: user
+          },
+          {
+            model: firm_template_task_file,
+          }
+        ],
+      },
+      order: [
+        [
+          Sequelize.literal(
+            '`firm_template_tasks`.no_of_days_from_start_date asc'
+          )
+        ]
+      ]
+    });
+      return Promise.resolve(template);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   public async get(firmId: number):Promise<any> {
     try {
       const {firm_case_template, firm_template_task, firm_template_task_file, user} = Database.models;

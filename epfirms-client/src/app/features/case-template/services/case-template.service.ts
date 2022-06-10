@@ -9,7 +9,11 @@ export class CaseTemplateService {
 
   constructor(private http: HttpClient) { }
 
-  get(): Observable<any> {
+  getOne(id: number): Observable<any> {
+    return this.http.get(`/api/firm/case-templates/${id}`);
+  }
+
+  getAll(): Observable<any> {
     return this.http.get('/api/firm/case-templates');
   }
 

@@ -1,0 +1,70 @@
+<button
+  type="button"
+  [ngClass]="{
+    'text-blue-600 hover:text-blue-500': files.length,
+    'text-gray-400 hover:text-gray-500': !files.length
+}"
+  class="-m-2.5 w-10 h-10 rounded-full flex items-center justify-center"
+  (click)="tooltip.show()" [tippy]="contextMenu" trigger="manual" #tooltip="tippy" variation="dropdown"
+>
+  <!-- Heroicon name: solid/paper-clip -->
+  <svg
+    class="w-5 h-5"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path
+      fill-rule="evenodd"
+      d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+      clip-rule="evenodd"
+    />
+  </svg>
+  <span class="sr-only">Attach a file</span>
+</button>
+
+<ng-template #contextMenu let-hide>
+    <div class="divide-y divide-gray-100">
+        <div class="flex items-center px-4 py-3 group" role="none" *ngIf="files.length" (click)="openFile(files[0])" [ngClass]="{'hover:bg-gray-100 hover:cursor-pointer': files[0].key}">
+            <div class="w-40">
+                <p class="text-sm font-medium text-gray-900 truncate" role="none">
+                    {{files[0].name}}
+                </p>
+                <p class="text-xs text-gray-700 nowrap" role="none">
+                    {{files[0].description}}
+                </p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+        </div>
+        <ng-container *ngIf="!readonly">
+        <div class="py-1" role="none" *ngIf="!files.length">
+            <!-- <a *ngIf="files.length" (click)="emitEdit(files[0].id); hide()" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:cursor-pointer hover:bg-gray-100 hover:text-gray-900"
+                role="menuitem" tabindex="-1" id="menu-item-0">
+                <svg class="w-5 h-5 mr-3 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                    fill="currentColor" aria-hidden="true">
+                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                    <path fill-rule="evenodd"
+                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                        clip-rule="evenodd" />
+                </svg>
+                Edit
+            </a> -->
+            <a (click)="fileList.click()" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100 hover:cursor-pointer"
+                role="menuitem" tabindex="-1" id="menu-item-0">
+                Attach file
+
+                <input type="file" (change)="emitAttach($event); hide()" #fileList multiple style="display:none">
+            </a>
+        </div>
+        <div *ngIf="files.length" class="py-1" role="none">
+            <a (click)="emitDelete(files[0].id); hide()" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100 hover:cursor-pointer"
+                role="menuitem" tabindex="-1" id="menu-item-1">
+                Remove
+            </a>
+        </div>
+    </ng-container>
+    </div>
+</ng-template>

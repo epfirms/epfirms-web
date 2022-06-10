@@ -29,6 +29,7 @@ import { IntakeV2Module } from '../intake-v2/intake-v2.module';
 import { MatterModule } from '../matter/matter.module';
 import { TippyModule } from '@ngneat/helipopper';
 import { PipesModule } from '@app/core/pipes/pipes.module';
+import { CaseTemplateModule } from '../case-template/case-template.module';
 
 
 
@@ -65,7 +66,8 @@ import { PipesModule } from '@app/core/pipes/pipes.module';
     IntakeV2Module,
     MatterModule,
     TippyModule,
-    PipesModule
+    PipesModule,
+    CaseTemplateModule
   ],
   exports: [
     MatterTabsComponent

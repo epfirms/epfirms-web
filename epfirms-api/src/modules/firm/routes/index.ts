@@ -21,6 +21,8 @@ firmRouter.post('/staff', passport.authenticate('bearer', { session: false }), (
 // Firm case template routes
 firmRouter.get('/case-templates', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.get(req, res));
 
+firmRouter.get('/case-templates/:id', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.getOne(req, res));
+
 firmRouter.post('/case-templates', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.create(req, res));
 
 firmRouter.put('/case-templates/:firm_case_template_id', passport.authenticate('bearer', {session: false}), (req, res) => firmCaseTemplateController.update(req, res));

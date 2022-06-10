@@ -1,16 +1,3 @@
-
-  <div class="sticky top-0 z-10 flex items-center w-full h-16 border-b border-gray-200 sm:flex sm:items-center sm:justify-between">
-        <div class="flex-1 min-w-0">
-            <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-              Case Templates
-            </h1>
-          </div>
-          <div class="flex mt-4 sm:mt-0 sm:ml-4">
-              <button (click)="openAddTemplateDialog()" type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-white bg-blue-600 border border-transparent rounded-md shadow-sm flex-end hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                  Create
-              </button>
-          </div>
-  </div>
 <div class="pt-6">
     <ep-accordion multi togglePosition="before">
         <ep-accordion-item *ngFor="let group of templateGroups" [expanded]="group.templates.length > 0">

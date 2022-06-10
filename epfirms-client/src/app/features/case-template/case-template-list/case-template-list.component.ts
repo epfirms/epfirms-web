@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CaseTemplateService } from '@app/features/case-template/services/case-template.service';
 import { AwsService } from '@app/shared/_services/aws.service';
 import { FirmTemplateTaskFile } from '../interfaces/firm-template-task-file';
 import { CaseTemplateDetailsComponent } from '../case-template-details/case-template-details.component';
-import { map } from 'rxjs';
-import {
-  caseTemplateLawCategories,
-  CaseTemplateLawCategory,
-} from '../enums/case-template-law-category';
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialog.component';
+import { TemplateCategoryGroup } from '@app/pages/case-template-list-page/case-template-list-page/case-template-list-page.component-store';
 
 @Component({
   selector: 'app-case-template-list',
@@ -17,7 +13,7 @@ import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialo
   styleUrls: ['./case-template-list.component.scss'],
 })
 export class CaseTemplateListComponent implements OnInit {
-  templateGroups: { name: string; templates: any[] }[] = [];
+  @Input() templateGroups: TemplateCategoryGroup[] = [];
 
   constructor(
     private _caseTemplateService: CaseTemplateService,
@@ -25,9 +21,7 @@ export class CaseTemplateListComponent implements OnInit {
     private _modalService: EpModalService
   ) {}
 
-  ngOnInit(): void {
-    this.loadCaseTemplates();
-  }
+  ngOnInit(): void {}
 
   openAddTemplateDialog(): void {
     this._modalService.create({
@@ -67,7 +61,7 @@ export class CaseTemplateListComponent implements OnInit {
         this.saveTemplateChanges(template.id, componentInstance.template);
         this.saveTaskChanges(template.id, componentInstance.template.firm_template_tasks);
         this.saveTaskDeletions(template.firm_template_tasks, componentInstance.template.firm_template_tasks);
-        this.loadCaseTemplates();
+        // this.loadCaseTemplates();
       }
     });
   }
@@ -84,7 +78,7 @@ export class CaseTemplateListComponent implements OnInit {
       },
       epOnOk: () => {
         this._caseTemplateService.delete(template.id).subscribe(() => {
-          this.loadCaseTemplates();
+          // this.loadCaseTemplates();
         });
       }
     });
@@ -123,38 +117,6 @@ export class CaseTemplateListComponent implements OnInit {
     deletedTasks.forEach((task) => {
       this._caseTemplateService.deleteTask(task.id).subscribe();
     });
-  }
-
-  private loadCaseTemplates() {
-    this._caseTemplateService
-      .get()
-      .pipe(
-        map((templates) => {
-          const lawCategories: CaseTemplateLawCategory[] = [...caseTemplateLawCategories];
-          const categoryGroups = [];
-
-          lawCategories.forEach((category) => {
-            const matchingTemplates = templates.filter(
-              (template) => template.law_category === category,
-            );
-            categoryGroups.push({ name: category, templates: matchingTemplates });
-          });
-
-          /** Sort categories with 0 templates to the end. */
-          return categoryGroups.sort((a, b) => {
-            if (!a.templates.length) {
-              return 1;
-            }
-            if (!b.templates.length) {
-              return -1;
-            }
-            return 0;
-          });
-        }),
-      )
-      .subscribe((templates) => {
-        this.templateGroups = templates;
-      });
   }
 
   private saveTaskFile(taskId: number, file) {

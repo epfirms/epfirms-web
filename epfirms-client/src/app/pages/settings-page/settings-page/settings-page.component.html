@@ -1,0 +1,125 @@
+<main class="flex flex-1 h-full overflow-hidden">
+  <div class="flex flex-col flex-1 overflow-y-auto xl:overflow-hidden">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="bg-white border-b border-gray-200 xl:hidden">
+      <div class="flex items-start max-w-3xl px-4 py-3 mx-auto sm:px-6 lg:px-8">
+        <a href="#" class="inline-flex items-center -ml-1 space-x-3 text-sm font-medium text-gray-900">
+          <!-- Heroicon name: solid/chevron-left -->
+          <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+          <span>Firm Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="flex flex-1 xl:overflow-hidden">
+      <!-- Secondary sidebar -->
+      <nav aria-label="Sections" class="flex-shrink-0 hidden bg-white border-r border-gray-200 w-96 xl:flex xl:flex-col">
+        <div class="flex items-center flex-shrink-0 h-16 px-6 border-b border-gray-200">
+          <p class="text-lg font-medium text-gray-900">Firm Settings</p>
+        </div>
+        <div class="flex-1 min-h-0 overflow-y-auto">
+          <!-- Current: "bg-gray-50 bg-opacity-50", Default: "hover:bg-gray-100 hover:bg-opacity-50" -->
+          <a routerLink="/firm/settings" [routerLinkActive]="'bg-gray-50 bg-opacity-50'" [routerLinkActiveOptions]="{exact: true}" class="flex p-6 border-b border-gray-200 hover:bg-gray-100 hover:bg-opacity-50" aria-current="page">
+            <!-- Heroicon name: outline/cog -->
+            <svg class="flex-shrink-0 -mt-0.5 h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <div class="ml-3 text-sm">
+              <p class="font-medium text-gray-900">Firm Details</p>
+              <p class="mt-1 text-gray-500">Change your firm's profile details like it's description or address.</p>
+            </div>
+          </a>
+
+          <a routerLink="legal-areas" [routerLinkActive]="'bg-gray-50 bg-opacity-50'" class="flex p-6 border-b border-gray-200 hover:bg-gray-100 hover:bg-opacity-50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 -mt-0.5 h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+            </svg>
+            <div class="ml-3 text-sm">
+              <p class="font-medium text-gray-900">Legal Areas</p>
+              <p class="mt-1 text-gray-500">Edit, add, or delete the legal areas for your client's cases and leads.</p>
+            </div>
+          </a>
+
+          <a routerLink="manage-staff" [routerLinkActive]="'bg-gray-50 bg-opacity-50'" class="flex p-6 border-b border-gray-200 hover:bg-gray-100 hover:bg-opacity-50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 -mt-0.5 h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+            </svg>
+            <div class="ml-3 text-sm">
+              <p class="font-medium text-gray-900">Manage Staff</p>
+              <p class="mt-1 text-gray-500">Edit, add, or remove a staff member from the firm.</p>
+            </div>
+          </a>
+
+          <a routerLink="case-templates" [routerLinkActive]="'bg-gray-50 bg-opacity-50'" class="flex p-6 border-b border-gray-200 hover:bg-gray-100 hover:bg-opacity-50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 -mt-0.5 h-6 w-6 text-gray-400"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+            </svg>
+            <div class="ml-3 text-sm">
+              <p class="font-medium text-gray-900">Case Templates</p>
+              <p class="mt-1 text-gray-500">Create a template for future tasks to streamline your scheduling process.</p>
+            </div>
+          </a>
+
+          <a routerLink="community-templates" [routerLinkActive]="'bg-gray-50 bg-opacity-50'" class="flex p-6 border-b border-gray-200 hover:bg-gray-100 hover:bg-opacity-50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 -mt-0.5 h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <div class="ml-3 text-sm">
+              <p class="font-medium text-gray-900">Browse Case Template Community</p>
+              <p class="mt-1 text-gray-500">Find and use case templates created by other law firms.</p>
+            </div>
+          </a>
+
+          <a routerLink="billing-integration" [routerLinkActive]="'bg-blue-50 bg-opacity-50'" class="flex p-6 border-b hover:bg-blue-50 hover:bg-opacity-50 border-blue-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 -mt-0.5 h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <div class="ml-3 text-sm">
+              <p class="font-medium text-gray-900">Billing</p>
+              <p class="mt-1 text-gray-500 line-clamp-2">Settings for recieving customer payments.</p>
+            </div>
+          </a>
+
+          <a routerLink="balance" [routerLinkActive]="'bg-blue-50 bg-opacity-50'" class="flex p-6 border-b hover:bg-blue-50 hover:bg-opacity-50 border-blue-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 -mt-0.5 h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <div class="ml-3 text-sm">
+              <p class="font-medium text-gray-900">Balance</p>
+              <p class="mt-1 text-gray-500 line-clamp-2">Manage your balance and payment history.</p>
+            </div>
+          </a>
+
+          <a routerLink="contracts" [routerLinkActive]="'bg-blue-50 bg-opacity-50'" class="flex p-6 border-b hover:bg-blue-50 hover:bg-opacity-50 border-blue-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 -mt-0.5 h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <div class="ml-3 text-sm">
+              <p class="font-medium text-gray-900">Contract Templates</p>
+              <p class="mt-1 text-gray-500">Create smart templates for contracts that you send to clients.</p>
+            </div>
+          </a>
+
+          <!-- <a routerLink="#" class="flex p-6 border-b hover:bg-blue-50 hover:bg-opacity-50 border-blue-gray-200">
+            <svg class="flex-shrink-0 -mt-0.5 h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <div class="ml-3 text-sm">
+              <p class="font-medium text-gray-900">Billing</p>
+              <p class="mt-1 text-gray-500">Change the schedule and billing type for your firm.</p>
+            </div>
+          </a> -->
+
+        </div>
+      </nav>
+
+      <!-- Main content -->
+      <div class="flex-1 max-h-screen min-h-0 overflow-y-auto">
+          <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</main>

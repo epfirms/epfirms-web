@@ -75,12 +75,10 @@
           <ng-container>
             <tr class="task-row group" *ngFor="let task of template.firm_template_tasks; let i=index; last as isLast">
               <td class="w-full px-1 py-1 text-sm font-medium text-gray-900 border-t border-r border-gray-200 max-w-0 whitespace-nowrap" [class.border-b]="!isLast">
-                <div class="flex items-center">
+                <div class="relative flex items-center">
                   <editable-input [value]="task.name" placeholder="Enter a task name"
                     (onChange)="setDescription($event, i)" class="flex-1"></editable-input>
-                  <app-task-file-button [files]="task.firm_template_task_files"
-                    (fileSelect)="attachFilesToTask($event, i)" (editFile)="editTaskFile($event)"
-                    (deleteFile)="deleteTaskFile($event, i)"></app-task-file-button>
+                  <app-task-toolbar [task]="task"></app-task-toolbar>
                 </div>
               </td>
               <td class="w-full px-1 py-1 text-sm font-medium text-gray-900 border-t border-r border-gray-200 whitespace-nowrap" [class.border-b]="!isLast">
