@@ -87,7 +87,7 @@
                     </label>
                   </div>
                   <div class="sm:col-span-2">
-                    <app-combobox></app-combobox>
+                    <app-combobox [options]="matterOptions" (onSelected)="onSelectedMatter($event.value)"></app-combobox>
                   </div>
                 </div>
 
