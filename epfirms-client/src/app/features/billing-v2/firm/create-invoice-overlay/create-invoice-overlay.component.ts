@@ -82,6 +82,26 @@ export class CreateInvoiceOverlayComponent implements OnInit {
   // this will set the status in both places as 'draft'
 
   submit(isDraft : boolean): void {
+    
+    try {
+      if (toFloat(this.invoiceForm.value.amount) > 999999) {
+      this._toastService.error(
+        'The amount cannot be greater than $999,999.99',
+      );
+
+
+      throw new Error('The amount cannot be greater than $999,999.99');
+      
+    }
+
+    if (Date.now() > new Date(this.invoiceForm.value.due_date).getTime()) {
+
+      this._toastService.error(
+        'The due date must be in future'
+      );
+      throw new Error('The due date must be in future');
+
+    }
     //creat a new invoice
     if (this.selectedMatter && this.invoiceForm.valid) {
       let invoice = new Invoice(
@@ -114,6 +134,9 @@ export class CreateInvoiceOverlayComponent implements OnInit {
       });
     } else {
       this._toastService.error('Please select a matter and fill out the form correctly.');
+    }
+    } catch (error) {
+     console.error(error);
     }
   }
 }
