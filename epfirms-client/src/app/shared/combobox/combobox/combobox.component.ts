@@ -56,7 +56,10 @@ export class ComboboxComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes.defaultValue) {
+
     this.searchTerm = changes.defaultValue.currentValue;
+    }
   }
 
   // toggle the dropdown visibility
