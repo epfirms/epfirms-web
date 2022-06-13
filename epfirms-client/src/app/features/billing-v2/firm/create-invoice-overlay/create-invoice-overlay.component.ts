@@ -4,6 +4,11 @@ import { currencyInputMask, toFloat } from '@app/core/util/currencyUtils';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { Observable } from 'rxjs';
 import { Matter } from '@app/core/interfaces/matter';
+import { Invoice } from '@app/core/interfaces/Invoice';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HotToastService } from '@ngneat/hot-toast';
+import { InvoiceService } from '../../services/invoice.service';
+import { StripeService } from '@app/shared/_services/stripe-service/stripe.service';
 @Component({
   selector: 'app-create-invoice-overlay',
   templateUrl: './create-invoice-overlay.component.html',
@@ -18,7 +23,23 @@ export class CreateInvoiceOverlayComponent implements OnInit {
   //list of matters in option format
   matterOptions: any[] = [];
 
-  constructor(private _modalRef: EpModalRef, private _matterService: MatterService) {
+  // the currently selected matter
+  selectedMatter: Matter;
+
+  // the invoice form
+  invoiceForm = new FormGroup({
+    amount: new FormControl('', Validators.required),
+    due_date: new FormControl('', Validators.required),
+    invoice_message: new FormControl('', Validators.required),
+  });
+
+  constructor(
+    private _modalRef: EpModalRef,
+    private _matterService: MatterService,
+    private _toastService: HotToastService,
+    private _invoiceService: InvoiceService,
+    private _stripeService : StripeService
+  ) {
     this.matters$ = this._matterService.filteredEntities$;
   }
 
@@ -50,7 +71,47 @@ export class CreateInvoiceOverlayComponent implements OnInit {
   }
 
   onSelectedMatter(matterId: number) {
-
     console.log(matterId);
+    this.selectedMatter = this.matters.find((matter) => matter.id === matterId);
+    console.log('the selected matter is: ', this.selectedMatter);
+  }
+
+  // this will create an invoice object in our DB
+  // this will create an invoice object with Stripe
+  // this will set the status in both places as 'draft'
+
+  saveAsDraft(): void {
+    //creat a new invoice
+    if (this.selectedMatter && this.invoiceForm.valid) {
+      let invoice = new Invoice(
+        this.selectedMatter.id,
+        this.selectedMatter.client.id,
+        this.selectedMatter.firm_id,
+        toFloat(this.invoiceForm.value.amount),
+        this.invoiceForm.value.invoice_message,
+      );
+      invoice.setDate(this.invoiceForm.value.due_date);
+      invoice.setAutoAdvance(false);
+      console.log('new invoice: ', invoice);
+      this._invoiceService.upsert(invoice).subscribe((res) => {
+        console.log(res);
+        if (res) {
+          
+          this._stripeService.createInvoice(res[0].id).subscribe((stripeRes) => {
+            if (stripeRes) {
+
+            console.log(stripeRes);
+            }
+          });
+          console.log('invoice created: ', res);
+          this._toastService.success('Invoice created');
+          this._modalRef.close(true);
+        } else {
+          this._toastService.error('Error creating invoice');
+        }
+      });
+    } else {
+      this._toastService.error('Please select a matter and fill out the form correctly.');
+    }
   }
 }

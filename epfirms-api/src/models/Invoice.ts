@@ -51,6 +51,11 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, DATE}) => {
         type: BOOLEAN,
         defaultValue: 0,
       },
+      //determines if stripe will automatically advance it through the lifecycle
+      auto_advance: {
+        type: BOOLEAN,
+        defaultValue: 0,
+      }
     },
     {
       tableName,

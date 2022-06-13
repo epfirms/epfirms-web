@@ -16,6 +16,8 @@ export class Invoice {
     created_at?: string;
     updated_at?: string;
     user? : User;
+    //determines whether or not stripe will automatically advance it through the lifecycle
+    auto_advance: boolean;
 
     constructor(matterId : number, userId: number, firmId: number, total: number, description: string) {
         this.user_id = userId;
@@ -29,6 +31,7 @@ export class Invoice {
         this.hosted_invoice_url = "";
         this.is_approved = false;
         this.is_client_visible = false;
+        this.auto_advance = false;
     }
 
     setDate(date: string) {
@@ -39,5 +42,10 @@ export class Invoice {
         this.is_approved = true;
         this.is_client_visible = true;
     }
+
+    setAutoAdvance(autoAdvance: boolean) {
+        this.auto_advance = autoAdvance;
+    }
+
 
 }

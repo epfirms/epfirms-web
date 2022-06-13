@@ -94,6 +94,7 @@ export class BillingSetupComponent implements OnInit {
       this.billingSettings.initial_payment,
       this.billingSettings.initial_invoice_message,
     );
+    initialInvoice.setAutoAdvance(true);
 
     console.log("initial invoice", initialInvoice);
 
@@ -104,6 +105,7 @@ export class BillingSetupComponent implements OnInit {
       this.billingSettings.final_payment,
       this.billingSettings.final_invoice_message,
     );
+    finalInvoice.setAutoAdvance(true);
 
     finalInvoice.setDate(new Date(this.billingSettings.final_payment_due_date).toUTCString());
 
@@ -139,6 +141,7 @@ export class BillingSetupComponent implements OnInit {
       this.billingSettings.flat_rate_amount,
       this.billingSettings.initial_invoice_message,
     );
+    initialInvoice.setAutoAdvance(true);
     this.invoiceService.upsert(initialInvoice).subscribe((initial) => {
       console.log('initial invoice, not split', initial);
       if (initial) {

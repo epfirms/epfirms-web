@@ -32,7 +32,10 @@
               To: "translate-x-full"
           -->
         <div class="pointer-events-auto w-screen max-w-2xl">
-          <form class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+          <form
+            [formGroup]="invoiceForm"
+            class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
+          >
             <div class="flex-1">
               <!-- Header -->
               <div class="bg-gray-50 px-4 py-6 sm:px-6">
@@ -87,7 +90,10 @@
                     </label>
                   </div>
                   <div class="sm:col-span-2">
-                    <app-combobox [options]="matterOptions" (onSelected)="onSelectedMatter($event.value)"></app-combobox>
+                    <app-combobox
+                      [options]="matterOptions"
+                      (onSelected)="onSelectedMatter($event.value)"
+                    ></app-combobox>
                   </div>
                 </div>
 
@@ -110,6 +116,7 @@
                           <span class="text-gray-500 sm:text-sm"> $ </span>
                         </div>
                         <input
+                          formControlName="amount"
                           [inputMask]="currencyMask"
                           type="text"
                           name="price"
@@ -142,6 +149,7 @@
                           <span class="text-gray-500 sm:text-sm"> $ </span>
                         </div>
                         <input
+                          formControlName="due_date"
                           type="date"
                           class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
                         />
@@ -164,6 +172,7 @@
                   </div>
                   <div class="sm:col-span-2">
                     <textarea
+                      formControlName="invoice_message"
                       id="project-description"
                       name="project-description"
                       rows="3"
@@ -186,6 +195,7 @@
                 </button>
 
                 <button
+                (click)="saveAsDraft()"
                   type="button"
                   class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >

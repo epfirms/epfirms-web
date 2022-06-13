@@ -390,7 +390,7 @@ export class StripeController {
       //create the invoice
       const invoiceStripe = await stripe.invoices.create({
         customer: customerID,
-        auto_advance: true,
+        auto_advance: invoice.auto_advance,
         collection_method: 'send_invoice',
         description: invoice.description,
         due_date: invoice.due_date.getTime() / 1000,
@@ -420,9 +420,9 @@ export class StripeController {
       );
 
       // send the invoice to the customer
-      const sentInvoice = await stripe.invoices.sendInvoice(invoiceStripe.id);
+      // const sentInvoice = await stripe.invoices.sendInvoice(invoiceStripe.id);
 
-      res.status(StatusConstants.OK).send(sentInvoice);
+      res.status(StatusConstants.OK).send(true);
     } catch (error) {
       console.error(error);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
