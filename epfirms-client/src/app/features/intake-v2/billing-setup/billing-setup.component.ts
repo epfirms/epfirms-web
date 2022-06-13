@@ -2,7 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Invoice } from '@app/core/interfaces/Invoice';
 import { Matter } from '@app/core/interfaces/matter';
 import { MatterBillingSettings } from '@app/core/interfaces/MatterBillingSettings';
+import { BillingSetupHelpOverlayComponent } from '@app/features/billing-v2/firm/billing-setup-help-overlay/billing-setup-help-overlay.component';
 import { InvoiceService } from '@app/features/billing-v2/services/invoice.service';
+import { EpModalService } from '@app/shared/modal/modal.service';
 import { MatterBillingSettingsService } from '@app/shared/_services/matter-billing-settings-service/matter-billing-settings.service';
 import { StripeService } from '@app/shared/_services/stripe-service/stripe.service';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -39,6 +41,7 @@ export class BillingSetupComponent implements OnInit {
     private invoiceService: InvoiceService,
     private toastService: HotToastService,
     private stripeService: StripeService,
+    private _modalService: EpModalService
   ) {}
 
   ngOnInit(): void {
@@ -247,5 +250,18 @@ export class BillingSetupComponent implements OnInit {
     //   // this.handleHourlySubmission();
     //   console.log("handle hourly")
     // }
+  }
+
+openHelpOverlay(): void {
+    let modal = this._modalService.create({
+      epContent: BillingSetupHelpOverlayComponent,
+      epModalType: 'slideOver',
+      epAutofocus: null,
+    });
+    modal.afterClose.subscribe((data) => {
+      if (data) {
+        console.log(data);
+      }
+    });
   }
 }
