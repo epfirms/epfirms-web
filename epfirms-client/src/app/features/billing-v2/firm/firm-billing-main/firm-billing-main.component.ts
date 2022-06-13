@@ -108,7 +108,7 @@ export class FirmBillingMainComponent implements OnInit {
   // an invoice can only be deleted if it is the 'draft' status
   // this requirement is enforced by stripe
   deleteInvoice(invoice: Invoice): void {
-    if (invoice.status === 'draft') {
+    if (invoice.status === 'draft' || invoice.status === 'pending') {
       this._modalService.create({
         epContent: ConfirmDialogComponent,
         epOkText: 'Confirm',
@@ -119,17 +119,26 @@ export class FirmBillingMainComponent implements OnInit {
           body: 'Are you sure you want to delete the invoice? Its data will not be recoverable after deletion.',
         },
         epOnOk: () => {
+          // if the invoice was never sent to stripe, it will still be 'pending' and only needs to be deleted from the db
+          if (invoice.status === 'pending') {
+            this._invoiceService.delete(invoice.id).subscribe((res) => {
+              if (res) {
+                this.invoices = this.invoices.filter((i) => i.id !== invoice.id);
+                this._toastService.success('Invoice deleted successfully');
+                this.loadInvoices();
+              }
+            });
+          } else {
 
           this.invoices = this.invoices.filter((i) => i.id !== invoice.id);
           this._stripeService.deleteInvoice(invoice.id).subscribe((invoice) => {
             this.loadInvoices();
-            
+
             if (invoice === true) {
               this._toastService.success('Invoice deleted successfully');
             }
           });
-
-          
+          }
         },
       });
     }

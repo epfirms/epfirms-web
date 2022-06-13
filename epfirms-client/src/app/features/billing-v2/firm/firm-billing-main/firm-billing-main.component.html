@@ -155,7 +155,7 @@
                     </button>
 
                     <button
-                      *ngIf="invoice.status === 'draft' && invoice.invoice_id"
+                      *ngIf="invoice.status === 'draft' && invoice.invoice_id || invoice.status === 'pending'"
                       (click)="deleteInvoice(invoice)"
                       [tippy]="'Delete Invoice'"
                     >
