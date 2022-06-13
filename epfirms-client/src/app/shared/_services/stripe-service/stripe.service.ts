@@ -27,6 +27,10 @@ export class StripeService {
   createInvoice(invoiceId): Observable<any> {
     return this._http.post('/api/stripe/invoice', { invoice_id: invoiceId });
   }
+   
+  deleteInvoice(invoiceId): Observable<any> {
+    return this._http.delete(`/api/stripe/invoice/${invoiceId}`);
+  }
 
   createPaymentIntent(amount: number): Observable<any> {
     return this._http.post('/api/stripe/payment-intent', {

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Invoice } from '@app/core/interfaces/Invoice';
+import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialog.component';
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
+import { StripeService } from '@app/shared/_services/stripe-service/stripe.service';
+import { HotToastService } from '@ngneat/hot-toast';
 import { InvoiceService } from '../../services/invoice.service';
 import { CreateInvoiceOverlayComponent } from '../create-invoice-overlay/create-invoice-overlay.component';
 
@@ -22,6 +25,8 @@ export class FirmBillingMainComponent implements OnInit {
     private _invoiceService: InvoiceService,
     private currentUserService: CurrentUserService,
     private _modalService: EpModalService,
+    private _stripeService: StripeService,
+    private _toastService: HotToastService,
   ) {}
 
   ngOnInit(): void {
@@ -29,10 +34,8 @@ export class FirmBillingMainComponent implements OnInit {
   }
 
   private loadInvoices(): void {
-
     this.currentUserService.getCurrentUser().subscribe((user) => {
       if (user) {
-
         this._invoiceService
           .getAllWithFirmId(user.scope.firm_access.firm_id)
           .subscribe((invoices) => {
@@ -99,5 +102,36 @@ export class FirmBillingMainComponent implements OnInit {
         this.loadInvoices();
       }
     });
+  }
+
+  // handles the deletion of the invoice if possible
+  // an invoice can only be deleted if it is the 'draft' status
+  // this requirement is enforced by stripe
+  deleteInvoice(invoice: Invoice): void {
+    if (invoice.status === 'draft') {
+      this._modalService.create({
+        epContent: ConfirmDialogComponent,
+        epOkText: 'Confirm',
+        epCancelText: 'Cancel',
+        epAutofocus: null,
+        epComponentParams: {
+          title: 'Delete Invoice',
+          body: 'Are you sure you want to delete the invoice? Its data will not be recoverable after deletion.',
+        },
+        epOnOk: () => {
+
+          this.invoices = this.invoices.filter((i) => i.id !== invoice.id);
+          this._stripeService.deleteInvoice(invoice.id).subscribe((invoice) => {
+            this.loadInvoices();
+            
+            if (invoice === true) {
+              this._toastService.success('Invoice deleted successfully');
+            }
+          });
+
+          
+        },
+      });
+    }
   }
 }

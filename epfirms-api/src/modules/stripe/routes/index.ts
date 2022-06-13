@@ -14,6 +14,11 @@ stripeRouter.get('/status', passport.authenticate('bearer', { session: false }),
 stripeRouter.post('/invoice', passport.authenticate('bearer', { session: false }), (req, res) =>
   stripeController.createInvoice(req, res),
 );
+
+stripeRouter.delete('/invoice/:id', passport.authenticate('bearer', { session: false }), (req, res) =>
+  stripeController.deleteInvoice(req, res),
+);
+
 stripeRouter.post('/payment', passport.authenticate('bearer', { session: false }), (req, res) =>
   stripeController.createPaymentSession(req, res),
 );

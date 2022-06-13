@@ -250,20 +250,21 @@ export class StripeController {
         console.log('INVOICE FINALIZED SESSION');
         console.log(session);
         // update the invoice with the invoice id
-        const updatedInvoice = await Database.models.invoice.update({status: session.status, hosted_invoice_url: session.hosted_invoice_url }, {where: {invoice_id: session.id}});
+        const updatedInvoice = await Database.models.invoice.update(
+          { status: session.status, hosted_invoice_url: session.hosted_invoice_url },
+          { where: { invoice_id: session.id } },
+        );
         res.status(200).send();
-      }
-      
-      else if (event.type === 'invoice.paid') {
-
+      } else if (event.type === 'invoice.paid') {
         console.log('INVOICE PAID SESSION');
         console.log(session);
         // update the invoice with the invoice id
-        const updatedInvoice = await Database.models.invoice.update({status: session.status}, {where: {invoice_id: session.id}});
+        const updatedInvoice = await Database.models.invoice.update(
+          { status: session.status },
+          { where: { invoice_id: session.id } },
+        );
         res.status(200).send();
-      }
-      
-      else if (event.type === 'invoice.payment_succeeded') {
+      } else if (event.type === 'invoice.payment_succeeded') {
         console.log('INVOICE PAYMENT SUCCESS SESSION');
         console.log(session);
         if (session.subscription) {
@@ -422,6 +423,28 @@ export class StripeController {
       // send the invoice to the customer
       // const sentInvoice = await stripe.invoices.sendInvoice(invoiceStripe.id);
 
+      res.status(StatusConstants.OK).send(true);
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
+
+  public async deleteInvoice(req, res: Response): Promise<any> {
+    try {
+      console.log("DELETE INVOICE REQ.BODY", req.body);
+      console.log("delete invoice params", req.params);
+      const invoice = await Database.models.invoice.findOne({
+        where: { id: req.params.id },
+      });
+      if (invoice) {
+        await stripe.invoices.del(invoice.invoice_id);
+        await Database.models.invoice.destroy({
+          where: {
+            id: req.params.id,
+          },
+        });
+      }
       res.status(StatusConstants.OK).send(true);
     } catch (error) {
       console.error(error);
