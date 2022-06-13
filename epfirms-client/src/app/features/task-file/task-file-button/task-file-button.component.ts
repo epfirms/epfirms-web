@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FirmTemplateTaskFile } from '@app/features/case-template/interfaces/firm-template-task-file';
 import { CaseTemplateService } from '@app/features/case-template/services/case-template.service';
-import { AwsService } from '@app/shared/_services/aws.service';
 import { TaskFile } from '../interfaces/task-file';
 
 @Component({
@@ -17,6 +16,7 @@ export class TaskFileButtonComponent {
   set files(value: TaskFile[] | FirmTemplateTaskFile[]) {
     this._files = value;
   }
+
   get files(): TaskFile[] | FirmTemplateTaskFile[] {
     return this._files;
   }
@@ -24,7 +24,9 @@ export class TaskFileButtonComponent {
   @Input() readonly: boolean = false;
 
   @Output() fileSelect: EventEmitter<FileList> = new EventEmitter<FileList>();
+
   @Output() editFile: EventEmitter<number> = new EventEmitter<number>();
+
   @Output() deleteFile: EventEmitter<number> = new EventEmitter<number>();
 
   private _files: TaskFile[] | FirmTemplateTaskFile[] = [];

@@ -11,7 +11,9 @@ import { EpModalService } from '@app/shared/modal/modal.service';
 })
 export class TaskToolbarComponent implements OnInit {
   @Input() task: any;
-  
+
+  @Input() files: any = [];
+
   constructor(
     private _caseTemplateService: CaseTemplateService,
     private _modalService: EpModalService

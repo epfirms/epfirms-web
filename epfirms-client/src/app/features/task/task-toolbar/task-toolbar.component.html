@@ -6,7 +6,7 @@
 
     <div class="flex items-center">
       <app-task-file-button
-        [files]="task.firm_template_task_files"
+        [files]="files"
         (fileSelect)="attachFilesToTask($event)"
         (deleteFile)="deleteTaskFile($event)"
       ></app-task-file-button>
