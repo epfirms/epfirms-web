@@ -129,18 +129,42 @@ export class FirmBillingMainComponent implements OnInit {
               }
             });
           } else {
+            this.invoices = this.invoices.filter((i) => i.id !== invoice.id);
+            this._stripeService.deleteInvoice(invoice.id).subscribe((invoice) => {
+              this.loadInvoices();
 
-          this.invoices = this.invoices.filter((i) => i.id !== invoice.id);
-          this._stripeService.deleteInvoice(invoice.id).subscribe((invoice) => {
-            this.loadInvoices();
-
-            if (invoice === true) {
-              this._toastService.success('Invoice deleted successfully');
-            }
-          });
+              if (invoice === true) {
+                this._toastService.success('Invoice deleted successfully');
+              }
+            });
           }
         },
       });
     }
+  }
+
+  // handles the finalization of the invoice
+  //this does two things: sets the invoice.auto_advance to true, and finalizes the invoice so that stripe sends it
+  //this is a one-time action, and the invoice will not be able to be finalized again
+  finalizeInvoice(invoice: Invoice): void {
+    this._modalService.create({
+      epContent: ConfirmDialogComponent,
+      epOkText: 'Confirm',
+      epCancelText: 'Cancel',
+      epAutofocus: null,
+      epComponentParams: {
+        title: 'Finalize Invoice',
+        body: 'Approve this invoice? Once an invoice is finalized, it cannot be deleted or edited. This will allow the invoice to be automatically collected from the client.',
+      },
+      epOnOk: () => {
+        this._stripeService.finalizeInvoice(invoice.id).subscribe((invoice) => {
+          if (invoice) {
+            console.log(invoice);
+            this.loadInvoices();
+            this._toastService.success('Invoice finalized successfully');
+          }
+        });
+      },
+    });
   }
 }
