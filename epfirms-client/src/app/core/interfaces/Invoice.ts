@@ -47,5 +47,10 @@ export class Invoice {
         this.auto_advance = autoAdvance;
     }
 
+    setStatus(status: string) {
+        this.status = status;
+    }
+
+
 
 }

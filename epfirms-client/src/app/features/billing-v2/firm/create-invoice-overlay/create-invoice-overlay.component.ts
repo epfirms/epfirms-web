@@ -47,6 +47,7 @@ export class CreateInvoiceOverlayComponent implements OnInit {
     this.loadMatters();
   }
 
+
   loadMatters(): void {
     this.matters$.subscribe((matters) => {
       if (matters) {
@@ -80,7 +81,7 @@ export class CreateInvoiceOverlayComponent implements OnInit {
   // this will create an invoice object with Stripe
   // this will set the status in both places as 'draft'
 
-  saveAsDraft(): void {
+  submit(isDraft : boolean): void {
     //creat a new invoice
     if (this.selectedMatter && this.invoiceForm.valid) {
       let invoice = new Invoice(
@@ -91,7 +92,8 @@ export class CreateInvoiceOverlayComponent implements OnInit {
         this.invoiceForm.value.invoice_message,
       );
       invoice.setDate(this.invoiceForm.value.due_date);
-      invoice.setAutoAdvance(false);
+      invoice.setStatus('pending');
+      invoice.setAutoAdvance(isDraft);
       console.log('new invoice: ', invoice);
       this._invoiceService.upsert(invoice).subscribe((res) => {
         console.log(res);
