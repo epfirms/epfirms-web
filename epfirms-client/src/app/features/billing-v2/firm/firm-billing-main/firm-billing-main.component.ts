@@ -21,6 +21,21 @@ export class FirmBillingMainComponent implements OnInit {
   invoices: Invoice[];
   firm;
 
+  // default invoice list
+  defaultInvoiceList: Invoice[];
+
+  // controls whether the filter dropdown is visible
+  filterDropdownVisible: boolean = false;
+
+
+  //filter settings object
+  filterSettings = {
+    paid: false,
+    open: false,
+    draft: false,
+  };
+
+
   constructor(
     private _invoiceService: InvoiceService,
     private currentUserService: CurrentUserService,
@@ -41,6 +56,7 @@ export class FirmBillingMainComponent implements OnInit {
           .subscribe((invoices) => {
             if (invoices.length > 0) {
               this.invoices = invoices;
+              this.defaultInvoiceList = invoices;
               console.log(this.invoices);
             }
           });
@@ -167,4 +183,28 @@ export class FirmBillingMainComponent implements OnInit {
       },
     });
   }
+
+
+  toggleFilterDropdown(): void {
+    this.filterDropdownVisible = !this.filterDropdownVisible;
+  }
+
+  //handles filter changes
+  onFilterChanges() : void {
+    if (this.filterSettings.draft) {
+      this.invoices = this.defaultInvoiceList.filter((i) => i.status === 'draft');
+    }
+    else if (this.filterSettings.open) {
+      this.invoices = this.defaultInvoiceList.filter((i) => i.status === 'open');
+    }
+   else  if (this.filterSettings.paid) {
+      this.invoices = this.defaultInvoiceList.filter((i) => i.status === 'paid');
+    }
+
+    else {
+      this.invoices = this.defaultInvoiceList;
+    }
+
+  }
+
 }

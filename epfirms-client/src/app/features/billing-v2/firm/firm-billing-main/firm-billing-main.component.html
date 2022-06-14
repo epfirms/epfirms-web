@@ -46,6 +46,7 @@
       <div class="mt-4 flex">
 
         <button
+        (click)="toggleFilterDropdown()"
           type="button"
           class="mr-2 inline-flex items-center justify-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
         >
@@ -55,6 +56,65 @@
         </svg>
           Filter
         </button>
+        <!--
+    Dropdown menu, show/hide based on menu state.
+
+    Entering: "transition ease-out duration-100"
+      From: "transform opacity-0 scale-95"
+      To: "transform opacity-100 scale-100"
+    Leaving: "transition ease-in duration-75"
+      From: "transform opacity-100 scale-100"
+      To: "transform opacity-0 scale-95"
+  -->
+  <div *ngIf="filterDropdownVisible" class="origin-top-right absolute mt-16 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+    <div class="py-1" role="none">
+      <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+    <!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<fieldset class="m-2 space-y-5">
+  <div class="relative flex items-start">
+    <div class="flex items-center h-5">
+      <input  (change)="onFilterChanges()" [(ngModel)]="filterSettings.draft" [checked]="filterSettings.draft" type="checkbox" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+    </div>
+    <div class="ml-3 text-sm">
+      <label  class="font-medium text-gray-700">Draft</label>
+    </div>
+  </div>
+
+  <div class="relative flex items-start">
+    <div class="flex items-center h-5">
+      <input (change)="onFilterChanges()" [(ngModel)]="filterSettings.open" [checked]="filterSettings.open" type="checkbox" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+    </div>
+    <div class="ml-3 text-sm">
+      <label  class="font-medium text-gray-700">Open</label>
+    </div>
+  </div>
+  <div class="relative flex items-start">
+    <div class="flex items-center h-5">
+      <input  (change)="onFilterChanges()" [(ngModel)]="filterSettings.paid" [checked]="filterSettings.paid" type="checkbox" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+    </div>
+    <div class="ml-3 text-sm">
+      <label  class="font-medium text-gray-700">Paid</label>
+    </div>
+  </div>
+</fieldset>
+
+    </div>
+  </div>
         <button
           (click)="openCreateInvoiceOverlay()"
           type="button"
