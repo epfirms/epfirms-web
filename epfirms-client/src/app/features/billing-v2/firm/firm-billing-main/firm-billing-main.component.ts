@@ -120,6 +120,17 @@ export class FirmBillingMainComponent implements OnInit {
     this.overDueInvoiceTotal = total;
   }
 
+  isOverDue(invoice: Invoice): boolean {
+
+    let today = new Date();
+    let dueDate = new Date(invoice.due_date);
+    if (today.getTime() > dueDate.getTime()) {
+      return true;
+    }
+    return false;
+
+  }
+
   openCreateInvoiceOverlay(): void {
     let modal = this._modalService.create({
       epContent: CreateInvoiceOverlayComponent,

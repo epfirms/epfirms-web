@@ -29,21 +29,21 @@
     </div>
 
     <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-      <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <div class="px-4 py-5 bg-blue-200 shadow rounded-lg overflow-hidden sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">Open Invoice Total</dt>
         <dd *ngIf="invoices" class="mt-1 text-3xl font-semibold text-gray-900">
           {{ openInvoiceTotal | currency }}
         </dd>
       </div>
 
-      <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <div class="px-4 py-5 bg-red-200 shadow rounded-lg overflow-hidden sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">Invoice Overdue Total</dt>
         <dd *ngIf="invoices" class="mt-1 text-3xl font-semibold text-gray-900">
           {{ overDueInvoiceTotal | currency }}
         </dd>
       </div>
 
-      <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <div class="px-4 py-5 bg-green-200 shadow rounded-lg overflow-hidden sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">Revenue Collected</dt>
         <dd *ngIf="invoices" class="mt-1 text-3xl font-semibold text-gray-900">
           {{ paidInvoiceTotal | currency }}
@@ -243,7 +243,7 @@
                     <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
                       {{ invoice.user.full_name }}
                     </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                    <td [ngClass]="isOverDue(invoice) ? 'bg-red-200' : 'bg-blue-200'" class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
                       {{ invoice.status }}
                     </td>
 
