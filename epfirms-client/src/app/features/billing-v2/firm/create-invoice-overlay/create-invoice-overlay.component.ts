@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EpModalRef } from '@app/shared/modal/modal-ref';
 import { currencyInputMask, toFloat } from '@app/core/util/currencyUtils';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { Matter } from '@app/core/interfaces/matter';
 import { Invoice } from '@app/core/interfaces/Invoice';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -48,8 +48,9 @@ export class CreateInvoiceOverlayComponent implements OnInit {
   }
 
 
+
   loadMatters(): void {
-    this.matters$.subscribe((matters) => {
+    this.matters$.pipe(take(1)).subscribe((matters) => {
       if (matters) {
         this.matters = matters;
         this.createMatterOptionsList();

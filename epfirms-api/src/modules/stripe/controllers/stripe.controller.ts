@@ -246,12 +246,17 @@ export class StripeController {
       } else if (event.type === 'invoice.created') {
         console.log('INVOICE CREATED SESSION');
         console.log(session);
+        res.status(200).send();
       } else if (event.type === 'invoice.finalized') {
         console.log('INVOICE FINALIZED SESSION');
         console.log(session);
         // update the invoice with the invoice id
         const updatedInvoice = await Database.models.invoice.update(
-          { status: session.status, hosted_invoice_url: session.hosted_invoice_url, auto_advance: session.auto_advance },
+          {
+            status: session.status,
+            hosted_invoice_url: session.hosted_invoice_url,
+            auto_advance: session.auto_advance,
+          },
           { where: { invoice_id: session.id } },
         );
         res.status(200).send();
@@ -432,8 +437,8 @@ export class StripeController {
 
   public async deleteInvoice(req, res: Response): Promise<any> {
     try {
-      console.log("DELETE INVOICE REQ.BODY", req.body);
-      console.log("delete invoice params", req.params);
+      console.log('DELETE INVOICE REQ.BODY', req.body);
+      console.log('delete invoice params', req.params);
       const invoice = await Database.models.invoice.findOne({
         where: { id: req.params.id },
       });
@@ -453,18 +458,15 @@ export class StripeController {
   }
 
   public async finalizeInvoice(req, res: Response): Promise<any> {
-
     try {
-      
       const invoice = await Database.models.invoice.findOne({
         where: { id: req.params.id },
       });
       if (invoice) {
-        await stripe.invoices.finalizeInvoice(invoice.invoice_id, {auto_advance: true});
+        await stripe.invoices.finalizeInvoice(invoice.invoice_id, { auto_advance: true });
       }
       res.status(StatusConstants.OK).send(true);
     } catch (error) {
-      
       console.error(error);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
     }
