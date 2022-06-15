@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Staff } from '@app/core/interfaces/staff';
-import { caseTemplateLawCategories, CaseTemplateLawCategory } from '@app/features/case-template/enums/case-template-law-category';
-import { FirmCaseTemplate } from '@app/features/case-template/interfaces/firm-case-template';
+import {
+  caseTemplateLawCategories,
+  CaseTemplateLawCategory,
+} from '@app/features/case-template/enums/case-template-law-category';
 import { FirmTemplateTaskFile } from '@app/features/case-template/interfaces/firm-template-task-file';
-import { AssigneeGroup, TemplateTaskAssignee } from '@app/features/case-template/interfaces/template-task-assignee';
+import {
+  AssigneeGroup,
+  TemplateTaskAssignee,
+} from '@app/features/case-template/interfaces/template-task-assignee';
 import { CaseTemplateCommunityService } from '@app/features/case-template/services/case-template-community.service';
 import { CaseTemplateService } from '@app/features/case-template/services/case-template.service';
 import { firmRoleOptions, FirmStaffRole } from '@app/features/firm-staff/enums/firm-staff-role';
@@ -16,12 +22,24 @@ import { AwsService } from '@app/shared/_services/aws.service';
 import { selectRouteParams } from '@app/store/router.selectors';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Store } from '@ngrx/store';
-import { filter, map, Observable, switchMap } from 'rxjs';
+import {
+  concatMap,
+  filter,
+  forkJoin,
+  from,
+  iif,
+  map,
+  mergeMap,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-case-template-details-page',
   templateUrl: './case-template-details-page.component.html',
-  styleUrls: ['./case-template-details-page.component.scss']
+  styleUrls: ['./case-template-details-page.component.scss'],
 })
 export class CaseTemplateDetailsPageComponent implements OnInit {
   public staff$: Observable<Staff[]>;
@@ -30,7 +48,7 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
     template_name: ['', Validators.required],
     law_category: [CaseTemplateLawCategory.OTHER, Validators.required],
     state_category: ['', Validators.required],
-    firm_template_tasks: this._formBuilder.array([])
+    firm_template_tasks: this._formBuilder.array([]),
   });
 
   originalValues;
@@ -48,23 +66,35 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
   filteredAssigneeGroups: AssigneeGroup[];
 
   selectedCaseTemplate$: Observable<any> = this.store.select(selectRouteParams).pipe(
-    filter(params => params.id), 
-    switchMap((params) => this._caseTemplateService.getOne(params.id)),
+    filter((params) => params.id),
+    switchMap((params) => {
+      if (params.id === 'new') {
+        return of({
+          id: null,
+          template_name: '',
+          law_category: 'other',
+          state_category: '',
+          firm_template_tasks: [],
+        });
+      }
+      return this._caseTemplateService.getOne(params.id);
+    }),
     map((template) => {
       this.originalValues = template;
       return this._formBuilder.group({
-      id: [template.id],
-      template_name: [template.template_name, Validators.required],
-      law_category: [template.law_category, Validators.required],
-      state_category: [template.state_category, Validators.required],
-      firm_template_tasks: [template.firm_template_tasks]
-    })})
-    );
-  
+        id: [template.id],
+        template_name: [template.template_name, Validators.required],
+        law_category: [template.law_category, Validators.required],
+        state_category: [template.state_category, Validators.required],
+        firm_template_tasks: [template.firm_template_tasks],
+      });
+    }),
+  );
+
   public usaStates: USAState[] = usaStatesFull;
 
   public caseTemplateLawCategories: CaseTemplateLawCategory[] = caseTemplateLawCategories;
-  
+
   constructor(
     private store: Store,
     private _caseTemplateService: CaseTemplateService,
@@ -72,16 +102,15 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
     private _toastService: HotToastService,
     private _modalService: EpModalService,
     private _formBuilder: FormBuilder,
-    private _awsService: AwsService
+    private _awsService: AwsService,
+    private _router: Router,
+    private _route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
-    this.selectedCaseTemplate$.subscribe(t => {
+    this.selectedCaseTemplate$.subscribe((t) => {
       this.templateForm = t;
-      this.templateForm.valueChanges.subscribe(c => {
-        console.log(c);
-      })
-    })
+    });
   }
 
   share(): void {
@@ -92,46 +121,99 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
       epAutofocus: null,
       epComponentParams: {
         title: 'Create community template',
-        body: 'A copy of this template will be created and shared with other users in the case template community.'
+        body: 'A copy of this template will be created and shared with other users in the case template community.',
       },
       epOnOk: () => {
         this._caseTemplateCommunityService.create(this.templateForm.value).subscribe(() => {
           this._toastService.success('Successfully created community template');
         });
-      }
+      },
     });
   }
 
   saveChanges() {
-    this.saveTemplateChanges(this.templateForm.get('id').value, this.templateForm.value);
-    this.saveTaskChanges(this.templateForm.get('id').value, this.templateForm.get('firm_template_tasks').value);
-    this.saveTaskDeletions(this.originalValues.firm_template_tasks, this.templateForm.get('firm_template_tasks').value);
-    // this.loadCaseTemplates();
+    const templateId = this.templateForm.get('id').value;
+    const template = this.templateForm.value;
+    const templateTasks: Observable<any> = from(this.templateForm.get('firm_template_tasks').value);
+    if (templateId) {
+      this._caseTemplateService
+        .update(templateId, template)
+        .pipe(
+          tap(() => {
+            forkJoin(
+              this.saveTaskDeletions(
+                this.originalValues.firm_template_tasks,
+                this.templateForm.get('firm_template_tasks').value,
+              ),
+            ).subscribe();
+          }),
+          // Observable stream of tasks to be updated.
+          mergeMap(() => templateTasks.pipe(map((task) => ({ ...task, template_id: templateId })))),
+          concatMap((task) => iif(() => task.id, this.updateTask(task), this.createTask(task))),
+          map((task) => {
+            const filesToUpload = task.firm_template_task_files.map((file) =>
+              this.saveTaskFile(task.id, file),
+            );
+            return filesToUpload;
+          }),
+          concatMap((filesToUpload) => forkJoin(filesToUpload)),
+        )
+        .subscribe({
+          complete: () => {
+            const toast = this._toastService.success('Successfully update template');
+
+            toast.afterClosed.subscribe(() => {
+              this._router.navigate(['..'], { relativeTo: this._route });
+            });
+          },
+        });
+    } else {
+      this._caseTemplateService
+        .create(template)
+        .pipe(
+          // Observable stream of tasks to be created.
+          mergeMap((createdTemplate) =>
+            templateTasks.pipe(map((task) => ({ ...task, template_id: createdTemplate.id }))),
+          ),
+          // Create single task.
+          concatMap((task) => this.createTask(task)),
+          // Map the task's files to an array of observables.
+          map((task) => {
+            const filesToUpload = task.firm_template_task_files.map((file) =>
+              this.saveTaskFile(task.id, file),
+            );
+            return filesToUpload;
+          }),
+          concatMap((filesToUpload) => forkJoin(filesToUpload)),
+        )
+        .subscribe({
+          complete: () => {
+            const toast = this._toastService.success('Successfully created template');
+
+            toast.afterClosed.subscribe(() => {
+              this._router.navigate(['..'], { relativeTo: this._route });
+            });
+          },
+        });
+    }
   }
 
-  private saveTaskChanges(templateId: number, changes) {
-    console.log(changes);
-    changes.forEach((change) => {
-      if (change.id) {
-        this._caseTemplateService.updateTask(change.id, change).subscribe(() => {
-          change.firm_template_task_files.forEach((file) => {
-            if (!file.id) {
-              this.saveTaskFile(change.id, file);
-            }
-          });
-        });
-      } else {
-        this._caseTemplateService.createTask(templateId, change).subscribe((newTask) => {
-          change.firm_template_task_files.forEach((file) => {
-            this.saveTaskFile(newTask.id, file);
-          });
-        });
-      }
-    });
+  createTask(task) {
+    return this._caseTemplateService.createTask(task.template_id, task).pipe(
+      map((createdTask) => ({
+        id: createdTask.id,
+        firm_template_task_files: task.firm_template_task_files,
+      })),
+    );
   }
 
-  private saveTemplateChanges(templateId: number, changes) {
-    this._caseTemplateService.update(templateId, changes).subscribe();
+  updateTask(task) {
+    return this._caseTemplateService.updateTask(task.id, task).pipe(
+      map(() => ({
+        id: task.id,
+        firm_template_task_files: task.firm_template_task_files,
+      })),
+    );
   }
 
   private saveTaskDeletions(tasks, changes) {
@@ -139,26 +221,23 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
       return !changes.some((changedTask) => changedTask.id === task.id);
     });
 
-    deletedTasks.forEach((task) => {
-      this._caseTemplateService.deleteTask(task.id).subscribe();
-    });
+    return deletedTasks.map((task) => this._caseTemplateService.deleteTask(task.id));
   }
 
   private saveTaskFile(taskId: number, file) {
-    this._caseTemplateService.getTaskFileUploadURL(file.name, file.description).subscribe((res) => {
-      const taskFile: FirmTemplateTaskFile = {
-        name: file.name,
-        description: file.description,
-        key: res.key,
-      };
-
-      this._awsService.uploadfileAWSS3(res.url, file.description, file.file).subscribe(
-        () => {},
-        () => {},
-        () => {
-          this._caseTemplateService.createTaskFile(taskId, taskFile).subscribe();
-        },
-      );
-    });
+    return this._caseTemplateService.getTaskFileUploadURL(file.name, file.description).pipe(
+      concatMap((res) =>
+        this._awsService.uploadfileAWSS3(res.url, file.description, file.file).pipe(
+          map(() => ({
+            name: file.name,
+            description: file.description,
+            key: res.key,
+          })),
+        ),
+      ),
+      concatMap((taskFile: FirmTemplateTaskFile) =>
+        this._caseTemplateService.createTaskFile(taskId, taskFile),
+      ),
+    );
   }
 }
