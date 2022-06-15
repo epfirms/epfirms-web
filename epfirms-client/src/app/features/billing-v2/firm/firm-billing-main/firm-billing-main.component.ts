@@ -15,8 +15,7 @@ import { CreateInvoiceOverlayComponent } from '../create-invoice-overlay/create-
   styleUrls: ['./firm-billing-main.component.scss'],
 })
 export class FirmBillingMainComponent implements OnInit {
-  // state controls the view of the bottom of the component
-  state: string = 'flat-rate';
+  
 
   // list of invoices
   invoices: Invoice[];
@@ -34,6 +33,10 @@ export class FirmBillingMainComponent implements OnInit {
     open: false,
     draft: false,
   };
+
+  // page state
+  // 'invoices' or 'subscriptions'
+  state : string = 'invoices';
 
   // range filter
   dateRange = 30;
