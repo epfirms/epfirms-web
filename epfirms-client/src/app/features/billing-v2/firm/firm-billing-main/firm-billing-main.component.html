@@ -14,7 +14,6 @@
       <select
       (change)="onRangeChange()"
         [(ngModel)]="dateRange"
-        
         class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
       >
 
@@ -33,21 +32,21 @@
       <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">Open Invoice Total</dt>
         <dd *ngIf="invoices" class="mt-1 text-3xl font-semibold text-gray-900">
-          {{ getOpenInvoiceTotal() | currency }}
+          {{ openInvoiceTotal | currency }}
         </dd>
       </div>
 
       <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">Invoice Overdue Total</dt>
         <dd *ngIf="invoices" class="mt-1 text-3xl font-semibold text-gray-900">
-          {{ getOverdueInvoiceTotal() | currency }}
+          {{ overDueInvoiceTotal | currency }}
         </dd>
       </div>
 
       <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">Revenue Collected</dt>
         <dd *ngIf="invoices" class="mt-1 text-3xl font-semibold text-gray-900">
-          {{ getPaidInvoiceTotal() | currency }}
+          {{ paidInvoiceTotal | currency }}
         </dd>
       </div>
     </dl>

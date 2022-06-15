@@ -36,7 +36,12 @@ export class FirmBillingMainComponent implements OnInit {
   };
 
   // range filter
-  dateRange: 30;
+  dateRange = 30;
+
+  // stats
+  openInvoiceTotal: number = 0;
+  overDueInvoiceTotal: number = 0;
+  paidInvoiceTotal: number = 0;
 
   constructor(
     private _invoiceService: InvoiceService,
@@ -59,7 +64,8 @@ export class FirmBillingMainComponent implements OnInit {
             if (invoices.length > 0) {
               this.invoices = invoices;
               this.defaultInvoiceList = invoices;
-              console.log(this.invoices);
+
+              this.onRangeChange();
             }
           });
       }
@@ -79,27 +85,27 @@ export class FirmBillingMainComponent implements OnInit {
     this.getOverdueInvoiceTotal();
   }
 
-  getOpenInvoiceTotal(): number {
+  getOpenInvoiceTotal(): void {
     let total = 0;
     this.invoices.forEach((invoice) => {
       if (invoice.status === 'open') {
         total += invoice.total;
       }
     });
-    return total;
+    this.openInvoiceTotal = total;
   }
 
-  getPaidInvoiceTotal(): number {
+  getPaidInvoiceTotal(): void {
     let total = 0;
     this.invoices.forEach((invoice) => {
       if (invoice.status === 'paid') {
         total += invoice.total;
       }
     });
-    return total;
+    this.paidInvoiceTotal = total;
   }
 
-  getOverdueInvoiceTotal(): number {
+  getOverdueInvoiceTotal(): void {
     let total = 0;
     let today = new Date();
 
@@ -111,7 +117,7 @@ export class FirmBillingMainComponent implements OnInit {
         }
       }
     });
-    return total;
+    this.overDueInvoiceTotal = total;
   }
 
   openCreateInvoiceOverlay(): void {
@@ -122,7 +128,6 @@ export class FirmBillingMainComponent implements OnInit {
     });
     modal.afterClose.subscribe((data) => {
       if (data) {
-        console.log(data);
         this.loadInvoices();
       }
     });
@@ -183,7 +188,6 @@ export class FirmBillingMainComponent implements OnInit {
       epOnOk: () => {
         this._stripeService.finalizeInvoice(invoice.id).subscribe((invoice) => {
           if (invoice) {
-            console.log(invoice);
             this.loadInvoices();
             this._toastService.success('Invoice finalized successfully');
           }
@@ -211,12 +215,13 @@ export class FirmBillingMainComponent implements OnInit {
   }
 
   onRangeChange(): void {
-    if (this.dateRange < 0 ) {
+    if (this.dateRange < 0) {
       this.invoices = this.defaultInvoiceList;
-    }
-    else {
-
-   this.invoices = this.defaultInvoiceList.filter(invoice => new Date(invoice.created_at).getTime() > new Date().getTime() - this.dateRange * DAY) 
+    } else {
+      this.invoices = this.defaultInvoiceList.filter(
+        (invoice) =>
+          new Date(invoice.created_at).getTime() > new Date().getTime() - this.dateRange * DAY,
+      );
     }
     this.reloadStats();
   }
