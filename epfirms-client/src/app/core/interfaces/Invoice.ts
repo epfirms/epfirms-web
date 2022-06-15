@@ -18,6 +18,8 @@ export class Invoice {
     user? : User;
     //determines whether or not stripe will automatically advance it through the lifecycle
     auto_advance: boolean;
+    client_subscription_id?: number;
+    stripe_subscription_id?: string;
 
     constructor(matterId : number, userId: number, firmId: number, total: number, description: string) {
         this.user_id = userId;
@@ -32,6 +34,7 @@ export class Invoice {
         this.is_approved = false;
         this.is_client_visible = false;
         this.auto_advance = false;
+        
     }
 
     setDate(date: string) {
@@ -49,6 +52,11 @@ export class Invoice {
 
     setStatus(status: string) {
         this.status = status;
+    }
+
+    setSubscriptionIDs(customerSubscriptionId: number, stripeSubscriptionId : string) {
+        this.client_subscription_id = customerSubscriptionId;
+        this.stripe_subscription_id = stripeSubscriptionId;
     }
 
 
