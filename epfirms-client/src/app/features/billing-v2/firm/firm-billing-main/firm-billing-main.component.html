@@ -359,6 +359,344 @@
 </div>
 
 
+<!-- Subscription PAGES -->
+<div *ngIf="state === 'subscriptions'">
+<!-- STATS OVERVIEW BLOCK -->
+<div class="m-5">
+  <div>
+    <div class="max-w-md">
+      <label class="block text-sm font-medium text-gray-700">Date Range</label>
+      <select
+        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+      >
+
+        <option [ngValue]="-1" >All</option>
+        <option [ngValue]="30">30 Days</option>
+        <option [ngValue]="60">60 Days</option>
+        <option [ngValue]="90">90 Days</option>
+
+        <option [ngValue]="180">180 Days</option>
+
+        <option [ngValue]="365">YTD</option>
+      </select>
+    </div>
+
+    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <div class="px-4 py-5 bg-blue-200 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">Active Subscription Total</dt>
+        <dd  class="mt-1 text-3xl font-semibold text-gray-900">
+          {{ 0 | currency }}
+        </dd>
+      </div>
+
+      <div class="px-4 py-5 bg-red-200 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">Overdue Subscription Total</dt>
+        <dd class="mt-1 text-3xl font-semibold text-gray-900">
+          {{ 0 | currency }}
+        </dd>
+      </div>
+
+      <div class="px-4 py-5 bg-green-200 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">Subscription Revenue Collected</dt>
+        <dd  class="mt-1 text-3xl font-semibold text-gray-900">
+          {{ 0 | currency }}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<!-- INVOICE SECTION -->
+<div class="mt-5">
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="sm:flex sm:items-center">
+      <div class="sm:flex-auto">
+        <h1 class="text-xl font-semibold text-gray-900">Subscriptions</h1>
+        <p class="mt-2 text-sm text-gray-700"></p>
+      </div>
+      <div class="mt-4 flex">
+        <button
+          type="button"
+          class="mr-2 inline-flex items-center justify-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+            />
+          </svg>
+          Filter
+        </button>
+        <!--
+    Dropdown menu, show/hide based on menu state.
+
+    Entering: "transition ease-out duration-100"
+      From: "transform opacity-0 scale-95"
+      To: "transform opacity-100 scale-100"
+    Leaving: "transition ease-in duration-75"
+      From: "transform opacity-100 scale-100"
+      To: "transform opacity-0 scale-95"
+  -->
+        <div
+        hidden
+          class="origin-top-right absolute mt-16 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="menu-button"
+          tabindex="-1"
+        >
+          <div class="py-1" role="none">
+            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+            <!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+            <fieldset class="m-2 space-y-5">
+              <div class="relative flex items-start">
+                <div class="flex items-center h-5">
+                  <input
+                    (change)="onFilterChanges()"
+                    [(ngModel)]="filterSettings.draft"
+                    [checked]="filterSettings.draft"
+                    type="checkbox"
+                    class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                  />
+                </div>
+                <div class="ml-3 text-sm">
+                  <label class="font-medium text-gray-700">Draft</label>
+                </div>
+              </div>
+
+              <div class="relative flex items-start">
+                <div class="flex items-center h-5">
+                  <input
+                    (change)="onFilterChanges()"
+                    [(ngModel)]="filterSettings.open"
+                    [checked]="filterSettings.open"
+                    type="checkbox"
+                    class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                  />
+                </div>
+                <div class="ml-3 text-sm">
+                  <label class="font-medium text-gray-700">Open</label>
+                </div>
+              </div>
+              <div class="relative flex items-start">
+                <div class="flex items-center h-5">
+                  <input
+                    (change)="onFilterChanges()"
+                    [(ngModel)]="filterSettings.paid"
+                    [checked]="filterSettings.paid"
+                    type="checkbox"
+                    class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                  />
+                </div>
+                <div class="ml-3 text-sm">
+                  <label class="font-medium text-gray-700">Paid</label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
+        >
+          Create Subscription
+        </button>
+      </div>
+    </div>
+    <div class="mt-8 flex flex-col">
+      <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <div class="overflow-y-scroll" style="height: 500px">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                    >
+                      Subscription ID
+                    </th>
+
+                    <th
+                      scope="col"
+                      class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Date Created
+                    </th>
+                    <th
+                      scope="col"
+                      class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Client
+                    </th>
+                    <th
+                      scope="col"
+                      class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Status
+                    </th>
+
+                    <th
+                      scope="col"
+                      class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Due Date
+                    </th>
+                    <th
+                      scope="col"
+                      class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Amount
+                    </th>
+
+                    <th
+                      scope="col"
+                      class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Term
+                    </th>
+                    <th
+                      scope="col"
+                      class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  <tr *ngFor="let invoice of invoices">
+                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
+                      {{ invoice.invoice_id }}
+                    </td>
+
+                    <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
+                      {{ invoice.created_at | date }}
+                    </td>
+
+                    <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
+                      {{ invoice.user.full_name }}
+                    </td>
+                    <td [ngClass]="statusColoration(invoice)" class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                      {{ invoice.status | uppercase }}
+                    </td>
+
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                      {{ invoice.due_date | date }}
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                      {{ invoice.total | currency }}
+                    </td>
+
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                      <button
+                        *ngIf="invoice.hosted_invoice_url.length > 0"
+                        (click)="openInvoice(invoice.hosted_invoice_url)"
+                        [disabled]="invoice.hosted_invoice_url.length <= 0"
+                        [tippy]="'View Invoice'"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                          />
+                        </svg>
+                      </button>
+
+                      <button
+                        *ngIf="
+                          (invoice.status === 'draft' && invoice.invoice_id) ||
+                          invoice.status === 'pending'
+                        "
+                        (click)="deleteInvoice(invoice)"
+                        [tippy]="'Delete Invoice'"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </button>
+
+                      <button
+                        *ngIf="
+                          invoice.status === 'draft' &&
+                          invoice.invoice_id &&
+                          invoice.auto_advance === false
+                        "
+                        (click)="finalizeInvoice(invoice)"
+                        [tippy]="'Finalize Invoice'"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- More transactions... -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-<!-- ADD A NEW INVOICE SLIDE OVER -->
+</div>
+
+
