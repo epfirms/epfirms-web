@@ -243,8 +243,8 @@
                     <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
                       {{ invoice.user.full_name }}
                     </td>
-                    <td [ngClass]="isOverDue(invoice) ? 'bg-red-200' : 'bg-blue-200'" class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                      {{ invoice.status }}
+                    <td [ngClass]="statusColoration(invoice)" class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                      {{ invoice.status | uppercase }}
                     </td>
 
                     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">

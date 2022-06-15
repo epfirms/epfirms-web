@@ -120,15 +120,21 @@ export class FirmBillingMainComponent implements OnInit {
     this.overDueInvoiceTotal = total;
   }
 
-  isOverDue(invoice: Invoice): boolean {
+  statusColoration(invoice: Invoice): string {
+    let isOverDue = new Date().getTime() > new Date(invoice.due_date).getTime();
 
-    let today = new Date();
-    let dueDate = new Date(invoice.due_date);
-    if (today.getTime() > dueDate.getTime()) {
-      return true;
+    let styleString = 'bg-white';
+
+    if (invoice.status === 'open') {
+      styleString = 'bg-blue-200';
+    } else if (invoice.status === 'paid') {
+      styleString = 'bg-green-200';
     }
-    return false;
+    if (isOverDue && invoice.status === 'open') {
+      styleString = 'bg-red-200';
+    }
 
+    return styleString;
   }
 
   openCreateInvoiceOverlay(): void {
