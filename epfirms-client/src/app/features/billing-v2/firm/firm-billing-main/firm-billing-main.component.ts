@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Invoice } from '@app/core/interfaces/Invoice';
+import { DAY } from '@app/core/util/timeConstants';
 import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialog.component';
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
@@ -27,7 +28,6 @@ export class FirmBillingMainComponent implements OnInit {
   // controls whether the filter dropdown is visible
   filterDropdownVisible: boolean = false;
 
-
   //filter settings object
   filterSettings = {
     paid: false,
@@ -35,6 +35,8 @@ export class FirmBillingMainComponent implements OnInit {
     draft: false,
   };
 
+  // range filter
+  dateRange: 30;
 
   constructor(
     private _invoiceService: InvoiceService,
@@ -69,6 +71,12 @@ export class FirmBillingMainComponent implements OnInit {
 
   openInvoice(url: string): void {
     window.open(url, '_blank');
+  }
+
+  reloadStats(): void {
+    this.getOpenInvoiceTotal();
+    this.getPaidInvoiceTotal();
+    this.getOverdueInvoiceTotal();
   }
 
   getOpenInvoiceTotal(): number {
@@ -184,27 +192,32 @@ export class FirmBillingMainComponent implements OnInit {
     });
   }
 
-
   toggleFilterDropdown(): void {
     this.filterDropdownVisible = !this.filterDropdownVisible;
   }
 
   //handles filter changes
-  onFilterChanges() : void {
+  onFilterChanges(): void {
+    this.onRangeChange();
     if (this.filterSettings.draft) {
-      this.invoices = this.defaultInvoiceList.filter((i) => i.status === 'draft');
+      this.invoices = this.invoices.filter((i) => i.status === 'draft');
+    } else if (this.filterSettings.open) {
+      this.invoices = this.invoices.filter((i) => i.status === 'open');
+    } else if (this.filterSettings.paid) {
+      this.invoices = this.invoices.filter((i) => i.status === 'paid');
+    } else {
+      this.invoices = this.invoices;
     }
-    else if (this.filterSettings.open) {
-      this.invoices = this.defaultInvoiceList.filter((i) => i.status === 'open');
-    }
-   else  if (this.filterSettings.paid) {
-      this.invoices = this.defaultInvoiceList.filter((i) => i.status === 'paid');
-    }
-
-    else {
-      this.invoices = this.defaultInvoiceList;
-    }
-
   }
 
+  onRangeChange(): void {
+    if (this.dateRange < 0 ) {
+      this.invoices = this.defaultInvoiceList;
+    }
+    else {
+
+   this.invoices = this.defaultInvoiceList.filter(invoice => new Date(invoice.created_at).getTime() > new Date().getTime() - this.dateRange * DAY) 
+    }
+    this.reloadStats();
+  }
 }
