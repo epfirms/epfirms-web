@@ -31,12 +31,12 @@ import { specificRequestsRouter } from '@src/modules/specific-requests/routes';
 import { excludedChildrenRouter } from '@src/modules/excluded-children/routes';
 import { estatePlanningRouter } from '@src/modules/estate-planning/routes';
 import { githubRouter } from '@src/modules/github/routes';
-import { toolAccessRouter } from '@src/modules/tool-access/routes';
 import { financialSummaryRouter } from '@src/modules/financial-summary/routes';
 import { appointeeSummaryRouter } from '@src/modules/appointee-summary/routes';
 import { intakeRouter } from '@src/modules/intake/routes';
 import { decedentRouter } from '@src/modules/decedent/routes';
 import { decedentPropertyRouter } from '@src/modules/decedent-property/routes';
+import { caseTemplateRouter } from '@src/modules/case-template/case-template.routes';
 import { wardRouter } from '@src/modules/ward/routes';
 
 const v1Router = express.Router();
@@ -59,7 +59,8 @@ v1Router.use('/statement', statementRouter);
 v1Router.use('/sign-up', betaSignupRouter);
 v1Router.use('/matter-billing-settings', matterBillingSettingsRouter)
 v1Router.use('/stripe', stripeRouter);
-v1Router.use('/case-templates', caseTemplateCommunityRouter);
+v1Router.use('/case-templates', caseTemplateRouter);
+v1Router.use('/community-templates', caseTemplateCommunityRouter);
 v1Router.use('/legal-insurance', legalInsuranceRouter);
 v1Router.use('/customer-account', customerAccountRouter);
 v1Router.use('/contract', contractRouter);
@@ -68,13 +69,11 @@ v1Router.use('/contract-template', contractTemplateRouter);
 v1Router.use('/teams', teamRouter);
 v1Router.use('/income', incomeRouter);
 v1Router.use('/phone-numbers', phoneNumberRouter);
-
 v1Router.use('/appointee', appointeeRouter);
 v1Router.use('/estate-planning', estatePlanningRouter);
 v1Router.use('/excluded-children', excludedChildrenRouter);
 v1Router.use('/specific-requests', specificRequestsRouter);
 v1Router.use('/github', githubRouter);
-v1Router.use('/tools', toolAccessRouter);
 v1Router.use('/decedent', decedentRouter);
 v1Router.use('/financial-summary', financialSummaryRouter);
 v1Router.use('/appointee-summary', appointeeSummaryRouter);

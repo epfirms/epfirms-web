@@ -28,6 +28,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
 import { BillingPaymentComponent } from './billing-payment/billing-payment.component';
 import { ButtonModule } from '@app/shared/button/button.module';
 import { BillingSavePaymentMethodComponent } from './billing-save-payment-method/billing-save-payment-method.component';
+import { CaseTemplatePageComponent } from './case-template-page/case-template-page.component';
 
 const FirmSettingsRoute: Routes = [
   {
@@ -69,6 +70,7 @@ const FirmSettingsRoute: Routes = [
     BillingOverviewComponent,
     BillingPaymentComponent,
     BillingSavePaymentMethodComponent,
+    CaseTemplatePageComponent,
   ],
   imports: [
     CommonModule,

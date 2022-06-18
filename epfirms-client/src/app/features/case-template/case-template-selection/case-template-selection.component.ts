@@ -68,7 +68,7 @@ export class CaseTemplateSelectionComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this._caseTemplateService.get().subscribe((templates) => {
+    this._caseTemplateService.getAll().subscribe((templates) => {
       this.caseTemplates = templates.reduce((acc, curr) => {
         const existingTemplate = acc.find((e) => e.category === curr.law_category);
         if (existingTemplate) {
@@ -138,7 +138,8 @@ export class CaseTemplateSelectionComponent implements OnInit, AfterViewInit {
         name: t.name,
         due: this.addDaysToDate(this.startDate, t.no_of_days_from_start_date).toString(),
         assignee_id: assigneeId,
-        matter_task_files: [...t.firm_template_task_files],
+        matter_task_file: t.firm_template_task_file,
+        matter_task_sms_message: t.firm_template_task_sms_message
       };
     });
   }

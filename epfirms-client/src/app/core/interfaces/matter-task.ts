@@ -19,5 +19,7 @@ export class MatterTask {
     
     hours?:any;
 
-    matter_task_files?: any[];
+    matter_task_file?: any;
+
+    matter_task_sms_message?: any;
   }

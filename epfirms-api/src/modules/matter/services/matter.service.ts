@@ -13,6 +13,7 @@ export class MatterService {
       matter_intake,
       statement,
       matter_task_file,
+      matter_task_sms_message,
       matter_billing_settings
     } = Database.models;
     const matters = await matter.findOne({
@@ -75,6 +76,9 @@ export class MatterService {
             },
             {
               model: matter_task_file
+            },
+            {
+              model: matter_task_sms_message
             }
           ]
         },
@@ -106,6 +110,7 @@ export class MatterService {
       matter_intake,
       statement,
       matter_task_file,
+      matter_task_sms_message,
       matter_billing_settings
     } = Database.models;
     const matters = await matter.findAll({
@@ -168,6 +173,9 @@ export class MatterService {
             },
             {
               model: matter_task_file
+            },
+            {
+              model: matter_task_sms_message
             }
           ]
         },

@@ -23,9 +23,9 @@ export class MatterTaskController {
 
       const newTask = await this._matterTaskService.create(task);
 
-      if (task.matter_task_files && task.matter_task_files.length) {
-        const sourceKey = task.matter_task_files[0].key;
-        const targetKey = await this._awsService.formatObjectKey(firm_id, 'task', task.matter_task_files[0].name)
+      if (task.matter_task_file) {
+        const sourceKey = task.matter_task_file.key;
+        const targetKey = await this._awsService.formatObjectKey(firm_id, 'task', task.matter_task_file.name)
         const source = {
           bucketName: S3_TASK_DOCUMENTS_BUCKET,
           key: sourceKey
@@ -38,12 +38,19 @@ export class MatterTaskController {
 
         if (copySuccess) {
           const newFile = {
-            name: task.matter_task_files[0].name,
-            description: task.matter_task_files[0].description,
+            name: task.matter_task_file.name,
+            description: task.matter_task_file.description,
             key: targetKey
           }
           await this._matterTaskFileService.attach(newTask.id, newFile)
         }
+      }
+
+      if (task.matter_task_sms_message) {
+        const newSms = {
+          body: task.matter_task_sms_message.body
+        };
+        await this._matterTaskService.createSmsAutomation(newTask.id, newSms);
       }
       
       const matter = await this._matterService.getOne(newTask.matter_id);

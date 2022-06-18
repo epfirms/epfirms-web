@@ -10,43 +10,43 @@ export class CaseTemplateCommunityService {
   constructor(private http: HttpClient) { }
 
   getById(id: number): Observable<any> {
-    return this.http.get(`/api/case-templates/${id}`);
+    return this.http.get(`/api/community-templates/${id}`);
   }
 
   get(): Observable<any> {
-    return this.http.get('/api/case-templates');
+    return this.http.get('/api/community-templates');
   }
 
   saveToFirmTemplates(templateId: number): Observable<any> {
-    return this.http.post('/api/case-templates/save', {id: templateId});
+    return this.http.post('/api/community-templates/save', {id: templateId});
   }
 
-  create(data):Observable<any> {
-    return this.http.post('/api/case-templates', data);
+  create(caseTemplateId: number):Observable<any> {
+    return this.http.post('/api/community-templates', {case_template_id: caseTemplateId});
   }
 
   delete(id):Observable<any>{
-    return this.http.delete(`/api/case-templates/${id}`);
+    return this.http.delete(`/api/community-templates/${id}`);
   }
 
   update(templateId: number, data):Observable<any> {
-    return this.http.put(`/api/case-templates/${templateId}`, data);
+    return this.http.put(`/api/community-templates/${templateId}`, data);
   }
 
   createTask(templateId: number, data):Observable<any> {
-    return this.http.post(`/api/case-templates/${templateId}/task`, data);
+    return this.http.post(`/api/community-templates/${templateId}/task`, data);
   }
 
   updateTask(taskId: number, data):Observable<any> {
-    return this.http.put(`/api/case-templates/task/${taskId}`, data);
+    return this.http.put(`/api/community-templates/task/${taskId}`, data);
   }
 
   deleteTask(taskId: number):Observable<any> {
-    return this.http.delete(`/api/case-templates/task/${taskId}`);
+    return this.http.delete(`/api/community-templates/task/${taskId}`);
   }
 
   getTaskFileUploadURL(fileName: string, contentType: string):Observable<any> {
-    return this.http.get(`/api/case-templates/task/file/upload`, {
+    return this.http.get(`/api/community-templates/task/file/upload`, {
       params: {
         name: fileName,
         MIME: contentType
@@ -55,7 +55,7 @@ export class CaseTemplateCommunityService {
   }
 
   getTaskFileDownloadURL(key: string):Observable<any> {
-    return this.http.get(`/api/case-templates/task/file/download`, {
+    return this.http.get(`/api/community-templates/task/file/download`, {
       params: {
         key: encodeURIComponent(key) 
       }
@@ -63,14 +63,14 @@ export class CaseTemplateCommunityService {
   }
 
   createTaskFile(taskId: number, data):Observable<any> {
-    return this.http.post(`/api/case-templates/task/${taskId}/file`, data);
+    return this.http.post(`/api/community-templates/task/${taskId}/file`, data);
   }
 
   updateTaskFile(fileId: number, data):Observable<any> {
-    return this.http.put(`/api/case-templates/task/file/${fileId}`, data);
+    return this.http.put(`/api/community-templates/task/file/${fileId}`, data);
   }
 
   deleteTaskFile(fileId: number):Observable<any> {
-    return this.http.delete(`/api/case-templates/task/file/${fileId}`);
+    return this.http.delete(`/api/community-templates/task/file/${fileId}`);
   }
 }

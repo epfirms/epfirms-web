@@ -163,4 +163,48 @@ export class ConversationService {
       }),
     );
   }
+
+  async findSmsConversation(cellPhone: string) {
+    const result = await this.asyncFind(
+      this.conversations$.value,
+      async (conversation) => {
+        const participants = await conversation.getParticipants();
+          return (
+            participants.length > 1 &&
+            participants.some((p) => p.attributes.phone === cellPhone)
+          )
+      },
+    );
+
+    return result;
+  }
+
+  async findChatConversation(id: number) {
+    const currentUserIdentity = this.user.identity;
+
+    const result = await this.asyncFind(
+      this.conversations$.value,
+      async (conversation) => {
+        const attributes = conversation.attributes;
+
+        const participants = await conversation.getParticipants();
+        return (
+          currentUserIdentity !== id.toString() &&
+          attributes.type === 'direct' &&
+          participants.length > 1 &&
+          participants.some((p) => p.identity === currentUserIdentity) &&
+          participants.some((p) => p.identity === id.toString())
+        );
+      },
+    );
+
+    return result;
+  }
+
+  async asyncFind(arr, callback) {
+    const fail = Symbol();
+    return (
+      await Promise.all(arr.map(async (item) => ((await callback(item)) ? item : fail)))
+    ).find((i) => i !== fail);
+  }
 }

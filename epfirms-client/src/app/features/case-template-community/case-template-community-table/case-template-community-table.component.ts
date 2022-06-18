@@ -9,11 +9,11 @@ import { usaStatesFull } from '@app/shared/utils/us-states/states';
   styleUrls: ['./case-template-community-table.component.scss']
 })
 export class CaseTemplateCommunityTableComponent implements OnInit {
-  caseTemplates;
+  caseTemplates = [];
 
   filteredCaseTemplates;
 
-  firmCaseTemplates;
+  firmCaseTemplates = [];
 
   lawCategories = caseTemplateLawCategories;
 

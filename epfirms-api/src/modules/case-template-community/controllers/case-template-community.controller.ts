@@ -3,7 +3,7 @@ import { StatusConstants } from '@src/constants/StatusConstants';
 import { CaseTemplateCommunityService } from '../services/case-template-community.service';
 import { Service } from 'typedi';
 import { AwsService } from '@src/modules/aws/services/aws.service';
-import { FirmCaseTemplateService } from '@src/modules/firm/services/firm-case-template.service';
+import { CaseTemplateService } from '@src/modules/case-template/case-template.service';
 const { S3_TASK_DOCUMENTS_BUCKET } = require('@configs/vars');
 
 @Service()
@@ -11,7 +11,7 @@ export class CaseTemplateCommunityController {
   constructor(
     private _communityCaseTemplateService: CaseTemplateCommunityService,
     private _awsService: AwsService,
-    private _firmCaseTemplateService: FirmCaseTemplateService,
+    private _caseTemplateService: CaseTemplateService,
   ) {}
 
   public async copyTemplateToFirm(req: any, res: Response): Promise<any> {
@@ -24,21 +24,30 @@ export class CaseTemplateCommunityController {
       const templateValues = { ...communityTemplate.dataValues };
       delete templateValues.id;
       templateValues.firm_id = firm_id;
-      const firmTemplate = await this._firmCaseTemplateService.create(templateValues);
+      const firmTemplate = await this._caseTemplateService.create(templateValues);
       for (let task of templateValues.community_template_tasks) {
         const taskValues = { ...task.dataValues };
         delete taskValues.id;
         taskValues.template_id = firmTemplate.id;
-        const firmTemplateTask = await this._firmCaseTemplateService.addTask(taskValues);
-        if (task.community_template_task_files.length) {
-          const fileValues = { ...task.community_template_task_files[0].dataValues };
+        const firmTemplateTask = await this._caseTemplateService.addTask(taskValues);
+        if (task.community_template_task_file) {
+          const fileValues = { ...task.community_template_task_file.dataValues };
           delete fileValues.id;
           fileValues.firm_template_task_id = firmTemplateTask.id;
-          await this._firmCaseTemplateService.attachFileToTask(firmTemplateTask.id, fileValues);
+          await this._caseTemplateService.attachFileToTask(firmTemplateTask.id, fileValues);
+        }
+
+        if (task.community_template_task_sms_message) {
+          const smsValues = { ...task.community_template_task_sms_message.dataValues };
+          delete smsValues.id;
+          smsValues.firm_template_task_id = firmTemplateTask.id;
+          await this._caseTemplateService.createSmsAutomation(firmTemplateTask.id, smsValues);
         }
       }
 
-      await this._communityCaseTemplateService.update(id, {download_count: communityTemplate.download_count + 1});
+      await this._communityCaseTemplateService.update(id, {
+        download_count: communityTemplate.download_count + 1,
+      });
 
       res.status(StatusConstants.OK).send({ success: true });
     } catch (err) {
@@ -53,13 +62,13 @@ export class CaseTemplateCommunityController {
       let permissions = {
         read: true,
         write: false,
-        delete: false
+        delete: false,
       };
       const template = await this._communityCaseTemplateService.getById(parseInt(id));
-      if(template.firm_id === firm_id) {
+      if (template.firm_id === firm_id) {
         permissions.write = permissions.delete = true;
       }
-      res.status(StatusConstants.OK).send({template, permissions});
+      res.status(StatusConstants.OK).send({ template, permissions });
     } catch (err) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
     }
@@ -71,7 +80,7 @@ export class CaseTemplateCommunityController {
 
       const all = await this._communityCaseTemplateService.get(firm_id);
       const firm = await this._communityCaseTemplateService.getAllByFirmId(firm_id);
-      res.status(StatusConstants.OK).send({all, firm});
+      res.status(StatusConstants.OK).send({ all, firm });
     } catch (err) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
     }
@@ -79,27 +88,46 @@ export class CaseTemplateCommunityController {
 
   public async create(req: any, res: Response): Promise<any> {
     try {
-      let template = req.body;
+      let templateId = req.body.case_template_id;
       const { firm_id } = req.user.firm_access;
 
-      template.firm_id = firm_id;
-      delete template.id;
+      const caseTemplate = await this._caseTemplateService.getOne(templateId);
+      const communityTemplate = await this._communityCaseTemplateService.create(
+        caseTemplate.dataValues,
+      );
 
-      const created = await this._communityCaseTemplateService.create(template);
+      for (let task of caseTemplate.firm_template_tasks) {
+        const taskValues = {
+          ...task.dataValues,
+        };
 
-      for (let task of template.firm_template_tasks) {
-        delete task.id;
-        task.template_id = created.id;
-        const communityTemplateTask = await this._communityCaseTemplateService.addTask(task);
-        if (task.firm_template_task_files.length) {
-          const fileValues = { ...task.firm_template_task_files[0] };
+        delete taskValues.id;
+
+        taskValues.template_id = communityTemplate.id;
+
+        const communityTemplateTask = await this._communityCaseTemplateService.addTask(taskValues);
+        if (task.firm_template_task_file) {
+          const fileValues = { ...task.firm_template_task_file.dataValues };
           delete fileValues.id;
           fileValues.firm_template_task_id = communityTemplateTask.id;
-          await this._communityCaseTemplateService.attachFileToTask(communityTemplateTask.id, fileValues);
+          await this._communityCaseTemplateService.attachFileToTask(
+            communityTemplateTask.id,
+            fileValues,
+          );
+        }
+
+        if (task.firm_template_task_sms_message) {
+          const smsValues = { ...task.firm_template_task_sms_message.dataValues };
+          delete smsValues.id;
+          smsValues.firm_template_task_id = communityTemplateTask.id;
+          await this._communityCaseTemplateService.createSmsAutomation(
+            communityTemplateTask.id,
+            smsValues,
+          );
         }
       }
 
-      res.status(StatusConstants.OK).send(created);
+      res.status(StatusConstants.OK).send(communityTemplate);
     } catch (err) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
     }

@@ -1,0 +1,107 @@
+<div class="h-full mx-auto max-w-7xl" *ngIf="selectedCaseTemplate$ | async">
+  <div
+    class="sticky top-0 z-10 flex items-center w-full h-16 px-8 border-b border-gray-200 sm:flex sm:items-center sm:justify-between"
+  >
+    <div>
+      <nav aria-label="Back">
+        <a
+          [routerLink]="['..']"
+          class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
+        >
+          <svg
+            class="flex-shrink-0 w-5 h-5 mr-1 -ml-1 text-gray-400"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          Back
+        </a>
+      </nav>
+    </div>
+
+    <div class="flex-1 min-w-0 ml-4"></div>
+    <div class="flex mt-4 space-x-6 sm:mt-0 sm:ml-4">
+      <a
+        (click)="share()"
+        class="group flex items-center text-sm text-blue-500 hover:text-blue-900 font-medium space-x-2.5 hover:cursor-pointer"
+      >
+        <svg
+          class="w-5 h-5 text-blue-500 group-hover:text-blue-900"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"
+          />
+        </svg>
+        <span> Add to template community </span>
+      </a>
+
+      <button type="button" ep-button [disabled]="!templateForm.dirty" (click)="saveChanges()">Save changes</button>
+    </div>
+  </div>
+
+  <div class="px-4 py-6 sm:px-6 lg:px-8 xl:py-6">
+    <form [formGroup]="templateForm" class="grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6">
+      <div class="sm:col-span-6">
+        <label for="template-name" class="block text-sm font-medium text-gray-700">
+          Template name
+        </label>
+        <div class="mt-1">
+          <input
+            formControlName="template_name"
+            type="text"
+            name="template-name"
+            id="template-name"
+            autocomplete="off"
+            class="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
+      </div>
+
+      <div class="sm:col-span-6">
+        <label for="template-name" class="block text-sm font-medium text-gray-700">
+          Field of law
+        </label>
+        <div class="mt-1">
+          <select
+            formControlName="law_category"
+            class="block w-full max-w-xs py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          >
+            <option *ngFor="let lawCategory of caseTemplateLawCategories" [ngValue]="lawCategory">
+              {{ lawCategory }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sm:col-span-6">
+        <label for="template-name" class="block text-sm font-medium text-gray-700"> State </label>
+        <div class="mt-1">
+          <select
+            formControlName="state_category"
+            class="block w-full max-w-xs py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          >
+            <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+              {{ state.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sm:col-span-6">
+        <label for="cover-photo" class="block text-sm font-medium text-gray-700"> Tasks </label>
+        <app-case-template-task-list formControlName="firm_template_tasks"></app-case-template-task-list>
+      </div>
+    </form>
+  </div>
+</div>
