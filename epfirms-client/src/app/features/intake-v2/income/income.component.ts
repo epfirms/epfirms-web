@@ -12,8 +12,8 @@ import { FinancialSummaryService } from '../services/financial-summary.service';
 })
 export class IncomeComponent implements OnInit {
   @Input() matter;
-  @Output() back = new EventEmitter<boolean>();
-  @Output() continue = new EventEmitter<boolean>();
+
+  @Input() client;
 
   // states for the financials section
   includeSpouseIncome: boolean = false;
@@ -53,7 +53,6 @@ export class IncomeComponent implements OnInit {
 
   // spouse property if available
   spouse;
-  client;
 
   constructor(
     private familyMemberService: FamilyMemberService,
@@ -61,7 +60,6 @@ export class IncomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.client = this.matter.client;
     this.clientIncomeForm.user_id = this.client.id;
     this.loadSpouse();
 
@@ -69,7 +67,7 @@ export class IncomeComponent implements OnInit {
   }
 
   loadSpouse(): void {
-    this.familyMemberService.getByUserId(this.matter.client.id).subscribe((res) => {
+    this.familyMemberService.getByUserId(this.client.id).subscribe((res) => {
       if (res) {
         this.spouse = res.filter(
           (member) => member.family_member.relationship_type === 'spouse',
@@ -161,11 +159,5 @@ export class IncomeComponent implements OnInit {
     }
   }
 
-  backButton(): void {
-    this.back.emit(true);
-  }
-
-  continueButton(): void {
-    this.continue.emit(true);
-  }
+  
 }

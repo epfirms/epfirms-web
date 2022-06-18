@@ -277,6 +277,8 @@
               <option [ngValue]="'estate planning'">Estate Planning</option>
 
               <option [ngValue]="'probate'">Probate</option>
+
+              <option [ngValue]="'elderlaw'">Elder Law</option>
             </select>
           </div>
           <div class="relative flex items-start">
@@ -284,6 +286,7 @@
               <input
                 [(ngModel)]="sendIntake"
                 [checked]="sendIntake"
+                [ngModelOptions]="{ standalone: true }"
                 type="checkbox"
                 class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
               />

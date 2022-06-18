@@ -37,6 +37,7 @@ import { intakeRouter } from '@src/modules/intake/routes';
 import { decedentRouter } from '@src/modules/decedent/routes';
 import { decedentPropertyRouter } from '@src/modules/decedent-property/routes';
 import { caseTemplateRouter } from '@src/modules/case-template/case-template.routes';
+import { wardRouter } from '@src/modules/ward/routes';
 
 const v1Router = express.Router();
 
@@ -68,7 +69,6 @@ v1Router.use('/contract-template', contractTemplateRouter);
 v1Router.use('/teams', teamRouter);
 v1Router.use('/income', incomeRouter);
 v1Router.use('/phone-numbers', phoneNumberRouter);
-
 v1Router.use('/appointee', appointeeRouter);
 v1Router.use('/estate-planning', estatePlanningRouter);
 v1Router.use('/excluded-children', excludedChildrenRouter);
@@ -79,4 +79,5 @@ v1Router.use('/financial-summary', financialSummaryRouter);
 v1Router.use('/appointee-summary', appointeeSummaryRouter);
 v1Router.use('/intake', intakeRouter);
 v1Router.use('/decedent-property', decedentPropertyRouter);
+v1Router.use('/ward', wardRouter);
 export { v1Router }
