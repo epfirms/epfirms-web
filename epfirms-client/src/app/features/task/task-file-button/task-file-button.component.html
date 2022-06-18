@@ -1,8 +1,8 @@
 <button
   type="button"
   [ngClass]="{
-    'text-blue-600 hover:text-blue-500': files.length,
-    'text-gray-400 hover:text-gray-500': !files.length
+    'text-blue-600 hover:text-blue-500': file,
+    'text-gray-400 hover:text-gray-500': !file
 }"
   class="-m-2.5 w-10 h-10 rounded-full flex items-center justify-center"
   (click)="tooltip.show()" [tippy]="contextMenu" trigger="manual" #tooltip="tippy" variation="dropdown"
@@ -26,13 +26,13 @@
 
 <ng-template #contextMenu let-hide>
     <div class="divide-y divide-gray-100">
-        <div class="flex items-center px-4 py-3 group" role="none" *ngIf="files.length" (click)="openFile(files[0])" [ngClass]="{'hover:bg-gray-100 hover:cursor-pointer': files[0].key}">
+        <div class="flex items-center px-4 py-3 group" role="none" *ngIf="file" (click)="openFile(file)" [ngClass]="{'hover:bg-gray-100 hover:cursor-pointer': file.key}">
             <div class="w-40">
                 <p class="text-sm font-medium text-gray-900 truncate" role="none">
-                    {{files[0].name}}
+                    {{file.name}}
                 </p>
                 <p class="text-xs text-gray-700 nowrap" role="none">
-                    {{files[0].description}}
+                    {{file.description}}
                 </p>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -40,7 +40,7 @@
               </svg>
         </div>
         <ng-container *ngIf="!readonly">
-        <div class="py-1" role="none" *ngIf="!files.length">
+        <div class="py-1" role="none" *ngIf="!file">
             <!-- <a *ngIf="files.length" (click)="emitEdit(files[0].id); hide()" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:cursor-pointer hover:bg-gray-100 hover:text-gray-900"
                 role="menuitem" tabindex="-1" id="menu-item-0">
                 <svg class="w-5 h-5 mr-3 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -59,8 +59,8 @@
                 <input type="file" (change)="emitAttach($event); hide()" #fileList multiple style="display:none">
             </a>
         </div>
-        <div *ngIf="files.length" class="py-1" role="none">
-            <a (click)="emitDelete(files[0].id); hide()" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100 hover:cursor-pointer"
+        <div *ngIf="file" class="py-1" role="none">
+            <a (click)="emitDelete(file.id); hide()" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100 hover:cursor-pointer"
                 role="menuitem" tabindex="-1" id="menu-item-1">
                 Remove
             </a>

@@ -1,0 +1,41 @@
+<div>
+  <div class="px-4 py-5 sm:px-6 sm:py-4">
+    <h3 class="font-medium leading-6 text-gray-900">Send text message</h3>
+    <!-- <p class="max-w-2xl mt-1 text-sm text-gray-500">Personal details and application.</p> -->
+  </div>
+
+  <div class="px-4 pt-5 pb-2.5 border-t border-gray-200 sm:px-6">
+    <div class="relative w-80">
+      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <span class="text-gray-500 sm:text-sm"> To: </span>
+      </div>
+      <input type="text" ep-input [(ngModel)]="cellPhoneNumber" class="py-2 pl-10 pr-12" autocomplete="off" [inputMask]="phoneInputMask"/>
+    </div>
+  </div>
+  
+  <div class="px-4 pt-2.5 pb-5 sm:px-6">
+    <form class="relative">
+      <div
+        class="overflow-hidden border border-gray-300 rounded-md shadow-sm focus-within:border-blue-400"
+      >
+        <label for="comment" class="sr-only">Add your comment</label>
+        <textarea
+          [(ngModel)]="smsBody"
+          (keydown.enter)="$event.preventDefault()"
+          (keyup.enter)="sendMessage()"
+          rows="3"
+          name="comment"
+          id="comment"
+          class="block w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm"
+          placeholder="Write a message..."
+        ></textarea>
+
+        <div class="py-2" aria-hidden="true">
+          <div class="py-px">
+            <div class="h-9"></div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -15,7 +15,6 @@ import { MatterTabNotesComponent } from './matter-tab-notes/matter-tab-notes.com
 import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { QuillModule } from 'ngx-quill';
 import { IntakeModule } from '../intake/intake.module';
-import { TaskFileModule } from '../task-file/task-file.module';
 import { EditableModule } from '@app/shared/editable/editable.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { DocumentsModule } from '../documents/documents.module';
@@ -30,6 +29,7 @@ import { MatterModule } from '../matter/matter.module';
 import { TippyModule } from '@ngneat/helipopper';
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { CaseTemplateModule } from '../case-template/case-template.module';
+import { TaskModule } from '../task/task.module';
 
 
 
@@ -53,7 +53,6 @@ import { CaseTemplateModule } from '../case-template/case-template.module';
     AvatarModule,
     QuillModule,
     IntakeModule,
-    TaskFileModule,
     EditableModule,
     DocumentsModule,
     SharedModule,
@@ -67,7 +66,8 @@ import { CaseTemplateModule } from '../case-template/case-template.module';
     MatterModule,
     TippyModule,
     PipesModule,
-    CaseTemplateModule
+    CaseTemplateModule,
+    TaskModule
   ],
   exports: [
     MatterTabsComponent

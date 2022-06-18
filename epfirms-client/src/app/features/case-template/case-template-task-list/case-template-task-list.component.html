@@ -42,7 +42,7 @@
               placeholder="Enter a task name"
               class="flex-1"
             ></editable-input>
-            <app-task-toolbar [task]="task" [files]="task.firm_template_task_files"></app-task-toolbar>
+            <app-task-toolbar [task]="task" [file]="task.firm_template_task_file" [sms]="task.firm_template_task_sms_message" (change)="automationChange()"></app-task-toolbar>
           </div>
         </td>
         <td

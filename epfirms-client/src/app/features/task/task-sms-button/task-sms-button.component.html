@@ -1,6 +1,9 @@
 <button
   type="button"
-
+  [ngClass]="{
+    'text-blue-600 hover:text-blue-500': smsMessage.body,
+    'text-gray-400 hover:text-gray-500': !smsMessage.body
+}"
   class="-m-2.5 w-10 h-10 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-500"
   (click)="tooltip.show()" [tippy]="contextMenu" trigger="manual" #tooltip="tippy" variation="dropdown"
 >
@@ -12,6 +15,13 @@
 </button>
 
 <ng-template #contextMenu let-hide>
+    <form [formGroup]="smsForm" class="p-2 space-y-2">
+        <textarea ep-input rows="3" [disabled]="readonly" placeholder="Type a text message to be sent when this task is marked complete." formControlName="body"></textarea>
+        <div class="text-right" *ngIf="!readonly">
+            <button ep-button size="xs" color="white" (click)="emitDelete(); hide()" >Clear</button>
+            <button ep-button size="xs" (click)="emitSave(); hide()">Save</button>
+        </div>
+    </form>
     <!-- <div class="divide-y divide-gray-100">
         <div class="flex items-center px-4 py-3 group" role="none" *ngIf="files.length" (click)="openFile(files[0])" [ngClass]="{'hover:bg-gray-100 hover:cursor-pointer': files[0].key}">
             <div class="w-40">

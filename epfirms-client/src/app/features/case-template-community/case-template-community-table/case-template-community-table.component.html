@@ -34,7 +34,7 @@
               </li>
               <li class="hover:cursor-pointer">
                 <span (click)="selectTemplateCategory('firm')" [class.text-blue-700]="templateCategory === 'firm'">
-                  Created by your firm <span class="text-xs font-normal text-gray-700">({{firmCaseTemplates.length || 0}})</span>
+                  Created by your firm <span class="text-xs font-normal text-gray-700" *ngIf="firmCaseTemplates">({{firmCaseTemplates.length || 0}})</span>
                 </span>
               </li>
             </ul>

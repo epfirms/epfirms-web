@@ -109,7 +109,7 @@ export class CaseTemplateTaskListComponent implements OnInit, ControlValueAccess
       user_id: null,
       name: '',
       no_of_days_from_start_date: null,
-      firm_template_task_files: [],
+      firm_template_task_file: null,
       duration_minutes: null,
       role: null,
     };
@@ -123,6 +123,10 @@ export class CaseTemplateTaskListComponent implements OnInit, ControlValueAccess
   displayFn(value, options): string {
     const selectedAssignee = options.find((option) => option.value === value);
     return selectedAssignee ? selectedAssignee.viewValue : '';
+  }
+
+  automationChange() {
+    this.value = this.val;
   }
 
   setAssignee(event, task) {

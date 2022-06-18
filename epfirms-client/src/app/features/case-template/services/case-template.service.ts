@@ -10,39 +10,39 @@ export class CaseTemplateService {
   constructor(private http: HttpClient) { }
 
   getOne(id: number): Observable<any> {
-    return this.http.get(`/api/firm/case-templates/${id}`);
+    return this.http.get(`/api/case-templates/${id}`);
   }
 
   getAll(): Observable<any> {
-    return this.http.get('/api/firm/case-templates');
+    return this.http.get('/api/case-templates');
   }
 
   create(data):Observable<any> {
-    return this.http.post('/api/firm/case-templates', data);
+    return this.http.post('/api/case-templates', data);
   }
 
   delete(id):Observable<any>{
-    return this.http.delete(`/api/firm/case-templates/${id}`);
+    return this.http.delete(`/api/case-templates/${id}`);
   }
 
   update(templateId: number, data):Observable<any> {
-    return this.http.put(`/api/firm/case-templates/${templateId}`, data);
+    return this.http.put(`/api/case-templates/${templateId}`, data);
   }
 
   createTask(templateId: number, data):Observable<any> {
-    return this.http.post(`/api/firm/case-templates/${templateId}/task`, data);
+    return this.http.post(`/api/case-templates/${templateId}/task`, data);
   }
 
   updateTask(taskId: number, data):Observable<any> {
-    return this.http.put(`/api/firm/case-templates/task/${taskId}`, data);
+    return this.http.put(`/api/case-templates/task/${taskId}`, data);
   }
 
   deleteTask(taskId: number):Observable<any> {
-    return this.http.delete(`/api/firm/case-templates/task/${taskId}`);
+    return this.http.delete(`/api/case-templates/task/${taskId}`);
   }
 
   getTaskFileUploadURL(fileName: string, contentType: string):Observable<any> {
-    return this.http.get(`/api/firm/case-templates/task/file/upload`, {
+    return this.http.get(`/api/case-templates/task/file/upload`, {
       params: {
         name: fileName,
         MIME: contentType
@@ -51,7 +51,7 @@ export class CaseTemplateService {
   }
 
   getTaskFileDownloadURL(key: string):Observable<any> {
-    return this.http.get(`/api/firm/case-templates/task/file/download`, {
+    return this.http.get(`/api/case-templates/task/file/download`, {
       params: {
         key: encodeURIComponent(key) 
       }
@@ -59,14 +59,26 @@ export class CaseTemplateService {
   }
 
   createTaskFile(taskId: number, data):Observable<any> {
-    return this.http.post(`/api/firm/case-templates/task/${taskId}/file`, data);
+    return this.http.post(`/api/case-templates/task/${taskId}/file`, data);
   }
 
   updateTaskFile(fileId: number, data):Observable<any> {
-    return this.http.put(`/api/firm/case-templates/task/file/${fileId}`, data);
+    return this.http.put(`/api/case-templates/task/file/${fileId}`, data);
   }
 
   deleteTaskFile(fileId: number):Observable<any> {
-    return this.http.delete(`/api/firm/case-templates/task/file/${fileId}`);
+    return this.http.delete(`/api/case-templates/task/file/${fileId}`);
+  }
+
+  createTaskSms(taskId: number, data):Observable<any> {
+    return this.http.post(`/api/case-templates/task/${taskId}/sms`, data);
+  }
+
+  updateTaskSms(smsId: number, data):Observable<any> {
+    return this.http.put(`/api/case-templates/task/sms/${smsId}`, data);
+  }
+
+  deleteTaskSms(smsId: number):Observable<any> {
+    return this.http.delete(`/api/case-templates/task/sms/${smsId}`);
   }
 }

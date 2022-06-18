@@ -6,7 +6,7 @@ import { Service } from 'typedi';
 export class CaseTemplateCommunityService {
   public async getAllByFirmId(firmId: number):Promise<any> {
     try {
-      const {community_case_template, community_template_task, community_template_task_file, firm} = Database.models;
+      const {community_case_template, community_template_task, community_template_task_file,community_template_task_sms_message, firm} = Database.models;
 
       const caseTemplates = await community_case_template.findAll({
         include: [{
@@ -14,6 +14,9 @@ export class CaseTemplateCommunityService {
         include: [
           {
             model: community_template_task_file,
+          },
+          {
+            model: community_template_task_sms_message,
           }
         ],
       },
@@ -40,7 +43,7 @@ export class CaseTemplateCommunityService {
   }
   public async getById(id: number):Promise<any> {
     try {
-      const {community_case_template, community_template_task, community_template_task_file, firm} = Database.models;
+      const {community_case_template, community_template_task, community_template_task_file, community_template_task_sms_message, firm} = Database.models;
 
       const caseTemplates = await community_case_template.findOne({
         where: {
@@ -51,6 +54,9 @@ export class CaseTemplateCommunityService {
         include: [
           {
             model: community_template_task_file,
+          },
+          {
+            model: community_template_task_sms_message
           }
         ],
       },
@@ -71,7 +77,7 @@ export class CaseTemplateCommunityService {
 
   public async get(firmId: number):Promise<any> {
     try {
-      const {community_case_template, community_template_task, community_template_task_file, firm} = Database.models;
+      const {community_case_template, community_template_task, community_template_task_file, community_template_task_sms_message, firm} = Database.models;
 
       const caseTemplates = await community_case_template.findAll({
         include: [{
@@ -79,6 +85,9 @@ export class CaseTemplateCommunityService {
         include: [
           {
             model: community_template_task_file,
+          },
+          {
+            model: community_template_task_sms_message
           }
         ],
       }
@@ -177,6 +186,39 @@ export class CaseTemplateCommunityService {
     try {
       const { community_template_task_file } = Database.models;
       await community_template_task_file.destroy({where: {id}});
+      return Promise.resolve(true);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
+  public async createSmsAutomation(id: number, sms: any):Promise<any> {
+    try {
+      const { community_template_task } = Database.models;
+      const task = await community_template_task.findOne({where: {id}});
+      const taskSms = await task.createCommunity_template_task_sms_message(sms);
+
+      return Promise.resolve(taskSms);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  public async updateSmsAutomation(id: number, changes: any):Promise<any> {
+    try {
+      const { community_template_task_sms_message } = Database.models;
+      const updatedFile = await community_template_task_sms_message.update(changes, {where: {id}});
+      return Promise.resolve(updatedFile);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  public async removeSmsAutomation(id: number):Promise<any> {
+    try {
+      const { community_template_task_sms_message } = Database.models;
+      await community_template_task_sms_message.destroy({where: {id}});
       return Promise.resolve(true);
     } catch (err) {
       console.error(err);

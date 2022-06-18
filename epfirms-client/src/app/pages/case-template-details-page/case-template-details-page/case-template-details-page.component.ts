@@ -124,7 +124,7 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
         body: 'A copy of this template will be created and shared with other users in the case template community.',
       },
       epOnOk: () => {
-        this._caseTemplateCommunityService.create(this.templateForm.value).subscribe(() => {
+        this._caseTemplateCommunityService.create(this.templateForm.get('id').value).subscribe(() => {
           this._toastService.success('Successfully created community template');
         });
       },
@@ -150,13 +150,8 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
           // Observable stream of tasks to be updated.
           mergeMap(() => templateTasks.pipe(map((task) => ({ ...task, template_id: templateId })))),
           concatMap((task) => iif(() => task.id, this.updateTask(task), this.createTask(task))),
-          map((task) => {
-            const filesToUpload = task.firm_template_task_files.map((file) =>
-              this.saveTaskFile(task.id, file),
-            );
-            return filesToUpload;
-          }),
-          concatMap((filesToUpload) => forkJoin(filesToUpload)),
+          concatMap((task) => this.saveTaskSmsMessage(task)),
+          concatMap((task) => this.saveTaskFile(task)),
         )
         .subscribe({
           complete: () => {
@@ -178,13 +173,7 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
           // Create single task.
           concatMap((task) => this.createTask(task)),
           // Map the task's files to an array of observables.
-          map((task) => {
-            const filesToUpload = task.firm_template_task_files.map((file) =>
-              this.saveTaskFile(task.id, file),
-            );
-            return filesToUpload;
-          }),
-          concatMap((filesToUpload) => forkJoin(filesToUpload)),
+          concatMap((task) => this.saveTaskFile(task)),
         )
         .subscribe({
           complete: () => {
@@ -198,11 +187,24 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
     }
   }
 
+  saveTaskSmsMessage(task) {
+    const existingTask = this.originalValues.firm_template_tasks.find((t) => t.id === task.id);
+    if (existingTask && existingTask.firm_template_task_sms_message && existingTask.firm_template_task_sms_message.body === task.firm_template_task_sms_message.body) {
+      return of(task);
+    } else {
+      if (task.firm_template_task_sms_message && task.firm_template_task_sms_message.body) {
+        return this._caseTemplateService.createTaskSms(task.id, task.firm_template_task_sms_message).pipe(map(() => task));
+      }
+    }
+
+    return of(task);
+  }
+
   createTask(task) {
     return this._caseTemplateService.createTask(task.template_id, task).pipe(
       map((createdTask) => ({
+        ...task,
         id: createdTask.id,
-        firm_template_task_files: task.firm_template_task_files,
       })),
     );
   }
@@ -210,8 +212,8 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
   updateTask(task) {
     return this._caseTemplateService.updateTask(task.id, task).pipe(
       map(() => ({
+        ...task,
         id: task.id,
-        firm_template_task_files: task.firm_template_task_files,
       })),
     );
   }
@@ -224,20 +226,29 @@ export class CaseTemplateDetailsPageComponent implements OnInit {
     return deletedTasks.map((task) => this._caseTemplateService.deleteTask(task.id));
   }
 
-  private saveTaskFile(taskId: number, file) {
-    return this._caseTemplateService.getTaskFileUploadURL(file.name, file.description).pipe(
-      concatMap((res) =>
-        this._awsService.uploadfileAWSS3(res.url, file.description, file.file).pipe(
-          map(() => ({
-            name: file.name,
-            description: file.description,
-            key: res.key,
-          })),
-        ),
-      ),
-      concatMap((taskFile: FirmTemplateTaskFile) =>
-        this._caseTemplateService.createTaskFile(taskId, taskFile),
-      ),
-    );
+  private saveTaskFile(task) {
+    const file = task.firm_template_task_file;
+    if (file) {
+      const existingTask = this.originalValues.firm_template_tasks.find((t) => t.id === task.id);
+      if (existingTask && existingTask.firm_template_task_file && existingTask.firm_template_task_file.key === file.key) {
+        return of([]);
+      } else {
+        return this._caseTemplateService.getTaskFileUploadURL(file.name, file.description).pipe(
+          concatMap((res) =>
+            this._awsService.uploadfileAWSS3(res.url, file.description, file.file).pipe(
+              map(() => ({
+                name: file.name,
+                description: file.description,
+                key: res.key,
+              })),
+            ),
+          ),
+          concatMap((taskFile: FirmTemplateTaskFile) =>
+            this._caseTemplateService.createTaskFile(task.id, taskFile),
+          ),
+        );
+      }
+    }
+    return of([]);
   }
 }

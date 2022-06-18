@@ -10,12 +10,12 @@ import { TaskFile } from '../interfaces/task-file';
 })
 export class TaskFileButtonComponent {
   @Input()
-  set files(value: TaskFile[] | FirmTemplateTaskFile[]) {
-    this._files = value;
+  set file(value: TaskFile | FirmTemplateTaskFile) {
+    this._file = value;
   }
 
-  get files(): TaskFile[] | FirmTemplateTaskFile[] {
-    return this._files;
+  get file(): TaskFile | FirmTemplateTaskFile {
+    return this._file;
   }
 
   @Input() readonly: boolean = false;
@@ -26,7 +26,7 @@ export class TaskFileButtonComponent {
 
   @Output() deleteFile: EventEmitter<number> = new EventEmitter<number>();
 
-  private _files: TaskFile[] | FirmTemplateTaskFile[] = [];
+  private _file: TaskFile | FirmTemplateTaskFile;
 
   constructor(private _caseTemplateService: CaseTemplateService) {}
 
