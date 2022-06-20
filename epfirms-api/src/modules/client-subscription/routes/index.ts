@@ -10,6 +10,7 @@ clientSubscriptionRouter.post('/', passport.authenticate('bearer', { session: fa
 clientSubscriptionRouter.get('/:id', passport.authenticate('bearer', { session: false }), (req, res) => clientSubscriptionController.getOneWithId(req, res));
 clientSubscriptionRouter.delete('/:id', passport.authenticate('bearer', { session: false }), (req, res) => clientSubscriptionController.delete(req, res));
 
+clientSubscriptionRouter.get('/firm/:firmId', passport.authenticate('bearer', { session: false }), (req, res) => clientSubscriptionController.getAllWithFirmId(req, res));
 
 
 export { clientSubscriptionRouter };

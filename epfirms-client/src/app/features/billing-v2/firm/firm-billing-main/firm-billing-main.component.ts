@@ -6,6 +6,7 @@ import { EpModalService } from '@app/shared/modal/modal.service';
 import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { StripeService } from '@app/shared/_services/stripe-service/stripe.service';
 import { HotToastService } from '@ngneat/hot-toast';
+import { ClientSubscriptionService } from '../../services/client-subscription.service';
 import { InvoiceService } from '../../services/invoice.service';
 import { CreateInvoiceOverlayComponent } from '../create-invoice-overlay/create-invoice-overlay.component';
 import { CreateSubscriptionOverlayComponent } from '../create-subscription-overlay/create-subscription-overlay.component';
@@ -44,6 +45,7 @@ export class FirmBillingMainComponent implements OnInit {
   openInvoiceTotal: number = 0;
   overDueInvoiceTotal: number = 0;
   paidInvoiceTotal: number = 0;
+  subscriptions: any;
 
   constructor(
     private _invoiceService: InvoiceService,
@@ -51,6 +53,7 @@ export class FirmBillingMainComponent implements OnInit {
     private _modalService: EpModalService,
     private _stripeService: StripeService,
     private _toastService: HotToastService,
+    private _clientSubscriptionService: ClientSubscriptionService,
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +73,19 @@ export class FirmBillingMainComponent implements OnInit {
               this.onRangeChange();
             }
           });
+          this.loadSubscriptions(user.scope.firm_access.firm_id);
+      }
+    });
+  }
+
+  private loadSubscriptions(firmId) : void {
+    this._clientSubscriptionService.getAllWithFirmId(firmId).subscribe(subscriptions => {
+
+      if (subscriptions.length > 0) {
+        this.subscriptions = subscriptions;
+      }
+      else {
+        this._toastService.error('You have no subscriptions.');
       }
     });
   }
@@ -137,6 +153,27 @@ export class FirmBillingMainComponent implements OnInit {
     }
 
     return styleString;
+  }
+
+
+  subscriptionStatusColoration(subscription): string {
+
+    let styleString = 'bg-white';
+
+    if (subscription.status === 'active') {
+      styleString = 'bg-blue-200';
+    } 
+    
+   else if ( subscription.status === 'past due') {
+      styleString = 'bg-red-200';
+    }
+
+    return styleString;
+  }
+
+  getDueDayOfMonth(monthly_due_date): number {
+    let dueDate = new Date(monthly_due_date);
+    return dueDate.getDate() + 1;
   }
 
   openCreateInvoiceOverlay(): void {
