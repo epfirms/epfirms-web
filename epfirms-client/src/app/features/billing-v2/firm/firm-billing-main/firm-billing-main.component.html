@@ -367,6 +367,9 @@
     <div class="max-w-md">
       <label class="block text-sm font-medium text-gray-700">Date Range</label>
       <select
+
+      (change)="onSubscriptionRangeChange()"
+        [(ngModel)]="dateRange"
         class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
       >
 
@@ -416,6 +419,8 @@
       </div>
       <div class="mt-4 flex">
         <button
+
+          (click)="toggleFilterDropdown()"
           type="button"
           class="mr-2 inline-flex items-center justify-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
         >
@@ -446,7 +451,7 @@
       To: "transform opacity-0 scale-95"
   -->
         <div
-        hidden
+          *ngIf="filterDropdownVisible"
           class="origin-top-right absolute mt-16 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
@@ -475,44 +480,44 @@
               <div class="relative flex items-start">
                 <div class="flex items-center h-5">
                   <input
-                    (change)="onFilterChanges()"
-                    [(ngModel)]="filterSettings.draft"
-                    [checked]="filterSettings.draft"
+                    (change)="onSubscriptionFilterChanges()"
+                    [(ngModel)]="subscriptionFilterSettings.active"
+                    [checked]="subscriptionFilterSettings.active"
                     type="checkbox"
                     class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                   />
                 </div>
                 <div class="ml-3 text-sm">
-                  <label class="font-medium text-gray-700">Draft</label>
+                  <label class="font-medium text-gray-700">Active</label>
                 </div>
               </div>
 
               <div class="relative flex items-start">
                 <div class="flex items-center h-5">
                   <input
-                    (change)="onFilterChanges()"
-                    [(ngModel)]="filterSettings.open"
-                    [checked]="filterSettings.open"
+                    (change)="onSubscriptionFilterChanges()"
+                    [(ngModel)]="subscriptionFilterSettings.past_due"
+                    [checked]="subscriptionFilterSettings.past_due"
                     type="checkbox"
                     class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                   />
                 </div>
                 <div class="ml-3 text-sm">
-                  <label class="font-medium text-gray-700">Open</label>
+                  <label class="font-medium text-gray-700">Past Due</label>
                 </div>
               </div>
               <div class="relative flex items-start">
                 <div class="flex items-center h-5">
                   <input
-                    (change)="onFilterChanges()"
-                    [(ngModel)]="filterSettings.paid"
-                    [checked]="filterSettings.paid"
+                    (change)="onSubscriptionFilterChanges()"
+                    [(ngModel)]="subscriptionFilterSettings.cancelled"
+                    [checked]="subscriptionFilterSettings.cancelled"
                     type="checkbox"
                     class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                   />
                 </div>
                 <div class="ml-3 text-sm">
-                  <label class="font-medium text-gray-700">Paid</label>
+                  <label class="font-medium text-gray-700">Cancelled</label>
                 </div>
               </div>
             </fieldset>
@@ -585,7 +590,7 @@
                       scope="col"
                       class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Received/Total Value
+                    End Date
                     </th>
                     <th
                       scope="col"
@@ -625,7 +630,7 @@
 
 
                     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                    100/1000
+                    {{subscription.cancel_at | date}}
                     </td>
 
                     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">

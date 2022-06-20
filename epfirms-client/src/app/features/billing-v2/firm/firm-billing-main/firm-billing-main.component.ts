@@ -21,6 +21,8 @@ export class FirmBillingMainComponent implements OnInit {
   invoices: Invoice[];
   firm;
 
+  firm_id: number;
+
   // default invoice list
   defaultInvoiceList: Invoice[];
 
@@ -32,6 +34,14 @@ export class FirmBillingMainComponent implements OnInit {
     paid: false,
     open: false,
     draft: false,
+  };
+
+
+  //filter settings object
+  subscriptionFilterSettings = {
+    active: false,
+    past_due: false,
+    cancelled: false,
   };
 
   // page state
@@ -46,6 +56,7 @@ export class FirmBillingMainComponent implements OnInit {
   overDueInvoiceTotal: number = 0;
   paidInvoiceTotal: number = 0;
   subscriptions: any;
+  defaultSubscriptionsList: any;
 
   constructor(
     private _invoiceService: InvoiceService,
@@ -63,6 +74,7 @@ export class FirmBillingMainComponent implements OnInit {
   private loadInvoices(): void {
     this.currentUserService.getCurrentUser().subscribe((user) => {
       if (user) {
+        this.firm_id = user.scope.firm_access.firm_id;
         this._invoiceService
           .getAllWithFirmId(user.scope.firm_access.firm_id)
           .subscribe((invoices) => {
@@ -83,6 +95,8 @@ export class FirmBillingMainComponent implements OnInit {
 
       if (subscriptions.length > 0) {
         this.subscriptions = subscriptions;
+        this.defaultSubscriptionsList = subscriptions;
+        this.onSubscriptionRangeChange();
       }
       else {
         this._toastService.error('You have no subscriptions.');
@@ -199,6 +213,7 @@ export class FirmBillingMainComponent implements OnInit {
       if (data) {
         console.log('subscription data', data);
       }
+      this.loadSubscriptions(this.firm_id);
     });
   }
 
@@ -294,4 +309,30 @@ export class FirmBillingMainComponent implements OnInit {
     }
     this.reloadStats();
   }
+
+  //handles filter changes
+  onSubscriptionFilterChanges(): void {
+    this.onSubscriptionRangeChange();
+    if (this.subscriptionFilterSettings.active) {
+      this.subscriptions = this.subscriptions.filter((i) => i.status === 'active');
+    } else if (this.subscriptionFilterSettings.past_due) {
+      this.subscriptions = this.subscriptions.filter((i) => i.status === 'past due');
+    } else if (this.subscriptionFilterSettings.cancelled) {
+      this.subscriptions = this.subscriptions.filter((i) => i.status === 'cancelled');
+    } else {
+      this.subscriptions = this.subscriptions;
+    }
+  }
+
+  onSubscriptionRangeChange(): void {
+    if (this.dateRange < 0) {
+      this.subscriptions = this.defaultSubscriptionsList;
+    } else {
+      this.subscriptions = this.defaultSubscriptionsList.filter(
+        (subscription) =>
+          new Date(subscription.created_at).getTime() > new Date().getTime() - this.dateRange * DAY,
+      );
+    }
+  }
+
 }
