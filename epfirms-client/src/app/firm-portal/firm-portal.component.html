@@ -162,6 +162,7 @@
         <span class="flex-1 hidden truncate opacity-0 lg:inline lg:opacity-100">Messages</span>
       </a>
       <a
+      *ngIf="billingActive"
       (click)="minimizeMatterTabs()"
         routerLink="billing"
         [routerLinkActive]="'bg-gray-900 text-gray-200'"
