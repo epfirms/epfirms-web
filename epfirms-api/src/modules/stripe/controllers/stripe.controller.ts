@@ -176,7 +176,7 @@ export class StripeController {
   public async createSubscriptionSession(req, res: Response): Promise<any> {
     try {
       let amount = this._roundToCurrency(req.body.balance);
-      console.log('REQ.BODY', req.body);
+
       // create stripe checkout session
       const session = await stripe.checkout.sessions.create({
         line_items: [
@@ -212,7 +212,6 @@ export class StripeController {
         },
       });
 
-      console.log(' SUB SESSION', session);
       res.status(StatusConstants.OK).send({ url: session.url, session_id: session.id });
     } catch (err) {
       console.error(err);
@@ -240,16 +239,10 @@ export class StripeController {
 
         res.status(200).send();
       } else if (event.type === 'customer.subscription.created') {
-        console.log('CUSTOMER SUB CREATED SESSION CREATED');
-        console.log(session);
         res.status(200).send();
       } else if (event.type === 'invoice.created') {
-        console.log('INVOICE CREATED SESSION');
-        console.log(session);
         res.status(200).send();
       } else if (event.type === 'invoice.finalized') {
-        console.log('INVOICE FINALIZED SESSION');
-        console.log(session);
         // update the invoice with the invoice id
         const updatedInvoice = await Database.models.invoice.update(
           {
@@ -261,8 +254,6 @@ export class StripeController {
         );
         res.status(200).send();
       } else if (event.type === 'invoice.paid') {
-        console.log('INVOICE PAID SESSION');
-        console.log(session);
         // update the invoice with the invoice id
         const updatedInvoice = await Database.models.invoice.update(
           { status: session.status },
@@ -270,8 +261,6 @@ export class StripeController {
         );
         res.status(200).send();
       } else if (event.type === 'invoice.payment_succeeded') {
-        console.log('INVOICE PAYMENT SUCCESS SESSION');
-        console.log(session);
         if (session.subscription) {
           const updatedCustomerAccount = await this._stripeService.fufillInvoicePaymentSuccess(
             session,
@@ -289,8 +278,6 @@ export class StripeController {
           res.status(200).send();
         }
       } else if (event.type === 'invoice.payment_failed') {
-        console.log('INVOICE PAYMENT FAILED SESSION');
-        console.log(session);
         if (session.subscription) {
           //send an email template for failed payment on subscription
           const email = await this._emailService.sendFromTemplate(
@@ -307,6 +294,90 @@ export class StripeController {
     } catch (err) {
       console.error(err);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err);
+    }
+  }
+
+  public async createSubscription(req, res: Response): Promise<any> {
+    try {
+      // get the subscription from the database with the subscription id
+
+      const subscription = await Database.models.client_subscription.findOne({
+        where: { id: req.body.subscription_id },
+      });
+
+      //get firm stripe account
+      const firmStripeAccount = await Database.models.stripe_account.findOne({
+        where: { id: subscription.firm_id },
+      });
+
+      // get the customer from the database with the user_id
+
+      let customer = await Database.models.customer_account.findOne({
+        where: { id: subscription.user_id },
+      });
+
+      // if no customer exists, create one
+
+      if (customer === null || customer === undefined) {
+        const user_profile = await Database.models.user.findOne({
+          where: { id: subscription.user_id },
+        });
+
+        const stripeCustomer = await stripe.customers.create({
+          email: user_profile.email,
+          name: user_profile.first_name + ' ' + user_profile.last_name,
+        });
+
+        customer = await Database.models.customer_account.create({
+          user_id: subscription.user_id,
+          customer_id: stripeCustomer.id,
+          firm_id: subscription.firm_id,
+        });
+      }
+
+      // create the price object
+      const price = await stripe.prices.create({
+        currency: 'usd',
+        unit_amount: subscription.amount * 100,
+        recurring: {
+          interval: 'month',
+        },
+        product_data: {
+          name: subscription.description,
+        },
+      });
+      // create the subscription
+
+      const stripeSubscription = await stripe.subscriptions.create({
+        customer: customer.customer_id,
+
+        items: [{ price: price.id }],
+        description: 'Monthly Legal Subscription',
+        cancel_at: subscription.cancel_at,
+        collection_method: 'send_invoice',
+        days_until_due: 0,
+        billing_cycle_anchor:
+          new Date(subscription.monthly_due_date).getTime() / 1000 + 60 * 60 * 24,
+        transfer_data: {
+          destination: firmStripeAccount.account_id,
+        },
+        // the 4% charge that we take from the connected account
+        application_fee_percent: 1,
+      });
+      // update the subscription in the database with the subscription id from stripe **IMPORTANT**
+
+      await Database.models.client_subscription.update(
+        {
+          subscription_id: stripeSubscription.id,
+          status: stripeSubscription.status,
+        },
+        { where: { id: subscription.id } },
+      );
+
+      res.status(StatusConstants.OK).send(stripeSubscription);
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
     }
   }
 
@@ -355,7 +426,7 @@ export class StripeController {
           name: user.first_name + ' ' + user.last_name,
         });
         customerID = customer.id;
-        console.log('the created stripe customer is', customer);
+
         // updated the customerID
         // create customer account in db
         await Database.models.customer_account.create({
@@ -368,8 +439,6 @@ export class StripeController {
       const transactions = await Database.models.transaction.findAll({
         where: { invoice_id: invoice.id },
       });
-
-      console.log('customer before transactions', customer);
 
       // usually, the invoice will be created from the transactions and that is the total that stripe goes by
       // they should be synced
@@ -392,7 +461,7 @@ export class StripeController {
           currency: 'usd',
         });
       }
-      console.log('The customer before invoice is', customer);
+
       //create the invoice
       const invoiceStripe = await stripe.invoices.create({
         customer: customerID,
@@ -437,8 +506,6 @@ export class StripeController {
 
   public async deleteInvoice(req, res: Response): Promise<any> {
     try {
-      console.log('DELETE INVOICE REQ.BODY', req.body);
-      console.log('delete invoice params', req.params);
       const invoice = await Database.models.invoice.findOne({
         where: { id: req.params.id },
       });
@@ -592,8 +659,7 @@ export class StripeController {
     try {
       event = stripe.webhooks.constructEvent(payload, sig, webhookSecret);
       const data = event.data.object;
-      console.log(event.type);
-      console.log(data);
+
       // switch(event.type) {
       //   case '':
 

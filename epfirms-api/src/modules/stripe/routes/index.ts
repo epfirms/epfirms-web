@@ -74,6 +74,13 @@ stripeRouter.post(
   (req, res) => stripeController.updateCustomer(req, res),
 );
 
+
+stripeRouter.post(
+  '/client-subscription',
+  passport.authenticate('bearer', { session: false }),
+  (req, res) => stripeController.createSubscription(req, res),
+);
+
 const stripeWebhookRouter = express.Router();
 
 stripeWebhookRouter.post('/', express.raw({ type: 'application/json' }), (req, res) =>

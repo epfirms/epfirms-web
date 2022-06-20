@@ -17,16 +17,23 @@ export class ClientSubscription{
     terms: number;
     cancel_at: Date;
 
-    constructor(user_id: number, firm_id: number, matter_id: number, description: string, terms:number){
+    // amount that will be charge monthly
+    amount : number;
+
+    constructor(user_id: number, firm_id: number, matter_id: number, description: string, terms:number, monthly_due_date: Date, amount: number){
+        console.log("creating date", monthly_due_date);
+        console.log(typeof(monthly_due_date));
         this.user_id = user_id;
         this.firm_id = firm_id;
         this.matter_id = matter_id;
         this.subscription_id = "";
         this.customer_id = "";
-        this.monthly_due_date = new Date(Date.now() + (1000 * 60 * 60 * 24 * 30));
+        this.monthly_due_date = monthly_due_date;
         this.description = description;
         this.status = "";
         this.terms = terms;
+        this.amount = amount;
 
+        this.cancel_at = new Date(new Date(monthly_due_date).setMonth(monthly_due_date.getMonth() + terms));
     }
 }

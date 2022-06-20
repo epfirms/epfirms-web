@@ -53,6 +53,9 @@ module.exports = (sequelize, { INTEGER, BOOLEAN, STRING, DATE}) => {
       },
       cancel_at: {
             type: DATE,
+      },
+      amount: {
+        type: INTEGER,
       }
       
     },

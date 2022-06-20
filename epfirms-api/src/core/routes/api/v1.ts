@@ -40,6 +40,7 @@ import { decedentPropertyRouter } from '@src/modules/decedent-property/routes';
 import { invoiceRouter } from '@src/modules/invoice/routes';
 import { transactionRouter } from '@src/modules/transaction/routes';
 import { wardRouter } from '@src/modules/ward/routes';
+import { clientSubscriptionRouter } from '@src/modules/client-subscription/routes';
 
 const v1Router = express.Router();
 
@@ -85,4 +86,5 @@ v1Router.use('/decedent-property', decedentPropertyRouter);
 v1Router.use('/invoice', invoiceRouter);
 v1Router.use('/transaction', transactionRouter);
 v1Router.use('/ward', wardRouter);
+v1Router.use('/clientsubscription', clientSubscriptionRouter);
 export { v1Router }

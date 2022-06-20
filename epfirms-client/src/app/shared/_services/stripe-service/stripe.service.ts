@@ -70,4 +70,9 @@ export class StripeService {
   updatePaymentIntent(id, amount): Observable<any> {
     return this._http.post(`/api/stripe/payment-intent/${id}`, { amount });
   }
+
+  createClientSubscription(subscriptionId: number) : Observable<any> {
+
+    return this._http.post('/api/stripe/client-subscription', {subscription_id: subscriptionId});
+  }
 }
