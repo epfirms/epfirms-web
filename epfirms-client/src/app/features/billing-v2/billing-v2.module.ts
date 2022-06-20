@@ -10,6 +10,7 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import { TippyModule } from '@ngneat/helipopper';
 import { CreateInvoiceOverlayComponent } from './firm/create-invoice-overlay/create-invoice-overlay.component';
 import { BillingSetupHelpOverlayComponent } from './firm/billing-setup-help-overlay/billing-setup-help-overlay.component';
+import { CreateSubscriptionOverlayComponent } from './firm/create-subscription-overlay/create-subscription-overlay.component';
 
 
 
@@ -18,7 +19,8 @@ import { BillingSetupHelpOverlayComponent } from './firm/billing-setup-help-over
   declarations: [
     FirmBillingMainComponent,
     CreateInvoiceOverlayComponent,
-    BillingSetupHelpOverlayComponent
+    BillingSetupHelpOverlayComponent,
+    CreateSubscriptionOverlayComponent
   ],
   imports: [
     CommonModule,

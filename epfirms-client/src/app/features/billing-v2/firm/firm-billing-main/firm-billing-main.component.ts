@@ -8,6 +8,7 @@ import { StripeService } from '@app/shared/_services/stripe-service/stripe.servi
 import { HotToastService } from '@ngneat/hot-toast';
 import { InvoiceService } from '../../services/invoice.service';
 import { CreateInvoiceOverlayComponent } from '../create-invoice-overlay/create-invoice-overlay.component';
+import { CreateSubscriptionOverlayComponent } from '../create-subscription-overlay/create-subscription-overlay.component';
 
 @Component({
   selector: 'app-firm-billing-main',
@@ -15,8 +16,6 @@ import { CreateInvoiceOverlayComponent } from '../create-invoice-overlay/create-
   styleUrls: ['./firm-billing-main.component.scss'],
 })
 export class FirmBillingMainComponent implements OnInit {
-  
-
   // list of invoices
   invoices: Invoice[];
   firm;
@@ -36,7 +35,7 @@ export class FirmBillingMainComponent implements OnInit {
 
   // page state
   // 'invoices' or 'subscriptions'
-  state : string = 'invoices';
+  state: string = 'invoices';
 
   // range filter
   dateRange = 30;
@@ -149,6 +148,19 @@ export class FirmBillingMainComponent implements OnInit {
     modal.afterClose.subscribe((data) => {
       if (data) {
         this.loadInvoices();
+      }
+    });
+  }
+
+  openCreateSubscriptionOverlay(): void {
+    let modal = this._modalService.create({
+      epContent: CreateSubscriptionOverlayComponent,
+      epModalType: 'slideOver',
+      epAutofocus: null,
+    });
+    modal.afterClose.subscribe((data) => {
+      if (data) {
+        console.log('subscription data', data);
       }
     });
   }
