@@ -249,7 +249,7 @@
                 <tbody class="divide-y divide-gray-200 bg-white">
                   <tr *ngFor="let invoice of invoices">
                     <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
-                      {{ invoice.invoice_id }}
+                      {{ invoice.invoice_id | uppercase }}
                     </td>
 
                     <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
