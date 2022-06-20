@@ -409,7 +409,7 @@ export class StripeController {
           destination: firmStripeAccount.account_id,
         },
         // the 4% charge that we take from the connected account
-        application_fee_amount: Math.floor(invoice.total * 0.04 * 100),
+        application_fee_amount: Math.floor(invoice.total * 0.01 * 100),
       });
 
       // update the invoice record with stripe invoice id and status
