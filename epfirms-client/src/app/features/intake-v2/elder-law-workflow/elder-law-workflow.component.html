@@ -78,6 +78,7 @@
                 >
 
                 <a
+                  *ngIf="clientMode === false"
                   (click)="setState('estate planning')"
                   [ngClass]="
                     state === 'estate planning'
@@ -97,6 +98,18 @@
                   "
                   class="text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
                   >Life Insurance</a
+                >
+
+                <a
+                  *ngIf="clientMode === false"
+                  (click)="setState('billing')"
+                  [ngClass]="
+                    state === 'billing'
+                      ? 'bg-blue-100 text-black text-sm'
+                      : 'text-gray hover:bg-blue-200 hover:bg-opacity-75'
+                  "
+                  class="text-black hover:bg-blue-300 hover:bg-opacity-75 px-3 py-2 rounded-md text-xs font-medium tracking-wider text-left uppercase text-slate-500 border-slate-200"
+                  >Initial Billing</a
                 >
               </div>
             </div>
@@ -132,10 +145,14 @@
           [client]="ward"
         ></app-real-estate>
 
-        <app-appointees *ngIf="state === 'appointees'" [client]="ward" [matter]="matter"></app-appointees>
+        <app-appointees
+          *ngIf="state === 'appointees'"
+          [client]="ward"
+          [matter]="matter"
+        ></app-appointees>
 
         <app-estate-planning-form
-          *ngIf="state === 'estate planning'"
+          *ngIf="state === 'estate planning' && clientMode === false"
           [matter]="matter"
           [client]="ward"
         ></app-estate-planning-form>
@@ -146,6 +163,11 @@
           [client]="ward"
           [matter]="matter"
         ></app-life-insurance>
+
+        <app-billing-setup
+          *ngIf="state === 'billing' && clientMode === false"
+          [matter]="matter"
+        ></app-billing-setup>
         <!-- /End replace -->
       </div>
     </main>

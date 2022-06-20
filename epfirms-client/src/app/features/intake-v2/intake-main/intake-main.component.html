@@ -76,7 +76,7 @@
 
 <app-probate-workflow *ngIf="selectedMatter.matter_intake.type === 'probate'" [matter]="selectedMatter" [clientMode]="true"></app-probate-workflow>
 
-<app-elder-law-workflow *ngIf="selectedMatter.matter_intake.type === 'elderlaw'" [matter]="selectedMatter"></app-elder-law-workflow>
+<app-elder-law-workflow *ngIf="selectedMatter.matter_intake.type === 'elderlaw'" [matter]="selectedMatter" [clientMode]="true"></app-elder-law-workflow>
 
   </ng-scrollbar>
 
