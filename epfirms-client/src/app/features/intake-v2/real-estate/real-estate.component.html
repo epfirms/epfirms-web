@@ -81,12 +81,18 @@
                     </thead>
                     <tbody class="bg-white">
                       <tr>
-                        <td
+                        
+                        <th
                           scope="row"
                           class="text-right whitespace-nowrap border-r border-gray-200 py-1 pr-2 text-sm font-normal text-gray-900"
                         >
-                          {{ financialSummaryForm.primary_residence_address }}
-                        </td>
+                          <input
+                            type="text"
+                            [(ngModel)]="financialSummaryForm.primary_residence_address"
+                            (change)="submit()"
+                            class="text-right inline-block w-full rounded-md border border-transparent bg-transparent p-1 text-sm leading-none text-gray-500 hover:cursor-text hover:border-gray-300 focus:bg-white"
+                          />
+                        </th>
                         <td
                           class="text-right group border-b border-r border-gray-200 py-1.5 pl-4 pr-1 hover:cursor-text hover:bg-gray-50 hover:text-gray-700"
                         >

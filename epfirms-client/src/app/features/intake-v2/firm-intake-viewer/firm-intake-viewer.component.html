@@ -6,6 +6,8 @@
       <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
   </button>
+
+  <p *ngIf="intake" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Intake {{intake.status | titlecase}}</p>
 </div>
 
 
@@ -19,6 +21,10 @@
   <div *ngIf="intake.type === 'probate'">
     <app-probate-workflow [matter]="matter" [clientMode]="false"></app-probate-workflow>
   </div>
+
+  <div *ngIf="intake.type === 'elderlaw'">
+    <app-elder-law-workflow [matter]="matter"></app-elder-law-workflow>
+    </div>
 </div>
 
 <div *ngIf="intake === undefined" class="bg-white">
@@ -39,6 +45,8 @@
           <option [ngValue]="'estate planning'">Estate Planning</option>
 
           <option [ngValue]="'probate'">Probate</option>
+
+          <option [ngValue]="'elderlaw'">Elder Law</option>
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 px-2 flex items-center">
           <!-- Heroicon name: solid/chevron-down -->

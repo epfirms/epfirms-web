@@ -1,23 +1,15 @@
 import { Response, Request } from 'express';
 import { StatusConstants } from '@src/constants/StatusConstants';
-import { IntakeService } from '@modules/intake/services/intake.service';
+import { WardService } from '@modules/ward/services/ward.service';
 import { Service } from 'typedi';
-import { MatterService } from '@src/modules/matter/services/matter.service';
 
 @Service()
-export class IntakeController {
-  constructor(private matterService: MatterService) {}
+export class WardController {
+  constructor() {}
 
   public async upsert(req: Request, res: Response): Promise<any> {
     try {
-      const created = await IntakeService.upsert(req.body);
-
-      console.log('created', created);
-      const updated = await this.matterService.update({
-        id: created.matter_id,
-        matter_intake_id: created.id,
-      });
-
+      const created = await WardService.upsert(req.body);
       res.status(StatusConstants.CREATED).send(created);
     } catch (error) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
@@ -27,7 +19,7 @@ export class IntakeController {
 
   public async delete(req: Request, res: Response): Promise<any> {
     try {
-      const deleted = await IntakeService.delete(req.params.id);
+      const deleted = await WardService.delete(req.params.id);
       res.status(StatusConstants.OK).send(true);
     } catch (error) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
@@ -35,9 +27,9 @@ export class IntakeController {
     }
   }
 
-  public async getOneWithMatterId(req: Request, res: Response): Promise<any> {
+  public async getAllWithId(req: Request, res: Response): Promise<any> {
     try {
-      const all = await IntakeService.getOneWithMatterId(req.params.matter_id);
+      const all = await WardService.getAllWithId(req.params.id);
       res.status(StatusConstants.OK).send(all);
     } catch (error) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
@@ -45,15 +37,13 @@ export class IntakeController {
     }
   }
 
-  public async updateReviewStatus(req: Request, res: Response): Promise<any> {
+  public async getWithMatterId(req: Request, res: Response): Promise<any> {
     try {
-      const updated = await IntakeService.updateReviewStatus(req.body);
-
-      res.status(StatusConstants.OK).send(updated);
+      const ward = await WardService.getWithMatterId(req.params.matterID);
+      res.status(StatusConstants.OK).send(ward);
     } catch (error) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
       console.error(error);
     }
   }
-
 }

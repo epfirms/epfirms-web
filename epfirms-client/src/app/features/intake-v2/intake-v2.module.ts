@@ -38,6 +38,9 @@ import { PersonalRepresentativeInformationComponent } from './personal-represent
 import { DecedentInformationComponent } from './decedent-information/decedent-information.component';
 import { DecedentPropertyComponent } from './decedent-property/decedent-property.component';
 import { IntakeSettingsOverlayComponent } from './firm-intake-viewer/intake-settings-overlay/intake-settings-overlay.component';
+import { ElderLawWorkflowComponent } from './elder-law-workflow/elder-law-workflow.component';
+import { CaregiverInformationComponent } from './caregiver-information/caregiver-information.component';
+import { WardInformationComponent } from './ward-information/ward-information.component';
 
 
 
@@ -69,7 +72,10 @@ import { IntakeSettingsOverlayComponent } from './firm-intake-viewer/intake-sett
     PersonalRepresentativeInformationComponent,
     DecedentInformationComponent,
     DecedentPropertyComponent,
-    IntakeSettingsOverlayComponent
+    IntakeSettingsOverlayComponent,
+    ElderLawWorkflowComponent,
+    CaregiverInformationComponent,
+    WardInformationComponent
   ],
   imports: [
     CommonModule,

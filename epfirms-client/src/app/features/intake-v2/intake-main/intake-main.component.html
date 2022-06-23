@@ -66,7 +66,6 @@
 
 <!-- ESTATE PLANNING INTAKE FORM CONTAINER -->
 <ng-container  *ngIf="selectedMatter" >
-  <ng-scrollbar style="height: 1000px;">
 
 <div *ngIf="selectedMatter.matter_intake.type === 'estate planning'">
 
@@ -76,8 +75,7 @@
 
 <app-probate-workflow *ngIf="selectedMatter.matter_intake.type === 'probate'" [matter]="selectedMatter" [clientMode]="true"></app-probate-workflow>
 
+<app-elder-law-workflow *ngIf="selectedMatter.matter_intake.type === 'elderlaw'" [matter]="selectedMatter" [clientMode]="true"></app-elder-law-workflow>
 
-
-  </ng-scrollbar>
 
 </ng-container>
