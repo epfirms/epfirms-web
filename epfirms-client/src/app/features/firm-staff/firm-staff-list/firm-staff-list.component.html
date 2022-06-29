@@ -12,26 +12,26 @@
   <table class="min-w-full">
     <thead>
       <tr class="border-t border-gray-200">
-        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase border-b border-gray-200 bg-gray-50 text-gray-500">
+        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
           Name
         </th>
-        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase border-b border-gray-200 bg-gray-50 text-gray-500">
+        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
           Role
         </th>
-        <th class="hidden px-6 py-3 text-xs font-medium tracking-wider text-right uppercase border-b md:table-cell border-gray-200 bg-gray-50 text-gray-500 whitespace-nowrap">
+        <th class="hidden px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase border-b border-gray-200 md:table-cell bg-gray-50 whitespace-nowrap">
           Hourly rate
         </th>
-        <th class="py-3 pr-6 text-xs font-medium tracking-wider text-right uppercase border-b border-gray-200 bg-gray-50 text-gray-500"></th>
+        <th class="py-3 pr-6 text-xs font-medium tracking-wider text-right text-gray-500 uppercase border-b border-gray-200 bg-gray-50"></th>
       </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-100">
       <tr *ngFor="let staff of staff$ | async">
-        <td class="w-full px-6 py-3 text-sm font-medium max-w-0 whitespace-nowrap text-gray-900">
+        <td class="w-full px-6 py-3 text-sm font-medium text-gray-900 max-w-0 whitespace-nowrap">
           <div class="flex items-center space-x-3 lg:pl-2">
             <div class="flex-shrink-0">
               <ep-avatar epSize="xsmall" [epSrc]="staff.user.profile_image" [epText]="staff.user.full_name"></ep-avatar>
             </div>
-            <a href="#" class="truncate hover:text-gray-600">
+            <a class="truncate hover:text-gray-600">
               <span>
                 {{staff.user.full_name | titlecase}}
               </span>
@@ -39,9 +39,9 @@
           </div>
         </td>
         <td class="px-6 py-3 text-sm font-medium text-gray-500">
-          <span class="truncate" *ngFor="let role of staff.role; last as isLast; count as length">{{role.name | titlecase}}<span *ngIf="!isLast && length > 1">, </span></span>
+          <span class="truncate">{{staff.role | titlecase}}</span>
         </td>
-        <td class="hidden px-6 py-3 text-sm text-right md:table-cell whitespace-nowrap text-gray-500">
+        <td class="hidden px-6 py-3 text-sm text-right text-gray-500 md:table-cell whitespace-nowrap">
           {{staff.hourly_rate || 0 | currency}}
         </td>
         <td class="px-6 py-3 text-sm font-medium text-right whitespace-nowrap">

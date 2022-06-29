@@ -1,0 +1,56 @@
+<button
+  type="button"
+  [ngClass]="{
+    'text-blue-600 hover:text-blue-500': smsMessage.body,
+    'text-gray-400 hover:text-gray-500': !smsMessage.body
+}"
+  class="-m-2.5 w-10 h-10 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-500"
+  (click)="tooltip.show()" [tippy]="contextMenu" trigger="manual" #tooltip="tippy" variation="dropdown"
+>
+  <!-- Heroicon name: solid/paper-clip -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+    <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd" />
+  </svg>
+  <span class="sr-only">Attach an SMS message</span>
+</button>
+
+<ng-template #contextMenu let-hide>
+    <form [formGroup]="smsForm" class="p-2 space-y-2">
+        <textarea ep-input rows="3" [disabled]="readonly" placeholder="Type a text message to be sent when this task is marked complete." formControlName="body"></textarea>
+        <div class="text-right" *ngIf="!readonly">
+            <button ep-button size="xs" color="white" (click)="emitDelete(); hide()" >Clear</button>
+            <button ep-button size="xs" (click)="emitSave(); hide()">Save</button>
+        </div>
+    </form>
+    <!-- <div class="divide-y divide-gray-100">
+        <div class="flex items-center px-4 py-3 group" role="none" *ngIf="files.length" (click)="openFile(files[0])" [ngClass]="{'hover:bg-gray-100 hover:cursor-pointer': files[0].key}">
+            <div class="w-40">
+                <p class="text-sm font-medium text-gray-900 truncate" role="none">
+                    {{files[0].name}}
+                </p>
+                <p class="text-xs text-gray-700 nowrap" role="none">
+                    {{files[0].description}}
+                </p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+        </div>
+        <ng-container *ngIf="!readonly">
+        <div class="py-1" role="none" *ngIf="!files.length">
+            <a (click)="fileList.click()" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100 hover:cursor-pointer"
+                role="menuitem" tabindex="-1" id="menu-item-0">
+                Attach file
+
+                <input type="file" (change)="emitAttach($event); hide()" #fileList multiple style="display:none">
+            </a>
+        </div>
+        <div *ngIf="files.length" class="py-1" role="none">
+            <a (click)="emitDelete(files[0].id); hide()" class="block px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100 hover:cursor-pointer"
+                role="menuitem" tabindex="-1" id="menu-item-1">
+                Remove
+            </a>
+        </div>
+    </ng-container>
+    </div> -->
+</ng-template>

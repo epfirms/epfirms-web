@@ -78,7 +78,7 @@
                 >
 
                 <a
-                  *ngIf="clientMode === false"
+                *ngIf="clientMode !== true"
                   (click)="setState('estate planning')"
                   [ngClass]="
                     state === 'estate planning'
@@ -152,7 +152,7 @@
         ></app-appointees>
 
         <app-estate-planning-form
-          *ngIf="state === 'estate planning' && clientMode === false"
+          *ngIf="state === 'estate planning' && clientMode !== true"
           [matter]="matter"
           [client]="ward"
         ></app-estate-planning-form>

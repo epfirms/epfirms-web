@@ -88,16 +88,16 @@
                       <table class="min-w-full" *ngIf="template.community_template_tasks.length">
                         <thead>
                           <tr>
-                            <th class="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-r border-gray-200  whitespace-nowrap">
+                            <th class="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-r border-gray-200 whitespace-nowrap">
                               <span>Task</span>
                             </th>
-                            <th class="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-l border-r border-gray-200  whitespace-nowrap">
+                            <th class="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-l border-r border-gray-200 whitespace-nowrap">
                               Assignee role
                             </th>
-                            <th class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-l border-gray-200  md:table-cell whitespace-nowrap">
+                            <th class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-l border-gray-200 md:table-cell whitespace-nowrap">
                               Days until due
                             </th>
-                            <!-- <th class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-l border-gray-200  md:table-cell whitespace-nowrap">
+                            <!-- <th class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-l border-gray-200 md:table-cell whitespace-nowrap">
                       Duration
                     </th> -->
                           </tr>
@@ -105,7 +105,7 @@
                         <tbody class="bg-white">
                           <ng-container>
                             <tr class="task-row group" *ngFor="let task of template.community_template_tasks; let i=index; last as isLast">
-                              <td class="w-full px-1 py-1 text-sm text-gray-900 border-t border-r border-gray-200  max-w-0 whitespace-nowrap" [class.border-b]="!isLast">
+                              <td class="w-full px-1 py-1 text-sm text-gray-900 border-t border-r border-gray-200 max-w-0 whitespace-nowrap" [class.border-b]="!isLast">
                                 <div class="flex items-center">
                                   <div class="flex-1 w-full px-2 py-1">
                                     {{task.name}}
@@ -113,10 +113,10 @@
                 
                                   <!-- <editable-input [value]="task.name" placeholder="Enter a task name"
                                     class="flex-1"></editable-input> -->
-                                  <app-task-file-button *ngIf="task.community_template_task_files.length" [files]="task.community_template_task_files" [readonly]="true"></app-task-file-button>
+                                  <!-- <app-task-file-button *ngIf="task.community_template_task_files.length" [files]="task.community_template_task_files" [readonly]="true"></app-task-file-button> -->
                                 </div>
                               </td>
-                              <td class="w-full px-1 py-1 text-sm text-center text-gray-900 border-t border-r border-gray-200  whitespace-nowrap" [class.border-b]="!isLast">
+                              <td class="w-full px-1 py-1 text-sm text-center text-gray-900 border-t border-r border-gray-200 whitespace-nowrap" [class.border-b]="!isLast">
                                   <span *ngIf="task.role">
                                     {{task.role | titlecase}}
                                   </span>

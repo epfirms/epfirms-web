@@ -164,7 +164,7 @@ export class LeadsComponent implements OnInit {
   createConversation(matter) {
     this._conversationService.createMatterConversation(matter.id).subscribe((response) => {
       this._firmService.getCurrentFirm().subscribe((firm) => {
-        const message = `Hello, this is your attorney, ${matter.attorney.full_name}, at ${firm.name}. I would like to communicate with you through text. If you do not want me to text you, please reply STOP.`;
+        const message = `Thank you for contacting ${firm.name}. We would like to communicate with you through text. If you do not want us to text you, please reply STOP.`;
         this._conversationService
           .sendMessage(response.data.conversationSid, { body: message, author: matter.attorney_id })
           .subscribe(() => {});

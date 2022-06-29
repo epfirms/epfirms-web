@@ -53,16 +53,17 @@ export class Database {
       statement: require('../models/Statement')(this.sequelize, Sequelize),
       beta_signup: require('../models/BetaSignup')(this.sequelize, Sequelize),
       firm_template_task_file: require('../models/FirmTemplateTaskFile')(this.sequelize, Sequelize),
+      firm_template_task_sms_message: require('../models/FirmTemplateTaskSMS')(this.sequelize, Sequelize),
       matter_task_file: require('../models/MatterTaskFile')(this.sequelize, Sequelize),
+      matter_task_sms_message: require('../models/MatterTaskSMS')(this.sequelize, Sequelize),
       matter_billing_settings: require('../models/MatterBillingSettings')(this.sequelize, Sequelize),
       stripe_account: require("../models/StripeAccount")(this.sequelize, Sequelize),
       community_case_template: require('../models/CommunityCaseTemplate')(this.sequelize, Sequelize),
       community_template_task: require('../models/CommunityTemplateTask')(this.sequelize, Sequelize),
       community_template_task_file: require('../models/CommunityTemplateTaskFile')(this.sequelize, Sequelize),
+      community_template_task_sms_message: require('../models/CommunityTemplateTaskSMS')(this.sequelize, Sequelize),
       firm_team: require('../models/FirmTeam')(this.sequelize, Sequelize),
       firm_team_member: require('../models/FirmTeamMember')(this.sequelize, Sequelize),
-      firm_role: require('../models/FirmRole')(this.sequelize, Sequelize),
-      firm_employee_role: require('../models/FirmEmployeeRole')(this.sequelize, Sequelize),
       legal_insurance: require('../models/LegalInsurance')(this.sequelize, Sequelize),
       customer_account: require('../models/CustomerAccount')(this.sequelize, Sequelize),
       contract: require('../models/Contract')(this.sequelize, Sequelize),
@@ -335,17 +336,33 @@ export class Database {
       foreignKey: 'user_id'
     });
 
-    this.models.firm_template_task.hasMany(this.models.firm_template_task_file, {
+    this.models.firm_template_task.hasOne(this.models.firm_template_task_file, {
       foreignKey: 'firm_template_task_id'
     });
 
     this.models.firm_template_task_file.belongsTo(this.models.firm_template_task);
 
-    this.models.matter_task.hasMany(this.models.matter_task_file, {
+    this.models.firm_template_task.hasOne(this.models.firm_template_task_sms_message, {
+      foreignKey: 'firm_template_task_id'
+    });
+
+    this.models.firm_template_task_sms_message.belongsTo(this.models.firm_template_task, {
+      foreignKey: 'firm_template_task_id'
+    });
+
+    this.models.matter_task.hasOne(this.models.matter_task_file, {
       foreignKey: 'matter_task_id'
     });
 
     this.models.matter_task_file.belongsTo(this.models.matter_task);
+
+    this.models.matter_task.hasOne(this.models.matter_task_sms_message, {
+      foreignKey: 'matter_task_id'
+    });
+
+    this.models.matter_task_sms_message.belongsTo(this.models.firm_template_task, {
+      foreignKey: 'matter_task_id'
+    });
 
     this.models.matter.hasOne(this.models.matter_billing_settings, {
       foreignKey: 'matter_id'
@@ -374,11 +391,19 @@ export class Database {
       foreignKey: 'template_id'
     });
 
-    this.models.community_template_task.hasMany(this.models.community_template_task_file, {
+    this.models.community_template_task.hasOne(this.models.community_template_task_file, {
       foreignKey: 'community_template_task_id'
     });
 
     this.models.community_template_task_file.belongsTo(this.models.community_template_task);
+
+    this.models.community_template_task.hasOne(this.models.community_template_task_sms_message, {
+      foreignKey: 'community_template_task_id'
+    });
+
+    this.models.community_template_task_sms_message.belongsTo(this.models.community_template_task, {
+      foreignKey: 'community_template_task_id'
+    });
 
     this.models.firm.hasMany(this.models.firm_team, {
       foreignKey: 'firm_id'
@@ -407,19 +432,6 @@ export class Database {
     this.models.firm_team_member.belongsTo(this.models.firm_team);
     // this.models.firm_team.belongsToMany(this.sequelize.models.firm_employee, { through: { model: this.models.firm_team_member, unique: false }, as: 'member', unique: false, foreignKey: 'firm_team_id'});
     // this.sequelize.models.firm_employee.belongsToMany(this.models.firm_team, { through: { model: this.models.firm_team_member, unique: false }, as: 'team', unique: false, foreignKey: 'firm_employee_id'});
-
-    this.models.firm_role.hasMany(this.models.firm_team_member, {
-      foreignKey: 'firm_role_id'
-    });
-    this.models.firm_team_member.belongsTo(this.models.firm_role);
-
-    this.models.firm.hasMany(this.models.firm_role, {foreignKey: 'firm_id', as: 'firm_role'});
-    this.models.firm_role.belongsTo(this.models.firm, {
-      foreignKey: 'firm_id'
-    });
-
-    this.sequelize.models.firm_employee.belongsToMany(this.models.firm_role, { through: 'firm_employee_role', as: 'role', foreignKey: 'firm_employee_id'});
-    this.models.firm_role.belongsToMany(this.sequelize.models.firm_employee, { through: 'firm_employee_role', foreignKey: 'firm_role_id'});
 
     this.models.matter.hasOne(this.models.customer_account, {foreignKey: 'matter_id'});
     this.models.customer_account.belongsTo(this.models.matter, {foreignKey: 'matter_id'});

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
@@ -6,8 +5,6 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class FirmRoleService {
-  constructor(private http: HttpClient) {}
-
   get(): Observable<any> {
     return of([
       'attorney',
@@ -18,9 +15,5 @@ export class FirmRoleService {
       'office manager',
       'other',
     ]);
-  }
-
-  getOne(id: number): Observable<any> {
-    return this.http.get(`/api/firm/roles/${id}`);
   }
 }

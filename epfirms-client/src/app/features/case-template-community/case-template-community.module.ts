@@ -5,7 +5,6 @@ import { CaseTemplateCommunityTemplatePageComponent } from './case-template-comm
 import { CaseTemplateModule } from '../case-template/case-template.module';
 import { RouterModule } from '@angular/router';
 import { EditableModule } from '@app/shared/editable/editable.module';
-import { TaskFileModule } from '../task-file/task-file.module';
 
 
 
@@ -19,7 +18,6 @@ import { TaskFileModule } from '../task-file/task-file.module';
     RouterModule,
     CaseTemplateModule,
     EditableModule,
-    TaskFileModule
   ],
   exports: [
     CaseTemplateCommunityTableComponent

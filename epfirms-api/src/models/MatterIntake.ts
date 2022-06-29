@@ -20,6 +20,10 @@ module.exports = (sequelize, { INTEGER, STRING, BOOLEAN }) => {
         },
         sent_by: {
           type: INTEGER
+        },
+        is_review_eligible: {
+          type: BOOLEAN,
+          defaultValue: false
         }
       },
       {

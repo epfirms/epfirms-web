@@ -9,7 +9,6 @@ import { LegalAreaResolver } from '@app/core/resolvers/firm-portal/legal-area.re
 import { MatterResolver } from '@app/core/resolvers/firm-portal/matter.resolver';
 import { StaffResolver } from '@app/core/resolvers/firm-portal/staff.resolver';
 import { FirmPortalComponent } from './firm-portal.component';
-import { ConversationResolver } from '@app/core/resolvers/firm-portal/chat.resolver';
 
 const routes: Routes = [
   {
@@ -71,14 +70,18 @@ const routes: Routes = [
             path: 'settings',
             canActivate: [AuthGuard],
             loadChildren: () =>
-              import('./firm-settings/firm-settings.module').then((m) => m.FirmSettingsModule),
+              import('../pages/settings-page/settings-page.module').then(
+                (m) => m.SettingsPageModule,
+              ),
             data: { title: 'Settings' },
           },
           {
             path: 'messages',
             canActivate: [AuthGuard],
             loadChildren: () =>
-              import('../pages/messages-page/messages-page.module').then((m) => m.MessagesPageModule),
+              import('../pages/messages-page/messages-page.module').then(
+                (m) => m.MessagesPageModule,
+              ),
             data: { title: 'Messages' },
           },
 
