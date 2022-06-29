@@ -62,6 +62,13 @@ module.exports = (sequelize, {
         total: {
           type: INTEGER,
         },
+        hosted_invoice_url: {
+          type: STRING,
+        },
+        invoice_id: {
+          type: STRING,
+        },
+
         stripe_session_id: {
           type: STRING
         },

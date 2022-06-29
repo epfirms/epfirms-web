@@ -36,8 +36,11 @@ import { appointeeSummaryRouter } from '@src/modules/appointee-summary/routes';
 import { intakeRouter } from '@src/modules/intake/routes';
 import { decedentRouter } from '@src/modules/decedent/routes';
 import { decedentPropertyRouter } from '@src/modules/decedent-property/routes';
+import { invoiceRouter } from '@src/modules/invoice/routes';
+import { transactionRouter } from '@src/modules/transaction/routes';
 import { caseTemplateRouter } from '@src/modules/case-template/case-template.routes';
 import { wardRouter } from '@src/modules/ward/routes';
+import { clientSubscriptionRouter } from '@src/modules/client-subscription/routes';
 
 const v1Router = express.Router();
 
@@ -79,5 +82,8 @@ v1Router.use('/financial-summary', financialSummaryRouter);
 v1Router.use('/appointee-summary', appointeeSummaryRouter);
 v1Router.use('/intake', intakeRouter);
 v1Router.use('/decedent-property', decedentPropertyRouter);
+v1Router.use('/invoice', invoiceRouter);
+v1Router.use('/transaction', transactionRouter);
 v1Router.use('/ward', wardRouter);
+v1Router.use('/clientsubscription', clientSubscriptionRouter);
 export { v1Router }

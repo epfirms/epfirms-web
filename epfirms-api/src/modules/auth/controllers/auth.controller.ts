@@ -31,6 +31,7 @@ export class AuthController {
         throw new Error(msg);
       }
     } catch (error) {
+      console.error(error);
       resp.status(StatusConstants.UNAUTHORIZED).send({success: false, access_token: null, msg: error.message});
     }
   }

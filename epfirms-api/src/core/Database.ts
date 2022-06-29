@@ -82,7 +82,10 @@ export class Database {
       stripe_customer: require('../models/StripeCustomer')(this.sequelize, Sequelize),
       decedent: require('../models/Decedent')(this.sequelize, Sequelize),
       decedent_property: require('../models/DecedentProperty')(this.sequelize, Sequelize),
+      invoice : require('../models/Invoice')(this.sequelize, Sequelize),
+      transaction: require('../models/Transaction')(this.sequelize, Sequelize),
       ward: require('../models/Ward')(this.sequelize, Sequelize),
+      client_subscription: require('../models/ClientSubscription')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.sequelize.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -107,6 +110,19 @@ export class Database {
     this.models.decedent.hasMany(this.models.decedent_property, {foreignKey: 'decedent_id'});
     this.models.decedent_property.belongsTo(this.models.decedent, {foreignKey: 'decedent_id'});
 
+    this.models.matter.hasMany(this.models.invoice, {foreignKey: 'matter_id'});
+    this.models.invoice.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+    this.models.invoice.hasMany(this.models.transaction, {foreignKey: 'invoice_id'});
+    this.models.transaction.belongsTo(this.models.invoice, {foreignKey: 'invoice_id'});
+    this.models.user.hasMany(this.models.invoice, {foreignKey: 'user_id'});
+    this.models.invoice.belongsTo(this.models.user, {foreignKey: 'user_id'});
+
+    this.models.client_subscription.belongsTo(this.models.user, {foreignKey: 'user_id'});
+    this.models.user.hasMany(this.models.client_subscription, {foreignKey: 'user_id'});
+    this.models.matter.hasOne(this.models.client_subscription, {foreignKey: 'matter_id'});
+    this.models.client_subscription.belongsTo(this.models.matter, {foreignKey: 'matter_id'});
+    this.models.client_subscription.hasMany(this.models.invoice, {foreignKey: 'client_subscription_id'});
+    this.models.invoice.belongsTo(this.models.client_subscription, {foreignKey: 'client_subscription_id'});
     // ward relationships
     this.models.user.hasOne(this.models.ward, {foreignKey: 'user_id'});
     this.models.ward.belongsTo(this.models.user, {foreignKey: 'user_id'});

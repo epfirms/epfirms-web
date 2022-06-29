@@ -24,6 +24,18 @@ export class StripeService {
     return this._http.post('/api/stripe/subscription', data);
   }
 
+  createInvoice(invoiceId): Observable<any> {
+    return this._http.post('/api/stripe/invoice', { invoice_id: invoiceId });
+  }
+   
+  deleteInvoice(invoiceId): Observable<any> {
+    return this._http.delete(`/api/stripe/invoice/${invoiceId}`);
+  }
+
+  finalizeInvoice(invoiceId): Observable<any> {
+    return this._http.put(`/api/stripe/invoice/${invoiceId}`, {});
+  }
+
   createPaymentIntent(amount: number): Observable<any> {
     return this._http.post('/api/stripe/payment-intent', {
       paymentIntent: {
@@ -56,6 +68,11 @@ export class StripeService {
   }
 
   updatePaymentIntent(id, amount): Observable<any> {
-    return this._http.post(`/api/stripe/payment-intent/${id}`, {amount});
+    return this._http.post(`/api/stripe/payment-intent/${id}`, { amount });
+  }
+
+  createClientSubscription(subscriptionId: number) : Observable<any> {
+
+    return this._http.post('/api/stripe/client-subscription', {subscription_id: subscriptionId});
   }
 }
