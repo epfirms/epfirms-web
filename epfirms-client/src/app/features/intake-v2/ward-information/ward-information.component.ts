@@ -49,7 +49,7 @@ export class WardInformationComponent implements OnInit {
     city: '',
     state: '',
     zip: '',
-    dob: new Date(),
+    dob: undefined,
     ssn: '',
     drivers_id: '',
   };
@@ -67,7 +67,7 @@ export class WardInformationComponent implements OnInit {
     city: '',
     state: '',
     zip: '',
-    dob: new Date(),
+    dob: undefined,
     ssn: '',
     drivers_id: '',
     relationship_type: 'spouse',
@@ -240,6 +240,7 @@ export class WardInformationComponent implements OnInit {
   }
 
   private upsertChildren(): void {
+    console.log("after upsert of children", this.children);
     this.children.forEach((child) => {
       console.log('child on upsert', child);
       this.familyMemberService.addFamilyMemberForUser(this.client.id, child).subscribe((res) => {
@@ -289,7 +290,7 @@ export class WardInformationComponent implements OnInit {
       city: '',
       state: '',
       zip: '',
-      dob: new Date(),
+      dob: undefined,
       ssn: '',
       drivers_id: '',
       relationship_type: 'child',
@@ -316,7 +317,7 @@ export class WardInformationComponent implements OnInit {
       city: '',
       state: '',
       zip: '',
-      dob: new Date(),
+      dob: undefined,
       ssn: '',
       drivers_id: '',
       relationship_type: '',
