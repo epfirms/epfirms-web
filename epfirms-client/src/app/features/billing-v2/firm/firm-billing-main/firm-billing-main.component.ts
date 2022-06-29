@@ -98,9 +98,6 @@ export class FirmBillingMainComponent implements OnInit {
         this.defaultSubscriptionsList = subscriptions;
         this.onSubscriptionRangeChange();
       }
-      else {
-        this._toastService.error('You have no subscriptions.');
-      }
     });
   }
   setState(state: string) {
