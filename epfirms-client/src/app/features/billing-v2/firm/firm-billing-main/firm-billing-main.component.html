@@ -359,8 +359,19 @@
 </div>
 
 
+<!-- SUBSCRIPTINOS PLACEHOLDER FOR NOW -->
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div *ngIf="state === 'subscriptions'" class="bg-white">
+  <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <p class="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">Subscriptions Coming Soon!</p>
+      <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500">Offer flexible monthly payment plans to meet your clients unique financial needs.</p>
+    </div>
+  </div>
+</div>
+
 <!-- Subscription PAGES -->
-<div *ngIf="state === 'subscriptions'">
+<div hidden *ngIf="state === 'subscriptions'">
 <!-- STATS OVERVIEW BLOCK -->
 <div class="m-5">
   <div>
