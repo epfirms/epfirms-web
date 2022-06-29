@@ -118,13 +118,13 @@ export class MatterService {
         include: [
           [
             Sequelize.literal(
-              '(SELECT SUM(amount) FROM `matter_billing` WHERE type = 0 AND matter_id = `matter`.id)'
+              '(SELECT SUM(total) FROM `invoice` WHERE status = "open" AND matter_id = `matter`.id)'
             ),
             'total_billed'
           ],
           [
             Sequelize.literal(
-              '(SELECT SUM(amount) FROM `matter_billing` WHERE type = 1 AND matter_id = `matter`.id)'
+              '(SELECT SUM(total) FROM `invoice` WHERE status = "paid" AND matter_id = `matter`.id)'
             ),
             'total_paid'
           ]
