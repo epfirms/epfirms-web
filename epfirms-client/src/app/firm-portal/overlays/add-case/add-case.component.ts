@@ -265,6 +265,9 @@ export class AddCaseComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    if (this.selectedClient.email === null || this.selectedClient.email === '') {
+      this.sendIntake = false;
+    }
     this.close({matter: this.caseForm.value, intake: this.selectedIntake, sendIntake: this.sendIntake, note: this.note, chatToTextNumber: this.enableChatToText && this.chatToTextNumber.valid ? this.chatToTextNumber : null});
   }
 }
