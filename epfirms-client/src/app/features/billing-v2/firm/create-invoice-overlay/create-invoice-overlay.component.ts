@@ -104,6 +104,13 @@ export class CreateInvoiceOverlayComponent implements OnInit {
 
     }
     //creat a new invoice
+    if (this.selectedMatter.client.email === null || this.selectedMatter.client.email === '' || this.selectedMatter.client.email === undefined) {
+      this._toastService.error(
+        'The client email is not set. Please set the client email in the client profile.'
+      );
+      throw new Error('The client email is not set');
+    }
+
     if (this.selectedMatter && this.invoiceForm.valid) {
       let invoice = new Invoice(
         this.selectedMatter.id,
