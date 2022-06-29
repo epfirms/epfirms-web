@@ -5,6 +5,7 @@ import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { USAState } from '@app/shared/utils/us-states/typings';
 import { Decedent } from '@app/core/interfaces/Decedent';
 import { DecedentService } from '../services/decedent.service';
+import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 
 @Component({
   selector: 'app-decedent-information',
@@ -48,7 +49,7 @@ export class DecedentInformationComponent implements OnInit {
     city: '',
     state: '',
     zip: '',
-    dob: new Date(),
+    dob: undefined,
     ssn: '',
     drivers_id: '',
   };
@@ -66,7 +67,7 @@ export class DecedentInformationComponent implements OnInit {
     city: '',
     state: '',
     zip: '',
-    dob: new Date(),
+    dob: undefined,
     ssn: '',
     drivers_id: '',
     relationship_type: 'spouse',
@@ -79,6 +80,7 @@ export class DecedentInformationComponent implements OnInit {
     private familyMemberService: FamilyMemberService,
     private userService: UserService,
     private decedentService: DecedentService,
+    private _matterService: MatterService
   ) {}
 
   ngOnInit(): void {
@@ -225,6 +227,14 @@ export class DecedentInformationComponent implements OnInit {
     this.clientForm.drivers_id = this.client.drivers_id;
   }
 
+
+  private updateSpouseIdOnMatter(spouseId) : void {
+    this._matterService.update({id: this.matter.id, spouse_id: spouseId}).subscribe(res => {
+      console.log(res);
+    });
+
+  }
+
   private upsertSpouse(): void {
     if (this.hasSpouse) {
       this.familyMemberService
@@ -232,6 +242,7 @@ export class DecedentInformationComponent implements OnInit {
         .subscribe((res) => {
           if (res) {
             this.spouseForm.id = res.id;
+            this.updateSpouseIdOnMatter(res.id);
             console.log('upsert spouse', res);
           }
         });
@@ -288,7 +299,7 @@ export class DecedentInformationComponent implements OnInit {
       city: '',
       state: '',
       zip: '',
-      dob: new Date(),
+      dob: undefined,
       ssn: '',
       drivers_id: '',
       relationship_type: 'child',
@@ -315,7 +326,7 @@ export class DecedentInformationComponent implements OnInit {
       city: '',
       state: '',
       zip: '',
-      dob: new Date(),
+      dob: undefined,
       ssn: '',
       drivers_id: '',
       relationship_type: '',
