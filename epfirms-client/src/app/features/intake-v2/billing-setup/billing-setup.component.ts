@@ -41,7 +41,7 @@ export class BillingSetupComponent implements OnInit {
     private invoiceService: InvoiceService,
     private toastService: HotToastService,
     private stripeService: StripeService,
-    private _modalService: EpModalService
+    private _modalService: EpModalService,
   ) {}
 
   ngOnInit(): void {
@@ -99,7 +99,7 @@ export class BillingSetupComponent implements OnInit {
     );
     initialInvoice.setAutoAdvance(true);
 
-    console.log("initial invoice", initialInvoice);
+    console.log('initial invoice', initialInvoice);
 
     const finalInvoice = new Invoice(
       this.matter.id,
@@ -112,7 +112,7 @@ export class BillingSetupComponent implements OnInit {
 
     finalInvoice.setDate(new Date(this.billingSettings.final_payment_due_date).toUTCString());
 
-    console.log("final invoice", finalInvoice);
+    console.log('final invoice', finalInvoice);
     this.invoiceService.upsert(initialInvoice).subscribe((initial) => {
       console.log('initial invoice', initial);
       if (initial) {
@@ -182,6 +182,8 @@ export class BillingSetupComponent implements OnInit {
       this.billingSettings.split_flat_rate === true
     ) {
       this.toastService.error('Please enter an amount for initial payment');
+    } else if (this.matter.client.email === null || this.matter.client.email === '') {
+      this.toastService.error('Please enter a valid email address for the client');
     } else if (
       this.billingSettings.final_payment <= 0 &&
       this.billingSettings.split_flat_rate === true
@@ -252,7 +254,7 @@ export class BillingSetupComponent implements OnInit {
     // }
   }
 
-openHelpOverlay(): void {
+  openHelpOverlay(): void {
     let modal = this._modalService.create({
       epContent: BillingSetupHelpOverlayComponent,
       epModalType: 'slideOver',
