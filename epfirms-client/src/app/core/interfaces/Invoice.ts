@@ -26,7 +26,7 @@ export class Invoice {
         this.firm_id = firmId;
         this.matter_id = matterId;
         this.invoice_id = "";
-        this.due_date = new Date(Date.now() + (1000 * 60 * 60 * 24 * 30)).toUTCString();
+        this.due_date = new Date(Date.now() + (1000 * 60 * 60 * 24 * 1)).toUTCString();
         this.description = description;
         this.status = "";
         this.total = total;
