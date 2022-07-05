@@ -1,34 +1,27 @@
-import { Express } from 'express';
 import { Logger } from '../utils/logger/Logger';
 let bodyParser = require('body-parser');
 let cors = require('cors');
 const passport = require('passport');
 const Strategy = require('passport-http-bearer').Strategy;
 const helmet = require('helmet');
-const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('@configs/vars');
-import { Database } from '@src/core/Database';
 import { Service } from 'typedi';
+import { AuthFirebaseService } from '@src/modules/auth/services/auth-firebase.service';
 const compression = require('compression');
 
 @Service()
 export class CommonMiddleware {
-  constructor() {}
+  constructor(private authService: AuthFirebaseService) {}
 
   usePassport() {
     passport.use(
-      new Strategy(function (token, done) {
-        jwt.verify(token, JWT_SECRET, function (err, user) {
-          if (err) {
-            return done(null, false, { message: err });
-          }
-
-          if (!user.id) {
-            return done(null, false);
-          }
-
-          return done(null, user, { scope: 'all' });
-        });
+      new Strategy(async (token, done) => {
+        try {
+          const decodedIdToken = await this.authService.verifyIdToken(token);
+          return done(null, decodedIdToken, { scope: 'all' });
+        } catch (err) {
+          console.log(err);
+          return done(null, false, { message: err });
+        }
       }),
     );
     return passport.initialize();

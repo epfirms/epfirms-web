@@ -1,7 +1,7 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +28,8 @@ import { ModalModule } from './shared/modal/modal.module';
 import { MatterTabsEffects } from './store/matter-tabs/matter-tabs.effects';
 import { CurrentUserEffects } from './store/current-user/current-user.effects';
 import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { PERSISTENCE } from '@angular/fire/compat/auth';
+import { AuthModule } from './features/auth/auth.module';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -158,14 +160,15 @@ const quillConfig = [
       },
       dismissible: true,
     }),
-    ModalModule
+    ModalModule,
+    AuthModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: MatterActivityInterceptor, multi: true },
     { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig },
-    Title
+    { provide: PERSISTENCE, useValue: 'local'}
   ],
   bootstrap: [AppComponent]
 })

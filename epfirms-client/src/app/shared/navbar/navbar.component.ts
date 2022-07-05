@@ -1,8 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { User as FirebaseUser } from '@angular/fire/auth';
+import { AuthService } from '@app/features/auth/auth.service';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../core/services/auth.service';
-import { CurrentUserService } from '../_services/current-user-service/current-user.service';
 
 @Component({
   selector: '[tw-nav]',
@@ -24,17 +24,17 @@ import { CurrentUserService } from '../_services/current-user-service/current-us
   ]
 })
 export class NavbarComponent {
-  currentUser$: Observable<any>;
+  user$: Observable<FirebaseUser>;
 
-  constructor(private _currentUserService: CurrentUserService, private _authService: AuthService) {
-    this.currentUser$ = _currentUserService.getCurrentUser();
+  constructor(private authService: AuthService) {
+    this.user$ = this.authService.user$;
   }
 
   goToPortalSelect() {
-    this._authService.selectPortal();
+    // this._authService.selectPortal();
   }
 
   logout() {
-    this._authService.logout();
+    // this._authService.logout();
   }
 }

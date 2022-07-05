@@ -1,11 +1,11 @@
-<ng-container *ngIf="!loading">
+<ng-container *ngIf="true">
     <router-outlet></router-outlet>
 </ng-container>
 
-<div class="fixed top-0 left-0 z-50 w-screen h-screen flex items-center justify-center bg-gray-800" *ngIf="loading"
+<div class="fixed top-0 left-0 z-50 flex items-center justify-center w-screen h-screen bg-gray-800" *ngIf="false"
     @fadeAnimation>
-    <div class="py-2 px-5 flex items-center flex-col">
-        <div class="text-gray-300 text-sm font-light mt-2 text-center">
+    <div class="flex flex-col items-center px-5 py-2">
+        <div class="mt-2 text-sm font-light text-center text-gray-300">
             <svg class="h-12" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;"
                 xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
                 width="100%" xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="0 0 279.01 110.78">
@@ -36,11 +36,11 @@
             </svg>
 
         </div>
-        <div class="loader-dots block relative w-20 h-5 mt-4">
-            <div class="absolute top-0 mt-1 w-2 h-2 rounded-full bg-blue-600"></div>
-            <div class="absolute top-0 mt-1 w-2 h-2 rounded-full bg-blue-600"></div>
-            <div class="absolute top-0 mt-1 w-2 h-2 rounded-full bg-blue-600"></div>
-            <div class="absolute top-0 mt-1 w-2 h-2 rounded-full bg-blue-600"></div>
+        <div class="relative block w-20 h-5 mt-4 loader-dots">
+            <div class="absolute top-0 w-2 h-2 mt-1 bg-blue-600 rounded-full"></div>
+            <div class="absolute top-0 w-2 h-2 mt-1 bg-blue-600 rounded-full"></div>
+            <div class="absolute top-0 w-2 h-2 mt-1 bg-blue-600 rounded-full"></div>
+            <div class="absolute top-0 w-2 h-2 mt-1 bg-blue-600 rounded-full"></div>
         </div>
     </div>
 </div>

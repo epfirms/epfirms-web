@@ -26,6 +26,7 @@ import { StoreModule } from '@ngrx/store';
 import { UserModule } from '@app/features/user/user.module';
 import { ConversationEventEffects } from '@app/features/conversation/store/conversation-event.effects';
 import { DeveloperToolsModule } from '@app/developer-tools/developer-tools.module';
+import { SocketModule } from '@app/features/socket/socket.module';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { DeveloperToolsModule } from '@app/developer-tools/developer-tools.modul
     EffectsModule.forFeature([ConversationEffects, ConversationEventEffects]),
     UserModule,
     DeveloperToolsModule,
+    SocketModule
   ]
 })
 export class FirmPortalModule {}

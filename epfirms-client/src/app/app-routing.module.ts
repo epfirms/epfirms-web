@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './core/guards/auth.guard';
+import { RouterModule, Routes } from '@angular/router';
+import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 
 const routes: Routes = [
   {
     path: 'firm',
-    canActivate: [AuthGuard],
+    canActivate: [AngularFireAuthGuard],
     loadChildren: () =>
       import('./firm-portal/firm-portal.module').then(
         (m) => m.FirmPortalModule
@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'client',
-    canActivate: [AuthGuard],
+    canActivate: [AngularFireAuthGuard],
     loadChildren: () =>
       import('./client-portal/client-portal.module').then(
         (m) => m.ClientPortalModule
@@ -27,10 +27,22 @@ const routes: Routes = [
     )
   },
   {
-    path: '',
+    path: 'login',
     loadChildren: () =>
-      import('./features/user-auth/user-auth.module').then((m) => m.UserAuthModule),
+    import('./pages/login-page/login-page.module').then(
+      (m) => m.LoginPageModule
+    )
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   }
+  // {
+  //   path: '',
+  //   loadChildren: () =>
+  //     import('./features/user-auth/user-auth.module').then((m) => m.UserAuthModule),
+  // }
 ];
 
 @NgModule({
