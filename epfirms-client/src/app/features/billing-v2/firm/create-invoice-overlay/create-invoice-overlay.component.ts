@@ -40,7 +40,7 @@ export class CreateInvoiceOverlayComponent implements OnInit {
     private _invoiceService: InvoiceService,
     private _stripeService : StripeService
   ) {
-    this.matters$ = this._matterService.filteredEntities$;
+    this.matters$ = this._matterService.entities$;
   }
 
   ngOnInit(): void {
