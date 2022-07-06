@@ -44,7 +44,6 @@ export class Database {
       matter_intake: require('../models/MatterIntake')(this.sequelize, Sequelize),
       verification_token: require('../models/verification_token')(this.sequelize, Sequelize),
       review: require('../models/Review')(this.sequelize, Sequelize),
-      appointee: require('../models/Appointee')(this.sequelize, Sequelize),
       password_reset_token: require('../models/PasswordResetToken')(this.sequelize, Sequelize),
       matter_billing: require('../models/MatterBilling')(this.sequelize, Sequelize),
       firm_template_task: require('../models/FirmTemplateTask')(this.sequelize, Sequelize),
@@ -287,17 +286,7 @@ export class Database {
       onDelete: 'cascade'
     });
 
-    this.models.user.belongsToMany(this.models.user, {
-      through: this.models.appointee,
-      as: 'appointed_user',
-      foreignKey: 'user_id'
-    });
-
-    this.models.user.belongsToMany(this.models.user, {
-      through: this.models.appointee,
-      as: 'owner',
-      foreignKey: 'appointee_id'
-    });
+    
 
     this.models.user.hasOne(this.models.password_reset_token, {
       foreignKey: 'user_id'
