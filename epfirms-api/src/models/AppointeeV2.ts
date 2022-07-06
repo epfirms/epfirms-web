@@ -13,7 +13,7 @@ module.exports = (sequelize, {
           autoIncrement: true,
         },
         // this is a reference to the User object that holds the appointee information
-        user_id: {
+        non_user_profile_id: {
           type: INTEGER,
           allowNull: false,
         },
