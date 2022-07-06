@@ -81,4 +81,10 @@ export class ComboboxComponent implements OnInit, OnChanges {
 
     this.onTyped.emit(this.searchTerm);
   }
+
+  reset(): void {
+    this.searchTerm = '';
+    this.options = this.defaultOptions;
+    this.isVisible = false;
+  }
 }
