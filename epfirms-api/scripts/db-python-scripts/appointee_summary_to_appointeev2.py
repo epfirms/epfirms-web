@@ -24,12 +24,13 @@ if __name__ == "__main__":
 
         )
 
-        cursor = db.cursor()
+        cursor = db.cursor(dictionary=True)
 
         query = "SELECT * FROM appointee_summary"
         cursor.execute(query)
 
         for entry in cursor:
-            print(entry[0])
+            print(entry)
+            print("\n\n\n")
 
 
