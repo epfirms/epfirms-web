@@ -190,6 +190,7 @@ export class WardInformationComponent implements OnInit {
       parent_2_name: child.parent_2_name,
       parent_1_id: child.parent_1_id,
       parent_2_id: child.parent_2_id,
+      is_minor: child.is_minor,
     };
     this.children.push(childForm);
   }
@@ -311,6 +312,7 @@ export class WardInformationComponent implements OnInit {
       parent_1_id: this.client.id,
       parent_2_name: this.spouse ? this.spouse.first_name + ' ' + this.spouse.last_name : '',
       parent_2_id: this.spouse ? this.spouse.id : undefined,
+      is_minor: false,
     };
 
     this.children.push(child);
