@@ -90,6 +90,9 @@ module.exports = (sequelize, { STRING, INTEGER, DATEONLY, TEXT, VIRTUAL, TINYINT
       parent_2_id: {
         type: INTEGER,
       },
+      is_minor: {
+        type: BOOLEAN,
+      },
     },
     {
       tableName,

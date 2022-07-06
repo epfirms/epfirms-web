@@ -323,20 +323,39 @@
                             <input [(ngModel)]="child.parent_2_name" (change)="submit()" type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0" />
                           </td>
 
-                          <td class="relative w-2/12 border border-gray-200 px-3 py-3">
-                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Has Special Needs?</label>
+
+
+
+
+
+
+                          <td class="relative w-1/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Is Minor?</label>
+                            <select [(ngModel)]="child.is_minor" (change)="submit()" id="region" name="region" autocomplete="address-level1" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0">
+                              <option [ngValue]="false">No</option>
+                              <option [ngValue]="true">Yes</option>
+                            </select>
+                          </td>
+                          <td class="relative w-1/12 border border-gray-200 px-3 py-3">
+                            <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Special Needs?</label>
                             <select [(ngModel)]="child.has_special_needs" (change)="submit()" id="region" name="region" autocomplete="address-level1" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0">
                               <option [ngValue]="false">No</option>
                               <option [ngValue]="true">Yes</option>
                             </select>
                           </td>
-                          <td class="relative w-2/12 border border-gray-200 px-3 py-3">
+                          <td class="relative w-1/12 border border-gray-200 px-3 py-3">
                             <label class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400">Excluded?</label>
                             <select [(ngModel)]="child.is_excluded" (change)="submit()" id="region" name="region" autocomplete="address-level1" class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0">
                               <option [ngValue]="false">No</option>
                               <option [ngValue]="true">Yes</option>
                             </select>
                           </td>
+
+
+
+
+
+
                         </tr>
                       </tbody>
                     </table>
