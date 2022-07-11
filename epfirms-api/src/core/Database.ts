@@ -461,8 +461,8 @@ export class Database {
     this.models.stripe_customer.belongsTo(this.models.firm, {foreignKey: 'firm_id'});
 
     // appointee
-    this.models.appointee.belongsTo(this.models.non_user_profile, {foreignKey: 'non_user_profile_id'});
-    this.models.appointee.belongsTo(this.models.user, {foreignKey: 'appointer_id'});
+    this.models.appointee.hasOne(this.models.non_user_profile, {foreignKey: 'non_user_profile_id'});
+    this.models.appointee.hasOne(this.models.user, {foreignKey: 'appointer_id'});
   }
 
   public static async start() {
