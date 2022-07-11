@@ -195,7 +195,7 @@ export class AppointeesComponent implements OnInit {
   }
 
   private initPiTableSettings(): void {
-    this.clientSettings = new PiSettings("Appointee",  PiSettingsMode.Family);
+    this.clientSettings = new PiSettings("Appointee",  PiSettingsMode.Appointee);
   }
 
   private initOptions(): void {

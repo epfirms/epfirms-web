@@ -35,10 +35,23 @@ import {{ Service }} from 'typedi';
 export class {pascal_case}Controller {{
   constructor() {{}}
 
-    public async upsert(req : Request, res : Response) : Promise<any> {{
+    public async create(req : Request, res : Response) : Promise<any> {{
         try {{
-                const created = await {pascal_case}Service.upsert(req.body);
+                const created = await {pascal_case}Service.create(req.body);
                 res.status(StatusConstants.CREATED).send(created);
+        }}
+        catch (error){{
+
+            res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+            console.error(error)
+        }}
+    }}
+
+
+    public async update(req : Request, res : Response) : Promise<any> {{
+        try {{
+                const updated = await {pascal_case}Service.create(req.body);
+                res.status(StatusConstants.CREATED).send(updated);
         }}
         catch (error){{
 
@@ -83,7 +96,9 @@ const passport = require('passport');
 
 const {camel_case_name}Router = express.Router();
 
-{camel_case_name}Router.post('/', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.upsert(req, res));
+{camel_case_name}Router.post('/', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.create(req, res));
+
+{camel_case_name}Router.put('/', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.update(req, res));
 {camel_case_name}Router.get('/:id', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.getOneWithId(req, res));
 {camel_case_name}Router.delete('/:id', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.delete(req, res));
 
@@ -101,10 +116,10 @@ import {{ Service }} from 'typedi';
 
 @Service()
 export class {pascal_case}Service {{
-     public static async upsert(data) : Promise<any> {{
+     public static async create(data) : Promise<any> {{
         try {{
 
-            const created = await Database.models.{snake_case}.upsert(data, {{where: {{id: data.id}}}});
+            const created = await Database.models.{snake_case}.create(data);
             return Promise.resolve(created);
         }}
         catch (error){{
@@ -112,6 +127,16 @@ export class {pascal_case}Service {{
         }}
     }}
   
+     public static async update(data) : Promise<any> {{
+        try {{
+
+            const updated = await Database.models.{snake_case}.update(data, {{ where: {{id: data.id}} }});
+            return Promise.resolve(updated);
+        }}
+        catch (error){{
+            console.error(error)
+        }}
+    }}
     public static async delete(id) : Promise<any> {{
         try {{
 
