@@ -76,6 +76,8 @@ module.exports = (sequelize, { STRING, INTEGER, DATEONLY, TEXT, VIRTUAL, BOOLEAN
         type: BOOLEAN,
       },
 
+      
+
       is_minor: {
         type: BOOLEAN,
       },
