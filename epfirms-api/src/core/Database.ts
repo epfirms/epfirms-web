@@ -85,6 +85,8 @@ export class Database {
       transaction: require('../models/Transaction')(this.sequelize, Sequelize),
       ward: require('../models/Ward')(this.sequelize, Sequelize),
       client_subscription: require('../models/ClientSubscription')(this.sequelize, Sequelize),
+      non_user_profile: require('../models/NonUserProfile')(this.sequelize, Sequelize),
+      appointee:require('../models/AppointeeV2')(this.sequelize, Sequelize),
     };
 
     this.models.user.belongsToMany(this.models.firm, { through: this.sequelize.models.firm_employee, as: 'employer', foreignKey: 'user_id' });
@@ -457,6 +459,10 @@ export class Database {
 
     this.models.firm.hasOne(this.models.stripe_customer, {foreignKey: 'firm_id'});
     this.models.stripe_customer.belongsTo(this.models.firm, {foreignKey: 'firm_id'});
+
+    // appointee
+    this.models.appointee.belongsTo(this.models.non_user_profile, {foreignKey: 'non_user_profile_id'});
+    this.models.appointee.belongsTo(this.models.user, {foreignKey: 'appointer_id'});
   }
 
   public static async start() {

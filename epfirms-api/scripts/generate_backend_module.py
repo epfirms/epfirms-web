@@ -50,7 +50,7 @@ export class {pascal_case}Controller {{
 
     public async update(req : Request, res : Response) : Promise<any> {{
         try {{
-                const updated = await {pascal_case}Service.create(req.body);
+                const updated = await {pascal_case}Service.update(req.body);
                 res.status(StatusConstants.CREATED).send(updated);
         }}
         catch (error){{
