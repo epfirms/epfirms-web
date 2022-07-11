@@ -460,9 +460,7 @@ export class Database {
     this.models.firm.hasOne(this.models.stripe_customer, {foreignKey: 'firm_id'});
     this.models.stripe_customer.belongsTo(this.models.firm, {foreignKey: 'firm_id'});
 
-    // appointee
-    this.models.appointee.hasOne(this.models.non_user_profile, {foreignKey: 'non_user_profile_id'});
-    this.models.appointee.hasOne(this.models.user, {foreignKey: 'appointer_id'});
+   
   }
 
   public static async start() {

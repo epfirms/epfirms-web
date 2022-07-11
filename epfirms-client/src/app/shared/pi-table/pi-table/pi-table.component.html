@@ -1,3 +1,5 @@
+<form [formGroup]="form">
+
 <div class="mt-10 flex">
   <span
     [ngClass]="getColorClass()"
@@ -16,6 +18,7 @@
           >Relationship</label
         >
         <select
+        formControlName="relationship_type"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         >
           <option *ngFor="let type of relationshipTypes" [ngValue]="type">
@@ -30,6 +33,7 @@
           First Name</label
         >
         <input
+        formControlName="first_name"
           type="text"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -42,6 +46,7 @@
           Last Name</label
         >
         <input
+        formControlName="last_name"
           type="text"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -54,6 +59,7 @@
           Date of Birth</label
         >
         <input
+        formControlName="dob"
           type="date"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -66,6 +72,7 @@
           Last 4 of SSN</label
         >
         <input
+        formControlName="ssn"
           type="text"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -80,6 +87,7 @@
           >Spouse?</label
         >
         <select
+        formControlName="has_spouse"
           class="focus:ring-3 block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300"
         >
           <option [ngValue]="false">No</option>
@@ -103,6 +111,7 @@
           Driver's ID #</label
         >
         <input
+        formControlName="drivers_id"
           type="text"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -115,6 +124,7 @@
           Email</label
         >
         <input
+        formControlName="email"
           type="email"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -129,6 +139,7 @@
           >Cell Phone</label
         >
         <input
+        formControlName="cell_phone"
           type="text"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
           [inputMask]="phoneInputMask"
@@ -144,6 +155,7 @@
           >Home Phone</label
         >
         <input
+        formControlName="phone"
           type="text"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
           [inputMask]="phoneInputMask"
@@ -163,6 +175,7 @@
           Street Address</label
         >
         <input
+        formControlName="address"
           type="text"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -175,6 +188,7 @@
           City</label
         >
         <input
+        formControlName="city"
           type="text"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -186,6 +200,7 @@
           >State</label
         >
         <select
+        formControlName="state"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         >
           <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
@@ -201,6 +216,7 @@
           Zip Code</label
         >
         <input
+        formControlName="zip"
           type="text"
           class="block w-20 border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -222,6 +238,7 @@
           Parent 1 Name</label
         >
         <input
+        formControlName="parent_1_name"
           type="text"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -237,6 +254,7 @@
           Parent 2 Name</label
         >
         <input
+        formControlName="parent_2_name"
           type="text"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         />
@@ -251,6 +269,7 @@
           >Is Minor?</label
         >
         <select
+        formControlName="is_minor"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         >
           <option [ngValue]="false">No</option>
@@ -266,13 +285,14 @@
           >Special Needs?</label
         >
         <select
+        formControlName="has_special_needs"
           class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
         >
           <option [ngValue]="false">No</option>
           <option [ngValue]="true">Yes</option>
         </select>
       </td>
-      <td *ngIf="settings.displayExcluded" class="relative w-1/12 border border-gray-200 px-3 py-3">
+      <!-- <td *ngIf="settings.displayExcluded" class="relative w-1/12 border border-gray-200 px-3 py-3">
         <label
           class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
           >Excluded?</label
@@ -283,7 +303,14 @@
           <option [ngValue]="false">No</option>
           <option [ngValue]="true">Yes</option>
         </select>
-      </td>
+      </td> -->
     </tr>
   </tbody>
 </table>
+
+
+</form>
+
+
+
+
