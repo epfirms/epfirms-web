@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
+import { PiSettings, PiSettingsMode } from '@app/shared/pi-table/pi-table/PiSettings';
 import { AppointeeSummaryService } from '../services/appointee-summary.service';
 
 @Component({
@@ -12,6 +13,9 @@ export class AppointeesComponent implements OnInit {
   @Input() client;
 
   spouse;
+
+  // client table settings
+  clientSettings: PiSettings;
 
   // state that manages tabs when there is spouse
   state: string = 'client';
@@ -186,7 +190,12 @@ export class AppointeesComponent implements OnInit {
     this.loadSpouse();
     this.loadClientAppointeeSummary();
 
+    this.initPiTableSettings();
     this.initOptions();
+  }
+
+  private initPiTableSettings(): void {
+    this.clientSettings = new PiSettings("Appointee",  PiSettingsMode.Family);
   }
 
   private initOptions(): void {

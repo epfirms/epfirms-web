@@ -42,6 +42,7 @@ import { BillingSetupComponent } from './billing-setup/billing-setup.component';
 import { ElderLawWorkflowComponent } from './elder-law-workflow/elder-law-workflow.component';
 import { CaregiverInformationComponent } from './caregiver-information/caregiver-information.component';
 import { WardInformationComponent } from './ward-information/ward-information.component';
+import { PiTableModule } from '@app/shared/pi-table/pi-table.module';
 
 
 
@@ -93,6 +94,7 @@ import { WardInformationComponent } from './ward-information/ward-information.co
     TippyModule,
     NgScrollbarModule,
     ComboboxModule,
+    PiTableModule
   ],
   exports: [
     ClientIntakeComponent,
