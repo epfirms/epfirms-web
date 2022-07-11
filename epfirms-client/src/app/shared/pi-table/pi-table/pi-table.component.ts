@@ -55,6 +55,7 @@ export class PiTableComponent implements OnInit {
   has_spouse: new FormControl(false),
   parent_1_name: new FormControl(''),
   parent_2_name: new FormControl(''),
+  rank: new FormControl(),
 
  });
 

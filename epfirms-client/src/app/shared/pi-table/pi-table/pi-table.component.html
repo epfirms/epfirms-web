@@ -12,6 +12,20 @@
 <table class="mt-6 min-w-full">
   <tbody class="bg-white shadow-md shadow-gray-200">
     <tr>
+<td *ngIf="settings.displayRank" class="relative w-3/12 border border-gray-200 px-3 py-3">
+        <label
+          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+        >
+          Rank</label
+        >
+        <input
+        formControlName="rank"
+          type="number"
+          min="1"
+          step="1"
+          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+        />
+      </td>
       <td *ngIf="settings.displayRelationship" class="relative border border-gray-200 px-3 py-3">
         <label
           class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"

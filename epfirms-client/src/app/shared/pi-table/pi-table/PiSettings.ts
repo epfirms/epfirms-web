@@ -106,7 +106,7 @@ export class PiSettings {
         this.displayMinorToggle = false;
         this.displayRelationship = true;
         this.displayHasSpouse = false;
-        this.displayRank = false;
+        this.displayRank = true;
         this.displaySpecialNeeds = false;
         this.displayDob = false;
         this.displayExcluded = false;
