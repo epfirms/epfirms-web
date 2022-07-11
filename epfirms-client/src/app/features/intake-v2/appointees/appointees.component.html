@@ -86,18 +86,27 @@
             </ol>
           </nav>
 
-<div class="m-5">
+          <div class="m-5">
+            <h3 class="font-semibold text-gray-600">Executors</h3>
+            <div class="flex justify-end">
+              <button
+                type="button"
+                class="m-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Add Executor from Family
+              </button>
 
-                  <h3 class="font-semibold text-gray-600">Executors</h3>
-          <app-pi-table [settings]="clientSettings"></app-pi-table>
-</div>
-
-          
+              <button
+                type="button"
+                class="m-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Add Executor
+              </button>
+            </div>
+            <app-pi-table [settings]="clientSettings"></app-pi-table>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </body>
-
-
-
