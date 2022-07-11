@@ -41,6 +41,7 @@ import { transactionRouter } from '@src/modules/transaction/routes';
 import { caseTemplateRouter } from '@src/modules/case-template/case-template.routes';
 import { wardRouter } from '@src/modules/ward/routes';
 import { clientSubscriptionRouter } from '@src/modules/client-subscription/routes';
+import { appointeesv2Router } from '@src/modules/appointeesv2/routes';
 
 const v1Router = express.Router();
 
@@ -86,4 +87,5 @@ v1Router.use('/invoice', invoiceRouter);
 v1Router.use('/transaction', transactionRouter);
 v1Router.use('/ward', wardRouter);
 v1Router.use('/clientsubscription', clientSubscriptionRouter);
+v1Router.use('/appointeev2', appointeesv2Router);
 export { v1Router }
