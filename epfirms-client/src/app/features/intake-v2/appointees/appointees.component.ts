@@ -24,12 +24,9 @@ export class AppointeesComponent implements OnInit {
 
   constructor() {}
 
-  private initPiTableSettings(): void {
-    this.clientSettings = new PiSettings('Appointee', PiSettingsMode.Appointee);
-  }
+  
 
   ngOnInit(): void {
-    this.initPiTableSettings();
   }
 
   addClientAppointee(): void {
