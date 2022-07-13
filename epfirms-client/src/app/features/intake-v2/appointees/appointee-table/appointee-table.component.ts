@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Appointee } from '@app/core/interfaces/Appointee';
 import { Matter } from '@app/core/interfaces/matter';
 
 @Component({
@@ -27,7 +28,17 @@ export class AppointeeTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private loadAppointees() : void {
+  
+  addAppointee(): void {
+
+    let appointee = new Appointee();
+    appointee.setMatterId(this.matter.id);
+    appointee.setAppointerId(this.client.id);
+    appointee.setAppointeeType(this.appointeeType);
+
+    console.log(appointee);
+
+    this.filteredAppointees.push(appointee);
 
   }
 
