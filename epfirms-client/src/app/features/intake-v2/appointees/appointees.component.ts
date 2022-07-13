@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
+import { Appointee } from '@app/core/interfaces/Appointee';
 import { NonUserProfile } from '@app/core/interfaces/NonUserProfile';
 import { PiSettings, PiSettingsMode } from '@app/shared/pi-table/pi-table/PiSettings';
 import { AppointeeSummaryService } from '../services/appointee-summary.service';
@@ -19,6 +20,10 @@ export class AppointeesComponent implements OnInit {
   state: string = 'client';
 
   
+  //array of appointees for the client
+  clientAppointees: Appointee[] = [];
+  // array of appointees for the spouse of client
+  spouseAppointees: Appointee[] = [];
 
   constructor() {}
 
@@ -26,6 +31,31 @@ export class AppointeesComponent implements OnInit {
 
   ngOnInit(): void {
    
+  }
+
+addAppointee(type: string, spouseMode : boolean): void {
+
+    let appointee = new Appointee();
+    appointee.setMatterId(this.matter.id);
+    appointee.setAppointerId(this.client.id);
+    appointee.setAppointeeType(type);
+
+    console.log(appointee);
+
+    if (spouseMode) {
+      this.spouseAppointees.push(appointee);
+    }
+    else {
+
+    this.clientAppointees.push(appointee);
+
+    }
+
+
+  }
+
+  appointeeTypeFilter(appointees : Appointee[], type: string): Appointee[] {
+    return appointees.filter(appointee => appointee.getType(type) === true);
   }
 
   

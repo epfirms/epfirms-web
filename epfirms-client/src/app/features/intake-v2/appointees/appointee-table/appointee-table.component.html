@@ -3,7 +3,7 @@
   <div class="px-4 sm:px-6 lg:px-8">
     <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
-        <h1 (click)="addAppointee()" class="text-xl font-semibold text-gray-900">Executors</h1>
+        <h1  class="text-xl font-semibold text-gray-900">Executors</h1>
       </div>
     </div>
     <div class="mt-8 flex flex-col">
@@ -64,11 +64,11 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 bg-white">
-                <tr *ngFor="let appointee of filteredAppointees">
+                <tr >
                   <td class="w-1/12 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                     <div>
                       <select
-                      [(ngModel)]=""
+                      
                         class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                       >
                         <option>1</option>

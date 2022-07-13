@@ -116,5 +116,26 @@ export class Appointee {
         break;
     }
   }
+
+  getType(type: string): boolean{
+    switch (type) {
+      case AppointeeTypes.executor:
+        return this.is_executor;
+      case AppointeeTypes.trustee:
+        return this.is_trustee;
+      case AppointeeTypes.fpoa:
+        return this.is_fpoa;
+      case AppointeeTypes.mpoa:
+        return this.is_mpoa;
+      case AppointeeTypes.gom:
+        return this.is_gom;
+      case AppointeeTypes.gop:
+        return this.is_gop;
+      case AppointeeTypes.goe:
+        return this.is_goe;
+      default:
+        return false;
+    }
+  }
   
 };
