@@ -1,312 +1,299 @@
 <form [formGroup]="form">
+  <div class="mt-10 flex">
+    <span
+      [ngClass]="getColorClass()"
+      class="inline-flex h-8 w-8 items-center justify-center rounded-md shadow-md shadow-gray-300"
+    >
+      <span class="font-medium leading-none text-white">First Name Last Name</span>
+    </span>
+    <h1 class="pl-2 font-semibold text-gray-600">
+      {{ settings.tableName | titlecase }} Information
+    </h1>
+  </div>
+  <table class="mt-6 min-w-full">
+    <tbody class="bg-white shadow-md shadow-gray-200">
+      <tr>
+        <td *ngIf="settings.displayRelationship" class="relative border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+            >Relationship</label
+          >
+          <select
+            formControlName="relationship_type"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          >
+            <option *ngFor="let type of relationshipTypes" [ngValue]="type">
+              {{ type | titlecase }}
+            </option>
+          </select>
+        </td>
+        <td class="relative w-3/12 border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+          >
+            First Name</label
+          >
+          <input
+            formControlName="first_name"
+            type="text"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
 
-<div class="mt-10 flex">
-  <span
-    [ngClass]="getColorClass()"
-    class="inline-flex h-8 w-8 items-center justify-center rounded-md shadow-md shadow-gray-300"
-  >
-    <span class="font-medium leading-none text-white">First Name Last Name</span>
-  </span>
-  <h1 class="pl-2 font-semibold text-gray-600">{{ settings.tableName | titlecase }} Information</h1>
-</div>
-<table class="mt-6 min-w-full">
-  <tbody class="bg-white shadow-md shadow-gray-200">
-    <tr>
-<td *ngIf="settings.displayRank" class="relative w-3/12 border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-        >
-          Rank</label
-        >
-        <input
-        formControlName="rank"
-          type="number"
-          min="1"
-          step="1"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
-      <td *ngIf="settings.displayRelationship" class="relative border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-          >Relationship</label
-        >
-        <select
-        formControlName="relationship_type"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        >
-          <option *ngFor="let type of relationshipTypes" [ngValue]="type">
-            {{ type | titlecase }}
-          </option>
-        </select>
-      </td>
-      <td class="relative w-3/12 border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-        >
-          First Name</label
-        >
-        <input
-        formControlName="first_name"
-          type="text"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
+        <td class="relative w-4/12 border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+          >
+            Last Name</label
+          >
+          <input
+            formControlName="last_name"
+            type="text"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
 
-      <td class="relative w-4/12 border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-        >
-          Last Name</label
-        >
-        <input
-        formControlName="last_name"
-          type="text"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
+        <td *ngIf="settings.displayDob" class="2.5/12 relative border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+          >
+            Date of Birth</label
+          >
+          <input
+            formControlName="dob"
+            type="date"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
 
-      <td *ngIf="settings.displayDob" class="2.5/12 relative border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-        >
-          Date of Birth</label
-        >
-        <input
-        formControlName="dob"
-          type="date"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
+        <td *ngIf="settings.displaySSN" class="relative w-2/12 border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+          >
+            Last 4 of SSN</label
+          >
+          <input
+            formControlName="ssn"
+            type="text"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
 
-      <td *ngIf="settings.displaySSN" class="relative w-2/12 border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+        <td
+          *ngIf="settings.displayHasSpouse"
+          class="relative w-1/12 border border-gray-200 px-3 py-3"
         >
-          Last 4 of SSN</label
-        >
-        <input
-        formControlName="ssn"
-          type="text"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+            >Spouse?</label
+          >
+          <select
+            formControlName="has_spouse"
+            class="focus:ring-3 block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300"
+          >
+            <option [ngValue]="false">No</option>
+            <option [ngValue]="true">Yes</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-      <td
-        *ngIf="settings.displayHasSpouse"
-        class="relative w-1/12 border border-gray-200 px-3 py-3"
-      >
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-          >Spouse?</label
+  <table class="mt-4 min-w-full">
+    <tbody class="mt-2 bg-white shadow-md shadow-gray-200">
+      <tr>
+        <td
+          *ngIf="settings.displayDriversId"
+          class="relative w-2/12 border border-gray-200 px-3 py-3"
         >
-        <select
-        formControlName="has_spouse"
-          class="focus:ring-3 block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300"
-        >
-          <option [ngValue]="false">No</option>
-          <option [ngValue]="true">Yes</option>
-        </select>
-      </td>
-    </tr>
-  </tbody>
-</table>
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+          >
+            Driver's ID #</label
+          >
+          <input
+            formControlName="drivers_id"
+            type="text"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
 
-<table class="mt-4 min-w-full">
-  <tbody class="mt-2 bg-white shadow-md shadow-gray-200">
-    <tr>
-      <td
-        *ngIf="settings.displayDriversId"
-        class="relative w-2/12 border border-gray-200 px-3 py-3"
-      >
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-        >
-          Driver's ID #</label
-        >
-        <input
-        formControlName="drivers_id"
-          type="text"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
+        <td *ngIf="settings.displayEmail" class="relative w-4/12 border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+          >
+            Email</label
+          >
+          <input
+            formControlName="email"
+            type="email"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
 
-      <td *ngIf="settings.displayEmail" class="relative w-4/12 border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+        <td
+          *ngIf="settings.displayCellPhone"
+          class="relative w-3/12 border border-gray-200 px-3 py-3"
         >
-          Email</label
-        >
-        <input
-        formControlName="email"
-          type="email"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+            >Cell Phone</label
+          >
+          <input
+            formControlName="cell_phone"
+            type="text"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+            [inputMask]="phoneInputMask"
+          />
+        </td>
 
-      <td
-        *ngIf="settings.displayCellPhone"
-        class="relative w-3/12 border border-gray-200 px-3 py-3"
-      >
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-          >Cell Phone</label
+        <td
+          *ngIf="settings.displayHomePhone"
+          class="relative w-3/12 border border-gray-200 px-3 py-3"
         >
-        <input
-        formControlName="cell_phone"
-          type="text"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-          [inputMask]="phoneInputMask"
-        />
-      </td>
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+            >Home Phone</label
+          >
+          <input
+            formControlName="phone"
+            type="text"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+            [inputMask]="phoneInputMask"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-      <td
-        *ngIf="settings.displayHomePhone"
-        class="relative w-3/12 border border-gray-200 px-3 py-3"
-      >
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-          >Home Phone</label
-        >
-        <input
-        formControlName="phone"
-          type="text"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-          [inputMask]="phoneInputMask"
-        />
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <table class="mt-4 min-w-full">
+    <tbody class="bg-white shadow-md shadow-gray-200">
+      <tr>
+        <td class="relative w-5/12 border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs text-gray-400"
+          >
+            Street Address</label
+          >
+          <input
+            formControlName="address"
+            type="text"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
 
-<table class="mt-4 min-w-full">
-  <tbody class="bg-white shadow-md shadow-gray-200">
-    <tr>
-      <td class="relative w-5/12 border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-2 text-xs text-gray-400"
-        >
-          Street Address</label
-        >
-        <input
-        formControlName="address"
-          type="text"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
+        <td class="relative border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+          >
+            City</label
+          >
+          <input
+            formControlName="city"
+            type="text"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
 
-      <td class="relative border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-        >
-          City</label
-        >
-        <input
-        formControlName="city"
-          type="text"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
+        <td class="relative border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+            >State</label
+          >
+          <select
+            formControlName="state"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          >
+            <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
+              {{ state.name }}
+            </option>
+          </select>
+        </td>
 
-      <td class="relative border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-          >State</label
-        >
-        <select
-        formControlName="state"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        >
-          <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">
-            {{ state.name }}
-          </option>
-        </select>
-      </td>
+        <td class="relative border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+          >
+            Zip Code</label
+          >
+          <input
+            formControlName="zip"
+            type="text"
+            class="block w-20 border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-      <td class="relative border border-gray-200 px-3 py-3">
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+  <table class="mt-4 min-w-full">
+    <tbody class="bg-white shadow-md shadow-gray-200">
+      <tr>
+        <td
+          *ngIf="settings.displayParent1Name"
+          class="relative w-4/12 border border-gray-200 px-3 py-3"
         >
-          Zip Code</label
-        >
-        <input
-        formControlName="zip"
-          type="text"
-          class="block w-20 border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
-    </tr>
-  </tbody>
-</table>
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+          >
+            Parent 1 Name</label
+          >
+          <input
+            formControlName="parent_1_name"
+            type="text"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
 
-<table class="mt-4 min-w-full">
-  <tbody class="bg-white shadow-md shadow-gray-200">
-    <tr>
-      <td
-        *ngIf="settings.displayParent1Name"
-        class="relative w-4/12 border border-gray-200 px-3 py-3"
-      >
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+        <td
+          *ngIf="settings.displayParent2Name"
+          class="relative w-4/12 border border-gray-200 px-3 py-3"
         >
-          Parent 1 Name</label
-        >
-        <input
-        formControlName="parent_1_name"
-          type="text"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+          >
+            Parent 2 Name</label
+          >
+          <input
+            formControlName="parent_2_name"
+            type="text"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          />
+        </td>
 
-      <td
-        *ngIf="settings.displayParent2Name"
-        class="relative w-4/12 border border-gray-200 px-3 py-3"
-      >
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+        <td
+          *ngIf="settings.displayMinorToggle"
+          class="relative w-1/12 border border-gray-200 px-3 py-3"
         >
-          Parent 2 Name</label
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+            >Is Minor?</label
+          >
+          <select
+            formControlName="is_minor"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          >
+            <option [ngValue]="false">No</option>
+            <option [ngValue]="true">Yes</option>
+          </select>
+        </td>
+        <td
+          *ngIf="settings.displaySpecialNeeds"
+          class="relative w-1/12 border border-gray-200 px-3 py-3"
         >
-        <input
-        formControlName="parent_2_name"
-          type="text"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        />
-      </td>
-
-      <td
-        *ngIf="settings.displayMinorToggle"
-        class="relative w-1/12 border border-gray-200 px-3 py-3"
-      >
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-          >Is Minor?</label
-        >
-        <select
-        formControlName="is_minor"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        >
-          <option [ngValue]="false">No</option>
-          <option [ngValue]="true">Yes</option>
-        </select>
-      </td>
-      <td
-        *ngIf="settings.displaySpecialNeeds"
-        class="relative w-1/12 border border-gray-200 px-3 py-3"
-      >
-        <label
-          class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
-          >Special Needs?</label
-        >
-        <select
-        formControlName="has_special_needs"
-          class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
-        >
-          <option [ngValue]="false">No</option>
-          <option [ngValue]="true">Yes</option>
-        </select>
-      </td>
-      <!-- <td *ngIf="settings.displayExcluded" class="relative w-1/12 border border-gray-200 px-3 py-3">
+          <label
+            class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
+            >Special Needs?</label
+          >
+          <select
+            formControlName="has_special_needs"
+            class="block w-full border-0 p-0 pl-1 text-gray-700 placeholder-gray-300 focus:ring-0"
+          >
+            <option [ngValue]="false">No</option>
+            <option [ngValue]="true">Yes</option>
+          </select>
+        </td>
+        <!-- <td *ngIf="settings.displayExcluded" class="relative w-1/12 border border-gray-200 px-3 py-3">
         <label
           class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs text-gray-400"
           >Excluded?</label
@@ -318,13 +305,9 @@
           <option [ngValue]="true">Yes</option>
         </select>
       </td> -->
-    </tr>
-  </tbody>
-</table>
+      </tr>
+    </tbody>
+  </table>
 
-
+  
 </form>
-
-
-
-
