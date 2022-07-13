@@ -9,6 +9,10 @@ module.exports = (sequelize, { INTEGER, BOOLEAN }) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      matter_id: {
+        type: INTEGER,
+        allowNull: false,
+      },
       // this is a reference to the User object that holds the appointee information
       non_user_profile_id: {
         type: INTEGER,

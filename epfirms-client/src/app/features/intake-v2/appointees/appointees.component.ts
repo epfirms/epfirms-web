@@ -13,28 +13,22 @@ export class AppointeesComponent implements OnInit {
   @Input() matter;
   @Input() client;
 
-  // client table settings
-  clientSettings: PiSettings;
+  
 
   // state that manages tabs when there is spouse
   state: string = 'client';
 
-  clientAppointees = [];
-  spouseAppointees = [];
+  
 
   constructor() {}
 
   
 
   ngOnInit(): void {
-    this.initClientSettings();
+   
   }
 
-  private initClientSettings(): void {
-    this.clientSettings = new PiSettings("Appointee", PiSettingsMode.Appointee);
-  }
+  
 
-  addClientAppointee(): void {
-    this.clientAppointees.push(new NonUserProfile());
-  }
+ 
 }
