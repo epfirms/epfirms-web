@@ -171,13 +171,14 @@
                                 </div>
                               </td>
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                                <app-combobox [options]="clientOptions"></app-combobox>
+                                <app-combobox [options]="clientOptions" (onSelected)="appointee.profile.first_name = $event"></app-combobox>
                               </td>
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <input
+                                  [(ngModel)]="appointee.profile.last_name"
                                     type="text"
-                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                   />
                                 </div>
                               </td>
@@ -185,43 +186,47 @@
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <input
+                                  [(ngModel)]="appointee.profile.address"
                                     type="text"
-                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                   />
                                 </div>
                               </td>
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <input
+                                  [(ngModel)]="appointee.profile.city"
                                     type="text"
-                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                   />
                                 </div>
                               </td>
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <select
+                                  [(ngModel)]="appointee.profile.state"
                                     class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                                   >
-                                    <option>United States</option>
-                                    <option selected>Canada</option>
-                                    <option>Mexico</option>
+                                    <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{state.name | titlecase}}</option>
                                   </select>
                                 </div>
                               </td>
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <input
+                                  [(ngModel)]="appointee.profile.zip"
                                     type="text"
-                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                   />
                                 </div>
                               </td>
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <input
+                                  [(ngModel)]="appointee.profile.phone"
+                                  [inputMask]="phoneMask"
                                     type="text"
-                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                   />
                                 </div>
                               </td>
