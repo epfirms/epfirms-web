@@ -19,18 +19,22 @@ export class AppointeesComponent implements OnInit {
   // state that manages tabs when there is spouse
   state: string = 'client';
 
+  familyMembers: any[] = [];
+  clientOptions = [];
+  spouseOptions = [];
   
   //array of appointees for the client
   clientAppointees: Appointee[] = [];
   // array of appointees for the spouse of client
   spouseAppointees: Appointee[] = [];
 
-  constructor() {}
+  constructor(private _familyMemberService : FamilyMemberService) {}
 
   
 
   ngOnInit(): void {
    
+    this.initOptions();
   }
 
 addAppointee(type: string, spouseMode : boolean): void {
@@ -56,6 +60,41 @@ addAppointee(type: string, spouseMode : boolean): void {
 
   appointeeTypeFilter(appointees : Appointee[], type: string): Appointee[] {
     return appointees.filter(appointee => appointee.getType(type) === true);
+  }
+
+private initOptions(): void {
+    this._familyMemberService.getByUserId(this.client.id).subscribe((familyMembers) => {
+      this.familyMembers = familyMembers;
+      this.familyMembers.forEach((familyMember) => {
+        this.clientOptions.push({
+          label: familyMember.first_name + ' ' + familyMember.last_name,
+          value: familyMember.first_name + ' ' + familyMember.last_name,
+          data: {
+            address: `${familyMember.address},${familyMember.city},${familyMember.state},${familyMember.zip}`,
+            phone: familyMember.phone,
+          },
+        });
+        if (familyMember.family_member.relationship !== 'spouse') {
+          this.spouseOptions.push({
+            label: familyMember.first_name + ' ' + familyMember.last_name,
+            value: familyMember.first_name + ' ' + familyMember.last_name,
+            data: {
+              address: `${familyMember.address},${familyMember.city},${familyMember.state},${familyMember.zip}`,
+              phone: familyMember.phone,
+            },
+          });
+        }
+      });
+
+      this.spouseOptions.push({
+        label: this.client.first_name + ' ' + this.client.last_name,
+        value: this.client.first_name + ' ' + this.client.last_name,
+        data: {
+          address: `${this.client.address},${this.client.city},${this.client.state},${this.client.zip}`,
+          phone: this.client.phone,
+        },
+      });
+    });
   }
 
   
