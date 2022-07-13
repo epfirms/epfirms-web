@@ -11,7 +11,7 @@ module.exports = (sequelize, { INTEGER, BOOLEAN }) => {
       },
       matter_id: {
         type: INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       // this is a reference to the User object that holds the appointee information
       non_user_profile_id: {
