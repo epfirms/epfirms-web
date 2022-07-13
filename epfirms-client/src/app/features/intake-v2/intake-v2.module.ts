@@ -43,7 +43,6 @@ import { ElderLawWorkflowComponent } from './elder-law-workflow/elder-law-workfl
 import { CaregiverInformationComponent } from './caregiver-information/caregiver-information.component';
 import { WardInformationComponent } from './ward-information/ward-information.component';
 import { PiTableModule } from '@app/shared/pi-table/pi-table.module';
-import { AppointeeTableComponent } from './appointees/appointee-table/appointee-table.component';
 
 
 
@@ -80,7 +79,6 @@ import { AppointeeTableComponent } from './appointees/appointee-table/appointee-
     ElderLawWorkflowComponent,
     CaregiverInformationComponent,
     WardInformationComponent,
-    AppointeeTableComponent
   ],
   imports: [
     CommonModule,
