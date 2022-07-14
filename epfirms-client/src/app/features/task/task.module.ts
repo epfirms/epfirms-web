@@ -8,6 +8,10 @@ import { InputModule } from '@app/shared/input/input.module';
 import { ButtonModule } from '@app/shared/button/button.module';
 import { TaskSmsConfirmationComponent } from './task-sms-confirmation/task-sms-confirmation.component';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { StoreModule } from '@ngrx/store';
+import * as fromTask from './task.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { TaskEffects } from './task.effects';
 
 
 
@@ -23,7 +27,9 @@ import { InputMaskModule } from '@ngneat/input-mask';
     TippyModule,
     InputModule,
     ButtonModule,
-    InputMaskModule
+    InputMaskModule,
+    StoreModule.forFeature(fromTask.tasksFeatureKey, fromTask.reducer),
+    EffectsModule.forFeature([TaskEffects])
   ],
   exports: [
     TaskToolbarComponent,
