@@ -6,7 +6,6 @@ import { UserService } from '@app/features/user/services/user.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialog.component';
 import { EpModalService } from '@app/shared/modal/modal.service';
-import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { Observable } from 'rxjs';
 import { FirmTeamService } from '../services/firm-team.service';
 import { StaffMemberDialogComponent } from '../staff-member-dialog/staff-member-dialog.component';
@@ -19,28 +18,19 @@ import { StaffMemberDialogComponent } from '../staff-member-dialog/staff-member-
 export class FirmStaffListComponent implements OnInit {
   staff$: Observable<Staff[]>;
 
-  user$: Observable<any>;
-
-  user: any[] = [];
-
   teams: any[] = [];
 
   constructor(
     private _staffService: StaffService,
-    private _currentUserService: CurrentUserService,
     private _modalService: EpModalService,
     private _teamService: FirmTeamService,
     private _userService: UserService,
   ) {
     this.staff$ = _staffService.filteredEntities$;
-    this.user$ = this._currentUserService.user$;
   }
 
   ngOnInit(): void {
     this._staffService.setFilter({ active: true });
-    this.user$.pipe().subscribe(({ user }) => {
-      this.user = user;
-    });
   }
 
   openAddStaffDialog() {

@@ -2,15 +2,18 @@ import { Component, Input, OnInit, ViewChildren } from '@angular/core';
 import { CaseTemplateSelectionComponent } from '@app/features/case-template/case-template-selection/case-template-selection.component';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { MatterTask } from '@app/core/interfaces/matter-task';
 import { Staff } from '@app/core/interfaces/staff';
 import { Observable } from 'rxjs';
-import { exhaustMap, map, switchMap, take } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { TaskSmsConfirmationComponent } from '@app/features/task/task-sms-confirmation/task-sms-confirmation.component';
 import { ConversationService } from '@app/features/conversation/services/conversation.service';
 import { FirmService } from '@app/firm-portal/_services/firm-service/firm.service';
+import { Store } from '@ngrx/store';
+import { selectCurrentTabTasks } from '@app/store/matter-tabs/matter-tabs.reducer';
+import { TaskService } from '@app/features/task/task.service';
 
 @Component({
   selector: 'app-matter-tab-tasks',
@@ -29,6 +32,8 @@ export class MatterTabTasksComponent implements OnInit {
 
   private _matter: Matter;
 
+  tasks$: Observable<any> = this.store.select(selectCurrentTabTasks).pipe(map(tasks => tasks.sort(this.sortByDueDate)));
+
   staff$: Observable<Staff[]>;
 
   staffMembers: Staff[];
@@ -42,7 +47,9 @@ export class MatterTabTasksComponent implements OnInit {
     private _staffService: StaffService,
     private _modalService: EpModalService,
     private _conversationService: ConversationService,
-    private _firmService: FirmService
+    private _firmService: FirmService,
+    private store: Store,
+    private _taskService: TaskService
   ) {
     this.staff$ = _staffService.entities$;
   }
@@ -52,6 +59,22 @@ export class MatterTabTasksComponent implements OnInit {
       this.staffMembers = s;
       this.filteredStaffMembers = s;
     })
+  }
+
+  sortByDueDate(a, b) {
+    if (a.completed && b.completed) {
+      return new Date(a.due).getTime() - new Date(b.due).getTime();
+    }
+
+    if (a.completed) {
+      return 1;
+    } 
+    
+    if (b.completed) {
+      return -1
+    }
+
+    return new Date(a.due).getTime() - new Date(b.due).getTime();
   }
 
   displayFn(value, options): string {
@@ -77,7 +100,7 @@ export class MatterTabTasksComponent implements OnInit {
       matter_id: matterId
     };
 
-    this._matterService.addMatterTask(task).subscribe();
+    this._taskService.create(task).subscribe()
   }
 
   updateTask(task, property, value) {
@@ -94,7 +117,7 @@ export class MatterTabTasksComponent implements OnInit {
       }
     }
 
-    this._matterService.updateMatterTask(taskChanges).subscribe();
+    this._taskService.update(task.id, taskChanges).subscribe();
   }
 
   createBill(task) {
@@ -158,7 +181,7 @@ export class MatterTabTasksComponent implements OnInit {
   }
 
   deleteTask(taskId) {
-    this._matterService.deleteMatterTask(taskId).subscribe();
+    this._taskService.delete(taskId).subscribe();
   }
 
   openCaseTemplateDialog(): void {
@@ -184,7 +207,7 @@ export class MatterTabTasksComponent implements OnInit {
     templateTasks.forEach((t) => {
       t.matter_id = matterId;
 
-      this._matterService.addMatterTask(t).subscribe();
+      this._taskService.create(t).subscribe();
     });
   }
 }

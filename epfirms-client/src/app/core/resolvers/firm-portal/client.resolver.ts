@@ -3,20 +3,21 @@ import {Resolve} from '@angular/router';
 import {catchError, take} from 'rxjs/operators';
 import {EMPTY, Observable} from 'rxjs';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
-import { AuthService } from '@app/core/services/auth.service';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '@app/features/auth/auth.actions';
 
 @Injectable({providedIn: 'root'})
 export class ClientResolver implements Resolve<any> {
 
-  constructor(private _clientService: ClientService, private _authService: AuthService) { }
+  constructor(private _clientService: ClientService, private store: Store) { }
 
   resolve(): Observable<any> | Observable<never> {
     return this._clientService.getClients()
       .pipe(
         take(1),
         catchError(err => {
-          this._authService.logout();
           console.error('Error fetching clients ', err);
+          this.store.dispatch(AuthActions.signOut());
           return EMPTY;
         }),
       );

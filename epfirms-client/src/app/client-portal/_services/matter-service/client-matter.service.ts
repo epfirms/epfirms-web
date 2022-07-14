@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Matter } from '@app/core/interfaces/matter';
 import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
 import { map } from 'rxjs/operators';
+import { Matter } from '@app/features/matter/matter.model';
 
 @Injectable({
   providedIn: 'root',

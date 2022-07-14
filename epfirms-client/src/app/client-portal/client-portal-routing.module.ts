@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientMatterResolver } from '@app/core/resolvers/client-portal/client-matter.resolver';
-import { CurrentUserResolver } from '@app/core/resolvers/current-user.resolver';
 import { IntakeMainComponent } from '@app/features/intake-v2/intake-main/intake-main.component';
 import { ClientContractsComponent } from './client-contracts/client-contracts.component';
 import { ClientDocumentsComponent } from './client-documents/client-documents.component';
@@ -14,7 +13,6 @@ const routes: Routes = [
     path: '',
     canActivate: [AngularFireAuthGuard],
     resolve: {
-      currentUser: CurrentUserResolver,
       matters: ClientMatterResolver,
     },
     component: ClientPortalComponent,

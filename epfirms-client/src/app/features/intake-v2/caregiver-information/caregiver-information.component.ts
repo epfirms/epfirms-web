@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { UserService } from '@app/features/user/services/user.service';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { USAState } from '@app/shared/utils/us-states/typings';

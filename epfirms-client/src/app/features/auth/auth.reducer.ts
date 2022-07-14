@@ -53,7 +53,6 @@ export const reducer = createReducer(
   on(AuthActions.syncUserProfileSuccess, (state) => ({
     ...state,
     loading: false,
-    authenticated: false,
   })),
   on(AuthActions.syncUserProfileFailure, (state, { error }) => ({
     ...state,

@@ -1,10 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ClientResolver } from '@app/core/resolvers/firm-portal/client.resolver';
+import { CurrentFirmResolver } from '@app/core/resolvers/firm-portal/current-firm.resolver';
+import { LegalAreaResolver } from '@app/core/resolvers/firm-portal/legal-area.resolver';
+import { StaffResolver } from '@app/core/resolvers/firm-portal/staff.resolver';
 import { FirmPortalComponent } from './firm-portal.component';
 
 const routes: Routes = [
   {
     path: '',
+    resolve: {
+      clients: ClientResolver,
+      currentFirm: CurrentFirmResolver,
+      legalAreas: LegalAreaResolver,
+      staff: StaffResolver,
+    },
     component: FirmPortalComponent,
     children: [
       {

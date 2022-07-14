@@ -27,7 +27,7 @@
                 clip-rule="evenodd" />
             </svg>
           </div>
-          <input id="search-field" [(ngModel)]="matterFilterValues.searchTerm" (ngModelChange)="filter()"
+          <input id="search-field" (input)="filterSearchInput('searchTerm', $event.target.value)"
             name="search-field" class="block w-full h-full py-0 pl-5 pr-3 text-gray-900 placeholder-gray-500 border-transparent focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm" placeholder="Search..." type="search" />
         </div>
       </form>
@@ -37,10 +37,9 @@
         <div Menu class="relative inline-block text-left">
           <button MenuButton ep-icon-button color="white">
             {{
-            matterFilterValues.status +
+            matterFilterValues$.value.status +
             " " +
-            matterFilterValues.matter_type +
-            "s" | titlecase
+            'Cases' | titlecase
             }}
 
             <svg ep-trailing-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -51,7 +50,7 @@
           </button>
           <div *MenuItems @toggleAnimation class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div class="p-1" *ngFor="let status of statusFilterOptions">
-              <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium text-gray-700 rounded-md group hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="filterStatus(status)">
+              <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium text-gray-700 rounded-md group hover:bg-blue-500 hover:text-white hover:cursor-pointer" (click)="filterSearchInput('status', status)">
                 {{ status + " cases" | titlecase }}
               </a>
             </div>
@@ -77,24 +76,13 @@
             [trackBy]="trackByIndex" fixedLayout>
             <!-- Position Column -->
             <ng-container cdkColumnDef="client">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase border-r border-gray-200" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('first_name')">
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase border-r border-gray-200" cdk-header-cell *cdkHeaderCellDef>
                 <div class="flex items-center group hover:cursor-pointer">
                 
                   <div class="flex items-center flex-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-4 h-4 text-slate-400 group-hover:text-slate-300 lg:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>Case</div>
-
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-opacity group-hover:opacity-50"
-                    [ngClass]="{'opacity-0 group-hover:opacity-50': sortValues.column !== 'first_name', 'opacity-100': sortValues.column === 'client'}"
-                    viewBox="0 0 20 20" fill="currentColor">
-                    <path *ngIf="sortValues.direction === 'asc' || !sortValues.direction" fill-rule="evenodd"
-                      d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
-                      clip-rule="evenodd" />
-                    <path *ngIf="sortValues.direction === 'desc'" fill-rule="evenodd"
-                      d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z"
-                      clip-rule="evenodd" />
-                  </svg>
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let case" class="w-4/12 px-6 py-4 border-r border-gray-200 whitespace-nowrap"
@@ -105,7 +93,7 @@
 
             <!-- Name Column -->
             <ng-container cdkColumnDef="task">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase" cdk-header-cell *cdkHeaderCellDef (click)="sortMatters('task')">
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase" cdk-header-cell *cdkHeaderCellDef (click)="updateSortValues('task')">
                 <div class="flex items-center group hover:cursor-pointer">
                   
                   <div class="flex items-center flex-1">
@@ -113,6 +101,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg> Next Task</div>
 
+                  <ng-container *ngIf="sortValues$ | async as sortValues">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-opacity group-hover:opacity-50"
                     [ngClass]="{'opacity-0 group-hover:opacity-50': sortValues.column !== 'task', 'opacity-100': sortValues.column === 'task'}"
                     viewBox="0 0 20 20" fill="currentColor">
@@ -123,28 +112,29 @@
                       d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z"
                       clip-rule="evenodd" />
                   </svg>
+                </ng-container>
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let case" class="w-3/12 px-6 py-4 whitespace-nowrap" (click)="openTab(case)">
-                <a class="flex-shrink-0 block group" *ngIf="case.matter_tasks.length">
-                  <a class="flex-shrink-0 block group" *ngIf="!case.matter_tasks[0].completed">
+                <a class="flex-shrink-0 block group" *ngIf="case.next_task">
+                  <a class="flex-shrink-0 block group" *ngIf="!case.next_task.completed">
                     <div class="flex items-center">
                       <div>
-                        <ep-avatar epSize="small" [epSrc]="case.matter_tasks[0].assignee?.profile_image"
-                          [epText]="case.matter_tasks[0].assignee?.full_name"></ep-avatar>
+                        <ep-avatar epSize="small" [epSrc]="case.next_task.assignee?.profile_image"
+                          [epText]="case.next_task.assignee?.full_name"></ep-avatar>
                       </div>
                       <div class="ml-3">
                         <p class="text-sm font-medium text-gray-700 truncate group-hover:text-gray-900"
-                          style="max-width: 12rem" [tippy]="case.matter_tasks[0].name || null" tabindex="0">
-                          {{ case.matter_tasks[0].name || "No task name" }}
+                          style="max-width: 12rem" [tippy]="case.next_task.name || null" tabindex="0">
+                          {{ case.next_task.name || "No task name" }}
                         </p>
                         <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
-                          {{ case.matter_tasks[0].due | date }}
+                          {{ case.next_task.due | date }}
                         </p>
                       </div>
                     </div>
                   </a>
-                  <div class="flex items-center font-normal text-gray-400" *ngIf="case.matter_tasks[0].completed">
+                  <div class="flex items-center font-normal text-gray-400" *ngIf="case.next_task.completed">
                     <div class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-green-400" aria-hidden="true"></div>
                     <div class="ml-2">
                       <p class="text-sm font-normal text-gray-500 group-hover:text-gray-600">
@@ -153,7 +143,7 @@
                     </div>
                   </div>
                 </a>
-                <div class="flex items-center text-sm text-gray-400" *ngIf="!case.matter_tasks.length">
+                <div class="flex items-center text-sm text-gray-400" *ngIf="!case.next_task">
                   <div class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gray-300" aria-hidden="true"></div>
                   <span class="ml-2 text-gray-500"> No tasks </span>
                 </div>
@@ -162,7 +152,7 @@
 
             <!-- Weight Column -->
             <ng-container cdkColumnDef="legal-area">
-              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500" cdk-header-cell *cdkHeaderCellDef>
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase whitespace-nowrap text-slate-500" cdk-header-cell *cdkHeaderCellDef>
                 <div class="flex items-center flex-1">
                   <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-4 h-4 text-slate-400 group-hover:text-slate-300 lg:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
@@ -212,7 +202,7 @@
                   </div>
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 group-hover:text-blue-500"
-                      [class.text-blue-500]="matterFilterValues.attorney_id" viewBox="0 0 20 20" fill="currentColor">
+                      [class.text-blue-500]="matterFilterValues$.value.attorney_id" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd"
                         d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
                         clip-rule="evenodd" />
@@ -221,8 +211,8 @@
                   <div *MenuItems @toggleAnimation class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div class="p-1" *ngFor="let attorney of attorneys$ | async">
                       <a MenuItem class="flex items-center w-full px-2 py-2 text-sm font-medium text-gray-700 normal-case rounded-md group hover:bg-blue-500 hover:text-white hover:cursor-pointer" [ngClass]="{
-                        'bg-blue-500 text-white': attorney.user.id === matterFilterValues.attorney_id
-                      }" (click)="filterAttorney(attorney.user.id)">
+                        'bg-blue-500 text-white': attorney.user.id === matterFilterValues$.value.attorney_id
+                      }" (click)="filterSearchInput('attorney_id', attorney.user.id)">
                         <div class="w-full">
                           {{ attorney.user.first_name + ' ' + attorney.user.last_name | titlecase }}
                         </div>
@@ -250,7 +240,7 @@
 
                       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white hover:text-blue-200"
                       viewBox="0 0 20 20" fill="currentColor"
-                      *ngIf="attorney.user.id === matterFilterValues.attorney_id">
+                      *ngIf="attorney.user.id === matterFilterValues$.value.attorney_id">
                       <path fill-rule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
                         clip-rule="evenodd" />
@@ -291,7 +281,7 @@
               </th>
               <td cdk-cell *cdkCellDef="let case" class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                 <ep-tag [dot]="false" [color]="'sky'" [epSize]="'small'" [rounded]="true">
-                  {{case.matter_intake?.status ? `Intake ${case.matter_intake.status}|| "No intake"}}
+                  {{case.matter_intake?.status ? 'Intake ' + case.matter_intake.status : "No intake"}}
                 </ep-tag>
               </td>
             </ng-container>

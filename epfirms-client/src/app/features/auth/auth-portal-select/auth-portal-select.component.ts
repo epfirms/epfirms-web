@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-auth-portal-select',
@@ -9,7 +8,7 @@ import { AuthService } from '../auth.service';
 })
 export class AuthPortalSelectComponent implements OnInit {
 
-  constructor(private _router: Router, private route: ActivatedRoute, private _authService: AuthService) { }
+  constructor(private _router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }

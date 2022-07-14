@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { AuthService } from '@app/features/auth/auth.service';
 import { ContractService } from '../contract.service';
 
 @Component({
@@ -9,6 +9,7 @@ import { ContractService } from '../contract.service';
 })
 export class ContractEditorV2Component implements OnInit {
   @Input() inputContent;
+
   @Output() isVisibleChange = new EventEmitter<boolean>();
 
   config = {
@@ -91,22 +92,25 @@ export class ContractEditorV2Component implements OnInit {
 
   // content binding for the editor
   content;
+
   title: string = 'Template Title Goes Here';
+
   // the actual quill object
   quill;
 
   //observable of current user
-  currentUser$;
-  currentUser;
+  idTokenResult$;
+
+  idTokenResult;
 
   //slide over state
   showAdvanced : boolean = false;
 
   constructor(
-    private store: Store<{ currentUser: any }>,
+    private authService: AuthService,
     private contractService : ContractService) {
     // grab the current user from the user store and stream Observable
-    this.currentUser$ = this.store.select('currentUser');
+    this.idTokenResult$ = this.authService.idTokenResult$;
   }
 
   ngOnInit(): void {
@@ -115,8 +119,8 @@ export class ContractEditorV2Component implements OnInit {
       
 
     }
-    this.currentUser$.subscribe((res) => {
-      this.currentUser = res;
+    this.idTokenResult$.subscribe((res) => {
+      this.idTokenResult = res;
     });
   }
 
@@ -142,7 +146,7 @@ export class ContractEditorV2Component implements OnInit {
       id: undefined,
       content: this.content,
       title: this.title,
-      firm_id: this.currentUser.scope.firm_access.firm_id,
+      firm_id: this.idTokenResult.firm_access.firm_id,
       template_vars: undefined
     };
 

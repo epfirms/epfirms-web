@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { updateProfile, User as FirebaseUser } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { EntityCacheDispatcher } from '@ngrx/data';
 import { Store } from '@ngrx/store';
-import { from, map, merge, mergeWith, Observable, tap } from 'rxjs';
+import { from, map, merge, Observable, tap } from 'rxjs';
 import { AuthActions } from './auth.actions';
 import { AuthLoginCredential, AuthNewUser } from './interfaces/auth.interface';
 
@@ -26,7 +27,7 @@ export class AuthService {
     return this.firebaseAuth.authState;
   }
 
-  constructor(private firebaseAuth: AngularFireAuth, private store: Store) {
+  constructor(private firebaseAuth: AngularFireAuth, private store: Store, private entityCacheDispatcher: EntityCacheDispatcher) {
     this.dispatchActions().subscribe();
   }
 
@@ -53,6 +54,7 @@ export class AuthService {
   }
 
   signOut() {
+    this.entityCacheDispatcher.clearCollections();
     return from(this.firebaseAuth.signOut());
   }
 

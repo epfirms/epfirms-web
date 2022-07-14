@@ -16,12 +16,22 @@ export class SocketEffects implements OnRunEffects {
       exhaustMap(() =>
         this.authService.idTokenResult$.pipe(
           mergeMap(decodedToken => this.socketService.connect(decodedToken.claims.firm_access.firm_id, decodedToken.token).pipe(
-            map(data => SocketActions.connectSocketSuccess({ namespace: 'x' })),
+            map(() => SocketActions.connectSocketSuccess({ namespace: this.socketService.namespace })),
             catchError(error => of(SocketActions.connectSocketFailure({ error: error.message }))))
           ))
       )
     );
   });
+
+  disconnect$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.signOut),
+      exhaustMap(() =>
+      this.socketService.disconnect().pipe(
+        map(() => SocketActions.disconnectSocketSuccess()),
+        catchError(error => of(SocketActions.disconnectSocketFailure({ error: error.message })))))
+    )
+  })
 
 
   constructor(private actions$: Actions, private authService: AuthService, private socketService: SocketService ) {}
@@ -31,7 +41,7 @@ export class SocketEffects implements OnRunEffects {
       ofType(AuthActions.signInSuccess),
       exhaustMap(() =>
         resolvedEffects$.pipe(
-          takeUntil(this.actions$.pipe(ofType(AuthActions.signOut)))
+          takeUntil(this.actions$.pipe(ofType(AuthActions.signOutSuccess)))
         )
       )
     );

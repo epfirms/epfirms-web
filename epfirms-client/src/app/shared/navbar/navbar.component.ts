@@ -1,7 +1,9 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { User as FirebaseUser } from '@angular/fire/auth';
+import { AuthActions } from '@app/features/auth/auth.actions';
 import { AuthService } from '@app/features/auth/auth.service';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -26,15 +28,16 @@ import { Observable } from 'rxjs';
 export class NavbarComponent {
   user$: Observable<FirebaseUser>;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private store: Store) {
     this.user$ = this.authService.user$;
   }
 
+  //TODO: Dispatch portal select.
   goToPortalSelect() {
     // this._authService.selectPortal();
   }
 
   logout() {
-    // this._authService.logout();
+    this.store.dispatch(AuthActions.signOut());
   }
 }

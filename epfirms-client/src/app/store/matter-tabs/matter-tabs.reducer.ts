@@ -1,6 +1,6 @@
-import { Matter } from '@app/core/interfaces/matter';
 import { Tabs } from '@app/core/interfaces/tabs';
-import { EntitySelectorsFactory } from '@ngrx/data';
+import { selectDenormalizedMatters } from '@app/features/matter/matter.selectors';
+import { selectTasksWithAssignees } from '@app/features/task/task.selectors';
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import {
   add,
@@ -94,14 +94,17 @@ export function matterTabsReducer(state, action) {
   return _matterTabsReducer(state, action);
 }
 
-export const matterSelectors = new EntitySelectorsFactory().create<Matter>('Matter');
 const selectTabState = createFeatureSelector<Tabs>('matterTabs');
 export const selectOpenTabsState = createSelector(selectTabState, (tabs: Tabs) => tabs.openTabs);
 export const selectedOpenTabs = createSelector(
-  matterSelectors.selectEntityMap,
+  selectDenormalizedMatters,
   selectOpenTabsState,
   (matters, openTabs) =>
     openTabs.map((t) => ({
-      ...matters[t],
+      ...matters.find((m) => m.id === t),
     })),
 );
+
+export const selectCurrentTab = createSelector(selectTabState, (tabs: Tabs) => tabs.openTabs[tabs.selectedIndex]);
+
+export const selectCurrentTabTasks = createSelector(selectCurrentTab, selectTasksWithAssignees, (currentTab, tasks) => tasks.filter(t => t.matter_id === currentTab));

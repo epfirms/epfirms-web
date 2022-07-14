@@ -12,7 +12,6 @@ import { DefaultDataServiceConfig, EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 import { EffectsModule } from '@ngrx/effects';
 import { matterTabsReducer } from './store/matter-tabs/matter-tabs.reducer';
-import { currentUserReducer } from './store/current-user/current-user.reducer';
 import { MatterActivityInterceptor } from './core/interceptors/matter-activity.interceptor';
 import { extModules } from 'src/environments/development/modules.dev';
 import { InputMaskModule } from '@ngneat/input-mask';
@@ -26,7 +25,6 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import ImageCompress from 'quill-image-compress';
 import { ModalModule } from './shared/modal/modal.module';
 import { MatterTabsEffects } from './store/matter-tabs/matter-tabs.effects';
-import { CurrentUserEffects } from './store/current-user/current-user.effects';
 import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { AuthModule } from './features/auth/auth.module';
@@ -76,9 +74,9 @@ const quillConfig = [
     FormsModule,
     AutocompleteModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({matterTabs: matterTabsReducer, currentUser: currentUserReducer, router: routerReducer}, {}),
+    StoreModule.forRoot({matterTabs: matterTabsReducer, router: routerReducer}, {}),
     StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forRoot([MatterTabsEffects, CurrentUserEffects]),
+    EffectsModule.forRoot([MatterTabsEffects]),
     EntityDataModule.forRoot(entityConfig),
     QuillModule.forRoot({
       modules: {

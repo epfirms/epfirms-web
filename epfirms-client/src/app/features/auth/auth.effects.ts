@@ -8,18 +8,18 @@ import { UserService } from '../user/services/user.service';
 
 @Injectable()
 export class AuthEffects {
-  idTokenChanged$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.idTokenChanged),
-      map((authState) => {
-        if (authState) {
-          return AuthActions.signInSuccess({ authenticated: !!authState })
-        }
-        return AuthActions.signOut()
-      }),
-      catchError((error) => of(AuthActions.signInFailure({ error: error.message }))),
-    ),
-  );
+  // idTokenChanged$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthActions.idTokenChanged),
+  //     map((authState) => {
+  //       if (authState) {
+  //         return AuthActions.signInSuccess({ authenticated: !!authState })
+  //       }
+  //       return AuthActions.signOut()
+  //     }),
+  //     catchError((error) => of(AuthActions.signInFailure({ error: error.message }))),
+  //   ),
+  // );
 
   /**
    * Sign in a user using firebase auth.
@@ -46,7 +46,7 @@ export class AuthEffects {
         this.userService.get('me').pipe(
           map((user) => AuthActions.syncUserProfile({ user })),
           catchError((error) => {
-            return of(AuthActions.syncUserProfileFailure({ error: error.message }))}),
+            return of(AuthActions.syncUserProfileFailure({ error: error }))}),
         ),
       ),
     ),

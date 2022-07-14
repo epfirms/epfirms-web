@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LegalArea } from '@app/core/interfaces/legal-area';
+import { SocketService } from '@app/features/socket/socket.service';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SocketService } from '../../../core/services/socket.service';
 
 @Injectable({
   providedIn: 'root'

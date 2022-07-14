@@ -12,7 +12,7 @@ import { AddMoneyAccountComponent } from '@app/features/intake/add-money-account
 import { AddRealEstateComponent } from '@app/features/intake/add-real-estate/add-real-estate.component';
 import { AddVehicleComponent } from '@app/features/intake/add-vehicle/add-vehicle.component';
 import { UserFormModalComponent } from '@app/shared/user-form-modal/user-form-modal.component';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { map } from 'rxjs/operators';
 import { DialogService } from '@ngneat/dialog';
 

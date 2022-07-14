@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { UserService } from '@app/features/user/services/user.service';
 import { FinancialSummaryService } from '../services/financial-summary.service';
 import { IntakeService } from '../services/intake.service';

@@ -38,11 +38,6 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   }
-  // {
-  //   path: '',
-  //   loadChildren: () =>
-  //     import('./features/user-auth/user-auth.module').then((m) => m.UserAuthModule),
-  // }
 ];
 
 @NgModule({

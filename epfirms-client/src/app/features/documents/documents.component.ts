@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Document } from '../../core/interfaces/document';
 import legalDocumentTypes from '@app/core/util/legalDocumentTypes';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { DocumentService } from './services/document.service';
 import { AwsService } from '@app/shared/_services/aws.service';
 

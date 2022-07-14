@@ -7,7 +7,7 @@ import {
 } from '@ngrx/data';
 import { map } from 'rxjs/operators';
 import { Staff } from '@app/core/interfaces/staff';
-import { SocketService } from '../../../core/services/socket.service';
+import { SocketService } from '@app/features/socket/socket.service';
 
 @Injectable({
   providedIn: 'root',

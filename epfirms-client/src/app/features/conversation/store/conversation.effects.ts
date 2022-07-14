@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { logout } from '@app/store/current-user/current-user.actions';
+import { AuthActions } from '@app/features/auth/auth.actions';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { ConversationState } from '@twilio/conversations';
@@ -79,7 +79,7 @@ export class ConversationEffects implements OnInitEffects {
   disconnect$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(logout),
+        ofType(AuthActions.signOut),
         tap(() => {
           this.conversationService.shutdown();
         }),

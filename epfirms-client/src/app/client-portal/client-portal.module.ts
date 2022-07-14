@@ -12,8 +12,6 @@ import { AvatarModule } from '@app/shared/avatar/avatar.module';
 import { NavbarModule } from '@app/shared/navbar/navbar.module';
 import { ClientFinancialsComponent } from './client-financials/client-financials.component';
 import { TransactionsComponent } from './client-financials/transactions/transactions.component';
-import { StoreModule } from '@ngrx/store';
-import { currentUserReducer } from '@app/store/current-user/current-user.reducer';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { StatementViewComponent } from './client-financials/statement-view/statement-view.component';
 import { CaseFinanceViewComponent } from './client-financials/case-finance-view/case-finance-view.component';

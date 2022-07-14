@@ -4,9 +4,8 @@ import { Observable, of } from 'rxjs';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
 import { catchError, map } from 'rxjs/operators';
 import { Client } from '@app/core/interfaces/client';
-import { Socket } from 'ngx-socket-io';
-import { SocketService } from '../../../core/services/socket.service';
 import { HotToastService } from '@ngneat/hot-toast';
+import { SocketService } from '@app/features/socket/socket.service';
 
 @Injectable({
   providedIn: 'root',

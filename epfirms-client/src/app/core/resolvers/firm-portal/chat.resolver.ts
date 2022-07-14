@@ -5,11 +5,11 @@ import { EMPTY, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectConnectionState } from '@app/features/conversation/store/conversation.store';
 import { ConversationActions } from '@app/features/conversation/store/conversation.actions';
-import { AuthService } from '@app/core/services/auth.service';
+import { AuthActions } from '@app/features/auth/auth.actions';
 
 @Injectable({ providedIn: 'root' })
 export class ConversationResolver implements Resolve<any> {
-  constructor(private store: Store, private _authService: AuthService) {}
+  constructor(private store: Store) {}
 
   resolve(): Observable<any> | Observable<never> {
     this.store.dispatch(ConversationActions.Init());
@@ -18,8 +18,8 @@ export class ConversationResolver implements Resolve<any> {
       filter((state) => state !== 'unknown'),
       take(1),
       catchError((err) => {
-        this._authService.logout();
         console.error('Error connecting to chat client ', err);
+        this.store.dispatch(AuthActions.signOut());
         return EMPTY;
       }),
     );

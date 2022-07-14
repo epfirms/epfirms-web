@@ -1,28 +1,8 @@
 import { EntityMetadataMap, EntityDataModuleConfig } from '@ngrx/data';
-import { Matter } from './core/interfaces/matter';
 import { Staff } from './core/interfaces/staff';
-import { LegalArea } from './core/interfaces/legal-area';
 import {Document} from './core/interfaces/document';
 import { Client } from './core/interfaces/client';
 import { MatterTask } from './core/interfaces/matter-task';
-
-const entityMetadata: EntityMetadataMap = {
-  Matter: {
-    filterFn: matterFilter,
-    sortComparer: matterSort
-  },
-  Client: {
-    filterFn: clientFilter
-  },
-  Staff: {
-    filterFn: staffFilter
-  },
-  Firm: {},
-  Document: {
-    filterFn: documentFilter,
-  },
-  LegalArea: {}
-};
 
 export function staffFilter(entities: Staff[], staffFilters: {active?: boolean, role?: string[]}) {
   return entities.filter(e => {
@@ -33,17 +13,17 @@ export function staffFilter(entities: Staff[], staffFilters: {active?: boolean, 
   });
 }
 
-export function matterFilter(entities: Matter[], search: {matter_type: string; status: string; attorney_id?: number; client_id?: number; searchTerm?: string}) {
-  let searchFields = Object.getOwnPropertyNames(search).filter(field => field !== 'searchTerm' && !!search[field]);
+// export function matterFilter(entities: Matter[], search: {matter_type: string; status: string; attorney_id?: number; client_id?: number; searchTerm?: string}) {
+//   let searchFields = Object.getOwnPropertyNames(search).filter(field => field !== 'searchTerm' && !!search[field]);
 
-  return entities.filter(e => {
-    if (search.searchTerm && search.searchTerm.length) {
-      return searchFields.every(field => e[field] === search[field]) && JSON.stringify(e).toUpperCase().includes(search.searchTerm.toString().toUpperCase())
-    }
+//   return entities.filter(e => {
+//     if (search.searchTerm && search.searchTerm.length) {
+//       return searchFields.every(field => e[field] === search[field]) && JSON.stringify(e).toUpperCase().includes(search.searchTerm.toString().toUpperCase())
+//     }
 
-    return searchFields.every(field => e[field] === search[field]);
-  });
-}
+//     return searchFields.every(field => e[field] === search[field]);
+//   });
+// }
 
 export function clientFilter(entities: Client[], search: {searchTerm?: string}) {
   return entities.filter(e => {
@@ -80,6 +60,17 @@ export function matterSort(a: { matter_tasks: MatterTask[] }, b: { matter_tasks:
 }
 
 const pluralNames = { Staff: 'Staff' };
+
+const entityMetadata: EntityMetadataMap = {
+  Client: {
+    filterFn: clientFilter
+  },
+  Staff: {
+    filterFn: staffFilter
+  },
+  Firm: {},
+  LegalArea: {}
+};
 
 export const entityConfig: EntityDataModuleConfig = {
   entityMetadata,

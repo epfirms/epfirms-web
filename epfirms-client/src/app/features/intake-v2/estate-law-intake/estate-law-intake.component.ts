@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
 import { ClientMatterService } from '@app/client-portal/_services/matter-service/client-matter.service';
-import { FormSettings } from '@app/core/interfaces/FormSettings';
-import { UserProfile } from '@app/core/interfaces/user-profile';
-import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 
 @Component({
   selector: 'app-estate-law-intake',
@@ -13,11 +10,14 @@ import { CurrentUserService } from '@app/shared/_services/current-user-service/c
 export class EstateLawIntakeComponent implements OnInit {
   // input bindings
   @Input() intake;
+
   @Input() matter;
+
   @Output() onIntakeSubmit = new EventEmitter<boolean>();
 
   //state that manages the views
   state: string = "intro";
+
   // stack that manages the views and enables the back() functionality
   history = [];
 
@@ -29,6 +29,7 @@ export class EstateLawIntakeComponent implements OnInit {
   }
 
   hasSpouse : boolean = false;
+  
   hasChildren : boolean = false;
 
 

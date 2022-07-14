@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { ClientService } from '../_services/client-service/client.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { AddClientComponent } from '../overlays/add-client/add-client.component';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { MatterService } from '../_services/matter-service/matter.service';
 import { MatterTabsService } from '../../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
 import { EpModalService } from '@app/shared/modal/modal.service';
@@ -54,8 +54,6 @@ export class ClientDirectoryComponent implements OnInit {
 
   asideTab = 'profile';
 
-  cases$: Observable<Matter[]>;
-
   constructor(
     private _clientService: ClientService,
     private _matterService: MatterService,
@@ -63,7 +61,6 @@ export class ClientDirectoryComponent implements OnInit {
     private _modalService: EpModalService,
   ) {
     this.clients$ = _clientService.filteredEntities$;
-    this.cases$ = _matterService.filteredEntities$;
   }
 
   ngOnInit(): void {

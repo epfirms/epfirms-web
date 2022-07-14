@@ -77,7 +77,11 @@ export class TeamService {
       ]
     });
 
-    return Promise.resolve(employee.teams);
+    if (employee) {
+      return Promise.resolve(employee.teams);
+    }
+
+    return Promise.resolve([]);
   }
 
   public async findAllMembers(teamId: number): Promise<any> {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { Observable, of } from 'rxjs';
 

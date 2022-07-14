@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LegalArea } from '@app/core/interfaces/legal-area';
-import { Matter } from '@app/core/interfaces/matter';
 import { Staff } from '@app/core/interfaces/staff';
 import { Tabs } from '@app/core/interfaces/tabs';
 import { catchError, Observable, of, take } from 'rxjs';
@@ -15,6 +14,7 @@ import { ClientService } from '@app/firm-portal/_services/client-service/client.
 import { AddClientComponent } from '@app/firm-portal/overlays/add-client/add-client.component';
 import { IntakeService } from '@app/features/intake-v2/services/intake.service';
 import { emailService } from '@app/shared/_services/email-service/email.service';
+import { Matter } from '@app/features/matter/matter.model';
 
 @Component({
   selector: 'app-matter-tabs',

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@app/core/services/auth.service';
+import { AuthActions } from '@app/features/auth/auth.actions';
 import { StripeService } from '@app/shared/_services/stripe-service/stripe.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-client-portal',
@@ -22,7 +23,7 @@ export class ClientPortalComponent implements OnInit {
 
   constructor(
     private stripeService : StripeService,
-    private authService : AuthService
+    private store: Store
   ) {}
 
   ngOnInit() : void {
@@ -34,6 +35,6 @@ export class ClientPortalComponent implements OnInit {
   }
 
   logout() : void {
-    this.authService.logout();
+    this.store.dispatch(AuthActions.signOut());
   }   
 }

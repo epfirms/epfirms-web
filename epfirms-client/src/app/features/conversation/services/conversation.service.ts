@@ -8,9 +8,10 @@ import {
   Conversation,
   Message,
 } from '@twilio/conversations';
-import { BehaviorSubject, from, fromEventPattern, merge, Observable, of, pluck, switchMap, take } from 'rxjs';
+import { BehaviorSubject, from, fromEventPattern, merge, Observable, of, switchMap, take } from 'rxjs';
 import { ConversationState } from '../store/conversation.store';
 import { HotToastService } from '@ngneat/hot-toast';
+import { AuthService } from '@app/features/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +30,9 @@ export class ConversationService {
 
   constructor(
     private _http: HttpClient,
-    private _store: Store<{ conversation: ConversationState; currentUser: any }>,
-    private _toastService: HotToastService
+    private _store: Store<{ conversation: ConversationState }>,
+    private _toastService: HotToastService,
+    private authService: AuthService
   ) {}
 
   /** Retrieves an access token for the client. */
@@ -150,8 +152,7 @@ export class ConversationService {
 
   /** Updates friendlyName and profileImage for logged-in user. */
   syncUserProfile(): Observable<any> {
-    const currentUser$ = this._store.select('currentUser');
-    return currentUser$.pipe(take(1), pluck('user'), switchMap((user) => merge(this.updateUserFriendlyName(user.full_name), this.updateUserAttributes(user.profile_image))));
+    return this.authService.user$.pipe(take(1), switchMap((user) => merge(this.updateUserFriendlyName(user.displayName), this.updateUserAttributes({profileImage: user.photoURL}))));
   }
 
   createMatterConversation(matterId: number): Observable<any> {

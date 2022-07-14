@@ -9,8 +9,6 @@ export class MatterService {
       matter,
       matter_task,
       user,
-      legal_area,
-      matter_intake,
       statement,
       matter_task_file,
       matter_task_sms_message,
@@ -30,6 +28,12 @@ export class MatterService {
               '(SELECT SUM(amount) FROM `matter_billing` WHERE type = 1 AND matter_id = `matter`.id)'
             ),
             'total_paid'
+          ],
+          [
+            Sequelize.literal(
+              '(SELECT id FROM `matter_task` WHERE matter_id = `matter`.id ORDER BY (CASE WHEN completed = 1 THEN 1 END) asc, (CASE WHEN due IS NULL THEN 3 END) asc, due asc LIMIT 1)'
+            ),
+            'next_task_id'
           ]
         ]
       },
@@ -39,63 +43,12 @@ export class MatterService {
       },
       include: [
         {
-          model: user,
-          as: 'client',
-          required: true
-        },
-        {
-          model: user,
-          as: 'attorney',
-          required: true
-        },
-        {
-          model: user,
-          as: 'spouse'
-        },
-        {
-          model: user,
-          as: 'opposing_counsel'
-        },
-        {
-          model: legal_area,
-          as: 'legal_area'
-        },
-        {
-          model: user,
-          as: 'point_of_contact'
-        },
-        {
-          model: matter_intake
-        },
-        {
-          model: matter_task,
-          include: [
-            {
-              model: user,
-              as: 'assignee'
-            },
-            {
-              model: matter_task_file
-            },
-            {
-              model: matter_task_sms_message
-            }
-          ]
-        },
-        {
           model: statement
         },
         {
           model: matter_billing_settings
         },
       ],
-      order: [
-        [
-          Sequelize.literal(
-            '(CASE WHEN `matter_tasks`.completed = 1 THEN 1 END) asc, (CASE WHEN `matter_tasks`.due IS NULL THEN 3 END) asc, `matter_tasks`.due asc'
-          )
-        ]
-      ]
     });
 
     return Promise.resolve(matters);
@@ -127,6 +80,12 @@ export class MatterService {
               '(SELECT SUM(amount) FROM `matter_billing` WHERE type = 1 AND matter_id = `matter`.id)'
             ),
             'total_paid'
+          ],
+          [
+            Sequelize.literal(
+              '(SELECT id FROM `matter_task` WHERE matter_id = `matter`.id ORDER BY (CASE WHEN completed = 1 THEN 1 END) asc, (CASE WHEN due IS NULL THEN 3 END) asc, due asc LIMIT 1)'
+            ),
+            'next_task_id'
           ]
         ]
       },
@@ -136,63 +95,12 @@ export class MatterService {
       },
       include: [
         {
-          model: user,
-          as: 'client',
-          required: true
-        },
-        {
-          model: user,
-          as: 'attorney',
-          required: true
-        },
-        {
-          model: user,
-          as: 'spouse'
-        },
-        {
-          model: user,
-          as: 'opposing_counsel'
-        },
-        {
-          model: legal_area,
-          as: 'legal_area'
-        },
-        {
-          model: user,
-          as: 'point_of_contact'
-        },
-        {
-          model: matter_intake
-        },
-        {
-          model: matter_task,
-          include: [
-            {
-              model: user,
-              as: 'assignee'
-            },
-            {
-              model: matter_task_file
-            },
-            {
-              model: matter_task_sms_message
-            }
-          ]
-        },
-        {
           model: statement
         },
         {
           model: matter_billing_settings
         },
       ],
-      order: [
-        [
-          Sequelize.literal(
-            '(CASE WHEN `matter_tasks`.completed = 1 THEN 1 END) asc, (CASE WHEN `matter_tasks`.due IS NULL THEN 3 END) asc, `matter_tasks`.due asc'
-          )
-        ]
-      ]
     });
 
     return Promise.resolve(matters);
@@ -235,7 +143,7 @@ export class MatterService {
   }
 
   public async getByUserId(userId: number): Promise<any> {
-    const { matter, user, legal_area, matter_intake } = Database.models;
+    const { matter, user, legal_area, matter_intake, statement, matter_billing_settings } = Database.models;
 
     const matters = await matter.findAll({
       where: {
@@ -250,31 +158,12 @@ export class MatterService {
       },
       include: [
         {
-          model: user,
-          as: 'client',
-          required: true
+          model: statement
         },
         {
-          model: user,
-          as: 'attorney',
-          required: true
+          model: matter_billing_settings
         },
-        {
-          model: user,
-          as: 'spouse'
-        },
-        {
-          model: legal_area,
-          as: 'legal_area'
-        },
-        {
-          model: matter_intake
-        },
-        {
-          model: user,
-          as: 'point_of_contact'
-        }
-      ]
+      ],
     });
 
     return Promise.resolve(matters);

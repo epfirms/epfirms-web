@@ -44,7 +44,9 @@ export class TagComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.clickEventSubscription.unsubscribe();
+    if (this.clickEventSubscription) {
+      this.clickEventSubscription.unsubscribe();
+    }
   }
 
   selectOption(option: any) {

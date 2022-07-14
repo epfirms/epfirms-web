@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '
   templateUrl: './tab-body.component.html',
   styleUrls: ['./tab-body.component.scss'],
   host: {
-    'class': 'bg-white flex h-full',
+    'class': 'bg-white flex h-full focus-visible:outline-0',
     '[class.h-full]': 'active',
     '[attr.tabindex]': 'active ? 0 : -1',
   },

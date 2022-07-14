@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ClientMatterService } from '@app/client-portal/_services/matter-service/client-matter.service';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { Observable } from 'rxjs';
 
 @Component({
