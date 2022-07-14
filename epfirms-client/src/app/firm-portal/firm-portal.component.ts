@@ -10,6 +10,7 @@ import { BugReporterModalComponent } from '@app/developer-tools/bug-reporter-mod
 import { BugReportService } from '@app/developer-tools/services/bug-report.service';
 import { HotToastService } from '@ngneat/hot-toast';
 import { connectSocket } from '@app/features/socket/socket.actions';
+import { StripeService } from '@app/shared/_services/stripe-service/stripe.service';
 
 @Component({
   selector: 'app-firm-portal',
@@ -22,18 +23,36 @@ export class FirmPortalComponent implements OnInit {
   // property that determines if the bug reporter modal is open
   isBugReporterModalOpen: boolean = false;
 
+  // property that determines if the firm can see the billing tab
+  billingActive : boolean;
+
   constructor(
     private _matterTabsService: MatterTabsService,
     private _store: Store,
     private _modalService: EpModalService,
     private _bugReportService: BugReportService,
-    private _toastService : HotToastService
+    private _toastService : HotToastService,
+    private _stripeService: StripeService,
   ) {
     this._store.dispatch(connectSocket())
   }
 
   ngOnInit() {
     this._matterTabsService.init();
+    this.getStripeStatus();
+  }
+
+
+  // billing can only be accessible if the firm has setup their 
+  // account with stripe
+  private getStripeStatus(): void {
+
+    this._stripeService.getConnectionStatus().subscribe((res) => {
+
+      if (res) {
+        this.billingActive = res.isConnected;
+      }
+    });
   }
 
   minimizeMatterTabs(): void {

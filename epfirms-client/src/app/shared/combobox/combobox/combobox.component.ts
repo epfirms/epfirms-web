@@ -49,14 +49,17 @@ export class ComboboxComponent implements OnInit, OnChanges {
   // this is called when the user selects an option`
   onSelect(option: any) {
     this.selectedOption = option;
-    this.searchTerm = this.selectedOption.value;
+    this.searchTerm = this.selectedOption.label;
     this.onSelected.emit(option);
     this.isVisible = false;
     this.options = this.defaultOptions;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes.defaultValue) {
+
     this.searchTerm = changes.defaultValue.currentValue;
+    }
   }
 
   // toggle the dropdown visibility
@@ -77,5 +80,11 @@ export class ComboboxComponent implements OnInit, OnChanges {
     }
 
     this.onTyped.emit(this.searchTerm);
+  }
+
+  reset(): void {
+    this.searchTerm = '';
+    this.options = this.defaultOptions;
+    this.isVisible = false;
   }
 }

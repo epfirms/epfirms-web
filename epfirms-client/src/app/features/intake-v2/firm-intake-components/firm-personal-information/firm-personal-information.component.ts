@@ -3,6 +3,7 @@ import { FamilyMemberService } from '@app/client-portal/_services/family-member-
 import { ClientMatterService } from '@app/client-portal/_services/matter-service/client-matter.service';
 import { UserService } from '@app/features/user/services/user.service';
 import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
+import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { usaStatesFull } from '@app/shared/utils/us-states/states';
 import { USAState } from '@app/shared/utils/us-states/typings';
 import { createMask } from '@ngneat/input-mask';
@@ -50,7 +51,7 @@ export class FirmPersonalInformationComponent implements OnInit {
     city: '',
     state: '',
     zip: '',
-    dob: new Date(),
+    dob: undefined,
     ssn: '',
     drivers_id: '',
   };
@@ -68,7 +69,7 @@ export class FirmPersonalInformationComponent implements OnInit {
     city: '',
     state: '',
     zip: '',
-    dob: new Date(),
+    dob: undefined,
     ssn: '',
     drivers_id: '',
     relationship_type: 'spouse',
@@ -81,10 +82,18 @@ export class FirmPersonalInformationComponent implements OnInit {
     private clientService: ClientService,
     private familyMemberService: FamilyMemberService,
     private userService: UserService,
+    private _matterService : MatterService
   ) {}
 
   ngOnInit(): void {
     this.loadClientData();
+  }
+
+  private updateSpouseIdOnMatter(spouseId) : void {
+    this._matterService.update({id: this.matter.id, spouse_id: spouseId}).subscribe(res => {
+      console.log(res);
+    });
+
   }
 
   getFamilyMembers(): void {
@@ -148,6 +157,7 @@ export class FirmPersonalInformationComponent implements OnInit {
       parent_2_name: child.parent_2_name,
       parent_1_id: child.parent_1_id,
       parent_2_id: child.parent_2_id,
+      is_minor: child.is_minor,
     };
     this.children.push(childForm);
   }
@@ -197,6 +207,7 @@ export class FirmPersonalInformationComponent implements OnInit {
         .subscribe((res) => {
           if (res) {
             this.spouseForm.id = res.id;
+            this.updateSpouseIdOnMatter(res.id);
             console.log('upsert spouse', res);
           }
         });
@@ -253,7 +264,7 @@ export class FirmPersonalInformationComponent implements OnInit {
       city: '',
       state: '',
       zip: '',
-      dob: new Date(),
+      dob: undefined,
       ssn: '',
       drivers_id: '',
       relationship_type: 'child',
@@ -263,6 +274,7 @@ export class FirmPersonalInformationComponent implements OnInit {
       parent_1_id: this.client.id,
       parent_2_name: this.spouse ? this.spouse.first_name + ' ' + this.spouse.last_name : '',
       parent_2_id: this.spouse ? this.spouse.id : undefined,
+      is_minor: false,
     };
 
     this.children.push(child);
@@ -280,7 +292,7 @@ export class FirmPersonalInformationComponent implements OnInit {
       city: '',
       state: '',
       zip: '',
-      dob: new Date(),
+      dob: undefined,
       ssn: '',
       drivers_id: '',
       relationship_type: '',

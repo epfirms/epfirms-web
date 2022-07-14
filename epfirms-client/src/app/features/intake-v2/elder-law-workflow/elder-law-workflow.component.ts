@@ -14,8 +14,10 @@ export class ElderLawWorkflowComponent implements OnInit {
   // input bindings
   @Input() matter: Matter;
 
-  // client mode bool
-  @Input() clientMode: boolean;
+
+  // determines whether certain tabs are visible
+  // the firm side has more tabs than the client side
+  @Input() clientMode: boolean = false;
 
   // state that manages the views
   state: string = 'caregiver';

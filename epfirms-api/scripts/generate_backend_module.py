@@ -59,11 +59,11 @@ export class {pascal_case}Controller {{
         }}
     }}
 
-public async getAllWithId(req : Request, res : Response) : Promise<any> {{
+public async getOneWithId(req : Request, res : Response) : Promise<any> {{
         try {{
 
-            const all = await {pascal_case}Service.getAllWithId(req.params.id);
-            res.status(StatusConstants.OK).send(all);
+            const one = await {pascal_case}Service.getOneWithId(req.params.id);
+            res.status(StatusConstants.OK).send(one);
         }}
         catch (error){{
             res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
@@ -84,7 +84,7 @@ const passport = require('passport');
 const {camel_case_name}Router = express.Router();
 
 {camel_case_name}Router.post('/', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.upsert(req, res));
-{camel_case_name}Router.get('/:id', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.getAllWithId(req, res));
+{camel_case_name}Router.get('/:id', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.getOneWithId(req, res));
 {camel_case_name}Router.delete('/:id', passport.authenticate('bearer', {{ session: false }}), (req, res) => {camel_case_name}Controller.delete(req, res));
 
 
@@ -123,11 +123,11 @@ export class {pascal_case}Service {{
         }}
     }}
 
-public static async getAllWithId(id) : Promise<any> {{
+public static async getOneWithId(id) : Promise<any> {{
         try {{
 
-            const all = await Database.models.{snake_case}.findAll({{where: {{id: id}}}});
-            return Promise.resolve(all);
+            const one = await Database.models.{snake_case}.findOne({{where: {{id: id}}}});
+            return Promise.resolve(one);
         }}
         catch (error){{
             console.error(error)

@@ -7,11 +7,11 @@ import { StripeMeteredUsageService } from '../services/stripe-metered-usage.serv
 import { ConfigService } from '@src/modules/config/config.service';
 import { TwilioMainAccountService } from '@src/modules/chat/twilio-main-account.service';
 import { TwilioSubaccountCredentialsService } from '@src/modules/chat/twilio-subaccount-credentials.service';
+import { Database } from '@src/core/Database';
+import { InvoiceService } from '@src/modules/invoice/services/invoice.service';
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const stripeWebhookSig = process.env.STRIPE_WEBHOOK_KEY;
-const {
-  TWILIO_SUBACCOUNT_SID,
-} = require('@configs/vars');
+const { TWILIO_SUBACCOUNT_SID } = require('@configs/vars');
 
 @Service()
 export class StripeController {
@@ -26,7 +26,7 @@ export class StripeController {
     private _stripeMeteredUsageService: StripeMeteredUsageService,
     private _configService: ConfigService,
     private _twilioMainAccountService: TwilioMainAccountService,
-    private _twilioCredentials: TwilioSubaccountCredentialsService
+    private _twilioCredentials: TwilioSubaccountCredentialsService,
   ) {}
 
   // This method takes the day in a month that the billing cycle will bill on
@@ -176,7 +176,7 @@ export class StripeController {
   public async createSubscriptionSession(req, res: Response): Promise<any> {
     try {
       let amount = this._roundToCurrency(req.body.balance);
-      console.log('REQ.BODY', req.body);
+
       // create stripe checkout session
       const session = await stripe.checkout.sessions.create({
         line_items: [
@@ -212,7 +212,6 @@ export class StripeController {
         },
       });
 
-      console.log(' SUB SESSION', session);
       res.status(StatusConstants.OK).send({ url: session.url, session_id: session.id });
     } catch (err) {
       console.error(err);
@@ -240,15 +239,28 @@ export class StripeController {
 
         res.status(200).send();
       } else if (event.type === 'customer.subscription.created') {
-        console.log('CUSTOMER SUB CREATED SESSION CREATED');
-        console.log(session);
         res.status(200).send();
       } else if (event.type === 'invoice.created') {
-        console.log('INVOICE CREATED SESSION');
-        console.log(session);
+        res.status(200).send();
+      } else if (event.type === 'invoice.finalized') {
+        // update the invoice with the invoice id
+        const updatedInvoice = await Database.models.invoice.update(
+          {
+            status: session.status,
+            hosted_invoice_url: session.hosted_invoice_url,
+            auto_advance: session.auto_advance,
+          },
+          { where: { invoice_id: session.id } },
+        );
+        res.status(200).send();
+      } else if (event.type === 'invoice.paid') {
+        // update the invoice with the invoice id
+        const updatedInvoice = await Database.models.invoice.update(
+          { status: session.status },
+          { where: { invoice_id: session.id } },
+        );
+        res.status(200).send();
       } else if (event.type === 'invoice.payment_succeeded') {
-        console.log('INVOICE PAYMENT SUCCESS SESSION');
-        console.log(session);
         if (session.subscription) {
           const updatedCustomerAccount = await this._stripeService.fufillInvoicePaymentSuccess(
             session,
@@ -266,8 +278,6 @@ export class StripeController {
           res.status(200).send();
         }
       } else if (event.type === 'invoice.payment_failed') {
-        console.log('INVOICE PAYMENT FAILED SESSION');
-        console.log(session);
         if (session.subscription) {
           //send an email template for failed payment on subscription
           const email = await this._emailService.sendFromTemplate(
@@ -287,13 +297,259 @@ export class StripeController {
     }
   }
 
+  public async createSubscription(req, res: Response): Promise<any> {
+    try {
+      // get the subscription from the database with the subscription id
+
+      const subscription = await Database.models.client_subscription.findOne({
+        where: { id: req.body.subscription_id },
+      });
+
+      //get firm stripe account
+      const firmStripeAccount = await Database.models.stripe_account.findOne({
+        where: { id: subscription.firm_id },
+      });
+
+      // get the customer from the database with the user_id
+
+      let customer = await Database.models.customer_account.findOne({
+        where: { id: subscription.user_id },
+      });
+
+      // if no customer exists, create one
+
+      if (customer === null || customer === undefined) {
+        const user_profile = await Database.models.user.findOne({
+          where: { id: subscription.user_id },
+        });
+
+        const stripeCustomer = await stripe.customers.create({
+          email: user_profile.email,
+          name: user_profile.first_name + ' ' + user_profile.last_name,
+        });
+
+        customer = await Database.models.customer_account.create({
+          user_id: subscription.user_id,
+          customer_id: stripeCustomer.id,
+          firm_id: subscription.firm_id,
+        });
+      }
+
+      // create the price object
+      const price = await stripe.prices.create({
+        currency: 'usd',
+        unit_amount: subscription.amount * 100,
+        recurring: {
+          interval: 'month',
+        },
+        product_data: {
+          name: subscription.description,
+        },
+      });
+      // create the subscription
+
+      const stripeSubscription = await stripe.subscriptions.create({
+        customer: customer.customer_id,
+
+        items: [{ price: price.id }],
+        description: 'Monthly Legal Subscription',
+        cancel_at: subscription.cancel_at,
+        collection_method: 'send_invoice',
+        days_until_due: 0,
+        billing_cycle_anchor:
+          new Date(subscription.monthly_due_date).getTime() / 1000 + 60 * 60 * 24,
+        transfer_data: {
+          destination: firmStripeAccount.account_id,
+        },
+        // the 4% charge that we take from the connected account
+        application_fee_percent: 4,
+      });
+      // update the subscription in the database with the subscription id from stripe **IMPORTANT**
+
+      await Database.models.client_subscription.update(
+        {
+          subscription_id: stripeSubscription.id,
+          status: stripeSubscription.status,
+        },
+        { where: { id: subscription.id } },
+      );
+
+      res.status(StatusConstants.OK).send(stripeSubscription);
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
+
+  public async createInvoice(req, res: Response): Promise<any> {
+    try {
+      // get the invoice from the db
+      const invoiceId = req.body.invoice_id;
+      const invoice = await Database.models.invoice.findOne({ where: { id: invoiceId } });
+      // if there is invoice, this process must not continue and should send an error
+      if (!invoice) {
+        res.status(StatusConstants.INTERNAL_SERVER_ERROR).send('INVOICE NOT FOUND');
+      }
+
+      //get the firms stripe account
+      const firmStripeAccount = await Database.models.stripe_account.findOne({
+        where: { firm_id: invoice.firm_id },
+      });
+
+      if (!firmStripeAccount) {
+        res.status(StatusConstants.INTERNAL_SERVER_ERROR).send('STRIPE ACCOUNT NOT FOUND');
+      }
+
+      //get the user information
+      const user = await Database.models.user.findOne({ where: { id: invoice.user_id } });
+
+      // get the customer record else create one
+      let customer = await Database.models.customer_account.findOne({
+        where: { user_id: invoice.user_id },
+      });
+
+      //id to hold the customer_id that stripe uses, the object is different structure based on
+      // whether or not we need to create one
+      // so we use this separate var to keep track of it
+      let customerID;
+
+      if (customer) {
+        customerID = customer.customer_id;
+      }
+      // the customerID is the stripe assigned Customer id
+      // if there is no customer id, we need to create one with stripe
+      // if there isn't a customer account record in the DB, create one and then create a stripe Customer
+      // and update the record as well
+      if (!customer) {
+        customer = await stripe.customers.create({
+          email: user.email,
+          name: user.first_name + ' ' + user.last_name,
+        });
+        customerID = customer.id;
+
+        // updated the customerID
+        // create customer account in db
+        await Database.models.customer_account.create({
+          user_id: user.id,
+          customer_id: customer.id,
+          firm_id: invoice.firm_id,
+        });
+      }
+      // get the transactions associated to invoice and create the stripe InvoiceItem
+      const transactions = await Database.models.transaction.findAll({
+        where: { invoice_id: invoice.id },
+      });
+
+      // usually, the invoice will be created from the transactions and that is the total that stripe goes by
+      // they should be synced
+      if (transactions.length > 0) {
+        transactions.forEach(async (transaction) => {
+          await stripe.invoiceItems.create({
+            customer: customerID,
+            amount: transaction.amount,
+            currency: 'usd',
+            description: transaction.description,
+          });
+        });
+        // there are a few cases where the invoice is just created with one InvoiceItem instead of from transactions
+        // a notable example of this is in the billing setup automations where there are no transactions on the matter yet
+      } else if (transactions.length === 0) {
+        // create the invoice item
+        const invoiceItem = await stripe.invoiceItems.create({
+          customer: customerID,
+          amount: invoice.total * 100,
+          currency: 'usd',
+        });
+      }
+
+      //create the invoice
+      const invoiceStripe = await stripe.invoices.create({
+        customer: customerID,
+        auto_advance: invoice.auto_advance,
+        collection_method: 'send_invoice',
+        description: invoice.description,
+        due_date: invoice.due_date.getTime() / 1000,
+        // this on behalf of is the connected firm
+        // if this is setup correctly, it will load their hosted page
+        // as well as their invoicing stuff
+        // NOTE: there is now way to create invoice for connected account with GUI
+        on_behalf_of: firmStripeAccount.account_id,
+        transfer_data: {
+          destination: firmStripeAccount.account_id,
+        },
+        // the 4% charge that we take from the connected account
+        application_fee_amount: Math.floor(invoice.total * 0.04 * 100),
+      });
+
+      // update the invoice record with stripe invoice id and status
+      await Database.models.invoice.update(
+        {
+          invoice_id: invoiceStripe.id,
+          status: invoiceStripe.status,
+        },
+        {
+          where: {
+            id: invoice.id,
+          },
+        },
+      );
+
+      // send the invoice to the customer
+      // const sentInvoice = await stripe.invoices.sendInvoice(invoiceStripe.id);
+
+      res.status(StatusConstants.OK).send(true);
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
+
+  public async deleteInvoice(req, res: Response): Promise<any> {
+    try {
+      const invoice = await Database.models.invoice.findOne({
+        where: { id: req.params.id },
+      });
+      if (invoice) {
+        await stripe.invoices.del(invoice.invoice_id);
+        await Database.models.invoice.destroy({
+          where: {
+            id: req.params.id,
+          },
+        });
+      }
+      res.status(StatusConstants.OK).send(true);
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
+
+  public async finalizeInvoice(req, res: Response): Promise<any> {
+    try {
+      const invoice = await Database.models.invoice.findOne({
+        where: { id: req.params.id },
+      });
+      if (invoice) {
+        await stripe.invoices.finalizeInvoice(invoice.invoice_id, { auto_advance: true });
+      }
+      res.status(StatusConstants.OK).send(true);
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+  }
+
   async getCustomerById(req, res: Response) {
     try {
       const firmId = req.user.firm_access.firm_id;
       const customerId = await this._stripeMeteredUsageService.findCustomerIdByFirm(firmId);
       const customer = await this._stripeMeteredUsageService.fetchCustomer(customerId);
-      const adjustedBalance = await this._stripeMeteredUsageService.getAdjustedCustomerBalance(customerId);
-      res.status(StatusConstants.OK).send({ data: { customer: {...customer, adjusted_balance: adjustedBalance} } });
+      const adjustedBalance = await this._stripeMeteredUsageService.getAdjustedCustomerBalance(
+        customerId,
+      );
+      res
+        .status(StatusConstants.OK)
+        .send({ data: { customer: { ...customer, adjusted_balance: adjustedBalance } } });
     } catch (err) {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err.message);
     }
@@ -344,17 +600,21 @@ export class StripeController {
     try {
       const data = req.body;
       const user = req.user;
-      
+
       const customerBalanceTransaction =
         await this._stripeMeteredUsageService.creditCustomerBalance(data.customerId, data.amount);
-      
-        const subaccountCredentials = await this._twilioCredentials.getByFirmId(user.firm_access.firm_id);
-        const subaccount = await this._twilioMainAccountService.fetchSubaccount(TWILIO_SUBACCOUNT_SID);
 
-        // if (subaccount.status !== 'active') {
-        //   await this._conversationService.updateSubaccountStatus(TWILIO_SUBACCOUNT_SID, 'active');
-        // } 
-        
+      const subaccountCredentials = await this._twilioCredentials.getByFirmId(
+        user.firm_access.firm_id,
+      );
+      const subaccount = await this._twilioMainAccountService.fetchSubaccount(
+        TWILIO_SUBACCOUNT_SID,
+      );
+
+      // if (subaccount.status !== 'active') {
+      //   await this._conversationService.updateSubaccountStatus(TWILIO_SUBACCOUNT_SID, 'active');
+      // }
+
       res.status(StatusConstants.OK).send({ data: customerBalanceTransaction });
     } catch (err) {
       console.error(err);
@@ -362,11 +622,12 @@ export class StripeController {
     }
   }
 
-  async getCustomerPaymentMethods(req, res:Response) {
+  async getCustomerPaymentMethods(req, res: Response) {
     try {
       const customerId = req.params.customer;
-      const paymentMethods =
-        await this._stripeMeteredUsageService.listPaymentMethodsForCustomer(customerId);
+      const paymentMethods = await this._stripeMeteredUsageService.listPaymentMethodsForCustomer(
+        customerId,
+      );
       res.status(StatusConstants.OK).send({ data: paymentMethods });
     } catch (err) {
       console.error(err);
@@ -374,12 +635,14 @@ export class StripeController {
     }
   }
 
-  async updatePaymentIntentAmount(req, res:Response) {
+  async updatePaymentIntentAmount(req, res: Response) {
     try {
       const id = req.params.id;
       const amount = req.body.amount;
-      const paymentIntent =
-        await this._stripeMeteredUsageService.updatePaymentIntentAmount(id, amount);
+      const paymentIntent = await this._stripeMeteredUsageService.updatePaymentIntentAmount(
+        id,
+        amount,
+      );
       res.status(StatusConstants.OK).send({ data: paymentIntent });
     } catch (err) {
       console.error(err);
@@ -396,16 +659,15 @@ export class StripeController {
     try {
       event = stripe.webhooks.constructEvent(payload, sig, webhookSecret);
       const data = event.data.object;
-      console.log(event.type);
-      console.log(data);
+
       // switch(event.type) {
       //   case '':
 
       //     break;
       // }
-      
+
       res.status(StatusConstants.OK).send();
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err.message);
     }

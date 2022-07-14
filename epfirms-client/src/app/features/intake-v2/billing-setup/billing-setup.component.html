@@ -1,0 +1,429 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="pb-5 border-b border-gray-200">
+  <div class="flex">
+
+  <h3 class="text-lg leading-6 font-medium text-gray-900">Billing Setup</h3>
+  <button (click)="openHelpOverlay()"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg></button>
+  </div>
+  <p class="mt-2 max-w-4xl text-sm text-gray-500">How are you planning on billing the client?</p>
+</div>
+
+<div class="pt-8">
+  <div class="mt-6 grid grid-cols-3 gap-y-6 gap-x-4">
+    <!-- FORM SECTION -->
+    <div class="col-span-1">
+      <label class="block text-sm font-medium text-gray-700">
+        How are you planning on billing the client?</label
+      >
+      <div class="mt-1">
+        <select
+          [(ngModel)]="billingSettings.billing_type"
+          (change)="upsertBillingSettings()"
+          [disabled]="billingSettings.initial_invoice_sent"
+          class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+        >
+          <option [ngValue]="'flatrate'">Flat Rate</option>
+          <!-- <option [ngValue]="'hourly'">Hourly</option> -->
+          <option [ngValue]="'contingency'">Contingency</option>
+
+          <option [ngValue]="'insurance'">Insurance</option>
+          <option [ngValue]="'monthly'">Monthly Payment Agreement</option>
+        </select>
+      </div>
+    </div>
+    <!-- -------------------------- -->
+    <!-- FLAT RATE -->
+    <ng-container *ngIf="billingSettings.billing_type === 'flatrate'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Flat Rate Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.flat_rate_amount"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700">
+          Do you want to split the payment?</label
+        >
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <select
+              [(ngModel)]="billingSettings.split_flat_rate"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              [(ngModel)]="billingSettings.split_flat_rate"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            >
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="billingSettings.split_flat_rate" class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Initial Payment Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.initial_payment"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+      <div *ngIf="billingSettings.split_flat_rate" class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Final Payment Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.final_payment"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="billingSettings.split_flat_rate" class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Final Payment Due Date?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.final_payment_due_date"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="date"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Invoice Message </label>
+        <div class="mt-1">
+          <textarea
+            [(ngModel)]="billingSettings.initial_invoice_message"
+            (change)="upsertBillingSettings()"
+            [disabled]="billingSettings.initial_invoice_sent"
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Write a note letting the client know what they are being charged for.
+        </p>
+      </div>
+
+      <div *ngIf="billingSettings.split_flat_rate" class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Final Invoice Message </label>
+        <div class="mt-1">
+          <textarea
+            [(ngModel)]="billingSettings.final_invoice_message"
+            (change)="upsertBillingSettings()"
+            [disabled]="billingSettings.initial_invoice_sent"
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Write a note letting the client know what they are being charged for.
+        </p>
+      </div>
+    </ng-container>
+
+    <!-- -------------------------- -->
+
+    <!-- HOURLY -->
+    <ng-container *ngIf="billingSettings.billing_type === 'hourly'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Retainer Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.retainer_amount"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-span-2"></div>
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Retainer Invoice Message </label>
+        <div class="mt-1">
+          <textarea
+            [(ngModel)]="billingSettings.retainer_invoice_message"
+            (change)="upsertBillingSettings()"
+            [disabled]="billingSettings.initial_invoice_sent"
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Write a note letting the client know what they are being charged for.
+        </p>
+      </div>
+    </ng-container>
+    <!-- --------------------------- -->
+
+    <!-- Contingency -->
+
+    <ng-container *ngIf="billingSettings.billing_type === 'contingency'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Pre-Settlement Percent?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.before_settlement"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Post-Settlement Percent?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.after_settlement"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Appeal Percent?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.appeal_amount"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ------------------------- -->
+
+    <!-- Insurance -->
+    <ng-container *ngIf="billingSettings.billing_type === 'insurance'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Insurance Company</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.company_name"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Policy Holder</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.policy_holder_name"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Policy Number</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.policy_number"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700">Claim Number</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.claim_number"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="text"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <label class="block text-sm font-medium text-gray-700"> Insurance Notes </label>
+        <div class="mt-1">
+          <textarea
+            [(ngModel)]="billingSettings.insurance_notes"
+            (change)="upsertBillingSettings()"
+            [disabled]="billingSettings.initial_invoice_sent"
+            rows="3"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">Write a note about insurance claim if needed.</p>
+      </div>
+    </ng-container>
+
+    <!-- --------------------------------------- -->
+
+    <!-- MONTHLY PAYMENT AGREEMENT    -->
+
+    <ng-container *ngIf="billingSettings.billing_type === 'monthly'">
+      <div class="col-span-1">
+        <label class="block text-sm font-medium text-gray-700"> Minimum Payment Amount?</label>
+        <div>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              [(ngModel)]="billingSettings.minimum_payment_amount"
+              (change)="upsertBillingSettings()"
+              [disabled]="billingSettings.initial_invoice_sent"
+              type="number"
+              class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- -------------------------------- -->
+  </div>
+</div>
+<div class="justify-end flex m-2">
+  <button
+  *ngIf="billingSettings.billing_type === 'flatrate' "
+    [tippy]="billingSettings.initial_invoice_sent ? 'Invoice already sent' : 'Send Initial Invoice'"
+    [disabled]="billingSettings.initial_invoice_sent"
+    (click)="openConfirmationModal()"
+    type="button"
+    class="m-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+  >
+    <span *ngIf="!billingSettings.initial_invoice_sent"> Send Initial Invoice </span>
+
+    <span *ngIf="billingSettings.initial_invoice_sent"> Initial Invoice Sent </span>
+  </button>
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div *ngIf="isModalVisible">
+  <!-- This example requires Tailwind CSS v2.0+ -->
+  <div class="relative z-20" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <!--
+    Background backdrop, show/hide based on modal state.
+
+    Entering: "ease-out duration-300"
+      From: "opacity-0"
+      To: "opacity-100"
+    Leaving: "ease-in duration-200"
+      From: "opacity-100"
+      To: "opacity-0"
+  -->
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+    <div class="fixed z-10 inset-0 overflow-y-auto">
+      <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+        <!--
+        Modal panel, show/hide based on modal state.
+
+        Entering: "ease-out duration-300"
+          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          To: "opacity-100 translate-y-0 sm:scale-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100 translate-y-0 sm:scale-100"
+          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+      -->
+        <div
+          class="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6"
+        >
+          <div>
+            <div class="mt-3 text-center sm:mt-5">
+              <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                Invoice Confirmation
+              </h3>
+              <div class="mt-2">
+                <p class="text-sm text-gray-500">
+                  Are you sure that your billing settings are finalized? Once you send the intitial
+                  invoices, it cannot be undone.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+            <button
+              (click)="submit()"
+              type="button"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm"
+            >
+              Confirm
+            </button>
+            <button
+              (click)="closeConfirmationModal()"
+              type="button"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

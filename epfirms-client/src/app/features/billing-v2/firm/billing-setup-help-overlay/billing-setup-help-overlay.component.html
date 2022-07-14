@@ -1,0 +1,129 @@
+<!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<div class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+  <!-- Background backdrop, show/hide based on slide-over state. -->
+  <div class="fixed inset-0"></div>
+
+  <div class="fixed inset-0 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="pointer-events-none fixed inset-y-0 right-0 flex pl-10 sm:pl-16">
+        <!--
+            Slide-over panel, show/hide based on slide-over state.
+  
+            Entering: "transform transition ease-in-out duration-500 sm:duration-700"
+              From: "translate-x-full"
+              To: "translate-x-0"
+            Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
+              From: "translate-x-0"
+              To: "translate-x-full"
+          -->
+        <div class="pointer-events-auto w-screen max-w-2xl">
+            <div class="flex-1">
+              <!-- Header -->
+              <div class="bg-gray-50 px-4 py-6 sm:px-6">
+                <div class="flex items-start justify-between space-x-3">
+                  <div class="space-y-1">
+                    <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+                      Billing Setup Help
+                    </h2>
+                    <p class="text-sm text-gray-500">
+                     Read about how to set up a client for billing. 
+                    </p>
+                  </div>
+                  <div class="flex h-7 items-center">
+                    <button
+                      (click)="close()"
+                      type="button"
+                      class="text-gray-400 hover:text-gray-500"
+                    >
+                      <span class="sr-only">Close panel</span>
+                      <!-- Heroicon name: outline/x -->
+                      <svg
+                        class="h-6 w-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Divider container -->
+              <div class="space-y-6 py-6 sm:space-y-0 sm:divide-y sm:divide-gray-200 sm:py-0">
+
+
+
+
+                <div
+                  class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5"
+                >
+                  <div>
+                    <label class="block text-sm font-bold text-gray-900 sm:mt-px sm:pt-2">
+                      Save as Draft
+                    </label>
+                  </div>
+                  <div class="sm:col-span-2">
+                    <p class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
+                      When you save an invoice as a draft, this saves it but does not set up
+                      automatic fufillment. You will then need to manually confirm that the invoice is ready to be finalized.
+                    </p>
+                  </div>
+                </div>
+
+
+                <div
+                  class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5"
+                >
+                  <div>
+                    <label class="block text-sm font-bold text-gray-900 sm:mt-px sm:pt-2">
+                     Create 
+                    </label>
+                  </div>
+                  <div class="sm:col-span-2">
+                    <p class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">
+                    When you Create an invoice, it saves the invoice and then automatilly gets fufilled.  
+                    This will finalize the invoice within an hour, and then will take care of email notification and payment
+                    collection. When the invoice is finalized, you will be able to view the invoice.
+                    </p>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex-shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6">
+              <div class="flex justify-end space-x-3">
+
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,6 +11,19 @@ stripeRouter.get('/status', passport.authenticate('bearer', { session: false }),
   stripeController.getConnectionStatus(req, res),
 );
 
+stripeRouter.post('/invoice', passport.authenticate('bearer', { session: false }), (req, res) =>
+  stripeController.createInvoice(req, res),
+);
+
+stripeRouter.delete('/invoice/:id', passport.authenticate('bearer', { session: false }), (req, res) =>
+  stripeController.deleteInvoice(req, res),
+);
+
+
+stripeRouter.put('/invoice/:id', passport.authenticate('bearer', { session: false }), (req, res) =>
+  stripeController.finalizeInvoice(req, res),
+);
+
 stripeRouter.post('/payment', passport.authenticate('bearer', { session: false }), (req, res) =>
   stripeController.createPaymentSession(req, res),
 );
@@ -62,8 +75,16 @@ stripeRouter.post(
 );
 
 
+stripeRouter.post(
+  '/client-subscription',
+  passport.authenticate('bearer', { session: false }),
+  (req, res) => stripeController.createSubscription(req, res),
+);
+
 const stripeWebhookRouter = express.Router();
 
-stripeWebhookRouter.post('/', express.raw({type: 'application/json'}), (req, res) => stripeController.handleWebhookEvent(req, res));
+stripeWebhookRouter.post('/', express.raw({ type: 'application/json' }), (req, res) =>
+  stripeController.handleWebhookEvent(req, res),
+);
 
 export { stripeRouter, stripeWebhookRouter };
