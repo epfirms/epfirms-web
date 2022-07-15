@@ -66,6 +66,12 @@ addAppointee(type: string, spouseMode : boolean): void {
 
   }
 
+  upsertAppointee(appointee: Appointee): void {
+
+    console.log("upsert" ,appointee);
+
+  }
+
   appointeeTypeFilter(appointees : Appointee[], type: string): Appointee[] {
     return appointees.filter(appointee => appointee.getType(type) === true);
   }

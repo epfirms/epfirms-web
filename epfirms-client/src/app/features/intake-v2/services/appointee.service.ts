@@ -9,8 +9,8 @@ export class AppointeeService {
 
   constructor(private http : HttpClient) { }
 
-  getAllAppointeesWithMatterId(matterId : number) : Observable<any> {
-    return this.http.get(`/api/v1/appointeev2/matter/${matterId}`);
+  getAllAppointeesForClient(clientId : number) : Observable<any> {
+    return this.http.get(`/api/v1/appointeev2/client/${clientId}`);
   }
 
   createAppointee(appointee : any) : Observable<any> {

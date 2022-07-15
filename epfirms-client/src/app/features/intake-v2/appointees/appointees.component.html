@@ -100,7 +100,7 @@
                 </div>
               </div>
               <div class="mt-8 flex flex-col">
-                <div class="-my-2 -mx-4  sm:-mx-6 lg:-mx-8">
+                <div class="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
                   <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                     <div class="shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                       <table class="min-w-full divide-y divide-gray-300">
@@ -157,26 +157,45 @@
                           </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                          <ng-container *ngFor="let appointee of appointeeTypeFilter(clientAppointees, 'executor')">
-                            <tr >
+                          <ng-container
+                            *ngFor="
+                              let appointee of appointeeTypeFilter(clientAppointees, 'executor')
+                            "
+                          >
+                            <tr>
                               <td class="w-1/12 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <select
-                                  [(ngModel)]="appointee.executor_rank"
+                                    [(ngModel)]="appointee.executor_rank"
+                                    (change)="upsertAppointee(appointee)"
                                     class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                                   >
-                                    <option *ngFor="let appointee of appointeeTypeFilter(clientAppointees, 'executor'); index as i" [ngValue]="i + 1" >{{i + 1}}</option>
-                                    
+                                    <option
+                                      *ngFor="
+                                        let appointee of appointeeTypeFilter(
+                                          clientAppointees,
+                                          'executor'
+                                        );
+                                        index as i
+                                      "
+                                      [ngValue]="i + 1"
+                                    >
+                                      {{ i + 1 }}
+                                    </option>
                                   </select>
                                 </div>
                               </td>
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                                <app-combobox [options]="clientOptions" (onSelected)="appointee.profile.first_name = $event"></app-combobox>
+                                <app-combobox
+                                  [options]="clientOptions"
+                                  (onSelected)="appointee.profile.first_name = $event"
+                                ></app-combobox>
                               </td>
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <input
-                                  [(ngModel)]="appointee.profile.last_name"
+                                    [(ngModel)]="appointee.profile.last_name"
+                                    (change)="upsertAppointee(appointee)"
                                     type="text"
                                     class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                   />
@@ -186,7 +205,8 @@
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <input
-                                  [(ngModel)]="appointee.profile.address"
+                                    [(ngModel)]="appointee.profile.address"
+                                    (change)="upsertAppointee(appointee)"
                                     type="text"
                                     class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                   />
@@ -195,7 +215,8 @@
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <input
-                                  [(ngModel)]="appointee.profile.city"
+                                    [(ngModel)]="appointee.profile.city"
+                                    (change)="upsertAppointee(appointee)"
                                     type="text"
                                     class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                   />
@@ -204,17 +225,24 @@
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <select
-                                  [(ngModel)]="appointee.profile.state"
+                                    [(ngModel)]="appointee.profile.state"
+                                    (change)="upsertAppointee(appointee)"
                                     class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                                   >
-                                    <option *ngFor="let state of usaStates" [ngValue]="state.abbreviation">{{state.name | titlecase}}</option>
+                                    <option
+                                      *ngFor="let state of usaStates"
+                                      [ngValue]="state.abbreviation"
+                                    >
+                                      {{ state.name | titlecase }}
+                                    </option>
                                   </select>
                                 </div>
                               </td>
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <input
-                                  [(ngModel)]="appointee.profile.zip"
+                                    [(ngModel)]="appointee.profile.zip"
+                                    (change)="upsertAppointee(appointee)"
                                     type="text"
                                     class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                   />
@@ -223,8 +251,9 @@
                               <td class="max-w-0 whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                 <div>
                                   <input
-                                  [(ngModel)]="appointee.profile.phone"
-                                  [inputMask]="phoneMask"
+                                    [(ngModel)]="appointee.profile.phone"
+                                    (change)="upsertAppointee(appointee)"
+                                    [inputMask]="phoneMask"
                                     type="text"
                                     class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                   />
