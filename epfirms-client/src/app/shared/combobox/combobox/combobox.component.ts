@@ -48,6 +48,7 @@ export class ComboboxComponent implements OnInit, OnChanges {
 
   // this is called when the user selects an option`
   onSelect(option: any) {
+    console.log('selected option', option);
     this.selectedOption = option;
     this.searchTerm = this.selectedOption.label;
     this.onSelected.emit(option);
