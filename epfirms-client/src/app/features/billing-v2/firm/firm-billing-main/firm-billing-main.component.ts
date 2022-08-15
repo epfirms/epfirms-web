@@ -72,6 +72,7 @@ export class FirmBillingMainComponent implements OnInit {
   }
 
   private loadInvoices(): void {
+    console.log("loadInvoices");
     this.currentUserService.getCurrentUser().subscribe((user) => {
       if (user) {
         this.firm_id = user.scope.firm_access.firm_id;
@@ -88,6 +89,10 @@ export class FirmBillingMainComponent implements OnInit {
           this.loadSubscriptions(user.scope.firm_access.firm_id);
       }
     });
+  }
+
+  refresh(): void {
+    this.loadInvoices();
   }
 
   private loadSubscriptions(firmId) : void {
