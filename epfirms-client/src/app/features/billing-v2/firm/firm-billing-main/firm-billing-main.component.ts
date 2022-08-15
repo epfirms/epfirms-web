@@ -10,6 +10,7 @@ import { ClientSubscriptionService } from '../../services/client-subscription.se
 import { InvoiceService } from '../../services/invoice.service';
 import { CreateInvoiceOverlayComponent } from '../create-invoice-overlay/create-invoice-overlay.component';
 import { CreateSubscriptionOverlayComponent } from '../create-subscription-overlay/create-subscription-overlay.component';
+import { EditInvoiceOverlayComponent } from '../edit-invoice-overlay/edit-invoice-overlay.component';
 
 @Component({
   selector: 'app-firm-billing-main',
@@ -205,6 +206,21 @@ export class FirmBillingMainComponent implements OnInit {
     });
   }
 
+  openEditInvoiceOverlay(invoice): void {
+    let modal = this._modalService.create({
+      epContent: EditInvoiceOverlayComponent,
+      epModalType: 'slideOver',
+      epAutofocus: null,
+     epComponentParams: {
+        invoice: invoice,
+     } 
+    });
+    modal.afterClose.subscribe((data) => {
+      if (data) {
+        this.loadInvoices();
+      }
+    });
+  }
   openCreateSubscriptionOverlay(): void {
     let modal = this._modalService.create({
       epContent: CreateSubscriptionOverlayComponent,
