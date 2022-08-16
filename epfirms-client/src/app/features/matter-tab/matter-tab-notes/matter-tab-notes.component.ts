@@ -13,7 +13,7 @@ import { EpModalService } from '@app/shared/modal/modal.service';
   templateUrl: './matter-tab-notes.component.html',
   styleUrls: ['./matter-tab-notes.component.scss'],
   host: {
-    'class': 'flex flex-row-reverse h-full'
+    'class': 'flex flex-row-reverse h-full max-w-7xl'
   }
 })
 export class MatterTabNotesComponent {

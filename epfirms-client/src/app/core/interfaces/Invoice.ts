@@ -59,6 +59,17 @@ export class Invoice {
         this.stripe_subscription_id = stripeSubscriptionId;
     }
 
+    setTotal(total: number) {
+        this.total = total;
+    }
+    setId(id: number) {
+        this.id = id;
+    }
+    setDescription(description: string) {
+        this.description = description;
+    }
+
+
 
 
 }

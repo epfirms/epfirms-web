@@ -15,6 +15,9 @@ stripeRouter.post('/invoice', passport.authenticate('bearer', { session: false }
   stripeController.createInvoice(req, res),
 );
 
+stripeRouter.post('/invoice/update', passport.authenticate('bearer', { session: false }), (req, res) =>
+  stripeController.updateInvoice(req, res),
+);
 stripeRouter.delete('/invoice/:id', passport.authenticate('bearer', { session: false }), (req, res) =>
   stripeController.deleteInvoice(req, res),
 );

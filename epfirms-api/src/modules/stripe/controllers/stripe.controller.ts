@@ -242,7 +242,12 @@ export class StripeController {
         res.status(200).send();
       } else if (event.type === 'invoice.created') {
         res.status(200).send();
-      } else if (event.type === 'invoice.finalized') {
+      }
+     else if (event.type === 'invoice.updated') {
+        res.status(200).send(event);
+      
+     }
+      else if (event.type === 'invoice.finalized') {
         // update the invoice with the invoice id
         const updatedInvoice = await Database.models.invoice.update(
           {
@@ -672,4 +677,49 @@ export class StripeController {
       res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(err.message);
     }
   }
+
+  async updateInvoice(req, res : Response) {
+    try {
+
+      let invoiceData = req.body.invoice;
+
+      console.log(invoiceData);
+
+      // stripe is a bit weird, we can update the Invoice object directly for due_date and description
+      // but we will need to update the InvoiceItem to change the amount
+      // so update the Invoice first, it returns its InvoiceItem list,
+      // then update the InvoiceItem with the new amount
+
+      const updatedInvoice = await stripe.invoices.update(invoiceData.id, {
+        description: invoiceData.description,
+        due_date: invoiceData.due_date,
+        application_fee_amount: Math.floor(invoiceData.amount_due * 0.04 * 100)
+      });
+
+      await Database.models.invoice.update({
+        description: invoiceData.description,
+        due_date: invoiceData.due_date * 1000,
+        total: invoiceData.amount_due,
+      }, {where: {invoice_id: invoiceData.id}});
+
+      // as of right now, there should only be one InvoiceItem in the list
+      // if this changes in the future, this will break
+
+      const invoiceItem = updatedInvoice.lines.data[0];
+
+      const updatedInvoiceItem = await stripe.invoiceItems.update(invoiceItem.id, {
+        amount: invoiceData.amount_due * 100,
+      });
+
+
+
+      res.status(StatusConstants.OK).send({ updated_invoice: updatedInvoice, updated_invoice_item: updatedInvoiceItem });
+      
+    } catch (error) {
+      console.error(error);
+      res.status(StatusConstants.INTERNAL_SERVER_ERROR).send(error);
+    }
+    }
+  
+
 }

@@ -10,6 +10,7 @@ import { ClientSubscriptionService } from '../../services/client-subscription.se
 import { InvoiceService } from '../../services/invoice.service';
 import { CreateInvoiceOverlayComponent } from '../create-invoice-overlay/create-invoice-overlay.component';
 import { CreateSubscriptionOverlayComponent } from '../create-subscription-overlay/create-subscription-overlay.component';
+import { EditInvoiceOverlayComponent } from '../edit-invoice-overlay/edit-invoice-overlay.component';
 
 @Component({
   selector: 'app-firm-billing-main',
@@ -72,6 +73,7 @@ export class FirmBillingMainComponent implements OnInit {
   }
 
   private loadInvoices(): void {
+    console.log("loadInvoices");
     this.currentUserService.getCurrentUser().subscribe((user) => {
       if (user) {
         this.firm_id = user.scope.firm_access.firm_id;
@@ -88,6 +90,10 @@ export class FirmBillingMainComponent implements OnInit {
           this.loadSubscriptions(user.scope.firm_access.firm_id);
       }
     });
+  }
+
+  refresh(): void {
+    this.loadInvoices();
   }
 
   private loadSubscriptions(firmId) : void {
@@ -194,12 +200,23 @@ export class FirmBillingMainComponent implements OnInit {
       epAutofocus: null,
     });
     modal.afterClose.subscribe((data) => {
-      if (data) {
-        this.loadInvoices();
-      }
+      this.refresh();
     });
   }
 
+  openEditInvoiceOverlay(invoice): void {
+    let modal = this._modalService.create({
+      epContent: EditInvoiceOverlayComponent,
+      epModalType: 'slideOver',
+      epAutofocus: null,
+     epComponentParams: {
+        invoice: invoice,
+     } 
+    });
+    modal.afterClose.subscribe((data) => {
+      this.refresh();
+    });
+  }
   openCreateSubscriptionOverlay(): void {
     let modal = this._modalService.create({
       epContent: CreateSubscriptionOverlayComponent,
