@@ -328,8 +328,7 @@
                       <button
                         *ngIf="
                           invoice.status === 'draft' &&
-                          invoice.invoice_id &&
-                          invoice.auto_advance === false
+                          invoice.invoice_id 
                         "
                         (click)="finalizeInvoice(invoice)"
                         [tippy]="'Finalize Invoice'"
