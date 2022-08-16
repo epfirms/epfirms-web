@@ -27,6 +27,10 @@ export class StripeService {
   createInvoice(invoiceId): Observable<any> {
     return this._http.post('/api/stripe/invoice', { invoice_id: invoiceId });
   }
+
+  updateInvoice(invoice) : Observable<any> {
+    return this._http.post(`/api/stripe/invoice/update`, {invoice});
+  }
    
   deleteInvoice(invoiceId): Observable<any> {
     return this._http.delete(`/api/stripe/invoice/${invoiceId}`);
