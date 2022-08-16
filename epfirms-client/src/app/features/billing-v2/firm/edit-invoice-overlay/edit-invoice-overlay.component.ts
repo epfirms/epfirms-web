@@ -87,15 +87,16 @@ export class EditInvoiceOverlayComponent implements OnInit {
       }
 
       // call stripe service to update the invoice
-      this._stripeService.updateInvoice(invoiceUpdate).subscribe(res => console.log("update res", res));
+      this._stripeService.updateInvoice(invoiceUpdate).subscribe(res => {
+        this._toastService.success('Invoice updated successfully');
+        this._modalRef.close();
+      });
     } catch (error) {
       console.error(error);
     }
   }
 
-onChange(event) {
-  console.log(event);
-}
+
 
 
 }

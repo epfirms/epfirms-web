@@ -200,9 +200,7 @@ export class FirmBillingMainComponent implements OnInit {
       epAutofocus: null,
     });
     modal.afterClose.subscribe((data) => {
-      if (data) {
-        this.loadInvoices();
-      }
+      this.refresh();
     });
   }
 
@@ -216,9 +214,7 @@ export class FirmBillingMainComponent implements OnInit {
      } 
     });
     modal.afterClose.subscribe((data) => {
-      if (data) {
-        this.loadInvoices();
-      }
+      this.refresh();
     });
   }
   openCreateSubscriptionOverlay(): void {

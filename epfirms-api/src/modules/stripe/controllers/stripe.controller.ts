@@ -696,6 +696,12 @@ export class StripeController {
         application_fee_amount: Math.floor(invoiceData.amount_due * 0.04 * 100)
       });
 
+      await Database.models.invoice.update({
+        description: invoiceData.description,
+        due_date: invoiceData.due_date * 1000,
+        total: invoiceData.amount_due,
+      }, {where: {invoice_id: invoiceData.id}});
+
       // as of right now, there should only be one InvoiceItem in the list
       // if this changes in the future, this will break
 
