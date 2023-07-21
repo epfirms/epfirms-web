@@ -31,7 +31,7 @@ import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
-  timeout: 50000, // request timeout
+  timeout: 240000, // request timeout
 };
 
 const tooltipConfig: Partial<TippyProps> = {
