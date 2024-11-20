@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { UserService } from '@app/features/user/services/user.service';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { Conversation, Participant, Message, Paginator, User } from '@twilio/conversations';

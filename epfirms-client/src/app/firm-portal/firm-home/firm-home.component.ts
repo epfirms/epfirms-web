@@ -6,7 +6,6 @@ import { ClientService } from '../_services/client-service/client.service';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
 import { MatterService } from '../_services/matter-service/matter.service';
 import { MatterTabsService } from '../../features/matter-tab/services/matter-tabs-service/matter-tabs.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-firm-home',
@@ -17,8 +16,6 @@ import { Title } from '@angular/platform-browser';
   }
 })
 export class FirmHomeComponent implements OnInit, OnDestroy {
-  pageTitle: string;
-
   taskSubscription: Subscription;
 
   taskCategories =  {
@@ -49,15 +46,12 @@ export class FirmHomeComponent implements OnInit, OnDestroy {
     private _legalAreaService: LegalAreaService,
     private _clientService: ClientService,
     private _matterTabsService: MatterTabsService,
-    private _titleService: Title
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
     this.clients$ = _clientService.entities$;
   }
 
   ngOnInit(): void {
-    this.pageTitle = this._titleService.getTitle();
-
     this.taskSubscription = this._matterService.getAssignedMatterTasks().pipe(map(tasks => tasks.sort((a,b) => {
       const dateA = new Date(a.task.due);
       const dateB = new Date(b.task.due);

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { User } from '@app/features/user/interfaces/user';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { HotToastService } from '@ngneat/hot-toast';

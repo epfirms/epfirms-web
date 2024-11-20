@@ -4,6 +4,9 @@ import { ConfigService } from '../config/config.service';
 import { LocalInstance } from 'twilio/lib/rest/api/v2010/account/availablePhoneNumber/local';
 import { AccountInstance } from 'twilio/lib/rest/api/v2010/account';
 
+/**
+ * Handles main account level functionality to manage Twilio subaccounts.
+ */
 @Service()
 export class TwilioMainAccountService {
   twilioClient: twilio.Twilio;
@@ -24,6 +27,7 @@ export class TwilioMainAccountService {
 
     return Promise.resolve(subaccount);
   }
+
   async fetchSubaccount(sid: string): Promise<AccountInstance> {
     const subaccount = await this.twilioClient.api.accounts(sid).fetch();
     return Promise.resolve(subaccount);

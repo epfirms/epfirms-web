@@ -15,4 +15,7 @@ authRouter.post('/VerifyEmail', (req, res) => authController.verifyEmailToken(re
 
 authRouter.get('/password/:user_id', (req, res) => authController.verifyPasswordToken(req, res));
 authRouter.post('/password', (req, res) => authController.updatePassword(req, res));
+
+authRouter.post('/user/claims', (req, res) => authController.setCustomUserClaims(req, res));
+
 export { authRouter };

@@ -6,6 +6,9 @@ import { TWILIO_SUBACCOUNT_TOKEN } from './twilio-subaccount.service';
 import { TwilioSubaccount } from './twilio.interface';
 import { NewKeyInstance, NewKeyListInstanceCreateOptions } from 'twilio/lib/rest/api/v2010/account/newKey';
 
+/**
+ * Handles authorization for Twilio Client SDK.
+ */
 @Service()
 export class TwilioHelperLibraryService {
   twilioClient: twilio.Twilio;

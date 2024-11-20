@@ -7,7 +7,6 @@ import { DeleteFirmComponent } from './delete-firm/delete-firm/delete-firm.compo
 import { CaseTemplatesComponent } from './case-templates/case-templates/case-templates.component';
 import { FirmSettingsComponent } from './firm-settings.component';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@app/core/guards/auth.guard';
 import { FirmDetailsComponent } from './firm-details/firm-details/firm-details.component';
 import { ManageStaffComponent } from './manage-staff/manage-staff.component';
 import { DialogModule } from '@ngneat/dialog';
@@ -29,10 +28,11 @@ import { BillingPaymentComponent } from './billing-payment/billing-payment.compo
 import { ButtonModule } from '@app/shared/button/button.module';
 import { BillingSavePaymentMethodComponent } from './billing-save-payment-method/billing-save-payment-method.component';
 import { CaseTemplatePageComponent } from './case-template-page/case-template-page.component';
+import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 
 const FirmSettingsRoute: Routes = [
   {
-    path: '', component: FirmSettingsComponent, canActivate: [AuthGuard], children: [
+    path: '', component: FirmSettingsComponent, canActivate: [AngularFireAuthGuard], children: [
       { path: 'legal-areas', component: LegalAreasComponent },
       { path: 'manage-staff', component: ManageStaffComponent },
       { path: 'delete-firm', component: DeleteFirmComponent },

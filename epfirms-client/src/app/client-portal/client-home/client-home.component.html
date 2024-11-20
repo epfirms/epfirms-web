@@ -1,4 +1,4 @@
-<main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
+<main class="relative z-0 flex-1 overflow-y-auto focus:outline-none">
     <!-- Page title & actions -->
     <div>
         <div class="px-4 sm:p-6 lg:max-w-7xl lg:mx-auto lg:p-8 lg:pt-4">
@@ -8,31 +8,31 @@
               <div class="flex items-center">
                 <ep-avatar
                 epSize="xlarge"
-                [epSrc]="currentUser.profile_image"
+                [epSrc]="currentUser.photoURL"
                 class="hidden sm:block"
               ></ep-avatar>
                 <div>
                   <div class="flex items-center">
                     <ep-avatar
                     epSize="xlarge"
-                    [epSrc]="currentUser.profile_image"
+                    [epSrc]="currentUser.photoURL"
                     class="sm:hidden"
                   ></ep-avatar>
                     <h1 class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                      Good {{ greeting }}, {{ currentUser.full_name | titlecase }}
+                      Good {{ greeting }}, {{ currentUser.photoURL | titlecase }}
                     </h1>
                   </div>
-                  <dl class="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
+                  <dl class="flex flex-col mt-6 sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
                     <dt class="sr-only">Company</dt>
-                    <dd class="flex items-center text-sm text-gray-500 font-medium capitalize sm:mr-6" *ngIf="currentUser.address">
+                    <dd class="flex items-center text-sm font-medium text-gray-500 capitalize sm:mr-6" *ngIf="currentUser.photoURL">
                       <!-- Heroicon name: solid/office-building -->
                       <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
                       </svg>
-                      {{currentUser.address}}
+                      {{currentUser.photoURL}}
                     </dd>
                     <dt class="sr-only">Account status</dt>
-                    <dd class="mt-3 flex items-center text-sm text-gray-500 font-medium sm:mr-6 sm:mt-0 capitalize">
+                    <dd class="flex items-center mt-3 text-sm font-medium text-gray-500 capitalize sm:mr-6 sm:mt-0">
                       <!-- Heroicon name: solid/check-circle -->
                       <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -48,7 +48,7 @@
       </div>
       
     <div>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <router-outlet></router-outlet>
         </div>
     </div>

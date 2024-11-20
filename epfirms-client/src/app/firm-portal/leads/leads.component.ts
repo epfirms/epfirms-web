@@ -1,9 +1,9 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { LegalArea } from '@app/core/interfaces/legal-area';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { Staff } from '@app/core/interfaces/staff';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AddCaseComponent } from '../overlays/add-case/add-case.component';
 import { LegalAreaService } from '../_services/legal-area-service/legal-area.service';
@@ -14,6 +14,17 @@ import { AutocompleteSelectedEvent } from '@app/shared/autocomplete/autocomplete
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { ConversationService } from '@app/features/conversation/services/conversation.service';
 import { FirmService } from '../_services/firm-service/firm.service';
+import { Store } from '@ngrx/store';
+import { selectDenormalizedMatters, selectLeads, selectSortValues } from '@app/features/matter/matter.selectors';
+import { MatterActions, updateSort } from '@app/features/matter/matter.actions';
+import * as TaskActions from '@app/features/task/task.actions';
+
+export interface LeadFilter {
+  status: string;
+  attorney_id?: number;
+  client_id?: number;
+  searchTerm?: string;
+}
 
 @Component({
   selector: 'app-leads',
@@ -41,15 +52,28 @@ export class LeadsComponent implements OnInit {
 
   filteredAttorneys: Staff[] = [];
 
-  leads$: Observable<Matter[]>;
+  matterFilterValues$: BehaviorSubject<LeadFilter> = new BehaviorSubject<LeadFilter>({
+    status: 'active',
+  });
 
+  sortValues$: Observable<any> = this.store.select(selectSortValues);
+
+  leads$: Observable<any> = combineLatest([
+    this.store.select(selectLeads),
+    this.sortValues$,
+    this.matterFilterValues$,
+  ]).pipe(
+    map(([cases, sortValues, searchInput]) => [this.filter(cases, searchInput), sortValues]),
+    map(([cases, sortValues]) => {
+      return sortValues.column ? this.sort(cases, sortValues.column, sortValues.direction) : cases;
+    }),
+  );
+  
   legalAreas$: Observable<LegalArea[]>;
 
   statusFilterOptions: any[] = ['active', 'inactive'];
 
   paginator: { start: number; end: number } = { start: 0, end: 20 };
-
-  searchTerm: string = '';
 
   statusOptions: any[] = [
     {
@@ -86,11 +110,6 @@ export class LeadsComponent implements OnInit {
     attorney_id: null,
   };
 
-  sortValues: { column: string; direction: string } = {
-    column: null,
-    direction: null,
-  };
-
   constructor(
     private _matterService: MatterService,
     private _matterTabsService: MatterTabsService,
@@ -99,19 +118,45 @@ export class LeadsComponent implements OnInit {
     private _modalService: EpModalService,
     private _conversationService: ConversationService,
     private _firmService: FirmService,
+    private store: Store
   ) {
     this.legalAreas$ = _legalAreaService.entities$;
-    this.leads$ = _matterService.filteredEntities$;
     this.attorneys$ = _staffService.filteredEntities$;
   }
 
   ngOnInit(): void {
-    this.filter();
+    this.store.dispatch(MatterActions.loadMatters());
+    this.store.dispatch(TaskActions.loadTasks());
     this._staffService.setFilter({ active: true, role: ['attorney'] });
     this.attorneys$.pipe(take(1)).subscribe((a) => {
       this.attorneys = [...a];
       this.filteredAttorneys = [...a];
     });
+  }
+
+  sort(data, column, direction) {
+    return [...data].sort(this.sortByTaskDate(direction));
+  }
+
+  filter(entities: Matter[], search: LeadFilter) {
+    let searchFields = Object.getOwnPropertyNames(search).filter(
+      (field) => field !== 'searchTerm' && !!search[field],
+    );
+
+    return entities.filter((e) => {
+      if (search.searchTerm && search.searchTerm.length) {
+        return (
+          searchFields.every((field) => e[field] === search[field]) &&
+          JSON.stringify(e).toUpperCase().includes(search.searchTerm.toString().toUpperCase())
+        );
+      }
+
+      return searchFields.every((field) => e[field] === search[field]);
+    });
+  }
+
+  updateSortValues(column: string) {
+    this.store.dispatch(updateSort({ sort: { column, direction: 'asc' } }));
   }
 
   displayFn(value, options): string {
@@ -186,40 +231,6 @@ export class LeadsComponent implements OnInit {
     this._matterService.update({ id: matter.id, legal_area_id: legalArea.id }).subscribe();
   }
 
-  // TODO: Rewrite this abomination to be generic
-  sortMatters(column: string) {
-    // Toggle asc -> desc -> null
-    if (!this.sortValues.direction) {
-      this.sortValues.column = column;
-      this.sortValues.direction = 'asc';
-    } else if (this.sortValues.direction === 'asc') {
-      this.sortValues.direction = 'desc';
-    } else {
-      this.sortValues.column = null;
-      this.sortValues.direction = null;
-    }
-
-    if (this.sortValues.column && this.sortValues.direction) {
-      if (this.sortValues.column === 'first_name') {
-        this.leads$ = this._matterService.filteredEntities$.pipe(
-          map((matters) => {
-            return matters.sort(this.sortByFirstName(this.sortValues.direction));
-          }),
-        );
-      } else if (this.sortValues.column === 'task') {
-        this.leads$ = this._matterService.filteredEntities$.pipe(
-          map((matters) => {
-            return matters.sort(this.sortByTaskDate(this.sortValues.direction));
-          }),
-        );
-      }
-    } else {
-      this.filter();
-      this.leads$ = this._matterService.filteredEntities$;
-    }
-    console.log(this.sortValues.direction);
-  }
-
   sortByFirstName(direction: string) {
     return (a, b) => {
       if (direction === 'asc') {
@@ -233,43 +244,39 @@ export class LeadsComponent implements OnInit {
   sortByTaskDate(direction: string) {
     return (a, b) => {
       if (direction === 'asc') {
-        if (a.matter_tasks.length && !b.matter_tasks.length) {
+        if (a.next_task && !b.next_task) {
           return -1;
-        } else if (!a.matter_tasks.length && b.matter_tasks.length) {
+        } else if (!a.next_task && b.next_task) {
           return 1;
-        } else if (!a.matter_tasks.length && !b.matter_tasks.length) {
+        } else if (!a.next_task && !b.next_task) {
           return 0;
         } else {
-          if (a.matter_tasks[0].completed && !b.matter_tasks[0].completed) {
+          if (a.next_task.completed && !b.next_task.completed) {
             return 1;
-          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
+          } else if (!a.next_task.completed && b.next_task.completed) {
             return -1;
-          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
+          } else if (!a.next_task.completed && b.next_task.completed) {
             return 0;
           } else {
-            return (
-              new Date(a.matter_tasks[0].due).getTime() - new Date(b.matter_tasks[0].due).getTime()
-            );
+            return new Date(a.next_task.due).getTime() - new Date(b.next_task.due).getTime();
           }
         }
       } else {
-        if (a.matter_tasks.length && !b.matter_tasks.length) {
+        if (a.next_task && !b.next_task) {
           return 1;
-        } else if (!a.matter_tasks.length && b.matter_tasks.length) {
+        } else if (!a.next_task && b.next_task) {
           return -1;
-        } else if (!a.matter_tasks.length && !b.matter_tasks.length) {
+        } else if (!a.next_task && !b.next_task) {
           return 0;
         } else {
-          if (a.matter_tasks[0].completed && !b.matter_tasks[0].completed) {
+          if (a.next_task.completed && !b.next_task.completed) {
             return -1;
-          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
+          } else if (!a.next_task.completed && b.next_task.completed) {
             return 1;
-          } else if (!a.matter_tasks[0].completed && b.matter_tasks[0].completed) {
+          } else if (!a.next_task.completed && b.next_task.completed) {
             return 0;
           } else {
-            return (
-              new Date(a.matter_tasks[0].due).getTime() - new Date(b.matter_tasks[0].due).getTime()
-            );
+            return new Date(a.next_task.due).getTime() - new Date(b.next_task.due).getTime();
           }
         }
       }
@@ -284,11 +291,6 @@ export class LeadsComponent implements OnInit {
     this.paginator = current;
   }
 
-  filterStatus(value: string) {
-    this.matterFilterValues.status = value;
-    this.filter();
-  }
-
   filterAttorney(id: number) {
     if (this.matterFilterValues.attorney_id != id) {
       this.matterFilterValues.attorney_id = id;
@@ -296,12 +298,11 @@ export class LeadsComponent implements OnInit {
       this.matterFilterValues.attorney_id = null;
     }
 
-    this.filter();
+    this.matterFilterValues$.next({ ...this.matterFilterValues$.value, attorney_id: id });
   }
 
-  filter() {
-    const filterValues = Object.assign({}, this.matterFilterValues);
-    this._matterService.setFilter(filterValues);
+  filterSearchInput(property, value) {
+    this.matterFilterValues$.next({ ...this.matterFilterValues$.value, [property]: value });
   }
 
   trackByIndex(index, item) {

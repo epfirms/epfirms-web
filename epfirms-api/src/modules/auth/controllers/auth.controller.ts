@@ -4,10 +4,11 @@ import { StatusConstants } from "@src/constants/StatusConstants";
 import { UserService } from "@src/modules/user/services/user.service";
 import { emailsService } from "@src/modules/emails/services/emails.service";
 import { Service } from "typedi";
+import { AuthFirebaseService } from "../services/auth-firebase.service";
 
 @Service()
 export class AuthController {
-  constructor(private _userService: UserService, private _emailService: emailsService, private _authService: AuthService) {}
+  constructor(private _userService: UserService, private _emailService: emailsService, private _authService: AuthService, private _firebaseAuthService: AuthFirebaseService) {}
 
   public async login(req: Request, resp: Response): Promise<any> {
     try {
@@ -38,6 +39,7 @@ export class AuthController {
 
   public async getCurrentUserDetails(req: any, resp: Response): Promise<any> {
     try {
+      console.log(req.user)
       const { user } = req;
 
       const scope = {
@@ -82,6 +84,26 @@ export class AuthController {
     try {
       const { id, token, password } = req.body;
       await this._authService.resetPassword(id, token, password);
+      resp.status(StatusConstants.OK).send(true);
+    } catch (error) {
+      resp.status(StatusConstants.UNAUTHORIZED).send(error.message);
+    }
+  }
+
+  public async setCustomUserClaims(req: any, resp: Response): Promise<any> {
+    try {
+      const { uid, admin } = req.body;
+      const user = await this._userService.get('email', 'jaer@epfirms.com');
+      const firmScope = await this._authService.getFirmScope(user.id);
+      const clientScope = await this._authService.getClientScope(user.id);
+      const claims = {
+        id: user.id,
+        admin,
+        client_access: clientScope,
+        firm_access: firmScope
+      };
+
+      await this._firebaseAuthService.setCustomUserClaims(uid, claims);
       resp.status(StatusConstants.OK).send(true);
     } catch (error) {
       resp.status(StatusConstants.UNAUTHORIZED).send(error.message);

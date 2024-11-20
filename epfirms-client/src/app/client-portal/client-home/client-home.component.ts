@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { Observable, Subscription } from 'rxjs';
+import { User as FirebaseUser } from '@angular/fire/auth';
+import { AuthService } from '@app/features/auth/auth.service';
 
 @Component({
   selector: 'app-client-home',
@@ -14,17 +15,19 @@ export class ClientHomeComponent implements OnInit, OnDestroy {
   greeting: string;
 
   currentUserSubscription: Subscription
-  currentUser$: Observable<any>;
-  currentUser: any;
 
-  constructor(private _currentUserService: CurrentUserService) {
-    this.currentUser$ = this._currentUserService.getCurrentUser();
+  currentUser$: Observable<FirebaseUser>;
+
+  currentUser: FirebaseUser;
+
+  constructor(private authService: AuthService) {
+    this.currentUser$ = this.authService.user$;
   }
 
   ngOnInit(): void {
     this.greeting = this.getGreeting(new Date());
 
-    this.currentUserSubscription = this.currentUser$.subscribe(({user}) => {
+    this.currentUserSubscription = this.currentUser$.subscribe((user) => {
       this.currentUser = user;
     });
   }

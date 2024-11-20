@@ -17,10 +17,10 @@
       Add Tasks From Template
     </button>
   </div>
-  <div class="inline-block min-w-full align-middle">
+  <div class="inline-block min-w-full align-middle" *ngIf="tasks$ | async as tasks">
     <table class="min-w-full">
       <thead>
-        <tr class="border-t border-gray-200" [class.border-b]="!matter.matter_tasks.length">
+        <tr class="border-t border-gray-200" [class.border-b]="!tasks.length">
           <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-gray-200 "></th>
           <th class="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-white border-r border-gray-200 whitespace-nowrap">
             <span>Task</span>
@@ -43,8 +43,8 @@
         </tr>
       </thead>
       <tbody class="bg-white">
-        <ng-container *ngIf="matter.matter_tasks.length">
-          <tr class="task-row group" *ngFor="let task of matter.matter_tasks; trackBy: trackByIndex">
+        <ng-container *ngIf="tasks.length">
+          <tr class="task-row group" *ngFor="let task of tasks; trackBy: trackByIndex">
             <td class="w-16 text-center border-t border-b border-gray-200 group-focus:bg-blue-50">
               <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-0 align-sub"
                 [checked]="task.completed" (change)="updateTask(task, 'completed', $event.target.checked)" />
@@ -115,7 +115,7 @@
           </tr>
         </ng-container>
 
-        <ng-container *ngIf="!matter.matter_tasks.length">
+        <ng-container *ngIf="!tasks.length">
           <tr>
             <td colspan="4" class="p-4">
               <button (click)="createMatterTask(matter.id);" type="button"

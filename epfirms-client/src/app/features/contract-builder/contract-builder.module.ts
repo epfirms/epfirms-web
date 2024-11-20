@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContractViewerComponent } from './contract-viewer/contract-viewer.component';
 import { ContractBuilderComponent } from './contract-builder/contract-builder.component';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@app/core/guards/auth.guard';
+import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 import { ContractEditorV2Component } from './contract-editor-v2/contract-editor-v2.component';
 import { QuillModule } from 'ngx-quill';
 import { NgScrollbarModule } from 'ngx-scrollbar';
@@ -14,7 +14,7 @@ import { TemplateSelectorComponent } from './contract-editor-v2/template-selecto
 
 const ContractBuilderRoute: Routes = [
   {
-    path: '', component: ContractBuilderComponent, canActivate: [AuthGuard], 
+    path: '', component: ContractBuilderComponent, canActivate: [AngularFireAuthGuard], 
   },
 ]
 

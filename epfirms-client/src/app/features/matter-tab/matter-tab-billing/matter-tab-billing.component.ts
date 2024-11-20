@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { PaymentFormModalComponent } from '@app/shared/payment-form-modal/payment-form-modal.component';
 import { StatementService } from '@app/shared/_services/statement-service/statement.service';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { MatterBillingSettingsService } from '@app/shared/_services/matter-billing-settings-service/matter-billing-settings.service';
 import { EpModalService } from '@app/shared/modal/modal.service';
 

@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AwsService } from '@app/shared/_services/aws.service';
-import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { DocumentService } from '@app/features/documents/services/document.service';
 import { MatterActivityService } from '@app/shared/_services/matter-activity-service/matter-activity.service';
 import { Document } from '@app/core/interfaces/document';
 import { MatterActivity } from '@app/core/interfaces/matter-activity';
 import { EpModalService } from '@app/shared/modal/modal.service';
 import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialog.component';
+import { AuthService } from '@app/features/auth/auth.service';
 
 @Component({
   selector: 'app-document-actions',
@@ -24,8 +24,8 @@ export class DocumentActionsComponent {
     private _docService: DocumentService,
     private _awsService: AwsService,
     private _matterActivityService: MatterActivityService,
-    private _currentUserService: CurrentUserService,
-    private _modalService: EpModalService
+    private _modalService: EpModalService,
+    private authService: AuthService
   ) {}
 
   toggleIsEditVisible(): void {
@@ -50,7 +50,7 @@ export class DocumentActionsComponent {
       epOnOk: () => {
         this._docService.delete(this.document.id).subscribe((res) => {
           this._awsService.deleteDocument(this.document).subscribe();
-          this._currentUserService.getCurrentUser().subscribe((userRes) => {
+          this.authService.user$.subscribe((userRes) => {
             // create matter activity object
             let matterActivity = new MatterActivity(
               this.document.user_id,
@@ -58,7 +58,7 @@ export class DocumentActionsComponent {
               'document',
               'delete',
               this.document.doc_name,
-              `${userRes.user.first_name} ${userRes.user.last_name}`
+              `${userRes.displayName}`
             );
             this._matterActivityService.create(matterActivity).subscribe();
           });

@@ -1,9 +1,4 @@
 import { Client } from '@app/core/interfaces/client';
-import { EntityCollection, EntitySelectorsFactory } from '@ngrx/data';
-import { createSelector } from '@ngrx/store';
+import { EntitySelectorsFactory } from '@ngrx/data';
 
-export const selectClients = new EntitySelectorsFactory().create<Client>('Client');
-
-
-export const selectClientById = (id: number) =>
-  createSelector(selectClients.selectEntityMap, (entities) => entities[id]);
+export const clientSelectors = new EntitySelectorsFactory().create<Client>('Client');

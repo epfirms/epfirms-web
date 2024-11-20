@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { EpModalRef } from '@app/shared/modal/modal-ref';
 import { IntakeService } from '../../services/intake.service';
 

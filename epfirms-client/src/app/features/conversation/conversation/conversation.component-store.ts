@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { concatLatestFrom } from '@ngrx/effects';
@@ -21,8 +21,20 @@ export interface ConversationComponentState {
 
 @Injectable()
 export class ConversationComponentStore extends ComponentStore<ConversationComponentState> {
-  constructor(private _conversationService: ConversationService, private _route: ActivatedRoute, private _matterService: MatterService) {
-    super({ currentUser: _conversationService.conversationsClient.user, conversationTitle: '', conversation: null, messages: [], paginator: null, otherParticipants: [], matter: null });
+  constructor(
+    private _conversationService: ConversationService,
+    private _route: ActivatedRoute,
+    private _matterService: MatterService,
+  ) {
+    super({
+      currentUser: _conversationService.conversationsClient.user,
+      conversationTitle: '',
+      conversation: null,
+      messages: [],
+      paginator: null,
+      otherParticipants: [],
+      matter: null,
+    });
   }
 
   readonly currentUser$ = this.select((state) => state.currentUser);
@@ -126,14 +138,16 @@ export class ConversationComponentStore extends ComponentStore<ConversationCompo
     return $.pipe(
       concatLatestFrom(() => this.paginator$),
       map(([_, paginator]) => paginator),
-      switchMap((paginator) => from(paginator.prevPage()).pipe(
-        tapResponse(
-          (p) => {
-            return this.addPreviousMessagePage(p);
-          },
-          () => of([]),
+      switchMap((paginator) =>
+        from(paginator.prevPage()).pipe(
+          tapResponse(
+            (p) => {
+              return this.addPreviousMessagePage(p);
+            },
+            () => of([]),
+          ),
         ),
-      ))
+      ),
     );
   });
 
@@ -157,7 +171,9 @@ export class ConversationComponentStore extends ComponentStore<ConversationCompo
 
   readonly getConversationTitle = this.effect(() => {
     return this.otherParticipants$.pipe(
-      concatLatestFrom(() => this.conversation$.pipe(filter((conversation) => conversation !== null))),
+      concatLatestFrom(() =>
+        this.conversation$.pipe(filter((conversation) => conversation !== null)),
+      ),
       switchMap(([otherParticipants, conversation]) => {
         if (conversation.attributes['matterId']) {
           return this._matterService.getById(conversation.attributes['matterId']).pipe(
@@ -167,35 +183,35 @@ export class ConversationComponentStore extends ComponentStore<ConversationCompo
                 return title;
               }
 
-              return of(otherParticipants).pipe(map(participants => participants[0].attributes['friendlyName']),
-              tapResponse(this.setConversationTitle, () => of(''))
-            )
+              return of(otherParticipants).pipe(
+                map((participants) => participants[0].attributes['friendlyName']),
+                tapResponse(this.setConversationTitle, () => of('')),
+              );
             }),
             tapResponse(this.setConversationTitle, () => of('')),
-          )
-      }
+          );
+        }
 
-      return of(otherParticipants).pipe(map(participants => participants[0].attributes['friendlyName']),
-        tapResponse(this.setConversationTitle, () => of(''))
-      )
-    }),
-  );
+        return of(otherParticipants).pipe(
+          map((participants) => participants[0].attributes['friendlyName']),
+          tapResponse(this.setConversationTitle, () => of('')),
+        );
+      }),
+    );
   });
 
   readonly getMatter = this.effect(() => {
     return this.conversation$.pipe(
       filter((conversation) => conversation !== null),
       switchMap((conversation) => {
-          return this._matterService.getById(conversation.attributes['matterId']).pipe(
-            tapResponse(
-              this.setMatter,
-              () => of(null),
-            ),
-          )
-    }))
+        return this._matterService
+          .getById(conversation.attributes['matterId'])
+          .pipe(tapResponse(this.setMatter, () => of(null)));
+      }),
+    );
   });
 
-    /**
+  /**
    * Listener for messages added after loading a conversation.
    */
   readonly listenForAddedMessages = this.effect(() => {

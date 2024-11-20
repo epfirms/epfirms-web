@@ -1,4 +1,4 @@
-import { Matter } from "./matter";
+import { Matter } from "@app/features/matter/matter.model";
 
 export class Client {
     id: number;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { Observable } from 'rxjs';
 import { ClientMatterService } from '../_services/matter-service/client-matter.service';
 

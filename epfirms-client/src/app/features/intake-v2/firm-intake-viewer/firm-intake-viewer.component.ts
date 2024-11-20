@@ -1,11 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FamilyMemberService } from '@app/client-portal/_services/family-member-service/family-member.service';
-import { ClientMatterService } from '@app/client-portal/_services/matter-service/client-matter.service';
-import { Matter } from '@app/core/interfaces/matter';
-import { ClientService } from '@app/firm-portal/_services/client-service/client.service';
-import { MatterService } from '@app/firm-portal/_services/matter-service/matter.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Matter } from '@app/features/matter/matter.model';
 import { EpModalService } from '@app/shared/modal/modal.service';
-import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { emailService } from '@app/shared/_services/email-service/email.service';
 import { IntakeService } from '../services/intake.service';
 import { IntakeSettingsOverlayComponent } from './intake-settings-overlay/intake-settings-overlay.component';
@@ -29,7 +24,7 @@ export class FirmIntakeViewerComponent implements OnInit {
 
   constructor(
     private intakeService: IntakeService,
-    private emailService: emailService,
+    private emailsService: emailService,
     private modalService: EpModalService,
   ) {}
 
@@ -57,7 +52,7 @@ export class FirmIntakeViewerComponent implements OnInit {
           this.intake = intake[0];
         }
         if (intake && this.sendIntakeToClient) {
-          this.emailService.sendIntakeNotifcation(this.matter.client.email).subscribe();
+          this.emailsService.sendIntakeNotifcation(this.matter.client.email).subscribe();
         }
       });
   }

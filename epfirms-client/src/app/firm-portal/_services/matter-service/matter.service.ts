@@ -1,42 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Matter } from '@app/core/interfaces/matter';
-import {
-  EntityCollectionServiceBase,
-  EntityCollectionServiceElementsFactory,
-} from '@ngrx/data';
+import { Matter } from '@app/features/matter/matter.model';
 import { concatMap, map, take } from 'rxjs/operators';
-import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
-import { SocketService } from '../../../core/services/socket.service';
-import { select } from '@ngrx/store';
-import { selectPopulatedMatters } from '@app/store/matter/matter.selector';
+import { Store } from '@ngrx/store';
 import { HotToastService } from '@ngneat/hot-toast';
+import { selectDenormalizedMatters } from '@app/features/matter/matter.selectors';
+import { AuthService } from '@app/features/auth/auth.service';
+import { SocketService } from '@app/features/socket/socket.service';
+import { addMatter, deleteMatter, updateMatter } from '@app/features/matter/matter.actions';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MatterService extends EntityCollectionServiceBase<Matter> {
+export class MatterService {
   constructor(
     private _http: HttpClient,
-    serviceElementsFactory: EntityCollectionServiceElementsFactory,
-    private _currentUserService: CurrentUserService,
     private _socketService: SocketService,
-    private _toastService: HotToastService
+    private _toastService: HotToastService,
+    private store: Store,
+    private authService: AuthService
   ) {
-    super('Matter', serviceElementsFactory);
 
     // Socket event listeners for syncing changes across firm users
     this._socketService.on('add:matter', (entityData) => {
-      this.addOneToCache(entityData);
+      this.store.dispatch(addMatter({matter: entityData}));
     });
 
     this._socketService.on('update:matter', (entityData) => {
-      this.updateOneInCache(entityData);
+      this.store.dispatch(updateMatter({matter: {id: entityData.id, changes: entityData}}));
     });
 
     this._socketService.on('delete:matter', (entityData) => {
-      this.removeOneFromCache(entityData);
+      this.store.dispatch(deleteMatter({id: entityData.id}));
     });
   }
 
@@ -56,7 +52,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
         error: () => 'An error occurred. Unable to add matter.',
       }),
       map((response: Matter) => {
-        this.addOneToCache(response);
+        this.store.dispatch(addMatter({matter: response}));
         this._socketService.addOneToCacheSync('matter', response);
         return of(response);
       })
@@ -70,27 +66,24 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   update(matter): Observable<any> {
     return this._http.put<any>('/api/matters', matter).pipe(
       map((response: Matter) => {
-        this.updateOneInCache(response);
+        this.store.dispatch(updateMatter({matter: {id: response.id, changes: response}}));
         this._socketService.updateCacheSync('matter', response);
         return of(response);
       })
     );
   }
 
-  getEntities(): Observable<Matter[]> {
-    return this.filteredEntities$.pipe(select(selectPopulatedMatters));
-  }
-
   getClientMatters(userId: number) {
-    return this.entities$.pipe(
-      take(1),
-      map((matters: Matter[]) => {
-        const clientMatters = matters.filter(
-          (matter) => matter.client_id === userId || matter.spouse_id === userId
-        );
-        return clientMatters;
-      })
-    );
+    return of([]);
+    // return this.entities$.pipe(
+    //   take(1),
+    //   map((matters: Matter[]) => {
+    //     const clientMatters = matters.filter(
+    //       (matter) => matter.client_id === userId || matter.spouse_id === userId
+    //     );
+    //     return clientMatters;
+    //   })
+    // );
   }
 
   getNotes(matterId: number): Observable<any> {
@@ -108,7 +101,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   addMatterTask(task): Observable<any> {
     return this._http.post<any>('/api/matters/task', task).pipe(
       map((response: Matter) => {
-        this.updateOneInCache(response);
+        this.store.dispatch(updateMatter({matter: {id: response.id, changes: response}}));
         this._socketService.updateCacheSync('matter', response);
         return response;
       })
@@ -118,7 +111,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   updateMatterTask(task): Observable<any> {
     return this._http.patch<any>('/api/matters/task', task).pipe(
       map((response: Matter) => {
-        this.updateOneInCache(response);
+        this.store.dispatch(updateMatter({matter: {id: response.id, changes: response}}));
         this._socketService.updateCacheSync('matter', response);
         return of(response);
       })
@@ -132,7 +125,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
       })
       .pipe(
         map((response: Matter) => {
-          this.updateOneInCache(response);
+          this.store.dispatch(updateMatter({matter: {id: response.id, changes: response}}));
           this._socketService.updateCacheSync('matter', response);
           return of(response);
         })
@@ -140,15 +133,15 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
   }
 
   getAssignedMatterTasks(): Observable<any> {
-    return this._currentUserService.getCurrentUser().pipe(
+    return this.authService.idTokenResult$.pipe(
       take(1),
-      concatMap(({ user }) => {
-        return this.entities$.pipe(
+      concatMap(( token ) => {
+        return this.store.select(selectDenormalizedMatters).pipe(
           map((matters: Matter[]) => {
             return matters.reduce((acc, matter) => {
               const filteredMatterTasks = matter.matter_tasks.reduce(
                 (a, task) => {
-                  if (task.assignee_id === user.id && matter.status === 'active') {
+                  if (task.assignee_id === token.claims.id && matter.status === 'active') {
                     a.push({
                       task,
                       legal_area: matter.legal_area,
@@ -174,7 +167,7 @@ export class MatterService extends EntityCollectionServiceBase<Matter> {
       .post<any>('/api/matters/intake', { matter_id: matterId })
       .pipe(
         map((response: Matter) => {
-          this.updateOneInCache(response);
+          this.store.dispatch(updateMatter({matter: {id: response.id, changes: response}}));
           this._socketService.updateCacheSync('matter', response);
           return of(response);
         })

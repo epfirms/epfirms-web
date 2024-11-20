@@ -1,7 +1,7 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +12,6 @@ import { DefaultDataServiceConfig, EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 import { EffectsModule } from '@ngrx/effects';
 import { matterTabsReducer } from './store/matter-tabs/matter-tabs.reducer';
-import { currentUserReducer } from './store/current-user/current-user.reducer';
 import { MatterActivityInterceptor } from './core/interceptors/matter-activity.interceptor';
 import { extModules } from 'src/environments/development/modules.dev';
 import { InputMaskModule } from '@ngneat/input-mask';
@@ -26,8 +25,9 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import ImageCompress from 'quill-image-compress';
 import { ModalModule } from './shared/modal/modal.module';
 import { MatterTabsEffects } from './store/matter-tabs/matter-tabs.effects';
-import { CurrentUserEffects } from './store/current-user/current-user.effects';
 import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { PERSISTENCE } from '@angular/fire/compat/auth';
+import { AuthModule } from './features/auth/auth.module';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/api',
@@ -74,9 +74,9 @@ const quillConfig = [
     FormsModule,
     AutocompleteModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({matterTabs: matterTabsReducer, currentUser: currentUserReducer, router: routerReducer}, {}),
+    StoreModule.forRoot({matterTabs: matterTabsReducer, router: routerReducer}, {}),
     StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forRoot([MatterTabsEffects, CurrentUserEffects]),
+    EffectsModule.forRoot([MatterTabsEffects]),
     EntityDataModule.forRoot(entityConfig),
     QuillModule.forRoot({
       modules: {
@@ -158,14 +158,15 @@ const quillConfig = [
       },
       dismissible: true,
     }),
-    ModalModule
+    ModalModule,
+    AuthModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: MatterActivityInterceptor, multi: true },
     { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig },
-    Title
+    { provide: PERSISTENCE, useValue: 'local'}
   ],
   bootstrap: [AppComponent]
 })

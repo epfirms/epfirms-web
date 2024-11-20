@@ -2,6 +2,9 @@ import { Service } from 'typedi';
 import { Database } from '@src/core/Database';
 import { TwilioSubaccount } from './twilio.interface';
 
+/**
+ * Manage Twilio Subaccount credentials.
+ */
 @Service()
 export class TwilioSubaccountCredentialsService {
   constructor() {}

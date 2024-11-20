@@ -7,7 +7,6 @@ import {
 } from '@ngrx/data';
 import { map } from 'rxjs/operators';
 import { Firm } from '@app/core/interfaces/firm';
-import { SocketService } from '../../../core/services/socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +15,6 @@ export class FirmService extends EntityCollectionServiceBase<Firm> {
   constructor(
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
     private _http: HttpClient,
-    private _socketService: SocketService
   ) {
     super('Firm', serviceElementsFactory);
   }

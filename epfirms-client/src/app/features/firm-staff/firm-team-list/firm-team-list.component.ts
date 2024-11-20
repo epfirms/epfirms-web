@@ -3,7 +3,6 @@ import { Staff } from '@app/core/interfaces/staff';
 import { TeamService } from '@app/features/team/services/team.service';
 import { StaffService } from '@app/firm-portal/_services/staff-service/staff.service';
 import { EpModalService } from '@app/shared/modal/modal.service';
-import { CurrentUserService } from '@app/shared/_services/current-user-service/current-user.service';
 import { Dictionary } from '@ngrx/entity';
 import { concatMap, from, map, Observable, switchMap, take } from 'rxjs';
 import { TeamMembersDialogComponent } from '../team-members-dialog/team-members-dialog.component';
@@ -16,27 +15,18 @@ import { TeamMembersDialogComponent } from '../team-members-dialog/team-members-
 export class FirmTeamListComponent implements OnInit {
   staff$: Observable<Dictionary<Staff>>;
 
-  user$: Observable<any>;
-
-  user: any[] = [];
-
   teams: any[] = [];
 
   constructor(
     private _staffService: StaffService,
-    private _currentUserService: CurrentUserService,
     private _modalService: EpModalService,
     private _teamService: TeamService,
   ) {
     this.staff$ = _staffService.entityMap$;
-    this.user$ = this._currentUserService.user$;
   }
 
   ngOnInit(): void {
     this._staffService.setFilter({ active: true });
-    this.user$.pipe(take(1)).subscribe(({ user }) => {
-      this.user = user;
-    });
 
     this.getTeams();
   }

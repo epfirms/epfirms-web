@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Decedent } from '@app/core/interfaces/Decedent';
 import { DecedentProperty } from '@app/core/interfaces/DecedentProperty';
-import { Matter } from '@app/core/interfaces/matter';
+import { Matter } from '@app/features/matter/matter.model';
 import { UserService } from '@app/features/user/services/user.service';
 import { HotToastService } from '@ngneat/hot-toast';
 import { createMask } from '@ngneat/input-mask';

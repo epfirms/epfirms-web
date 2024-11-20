@@ -35,14 +35,14 @@
               </div>
             </div>
             <button MenuButton class="flex-shrink-0 block w-full text-left group">
-              <div class="flex items-center" *ngIf="currentUser$ | async as currentUser">
+              <div class="flex items-center" *ngIf="user$ | async as currentUser">
                 <div>
-                  <ep-avatar epSize="mediumSmall" [epSrc]="currentUser.user.profile_image"
-                    [epText]="currentUser.user.full_name"></ep-avatar>
+                  <ep-avatar epSize="mediumSmall" [epSrc]="currentUser.photoURL"
+                    [epText]="currentUser.displayName"></ep-avatar>
                 </div>
                 <div class="hidden truncate lg:block lg:ml-3">
                   <p class="text-sm font-medium text-white">
-                    {{ currentUser.user.full_name | titlecase }}
+                    {{ currentUser.displayName | titlecase }}
                   </p>
                   <p class="text-xs font-medium text-gray-200 group-hover:text-white">
                     View profile
